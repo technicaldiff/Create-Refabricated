@@ -1,10 +1,5 @@
 package com.simibubi.create.content.contraptions.components.structureMovement;
 
-import static net.minecraft.block.HorizontalFaceBlock.FACE;
-import static net.minecraft.state.properties.BlockStateProperties.AXIS;
-import static net.minecraft.state.properties.BlockStateProperties.FACING;
-import static net.minecraft.state.properties.BlockStateProperties.HORIZONTAL_FACING;
-
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.content.contraptions.base.DirectionalAxisKineticBlock;
 import com.simibubi.create.content.contraptions.components.structureMovement.chassis.AbstractChassisBlock;
@@ -14,36 +9,30 @@ import com.simibubi.create.foundation.utility.BlockHelper;
 import com.simibubi.create.foundation.utility.DirectionHelper;
 import com.simibubi.create.foundation.utility.Iterate;
 import com.simibubi.create.foundation.utility.VecHelper;
-
-import net.minecraft.block.BellBlock;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.HorizontalFaceBlock;
-import net.minecraft.block.SlabBlock;
-import net.minecraft.block.StairsBlock;
-import net.minecraft.network.PacketBuffer;
-import net.minecraft.state.BooleanProperty;
-import net.minecraft.state.properties.AttachFace;
-import net.minecraft.state.properties.BellAttachment;
-import net.minecraft.state.properties.BlockStateProperties;
-import net.minecraft.state.properties.Half;
-import net.minecraft.state.properties.SlabType;
-import net.minecraft.util.Direction;
-import net.minecraft.util.Direction.Axis;
-import net.minecraft.util.Direction.AxisDirection;
-import net.minecraft.util.Rotation;
+import net.minecraft.block.*;
+import net.minecraft.block.enums.Attachment;
+import net.minecraft.block.enums.BlockHalf;
+import net.minecraft.block.enums.SlabType;
+import net.minecraft.block.enums.WallMountLocation;
+import net.minecraft.network.PacketByteBuf;
+import net.minecraft.state.property.BooleanProperty;
+import net.minecraft.state.property.Properties;
+import net.minecraft.util.BlockRotation;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.vector.Vector3d;
+import net.minecraft.util.math.Direction;
+import net.minecraft.util.math.Vec3d;
+
+import static net.minecraft.block.WallMountedBlock.FACE;
+import static net.minecraft.state.property.Properties.*;
 
 public class StructureTransform {
-
 	// Assuming structures cannot be rotated around multiple axes at once
-	Rotation rotation;
+	BlockRotation rotation;
 	int angle;
-	Axis rotationAxis;
+	Direction.Axis rotationAxis;
 	BlockPos offset;
 
-	private StructureTransform(BlockPos offset, int angle, Axis axis, Rotation rotation) {
+	private StructureTransform(BlockPos offset, int angle, Direction.Axis axis, BlockRotation rotation) {
 		this.offset = offset;
 		this.angle = angle;
 		rotationAxis = axis;
@@ -53,42 +42,77 @@ public class StructureTransform {
 	public StructureTransform(BlockPos offset, float xRotation, float yRotation, float zRotation) {
 		this.offset = offset;
 		if (xRotation != 0) {
-			rotationAxis = Axis.X;
-			angle = (int) (Math.round(xRotation / 90) * 90);
+			rotationAxis = Direction.Axis.X;
+			angle = Math.round(xRotation / 90) * 90;
 		}
 		if (yRotation != 0) {
-			rotationAxis = Axis.Y;
-			angle = (int) (Math.round(yRotation / 90) * 90);
+			rotationAxis = Direction.Axis.Y;
+			angle = Math.round(yRotation / 90) * 90;
 		}
 		if (zRotation != 0) {
-			rotationAxis = Axis.Z;
-			angle = (int) (Math.round(zRotation / 90) * 90);
+			rotationAxis = Direction.Axis.Z;
+			angle = Math.round(zRotation / 90) * 90;
 		}
 
 		angle %= 360;
 		if (angle < -90)
 			angle += 360;
 
-		this.rotation = Rotation.NONE;
+		this.rotation = BlockRotation.NONE;
 		if (angle == -90 || angle == 270)
-			this.rotation = Rotation.CLOCKWISE_90;
+			this.rotation = BlockRotation.CLOCKWISE_90;
 		if (angle == 90)
-			this.rotation = Rotation.COUNTERCLOCKWISE_90;
+			this.rotation = BlockRotation.COUNTERCLOCKWISE_90;
 		if (angle == 180)
-			this.rotation = Rotation.CLOCKWISE_180;
+			this.rotation = BlockRotation.CLOCKWISE_180;
 
 	}
 
-	public Vector3d apply(Vector3d localVec) {
-		Vector3d vec = localVec;
+ 	private BlockState rotateChassis(BlockState state) {
+ 		if (rotation == BlockRotation.NONE)
+			return state;
+
+ 		BlockState rotated = state.with(AXIS, transformAxis(state.get(AXIS)));
+	 	AbstractChassisBlock block = (AbstractChassisBlock) state.getBlock();
+
+	 	for (Direction face : Iterate.directions) {
+	 		BooleanProperty glueableSide = block.getGlueableSide(rotated, face);
+			if (glueableSide != null)
+	 			rotated = rotated.with(glueableSide, false);
+		}
+
+		for (Direction face : Iterate.directions) {
+ 			BooleanProperty glueableSide = block.getGlueableSide(state, face);
+	 		if (glueableSide == null || !state.get(glueableSide))
+	 			continue;
+	 		Direction rotatedFacing = transformFacing(face);
+	 		BooleanProperty rotatedGlueableSide = block.getGlueableSide(rotated, rotatedFacing);
+	 		if (rotatedGlueableSide != null)
+	 			rotated = rotated.with(rotatedGlueableSide, true);
+	 	}
+
+	 	return rotated;
+ 	}
+
+	public static StructureTransform fromBuffer(PacketByteBuf buffer) {
+		BlockPos readBlockPos = buffer.readBlockPos();
+		int readAngle = buffer.readInt();
+		int axisIndex = buffer.readVarInt();
+		int rotationIndex = buffer.readVarInt();
+		return new StructureTransform(readBlockPos, readAngle, axisIndex == -1 ? null : Direction.Axis.values()[axisIndex],
+			rotationIndex == -1 ? null : BlockRotation.values()[rotationIndex]);
+	}
+
+	public Vec3d apply(Vec3d localVec) {
+		Vec3d vec = localVec;
 		if (rotationAxis != null)
 			vec = VecHelper.rotateCentered(vec, angle, rotationAxis);
-		vec = vec.add(Vector3d.of(offset));
+		vec = vec.add(new Vec3d(offset.getX(), offset.getY(), offset.getZ())); // TODO MIGHT NOT BE BEST SOLUTION?
 		return vec;
 	}
 
 	public BlockPos apply(BlockPos localPos) {
-		Vector3d vec = VecHelper.getCenterOf(localPos);
+		Vec3d vec = VecHelper.getCenterOf(localPos);
 		if (rotationAxis != null)
 			vec = VecHelper.rotateCentered(vec, angle, rotationAxis);
 		localPos = new BlockPos(vec);
@@ -103,13 +127,13 @@ public class StructureTransform {
 	public BlockState apply(BlockState state) {
 		Block block = state.getBlock();
 
-		if (rotationAxis == Axis.Y) {
+		if (rotationAxis == Direction.Axis.Y) {
 			if (block instanceof BellBlock) {
-				if (state.get(BlockStateProperties.BELL_ATTACHMENT) == BellAttachment.DOUBLE_WALL) {
-					state = state.with(BlockStateProperties.BELL_ATTACHMENT, BellAttachment.SINGLE_WALL);
+				if (state.get(Properties.ATTACHMENT) == Attachment.DOUBLE_WALL) {
+					state = state.with(Properties.ATTACHMENT, Attachment.SINGLE_WALL);
 				}
-				return state.with(HorizontalFaceBlock.HORIZONTAL_FACING,
-					rotation.rotate(state.get(HorizontalFaceBlock.HORIZONTAL_FACING)));
+				return state.with(WallMountedBlock.FACING,
+					rotation.rotate(state.get(WallMountedBlock.FACING)));
 			}
 			return state.rotate(rotation);
 		}
@@ -117,50 +141,50 @@ public class StructureTransform {
 		if (block instanceof AbstractChassisBlock)
 			return rotateChassis(state);
 
-		if (block instanceof HorizontalFaceBlock) {
-			Direction stateFacing = state.get(HorizontalFaceBlock.HORIZONTAL_FACING);
-			AttachFace stateFace = state.get(FACE);
-			Direction forcedAxis = rotationAxis == Axis.Z ? Direction.EAST : Direction.SOUTH;
+		if (block instanceof HorizontalFacingBlock) {
+			Direction stateFacing = state.get(WallMountedBlock.FACING);
+			WallMountLocation stateFace = state.get(FACE);
+			Direction forcedAxis = rotationAxis == Direction.Axis.Z ? Direction.EAST : Direction.SOUTH;
 
-			if (stateFacing.getAxis() == rotationAxis && stateFace == AttachFace.WALL)
+			if (stateFacing.getAxis() == rotationAxis && stateFace == WallMountLocation.WALL)
 				return state;
 
 			for (int i = 0; i < rotation.ordinal(); i++) {
 				stateFace = state.get(FACE);
-				stateFacing = state.get(HorizontalFaceBlock.HORIZONTAL_FACING);
+				stateFacing = state.get(WallMountedBlock.FACING);
 
-				boolean b = state.get(FACE) == AttachFace.CEILING;
+				boolean b = state.get(FACE) == WallMountLocation.CEILING;
 				state = state.with(HORIZONTAL_FACING, b ? forcedAxis : forcedAxis.getOpposite());
 
-				if (stateFace != AttachFace.WALL) {
-					state = state.with(FACE, AttachFace.WALL);
+				if (stateFace != WallMountLocation.WALL) {
+					state = state.with(FACE, WallMountLocation.WALL);
 					continue;
 				}
 
-				if (stateFacing.getAxisDirection() == AxisDirection.POSITIVE) {
-					state = state.with(FACE, AttachFace.FLOOR);
+				if (stateFacing.getDirection() == Direction.AxisDirection.POSITIVE) {
+					state = state.with(FACE, WallMountLocation.FLOOR);
 					continue;
 				}
-				state = state.with(FACE, AttachFace.CEILING);
+				state = state.with(FACE, WallMountLocation.CEILING);
 			}
 
 			return state;
 		}
 
-		boolean halfTurn = rotation == Rotation.CLOCKWISE_180;
+		boolean halfTurn = rotation == BlockRotation.CLOCKWISE_180;
 		if (block instanceof StairsBlock) {
 			state = transformStairs(state, halfTurn);
 			return state;
 		}
 
-		if (AllBlocks.BELT.has(state)) {
+		if (AllBlocks.BELT.getStateManager().getStates().contains(state)) {
 			state = transformBelt(state, halfTurn);
 			return state;
 		}
 
 		if (BlockHelper.hasBlockStateProperty(state, FACING)) {
 			Direction newFacing = transformFacing(state.get(FACING));
-			if (BlockHelper.hasBlockStateProperty(state, DirectionalAxisKineticBlock.AXIS_ALONG_FIRST_COORDINATE)) {
+			if (state.get(DirectionalAxisKineticBlock.AXIS_ALONG_FIRST_COORDINATE) != null) {
 				if (rotationAxis == newFacing.getAxis() && rotation.ordinal() % 2 == 1)
 					state = state.cycle(DirectionalAxisKineticBlock.AXIS_ALONG_FIRST_COORDINATE);
 			}
@@ -171,7 +195,7 @@ public class StructureTransform {
 
 		} else if (halfTurn) {
 
-			if (BlockHelper.hasBlockStateProperty(state, FACING)) {
+			if (BlockHelper.hasBlockStateProperty(state, AXIS)) {
 				Direction stateFacing = state.get(FACING);
 				if (stateFacing.getAxis() == rotationAxis)
 					return state;
@@ -197,9 +221,9 @@ public class StructureTransform {
 			.getAxis() != rotationAxis) {
 			for (int i = 0; i < rotation.ordinal(); i++) {
 				Direction direction = state.get(StairsBlock.FACING);
-				Half half = state.get(StairsBlock.HALF);
-				if (direction.getAxisDirection() == AxisDirection.POSITIVE ^ half == Half.BOTTOM
-					^ direction.getAxis() == Axis.Z)
+				BlockHalf half = state.get(StairsBlock.HALF);
+				if (direction.getDirection() == Direction.AxisDirection.POSITIVE ^ half == BlockHalf.BOTTOM
+					^ direction.getAxis() == Direction.Axis.Z)
 					state = state.cycle(StairsBlock.HALF);
 				else
 					state = state.with(StairsBlock.FACING, direction.getOpposite());
@@ -230,12 +254,12 @@ public class StructureTransform {
 
 				if (vertical) {
 					if (direction.getAxis() == rotationAxis) {
-						newDirection = direction.rotateYCCW();
+						newDirection = direction.rotateYCounterclockwise();
 						newSlope = BeltSlope.SIDEWAYS;
 					} else {
 						newSlope = BeltSlope.HORIZONTAL;
 						newDirection = direction;
-						if (direction.getAxis() == Axis.Z)
+						if (direction.getAxis() == Direction.Axis.Z)
 							newDirection = direction.getOpposite();
 					}
 				}
@@ -245,14 +269,14 @@ public class StructureTransform {
 					if (direction.getAxis() == rotationAxis)
 						newSlope = BeltSlope.HORIZONTAL;
 					else
-						newDirection = direction.rotateYCCW();
+						newDirection = direction.rotateYCounterclockwise();
 				}
 
 				if (horizontal) {
 					newDirection = direction;
 					if (direction.getAxis() == rotationAxis)
 						newSlope = BeltSlope.SIDEWAYS;
-					else if (direction.getAxis() != Axis.Z)
+					else if (direction.getAxis() != Direction.Axis.Z)
 						newDirection = direction.getOpposite();
 				}
 
@@ -269,7 +293,7 @@ public class StructureTransform {
 				boolean downward = slope == BeltSlope.DOWNWARD;
 
 				// Rotate diagonal
-				if (direction.getAxisDirection() == AxisDirection.POSITIVE ^ downward ^ direction.getAxis() == Axis.Z) {
+				if (direction.getDirection() == Direction.AxisDirection.POSITIVE ^ downward ^ direction.getAxis() == Direction.Axis.Z) {
 					state = state.with(BeltBlock.SLOPE, upward ? BeltSlope.DOWNWARD : BeltSlope.UPWARD);
 				} else {
 					state = state.with(BeltBlock.HORIZONTAL_FACING, newDirection);
@@ -292,10 +316,10 @@ public class StructureTransform {
 		return state;
 	}
 
-	public Axis transformAxis(Axis axisIn) {
-		Direction facing = Direction.getFacingFromAxis(AxisDirection.POSITIVE, axisIn);
+	public Direction.Axis transformAxis(Direction.Axis axisIn) {
+		Direction facing = Direction.get(Direction.AxisDirection.POSITIVE, axisIn);
 		facing = transformFacing(facing);
-		Axis axis = facing.getAxis();
+		Direction.Axis axis = facing.getAxis();
 		return axis;
 	}
 
@@ -305,42 +329,7 @@ public class StructureTransform {
 		return facing;
 	}
 
-	private BlockState rotateChassis(BlockState state) {
-		if (rotation == Rotation.NONE)
-			return state;
-
-		BlockState rotated = state.with(AXIS, transformAxis(state.get(AXIS)));
-		AbstractChassisBlock block = (AbstractChassisBlock) state.getBlock();
-
-		for (Direction face : Iterate.directions) {
-			BooleanProperty glueableSide = block.getGlueableSide(rotated, face);
-			if (glueableSide != null)
-				rotated = rotated.with(glueableSide, false);
-		}
-
-		for (Direction face : Iterate.directions) {
-			BooleanProperty glueableSide = block.getGlueableSide(state, face);
-			if (glueableSide == null || !state.get(glueableSide))
-				continue;
-			Direction rotatedFacing = transformFacing(face);
-			BooleanProperty rotatedGlueableSide = block.getGlueableSide(rotated, rotatedFacing);
-			if (rotatedGlueableSide != null)
-				rotated = rotated.with(rotatedGlueableSide, true);
-		}
-
-		return rotated;
-	}
-
-	public static StructureTransform fromBuffer(PacketBuffer buffer) {
-		BlockPos readBlockPos = buffer.readBlockPos();
-		int readAngle = buffer.readInt();
-		int axisIndex = buffer.readVarInt();
-		int rotationIndex = buffer.readVarInt();
-		return new StructureTransform(readBlockPos, readAngle, axisIndex == -1 ? null : Axis.values()[axisIndex],
-			rotationIndex == -1 ? null : Rotation.values()[rotationIndex]);
-	}
-
-	public void writeToBuffer(PacketBuffer buffer) {
+	public void writeToBuffer(PacketByteBuf buffer) {
 		buffer.writeBlockPos(offset);
 		buffer.writeInt(angle);
 		buffer.writeVarInt(rotationAxis == null ? -1 : rotationAxis.ordinal());

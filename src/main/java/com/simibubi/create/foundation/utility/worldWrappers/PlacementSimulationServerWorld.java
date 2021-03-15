@@ -5,8 +5,8 @@ import java.util.function.Predicate;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.server.ServerWorld;
 
 public class PlacementSimulationServerWorld extends WrappedServerWorld {
 	public HashMap<BlockPos, BlockState> blocksAdded;
@@ -32,17 +32,17 @@ public class PlacementSimulationServerWorld extends WrappedServerWorld {
 	}
 
 	@Override
-	public boolean hasBlockState(BlockPos pos, Predicate<BlockState> condition) {
+	public boolean testBlockState(BlockPos pos, Predicate<BlockState> condition) {
 		return condition.test(getBlockState(pos));
 	}
 	
 	@Override
-	public boolean isBlockPresent(BlockPos pos) {
+	public boolean canSetBlock(BlockPos pos) {
 		return true;
 	}
-	
+
 	@Override
-	public boolean isAreaLoaded(BlockPos center, int range) {
+	public boolean isRegionLoaded(BlockPos min, BlockPos max) {
 		return true;
 	}
 

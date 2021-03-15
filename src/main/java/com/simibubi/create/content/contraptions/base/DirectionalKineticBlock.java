@@ -4,36 +4,36 @@ import com.simibubi.create.foundation.utility.Iterate;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
-import net.minecraft.item.BlockItemUseContext;
-import net.minecraft.state.DirectionProperty;
-import net.minecraft.state.StateContainer.Builder;
-import net.minecraft.state.properties.BlockStateProperties;
-import net.minecraft.util.Direction;
-import net.minecraft.util.Mirror;
-import net.minecraft.util.Rotation;
+import net.minecraft.item.ItemPlacementContext;
+import net.minecraft.state.StateManager.Builder;
+import net.minecraft.state.property.DirectionProperty;
+import net.minecraft.state.property.Properties;
+import net.minecraft.util.BlockMirror;
+import net.minecraft.util.BlockRotation;
+import net.minecraft.util.math.Direction;
 
 public abstract class DirectionalKineticBlock extends KineticBlock {
 
-	public static final DirectionProperty FACING = BlockStateProperties.FACING;
+	public static final DirectionProperty FACING = Properties.FACING;
 
-	public DirectionalKineticBlock(Properties properties) {
+	public DirectionalKineticBlock(Settings properties) {
 		super(properties);
 	}
 
 	@Override
-	protected void fillStateContainer(Builder<Block, BlockState> builder) {
+	protected void appendProperties(Builder<Block, BlockState> builder) {
 		builder.add(FACING);
-		super.fillStateContainer(builder);
+		super.appendProperties(builder);
 	}
 
-	public Direction getPreferredFacing(BlockItemUseContext context) {
+	public Direction getPreferredFacing(ItemPlacementContext context) {
 		Direction prefferedSide = null;
 		for (Direction side : Iterate.directions) {
 			BlockState blockState = context.getWorld()
-				.getBlockState(context.getPos()
+				.getBlockState(context.getBlockPos()
 					.offset(side));
-			if (blockState.getBlock() instanceof IRotate) {
-				if (((IRotate) blockState.getBlock()).hasShaftTowards(context.getWorld(), context.getPos()
+			if (blockState.getBlock() instanceof Rotating) {
+				if (((Rotating) blockState.getBlock()).hasShaftTowards(context.getWorld(), context.getBlockPos()
 					.offset(side), blockState, side.getOpposite()))
 					if (prefferedSide != null && prefferedSide.getAxis() != side.getAxis()) {
 						prefferedSide = null;
@@ -47,11 +47,11 @@ public abstract class DirectionalKineticBlock extends KineticBlock {
 	}
 
 	@Override
-	public BlockState getStateForPlacement(BlockItemUseContext context) {
+	public BlockState getPlacementState(ItemPlacementContext context) {
 		Direction preferred = getPreferredFacing(context);
 		if (preferred == null || (context.getPlayer() != null && context.getPlayer()
 			.isSneaking())) {
-			Direction nearestLookingDirection = context.getNearestLookingDirection();
+			Direction nearestLookingDirection = context.getPlayerLookDirection();
 			return getDefaultState().with(FACING, context.getPlayer() != null && context.getPlayer()
 				.isSneaking() ? nearestLookingDirection : nearestLookingDirection.getOpposite());
 		}
@@ -59,13 +59,13 @@ public abstract class DirectionalKineticBlock extends KineticBlock {
 	}
 
 	@Override
-	public BlockState rotate(BlockState state, Rotation rot) {
+	public BlockState rotate(BlockState state, BlockRotation rot) {
 		return state.with(FACING, rot.rotate(state.get(FACING)));
 	}
 
 	@Override
-	public BlockState mirror(BlockState state, Mirror mirrorIn) {
-		return state.rotate(mirrorIn.toRotation(state.get(FACING)));
+	public BlockState mirror(BlockState state, BlockMirror mirrorIn) {
+		return state.rotate(mirrorIn.getRotation(state.get(FACING)));
 	}
 
 }

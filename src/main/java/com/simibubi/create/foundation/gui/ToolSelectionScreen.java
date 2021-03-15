@@ -3,22 +3,21 @@ package com.simibubi.create.foundation.gui;
 import java.util.List;
 import java.util.function.Consumer;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.simibubi.create.AllKeys;
 import com.simibubi.create.content.schematics.client.tools.Tools;
 import com.simibubi.create.foundation.utility.Lang;
 
-import net.minecraft.client.MainWindow;
-import net.minecraft.client.Minecraft;
+import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.client.util.Window;
+import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.text.LiteralText;
+import net.minecraft.text.Text;
 
 public class ToolSelectionScreen extends Screen {
 
-	public final String scrollToCycle = Lang.translate("gui.toolmenu.cycle")
-		.getString();
+	public final String scrollToCycle = Lang.translate("gui.toolmenu.cycle").getString();
 	public final String holdToFocus = "gui.toolmenu.focusKey";
 
 	protected List<Tools> tools;
@@ -32,8 +31,8 @@ public class ToolSelectionScreen extends Screen {
 	protected int h;
 
 	public ToolSelectionScreen(List<Tools> tools, Consumer<Tools> callback) {
-		super(new StringTextComponent("Tool Selection"));
-		this.client = Minecraft.getInstance();
+		super(new LiteralText("Tool Selection"));
+		this.client = MinecraftClient.getInstance();
 		this.tools = tools;
 		this.callback = callback;
 		focused = false;
@@ -59,8 +58,8 @@ public class ToolSelectionScreen extends Screen {
 	}
 
 	private void draw(MatrixStack matrixStack, float partialTicks) {
-		Minecraft mc = Minecraft.getInstance();
-		MainWindow mainWindow = mc.getWindow();
+		MinecraftClient mc = MinecraftClient.getInstance();
+		Window mainWindow = mc.getWindow();
 		if (!initialized)
 			init(mc, mainWindow.getScaledWidth(), mainWindow.getScaledHeight());
 
@@ -74,13 +73,13 @@ public class ToolSelectionScreen extends Screen {
 		RenderSystem.enableBlend();
 		RenderSystem.color4f(1, 1, 1, focused ? 7 / 8f : 1 / 2f);
 
-		Minecraft.getInstance()
+		MinecraftClient.getInstance()
 			.getTextureManager()
 			.bindTexture(gray.location);
 		drawTexture(matrixStack, x - 15, y, gray.startX, gray.startY, w, h, gray.width, gray.height);
 
 		float toolTipAlpha = yOffset / 10;
-		List<ITextComponent> toolTip = tools.get(selection)
+		List<Text> toolTip = tools.get(selection)
 			.getDescription();
 		int stringAlphaComponent = ((int) (toolTipAlpha * 0xFF)) << 24;
 
@@ -105,10 +104,10 @@ public class ToolSelectionScreen extends Screen {
 			int width = client.getWindow()
 				.getScaledWidth();
 			if (!focused)
-				drawCenteredText(matrixStack, client.fontRenderer, Lang.translate(holdToFocus, keyName), width / 2,
+				drawCenteredText(matrixStack, client.textRenderer, Lang.translate(holdToFocus, keyName), width / 2,
 					y - 10, 0xCCDDFF);
 			else
-				drawCenteredString(matrixStack, client.fontRenderer, scrollToCycle, width / 2, y - 10, 0xCCDDFF);
+				drawCenteredString(matrixStack, client.textRenderer, scrollToCycle, width / 2, y - 10, 0xCCDDFF);
 		} else {
 			x += 65;
 		}
@@ -119,7 +118,7 @@ public class ToolSelectionScreen extends Screen {
 			float alpha = focused ? 1 : .2f;
 			if (i == selection) {
 				matrixStack.translate(0, -10, 0);
-				drawCenteredString(matrixStack, client.fontRenderer, tools.get(i)
+				drawCenteredString(matrixStack, client.textRenderer, tools.get(i)
 					.getDisplayName()
 					.getString(), x + i * 50 + 24, y + 28, 0xCCDDFF);
 				alpha = 1;

@@ -1,55 +1,55 @@
 package com.simibubi.create.content.contraptions.components.structureMovement.bearing;
 
-import com.simibubi.create.AllTileEntities;
-import com.simibubi.create.foundation.block.ITE;
+import com.simibubi.create.AllBlockEntities;
+import com.simibubi.create.foundation.block.IBE;
 
 import net.minecraft.block.BlockState;
+import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.ActionResultType;
+import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
+import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.world.IBlockReader;
+import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 
-public class MechanicalBearingBlock extends BearingBlock implements ITE<MechanicalBearingTileEntity> {
+public class MechanicalBearingBlock extends BearingBlock implements IBE<MechanicalBearingBlockEntity> {
 
-	public MechanicalBearingBlock(Properties properties) {
+	public MechanicalBearingBlock(Settings properties) {
 		super(properties);
 	}
 
 	@Override
-	public TileEntity createTileEntity(BlockState state, IBlockReader world) {
-		return AllTileEntities.MECHANICAL_BEARING.create();
+	public BlockEntity createBlockEntity(BlockView world) {
+		return AllBlockEntities.MECHANICAL_BEARING.instantiate();
 	}
 
 	@Override
-	public ActionResultType onUse(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn,
-		BlockRayTraceResult hit) {
-		if (!player.isAllowEdit())
-			return ActionResultType.FAIL;
+	public ActionResult onUse(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn,
+		BlockHitResult hit) {
+		if (!player.canModifyBlocks())
+			return ActionResult.FAIL;
 		if (player.isSneaking())
-			return ActionResultType.FAIL;
-		if (player.getHeldItem(handIn)
+			return ActionResult.FAIL;
+		if (player.getStackInHand(handIn)
 			.isEmpty()) {
-			if (worldIn.isRemote)
-				return ActionResultType.SUCCESS;
-			withTileEntityDo(worldIn, pos, te -> {
+			if (worldIn.isClient)
+				return ActionResult.SUCCESS;
+			withBlockEntityDo(worldIn, pos, te -> {
 				if (te.running) {
 					te.disassemble();
 					return;
 				}
 				te.assembleNextTick = true;
 			});
-			return ActionResultType.SUCCESS;
+			return ActionResult.SUCCESS;
 		}
-		return ActionResultType.PASS;
+		return ActionResult.PASS;
 	}
 
 	@Override
-	public Class<MechanicalBearingTileEntity> getTileEntityClass() {
-		return MechanicalBearingTileEntity.class;
+	public Class<MechanicalBearingBlockEntity> getBlockEntityClass() {
+		return MechanicalBearingBlockEntity.class;
 	}
 
 }

@@ -7,41 +7,41 @@ import java.util.Map;
 import java.util.Set;
 import java.util.function.Supplier;
 
+import org.jetbrains.annotations.Nullable;
+
 import com.google.common.collect.Maps;
 import com.simibubi.create.Create;
+import com.simibubi.create.registrate.util.nullness.MethodsReturnNonnullByDefault;
+import com.simibubi.create.registrate.util.nullness.ParametersAreNonnullByDefault;
 
-import mcp.MethodsReturnNonnullByDefault;
-import net.minecraft.advancements.ICriterionTrigger;
-import net.minecraft.advancements.PlayerAdvancements;
-import net.minecraft.advancements.criterion.CriterionInstance;
-import net.minecraft.advancements.criterion.EntityPredicate;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.util.ResourceLocation;
-
-import javax.annotation.Nullable;
-import javax.annotation.ParametersAreNonnullByDefault;
+import net.minecraft.advancement.PlayerAdvancementTracker;
+import net.minecraft.advancement.criterion.AbstractCriterionConditions;
+import net.minecraft.advancement.criterion.Criterion;
+import net.minecraft.predicate.entity.EntityPredicate;
+import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.util.Identifier;
 
 @ParametersAreNonnullByDefault
 @MethodsReturnNonnullByDefault
-public abstract class CriterionTriggerBase<T extends CriterionTriggerBase.Instance> implements ICriterionTrigger<T> {
+public abstract class CriterionTriggerBase<T extends CriterionTriggerBase.Instance> implements Criterion<T> {
 
 	public CriterionTriggerBase(String id) {
-		this.ID = new ResourceLocation(Create.ID, id);
+		this.ID = new Identifier(Create.ID, id);
 	}
 
-	private final ResourceLocation ID;
-	protected final Map<PlayerAdvancements, Set<Listener<T>>> listeners = Maps.newHashMap();
+	private final Identifier ID;
+	protected final Map<PlayerAdvancementTracker, Set<ConditionsContainer<T>>> listeners = Maps.newHashMap();
 
 	@Override
-	public void addListener(PlayerAdvancements playerAdvancementsIn, Listener<T> listener) {
-		Set<Listener<T>> playerListeners = this.listeners.computeIfAbsent(playerAdvancementsIn, k -> new HashSet<>());
+	public void beginTrackingCondition(PlayerAdvancementTracker playerAdvancementsIn, ConditionsContainer<T> listener) {
+		Set<ConditionsContainer<T>> playerListeners = this.listeners.computeIfAbsent(playerAdvancementsIn, k -> new HashSet<>());
 
 		playerListeners.add(listener);
 	}
 
 	@Override
-	public void removeListener(PlayerAdvancements playerAdvancementsIn, Listener<T> listener) {
-		Set<Listener<T>> playerListeners = this.listeners.get(playerAdvancementsIn);
+	public void endTrackingCondition(PlayerAdvancementTracker playerAdvancementsIn, ConditionsContainer<T> listener) {
+		Set<ConditionsContainer<T>> playerListeners = this.listeners.get(playerAdvancementsIn);
 		if (playerListeners != null){
 			playerListeners.remove(listener);
 			if (playerListeners.isEmpty()){
@@ -51,36 +51,36 @@ public abstract class CriterionTriggerBase<T extends CriterionTriggerBase.Instan
 	}
 
 	@Override
-	public void removeAllListeners(PlayerAdvancements playerAdvancementsIn) {
+	public void endTracking(PlayerAdvancementTracker playerAdvancementsIn) {
 		this.listeners.remove(playerAdvancementsIn);
 	}
 
 	@Override
-	public ResourceLocation getId() {
+	public Identifier getId() {
 		return ID;
 	}
 
 	protected void trigger(ServerPlayerEntity player, @Nullable List<Supplier<Object>> suppliers){
-		PlayerAdvancements playerAdvancements = player.getAdvancements();
-		Set<Listener<T>> playerListeners = this.listeners.get(playerAdvancements);
+		PlayerAdvancementTracker playerAdvancements = player.getAdvancementTracker();
+		Set<ConditionsContainer<T>> playerListeners = this.listeners.get(playerAdvancements);
 		if (playerListeners != null){
-			List<Listener<T>> list = new LinkedList<>();
+			List<ConditionsContainer<T>> list = new LinkedList<>();
 
-			for (Listener<T> listener :
+			for (ConditionsContainer<T> listener :
 					playerListeners) {
-				if (listener.getCriterionInstance().test(suppliers)) {
+				if (listener.getConditions().test(suppliers)) {
 					list.add(listener);
 				}
 			}
 
-			list.forEach(listener -> listener.grantCriterion(playerAdvancements));
+			list.forEach(listener -> listener.grant(playerAdvancements));
 
 		}
 	}
 
-	public abstract static class Instance extends CriterionInstance {
+	public abstract static class Instance extends AbstractCriterionConditions {
 
-		public Instance(ResourceLocation idIn, EntityPredicate.AndPredicate p_i231464_2_) {
+		public Instance(Identifier idIn, EntityPredicate.Extended p_i231464_2_) {
 			super(idIn, p_i231464_2_);
 		}
 

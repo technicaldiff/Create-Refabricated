@@ -1,26 +1,26 @@
 package com.simibubi.create.foundation.gui.widgets;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
 
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.FontRenderer;
-import net.minecraft.util.text.IFormattableTextComponent;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.font.TextRenderer;
+import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.text.LiteralText;
+import net.minecraft.text.MutableText;
+import net.minecraft.text.Text;
 
 public class Label extends AbstractSimiWidget {
 
-	public ITextComponent text;
+	public Text text;
 	public String suffix;
 	protected boolean hasShadow;
 	protected int color;
-	protected FontRenderer font;
+	protected TextRenderer font;
 
-	public Label(int x, int y, ITextComponent text) {
-		super(x, y, Minecraft.getInstance().fontRenderer.getWidth(text), 10);
-		font = Minecraft.getInstance().fontRenderer;
-		this.text = new StringTextComponent("Label");
+	public Label(int x, int y, Text text) {
+		super(x, y, MinecraftClient.getInstance().textRenderer.getWidth(text), 10);
+		font = MinecraftClient.getInstance().textRenderer;
+		this.text = new LiteralText("Label");
 		color = 0xFFFFFF;
 		hasShadow = false;
 		suffix = "";
@@ -41,16 +41,16 @@ public class Label extends AbstractSimiWidget {
 		return this;
 	}
 
-	public void setTextAndTrim(ITextComponent newText, boolean trimFront, int maxWidthPx) {
-		FontRenderer fontRenderer = Minecraft.getInstance().fontRenderer;
-		
+	public void setTextAndTrim(Text newText, boolean trimFront, int maxWidthPx) {
+		TextRenderer fontRenderer = MinecraftClient.getInstance().textRenderer;
+
 		if (fontRenderer.getWidth(newText) <= maxWidthPx) {
 			text = newText;
 			return;
 		}
-		
+
 		String trim = "...";
-		int trimWidth = fontRenderer.getStringWidth(trim);
+		int trimWidth = fontRenderer.getWidth(trim);
 
 		String raw = newText.getString();
 		StringBuilder builder = new StringBuilder(raw);
@@ -60,8 +60,8 @@ public class Label extends AbstractSimiWidget {
 
 		for (int i = startIndex; i != endIndex; i += step) {
 			String sub = builder.substring(trimFront ? i : startIndex, trimFront ? endIndex + 1 : i + 1);
-			if (fontRenderer.getWidth(new StringTextComponent(sub).setStyle(newText.getStyle())) + trimWidth <= maxWidthPx) {
-				text = new StringTextComponent(trimFront ? trim + sub : sub + trim).setStyle(newText.getStyle());
+			if (fontRenderer.getWidth(new LiteralText(sub).setStyle(newText.getStyle())) + trimWidth <= maxWidthPx) {
+				text = new LiteralText(trimFront ? trim + sub : sub + trim).setStyle(newText.getStyle());
 				return;
 			}
 		}
@@ -76,10 +76,10 @@ public class Label extends AbstractSimiWidget {
 			return;
 
 		RenderSystem.color4f(1, 1, 1, 1);
-		IFormattableTextComponent copy = text.copy();
+		MutableText copy = text.copy();
 		if (suffix != null && !suffix.isEmpty())
 			copy.append(suffix);
-		
+
 		if (hasShadow)
 			font.drawWithShadow(matrixStack, copy, x, y, color);
 		else

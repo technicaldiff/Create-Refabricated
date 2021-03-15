@@ -8,16 +8,15 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.simibubi.create.AllParticleTypes;
 
-import net.minecraft.client.particle.IParticleFactory;
-import net.minecraft.network.PacketBuffer;
-import net.minecraft.particles.IParticleData;
-import net.minecraft.particles.ParticleType;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
+import net.minecraft.client.particle.ParticleFactory;
+import net.minecraft.network.PacketByteBuf;
+import net.minecraft.particle.ParticleEffect;
+import net.minecraft.particle.ParticleType;
 
-public class CubeParticleData implements IParticleData, ICustomParticleData<CubeParticleData> {
-
-	public static final Codec<CubeParticleData> CODEC = RecordCodecBuilder.create(i -> 
+public class CubeParticleData implements ParticleEffect, CustomParticleData<CubeParticleData> {
+	public static final Codec<CubeParticleData> CODEC = RecordCodecBuilder.create(i ->
 		i.group(
 			Codec.FLOAT.fieldOf("r").forGetter(p -> p.r),
 			Codec.FLOAT.fieldOf("g").forGetter(p -> p.g),
@@ -25,11 +24,11 @@ public class CubeParticleData implements IParticleData, ICustomParticleData<Cube
 			Codec.FLOAT.fieldOf("scale").forGetter(p -> p.scale),
 			Codec.INT.fieldOf("avgAge").forGetter(p -> p.avgAge),
 			Codec.BOOL.fieldOf("hot").forGetter(p -> p.hot))
-		.apply(i, CubeParticleData::new));
+			.apply(i, CubeParticleData::new));
 
-	public static final IParticleData.IDeserializer<CubeParticleData> DESERIALIZER = new IParticleData.IDeserializer<CubeParticleData>() {
+	public static final Factory<CubeParticleData> DESERIALIZER = new Factory<CubeParticleData>() {
 		@Override
-		public CubeParticleData deserialize(ParticleType<CubeParticleData> type, StringReader reader) throws CommandSyntaxException {
+		public CubeParticleData read(ParticleType<CubeParticleData> type, StringReader reader) throws CommandSyntaxException {
 			reader.expect(' ');
 			float r = reader.readFloat();
 			reader.expect(' ');
@@ -46,7 +45,7 @@ public class CubeParticleData implements IParticleData, ICustomParticleData<Cube
 		}
 
 		@Override
-		public CubeParticleData read(ParticleType<CubeParticleData> type, PacketBuffer buffer) {
+		public CubeParticleData read(ParticleType<CubeParticleData> type, PacketByteBuf buffer) {
 			return new CubeParticleData(buffer.readFloat(), buffer.readFloat(), buffer.readFloat(), buffer.readFloat(), buffer.readInt(), buffer.readBoolean());
 		}
 	};
@@ -72,7 +71,7 @@ public class CubeParticleData implements IParticleData, ICustomParticleData<Cube
 	}
 
 	@Override
-	public IDeserializer<CubeParticleData> getDeserializer() {
+	public Factory<CubeParticleData> getDeserializer() {
 		return DESERIALIZER;
 	}
 
@@ -82,8 +81,8 @@ public class CubeParticleData implements IParticleData, ICustomParticleData<Cube
 	}
 
 	@Override
-	@OnlyIn(Dist.CLIENT)
-	public IParticleFactory<CubeParticleData> getFactory() {
+	@Environment(EnvType.CLIENT)
+	public ParticleFactory<CubeParticleData> getFactory() {
 		return new CubeParticle.Factory();
 	}
 
@@ -93,7 +92,7 @@ public class CubeParticleData implements IParticleData, ICustomParticleData<Cube
 	}
 
 	@Override
-	public void write(PacketBuffer buffer) {
+	public void write(PacketByteBuf buffer) {
 		buffer.writeFloat(r);
 		buffer.writeFloat(g);
 		buffer.writeFloat(b);
@@ -103,7 +102,7 @@ public class CubeParticleData implements IParticleData, ICustomParticleData<Cube
 	}
 
 	@Override
-	public String getParameters() {
+	public String asString() {
 		return String.format(Locale.ROOT, "%s %f %f %f %f %d %s", AllParticleTypes.CUBE.parameter(), r, g, b, scale, avgAge, hot);
 	}
 }

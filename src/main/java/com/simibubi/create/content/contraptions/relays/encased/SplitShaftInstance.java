@@ -3,30 +3,30 @@ package com.simibubi.create.content.contraptions.relays.encased;
 import java.util.ArrayList;
 
 import com.simibubi.create.AllBlockPartials;
-import com.simibubi.create.content.contraptions.base.IRotate;
-import com.simibubi.create.content.contraptions.base.KineticTileInstance;
+import com.simibubi.create.content.contraptions.base.KineticBlockInstance;
+import com.simibubi.create.content.contraptions.base.Rotating;
 import com.simibubi.create.content.contraptions.base.RotatingData;
 import com.simibubi.create.foundation.render.backend.instancing.InstanceKey;
+import com.simibubi.create.foundation.render.backend.instancing.InstancedBlockRenderer;
 import com.simibubi.create.foundation.render.backend.instancing.InstancedModel;
 import com.simibubi.create.foundation.render.backend.instancing.InstancedTileRenderRegistry;
-import com.simibubi.create.foundation.render.backend.instancing.InstancedTileRenderer;
 import com.simibubi.create.foundation.utility.Iterate;
 
+import net.fabricmc.api.EnvType;
+import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.block.Block;
-import net.minecraft.tileentity.TileEntityType;
-import net.minecraft.util.Direction;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.fml.DistExecutor;
+import net.minecraft.block.entity.BlockEntityType;
+import net.minecraft.util.math.Direction;
 
-public class SplitShaftInstance extends KineticTileInstance<SplitShaftTileEntity> {
-    public static void register(TileEntityType<? extends SplitShaftTileEntity> type) {
-        DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () ->
-                InstancedTileRenderRegistry.instance.register(type, SplitShaftInstance::new));
+public class SplitShaftInstance extends KineticBlockInstance<SplitShaftBlockEntity> {
+    public static void register(BlockEntityType<? extends SplitShaftBlockEntity> type) {
+        if (FabricLoader.getInstance().getEnvironmentType() == EnvType.CLIENT)
+			InstancedTileRenderRegistry.instance.register(type, SplitShaftInstance::new);
     }
 
     protected ArrayList<InstanceKey<RotatingData>> keys;
 
-    public SplitShaftInstance(InstancedTileRenderer modelManager, SplitShaftTileEntity tile) {
+    public SplitShaftInstance(InstancedBlockRenderer modelManager, SplitShaftBlockEntity tile) {
         super(modelManager, tile);
     }
 
@@ -35,7 +35,7 @@ public class SplitShaftInstance extends KineticTileInstance<SplitShaftTileEntity
         keys = new ArrayList<>(2);
 
         Block block = lastState.getBlock();
-        final Direction.Axis boxAxis = ((IRotate) block).getRotationAxis(lastState);
+        final Direction.Axis boxAxis = ((Rotating) block).getRotationAxis(lastState);
 
         float speed = tile.getSpeed();
 
@@ -52,7 +52,7 @@ public class SplitShaftInstance extends KineticTileInstance<SplitShaftTileEntity
     @Override
     public void onUpdate() {
         Block block = lastState.getBlock();
-        final Direction.Axis boxAxis = ((IRotate) block).getRotationAxis(lastState);
+        final Direction.Axis boxAxis = ((Rotating) block).getRotationAxis(lastState);
 
         Direction[] directions = Iterate.directionsInAxis(boxAxis);
 
@@ -81,7 +81,7 @@ public class SplitShaftInstance extends KineticTileInstance<SplitShaftTileEntity
             data.setColor(tile.network)
                 .setRotationalSpeed(tile.getSpeed() * tile.getRotationSpeedModifier(dir))
                 .setRotationOffset(getRotationOffset(axis))
-                .setRotationAxis(Direction.getFacingFromAxis(Direction.AxisDirection.POSITIVE, axis).getUnitVector());
+                .setRotationAxis(Direction.get(Direction.AxisDirection.POSITIVE, axis).getUnitVector());
         });
     }
 }

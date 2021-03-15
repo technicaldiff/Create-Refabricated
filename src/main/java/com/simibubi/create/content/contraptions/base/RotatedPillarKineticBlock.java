@@ -4,26 +4,25 @@ import com.simibubi.create.foundation.utility.Iterate;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
-import net.minecraft.item.BlockItemUseContext;
-import net.minecraft.state.EnumProperty;
-import net.minecraft.state.StateContainer;
-import net.minecraft.state.properties.BlockStateProperties;
-import net.minecraft.util.Direction;
-import net.minecraft.util.Direction.Axis;
-import net.minecraft.util.Rotation;
+import net.minecraft.item.ItemPlacementContext;
+import net.minecraft.state.StateManager;
+import net.minecraft.state.property.EnumProperty;
+import net.minecraft.state.property.Properties;
+import net.minecraft.util.BlockRotation;
+import net.minecraft.util.math.Direction;
+import net.minecraft.util.math.Direction.Axis;
 
 public abstract class RotatedPillarKineticBlock extends KineticBlock {
+	public static final EnumProperty<Direction.Axis> AXIS = Properties.AXIS;
 
-	public static final EnumProperty<Direction.Axis> AXIS = BlockStateProperties.AXIS;
-
-	public RotatedPillarKineticBlock(Properties properties) {
+	public RotatedPillarKineticBlock(Settings properties) {
 		super(properties);
 		this.setDefaultState(this.getDefaultState()
 			.with(AXIS, Direction.Axis.Y));
 	}
 
 	@Override
-	public BlockState rotate(BlockState state, Rotation rot) {
+	public BlockState rotate(BlockState state, BlockRotation rot) {
 		switch (rot) {
 		case COUNTERCLOCKWISE_90:
 		case CLOCKWISE_90:
@@ -40,14 +39,14 @@ public abstract class RotatedPillarKineticBlock extends KineticBlock {
 		}
 	}
 
-	public static Axis getPreferredAxis(BlockItemUseContext context) {
+	public static Axis getPreferredAxis(ItemPlacementContext context) {
 		Axis prefferedAxis = null;
 		for (Direction side : Iterate.directions) {
 			BlockState blockState = context.getWorld()
-				.getBlockState(context.getPos()
+				.getBlockState(context.getBlockPos()
 					.offset(side));
-			if (blockState.getBlock() instanceof IRotate) {
-				if (((IRotate) blockState.getBlock()).hasShaftTowards(context.getWorld(), context.getPos()
+			if (blockState.getBlock() instanceof Rotating) {
+				if (((Rotating) blockState.getBlock()).hasShaftTowards(context.getWorld(), context.getBlockPos()
 					.offset(side), blockState, side.getOpposite()))
 					if (prefferedAxis != null && prefferedAxis != side.getAxis()) {
 						prefferedAxis = null;
@@ -61,12 +60,12 @@ public abstract class RotatedPillarKineticBlock extends KineticBlock {
 	}
 
 	@Override
-	protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
+	protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
 		builder.add(AXIS);
 	}
 
 	@Override
-	public BlockState getStateForPlacement(BlockItemUseContext context) {
+	public BlockState getPlacementState(ItemPlacementContext context) {
 		Axis preferredAxis = getPreferredAxis(context);
 		if (preferredAxis != null && (context.getPlayer() == null || !context.getPlayer()
 			.isSneaking()))
@@ -74,9 +73,9 @@ public abstract class RotatedPillarKineticBlock extends KineticBlock {
 				.with(AXIS, preferredAxis);
 		return this.getDefaultState()
 			.with(AXIS, preferredAxis != null && context.getPlayer()
-				.isSneaking() ? context.getFace()
+				.isSneaking() ? context.getSide()
 					.getAxis()
-					: context.getNearestLookingDirection()
+					: context.getPlayerLookDirection()
 						.getAxis());
 	}
 }

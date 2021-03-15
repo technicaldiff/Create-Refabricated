@@ -4,43 +4,43 @@ import com.simibubi.create.foundation.utility.Iterate;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
-import net.minecraft.item.BlockItemUseContext;
-import net.minecraft.state.Property;
-import net.minecraft.state.StateContainer.Builder;
-import net.minecraft.state.properties.BlockStateProperties;
-import net.minecraft.util.Direction;
-import net.minecraft.util.Mirror;
-import net.minecraft.util.Rotation;
+import net.minecraft.item.ItemPlacementContext;
+import net.minecraft.state.StateManager;
+import net.minecraft.state.property.Properties;
+import net.minecraft.state.property.Property;
+import net.minecraft.util.BlockMirror;
+import net.minecraft.util.BlockRotation;
+import net.minecraft.util.math.Direction;
 
 public abstract class HorizontalKineticBlock extends KineticBlock {
 
-	public static final Property<Direction> HORIZONTAL_FACING = BlockStateProperties.HORIZONTAL_FACING;
+	public static final Property<Direction> HORIZONTAL_FACING = Properties.HORIZONTAL_FACING;
 
-	public HorizontalKineticBlock(Properties properties) {
+	public HorizontalKineticBlock(Settings properties) {
 		super(properties);
 	}
 
 	@Override
-	protected void fillStateContainer(Builder<Block, BlockState> builder) {
+	protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
 		builder.add(HORIZONTAL_FACING);
-		super.fillStateContainer(builder);
+		super.appendProperties(builder);
 	}
 
 	@Override
-	public BlockState getStateForPlacement(BlockItemUseContext context) {
+	public BlockState getPlacementState(ItemPlacementContext context) {
 		return this.getDefaultState()
-			.with(HORIZONTAL_FACING, context.getPlacementHorizontalFacing()
+			.with(HORIZONTAL_FACING, context.getPlayerFacing()
 				.getOpposite());
 	}
 
-	public Direction getPreferredHorizontalFacing(BlockItemUseContext context) {
+	public Direction getPreferredHorizontalFacing(ItemPlacementContext context) {
 		Direction prefferedSide = null;
 		for (Direction side : Iterate.horizontalDirections) {
 			BlockState blockState = context.getWorld()
-				.getBlockState(context.getPos()
+				.getBlockState(context.getBlockPos()
 					.offset(side));
-			if (blockState.getBlock() instanceof IRotate) {
-				if (((IRotate) blockState.getBlock()).hasShaftTowards(context.getWorld(), context.getPos()
+			if (blockState.getBlock() instanceof Rotating) {
+				if (((Rotating) blockState.getBlock()).hasShaftTowards(context.getWorld(), context.getBlockPos()
 					.offset(side), blockState, side.getOpposite()))
 					if (prefferedSide != null && prefferedSide.getAxis() != side.getAxis()) {
 						prefferedSide = null;
@@ -54,13 +54,13 @@ public abstract class HorizontalKineticBlock extends KineticBlock {
 	}
 
 	@Override
-	public BlockState rotate(BlockState state, Rotation rot) {
+	public BlockState rotate(BlockState state, BlockRotation rot) {
 		return state.with(HORIZONTAL_FACING, rot.rotate(state.get(HORIZONTAL_FACING)));
 	}
 
 	@Override
-	public BlockState mirror(BlockState state, Mirror mirrorIn) {
-		return state.rotate(mirrorIn.toRotation(state.get(HORIZONTAL_FACING)));
+	public BlockState mirror(BlockState state, BlockMirror mirrorIn) {
+		return state.rotate(mirrorIn.getRotation(state.get(HORIZONTAL_FACING)));
 	}
 
 }

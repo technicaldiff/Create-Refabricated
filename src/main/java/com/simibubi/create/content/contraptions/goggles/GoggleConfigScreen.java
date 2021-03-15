@@ -3,55 +3,54 @@ package com.simibubi.create.content.contraptions.goggles;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.systems.RenderSystem;
 import com.simibubi.create.AllItems;
-import com.simibubi.create.foundation.config.AllConfigs;
 import com.simibubi.create.foundation.gui.AbstractSimiScreen;
 import com.simibubi.create.foundation.gui.GuiGameElement;
 import com.simibubi.create.foundation.utility.Lang;
 
-import net.minecraft.client.Minecraft;
+import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.util.text.TextFormatting;
+import net.minecraft.text.Text;
+import net.minecraft.util.Formatting;
 
 public class GoggleConfigScreen extends AbstractSimiScreen {
 
+	private final List<String> tooltip;
 	private int offsetX;
 	private int offsetY;
-	private final List<ITextComponent> tooltip;
 
 	public GoggleConfigScreen() {
-		ITextComponent componentSpacing = new StringTextComponent("    ");
+		String spacing = "    ";
 		tooltip = new ArrayList<>();
-		tooltip.add(componentSpacing.copy().append(Lang.translate("gui.config.overlay1")));
-		tooltip.add(componentSpacing.copy().append(Lang.translate("gui.config.overlay2").formatted(TextFormatting.GRAY)));
-		tooltip.add(StringTextComponent.EMPTY);
-		tooltip.add(componentSpacing.copy().append(Lang.translate("gui.config.overlay3")));
-		tooltip.add(componentSpacing.copy().append(Lang.translate("gui.config.overlay4")));
-		tooltip.add(StringTextComponent.EMPTY);
-		tooltip.add(componentSpacing.copy().append(Lang.translate("gui.config.overlay5").formatted(TextFormatting.GRAY)));
-		tooltip.add(componentSpacing.copy().append(Lang.translate("gui.config.overlay6").formatted(TextFormatting.GRAY)));
-		tooltip.add(StringTextComponent.EMPTY);
-		tooltip.add(componentSpacing.copy().append(Lang.translate("gui.config.overlay7")));
-		tooltip.add(componentSpacing.copy().append(Lang.translate("gui.config.overlay8")));
+		tooltip.add(spacing + Lang.translate("gui.config.overlay1"));
+		tooltip.add(spacing + Formatting.GRAY + Lang.translate("gui.config.overlay2"));
+		tooltip.add("");
+		tooltip.add(spacing + Lang.translate("gui.config.overlay3"));
+		tooltip.add(spacing + Lang.translate("gui.config.overlay4"));
+		tooltip.add("");
+		tooltip.add(spacing + Formatting.GRAY + Lang.translate("gui.config.overlay5"));
+		tooltip.add(spacing + Formatting.GRAY + Lang.translate("gui.config.overlay6"));
+		tooltip.add("");
+		tooltip.add(spacing + Lang.translate("gui.config.overlay7"));
+		tooltip.add(spacing + Lang.translate("gui.config.overlay8"));
 	}
 
 	@Override
 	protected void init() {
-		Minecraft mc = Minecraft.getInstance();
+		MinecraftClient mc = MinecraftClient.getInstance();
 		this.width = mc.getWindow().getScaledWidth();
 		this.height = mc.getWindow().getScaledHeight();
 
-		offsetX = AllConfigs.CLIENT.overlayOffsetX.get();
-		offsetY = AllConfigs.CLIENT.overlayOffsetY.get();
+		offsetX = 0;/**AllConfigs.CLIENT.overlayOffsetX.get(); TODO CONFIG*/
+		offsetY = 0; /**AllConfigs.CLIENT.overlayOffsetY.get(); TODO CONFIG*/
 	}
 
 	@Override
 	public void removed() {
-		AllConfigs.CLIENT.overlayOffsetX.set(offsetX);
-		AllConfigs.CLIENT.overlayOffsetY.set(offsetY);
+		/**AllConfigs.CLIENT.overlayOffsetX.set(offsetX); TODO CONFIG
+		 AllConfigs.CLIENT.overlayOffsetY.set(offsetY); TODO CONFIG */
 	}
 
 	@Override
@@ -74,14 +73,16 @@ public class GoggleConfigScreen extends AbstractSimiScreen {
 	}
 
 	@Override
-	protected void renderWindow(MatrixStack ms, int mouseX, int mouseY, float partialTicks) {
-		ms.push();
+	public void renderWindow(MatrixStack matrices, int mouseX, int mouseY, float partialTicks) {
+		RenderSystem.pushMatrix();
 		int posX = this.width / 2 + offsetX;
 		int posY = this.height / 2 + offsetY;
-		renderTooltip(ms, tooltip, posX, posY);
+		//tooltipScreen.renderTooltip(tooltip, tooltipScreen.width / 2, tooltipScreen.height / 2);
+		renderTooltip(matrices, (Text) tooltip, posX, posY);
 
-		ItemStack item = AllItems.GOGGLES.asStack();
-		GuiGameElement.of(item).atLocal(posX + 10, posY, 450).render(ms);
-		ms.pop();
+		ItemStack item = AllItems.GOGGLES.asItem().getDefaultStack();
+		//GuiGameElement.of(item).at(tooltipScreen.width / 2 + 10, tooltipScreen.height / 2 - 16).render();
+		GuiGameElement.of(item).at(posX + 10, posY - 16).render();
+		RenderSystem.popMatrix();
 	}
 }

@@ -1,27 +1,27 @@
 package com.simibubi.create.foundation.block;
 
-import com.simibubi.create.content.contraptions.wrench.IWrenchable;
+import com.simibubi.create.content.contraptions.wrench.Wrenchable;
 import com.simibubi.create.foundation.utility.DirectionHelper;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.DirectionalBlock;
-import net.minecraft.item.BlockItemUseContext;
-import net.minecraft.state.StateContainer.Builder;
-import net.minecraft.util.Direction;
-import net.minecraft.util.Mirror;
-import net.minecraft.util.Rotation;
+import net.minecraft.block.FacingBlock;
+import net.minecraft.item.ItemPlacementContext;
+import net.minecraft.state.StateManager.Builder;
+import net.minecraft.util.BlockMirror;
+import net.minecraft.util.BlockRotation;
+import net.minecraft.util.math.Direction;
 
-public class ProperDirectionalBlock extends DirectionalBlock implements IWrenchable {
+public class ProperDirectionalBlock extends FacingBlock implements Wrenchable {
 
-	public ProperDirectionalBlock(Properties p_i48415_1_) {
+	public ProperDirectionalBlock(Settings p_i48415_1_) {
 		super(p_i48415_1_);
 	}
 	
 	@Override
-	protected void fillStateContainer(Builder<Block, BlockState> builder) {
+	protected void appendProperties(Builder<Block, BlockState> builder) {
 		builder.add(FACING);
-		super.fillStateContainer(builder);
+		super.appendProperties(builder);
 	}
 
 	@Override
@@ -37,18 +37,18 @@ public class ProperDirectionalBlock extends DirectionalBlock implements IWrencha
 	}
 
 	@Override
-	public BlockState getStateForPlacement(BlockItemUseContext context) {
-		return getDefaultState().with(FACING, context.getNearestLookingDirection());
+	public BlockState getPlacementState(ItemPlacementContext context) {
+		return getDefaultState().with(FACING, context.getPlayerLookDirection());
 	}
 	
 	@Override
-	public BlockState rotate(BlockState state, Rotation rot) {
+	public BlockState rotate(BlockState state, BlockRotation rot) {
 		return state.with(FACING, rot.rotate(state.get(FACING)));
 	}
 
 	@Override
-	public BlockState mirror(BlockState state, Mirror mirrorIn) {
-		return state.rotate(mirrorIn.toRotation(state.get(FACING)));
+	public BlockState mirror(BlockState state, BlockMirror mirrorIn) {
+		return state.rotate(mirrorIn.getRotation(state.get(FACING)));
 	}
 
 }

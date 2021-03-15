@@ -1,28 +1,27 @@
 package com.simibubi.create.foundation.collision;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
 import com.simibubi.create.AllSpecialTextures;
 import com.simibubi.create.CreateClient;
-import com.simibubi.create.foundation.collision.ContinuousOBBCollider.ContinuousSeparationManifold;
 import com.simibubi.create.foundation.renderState.SuperRenderTypeBuffer;
 import com.simibubi.create.foundation.utility.AngleHelper;
 import com.simibubi.create.foundation.utility.MatrixStacker;
 import com.simibubi.create.foundation.utility.outliner.AABBOutline;
 
-import net.minecraft.client.Minecraft;
-import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.util.hit.BlockHitResult;
+import net.minecraft.util.hit.HitResult;
+import net.minecraft.util.hit.HitResult.Type;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.util.math.RayTraceResult;
-import net.minecraft.util.math.RayTraceResult.Type;
-import net.minecraft.util.math.vector.Vector3d;
+import net.minecraft.util.math.Box;
+import net.minecraft.util.math.Vec3d;
 
 public class CollisionDebugger {
 
-	public static AxisAlignedBB AABB = new AxisAlignedBB(BlockPos.ZERO.up(10));
-	public static OrientedBB OBB = new OrientedBB(new AxisAlignedBB(BlockPos.ZERO));
-	public static Vector3d motion = Vector3d.ZERO;
-	static ContinuousSeparationManifold seperation;
+	public static Box AABB = new Box(BlockPos.ORIGIN.up(10));
+	public static OrientedBB OBB = new OrientedBB(new Box(BlockPos.ORIGIN));
+	public static Vec3d motion = Vec3d.ZERO;
+	static ContinuousOBBCollider.ContinuousSeparationManifold seperation;
 	static double angle = 0;
 	static AABBOutline outline;
 
@@ -71,7 +70,7 @@ public class CollisionDebugger {
 
 		ms.push();
 		if (seperation != null) {
-			Vector3d asSeparationVec = seperation.asSeparationVec(.5f);
+			Vec3d asSeparationVec = seperation.asSeparationVec(.5f);
 			if (asSeparationVec != null) {
 				outline.getParams()
 					.colored(0x65ff44)
@@ -91,20 +90,20 @@ public class CollisionDebugger {
 	}
 
 	public static void tick() {
-		AABB = new AxisAlignedBB(BlockPos.ZERO.up(60)).offset(.5, 0, .5);
-		motion = Vector3d.ZERO;
-		RayTraceResult mouse = Minecraft.getInstance().objectMouseOver;
+		AABB = new Box(BlockPos.ORIGIN.up(60)).offset(.5, 0, .5);
+		motion = Vec3d.ZERO;
+		HitResult mouse = MinecraftClient.getInstance().crosshairTarget;
 		if (mouse != null && mouse.getType() == Type.BLOCK) {
-			BlockRayTraceResult hit = (BlockRayTraceResult) mouse;
-			OBB.setCenter(hit.getHitVec());
+			BlockHitResult hit = (BlockHitResult) mouse;
+			OBB.setCenter(hit.getPos());
 			seperation = OBB.intersect(AABB, motion);
 		}
 		CreateClient.outliner.showAABB(AABB, AABB)
 			.withFaceTexture(seperation == null ? AllSpecialTextures.CHECKERED : null);
 	}
 
-	static void showDebugLine(Vector3d relativeStart, Vector3d relativeEnd, int color, String id, int offset) {
-		Vector3d center = CollisionDebugger.AABB.getCenter()
+	static void showDebugLine(Vec3d relativeStart, Vec3d relativeEnd, int color, String id, int offset) {
+		Vec3d center = CollisionDebugger.AABB.getCenter()
 			.add(0, 1 + offset / 16f, 0);
 		CreateClient.outliner.showLine(id + OBBCollider.checkCount, center.add(relativeStart), center.add(relativeEnd))
 			.colored(color)

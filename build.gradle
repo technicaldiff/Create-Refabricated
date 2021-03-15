@@ -1,226 +1,171 @@
-buildscript {
-    repositories {
-        maven { url = 'https://files.minecraftforge.net/maven' }
-        jcenter()
-        mavenCentral()
-        maven { url='https://dist.creeper.host/Sponge/maven' }
-    }
-    dependencies {
-        classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '3.+', changing: true
-        classpath group: 'org.spongepowered', name: 'mixingradle', version: '0.7-SNAPSHOT'
-    }
-}
 plugins {
-    id 'com.github.johnrengelman.shadow' version '5.2.0'
-    id 'com.matthewprenger.cursegradle' version '1.4.0'
-}
-apply plugin: 'net.minecraftforge.gradle'
-// Only edit below this line, the above code adds and enables the necessary things for Forge to be setup.
-apply plugin: 'eclipse'
-apply plugin: 'maven-publish'
-
-boolean dev = System.getenv('RELEASE') == null || System.getenv('RELEASE').equals('false');
-
-ext.buildnumber = 0
-project.buildnumber = System.getenv('BUILD_NUMBER') != null ? System.getenv('BUILD_NUMBER') : "custom"
-
-version = "mc${minecraft_version}_v${mod_version}" + (dev ? "+${buildnumber}" : '')
-group = 'com.simibubi.create'
-archivesBaseName = 'create'
-
-sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8'
-
-minecraft {
-    mappings channel: 'snapshot', version: '20200920-mixed-1.16.3'
-	accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
-    
-    runs {		
-		client {
-            workingDirectory project.file('run')
-            // property 'mixin.env.disableRefMap', 'true'
-            arg '-mixin.config=create.mixins.json'
-//            jvmArgs '-XX:+UnlockCommercialFeatures'
-            property 'forge.logging.console.level', 'info'
-            property 'fml.earlyprogresswindow', 'false'
-            mods {
-                create {
-                    source sourceSets.main
-                }
-            }
-        }
-
-        server {
-            workingDirectory project.file('run/server')
-            // property 'mixin.env.disableRefMap', 'true'
-            arg '-mixin.config=create.mixins.json'
-            property 'forge.logging.console.level', 'info'
-            mods {
-                create {
-                    source sourceSets.main
-                }
-            }
-        }
-
-        data {
-            workingDirectory project.file('run')
-            property 'forge.logging.markers', 'REGISTRIES,REGISTRYDUMP'
-            property 'forge.logging.console.level', 'debug'
-            property 'fml.earlyprogresswindow', 'false'
-            args '--mod', 'create', '--all', '--output', file('src/generated/resources/'), '--existing', file('src/main/resources')
-            mods {
-                create {
-                    source sourceSets.main
-                }
-            }
-        }
-    }
+	id("fabric-loom") version "0.6-SNAPSHOT"
+	id("maven-publish")
 }
 
-compileJava {
-    options.compilerArgs = ["-Xdiags:verbose"]
-}
+sourceCompatibility = JavaVersion.VERSION_1_8
+targetCompatibility = JavaVersion.VERSION_1_8
 
-sourceSets.main.resources {
-    srcDir 'src/generated/resources'
-}
+archivesBaseName = project.archives_base_name
+version = project.mod_version
+group = project.maven_group
 
 repositories {
-    maven {
-        // location of the maven that hosts JEI files (And TiC)
-        name "Progwml6 maven"
-        url "https://dvs1.progwml6.com/files/maven/"
-    }
-    /*
-    maven {
-        // location of a maven mirror for JEI files, as a fallback
-        name "ModMaven"
-        url "https://modmaven.k-4u.nl"
-    }*/
-    maven {
-        //location of the maven for vazkii's mods
-        name "blamejared"
-        url "http://maven.blamejared.com/"
-    }
-    maven {
-        //location of the maven for mixed mappings and registrate
-        name = "tterrag maven"
-        url = "https://maven.tterrag.com/"
-    }
-    maven {
-        url = "https://www.cursemaven.com"
-    }
-}
+	maven {
+		name = "Fabric"
+		url = "https://maven.fabricmc.net/"
+	}
 
-configurations {
-    shade
+	maven {
+		name = "HalfOf2"
+		url = "https://raw.githubusercontent.com/Devan-Kerman/Devan-Repo/master/"
+	}
+
+	maven {
+		name = "TerraformersMC"
+		url = "https://maven.terraformersmc.com/"
+	}
+
+	maven {
+		name = "Shedaniel"
+		url "https://maven.shedaniel.me/"
+	}
+
+	maven {
+		name = "JitPack"
+		url = "https://jitpack.io/"
+
+		content {
+			includeGroup("com.github.SuperCoder7979") // So Gradle doesn't spend time searching JitPack for other deps
+		}
+	}
 }
 
 dependencies {
-    minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
-    
-    def registrate = "com.tterrag.registrate:Registrate:MC1.16.2-${registrate_version}"
-    implementation fg.deobf(registrate)
-    shade registrate
+	minecraft("com.mojang:minecraft:${project.minecraft_version}")
+	mappings("net.fabricmc:yarn:${project.yarn_mappings}:v2")
+	modImplementation("net.fabricmc:fabric-loader:${project.loader_version}")
 
-    // compile against the JEI API but do not include it at runtime
-    compileOnly fg.deobf("mezz.jei:jei-1.16.4:${jei_version}:api")
-    // at runtime, use the full JEI jar
-    runtimeOnly fg.deobf("mezz.jei:jei-1.16.4:${jei_version}")
+	// Fabric API. This is technically optional, but you probably want it anyway.
+	modImplementation("net.fabricmc.fabric-api:fabric-api:${project.fabric_version}") {
+		exclude(module: "fabric-biomes-v1")
+	}
 
-    // implementation fg.deobf("curse.maven:druidcraft-340991:3101903")
+	// Runtime resource generation
+	modImplementation("net.devtech:arrp:${project.arrp_version}")
+	include("net.devtech:arrp:${project.arrp_version}")
 
-    // i'll leave this here commented for easier testing
-    //runtimeOnly fg.deobf("vazkii.arl:AutoRegLib:1.4-35.69")
-    //runtimeOnly fg.deobf("vazkii.quark:Quark:r2.0-212.984")
-    // runtimeOnly fg.deobf("slimeknights.mantle:Mantle:1.16.3-1.6.40")
-    // runtimeOnly fg.deobf("slimeknights.tconstruct:TConstruct:1.16.3-3.0.1.24")
+	// DataBreaker
+	modRuntime("com.github.SuperCoder7979:databreaker:${project.databreaker_version}") {
+		exclude(module: "fabric-loader")
+	}
 
-    annotationProcessor 'org.spongepowered:mixin:0.8:processor'
+	// ModMenu
+	modImplementation("com.terraformersmc:modmenu:${project.modmenu_version}")
+
+	// REI
+	modCompileOnly("me.shedaniel:RoughlyEnoughItems-api:${project.rei_version}")
+	modRuntime("me.shedaniel:RoughlyEnoughItems:${project.rei_version}")
+
+	// cloth config
+	modApi("me.shedaniel.cloth:cloth-config-fabric:${project.cloth_config_version}") {
+		exclude(group: "net.fabricmc.fabric-api")
+	}
+}
+
+//////////// Gradle Properties ////////////
+Closure properties = {
+	final String createPrefix = "create."
+	Map<String, Closure<Project>> map = new HashMap<>()
+
+	/**
+	* Should be configured in {@code gradle.properties} like so:
+	* <code>
+	*     create.debug_logs=true
+	*     create.mixin_export=true
+	* </code>
+	*/
+
+	map["debug_logs"] = {
+		loom.runConfigs.configureEach {
+			property("fabric.log.level", "debug")
+		}
+	}
+
+	map["mixin_export"] = {
+		loom.runConfigs.configureEach {
+			property("mixin.debug.export", "true")
+		}
+	}
+
+	map.forEach { str, clr ->
+		if (project.hasProperty(createPrefix + str) && (
+			project.property(createPrefix + str) != null &&
+				project.property(createPrefix + str) != false &&
+				project.property(createPrefix + str) != "false"
+		)) {
+			clr.delegate = project
+			clr()
+		}
+	}
+}; properties() // Sadly we don't have IIFEs in Groovy
+
+loom {
+	accessWidener = file("src/main/resources/create.accesswidener")
+}
+
+processResources {
+	inputs.property "version", project.version
+
+	filesMatching("fabric.mod.json") {
+		expand "version": project.version
+	}
+}
+
+tasks.withType(JavaCompile).configureEach {
+	it.options.encoding = "UTF-8"
+	if (JavaVersion.current().isJava9Compatible()) {
+		it.options.release = 8
+	}
+}
+
+tasks.withType(Wrapper).configureEach {
+	it.gradleVersion = "6.8.3"
+	it.distributionType = Wrapper.DistributionType.BIN
+}
+
+java {
+	// Loom will automatically attach sourcesJar to a RemapSourcesJar task and to the "build" task
+	// if it is present.
+	// If you remove this line, sources will not be generated.
+	withSourcesJar()
 }
 
 jar {
-    classifier = 'slim'
-    manifest {
-        attributes([
-            "Specification-Title": "create",
-            "Specification-Vendor": "simibubi",
-            "Specification-Version": "1",
-            "Implementation-Title": project.name,
-            "Implementation-Version": "${version}",
-            "Implementation-Vendor" :"simibubi",
-            "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ"),
-            "MixinConfigs": "create.mixins.json"
-        ])
-    }
+	from("LICENSE") {
+		rename { "${it}_${project.archivesBaseName}" }
+	}
 }
 
-shadowJar {
-    classifier = ''
-    configurations = [project.configurations.shade]
-    relocate 'com.tterrag.registrate', 'com.simibubi.create.repack.registrate'
-}
+// configure the maven publication
+publishing {
+	publications {
+		mavenJava(MavenPublication) {
+			// add all the jars that should be included when publishing to maven
+			artifact(remapJar) {
+				builtBy remapJar
+			}
+			artifact(sourcesJar) {
+				builtBy remapSourcesJar
+			}
+		}
+	}
 
-reobf {
-    shadowJar {}
-}
-
-String getChangelogText() {
-    def changelogFile = file('changelog.txt')
-    String str = ''
-    int lineCount = 0
-    boolean done = false
-    changelogFile.eachLine {
-        if (done || it == null) {
-            return
-        }
-        if (it.size() > 1) {
-            def temp = it
-            if (lineCount == 0) {
-                temp = "Create ${version}"
-                temp = "<span style=\"font-size: 18px; color: #333399;\">Create v${mod_version}</span>&nbsp;&nbsp;<em>for Minecraft ${minecraft_version}</em><br/>"
-            } else if (it.startsWith('-')) {
-                temp = "&nbsp;&nbsp;&nbsp;$temp<br/>"
-                temp = temp.replaceAll("(\\S+\\/\\S+)#([0-9]+)\\b", "<a href=\"https://github.com/\$1/issues/\$2\">\$0</a>");
-                temp = temp.replaceAll("#([0-9]+)\\b(?!<\\/a>)", "<a href=\"https://github.com/$github_project/issues/\$1\">\$0</a>");
-            } else {
-                temp = "<h4>$temp</h4>"
-            }
-            str += temp
-            lineCount++
-        } else {
-            str += "<p>Please submit any Issues you come across on the&nbsp;<a href=\"https://github.com/${github_project}/issues\" rel=\"nofollow\">Issue Tracker</a>.</p>"
-            done = true
-        }
-    }
-    return str
-}
-
-//changelog debugging
-//new File("changelog.html").write getChangelogText()
-
-tasks.curseforge.enabled = !dev && project.hasProperty('simi_curseforge_key')
-    
-curseforge {
-    if (project.hasProperty('simi_curseforge_key')) {
-        apiKey = project.simi_curseforge_key
-    }
-
-    project {
-        id = project.projectId
-        changelog = System.getenv('CHANGELOG') == null || System.getenv('CHANGELOG').equals('none') ? getChangelogText() : System.getenv('CHANGELOG')
-        changelogType = 'html'
-        releaseType = project.curse_type
-        mainArtifact(shadowJar) {
-            displayName = "Create - ${version}"
-        }
-        relations {
-        	optionalDependency 'jei'
-        }
-    }
-}
-
-apply plugin: 'org.spongepowered.mixin'
-
-mixin {
-    add sourceSets.main, "create.refmap.json"
+	// See https://docs.gradle.org/current/userguide/publishing_maven.html for information on how to set up publishing.
+	repositories {
+		// Add repositories to publish to here.
+		// Notice: This block does NOT have the same function as the block in the top level.
+		// The repositories here will be used for publishing your artifact, not for
+		// retrieving dependencies.
+	}
 }

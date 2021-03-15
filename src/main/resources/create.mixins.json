@@ -1,18 +1,35 @@
 {
-    "required": true,
-    "package": "com.simibubi.create.foundation.mixin",
-    "compatibilityLevel": "JAVA_8",
-    "refmap": "create.refmap.json",
-    "client": [
-        "OnRemoveTileMixin",
-        "ShaderCloseMixin",
-        "CancelTileEntityRenderMixin",
-        "LightUpdateMixin",
-        "RenderHooksMixin",
-        "FogColorTrackerMixin"
-    ],
-    "injectors": {
-        "defaultRequire": 1
-    },
-    "minVersion": "0.8"
+  "required": true,
+  "minVersion": "0.8",
+  "package": "com.simibubi.create.foundation.mixin",
+  "compatibilityLevel": "JAVA_8",
+  "mixins": [
+    "BakedModelManagerMixin",
+    "EntityTypeMixin",
+    "FogColorTrackerMixin",
+    "Matrix4fMixin",
+    "MouseMixin",
+    "ParticleManagerMixin",
+    "WorldMixin",
+    "accessor.BufferBuilderAccessor",
+    "accessor.GameRendererAccessor",
+    "accessor.GlStateManagerAccessor",
+    "accessor.ItemAccessor",
+    "accessor.ItemRendererAccessor",
+    "accessor.CriteriaRegistryAccessor",
+    "accessor.BiomeAccessAccessor",
+    "accessor.MinecraftServerAccessor"
+  ],
+  "client": [
+    "ChunkBuilder$ChunkDataMixin",
+    "RenderHooksMixin",
+    "event.ClientWorldMixin",
+    "event.MinecraftClientMixin"
+  ],
+  "server": [
+    "Vec3dMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
 }

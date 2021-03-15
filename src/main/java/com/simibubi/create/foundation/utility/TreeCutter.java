@@ -8,23 +8,20 @@ import java.util.List;
 import java.util.Set;
 
 import com.google.common.base.Predicates;
-import com.simibubi.create.AllTags;
 
 import net.minecraft.block.BambooBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
 import net.minecraft.block.CactusBlock;
 import net.minecraft.block.ChorusFlowerBlock;
 import net.minecraft.block.ChorusPlantBlock;
 import net.minecraft.block.KelpBlock;
-import net.minecraft.block.KelpTopBlock;
 import net.minecraft.block.LeavesBlock;
 import net.minecraft.block.SugarCaneBlock;
-import net.minecraft.tags.BlockTags;
-import net.minecraft.util.Direction;
+import net.minecraft.tag.BlockTags;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.IBlockReader;
+import net.minecraft.util.math.Direction;
+import net.minecraft.world.BlockView;
 
 public class TreeCutter {
 
@@ -45,7 +42,7 @@ public class TreeCutter {
 	 * @param pos
 	 * @return null if not found or not fully cut
 	 */
-	public static Tree cutTree(IBlockReader reader, BlockPos pos) {
+	public static Tree cutTree(BlockView reader, BlockPos pos) {
 		List<BlockPos> logs = new ArrayList<>();
 		List<BlockPos> leaves = new ArrayList<>();
 		Set<BlockPos> visited = new HashSet<>();
@@ -90,8 +87,7 @@ public class TreeCutter {
 			return null;
 
 		visited.add(pos);
-		BlockPos.getAllInBox(pos.add(-1, 0, -1), pos.add(1, 1, 1))
-			.forEach(p -> frontier.add(new BlockPos(p)));
+		BlockPos.stream(pos.add(-1, 0, -1), pos.add(1, 1, 1)).forEach(p -> frontier.add(new BlockPos(p)));
 
 		// Find all logs
 		while (!frontier.isEmpty()) {
@@ -120,22 +116,19 @@ public class TreeCutter {
 			BlockState blockState = reader.getBlockState(currentPos);
 			boolean isLog = isLog(blockState);
 			boolean isLeaf = isLeaf(blockState);
-			boolean isGenericLeaf = isLeaf || isNonDecayingLeaf(blockState);
 
-			if (!isLog && !isGenericLeaf)
+			if (!isLog && !isLeaf)
 				continue;
-			if (isGenericLeaf)
+			if (isLeaf)
 				leaves.add(currentPos);
 
-			int distance = !isLeaf ? 0 : blockState.get(LeavesBlock.DISTANCE);
+			int distance = isLog ? 0 : blockState.get(LeavesBlock.DISTANCE);
 			for (Direction direction : Iterate.directions) {
 				BlockPos offset = currentPos.offset(direction);
 				if (visited.contains(offset))
 					continue;
 				BlockState state = reader.getBlockState(offset);
-				BlockPos subtract = offset.subtract(pos);
-				int horizontalDistance = Math.max(Math.abs(subtract.getX()), Math.abs(subtract.getZ()));
-				if (isLeaf(state) && state.get(LeavesBlock.DISTANCE) > distance || isNonDecayingLeaf(state) && horizontalDistance < 4)
+				if (isLeaf(state) && state.get(LeavesBlock.DISTANCE) > distance)
 					frontier.add(offset);
 			}
 
@@ -158,8 +151,8 @@ public class TreeCutter {
 			return true;
 		if (block instanceof KelpBlock)
 			return true;
-		if (block instanceof KelpTopBlock)
-			return true;
+		/**if (block instanceof KelpTopBlock)
+			return true;*/
 		return false;
 	}
 
@@ -171,7 +164,7 @@ public class TreeCutter {
 	 * @param pos
 	 * @return
 	 */
-	private static boolean validateCut(IBlockReader reader, BlockPos pos) {
+	private static boolean validateCut(BlockView reader, BlockPos pos) {
 		Set<BlockPos> visited = new HashSet<>();
 		List<BlockPos> frontier = new LinkedList<>();
 		frontier.add(pos);
@@ -205,21 +198,16 @@ public class TreeCutter {
 	}
 
 	private static void addNeighbours(BlockPos pos, List<BlockPos> frontier, Set<BlockPos> visited) {
-		BlockPos.getAllInBox(pos.add(-1, -1, -1), pos.add(1, 1, 1))
-			.filter(Predicates.not(visited::contains))
-			.forEach(p -> frontier.add(new BlockPos(p)));
+		BlockPos.stream(pos.add(-1, -1, -1), pos.add(1, 1, 1)).filter(Predicates.not(visited::contains))
+				.forEach(p -> frontier.add(new BlockPos(p)));
 	}
 
 	private static boolean isLog(BlockState state) {
-		return state.isIn(BlockTags.LOGS) || AllTags.AllBlockTags.SLIMY_LOGS.matches(state);
-	}
-
-	private static boolean isNonDecayingLeaf(BlockState state) {
-		return state.isIn(BlockTags.WART_BLOCKS) || state.getBlock() == Blocks.SHROOMLIGHT;
+		return state.isIn(BlockTags.LOGS);
 	}
 
 	private static boolean isLeaf(BlockState state) {
-		return BlockHelper.hasBlockStateProperty(state, LeavesBlock.DISTANCE);
+		return state.contains(LeavesBlock.DISTANCE);
 	}
 
 }

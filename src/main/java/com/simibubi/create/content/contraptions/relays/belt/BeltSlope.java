@@ -2,13 +2,13 @@ package com.simibubi.create.content.contraptions.relays.belt;
 
 import com.simibubi.create.foundation.utility.Lang;
 
-import net.minecraft.util.IStringSerializable;
+import net.minecraft.util.StringIdentifiable;
 
-public enum BeltSlope implements IStringSerializable {
+public enum BeltSlope implements StringIdentifiable {
 	HORIZONTAL, UPWARD, DOWNWARD, VERTICAL, SIDEWAYS;
 
 	@Override
-	public String getString() {
+	public String asString() {
 		return Lang.asId(name());
 	}
 

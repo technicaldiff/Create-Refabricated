@@ -5,8 +5,9 @@ import java.util.Set;
 import com.simibubi.create.content.contraptions.components.structureMovement.ContraptionLighter;
 import com.simibubi.create.foundation.render.backend.light.GridAlignedBB;
 
-import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Direction;
+import net.minecraft.util.math.Vec3d;
 
 public class BearingLighter extends ContraptionLighter<BearingContraption> {
 
@@ -49,7 +50,7 @@ public class BearingLighter extends ContraptionLighter<BearingContraption> {
             betterBounds.minZ = contraptionBounds.minZ;
         }
 
-        betterBounds.translate(contraption.anchor);
+        betterBounds.translate(new Vec3d(contraption.anchor.getX(), contraption.anchor.getY(), contraption.anchor.getZ()));
         return betterBounds;
     }
 }

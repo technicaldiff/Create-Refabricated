@@ -1,24 +1,22 @@
 package com.simibubi.create.content.contraptions.relays.encased;
 
-import com.simibubi.create.content.contraptions.base.KineticTileEntity;
+import com.simibubi.create.content.contraptions.base.KineticBlockEntity;
 import com.simibubi.create.content.contraptions.base.SingleRotatingInstance;
+import com.simibubi.create.foundation.render.backend.instancing.InstancedBlockRenderer;
 import com.simibubi.create.foundation.render.backend.instancing.InstancedTileRenderRegistry;
-import com.simibubi.create.foundation.render.backend.instancing.InstancedTileRenderer;
 
 import net.minecraft.block.BlockState;
-import net.minecraft.tileentity.TileEntityType;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.fml.DistExecutor;
+import net.minecraft.block.entity.BlockEntityType;
 
 public class ShaftInstance extends SingleRotatingInstance {
 
-	public static void register(TileEntityType<? extends KineticTileEntity> type) {
-		DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () ->
-				InstancedTileRenderRegistry.instance.register(type, ShaftInstance::new));
+	public ShaftInstance(InstancedBlockRenderer dispatcher, KineticBlockEntity tile) {
+		super(dispatcher, tile);
 	}
 
-	public ShaftInstance(InstancedTileRenderer dispatcher, KineticTileEntity tile) {
-		super(dispatcher, tile);
+	public static void register(BlockEntityType<? extends KineticBlockEntity> type) {
+		/**DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () ->*/
+		InstancedTileRenderRegistry.instance.register(type, ShaftInstance::new);
 	}
 
 	@Override

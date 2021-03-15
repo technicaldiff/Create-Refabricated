@@ -1,65 +1,52 @@
 package com.simibubi.create.content.logistics.block.diodes;
 
+import com.simibubi.create.AllBlockEntities;
 import com.simibubi.create.AllBlocks;
-import com.simibubi.create.AllTileEntities;
-
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockEntityProvider;
 import net.minecraft.block.BlockState;
-import net.minecraft.state.BooleanProperty;
-import net.minecraft.state.StateContainer.Builder;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.Direction;
+import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.state.StateManager.Builder;
+import net.minecraft.state.property.BooleanProperty;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.IBlockReader;
+import net.minecraft.util.math.Direction;
+import net.minecraft.world.BlockView;
 
-public class AdjustableRepeaterBlock extends AbstractDiodeBlock {
+public class AdjustableRepeaterBlock extends AbstractDiodeBlock implements BlockEntityProvider {
 
-	public static BooleanProperty POWERING = BooleanProperty.create("powering");
+	public static BooleanProperty POWERING = BooleanProperty.of("powering");
 
-	public AdjustableRepeaterBlock(Properties properties) {
+	public AdjustableRepeaterBlock(Settings properties) {
 		super(properties);
 		setDefaultState(getDefaultState().with(POWERED, false)
 			.with(POWERING, false));
 	}
 
 	@Override
-	protected void fillStateContainer(Builder<Block, BlockState> builder) {
-		builder.add(POWERED, POWERING, HORIZONTAL_FACING);
-		super.fillStateContainer(builder);
+	protected void appendProperties(Builder<Block, BlockState> builder) {
+		builder.add(POWERED, POWERING, FACING);
+		super.appendProperties(builder);
 	}
 
 	@Override
-	public boolean hasTileEntity(BlockState state) {
-		return true;
+	public BlockEntity createBlockEntity(BlockView world) {
+		return AllBlocks.ADJUSTABLE_REPEATER.is(this) ? AllBlockEntities.ADJUSTABLE_REPEATER.instantiate()
+			: AllBlockEntities.ADJUSTABLE_PULSE_REPEATER.instantiate();
 	}
 
 	@Override
-	public TileEntity createTileEntity(BlockState state, IBlockReader world) {
-		return AllBlocks.ADJUSTABLE_REPEATER.is(this) ? AllTileEntities.ADJUSTABLE_REPEATER.create()
-			: AllTileEntities.ADJUSTABLE_PULSE_REPEATER.create();
-	}
-
-	@Override
-	protected int getActiveSignal(IBlockReader worldIn, BlockPos pos, BlockState state) {
+	protected int getOutputLevel(BlockView worldIn, BlockPos pos, BlockState state) {
 		return state.get(POWERING) ? 15 : 0;
 	}
 
 	@Override
-	public int getWeakPower(BlockState blockState, IBlockReader blockAccess, BlockPos pos, Direction side) {
-		return blockState.get(HORIZONTAL_FACING) == side ? this.getActiveSignal(blockAccess, pos, blockState) : 0;
+	public int getWeakRedstonePower(BlockState blockState, BlockView blockAccess, BlockPos pos, Direction side) {
+		return blockState.get(FACING) == side ? this.getOutputLevel(blockAccess, pos, blockState) : 0;
 	}
 
 	@Override
-	protected int getDelay(BlockState p_196346_1_) {
+	protected int getUpdateDelayInternal(BlockState p_196346_1_) {
 		return 0;
-	}
-
-	@Override
-	public boolean canConnectRedstone(BlockState state, IBlockReader world, BlockPos pos, Direction side) {
-		if (side == null)
-			return false;
-		return side.getAxis() == state.get(HORIZONTAL_FACING)
-			.getAxis();
 	}
 
 }

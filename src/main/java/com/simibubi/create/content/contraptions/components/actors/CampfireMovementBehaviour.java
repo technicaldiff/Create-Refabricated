@@ -6,25 +6,25 @@ import com.simibubi.create.content.contraptions.components.structureMovement.Mov
 import com.simibubi.create.content.contraptions.components.structureMovement.MovementContext;
 
 import net.minecraft.block.CampfireBlock;
-import net.minecraft.particles.ParticleTypes;
+import net.minecraft.particle.ParticleTypes;
 
 public class CampfireMovementBehaviour extends MovementBehaviour {
 	@Override
-	public boolean renderAsNormalTileEntity() {
+	public boolean renderAsNormalBlockEntity() {
 		return true;
 	}
 
 	@Override
 	public void tick(MovementContext context) {
-		if (context.world == null || !context.world.isRemote || context.position == null
+		if (context.world == null || !context.world.isClient || context.position == null
 			|| !context.state.get(CampfireBlock.LIT))
 			return;
 
 		// Mostly copied from CampfireBlock and CampfireTileEntity
-		Random random = context.world.rand;
+		Random random = context.world.random;
 		if (random.nextFloat() < 0.11F) {
 			for (int i = 0; i < random.nextInt(2) + 2; ++i) {
-				context.world.addOptionalParticle(
+				context.world.addImportantParticle(
 					context.state.get(CampfireBlock.SIGNAL_FIRE) ? ParticleTypes.CAMPFIRE_SIGNAL_SMOKE
 						: ParticleTypes.CAMPFIRE_COSY_SMOKE,
 					true, context.position.getX() + random.nextDouble() / (random.nextBoolean() ? 3D : -3D),

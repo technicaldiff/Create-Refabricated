@@ -1,23 +1,17 @@
 package com.simibubi.create;
 
-import static net.minecraft.util.Direction.NORTH;
-import static net.minecraft.util.Direction.SOUTH;
-import static net.minecraft.util.Direction.UP;
-
 import java.util.function.BiFunction;
 
-import com.simibubi.create.content.logistics.block.chute.ChuteShapes;
 import com.simibubi.create.foundation.utility.VoxelShaper;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
-import net.minecraft.block.DirectionalBlock;
+import net.minecraft.block.FacingBlock;
 import net.minecraft.block.PistonHeadBlock;
-import net.minecraft.util.Direction;
-import net.minecraft.util.Direction.Axis;
-import net.minecraft.util.math.shapes.IBooleanFunction;
-import net.minecraft.util.math.shapes.VoxelShape;
-import net.minecraft.util.math.shapes.VoxelShapes;
+import net.minecraft.util.function.BooleanBiFunction;
+import net.minecraft.util.math.Direction;
+import net.minecraft.util.shape.VoxelShape;
+import net.minecraft.util.shape.VoxelShapes;
 
 public class AllShapes {
 
@@ -29,7 +23,8 @@ public class AllShapes {
 		CASING_12PX = shape(0, 0, 0, 16, 12, 16).forDirectional(),
 		CASING_11PX = shape(0, 0, 0, 16, 11, 16).forDirectional(),
 		MOTOR_BLOCK = shape(3, 0, 3, 13, 14, 13).forDirectional(),
-		FOUR_VOXEL_POLE = shape(6, 0, 6, 10, 16, 10).forAxis(), SIX_VOXEL_POLE = shape(5, 0, 5, 11, 16, 11).forAxis(),
+		FOUR_VOXEL_POLE = shape(6, 0, 6, 10, 16, 10).forAxis(),
+		SIX_VOXEL_POLE = shape(5, 0, 5, 11f, 16, 11).forAxis(),
 		EIGHT_VOXEL_POLE = shape(4, 0, 4, 12, 16, 12).forAxis(),
 		FURNACE_ENGINE = shape(1, 1, 0, 15, 15, 16).add(0, 0, 9, 16, 16, 14)
 			.forHorizontal(Direction.SOUTH),
@@ -41,7 +36,7 @@ public class AllShapes {
 		SAIL_FRAME_COLLISION = shape(0, 5, 0, 16, 9, 16).erase(2, 0, 2, 14, 16, 14)
 			.forDirectional(),
 		SAIL_FRAME = shape(0, 5, 0, 16, 9, 16).forDirectional(), SAIL = shape(0, 5, 0, 16, 10, 16).forDirectional(),
-		HARVESTER_BASE = shape(0, 2, 0, 16, 14, 3).forDirectional(SOUTH),
+		HARVESTER_BASE = shape(0, 2, 0, 16, 14, 3).forDirectional(Direction.SOUTH),
 		NOZZLE = shape(2, 0, 2, 14, 14, 14).add(1, 13, 1, 15, 15, 15)
 			.erase(3, 13, 3, 13, 15, 13)
 			.forDirectional(),
@@ -53,38 +48,38 @@ public class AllShapes {
 		STOCKPILE_SWITCH = shape(0, 0, 0, 16, 2, 16).add(1, 0, 1, 15, 16, 15)
 			.add(0, 14, 0, 16, 16, 16)
 			.add(3, 3, -2, 13, 13, 2)
-			.forHorizontal(NORTH),
+			.forHorizontal(Direction.NORTH),
 		CONTENT_OBSERVER = shape(0, 0, 0, 16, 6, 16).add(1, 0, 1, 15, 16, 15)
 			.add(0, 14, 0, 16, 16, 16)
 			.add(3, 3, -2, 13, 13, 2)
-			.forHorizontal(NORTH),
+			.forHorizontal(Direction.NORTH),
 		NIXIE_TUBE = shape(0, 0, 0, 16, 4, 16).add(9, 0, 5, 15, 15, 11)
 			.add(1, 0, 5, 7, 15, 11)
 			.forHorizontalAxis(),
 		NIXIE_TUBE_CEILING = shape(0, 12, 0, 16, 16, 16).add(9, 1, 5, 15, 16, 11)
 			.add(1, 1, 5, 7, 16, 11)
 			.forHorizontalAxis(),
-		FUNNEL_COLLISION = shape(0, 0, 0, 16, 4, 16).forDirectional(UP),
+		FUNNEL_COLLISION = shape(0, 0, 0, 16, 4, 16).forDirectional(Direction.UP),
 		BELT_FUNNEL_RETRACTED = shape(2, -2, 14, 14, 14, 18).add(0, -5, 8, 16, 16, 14)
-			.forHorizontal(NORTH),
+			.forHorizontal(Direction.NORTH),
 		BELT_FUNNEL_EXTENDED = shape(2, -2, 14, 14, 14, 18).add(3, -4, 10, 13, 13, 14)
 			.add(2, -4, 6, 14, 14, 10)
 			.add(0, -5, 0, 16, 16, 6)
-			.forHorizontal(NORTH),
+			.forHorizontal(Direction.NORTH),
 		BELT_FUNNEL_PERPENDICULAR = shape(2, -2, 14, 14, 14, 18).add(1, 8, 12, 15, 15, 14)
 			.add(0.1, 13, 7, 15.9, 15, 11)
 			.add(0.1, 9, 8, 15.9, 13, 12)
 			.add(0.1, 5, 9, 15.9, 9, 13)
 			.add(0.1, 1, 10, 15.9, 5, 14)
 			.add(0.1, -3, 11, 15.9, 1, 15)
-			.forHorizontal(NORTH),
-		FUNNEL = shape(2, 2, 14, 14, 14, 18).add(1, 8, 12, 15, 15, 14)
+			.forHorizontal(Direction.NORTH),
+		FUNNEL_WALL = shape(2, 2, 14, 14, 14, 18).add(1, 8, 12, 15, 15, 14)
 			.add(0.1, 13, 7, 15.9, 15, 11)
 			.add(0.1, 9, 8, 15.9, 13, 12)
 			.add(0.1, 5, 9, 15.9, 9, 13)
 			.add(0.1, 1, 10, 15.9, 5, 14)
 			.add(0.1, -1, 11, 15.9, 1, 15)
-			.forHorizontal(NORTH),
+			.forHorizontal(Direction.NORTH),
 		FLUID_VALVE = shape(3, -1, 3, 13, 17, 13).add(2, 2, 2, 14, 14, 14)
 			.forAxis(),
 		SMART_FLUID_PIPE_FLOOR = shape(4, 4, 0, 12, 12, 16).add(3, 3, 3, 13, 13, 13)
@@ -118,10 +113,10 @@ public class AllShapes {
 	private static final VoxelShape
 
 	PISTON_HEAD = Blocks.PISTON_HEAD.getDefaultState()
-		.with(DirectionalBlock.FACING, UP)
+		.with(FacingBlock.FACING, Direction.UP)
 		.with(PistonHeadBlock.SHORT, true)
-		.getShape(null, null), PISTON_EXTENDED =
-			shape(CASING_12PX.get(UP)).add(FOUR_VOXEL_POLE.get(Axis.Y))
+		.getOutlineShape(null, null), PISTON_EXTENDED = //TODO getOutlineShape instead of getShape? Don't know
+			shape(CASING_12PX.get(Direction.UP)).add(FOUR_VOXEL_POLE.get(Direction.Axis.Y))
 				.build(),
 		SMALL_GEAR_SHAPE = cuboid(2, 6, 2, 14, 10, 14), LARGE_GEAR_SHAPE = cuboid(0, 6, 0, 16, 10, 16),
 		VERTICAL_TABLET_SHAPE = cuboid(3, 1, -1, 13, 15, 3), SQUARE_TABLET_SHAPE = cuboid(2, 2, -1, 14, 14, 3),
@@ -161,7 +156,7 @@ public class AllShapes {
 		BELT_COLLISION_MASK = cuboid(0, 0, 0, 16, 19, 16),
 		SCHEMATICANNON_SHAPE = shape(1, 0, 1, 15, 8, 15).add(0.5, 8, 0.5, 15.5, 11, 15.5)
 			.build(),
-		PULLEY_MAGNET = shape(3, 0, 3, 13, 2, 13).add(FOUR_VOXEL_POLE.get(UP))
+		PULLEY_MAGNET = shape(3, 0, 3, 13, 2, 13).add(FOUR_VOXEL_POLE.get(Direction.UP))
 			.build(),
 		SPOUT = shape(1, 2, 1, 15, 14, 15).add(2, 0, 2, 14, 16, 14)
 			.build(),
@@ -203,20 +198,20 @@ public class AllShapes {
 
 	MECHANICAL_PISTON_HEAD = shape(PISTON_HEAD).forDirectional(), MECHANICAL_PISTON = CASING_12PX,
 		MECHANICAL_PISTON_EXTENDED = shape(PISTON_EXTENDED).forDirectional(),
-		SMALL_GEAR = shape(SMALL_GEAR_SHAPE).add(SIX_VOXEL_POLE.get(Axis.Y))
+		SMALL_GEAR = shape(SMALL_GEAR_SHAPE).add(SIX_VOXEL_POLE.get(Direction.Axis.Y))
 			.forAxis(),
-		LARGE_GEAR = shape(LARGE_GEAR_SHAPE).add(SIX_VOXEL_POLE.get(Axis.Y))
+		LARGE_GEAR = shape(LARGE_GEAR_SHAPE).add(SIX_VOXEL_POLE.get(Direction.Axis.Y))
 			.forAxis(),
-		LOGISTICAL_CONTROLLER = shape(SQUARE_TABLET_SHAPE).forDirectional(SOUTH),
-		REDSTONE_BRIDGE = shape(VERTICAL_TABLET_SHAPE).forDirectional(SOUTH)
-			.withVerticalShapes(LOGISTICAL_CONTROLLER.get(UP)),
+		LOGISTICAL_CONTROLLER = shape(SQUARE_TABLET_SHAPE).forDirectional(Direction.SOUTH),
+		REDSTONE_BRIDGE = shape(VERTICAL_TABLET_SHAPE).forDirectional(Direction.SOUTH)
+			.withVerticalShapes(LOGISTICAL_CONTROLLER.get(Direction.UP)),
 		LOGISTICS_TABLE = shape(TABLE_POLE_SHAPE).add(LOGISTICS_TABLE_SLOPE)
-			.forHorizontal(SOUTH),
+			.forHorizontal(Direction.SOUTH),
 		SCHEMATICS_TABLE = shape(4, 0, 4, 12, 12, 12).add(0, 11, 2, 16, 14, 14)
-			.forDirectional(SOUTH),
-		CHUTE_SLOPE = shape(ChuteShapes.createSlope()).forHorizontal(SOUTH)
-
+			.forDirectional(Direction.SOUTH)
 	;
+
+	//CHUTE_SLOPE = shape(ChuteShapes.createSlope()).forHorizontal(Direction.SOUTH) TODO FIX THIS ADD IT IN THAT LIST
 
 	private static Builder shape(VoxelShape shape) {
 		return new Builder(shape);
@@ -227,7 +222,7 @@ public class AllShapes {
 	}
 
 	private static VoxelShape cuboid(double x1, double y1, double z1, double x2, double y2, double z2) {
-		return Block.makeCuboidShape(x1, y1, z1, x2, y2, z2);
+		return Block.createCuboidShape(x1, y1, z1, x2, y2, z2);
 	}
 
 	private static class Builder {
@@ -238,7 +233,7 @@ public class AllShapes {
 		}
 
 		Builder add(VoxelShape shape) {
-			this.shape = VoxelShapes.or(this.shape, shape);
+			this.shape = VoxelShapes.union(this.shape, shape);
 			return this;
 		}
 
@@ -248,7 +243,7 @@ public class AllShapes {
 
 		Builder erase(double x1, double y1, double z1, double x2, double y2, double z2) {
 			this.shape =
-				VoxelShapes.combineAndSimplify(shape, cuboid(x1, y1, z1, x2, y2, z2), IBooleanFunction.ONLY_FIRST);
+				VoxelShapes.combineAndSimplify(shape, cuboid(x1, y1, z1, x2, y2, z2), BooleanBiFunction.ONLY_FIRST);
 			return this;
 		}
 
@@ -260,7 +255,7 @@ public class AllShapes {
 			return factory.apply(shape, direction);
 		}
 
-		VoxelShaper build(BiFunction<VoxelShape, Axis, VoxelShaper> factory, Axis axis) {
+		VoxelShaper build(BiFunction<VoxelShape, Direction.Axis, VoxelShaper> factory, Direction.Axis axis) {
 			return factory.apply(shape, axis);
 		}
 
@@ -269,11 +264,11 @@ public class AllShapes {
 		}
 
 		VoxelShaper forAxis() {
-			return build(VoxelShaper::forAxis, Axis.Y);
+			return build(VoxelShaper::forAxis, Direction.Axis.Y);
 		}
 
 		VoxelShaper forHorizontalAxis() {
-			return build(VoxelShaper::forHorizontalAxis, Axis.Z);
+			return build(VoxelShaper::forHorizontalAxis, Direction.Axis.Z);
 		}
 
 		VoxelShaper forHorizontal(Direction direction) {
@@ -281,7 +276,7 @@ public class AllShapes {
 		}
 
 		VoxelShaper forDirectional() {
-			return forDirectional(UP);
+			return forDirectional(Direction.UP);
 		}
 
 	}

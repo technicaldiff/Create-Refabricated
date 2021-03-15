@@ -1,24 +1,28 @@
 package com.simibubi.create.content.contraptions.relays.belt;
 
-import com.simibubi.create.foundation.data.SpecialBlockStateGen;
-import com.tterrag.registrate.providers.DataGenContext;
-import com.tterrag.registrate.providers.RegistrateBlockstateProvider;
+/*import com.simibubi.create.foundation.data.SpecialBlockStateGen;
+import com.tterrag.com.simibubi.create.registrate.providers.DataGenContext;
+import com.tterrag.com.simibubi.create.registrate.providers.RegistrateBlockstateProvider;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.util.Direction;
 import net.minecraft.util.Direction.AxisDirection;
+import net.minecraft.util.Identifier;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.Direction;
 import net.minecraftforge.client.model.generators.ModelFile;
 
-public class BeltGenerator extends SpecialBlockStateGen {
+import static com.smellypengu.createfabric.foundation.utility.AngleHelper.horizontalAngle;
+
+/public class BeltGenerator extends SpecialBlockStateGen {
 
 	@Override
 	protected int getXRotation(BlockState state) {
 		Direction direction = state.get(BeltBlock.HORIZONTAL_FACING);
 		BeltSlope slope = state.get(BeltBlock.SLOPE);
 		return slope == BeltSlope.VERTICAL ? 90
-			: slope == BeltSlope.SIDEWAYS && direction.getAxisDirection() == AxisDirection.NEGATIVE ? 180 : 0;
+			: slope == BeltSlope.SIDEWAYS && direction.getDirection() == Direction.AxisDirection.NEGATIVE ? 180 : 0;
 	}
 
 	@Override
@@ -49,7 +53,7 @@ public class BeltGenerator extends SpecialBlockStateGen {
 		boolean vertical = slope == BeltSlope.VERTICAL;
 		boolean pulley = part == BeltPart.PULLEY;
 		boolean sideways = slope == BeltSlope.SIDEWAYS;
-		boolean negative = direction.getAxisDirection() == AxisDirection.NEGATIVE;
+		boolean negative = direction.getDirection() == Direction.AxisDirection.NEGATIVE;
 
 		if (!casing && pulley)
 			part = BeltPart.MIDDLE;
@@ -63,15 +67,16 @@ public class BeltGenerator extends SpecialBlockStateGen {
 			slope = BeltSlope.SIDEWAYS;
 
 		String path = "block/" + (casing ? "belt_casing/" : "belt/");
-		String slopeName = slope.getString();
-		String partName = part.getString();
+		String slopeName = slope.name();
+		String partName = part.name();
 
 		if (diagonal)
 			slopeName = "diagonal";
 
-		ResourceLocation location = prov.modLoc(path + slopeName + "_" + partName);
+		Identifier location = prov.modLoc(path + slopeName + "_" + partName);
 		return prov.models()
 			.getExistingFile(location);
 	}
 
 }
+*/

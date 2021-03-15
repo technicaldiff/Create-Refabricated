@@ -1,69 +1,45 @@
 package com.simibubi.create;
 
-import static com.simibubi.create.AllTags.NameSpace.FORGE;
-import static com.simibubi.create.AllTags.NameSpace.MC;
-import static com.simibubi.create.AllTags.NameSpace.MOD;
-import static com.simibubi.create.AllTags.NameSpace.TIC;
-
-import java.util.function.Function;
-
-import com.simibubi.create.foundation.data.CreateRegistrate;
-import com.simibubi.create.foundation.utility.EmptyNamedTag;
-import com.simibubi.create.foundation.utility.Lang;
-import com.tterrag.registrate.builders.BlockBuilder;
-import com.tterrag.registrate.builders.ItemBuilder;
-import com.tterrag.registrate.providers.ProviderType;
-import com.tterrag.registrate.util.nullness.NonNullFunction;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
-import net.minecraft.fluid.Fluid;
-import net.minecraft.item.BlockItem;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.tags.BlockTags;
-import net.minecraft.tags.FluidTags;
-import net.minecraft.tags.ITag;
-import net.minecraft.tags.ItemTags;
-import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.fml.ModList;
+import net.minecraft.tag.BlockTags;
 
+// TODO FIX THIS WHOLE CLASS TAGS
 public class AllTags {
-	private static final CreateRegistrate REGISTRATE = Create.registrate()
-		.itemGroup(() -> Create.baseCreativeTab);
+	/*private static final CreateRegistrate REGISTRATE = Create.com.simibubi.create.registrate()
+		.itemGroup(() -> Create.baseCreativeTab);*/
 
-	public static <T extends Block, P> NonNullFunction<BlockBuilder<T, P>, ItemBuilder<BlockItem, BlockBuilder<T, P>>> tagBlockAndItem(
+	/*public static <T extends Block, P> NonNullFunction<BlockBuilder<T, P>, ItemBuilder<BlockItem, BlockBuilder<T, P>>> tagBlockAndItem(
 		String tagName) {
 		return b -> b.tag(forgeBlockTag(tagName))
 			.item()
 			.tag(forgeItemTag(tagName));
+	}*/
+
+	/*public static net.minecraft.tag.Tag.Identified<Block> forgeBlockTag(String name) {
+		return forgeTag(BlockTags.getTagGroup(), name);
+	}*/
+
+	/*public static Tag<Item> forgeItemTag(String name) {
+		return forgeTag(ItemTags.getCollection(), name);
 	}
 
-	public static ITag.INamedTag<Block> forgeBlockTag(String name) {
-		return forgeTag(BlockTags::makeWrapperTag, name);
-	}
+	public static Tag<Fluid> forgeFluidTag(String name) {
+		return forgeTag(FluidTags.getContainer(), name);
+	}*/
 
-	public static ITag.INamedTag<Item> forgeItemTag(String name) {
-		return forgeTag(ItemTags::makeWrapperTag, name);
-	}
-	
-	public static ITag.INamedTag<Fluid> forgeFluidTag(String name) {
-		return forgeTag(FluidTags::makeWrapperTag, name);
-	}
+	/*public static <T> net.minecraft.tag.Tag.Identified<T> forgeTag(TagGroup<T> collection, String name) {
+		return tag(collection, "forge", name);
+	}*/
 
-	public static <T> ITag.INamedTag<T> forgeTag(Function<String, ITag.INamedTag<T>> wrapperFactory, String name) {
-		return tag(wrapperFactory, "forge", name);
-	}
-
-	public static <T> ITag.INamedTag<T> tag(Function<String, ITag.INamedTag<T>> wrapperFactory, String domain, String name) {
-		return wrapperFactory.apply(new ResourceLocation(domain, name).toString());
-	}
+	/*public static <T> net.minecraft.tag.Tag.Identified<T> tag(TagGroup<T> collection, String domain, String name) {
+		return collection.getOrCreate(new Identifier(domain, name));
+	}*/
 
 	public static enum NameSpace {
 
-		MOD(Create.ID), FORGE("forge"), MC("minecraft"), TIC("tconstruct")
+		MOD(Create.ID), FORGE("forge"), MC("minecraft")
 
 		;
 		String id;
@@ -73,30 +49,29 @@ public class AllTags {
 		}
 	}
 
-	public static enum AllItemTags {
-		CRUSHED_ORES(MOD),
-		SEATS(MOD),
-		VALVE_HANDLES(MOD),
-		UPRIGHT_ON_BELT(MOD),
-		CREATE_INGOTS(MOD),
-		BEACON_PAYMENT(FORGE),
-		INGOTS(FORGE),
-		NUGGETS(FORGE),
-		PLATES(FORGE),
-		COBBLESTONE(FORGE)
+	/*public static enum AllItemTags {
+		CRUSHED_ORES(NameSpace.MOD),
+		SEATS(NameSpace.MOD),
+		VALVE_HANDLES(NameSpace.MOD),
+		UPRIGHT_ON_BELT(NameSpace.MOD),
+		CREATE_INGOTS(NameSpace.MOD),
+		BEACON_PAYMENT(NameSpace.FORGE),
+		INGOTS(NameSpace.FORGE),
+		NUGGETS(NameSpace.FORGE),
+		PLATES(NameSpace.FORGE),
+		COBBLESTONE(NameSpace.FORGE)
 
 		;
 
-		public ITag.INamedTag<Item> tag;
+		public Tag<Item> tag;
 
 		private AllItemTags(NameSpace namespace) {
 			this(namespace, "");
 		}
 
 		private AllItemTags(NameSpace namespace, String path) {
-			tag = ItemTags.makeWrapperTag(
-				new ResourceLocation(namespace.id, (path.isEmpty() ? "" : path + "/") + Lang.asId(name())).toString());
-			REGISTRATE.addDataGenerator(ProviderType.ITEM_TAGS, prov -> prov.getOrCreateTagBuilder(tag));
+			tag = new ItemTags.Wrapper(
+				new Identifier(namespace.id, (path.isEmpty() ? "" : path + "/") + Lang.asId(name())));
 		}
 
 		public boolean matches(ItemStack stack) {
@@ -104,13 +79,13 @@ public class AllTags {
 		}
 
 		public void add(Item... values) {
-			REGISTRATE.addDataGenerator(ProviderType.ITEM_TAGS, prov -> prov.getOrCreateTagBuilder(tag)
+			REGISTRATE.addDataGenerator(ProviderType.ITEM_TAGS, prov -> prov.getBuilder(tag)
 				.add(values));
 		}
 
 		public void includeIn(AllItemTags parent) {
-			REGISTRATE.addDataGenerator(ProviderType.ITEM_TAGS, prov -> prov.getOrCreateTagBuilder(parent.tag)
-				.addTag(tag));
+			REGISTRATE.addDataGenerator(ProviderType.ITEM_TAGS, prov -> prov.getBuilder(parent.tag)
+				.add(tag));
 		}
 	}
 	
@@ -118,10 +93,10 @@ public class AllTags {
 		NO_INFINITE_DRAINING
 		
 		;
-		public ITag.INamedTag<Fluid> tag;
+		public Tag<Fluid> tag;
 		
 		private AllFluidTags() {
-			this(MOD, "");
+			this(NameSpace.MOD, "");
 		}
 
 		private AllFluidTags(NameSpace namespace) {
@@ -129,27 +104,24 @@ public class AllTags {
 		}
 
 		private AllFluidTags(NameSpace namespace, String path) {
-			tag = FluidTags.createOptional(
-				new ResourceLocation(namespace.id, (path.isEmpty() ? "" : path + "/") + Lang.asId(name())));
+			tag = new FluidTags.Wrapper(
+				new Identifier(namespace.id, (path.isEmpty() ? "" : path + "/") + Lang.asId(name())));
 		}
 		
 		public boolean matches(Fluid fluid) {
 			return fluid != null && fluid.isIn(tag);
 		}
-		
-		static void loadClass() {
-		}
-	}
+	}*/
 
 	public static enum AllBlockTags {
-		WINDMILL_SAILS, FAN_HEATERS, WINDOWABLE, NON_MOVABLE, BRITTLE, SEATS, SAILS, VALVE_HANDLES, FAN_TRANSPARENT, SAFE_NBT, SLIMY_LOGS(TIC), BEACON_BASE_BLOCKS(MC)
+		WINDMILL_SAILS, FAN_HEATERS, WINDOWABLE, NON_MOVABLE, BRITTLE, SEATS, SAILS, VALVE_HANDLES, FAN_TRANSPARENT, SAFE_NBT
 
 		;
 
-		public ITag.INamedTag<Block> tag;
+		public net.minecraft.tag.Tag.Identified<Block> tag;
 
 		private AllBlockTags() {
-			this(MOD, "");
+			this(NameSpace.MOD, "");
 		}
 
 		private AllBlockTags(NameSpace namespace) {
@@ -157,39 +129,35 @@ public class AllTags {
 		}
 
 		private AllBlockTags(NameSpace namespace, String path) {
-			ResourceLocation id = new ResourceLocation(namespace.id, (path.isEmpty() ? "" : path + "/") + Lang.asId(name()));
-			if (ModList.get().isLoaded(namespace.id)) {
-				tag = BlockTags.makeWrapperTag(id.toString());
-				REGISTRATE.addDataGenerator(ProviderType.BLOCK_TAGS, prov -> prov.getOrCreateTagBuilder(tag));
-			} else {
-				tag = new EmptyNamedTag<>(id);
-			}
+			/*tag = new BlockTags.Wrapper(
+				new Identifier(namespace.id, (path.isEmpty() ? "" : path + "/") + Lang.asId(name())));*/
 		}
 
 		public boolean matches(BlockState block) {
 			return tag.contains(block.getBlock());
 		}
 
-		public void includeIn(AllBlockTags parent) {
-			REGISTRATE.addDataGenerator(ProviderType.BLOCK_TAGS, prov -> prov.getOrCreateTagBuilder(parent.tag)
-				.addTag(tag));
+		/*public void includeIn(AllBlockTags parent) {
+			REGISTRATE.addDataGenerator(ProviderType.BLOCK_TAGS, prov -> prov.getBuilder(parent.tag)
+				.add(tag));
+		}*/
+
+		public void includeAll(net.minecraft.tag.Tag.Identified<Block> child) {
+			/*REGISTRATE.addDataGenerator(ProviderType.BLOCK_TAGS, prov -> prov.getBuilder(tag)
+				.add(child));*/
 		}
 
-		public void includeAll(ITag.INamedTag<Block> child) {
-			REGISTRATE.addDataGenerator(ProviderType.BLOCK_TAGS, prov -> prov.getOrCreateTagBuilder(tag)
-				.addTag(child));
-		}
-		
-		public void add(Block ...values) {
-			REGISTRATE.addDataGenerator(ProviderType.BLOCK_TAGS, prov -> prov.getOrCreateTagBuilder(tag).add(values));
+		public void add(Block... values) {
+			/*REGISTRATE.addDataGenerator(ProviderType.BLOCK_TAGS, prov -> prov.getBuilder(tag)
+				.add(values));*/
 		}
 	}
 
 	public static void register() {
-		AllItemTags.CREATE_INGOTS.includeIn(AllItemTags.BEACON_PAYMENT);
+		/*AllItemTags.CREATE_INGOTS.includeIn(AllItemTags.BEACON_PAYMENT);
 		AllItemTags.CREATE_INGOTS.includeIn(AllItemTags.INGOTS);
 
-		AllItemTags.UPRIGHT_ON_BELT.add(Items.GLASS_BOTTLE, Items.POTION, Items.SPLASH_POTION, Items.LINGERING_POTION);
+		AllItemTags.UPRIGHT_ON_BELT.add(Items.GLASS_BOTTLE, Items.POTION, Items.SPLASH_POTION, Items.LINGERING_POTION);*/
 
 		AllBlockTags.WINDMILL_SAILS.includeAll(BlockTags.WOOL);
 		
@@ -199,10 +167,8 @@ public class AllTags {
 		AllBlockTags.FAN_TRANSPARENT.includeAll(BlockTags.FENCES);
 		AllBlockTags.FAN_TRANSPARENT.add(Blocks.IRON_BARS);
 
-		AllBlockTags.FAN_HEATERS.add(Blocks.MAGMA_BLOCK, Blocks.CAMPFIRE, Blocks.LAVA, Blocks.FIRE, Blocks.SOUL_FIRE,
-			Blocks.SOUL_CAMPFIRE);
-		AllBlockTags.SAFE_NBT.includeAll(BlockTags.SIGNS);
+		AllBlockTags.FAN_HEATERS.add(Blocks.MAGMA_BLOCK, Blocks.CAMPFIRE, Blocks.LAVA, Blocks.FIRE);
 
-		AllFluidTags.loadClass();
+		AllBlockTags.SAFE_NBT.includeAll(BlockTags.SIGNS);
 	}
 }

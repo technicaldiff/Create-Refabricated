@@ -3,79 +3,59 @@ package com.simibubi.create.foundation.block.render;
 import java.util.List;
 import java.util.Random;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
-
 import net.minecraft.block.BlockState;
-import net.minecraft.client.renderer.model.BakedQuad;
-import net.minecraft.client.renderer.model.IBakedModel;
-import net.minecraft.client.renderer.model.ItemCameraTransforms.TransformType;
-import net.minecraft.client.renderer.model.ItemOverrideList;
-import net.minecraft.client.renderer.texture.TextureAtlasSprite;
-import net.minecraft.util.Direction;
-import net.minecraftforge.client.model.data.EmptyModelData;
-import net.minecraftforge.client.model.data.IModelData;
+import net.minecraft.client.render.model.BakedModel;
+import net.minecraft.client.render.model.BakedQuad;
+import net.minecraft.client.render.model.json.ModelOverrideList;
+import net.minecraft.client.render.model.json.ModelTransformation;
+import net.minecraft.client.texture.Sprite;
+import net.minecraft.util.math.Direction;
 
-public class WrappedBakedModel implements IBakedModel {
+public class WrappedBakedModel implements BakedModel {
 
-	protected IBakedModel template;
+	public BakedModel template;
 
-	public WrappedBakedModel(IBakedModel template) {
+	public WrappedBakedModel(BakedModel template) {
 		this.template = template;
 	}
-	
-	@Override
-	public IBakedModel getBakedModel() {
-		return template;
-	}
 
 	@Override
-	public boolean isAmbientOcclusion() {
-		return template.isAmbientOcclusion();
-	}
-
-	@Override
-	public boolean isGui3d() {
-		return template.isGui3d();
-	}
-
-	@Override
-	public boolean isBuiltInRenderer() {
-		return template.isBuiltInRenderer();
-	}
-
-	@Override
-	public TextureAtlasSprite getParticleTexture(IModelData data) {
-		return template.getParticleTexture(data);
-	}
-
-	@Override
-	public ItemOverrideList getOverrides() {
+	public ModelOverrideList getOverrides() {
 		return template.getOverrides();
 	}
 
 	@Override
-	public IBakedModel handlePerspective(TransformType cameraTransformType, MatrixStack mat) {
-		template.handlePerspective(cameraTransformType, mat);
-		return this;
+	public boolean useAmbientOcclusion() {
+		return template.useAmbientOcclusion();
+	}
+
+	@Override
+	public boolean hasDepth() {
+		return template.hasDepth();
 	}
 
 	@Override
 	public List<BakedQuad> getQuads(BlockState state, Direction side, Random rand) {
-		return getQuads(state, side, rand, EmptyModelData.INSTANCE);
+		return template.getQuads(state, side, rand);
 	}
 
 	@Override
-	public List<BakedQuad> getQuads(BlockState state, Direction side, Random rand, IModelData data) {
-		return template.getQuads(state, side, rand, data);
+	public Sprite getSprite() {
+		return template.getSprite();
 	}
 
 	@Override
-	public TextureAtlasSprite getParticleTexture() {
-		return getParticleTexture(EmptyModelData.INSTANCE);
+	public ModelTransformation getTransformation() {
+		return template.getTransformation();
 	}
 
 	@Override
 	public boolean isSideLit() {
 		return template.isSideLit();
+	}
+
+	@Override
+	public boolean isBuiltin() {
+		return false;
 	}
 }

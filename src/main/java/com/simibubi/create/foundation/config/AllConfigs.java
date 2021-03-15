@@ -1,61 +1,83 @@
 package com.simibubi.create.foundation.config;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Map.Entry;
-import java.util.function.Supplier;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
-import org.apache.commons.lang3.tuple.Pair;
+import me.shedaniel.autoconfig.AutoConfig;
+import me.shedaniel.autoconfig.ConfigData;
+import me.shedaniel.autoconfig.annotation.Config;
+import me.shedaniel.autoconfig.annotation.ConfigEntry.Gui.CollapsibleObject;
+import me.shedaniel.autoconfig.annotation.ConfigEntry.Gui.Tooltip;
+import me.shedaniel.autoconfig.serializer.Toml4jConfigSerializer;
 
-import net.minecraftforge.common.ForgeConfigSpec;
-import net.minecraftforge.fml.ModLoadingContext;
-import net.minecraftforge.fml.config.ModConfig;
-import net.minecraftforge.fml.config.ModConfig.Type;
-
-public class AllConfigs {
-
-	static Map<ConfigBase, ModConfig.Type> configs = new HashMap<>();
-
-	public static CClient CLIENT;
-	public static CCommon COMMON;
-	public static CServer SERVER;
-
-	private static <T extends ConfigBase> T register(Supplier<T> factory, ModConfig.Type side) {
-		Pair<T, ForgeConfigSpec> specPair = new ForgeConfigSpec.Builder().configure(builder -> {
-			T config = factory.get();
-			config.registerAll(builder);
-			return config;
-		});
-
-		T config = specPair.getLeft();
-		config.specification = specPair.getRight();
-		configs.put(config, side);
-		return config;
-	}
-
+@Config(name = "create")
+public class AllConfigs implements ConfigData {
 	public static void register() {
-		CLIENT = register(CClient::new, ModConfig.Type.CLIENT);
-		COMMON = register(CCommon::new, ModConfig.Type.COMMON);
-		SERVER = register(CServer::new, ModConfig.Type.SERVER);
-
-		for (Entry<ConfigBase, Type> pair : configs.entrySet())
-			ModLoadingContext.get()
-				.registerConfig(pair.getValue(), pair.getKey().specification);
+		try {
+			AutoConfig.register(AllConfigs.class, Toml4jConfigSerializer::new).getConfig().validatePostLoad();
+		} catch (ValidationException e) {
+			throw new RuntimeException(e);
+		}
 	}
 
-	public static void onLoad(ModConfig.Loading event) {
-		for (Entry<ConfigBase, Type> pair : configs.entrySet())
-			if (pair.getKey().specification == event.getConfig()
-				.getSpec())
-				pair.getKey()
-					.onLoad();
-	}
+	// use this to use the config
+	// ModConfig config = AutoConfig.getConfigHolder(ModConfig.class).getConfig();
 
-	public static void onReload(ModConfig.Reloading event) {
-		for (Entry<ConfigBase, Type> pair : configs.entrySet())
-			if (pair.getKey().specification == event.getConfig()
-				.getSpec())
-				pair.getKey()
-					.onReload();
+	/* see CServer (old)
+	static String recipes = "Packmakers' control panel for internal recipe compat";
+	static String schematics = "Everything related to Schematic tools";
+	static String kinetics = "Parameters and abilities of Create's kinetic mechanisms";
+	static String fluids = "Create's liquid manipulation tools";
+	static String logistics = "Tweaks for logistical components";
+	static String curiosities = "Gadgets and other Shenanigans added by Create";
+	static String infrastructure = "The Backbone of Create";
+	 */
+
+	// creating collapsible groups
+	@CollapsibleObject
+	@Tooltip
+	CClient client = new CClient();
+
+	@CollapsibleObject
+	CCommon common = new CCommon();
+
+	@CollapsibleObject
+	CCuriosities curiosities = new CCuriosities();
+
+	@CollapsibleObject
+	CFluids fluids = new CFluids();
+
+	@CollapsibleObject
+	CKinetics kinetics = new CKinetics();
+
+	@CollapsibleObject
+	CLogistics logistics = new CLogistics();
+
+	@CollapsibleObject
+	CRecipes recipes = new CRecipes();
+
+	@CollapsibleObject
+	CSchematics schematics = new CSchematics();
+
+	@CollapsibleObject
+	CServer server = new CServer();
+
+	@CollapsibleObject
+	CStress stress = new CStress();
+
+	@CollapsibleObject
+	CWorldGen worldGen = new CWorldGen();
+
+	@Override
+	public void validatePostLoad() throws ValidationException {
+		client.validate();
+		curiosities.validate();
+		fluids.validate();
+		kinetics.validate();
+		logistics.validate();
+		recipes.validate();
+		schematics.validate();
+		server.validate();
+		worldGen.validate();
 	}
 }

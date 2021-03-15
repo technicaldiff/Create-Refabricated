@@ -4,24 +4,21 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.function.Predicate;
 
-import com.simibubi.create.content.logistics.InWorldProcessing;
-import net.minecraft.advancements.CriteriaTriggers;
-import net.minecraft.block.Block;
+import com.simibubi.create.foundation.mixin.accessor.CriteriaRegistryAccessor;
+
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.fluid.Fluid;
-import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.IWorld;
-import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraft.util.math.Box;
+import net.minecraft.world.WorldAccess;
 
 public class AllTriggers {
 
 	private static final List<CriterionTriggerBase<?>> triggers = new LinkedList<>();
 
-	public static final RegistryTrigger<Fluid> INFINITE_FLUID = add(new RegistryTrigger<>("infinite_fluid", ForgeRegistries.FLUIDS));
-	public static final RegistryTrigger<Block> BRACKET_APPLY_TRIGGER = add(new RegistryTrigger<>("bracket_apply", ForgeRegistries.BLOCKS));
-	public static final EnumTrigger<InWorldProcessing.Type> FAN_PROCESSING = add(new EnumTrigger<>("fan_processing", InWorldProcessing.Type.class));
+	//public static final RegistryTrigger<Fluid> INFINITE_FLUID = add(new RegistryTrigger<>("infinite_fluid", ForgeRegistries.FLUIDS));
+	//public static final RegistryTrigger<Block> BRACKET_APPLY_TRIGGER = add(new RegistryTrigger<>("bracket_apply", ForgeRegistries.BLOCKS));
+	//public static final EnumTrigger<InWorldProcessing.Type> FAN_PROCESSING = add(new EnumTrigger<>("fan_processing", InWorldProcessing.Type.class));
 
 	public static final SimpleTrigger
 			ROTATION = simple("rotation"), 
@@ -77,7 +74,7 @@ public class AllTriggers {
 	}
 
 	public static void register() {
-		triggers.forEach(CriteriaTriggers::register);
+		triggers.forEach(CriteriaRegistryAccessor::register);
 	}
 
 	public static void triggerFor(ITriggerable trigger, PlayerEntity player) {
@@ -85,21 +82,21 @@ public class AllTriggers {
 			trigger.trigger((ServerPlayerEntity) player);
 	}
 
-	public static void triggerForNearbyPlayers(ITriggerable trigger, IWorld world, BlockPos pos, int range) {
+	public static void triggerForNearbyPlayers(ITriggerable trigger, WorldAccess world, BlockPos pos, int range) {
 		triggerForNearbyPlayers(trigger, world, pos, range, player -> true);
 	}
 
-	public static void triggerForNearbyPlayers(ITriggerable trigger, IWorld world, BlockPos pos, int range,
+	public static void triggerForNearbyPlayers(ITriggerable trigger, WorldAccess world, BlockPos pos, int range,
 			Predicate<PlayerEntity> playerFilter) {
 		if (world == null)
 			return;
-		if (world.isRemote())
+		if (world.isClient())
 			return;
 		List<ServerPlayerEntity> players = getPlayersInRange(world, pos, range);
 		players.stream().filter(playerFilter).forEach(trigger::trigger);
 	}
 
-	public static List<ServerPlayerEntity> getPlayersInRange(IWorld world, BlockPos pos, int range) {
-		return world.getEntitiesWithinAABB(ServerPlayerEntity.class, new AxisAlignedBB(pos).grow(range));
+	public static List<ServerPlayerEntity> getPlayersInRange(WorldAccess world, BlockPos pos, int range) {
+		return world.getNonSpectatingEntities(ServerPlayerEntity.class, new Box(pos).expand(range));
 	}
 }

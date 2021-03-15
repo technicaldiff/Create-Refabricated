@@ -8,28 +8,28 @@ import java.util.function.Supplier;
 
 import org.apache.commons.lang3.tuple.Pair;
 
-import com.tterrag.registrate.util.nullness.NonNullBiConsumer;
-import com.tterrag.registrate.util.nullness.NonNullFunction;
+import com.simibubi.create.registrate.util.nullness.NonNullBiConsumer;
+import com.simibubi.create.registrate.util.nullness.NonNullFunction;
 
-import net.minecraft.client.renderer.model.IBakedModel;
+import net.minecraft.client.render.model.BakedModel;
 import net.minecraft.item.Item;
 
 public class CustomItemModels {
 
-	private List<Pair<Supplier<? extends Item>, NonNullFunction<IBakedModel, ? extends IBakedModel>>> registered;
-	private Map<Item, NonNullFunction<IBakedModel, ? extends IBakedModel>> customModels;
-	
+	private final List<Pair<Supplier<? extends Item>, NonNullFunction<BakedModel, ? extends BakedModel>>> registered;
+	private final Map<Item, NonNullFunction<BakedModel, ? extends BakedModel>> customModels;
+
 	public CustomItemModels() {
 		registered = new ArrayList<>();
 		customModels = new IdentityHashMap<>();
 	}
 
 	public void register(Supplier<? extends Item> entry,
-		NonNullFunction<IBakedModel, ? extends IBakedModel> behaviour) {
+						 NonNullFunction<BakedModel, ? extends BakedModel> behaviour) {
 		registered.add(Pair.of(entry, behaviour));
 	}
-	
-	public void foreach(NonNullBiConsumer<Item, NonNullFunction<IBakedModel, ? extends IBakedModel>> consumer) {
+
+	public void foreach(NonNullBiConsumer<Item, NonNullFunction<BakedModel, ? extends BakedModel>> consumer) {
 		loadEntriesIfMissing();
 		customModels.forEach(consumer);
 	}

@@ -11,16 +11,16 @@ import com.mojang.serialization.codecs.PrimitiveCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.simibubi.create.AllParticleTypes;
 
-import net.minecraft.client.particle.ParticleManager.IParticleMetaFactory;
-import net.minecraft.network.PacketBuffer;
-import net.minecraft.particles.IParticleData;
-import net.minecraft.particles.ParticleType;
-import net.minecraft.util.Direction.Axis;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
+import net.minecraft.client.particle.ParticleManager;
+import net.minecraft.network.PacketByteBuf;
+import net.minecraft.particle.ParticleEffect;
+import net.minecraft.particle.ParticleType;
+import net.minecraft.util.math.Direction.Axis;
 
 public class RotationIndicatorParticleData
-	implements IParticleData, ICustomParticleDataWithSprite<RotationIndicatorParticleData> {
+	implements ParticleEffect, CustomParticleDataWithSprite<RotationIndicatorParticleData> {
 
 	// TODO 1.16 make this unnecessary
 	public static final PrimitiveCodec<Character> CHAR = new PrimitiveCodec<Character>() {
@@ -43,7 +43,7 @@ public class RotationIndicatorParticleData
 
 	public static final Codec<RotationIndicatorParticleData> CODEC = RecordCodecBuilder.create(i -> i
 		.group(Codec.INT.fieldOf("color")
-			.forGetter(p -> p.color),
+				.forGetter(p -> p.color),
 			Codec.FLOAT.fieldOf("speed")
 				.forGetter(p -> p.speed),
 			Codec.FLOAT.fieldOf("radius1")
@@ -56,10 +56,10 @@ public class RotationIndicatorParticleData
 				.forGetter(p -> p.axis))
 		.apply(i, RotationIndicatorParticleData::new));
 
-	public static final IParticleData.IDeserializer<RotationIndicatorParticleData> DESERIALIZER =
-		new IParticleData.IDeserializer<RotationIndicatorParticleData>() {
-			public RotationIndicatorParticleData deserialize(ParticleType<RotationIndicatorParticleData> particleTypeIn,
-				StringReader reader) throws CommandSyntaxException {
+	public static final Factory<RotationIndicatorParticleData> DESERIALIZER =
+		new Factory<RotationIndicatorParticleData>() {
+			public RotationIndicatorParticleData read(ParticleType<RotationIndicatorParticleData> particleTypeIn,
+													  StringReader reader) throws CommandSyntaxException {
 				reader.expect(' ');
 				int color = reader.readInt();
 				reader.expect(' ');
@@ -76,7 +76,7 @@ public class RotationIndicatorParticleData
 			}
 
 			public RotationIndicatorParticleData read(ParticleType<RotationIndicatorParticleData> particleTypeIn,
-				PacketBuffer buffer) {
+													  PacketByteBuf buffer) {
 				return new RotationIndicatorParticleData(buffer.readInt(), buffer.readFloat(), buffer.readFloat(),
 					buffer.readFloat(), buffer.readInt(), buffer.readChar());
 			}
@@ -90,7 +90,7 @@ public class RotationIndicatorParticleData
 	final char axis;
 
 	public RotationIndicatorParticleData(int color, float speed, float radius1, float radius2, int lifeSpan,
-		char axis) {
+										 char axis) {
 		this.color = color;
 		this.speed = speed;
 		this.radius1 = radius1;
@@ -113,7 +113,7 @@ public class RotationIndicatorParticleData
 	}
 
 	@Override
-	public void write(PacketBuffer buffer) {
+	public void write(PacketByteBuf buffer) {
 		buffer.writeInt(color);
 		buffer.writeFloat(speed);
 		buffer.writeFloat(radius1);
@@ -123,13 +123,13 @@ public class RotationIndicatorParticleData
 	}
 
 	@Override
-	public String getParameters() {
+	public String asString() {
 		return String.format(Locale.ROOT, "%s %d %.2f %.2f %.2f %d %c", AllParticleTypes.ROTATION_INDICATOR.parameter(),
 			color, speed, radius1, radius2, lifeSpan, axis);
 	}
 
 	@Override
-	public IDeserializer<RotationIndicatorParticleData> getDeserializer() {
+	public Factory<RotationIndicatorParticleData> getDeserializer() {
 		return DESERIALIZER;
 	}
 
@@ -139,8 +139,8 @@ public class RotationIndicatorParticleData
 	}
 
 	@Override
-	@OnlyIn(Dist.CLIENT)
-	public IParticleMetaFactory<RotationIndicatorParticleData> getMetaFactory() {
+	@Environment(EnvType.CLIENT)
+	public ParticleManager.SpriteAwareFactory<RotationIndicatorParticleData> getMetaFactory() {
 		return RotationIndicatorParticle.Factory::new;
 	}
 

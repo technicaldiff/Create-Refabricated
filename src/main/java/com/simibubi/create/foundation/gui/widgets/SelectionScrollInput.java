@@ -5,22 +5,21 @@ import java.util.List;
 
 import com.simibubi.create.foundation.utility.Lang;
 
-import net.minecraft.util.text.IFormattableTextComponent;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.util.text.TextFormatting;
+import net.minecraft.text.LiteralText;
+import net.minecraft.text.Text;
+import net.minecraft.util.Formatting;
 
 public class SelectionScrollInput extends ScrollInput {
 
-	private final IFormattableTextComponent scrollToSelect = Lang.translate("gui.scrollInput.scrollToSelect");
-	protected List<ITextComponent> options;
+	private final Text scrollToSelect = Lang.translate("gui.scrollInput.scrollToSelect");
+	protected List<Text> options;
 
 	public SelectionScrollInput(int xIn, int yIn, int widthIn, int heightIn) {
 		super(xIn, yIn, widthIn, heightIn);
 		options = new ArrayList<>();
 	}
 
-	public ScrollInput forOptions(List<ITextComponent> options) {
+	public ScrollInput forOptions(List<Text> options) {
 		this.options = options;
 		this.max = options.size();
 		updateTooltip();
@@ -40,14 +39,14 @@ public class SelectionScrollInput extends ScrollInput {
 	@Override
 	protected void updateTooltip() {
 		toolTip.clear();
-		toolTip.add(title.copy().formatted(TextFormatting.BLUE));
+		toolTip.add(title.copy().formatted(Formatting.BLUE));
 		for (int i = min; i < max; i++) {
 			if (i == state)
-				toolTip.add(StringTextComponent.EMPTY.copy().append("-> ").append(options.get(i)).formatted(TextFormatting.WHITE));
+				toolTip.add(LiteralText.EMPTY.copy().append("-> ").append(options.get(i)).formatted(Formatting.WHITE));
 			else
-				toolTip.add(StringTextComponent.EMPTY.copy().append("> ").append(options.get(i)).formatted(TextFormatting.GRAY));
+				toolTip.add(LiteralText.EMPTY.copy().append("> ").append(options.get(i)).formatted(Formatting.GRAY));
 		}
-		toolTip.add( StringTextComponent.EMPTY.copy().append(scrollToSelect).formatted(TextFormatting.ITALIC, TextFormatting.DARK_GRAY));
+		toolTip.add(LiteralText.EMPTY.copy().append(scrollToSelect).formatted(Formatting.ITALIC, Formatting.DARK_GRAY));
 	}
 
 }

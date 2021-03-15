@@ -1,22 +1,22 @@
 package com.simibubi.create.foundation.block.render;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
 import com.simibubi.create.foundation.item.PartialItemModelRenderer;
 
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.IRenderTypeBuffer;
-import net.minecraft.client.renderer.model.ItemCameraTransforms;
-import net.minecraft.client.renderer.tileentity.ItemStackTileEntityRenderer;
+import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.render.VertexConsumerProvider;
+import net.minecraft.client.render.item.BuiltinModelItemRenderer;
+import net.minecraft.client.render.model.json.ModelTransformation;
+import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.item.ItemStack;
 
-public class CustomRenderedItemModelRenderer<M extends CustomRenderedItemModel> extends ItemStackTileEntityRenderer {
+public class CustomRenderedItemModelRenderer<M extends CustomRenderedItemModel> extends BuiltinModelItemRenderer {
 
 	@Override
 	@SuppressWarnings("unchecked")
-	public void render(ItemStack stack, ItemCameraTransforms.TransformType p_239207_2_, MatrixStack ms, IRenderTypeBuffer buffer, int light, int overlay) {
-		M mainModel = ((M) Minecraft.getInstance()
+	public void render(ItemStack stack, ModelTransformation.Mode p_239207_2_, MatrixStack ms, VertexConsumerProvider buffer, int light, int overlay) {
+		M mainModel = ((M) MinecraftClient.getInstance()
 			.getItemRenderer()
-			.getItemModelWithOverrides(stack, null, null));
+			.getHeldItemModel(stack, null, null));
 		PartialItemModelRenderer renderer = PartialItemModelRenderer.of(stack, p_239207_2_, ms, buffer, overlay);
 
 		ms.push();
@@ -25,8 +25,8 @@ public class CustomRenderedItemModelRenderer<M extends CustomRenderedItemModel> 
 		ms.pop();
 	}
 
-	protected void render(ItemStack stack, M model, PartialItemModelRenderer renderer, MatrixStack ms,
-		IRenderTypeBuffer buffer, int light, int overlay) {
+	public void render(ItemStack stack, M model, PartialItemModelRenderer renderer, MatrixStack ms,
+		VertexConsumerProvider buffer, int light, int overlay) {
 
 	}
 

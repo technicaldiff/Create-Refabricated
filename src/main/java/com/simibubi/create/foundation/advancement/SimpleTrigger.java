@@ -3,16 +3,16 @@ package com.simibubi.create.foundation.advancement;
 import java.util.List;
 import java.util.function.Supplier;
 
+import org.jetbrains.annotations.Nullable;
+
 import com.google.gson.JsonObject;
+import com.simibubi.create.registrate.util.nullness.MethodsReturnNonnullByDefault;
+import com.simibubi.create.registrate.util.nullness.ParametersAreNonnullByDefault;
 
-import net.minecraft.advancements.criterion.EntityPredicate;
-import mcp.MethodsReturnNonnullByDefault;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.loot.ConditionArrayParser;
-import net.minecraft.util.ResourceLocation;
-
-import javax.annotation.Nullable;
-import javax.annotation.ParametersAreNonnullByDefault;
+import net.minecraft.predicate.entity.AdvancementEntityPredicateDeserializer;
+import net.minecraft.predicate.entity.EntityPredicate;
+import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.util.Identifier;
 
 @MethodsReturnNonnullByDefault
 @ParametersAreNonnullByDefault
@@ -23,7 +23,7 @@ public class SimpleTrigger extends CriterionTriggerBase<SimpleTrigger.Instance> 
 	}
 
 	@Override
-	public Instance conditionsFromJson(JsonObject json, ConditionArrayParser context) {
+	public Instance conditionsFromJson(JsonObject json, AdvancementEntityPredicateDeserializer context) {
 		return new Instance(getId());
 	}
 
@@ -37,8 +37,8 @@ public class SimpleTrigger extends CriterionTriggerBase<SimpleTrigger.Instance> 
 
 	public static class Instance extends CriterionTriggerBase.Instance {
 
-		public Instance(ResourceLocation idIn) {
-			super(idIn, EntityPredicate.AndPredicate.EMPTY); // FIXME: Is this right?
+		public Instance(Identifier idIn) {
+			super(idIn, EntityPredicate.Extended.EMPTY); // FIXME: Is this right?
 		}
 
 		@Override

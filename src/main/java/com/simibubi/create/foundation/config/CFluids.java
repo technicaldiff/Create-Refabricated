@@ -1,33 +1,31 @@
 package com.simibubi.create.foundation.config;
 
-public class CFluids extends ConfigBase {
+import com.simibubi.create.foundation.config.util.Validatable;
+import me.shedaniel.autoconfig.ConfigData;
+import me.shedaniel.autoconfig.annotation.ConfigEntry.Gui.Tooltip;
 
-	public ConfigInt fluidTankCapacity = i(8, 1, "fluidTankCapacity", Comments.buckets, Comments.fluidTankCapacity);
-	public ConfigInt fluidTankMaxHeight = i(32, 1, "fluidTankMaxHeight", Comments.blocks, Comments.fluidTankMaxHeight);
-	public ConfigInt mechanicalPumpRange =
-		i(16, 1, "mechanicalPumpRange", Comments.blocks, Comments.mechanicalPumpRange);
+public class CFluids implements Validatable {
+	@Tooltip
+	int fluidTankCapacity = 8; // min 1, "[in Buckets]" "The amount of liquid a tank can hold per block."
 
-	public ConfigInt hosePulleyBlockThreshold = i(10000, -1, "hosePulleyBlockThreshold", Comments.blocks,
-		Comments.toDisable, Comments.hosePulleyBlockThreshold);
-	public ConfigInt hosePulleyRange = i(128, 1, "hosePulleyRange", Comments.blocks, Comments.hosePulleyRange);
+	@Tooltip
+	int fluidTankMaxHeight = 32; // min 1, "[in Blocks]" "The maximum height a fluid tank can reach."
+
+	@Tooltip
+	int mechanicalPumpRange = 16; // min 1, "[in Blocks]" "The maximum distance a mechanical pump can push or pull liquids on either side."
+
+	@Tooltip(count = 2)
+	int hosePulleyBlockThreshold = 10000; // min -1, "[in Blocks]" "[-1 to disable this behaviour]" "The minimum amount of fluid blocks the hose pulley needs to find before deeming it an infinite source."
+
+	@Tooltip
+	int hosePulleyRange = 128; // min 1, "[in Blocks]" "The maximum distance a hose pulley can draw fluid blocks from."
 
 	@Override
-	public String getName() {
-		return "fluids";
+	public void validate() throws ConfigData.ValidationException {
+		fluidTankCapacity = Math.max(fluidTankCapacity, 1);
+		fluidTankMaxHeight = Math.max(fluidTankMaxHeight, 1);
+		mechanicalPumpRange = Math.max(mechanicalPumpRange, 1);
+		hosePulleyBlockThreshold = Math.max(hosePulleyBlockThreshold, -1);
+		hosePulleyRange = Math.max(hosePulleyRange, 1);
 	}
-
-	private static class Comments {
-		static String blocks = "[in Blocks]";
-		static String buckets = "[in Buckets]";
-		static String fluidTankCapacity = "The amount of liquid a tank can hold per block.";
-		static String fluidTankMaxHeight = "The maximum height a fluid tank can reach.";
-		static String mechanicalPumpRange =
-			"The maximum distance a mechanical pump can push or pull liquids on either side.";
-
-		static String hosePulleyRange = "The maximum distance a hose pulley can draw fluid blocks from.";
-		static String toDisable = "[-1 to disable this behaviour]";
-		static String hosePulleyBlockThreshold =
-			"The minimum amount of fluid blocks the hose pulley needs to find before deeming it an infinite source.";
-	}
-
 }

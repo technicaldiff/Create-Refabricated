@@ -1,15 +1,6 @@
 package com.simibubi.create.content.logistics.item.filter;
 
-import com.simibubi.create.AllContainerTypes;
-
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.network.PacketBuffer;
-import net.minecraftforge.items.ItemStackHandler;
-import net.minecraftforge.items.SlotItemHandler;
-
-public class FilterContainer extends AbstractFilterContainer {
+/*public class FilterContainer extends AbstractFilterContainer {
 
 	boolean respectNBT;
 	boolean blacklist;
@@ -44,16 +35,16 @@ public class FilterContainer extends AbstractFilterContainer {
 	
 	@Override
 	protected void readData(ItemStack filterItem) {
-		CompoundNBT tag = filterItem.getOrCreateTag();
+		CompoundTag tag = filterItem.getOrCreateTag();
 		respectNBT = tag.getBoolean("RespectNBT");
 		blacklist = tag.getBoolean("Blacklist");
 	}
 	
 	@Override
 	protected void saveData(ItemStack filterItem) {
-		CompoundNBT tag = filterItem.getOrCreateTag();
+		CompoundTag tag = filterItem.getOrCreateTag();
 		tag.putBoolean("RespectNBT", respectNBT);
 		tag.putBoolean("Blacklist", blacklist);
 	}
 
-}
+}*/

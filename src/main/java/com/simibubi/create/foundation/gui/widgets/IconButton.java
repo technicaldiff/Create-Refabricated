@@ -1,15 +1,15 @@
 package com.simibubi.create.foundation.gui.widgets;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.simibubi.create.foundation.gui.AllGuiTextures;
 import com.simibubi.create.foundation.gui.AllIcons;
 
-import net.minecraft.util.text.ITextComponent;
+import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.text.Text;
 
 public class IconButton extends AbstractSimiWidget {
 
-	private AllIcons icon;
+	private final AllIcons icon;
 	protected boolean pressed;
 
 	public IconButton(int x, int y, AllIcons icon) {
@@ -45,7 +45,7 @@ public class IconButton extends AbstractSimiWidget {
 		this.pressed = false;
 	}
 
-	public void setToolTip(ITextComponent text) {
+	public void setToolTip(Text text) {
 		toolTip.clear();
 		toolTip.add(text);
 	}

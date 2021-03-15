@@ -1,14 +1,14 @@
 package com.simibubi.create.foundation.utility;
 
-import static net.minecraft.util.Direction.DOWN;
-import static net.minecraft.util.Direction.EAST;
-import static net.minecraft.util.Direction.NORTH;
-import static net.minecraft.util.Direction.SOUTH;
-import static net.minecraft.util.Direction.UP;
-import static net.minecraft.util.Direction.WEST;
+import static net.minecraft.util.math.Direction.DOWN;
+import static net.minecraft.util.math.Direction.EAST;
+import static net.minecraft.util.math.Direction.NORTH;
+import static net.minecraft.util.math.Direction.SOUTH;
+import static net.minecraft.util.math.Direction.UP;
+import static net.minecraft.util.math.Direction.WEST;
 
-import net.minecraft.util.Direction;
-import net.minecraft.util.Direction.Axis;
+import net.minecraft.util.math.Direction;
+import net.minecraft.util.math.Direction.Axis;
 
 /**
  * A bunch of methods that got stripped out of Direction in 1.15
@@ -17,7 +17,7 @@ import net.minecraft.util.Direction.Axis;
  */
 public class DirectionHelper {
 
-	public static Direction rotateAround(Direction dir, Direction.Axis axis) {
+	public static Direction rotateAround(Direction dir, Axis axis) {
 		switch (axis) {
 		case X:
 			if (dir != WEST && dir != EAST) {
@@ -27,7 +27,7 @@ public class DirectionHelper {
 			return dir;
 		case Y:
 			if (dir != UP && dir != DOWN) {
-				return dir.rotateY();
+				return dir.rotateYClockwise();
 			}
 
 			return dir;

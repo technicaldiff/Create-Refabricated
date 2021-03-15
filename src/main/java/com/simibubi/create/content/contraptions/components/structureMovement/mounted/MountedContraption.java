@@ -4,38 +4,27 @@ import static com.simibubi.create.content.contraptions.components.structureMovem
 
 import java.util.Queue;
 
-import org.apache.commons.lang3.tuple.Pair;
-
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.content.contraptions.components.structureMovement.AssemblyException;
 import com.simibubi.create.content.contraptions.components.structureMovement.Contraption;
 import com.simibubi.create.content.contraptions.components.structureMovement.ContraptionLighter;
 import com.simibubi.create.content.contraptions.components.structureMovement.ContraptionType;
 import com.simibubi.create.content.contraptions.components.structureMovement.NonStationaryLighter;
-import com.simibubi.create.content.contraptions.components.structureMovement.mounted.CartAssemblerTileEntity.CartMovementMode;
+import com.simibubi.create.content.contraptions.components.structureMovement.mounted.CartAssemblerBlockEntity.CartMovementMode;
 import com.simibubi.create.foundation.utility.BlockHelper;
+import com.simibubi.create.foundation.utility.CNBTHelper;
 import com.simibubi.create.foundation.utility.Iterate;
-import com.simibubi.create.foundation.utility.NBTHelper;
 import com.simibubi.create.foundation.utility.VecHelper;
 
 import net.minecraft.block.BlockState;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.item.minecart.AbstractMinecartEntity;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.state.properties.BlockStateProperties;
-import net.minecraft.state.properties.RailShape;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.Direction;
-import net.minecraft.util.Direction.Axis;
-import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.block.enums.RailShape;
+import net.minecraft.entity.vehicle.AbstractMinecartEntity;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.IWorld;
+import net.minecraft.util.math.Box;
+import net.minecraft.util.math.Direction;
+import net.minecraft.util.math.Direction.Axis;
 import net.minecraft.world.World;
-import net.minecraft.world.gen.feature.template.Template.BlockInfo;
-import net.minecraftforge.items.IItemHandlerModifiable;
-import net.minecraftforge.items.wrapper.CombinedInvWrapper;
-import net.minecraftforge.items.wrapper.InvWrapper;
 
 public class MountedContraption extends Contraption {
 
@@ -64,8 +53,8 @@ public class MountedContraption extends Contraption {
 			return false;
 		
 		Axis axis = state.get(RAIL_SHAPE) == RailShape.EAST_WEST ? Axis.X : Axis.Z;
-		addBlock(pos, Pair.of(new BlockInfo(pos, AllBlocks.MINECART_ANCHOR.getDefaultState()
-			.with(BlockStateProperties.HORIZONTAL_AXIS, axis), null), null));
+		/*addBlock(pos, Pair.of(new StructureBlockInfo(pos, AllBlocks.MINECART_ANCHOR.getDefaultState()
+			.with(Properties.HORIZONTAL_AXIS, axis), null), null));*/
 		
 		if (blocks.size() == 1)
 			return false;
@@ -80,15 +69,15 @@ public class MountedContraption extends Contraption {
 		return true;
 	}
 
-	@Override
-	protected Pair<BlockInfo, TileEntity> capture(World world, BlockPos pos) {
-		Pair<BlockInfo, TileEntity> pair = super.capture(world, pos);
-		BlockInfo capture = pair.getKey();
-		if (!AllBlocks.CART_ASSEMBLER.has(capture.state))
+	/*@Override
+	protected Pair<StructureBlockInfo, BlockEntity> capture(World world, BlockPos pos) {
+		Pair<StructureBlockInfo, BlockEntity> pair = super.capture(world, pos);
+		StructureBlockInfo capture = pair.getKey();
+		if (!AllBlocks.CART_ASSEMBLER.getStateManager().getStates().contains(capture.state))
 			return pair;
 
-		Pair<BlockInfo, TileEntity> anchorSwap =
-			Pair.of(new BlockInfo(pos, CartAssemblerBlock.createAnchor(capture.state), null), pair.getValue());
+		Pair<StructureBlockInfo, BlockEntity> anchorSwap =
+			Pair.of(new StructureBlockInfo(pos, CartAssemblerBlock.createAnchor(capture.state), null), pair.getValue());
 		if (pos.equals(anchor) || connectedCart != null)
 			return anchorSwap;
 
@@ -96,20 +85,20 @@ public class MountedContraption extends Contraption {
 			if (axis.isVertical() || !VecHelper.onSameAxis(anchor, pos, axis))
 				continue;
 			for (AbstractMinecartEntity abstractMinecartEntity : world
-				.getEntitiesWithinAABB(AbstractMinecartEntity.class, new AxisAlignedBB(pos))) {
+				.getNonSpectatingEntities(AbstractMinecartEntity.class, new Box(pos))) {
 				if (!CartAssemblerBlock.canAssembleTo(abstractMinecartEntity))
 					break;
 				connectedCart = abstractMinecartEntity;
-				connectedCart.setPosition(pos.getX() + .5, pos.getY(), pos.getZ() + .5f);
+				connectedCart.updatePosition(pos.getX() + .5, pos.getY(), pos.getZ() + .5f);
 			}
 		}
 
 		return anchorSwap;
-	}
+	}*/
 
 	@Override
 	protected boolean movementAllowed(BlockState state, World world, BlockPos pos) {
-		if (!pos.equals(anchor) && AllBlocks.CART_ASSEMBLER.has(state))
+		if (!pos.equals(anchor) && AllBlocks.CART_ASSEMBLER.getStateManager().getStates().contains(state))
 			return testSecondaryCartAssembler(world, state, pos);
 		return super.movementAllowed(state, world, pos);
 	}
@@ -119,7 +108,7 @@ public class MountedContraption extends Contraption {
 			if (axis.isVertical() || !VecHelper.onSameAxis(anchor, pos, axis))
 				continue;
 			for (AbstractMinecartEntity abstractMinecartEntity : world
-				.getEntitiesWithinAABB(AbstractMinecartEntity.class, new AxisAlignedBB(pos))) {
+				.getNonSpectatingEntities(AbstractMinecartEntity.class, new Box(pos))) {
 				if (!CartAssemblerBlock.canAssembleTo(abstractMinecartEntity))
 					break;
 				return true;
@@ -129,40 +118,40 @@ public class MountedContraption extends Contraption {
 	}
 
 	@Override
-	public CompoundNBT writeNBT(boolean spawnPacket) {
-		CompoundNBT tag = super.writeNBT(spawnPacket);
-		NBTHelper.writeEnum(tag, "RotationMode", rotationMode);
+	public CompoundTag writeNBT(boolean spawnPacket) {
+		CompoundTag tag = super.writeNBT(spawnPacket);
+		CNBTHelper.writeEnum(tag, "RotationMode", rotationMode);
 		return tag;
 	}
 
 	@Override
-	public void readNBT(World world, CompoundNBT nbt, boolean spawnData) {
-		rotationMode = NBTHelper.readEnum(nbt, "RotationMode", CartMovementMode.class);
+	public void readNBT(World world, CompoundTag nbt, boolean spawnData) {
+		rotationMode = CNBTHelper.readEnum(nbt, "RotationMode", CartMovementMode.class);
 		super.readNBT(world, nbt, spawnData);
 	}
 
-	@Override
-	protected boolean customBlockPlacement(IWorld world, BlockPos pos, BlockState state) {
+	/*@Override
+	protected boolean customBlockPlacement(WorldAccess world, BlockPos pos, BlockState state) {
 		return AllBlocks.MINECART_ANCHOR.has(state);
 	}
 
 	@Override
-	protected boolean customBlockRemoval(IWorld world, BlockPos pos, BlockState state) {
+	protected boolean customBlockRemoval(WorldAccess world, BlockPos pos, BlockState state) {
 		return AllBlocks.MINECART_ANCHOR.has(state);
-	}
+	}*/
 	
 	@Override
 	public boolean canBeStabilized(Direction facing, BlockPos localPos) {
 		return true;
 	}
 	
-	@Override
+	/*@Override
 	public void addExtraInventories(Entity cart) {
-		if (!(cart instanceof IInventory))
+		if (!(cart instanceof Inventory))
 			return;
-		IItemHandlerModifiable handlerFromInv = new InvWrapper((IInventory) cart);
+		IItemHandlerModifiable handlerFromInv = new InvWrapper((Inventory) cart);
 		inventory = new CombinedInvWrapper(handlerFromInv, inventory);
-	}
+	}*/
 
 	@Override
 	public ContraptionLighter<?> makeLighter() {

@@ -1,24 +1,26 @@
 package com.simibubi.create.foundation.advancement;
 
-import com.google.common.collect.Sets;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonSyntaxException;
-import mcp.MethodsReturnNonnullByDefault;
-import net.minecraft.advancements.criterion.EntityPredicate;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.loot.ConditionArrayParser;
-import net.minecraft.loot.ConditionArraySerializer;
-
-import javax.annotation.Nullable;
-import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
+
+import org.jetbrains.annotations.Nullable;
+
+import com.google.common.collect.Sets;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonSyntaxException;
+import com.simibubi.create.registrate.util.nullness.MethodsReturnNonnullByDefault;
+import com.simibubi.create.registrate.util.nullness.ParametersAreNonnullByDefault;
+
+import net.minecraft.predicate.entity.AdvancementEntityPredicateDeserializer;
+import net.minecraft.predicate.entity.AdvancementEntityPredicateSerializer;
+import net.minecraft.predicate.entity.EntityPredicate;
+import net.minecraft.server.network.ServerPlayerEntity;
 
 @MethodsReturnNonnullByDefault
 @ParametersAreNonnullByDefault
@@ -46,7 +48,7 @@ public abstract class StringSerializableTrigger<T> extends CriterionTriggerBase<
 	}
 
 	@Override
-	public Instance<T> conditionsFromJson(JsonObject json, ConditionArrayParser context) {
+	public Instance<T> conditionsFromJson(JsonObject json, AdvancementEntityPredicateDeserializer context) {
 		if (json.has(getJsonKey())) {
 			JsonArray elements = json.getAsJsonArray(getJsonKey());
 			return new Instance<>(this,
@@ -74,7 +76,7 @@ public abstract class StringSerializableTrigger<T> extends CriterionTriggerBase<
 		private final StringSerializableTrigger<T> trigger;
 
 		public Instance(StringSerializableTrigger<T> trigger, @Nullable Set<T> entries) {
-			super(trigger.getId(), EntityPredicate.AndPredicate.EMPTY);
+			super(trigger.getId(), EntityPredicate.Extended.EMPTY);
 			this.trigger = trigger;
 			this.entries = entries;
 		}
@@ -87,7 +89,7 @@ public abstract class StringSerializableTrigger<T> extends CriterionTriggerBase<
 		}
 
 		@Override
-		public JsonObject toJson(ConditionArraySerializer p_230240_1_) {
+		public JsonObject toJson(AdvancementEntityPredicateSerializer p_230240_1_) {
 			JsonObject jsonobject = super.toJson(p_230240_1_);
 			JsonArray elements = new JsonArray();
 

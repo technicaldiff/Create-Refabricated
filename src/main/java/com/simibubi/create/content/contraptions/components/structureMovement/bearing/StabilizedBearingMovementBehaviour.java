@@ -1,6 +1,5 @@
 package com.simibubi.create.content.contraptions.components.structureMovement.bearing;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
 import com.simibubi.create.AllBlockPartials;
 import com.simibubi.create.content.contraptions.components.structureMovement.AbstractContraptionEntity;
 import com.simibubi.create.content.contraptions.components.structureMovement.ControlledContraptionEntity;
@@ -12,21 +11,22 @@ import com.simibubi.create.foundation.render.SuperByteBuffer;
 import com.simibubi.create.foundation.utility.AngleHelper;
 import com.simibubi.create.foundation.utility.AnimationTickHolder;
 
-import net.minecraft.client.renderer.IRenderTypeBuffer;
-import net.minecraft.client.renderer.RenderType;
-import net.minecraft.state.properties.BlockStateProperties;
-import net.minecraft.util.Direction;
-import net.minecraft.util.Direction.Axis;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
+import net.minecraft.client.render.RenderLayer;
+import net.minecraft.client.render.VertexConsumerProvider;
+import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.state.property.Properties;
+import net.minecraft.util.math.Direction;
+import net.minecraft.util.math.Direction.Axis;
 
 public class StabilizedBearingMovementBehaviour extends MovementBehaviour {
 
 	@Override
-	@OnlyIn(Dist.CLIENT)
+	@Environment(EnvType.CLIENT)
 	public void renderInContraption(MovementContext context, MatrixStack ms, MatrixStack msLocal,
-		IRenderTypeBuffer buffer) {
-		Direction facing = context.state.get(BlockStateProperties.FACING);
+		VertexConsumerProvider buffer) {
+		Direction facing = context.state.get(Properties.FACING);
 		AllBlockPartials top = AllBlockPartials.BEARING_TOP;
 		SuperByteBuffer superBuffer = top.renderOn(context.state);
 		float renderPartialTicks = AnimationTickHolder.getPartialTicks();
@@ -40,7 +40,7 @@ public class StabilizedBearingMovementBehaviour extends MovementBehaviour {
 
 		// rotate against parent
 		float offset = 0;
-		int offsetMultiplier = facing.getAxisDirection().getOffset();
+		int offsetMultiplier = facing.getDirection().offset();
 		
 		AbstractContraptionEntity entity = context.contraption.entity;
 		if (entity instanceof ControlledContraptionEntity) {
@@ -64,7 +64,7 @@ public class StabilizedBearingMovementBehaviour extends MovementBehaviour {
 		// render
 		superBuffer.light(msLocal.peek()
 			.getModel(), ContraptionRenderDispatcher.getLightOnContraption(context));
-		superBuffer.renderInto(ms, buffer.getBuffer(RenderType.getSolid()));
+		superBuffer.renderInto(ms, buffer.getBuffer(RenderLayer.getSolid()));
 	}
 
 }

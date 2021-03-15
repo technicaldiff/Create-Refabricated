@@ -1,82 +1,75 @@
 package com.simibubi.create.content.contraptions.components.structureMovement.mounted;
 
-import java.util.List;
 import java.util.Optional;
 
-import javax.annotation.Nullable;
+import org.jetbrains.annotations.Nullable;
 
 import com.simibubi.create.AllItems;
-import com.simibubi.create.content.contraptions.components.structureMovement.AbstractContraptionEntity;
 import com.simibubi.create.content.contraptions.components.structureMovement.Contraption;
 import com.simibubi.create.content.contraptions.components.structureMovement.OrientedContraptionEntity;
-import com.simibubi.create.foundation.utility.NBTHelper;
+import com.simibubi.create.foundation.utility.CNBTHelper;
 
 import net.minecraft.block.AbstractRailBlock;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.DispenserBlock;
-import net.minecraft.dispenser.DefaultDispenseItemBehavior;
-import net.minecraft.dispenser.IBlockSource;
-import net.minecraft.dispenser.IDispenseItemBehavior;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.item.minecart.AbstractMinecartEntity;
-import net.minecraft.entity.item.minecart.AbstractMinecartEntity.Type;
+import net.minecraft.block.dispenser.DispenserBehavior;
+import net.minecraft.block.dispenser.ItemDispenserBehavior;
+import net.minecraft.block.enums.RailShape;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.vehicle.AbstractMinecartEntity;
+import net.minecraft.entity.vehicle.AbstractMinecartEntity.Type;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.ItemUseContext;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.state.properties.RailShape;
-import net.minecraft.tags.BlockTags;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Direction;
-import net.minecraft.util.NonNullList;
+import net.minecraft.item.ItemUsageContext;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.tag.BlockTags;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.collection.DefaultedList;
+import net.minecraft.util.math.BlockPointer;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Direction;
 import net.minecraft.world.World;
-import net.minecraftforge.event.entity.player.PlayerInteractEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 
-@EventBusSubscriber
 public class MinecartContraptionItem extends Item {
 
-	private final AbstractMinecartEntity.Type minecartType;
+	private final Type minecartType;
 
-	public static MinecartContraptionItem rideable(Properties builder) {
+	public static MinecartContraptionItem rideable(Settings builder) {
 		return new MinecartContraptionItem(Type.RIDEABLE, builder);
 	}
 
-	public static MinecartContraptionItem furnace(Properties builder) {
+	public static MinecartContraptionItem furnace(Settings builder) {
 		return new MinecartContraptionItem(Type.FURNACE, builder);
 	}
 
-	public static MinecartContraptionItem chest(Properties builder) {
+	public static MinecartContraptionItem chest(Settings builder) {
 		return new MinecartContraptionItem(Type.CHEST, builder);
 	}
 
-	private MinecartContraptionItem(Type minecartTypeIn, Properties builder) {
+	private MinecartContraptionItem(Type minecartTypeIn, Settings builder) {
 		super(builder);
 		this.minecartType = minecartTypeIn;
-		DispenserBlock.registerDispenseBehavior(this, DISPENSER_BEHAVIOR);
+		DispenserBlock.registerBehavior(this, DISPENSER_BEHAVIOR);
 	}
 
 	// Taken and adjusted from MinecartItem
-	private static final IDispenseItemBehavior DISPENSER_BEHAVIOR = new DefaultDispenseItemBehavior() {
-		private final DefaultDispenseItemBehavior behaviourDefaultDispenseItem = new DefaultDispenseItemBehavior();
+	private static final DispenserBehavior DISPENSER_BEHAVIOR = new ItemDispenserBehavior() {
+		private final ItemDispenserBehavior behaviourDefaultDispenseItem = new ItemDispenserBehavior();
 
 		@Override
-		public ItemStack dispenseStack(IBlockSource source, ItemStack stack) {
+		public ItemStack dispenseSilently(BlockPointer source, ItemStack stack) {
 			Direction direction = source.getBlockState()
 				.get(DispenserBlock.FACING);
 			World world = source.getWorld();
-			double d0 = source.getX() + (double) direction.getXOffset() * 1.125D;
-			double d1 = Math.floor(source.getY()) + (double) direction.getYOffset();
-			double d2 = source.getZ() + (double) direction.getZOffset() * 1.125D;
+			double d0 = source.getX() + (double) direction.getOffsetX() * 1.125D;
+			double d1 = Math.floor(source.getY()) + (double) direction.getOffsetY();
+			double d2 = source.getZ() + (double) direction.getOffsetZ() * 1.125D;
 			BlockPos blockpos = source.getBlockPos()
 				.offset(direction);
 			BlockState blockstate = world.getBlockState(blockpos);
 			RailShape railshape = blockstate.getBlock() instanceof AbstractRailBlock
-				? ((AbstractRailBlock) blockstate.getBlock()).getRailDirection(blockstate, world, blockpos, null)
+				? getRailDirection(blockstate, null)
 				: RailShape.NORTH_SOUTH;
 			double d3;
 			if (blockstate.isIn(BlockTags.RAILS)) {
@@ -86,15 +79,14 @@ public class MinecartContraptionItem extends Item {
 					d3 = 0.1D;
 				}
 			} else {
-				if (!blockstate.isAir(world, blockpos) || !world.getBlockState(blockpos.down())
+				if (!blockstate.isAir() || !world.getBlockState(blockpos.down())
 					.isIn(BlockTags.RAILS)) {
 					return this.behaviourDefaultDispenseItem.dispense(source, stack);
 				}
 
 				BlockState blockstate1 = world.getBlockState(blockpos.down());
 				RailShape railshape1 = blockstate1.getBlock() instanceof AbstractRailBlock
-					? ((AbstractRailBlock) blockstate1.getBlock()).getRailDirection(blockstate1, world, blockpos.down(),
-						null)
+					? getRailDirection(blockstate1, null)
 					: RailShape.NORTH_SOUTH;
 				if (direction != Direction.DOWN && railshape1.isAscending()) {
 					d3 = -0.4D;
@@ -105,35 +97,35 @@ public class MinecartContraptionItem extends Item {
 
 			AbstractMinecartEntity abstractminecartentity = AbstractMinecartEntity.create(world, d0, d1 + d3, d2,
 				((MinecartContraptionItem) stack.getItem()).minecartType);
-			if (stack.hasDisplayName())
-				abstractminecartentity.setCustomName(stack.getDisplayName());
-			world.addEntity(abstractminecartentity);
+			if (stack.hasCustomName())
+				abstractminecartentity.setCustomName(stack.getName());
+			world.spawnEntity(abstractminecartentity);
 			addContraptionToMinecart(world, stack, abstractminecartentity, direction);
 
-			stack.shrink(1);
+			stack.decrement(1);
 			return stack;
 		}
 
 		@Override
-		protected void playDispenseSound(IBlockSource source) {
+		protected void playSound(BlockPointer source) {
 			source.getWorld()
-				.playEvent(1000, source.getBlockPos(), 0);
+				.syncWorldEvent(1000, source.getBlockPos(), 0);
 		}
 	};
 
 	// Taken and adjusted from MinecartItem
 	@Override
-	public ActionResultType onItemUse(ItemUseContext context) {
+	public ActionResult useOnBlock(ItemUsageContext context) {
 		World world = context.getWorld();
-		BlockPos blockpos = context.getPos();
+		BlockPos blockpos = context.getBlockPos();
 		BlockState blockstate = world.getBlockState(blockpos);
 		if (!blockstate.isIn(BlockTags.RAILS)) {
-			return ActionResultType.FAIL;
+			return ActionResult.FAIL;
 		} else {
-			ItemStack itemstack = context.getItem();
-			if (!world.isRemote) {
+			ItemStack itemstack = context.getStack();
+			if (!world.isClient) {
 				RailShape railshape = blockstate.getBlock() instanceof AbstractRailBlock
-					? ((AbstractRailBlock) blockstate.getBlock()).getRailDirection(blockstate, world, blockpos, null)
+					? getRailDirection(blockstate, null)
 					: RailShape.NORTH_SOUTH;
 				double d0 = 0.0D;
 				if (railshape.isAscending()) {
@@ -143,37 +135,37 @@ public class MinecartContraptionItem extends Item {
 				AbstractMinecartEntity abstractminecartentity =
 					AbstractMinecartEntity.create(world, (double) blockpos.getX() + 0.5D,
 						(double) blockpos.getY() + 0.0625D + d0, (double) blockpos.getZ() + 0.5D, this.minecartType);
-				if (itemstack.hasDisplayName())
-					abstractminecartentity.setCustomName(itemstack.getDisplayName());
+				if (itemstack.hasCustomName())
+					abstractminecartentity.setCustomName(itemstack.getName());
 				PlayerEntity player = context.getPlayer();
-				world.addEntity(abstractminecartentity);
+				world.spawnEntity(abstractminecartentity);
 				addContraptionToMinecart(world, itemstack, abstractminecartentity,
 					player == null ? null : player.getHorizontalFacing());
 			}
 
-			itemstack.shrink(1);
-			return ActionResultType.SUCCESS;
+			itemstack.decrement(1);
+			return ActionResult.SUCCESS;
 		}
 	}
 
 	public static void addContraptionToMinecart(World world, ItemStack itemstack, AbstractMinecartEntity cart,
 		@Nullable Direction newFacing) {
-		CompoundNBT tag = itemstack.getOrCreateTag();
+		CompoundTag tag = itemstack.getOrCreateTag();
 		if (tag.contains("Contraption")) {
-			CompoundNBT contraptionTag = tag.getCompound("Contraption");
+			CompoundTag contraptionTag = tag.getCompound("Contraption");
 
 			Optional<Direction> intialOrientation = Optional.empty();
 			if (contraptionTag.contains("InitialOrientation"))
 				intialOrientation =
-					Optional.of(NBTHelper.readEnum(contraptionTag, "InitialOrientation", Direction.class));
+					Optional.of(CNBTHelper.readEnum(contraptionTag, "InitialOrientation", Direction.class));
 
 			Contraption mountedContraption = Contraption.fromNBT(world, contraptionTag, false);
 			OrientedContraptionEntity contraptionEntity =
 				OrientedContraptionEntity.create(world, mountedContraption, intialOrientation);
 
 			contraptionEntity.startRiding(cart);
-			contraptionEntity.setPosition(cart.getX(), cart.getY(), cart.getZ());
-			world.addEntity(contraptionEntity);
+			contraptionEntity.updatePosition(cart.getX(), cart.getY(), cart.getZ());
+			world.spawnEntity(contraptionEntity);
 		}
 	}
 
@@ -183,53 +175,53 @@ public class MinecartContraptionItem extends Item {
 	}
 
 	@Override
-	public void fillItemGroup(ItemGroup group, NonNullList<ItemStack> items) {}
+	public void appendStacks(ItemGroup group, DefaultedList<ItemStack> items) {}
 
-	@SubscribeEvent
+	/*@SubscribeEvent
 	public static void wrenchCanBeUsedToPickUpMinecartContraptions(PlayerInteractEvent.EntityInteract event) {
 		Entity entity = event.getTarget();
 		PlayerEntity player = event.getPlayer();
 		if (player == null || entity == null)
 			return;
 
-		ItemStack wrench = player.getHeldItem(event.getHand());
+		ItemStack wrench = player.getStackInHand(event.getHand());
 		if (!AllItems.WRENCH.isIn(wrench))
 			return;
 		if (entity instanceof AbstractContraptionEntity)
-			entity = entity.getRidingEntity();
+			entity = entity.getVehicle();
 		if (!(entity instanceof AbstractMinecartEntity))
 			return;
 		AbstractMinecartEntity cart = (AbstractMinecartEntity) entity;
 		Type type = cart.getMinecartType();
 		if (type != Type.RIDEABLE && type != Type.FURNACE && type != Type.CHEST)
 			return;
-		List<Entity> passengers = cart.getPassengers();
+		List<Entity> passengers = cart.getPassengerList();
 		if (passengers.isEmpty() || !(passengers.get(0) instanceof OrientedContraptionEntity))
 			return;
 		OrientedContraptionEntity contraption = (OrientedContraptionEntity) passengers.get(0);
 
-		if (!event.getWorld().isRemote) {
-			player.inventory.placeItemBackInInventory(event.getWorld(), create(type, contraption).setDisplayName(entity.getCustomName()));
+		if (!event.getWorld().isClient) {
+			player.inventory.offerOrDrop(event.getWorld(), create(type, contraption).setCustomName(entity.getCustomName()));
 			contraption.remove();
 			entity.remove();
 		}
 
-		event.setCancellationResult(ActionResultType.SUCCESS);
+		event.setCancellationResult(ActionResult.SUCCESS);
 		event.setCanceled(true);
-	}
+	}*/
 
 	public static ItemStack create(Type type, OrientedContraptionEntity entity) {
 		ItemStack stack = ItemStack.EMPTY;
 
 		switch (type) {
 		case RIDEABLE:
-			stack = AllItems.MINECART_CONTRAPTION.asStack();
+			stack = AllItems.MINECART_CONTRAPTION.getDefaultStack();
 			break;
 		case FURNACE:
-			stack = AllItems.FURNACE_MINECART_CONTRAPTION.asStack();
+			stack = AllItems.FURNACE_MINECART_CONTRAPTION.getDefaultStack();
 			break;
 		case CHEST:
-			stack = AllItems.CHEST_MINECART_CONTRAPTION.asStack();
+			stack = AllItems.CHEST_MINECART_CONTRAPTION.getDefaultStack();
 			break;
 		default:
 			break;
@@ -238,17 +230,22 @@ public class MinecartContraptionItem extends Item {
 		if (stack.isEmpty())
 			return stack;
 
-		CompoundNBT tag = entity.getContraption()
+		CompoundTag tag = entity.getContraption()
 			.writeNBT(false);
 		tag.remove("UUID");
 		tag.remove("Pos");
 		tag.remove("Motion");
 
 		if (entity.isInitialOrientationPresent())
-			NBTHelper.writeEnum(tag, "InitialOrientation", entity.getInitialOrientation());
+			CNBTHelper.writeEnum(tag, "InitialOrientation", entity.getInitialOrientation());
 
 		stack.getOrCreateTag()
 			.put("Contraption", tag);
 		return stack;
 	}
+
+	static RailShape getRailDirection(BlockState state, @Nullable AbstractRailBlock cart) {
+		return state.get(cart.getShapeProperty());
+	}
+
 }

@@ -7,7 +7,7 @@ import java.util.stream.Collectors;
 
 import com.simibubi.create.Create;
 
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.Identifier;
 
 public class SpriteShifter {
 
@@ -19,8 +19,8 @@ public class SpriteShifter {
 			return textures.get(key);
 
 		SpriteShiftEntry entry = new SpriteShiftEntry();
-		entry.originalTextureLocation = new ResourceLocation(Create.ID, originalLocation);
-		entry.targetTextureLocation = new ResourceLocation(Create.ID, targetLocation);
+		entry.originalTextureLocation = new Identifier(Create.ID, originalLocation);
+		entry.targetTextureLocation = new Identifier(Create.ID, targetLocation);
 		textures.put(key, entry);
 		return entry;
 	}
@@ -29,7 +29,7 @@ public class SpriteShifter {
 		textures.values().forEach(SpriteShiftEntry::loadTextures);
 	}
 
-	public static List<ResourceLocation> getAllTargetSprites() {
+	public static List<Identifier> getAllTargetSprites() {
 		return textures.values().stream().map(SpriteShiftEntry::getTargetResourceLocation).collect(Collectors.toList());
 	}
 

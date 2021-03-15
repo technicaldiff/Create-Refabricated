@@ -2,20 +2,19 @@ package com.simibubi.create.content.contraptions.components.structureMovement.be
 
 import org.apache.commons.lang3.tuple.Pair;
 
-import com.simibubi.create.AllTags.AllBlockTags;
 import com.simibubi.create.content.contraptions.components.structureMovement.AssemblyException;
 import com.simibubi.create.content.contraptions.components.structureMovement.Contraption;
 import com.simibubi.create.content.contraptions.components.structureMovement.ContraptionLighter;
 import com.simibubi.create.content.contraptions.components.structureMovement.ContraptionType;
 
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.Direction;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
+import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.structure.Structure.StructureBlockInfo;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Direction;
 import net.minecraft.world.World;
-import net.minecraft.world.gen.feature.template.Template.BlockInfo;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 
 public class BearingContraption extends Contraption {
 
@@ -56,25 +55,25 @@ public class BearingContraption extends Contraption {
 	}
 
 	@Override
-	public void addBlock(BlockPos pos, Pair<BlockInfo, TileEntity> capture) {
+	public void addBlock(BlockPos pos, Pair<StructureBlockInfo, BlockEntity> capture) {
 		BlockPos localPos = pos.subtract(anchor);
-		if (!getBlocks().containsKey(localPos) && AllBlockTags.WINDMILL_SAILS.matches(capture.getKey().state))
-			sailBlocks++;
+		/*if (!getBlocks().containsKey(localPos) && AllBlockTags.WINDMILL_SAILS.matches(capture.getKey().state))
+			sailBlocks++;*/
 		super.addBlock(pos, capture);
 	}
 
 	@Override
-	public CompoundNBT writeNBT(boolean spawnPacket) {
-		CompoundNBT tag = super.writeNBT(spawnPacket);
+	public CompoundTag writeNBT(boolean spawnPacket) {
+		CompoundTag tag = super.writeNBT(spawnPacket);
 		tag.putInt("Sails", sailBlocks);
-		tag.putInt("Facing", facing.getIndex());
+		tag.putInt("Facing", facing.getId());
 		return tag;
 	}
 
 	@Override
-	public void readNBT(World world, CompoundNBT tag, boolean spawnData) {
+	public void readNBT(World world, CompoundTag tag, boolean spawnData) {
 		sailBlocks = tag.getInt("Sails");
-		facing = Direction.byIndex(tag.getInt("Facing"));
+		facing = Direction.byId(tag.getInt("Facing"));
 		super.readNBT(world, tag, spawnData);
 	}
 
@@ -88,12 +87,12 @@ public class BearingContraption extends Contraption {
 
 	@Override
 	public boolean canBeStabilized(Direction facing, BlockPos localPos) {
-		if (facing.getOpposite() == this.facing && BlockPos.ZERO.equals(localPos))
+		if (facing.getOpposite() == this.facing && BlockPos.ORIGIN.equals(localPos))
 			return false;
 		return facing.getAxis() == this.facing.getAxis();
 	}
 
-	@OnlyIn(Dist.CLIENT)
+	@Environment(EnvType.CLIENT)
 	@Override
 	public ContraptionLighter<?> makeLighter() {
 		return new BearingLighter(this);

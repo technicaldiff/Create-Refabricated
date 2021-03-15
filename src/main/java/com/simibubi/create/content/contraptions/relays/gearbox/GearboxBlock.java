@@ -3,73 +3,69 @@ package com.simibubi.create.content.contraptions.relays.gearbox;
 import java.util.Arrays;
 import java.util.List;
 
+import com.simibubi.create.AllBlockEntities;
 import com.simibubi.create.AllItems;
-import com.simibubi.create.AllTileEntities;
 import com.simibubi.create.content.contraptions.base.RotatedPillarKineticBlock;
 
 import net.minecraft.block.BlockState;
-import net.minecraft.block.material.PushReaction;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.BlockItemUseContext;
+import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.block.piston.PistonBehavior;
 import net.minecraft.item.ItemGroup;
+import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.item.ItemStack;
-import net.minecraft.loot.LootContext.Builder;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.Direction;
-import net.minecraft.util.Direction.Axis;
-import net.minecraft.util.NonNullList;
+import net.minecraft.loot.context.LootContext.Builder;
+import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.RayTraceResult;
-import net.minecraft.world.IBlockReader;
-import net.minecraft.world.IWorldReader;
+import net.minecraft.util.math.Direction;
+import net.minecraft.util.math.Direction.Axis;
+import net.minecraft.world.BlockView;
+import net.minecraft.world.WorldView;
 
 public class GearboxBlock extends RotatedPillarKineticBlock {
 
-	public GearboxBlock(Properties properties) {
+	public GearboxBlock(Settings properties) {
 		super(properties);
 	}
 
 	@Override
-	public TileEntity createTileEntity(BlockState state, IBlockReader world) {
-		return AllTileEntities.GEARBOX.create();
+	public BlockEntity createBlockEntity(BlockView world) {
+		return AllBlockEntities.GEARBOX.instantiate();
 	}
 
 	@Override
-	public PushReaction getPushReaction(BlockState state) {
-		return PushReaction.PUSH_ONLY;
+	public PistonBehavior getPistonBehavior(BlockState state) {
+		return PistonBehavior.PUSH_ONLY;
 	}
 
 	@Override
-	public void fillItemGroup(ItemGroup group, NonNullList<ItemStack> items) {
-		super.fillItemGroup(group, items);
-		items.add(AllItems.VERTICAL_GEARBOX.asStack());
+	public void addStacksForDisplay(ItemGroup group, DefaultedList<ItemStack> items) {
+		super.addStacksForDisplay(group, items);
+		items.add(AllItems.VERTICAL_GEARBOX.getDefaultStack());
 	}
 
-	@SuppressWarnings("deprecation")
 	@Override
-	public List<ItemStack> getDrops(BlockState state, Builder builder) {
+	public List<ItemStack> getDroppedStacks(BlockState state, Builder builder) {
 		if (state.get(AXIS).isVertical())
-			return super.getDrops(state, builder);
-		return Arrays.asList(new ItemStack(AllItems.VERTICAL_GEARBOX.get()));
-	}
-	
-	@Override
-	public ItemStack getPickBlock(BlockState state, RayTraceResult target, IBlockReader world, BlockPos pos,
-			PlayerEntity player) {
-		if (state.get(AXIS).isVertical())
-			return super.getPickBlock(state, target, world, pos, player);
-		return new ItemStack(AllItems.VERTICAL_GEARBOX.get());
+			return super.getDroppedStacks(state, builder);
+		return Arrays.asList(new ItemStack(AllItems.VERTICAL_GEARBOX));
 	}
 
 	@Override
-	public BlockState getStateForPlacement(BlockItemUseContext context) {
+	public ItemStack getPickStack(BlockView world, BlockPos pos, BlockState state) {
+		if (state.get(AXIS).isVertical())
+			return super.getPickStack(world, pos, state);
+		return new ItemStack(AllItems.VERTICAL_GEARBOX);
+	}
+
+	@Override
+	public BlockState getPlacementState(ItemPlacementContext context) {
 		return getDefaultState().with(AXIS, Axis.Y);
 	}
 
 	// IRotate:
 
 	@Override
-	public boolean hasShaftTowards(IWorldReader world, BlockPos pos, BlockState state, Direction face) {
+	public boolean hasShaftTowards(WorldView world, BlockPos pos, BlockState state, Direction face) {
 		return face.getAxis() != state.get(AXIS);
 	}
 

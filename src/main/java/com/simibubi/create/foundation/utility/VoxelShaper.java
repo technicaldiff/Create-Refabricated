@@ -8,12 +8,10 @@ import java.util.function.Function;
 import org.apache.commons.lang3.mutable.MutableObject;
 
 import net.minecraft.block.Block;
-import net.minecraft.util.Direction;
-import net.minecraft.util.Direction.Axis;
-import net.minecraft.util.Direction.AxisDirection;
-import net.minecraft.util.math.shapes.VoxelShape;
-import net.minecraft.util.math.shapes.VoxelShapes;
-import net.minecraft.util.math.vector.Vector3d;
+import net.minecraft.util.math.Direction;
+import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.shape.VoxelShape;
+import net.minecraft.util.shape.VoxelShapes;
 
 public class VoxelShaper {
 
@@ -23,15 +21,15 @@ public class VoxelShaper {
 		return shapes.get(direction);
 	}
 
-	public VoxelShape get(Axis axis) {
+	public VoxelShape get(Direction.Axis axis) {
 		return shapes.get(axisAsFace(axis));
 	}
 
 	public static VoxelShaper forHorizontal(VoxelShape shape, Direction facing){
-		return forDirectionsWithRotation(shape, facing, Direction.Plane.HORIZONTAL, new HorizontalRotationValues());
+		return forDirectionsWithRotation(shape, facing, Direction.Type.HORIZONTAL, new HorizontalRotationValues());
 	}
 
-	public static VoxelShaper forHorizontalAxis(VoxelShape shape, Axis along) {
+	public static VoxelShaper forHorizontalAxis(VoxelShape shape, Direction.Axis along) {
 		return forDirectionsWithRotation(shape, axisAsFace(along), Arrays.asList(Direction.SOUTH, Direction.EAST), new HorizontalRotationValues());
 	}
 
@@ -39,13 +37,13 @@ public class VoxelShaper {
 		return forDirectionsWithRotation(shape, facing, Arrays.asList(Iterate.directions), new DefaultRotationValues());
 	}
 
-	public static VoxelShaper forAxis(VoxelShape shape, Axis along){
+	public static VoxelShaper forAxis(VoxelShape shape, Direction.Axis along){
 		return forDirectionsWithRotation(shape, axisAsFace(along), Arrays.asList(Direction.SOUTH, Direction.EAST, Direction.UP), new DefaultRotationValues());
 	}
 
 	public VoxelShaper withVerticalShapes(VoxelShape upShape) {
 		shapes.put(Direction.UP, upShape);
-		shapes.put(Direction.DOWN, rotatedCopy(upShape, new Vector3d(180, 0, 0)));
+		shapes.put(Direction.DOWN, rotatedCopy(upShape, new Vec3d(180, 0, 0)));
 		return this;
 	}
 
@@ -54,15 +52,15 @@ public class VoxelShaper {
 		return this;
 	}
 
-	public static Direction axisAsFace(Axis axis) {
-		return Direction.getFacingFromAxis(AxisDirection.POSITIVE, axis);
+	public static Direction axisAsFace(Direction.Axis axis) {
+		return Direction.get(Direction.AxisDirection.POSITIVE, axis);
 	}
 
 	protected static float horizontalAngleFromDirection(Direction direction){
-		return (float)((Math.max(direction.getHorizontalIndex(), 0) & 3) * 90);
+		return (float)((Math.max(direction.getHorizontal(), 0) & 3) * 90);
 	}
 
-	protected static VoxelShaper forDirectionsWithRotation(VoxelShape shape, Direction facing, Iterable<Direction> directions, Function<Direction, Vector3d> rotationValues){
+	protected static VoxelShaper forDirectionsWithRotation(VoxelShape shape, Direction facing, Iterable<Direction> directions, Function<Direction, Vec3d> rotationValues){
 		VoxelShaper voxelShaper = new VoxelShaper();
 		for (Direction dir : directions) {
 			voxelShaper.shapes.put(dir, rotate(shape, facing, dir, rotationValues));
@@ -70,55 +68,55 @@ public class VoxelShaper {
 		return voxelShaper;
 	}
 
-	protected static VoxelShape rotate(VoxelShape shape, Direction from, Direction to, Function<Direction, Vector3d> usingValues){
+	protected static VoxelShape rotate(VoxelShape shape, Direction from, Direction to, Function<Direction, Vec3d> usingValues){
 		if (from == to)
 			return shape;
 
-		return rotatedCopy(shape, usingValues.apply(from).inverse().add(usingValues.apply(to)));
+		return rotatedCopy(shape, usingValues.apply(from).negate().add(usingValues.apply(to)));
 	}
 
-	protected static VoxelShape rotatedCopy(VoxelShape shape, Vector3d rotation){
-		if (rotation.equals(Vector3d.ZERO))
+	protected static VoxelShape rotatedCopy(VoxelShape shape, Vec3d rotation){
+		if (rotation.equals(Vec3d.ZERO))
 			return shape;
 
 		MutableObject<VoxelShape> result = new MutableObject<>(VoxelShapes.empty());
-		Vector3d center = new Vector3d(8, 8, 8);
+		Vec3d center = new Vec3d(8, 8, 8);
 
 		shape.forEachBox((x1, y1, z1, x2, y2, z2) -> {
-			Vector3d v1 = new Vector3d(x1, y1, z1).scale(16).subtract(center);
-			Vector3d v2 = new Vector3d(x2, y2, z2).scale(16).subtract(center);
+			Vec3d v1 = new Vec3d(x1, y1, z1).multiply(16).subtract(center);
+			Vec3d v2 = new Vec3d(x2, y2, z2).multiply(16).subtract(center);
 
-			v1 = VecHelper.rotate(v1, (float) rotation.x, Axis.X);
-			v1 = VecHelper.rotate(v1, (float) rotation.y, Axis.Y);
-			v1 = VecHelper.rotate(v1, (float) rotation.z, Axis.Z).add(center);
+			v1 = VecHelper.rotate(v1, (float) rotation.x, Direction.Axis.X);
+			v1 = VecHelper.rotate(v1, (float) rotation.y, Direction.Axis.Y);
+			v1 = VecHelper.rotate(v1, (float) rotation.z, Direction.Axis.Z).add(center);
 
-			v2 = VecHelper.rotate(v2, (float) rotation.x, Axis.X);
-			v2 = VecHelper.rotate(v2, (float) rotation.y, Axis.Y);
-			v2 = VecHelper.rotate(v2, (float) rotation.z, Axis.Z).add(center);
+			v2 = VecHelper.rotate(v2, (float) rotation.x, Direction.Axis.X);
+			v2 = VecHelper.rotate(v2, (float) rotation.y, Direction.Axis.Y);
+			v2 = VecHelper.rotate(v2, (float) rotation.z, Direction.Axis.Z).add(center);
 
-			VoxelShape rotated = Block.makeCuboidShape(v1.x, v1.y, v1.z, v2.x, v2.y, v2.z);
-			result.setValue(VoxelShapes.or(result.getValue(), rotated));
+			VoxelShape rotated = Block.createCuboidShape(v1.x, v1.y, v1.z, v2.x, v2.y, v2.z);
+			result.setValue(VoxelShapes.union(result.getValue(), rotated));
 		});
 
 		return result.getValue();
 	}
 
-	protected static class DefaultRotationValues implements Function<Direction, Vector3d> {
+	protected static class DefaultRotationValues implements Function<Direction, Vec3d> {
 		//assume facing up as the default rotation
 		@Override
-		public Vector3d apply(Direction direction) {
-			return new Vector3d(
-					direction == Direction.UP ? 0 : (Direction.Plane.VERTICAL.test(direction) ? 180 : 90),
+		public Vec3d apply(Direction direction) {
+			return new Vec3d(
+					direction == Direction.UP ? 0 : (Direction.Type.VERTICAL.test(direction) ? 180 : 90),
 					-horizontalAngleFromDirection(direction),
 					0
 			);
 		}
 	}
 
-	protected static class HorizontalRotationValues implements Function<Direction, Vector3d> {
+	protected static class HorizontalRotationValues implements Function<Direction, Vec3d> {
 		@Override
-		public Vector3d apply(Direction direction) {
-			return new Vector3d(
+		public Vec3d apply(Direction direction) {
+			return new Vec3d(
 					0,
 					-horizontalAngleFromDirection(direction),
 					0

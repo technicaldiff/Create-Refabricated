@@ -7,17 +7,15 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
+import com.simibubi.create.foundation.block.entity.behaviour.ValueBox;
 import com.simibubi.create.foundation.renderState.SuperRenderTypeBuffer;
-import com.simibubi.create.foundation.tileEntity.behaviour.ValueBox;
 import com.simibubi.create.foundation.utility.AnimationTickHolder;
-import com.simibubi.create.foundation.utility.outliner.LineOutline.EndChasingLineOutline;
-import com.simibubi.create.foundation.utility.outliner.Outline.OutlineParams;
 
-import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Box;
 import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.vector.Vector3d;
+import net.minecraft.util.math.Vec3d;
 
 public class Outliner {
 
@@ -29,12 +27,12 @@ public class Outliner {
 
 	// Facade
 
-	public OutlineParams showValueBox(Object slot, ValueBox box) {
+	public Outline.OutlineParams showValueBox(Object slot, ValueBox box) {
 		outlines.put(slot, new OutlineEntry(box));
 		return box.getParams();
 	}
 
-	public OutlineParams showLine(Object slot, Vector3d start, Vector3d end) {
+	public Outline.OutlineParams showLine(Object slot, Vec3d start, Vec3d end) {
 		if (!outlines.containsKey(slot)) {
 			LineOutline outline = new LineOutline();
 			outlines.put(slot, new OutlineEntry(outline));
@@ -45,40 +43,40 @@ public class Outliner {
 		return entry.outline.getParams();
 	}
 
-	public OutlineParams endChasingLine(Object slot, Vector3d start, Vector3d end, float chasingProgress) {
+	public Outline.OutlineParams endChasingLine(Object slot, Vec3d start, Vec3d end, float chasingProgress) {
 		if (!outlines.containsKey(slot)) {
-			EndChasingLineOutline outline = new EndChasingLineOutline();
+			LineOutline.EndChasingLineOutline outline = new LineOutline.EndChasingLineOutline();
 			outlines.put(slot, new OutlineEntry(outline));
 		}
 		OutlineEntry entry = outlines.get(slot);
 		entry.ticksTillRemoval = 1;
-		((EndChasingLineOutline) entry.outline).setProgress(chasingProgress)
+		((LineOutline.EndChasingLineOutline) entry.outline).setProgress(chasingProgress)
 			.set(start, end);
 		return entry.outline.getParams();
 	}
 
-	public OutlineParams showAABB(Object slot, AxisAlignedBB bb, int ttl) {
+	public Outline.OutlineParams showAABB(Object slot, Box bb, int ttl) {
 		createAABBOutlineIfMissing(slot, bb);
 		ChasingAABBOutline outline = getAndRefreshAABB(slot, ttl);
 		outline.prevBB = outline.targetBB = bb;
 		return outline.getParams();
 	}
 
-	public OutlineParams showAABB(Object slot, AxisAlignedBB bb) {
+	public Outline.OutlineParams showAABB(Object slot, Box bb) {
 		createAABBOutlineIfMissing(slot, bb);
 		ChasingAABBOutline outline = getAndRefreshAABB(slot);
 		outline.prevBB = outline.targetBB = bb;
 		return outline.getParams();
 	}
 
-	public OutlineParams chaseAABB(Object slot, AxisAlignedBB bb) {
+	public Outline.OutlineParams chaseAABB(Object slot, Box bb) {
 		createAABBOutlineIfMissing(slot, bb);
 		ChasingAABBOutline outline = getAndRefreshAABB(slot);
 		outline.targetBB = bb;
 		return outline.getParams();
 	}
 
-	public OutlineParams showCluster(Object slot, Iterable<BlockPos> selection) {
+	public Outline.OutlineParams showCluster(Object slot, Iterable<BlockPos> selection) {
 		BlockClusterOutline outline = new BlockClusterOutline(selection);
 		OutlineEntry entry = new OutlineEntry(outline);
 		outlines.put(slot, entry);
@@ -95,7 +93,7 @@ public class Outliner {
 		outlines.remove(slot);
 	}
 
-	public Optional<OutlineParams> edit(Object slot) {
+	public Optional<Outline.OutlineParams> edit(Object slot) {
 		keep(slot);
 		if (outlines.containsKey(slot))
 			return Optional.of(outlines.get(slot)
@@ -106,7 +104,7 @@ public class Outliner {
 
 	// Utility
 
-	private void createAABBOutlineIfMissing(Object slot, AxisAlignedBB bb) {
+	private void createAABBOutlineIfMissing(Object slot, Box bb) {
 		if (!outlines.containsKey(slot)) {
 			ChasingAABBOutline outline = new ChasingAABBOutline(bb);
 			outlines.put(slot, new OutlineEntry(outline));

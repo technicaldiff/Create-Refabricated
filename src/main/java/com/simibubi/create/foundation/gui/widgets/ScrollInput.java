@@ -4,26 +4,26 @@ import java.util.function.Consumer;
 import java.util.function.Function;
 
 import com.simibubi.create.AllKeys;
-import com.simibubi.create.foundation.tileEntity.behaviour.scrollvalue.ScrollValueBehaviour.StepContext;
+import com.simibubi.create.foundation.block.entity.behaviour.scrollvalue.ScrollValueBehaviour;
 import com.simibubi.create.foundation.utility.Lang;
 
-import net.minecraft.util.text.IFormattableTextComponent;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.util.text.TextFormatting;
+import net.minecraft.text.LiteralText;
+import net.minecraft.text.MutableText;
+import net.minecraft.text.Text;
+import net.minecraft.util.Formatting;
 
 public class ScrollInput extends AbstractSimiWidget {
 
+	protected final Text scrollToModify = Lang.translate("gui.scrollInput.scrollToModify");
+	protected final Text shiftScrollsFaster = Lang.translate("gui.scrollInput.shiftScrollsFaster");
 	protected Consumer<Integer> onScroll;
 	protected int state;
-	protected ITextComponent title = Lang.translate("gui.scrollInput.defaultTitle");
-	protected final ITextComponent scrollToModify = Lang.translate("gui.scrollInput.scrollToModify");
-	protected final ITextComponent shiftScrollsFaster = Lang.translate("gui.scrollInput.shiftScrollsFaster");
+	protected Text title = Lang.translate("gui.scrollInput.defaultTitle");
 	protected Label displayLabel;
 
 	protected int min, max;
 	protected int shiftStep;
-	Function<StepContext, Integer> step;
+	Function<ScrollValueBehaviour.StepContext, Integer> step;
 
 	public ScrollInput(int xIn, int yIn, int widthIn, int heightIn) {
 		super(xIn, yIn, widthIn, heightIn);
@@ -34,7 +34,7 @@ public class ScrollInput extends AbstractSimiWidget {
 		step = standardStep();
 	}
 
-	public Function<StepContext, Integer> standardStep() {
+	public Function<ScrollValueBehaviour.StepContext, Integer> standardStep() {
 		return c -> c.shift ? shiftStep : 1;
 	}
 
@@ -48,19 +48,19 @@ public class ScrollInput extends AbstractSimiWidget {
 		this.onScroll = onScroll;
 		return this;
 	}
-	
+
 	public ScrollInput removeCallback() {
 		this.onScroll = null;
 		return this;
 	}
 
-	public ScrollInput titled(IFormattableTextComponent title) {
+	public ScrollInput titled(MutableText title) {
 		this.title = title;
 		updateTooltip();
 		return this;
 	}
 
-	public ScrollInput withStepFunction(Function<StepContext, Integer> step) {
+	public ScrollInput withStepFunction(Function<ScrollValueBehaviour.StepContext, Integer> step) {
 		this.step = step;
 		return this;
 	}
@@ -94,7 +94,7 @@ public class ScrollInput extends AbstractSimiWidget {
 		if (!hovered)
 			return false;
 
-		StepContext context = new StepContext();
+		ScrollValueBehaviour.StepContext context = new ScrollValueBehaviour.StepContext();
 		context.control = AllKeys.ctrlDown();
 		context.shift = AllKeys.shiftDown();
 		context.currentValue = state;
@@ -132,14 +132,14 @@ public class ScrollInput extends AbstractSimiWidget {
 	}
 
 	protected void writeToLabel() {
-		displayLabel.text = new StringTextComponent(String.valueOf(state));
+		displayLabel.text = new LiteralText(String.valueOf(state));
 	}
 
 	protected void updateTooltip() {
 		toolTip.clear();
-		toolTip.add(title.copy().formatted(TextFormatting.BLUE));
-		toolTip.add(scrollToModify.copy().formatted(TextFormatting.ITALIC, TextFormatting.DARK_GRAY));
-		toolTip.add(shiftScrollsFaster.copy().formatted(TextFormatting.ITALIC, TextFormatting.DARK_GRAY));
+		toolTip.add(title.copy().formatted(Formatting.BLUE));
+		toolTip.add(scrollToModify.copy().formatted(Formatting.ITALIC, Formatting.DARK_GRAY));
+		toolTip.add(shiftScrollsFaster.copy().formatted(Formatting.ITALIC, Formatting.DARK_GRAY));
 	}
 
 }

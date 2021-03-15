@@ -1,7 +1,7 @@
 package com.simibubi.create;
 
-import static net.minecraft.state.properties.BlockStateProperties.FACING;
-import static net.minecraft.state.properties.BlockStateProperties.HORIZONTAL_FACING;
+import static net.minecraft.state.property.Properties.FACING;
+import static net.minecraft.state.property.Properties.HORIZONTAL_FACING;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -9,27 +9,23 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Supplier;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
 import com.simibubi.create.content.contraptions.base.KineticRenderMaterials;
 import com.simibubi.create.content.contraptions.base.RotatingData;
-import com.simibubi.create.content.contraptions.fluids.FluidTransportBehaviour.AttachmentTypes;
-import com.simibubi.create.content.contraptions.processing.burner.BlazeBurnerBlock.HeatLevel;
 import com.simibubi.create.content.contraptions.relays.belt.BeltData;
+import com.simibubi.create.foundation.mixinterface.BakedModelManagerExtension;
 import com.simibubi.create.foundation.render.SuperByteBuffer;
+import com.simibubi.create.foundation.render.backend.instancing.InstancedBlockRenderer;
 import com.simibubi.create.foundation.render.backend.instancing.InstancedModel;
-import com.simibubi.create.foundation.render.backend.instancing.InstancedTileRenderer;
 import com.simibubi.create.foundation.utility.AngleHelper;
-import com.simibubi.create.foundation.utility.Iterate;
-import com.simibubi.create.foundation.utility.Lang;
 import com.simibubi.create.foundation.utility.MatrixStacker;
 
+import net.fabricmc.fabric.api.client.model.ModelLoadingRegistry;
 import net.minecraft.block.BlockState;
-import net.minecraft.client.renderer.model.IBakedModel;
-import net.minecraft.util.Direction;
-import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.client.event.ModelBakeEvent;
-import net.minecraftforge.client.event.ModelRegistryEvent;
-import net.minecraftforge.client.model.ModelLoader;
+import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.render.model.BakedModel;
+import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.util.Identifier;
+import net.minecraft.util.math.Direction;
 
 public class AllBlockPartials {
 
@@ -123,8 +119,8 @@ public class AllBlockPartials {
 
 	;
 
-	public static final Map<AttachmentTypes, Map<Direction, AllBlockPartials>> PIPE_ATTACHMENTS = map();
-	public static final Map<HeatLevel, AllBlockPartials> BLAZES = map();
+//	public static final Map<AttachmentTypes, Map<Direction, AllBlockPartials>> PIPE_ATTACHMENTS = map();
+//	public static final Map<HeatLevel, AllBlockPartials> BLAZES = map();
 
 	static {
 		populateMaps();
@@ -132,27 +128,27 @@ public class AllBlockPartials {
 
 	;
 
-	private ResourceLocation modelLocation;
-	private IBakedModel bakedModel;
+	private Identifier modelLocation;
+	private BakedModel bakedModel;
 
 	private AllBlockPartials() {}
 
 	private static void populateMaps() {
-		for (AttachmentTypes type : AttachmentTypes.values()) {
-			if (!type.hasModel())
-				continue;
-			Map<Direction, AllBlockPartials> map = map();
-			for (Direction d : Iterate.directions) {
-				String asId = Lang.asId(type.name());
-				map.put(d, get("fluid_pipe/" + asId + "/" + Lang.asId(d.getString())));
-			}
-			PIPE_ATTACHMENTS.put(type, map);
-		}
-		for (HeatLevel heat : HeatLevel.values()) {
-			if (heat == HeatLevel.NONE)
-				continue;
-			BLAZES.put(heat, get("blaze_burner/blaze/" + heat.getString()));
-		}
+//		for (AttachmentTypes type : AttachmentTypes.values()) {
+//			if (!type.hasModel())
+//				continue;
+//			Map<Direction, AllBlockPartials> map = map();
+//			for (Direction d : Iterate.directions) {
+//				String asId = Lang.asId(type.name());
+//				map.put(d, get("fluid_pipe/" + asId + "/" + Lang.asId(d.asString())));
+//			}
+//			PIPE_ATTACHMENTS.put(type, map);
+//		}
+//		for (HeatLevel heat : HeatLevel.values()) {
+//			if (heat == HeatLevel.NONE)
+//				continue;
+//			BLAZES.put(heat, get("blaze_burner/blaze/" + heat.asString()));
+//		}
 	}
 
 	private static <T, U> Map<T, U> map() {
@@ -161,30 +157,32 @@ public class AllBlockPartials {
 
 	private static AllBlockPartials getEntity(String path) {
 		AllBlockPartials partials = new AllBlockPartials();
-		partials.modelLocation = new ResourceLocation(Create.ID, "entity/" + path);
+		partials.modelLocation = new Identifier(Create.ID, "entity/" + path);
 		all.add(partials);
 		return partials;
 	}
 
 	private static AllBlockPartials get(String path) {
 		AllBlockPartials partials = new AllBlockPartials();
-		partials.modelLocation = new ResourceLocation(Create.ID, "block/" + path);
+		partials.modelLocation = new Identifier(Create.ID, "block/" + path);
 		all.add(partials);
 		return partials;
 	}
-
-	public static void onModelRegistry(ModelRegistryEvent event) {
-		for (AllBlockPartials partial : all)
-			ModelLoader.addSpecialModel(partial.modelLocation);
+	
+	public static void onModelRegistry() {
+		ModelLoadingRegistry.INSTANCE.registerModelProvider((manager, out) -> {
+			for (AllBlockPartials partial : all)
+				out.accept(partial.modelLocation);
+		});
 	}
 
-	public static void onModelBake(ModelBakeEvent event) {
-		Map<ResourceLocation, IBakedModel> modelRegistry = event.getModelRegistry();
+	public static void onModelBake() {
+		BakedModelManagerExtension e = (BakedModelManagerExtension) MinecraftClient.getInstance().getBakedModelManager();
 		for (AllBlockPartials partial : all)
-			partial.bakedModel = modelRegistry.get(partial.modelLocation);
+			partial.bakedModel = e.getModel(partial.modelLocation);
 	}
 
-	public IBakedModel get() {
+	public BakedModel get() {
 		return bakedModel;
 	}
 
@@ -229,20 +227,20 @@ public class AllBlockPartials {
 		return CreateClient.bufferCache.renderDirectionalPartial(this, referenceState, facing, ms);
 	}
 
-	public InstancedModel<RotatingData> renderOnRotating(InstancedTileRenderer<?> ctx, BlockState referenceState) {
+	public InstancedModel<RotatingData> renderOnRotating(InstancedBlockRenderer<?> ctx, BlockState referenceState) {
 		return ctx.getMaterial(KineticRenderMaterials.ROTATING).getModel(this, referenceState);
 	}
 
-	public InstancedModel<BeltData> renderOnBelt(InstancedTileRenderer<?> ctx, BlockState referenceState) {
+	public InstancedModel<BeltData> renderOnBelt(InstancedBlockRenderer<?> ctx, BlockState referenceState) {
 		return ctx.getMaterial(KineticRenderMaterials.BELTS).getModel(this, referenceState);
 	}
 
-	public InstancedModel<RotatingData> renderOnDirectionalSouthRotating(InstancedTileRenderer<?> dispatcher, BlockState referenceState) {
+	public InstancedModel<RotatingData> renderOnDirectionalSouthRotating(InstancedBlockRenderer<?> dispatcher, BlockState referenceState) {
 		Direction facing = referenceState.get(FACING);
 		return renderOnDirectionalSouthRotating(dispatcher, referenceState, facing);
 	}
 
-	public InstancedModel<RotatingData> renderOnDirectionalSouthRotating(InstancedTileRenderer<?> dispatcher, BlockState referenceState, Direction facing) {
+	public InstancedModel<RotatingData> renderOnDirectionalSouthRotating(InstancedBlockRenderer<?> dispatcher, BlockState referenceState, Direction facing) {
 		Supplier<MatrixStack> ms = () -> {
 			MatrixStack stack = new MatrixStack();
 			MatrixStacker.of(stack)

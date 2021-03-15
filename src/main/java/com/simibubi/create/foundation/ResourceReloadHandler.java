@@ -3,21 +3,20 @@ package com.simibubi.create.foundation;
 import com.simibubi.create.CreateClient;
 import com.simibubi.create.foundation.block.render.SpriteShifter;
 
-import net.minecraft.client.resources.ReloadListener;
-import net.minecraft.profiler.IProfiler;
-import net.minecraft.resources.IResourceManager;
+import net.minecraft.resource.ResourceManager;
+import net.minecraft.resource.SinglePreparationResourceReloadListener;
+import net.minecraft.util.Unit;
+import net.minecraft.util.profiler.Profiler;
 
-public class ResourceReloadHandler extends ReloadListener<Object> {
-
+public class ResourceReloadHandler extends SinglePreparationResourceReloadListener<Unit> {
 	@Override
-	protected Object prepare(IResourceManager resourceManagerIn, IProfiler profilerIn) {
-		return new Object();
+	protected Unit prepare(ResourceManager resourceManagerIn, Profiler profilerIn) {
+		return Unit.INSTANCE;
 	}
 
 	@Override
-	protected void apply(Object $, IResourceManager resourceManagerIn, IProfiler profilerIn) {
+	protected void apply(Unit $, ResourceManager resourceManagerIn, Profiler profilerIn) {
 		SpriteShifter.reloadUVs();
 		CreateClient.invalidateRenderers();
 	}
-
 }

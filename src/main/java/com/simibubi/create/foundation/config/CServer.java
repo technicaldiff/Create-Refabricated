@@ -1,34 +1,14 @@
 package com.simibubi.create.foundation.config;
 
-public class CServer extends ConfigBase {
+import com.simibubi.create.foundation.config.util.Validatable;
+import me.shedaniel.autoconfig.ConfigData;
 
-	public ConfigGroup infrastructure = group(0, "infrastructure", Comments.infrastructure);
-	public ConfigInt tickrateSyncTimer =
-		i(20, 5, "tickrateSyncTimer", "[in Ticks]", Comments.tickrateSyncTimer, Comments.tickrateSyncTimer2);
-
-	public CRecipes recipes = nested(0, CRecipes::new, Comments.recipes);
-	public CKinetics kinetics = nested(0, CKinetics::new, Comments.kinetics);
-	public CFluids fluids = nested(0, CFluids::new, Comments.fluids);
-	public CLogistics logistics = nested(0, CLogistics::new, Comments.logistics);
-	public CSchematics schematics = nested(0, CSchematics::new, Comments.schematics);
-	public CCuriosities curiosities = nested(0, CCuriosities::new, Comments.curiosities);
+public class CServer implements Validatable {
+	// infrastructure           public ConfigGroup infrastructure = group(0, "infrastructure", Comments.infrastructure);
+	int tickrateSyncTimer = 20; // min 5, "[in Ticks]" "The amount of time a server waits before sending out tickrate synchronization packets." "These packets help animations to be more accurate when tps is below 20."
 
 	@Override
-	public String getName() {
-		return "server";
+	public void validate() throws ConfigData.ValidationException {
+		tickrateSyncTimer = Math.max(tickrateSyncTimer, 5);
 	}
-
-	private static class Comments {
-		static String recipes = "Packmakers' control panel for internal recipe compat";
-		static String schematics = "Everything related to Schematic tools";
-		static String kinetics = "Parameters and abilities of Create's kinetic mechanisms";
-		static String fluids = "Create's liquid manipulation tools";
-		static String logistics = "Tweaks for logistical components";
-		static String curiosities = "Gadgets and other Shenanigans added by Create";
-		static String infrastructure = "The Backbone of Create";
-		static String tickrateSyncTimer =
-			"The amount of time a server waits before sending out tickrate synchronization packets.";
-		static String tickrateSyncTimer2 = "These packets help animations to be more accurate when tps is below 20.";
-	}
-
 }

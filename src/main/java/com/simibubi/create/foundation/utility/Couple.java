@@ -1,17 +1,12 @@
 package com.simibubi.create.foundation.utility;
 
 import java.util.Iterator;
-import java.util.List;
 import java.util.function.BiConsumer;
 import java.util.function.BiFunction;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
 import com.google.common.base.Supplier;
-import com.google.common.collect.ImmutableList;
-
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.nbt.ListNBT;
 
 public class Couple<T> extends Pair<T, T> implements Iterable<T> {
 
@@ -90,14 +85,14 @@ public class Couple<T> extends Pair<T, T> implements Iterable<T> {
 		return Couple.create(second, first);
 	}
 
-	public ListNBT serializeEach(Function<T, CompoundNBT> serializer) {
+	/*public ListNBT serializeEach(Function<T, CompoundNBT> serializer) {
 		return NBTHelper.writeCompoundList(ImmutableList.of(first, second), serializer);
 	}
 
 	public static <S> Couple<S> deserializeEach(ListNBT list, Function<CompoundNBT, S> deserializer) {
 		List<S> readCompoundList = NBTHelper.readCompoundList(list, deserializer);
 		return new Couple<>(readCompoundList.get(0), readCompoundList.get(1));
-	}
+	}*/
 
 	@Override
 	public Iterator<T> iterator() {

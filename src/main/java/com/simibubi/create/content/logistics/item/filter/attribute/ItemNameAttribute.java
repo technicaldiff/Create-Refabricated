@@ -7,8 +7,8 @@ import com.google.gson.JsonParseException;
 import com.simibubi.create.content.logistics.item.filter.ItemAttribute;
 
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.text.ITextComponent;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.text.Text;
 
 public class ItemNameAttribute implements ItemAttribute {
     String itemName;
@@ -44,20 +44,20 @@ public class ItemNameAttribute implements ItemAttribute {
     }
 
     @Override
-    public void writeNBT(CompoundNBT nbt) {
+    public void writeNBT(CompoundTag nbt) {
         nbt.putString("name", this.itemName);
     }
 
     @Override
-    public ItemAttribute readNBT(CompoundNBT nbt) {
+    public ItemAttribute readNBT(CompoundTag nbt) {
         return new ItemNameAttribute(nbt.getString("name"));
     }
 
     private String extractCustomName(ItemStack stack) {
-        CompoundNBT compoundnbt = stack.getChildTag("display");
+		CompoundTag compoundnbt = stack.getSubTag("display");
         if (compoundnbt != null && compoundnbt.contains("Name", 8)) {
             try {
-                ITextComponent itextcomponent = ITextComponent.Serializer.fromJson(compoundnbt.getString("Name"));
+				Text itextcomponent = Text.Serializer.fromJson(compoundnbt.getString("Name"));
                 if (itextcomponent != null) {
                     return itextcomponent.getString();
                 }

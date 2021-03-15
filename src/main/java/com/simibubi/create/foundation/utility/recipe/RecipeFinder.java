@@ -6,15 +6,15 @@ import java.util.concurrent.ExecutionException;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
-import javax.annotation.Nullable;
+import org.jetbrains.annotations.Nullable;
 
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
 
-import net.minecraft.client.resources.ReloadListener;
-import net.minecraft.item.crafting.IRecipe;
-import net.minecraft.profiler.IProfiler;
-import net.minecraft.resources.IResourceManager;
+import net.minecraft.recipe.Recipe;
+import net.minecraft.resource.ResourceManager;
+import net.minecraft.resource.SinglePreparationResourceReloadListener;
+import net.minecraft.util.profiler.Profiler;
 import net.minecraft.world.World;
 
 /**
@@ -27,7 +27,7 @@ import net.minecraft.world.World;
  */
 public class RecipeFinder {
 	
-	private static Cache<Object, List<IRecipe<?>>> cachedSearches = CacheBuilder.newBuilder().build();
+	private static Cache<Object, List<Recipe<?>>> cachedSearches = CacheBuilder.newBuilder().build();
 
 	/**
 	 * Find all IRecipes matching the condition predicate. If this search is made
@@ -39,7 +39,7 @@ public class RecipeFinder {
 	 * @param conditions
 	 * @return A started search to continue with more specific conditions.
 	 */
-	public static List<IRecipe<?>> get(@Nullable Object cacheKey, World world, Predicate<IRecipe<?>> conditions) {
+	public static List<Recipe<?>> get(@Nullable Object cacheKey, World world, Predicate<Recipe<?>> conditions) {
 		if (cacheKey == null)
 			return startSearch(world, conditions);
 
@@ -52,22 +52,22 @@ public class RecipeFinder {
 		return Collections.emptyList();
 	}
 
-	private static List<IRecipe<?>> startSearch(World world, Predicate<? super IRecipe<?>> conditions) {
-		List<IRecipe<?>> list = world.getRecipeManager().getRecipes().stream().filter(conditions)
+	private static List<Recipe<?>> startSearch(World world, Predicate<? super Recipe<?>> conditions) {
+		List<Recipe<?>> list = world.getRecipeManager().values().stream().filter(conditions)
 				.collect(Collectors.toList());
 		return list;
 	}
 
 
-	public static final ReloadListener<Object> LISTENER = new ReloadListener<Object>() {
+	public static final SinglePreparationResourceReloadListener<Object> LISTENER = new SinglePreparationResourceReloadListener<Object>() {
 		
 		@Override
-		protected Object prepare(IResourceManager p_212854_1_, IProfiler p_212854_2_) {
+		protected Object prepare(ResourceManager p_212854_1_, Profiler p_212854_2_) {
 			return new Object();
 		}
 		
 		@Override
-		protected void apply(Object p_212853_1_, IResourceManager p_212853_2_, IProfiler p_212853_3_) {
+		protected void apply(Object p_212853_1_, ResourceManager p_212853_2_, Profiler p_212853_3_) {
 			cachedSearches.invalidateAll();
 		}
 		

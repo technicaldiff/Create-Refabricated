@@ -1,26 +1,28 @@
 package com.simibubi.create.foundation.config;
 
-public class CLogistics extends ConfigBase {
+import com.simibubi.create.foundation.config.util.Validatable;
+import me.shedaniel.autoconfig.ConfigData;
+import me.shedaniel.autoconfig.annotation.ConfigEntry.Gui.Tooltip;
+import net.minecraft.util.math.MathHelper;
 
-	public ConfigInt defaultExtractionLimit = i(64, 1, 64, "defaultExtractionLimit", Comments.defaultExtractionLimit);
-	public ConfigInt defaultExtractionTimer = i(8, 1, "defaultExtractionTimer", Comments.defaultExtractionTimer);
-	public ConfigInt psiTimeout = i(20, 1, "psiTimeout", Comments.psiTimeout);
-	public ConfigInt mechanicalArmRange = i(5, 1, "mechanicalArmRange", Comments.mechanicalArmRange);
-	public ConfigInt linkRange = i(128, 1, "linkRange", Comments.linkRange);
+public class CLogistics implements Validatable {
+	@Tooltip
+	int defaultExtractionLimit = 64; // min 1, max 64
+	@Tooltip
+	int defaultExtractionTimer = 8; // min 1
+	@Tooltip
+	int psiTimeout = 20; // min 1
+	@Tooltip
+	int mechanicalArmRange = 5; // min 1
+	@Tooltip
+	int linkRange = 128; // min 1
 
 	@Override
-	public String getName() {
-		return "logistics";
+	public void validate() throws ConfigData.ValidationException {
+		defaultExtractionLimit = MathHelper.clamp(defaultExtractionLimit, 1, 64);
+		defaultExtractionTimer = Math.max(defaultExtractionTimer, 1);
+		psiTimeout = Math.max(psiTimeout, 1);
+		mechanicalArmRange = Math.max(mechanicalArmRange, 1);
+		linkRange = Math.max(linkRange, 1);
 	}
-
-	private static class Comments {
-		static String defaultExtractionLimit =
-			"The maximum amount of items a funnel pulls at a time without an applied filter.";
-		static String defaultExtractionTimer =
-			"The amount of ticks a funnel waits between item transferrals, when it is not re-activated by redstone.";
-		static String linkRange = "Maximum possible range in blocks of redstone link connections.";
-		static String psiTimeout = "The amount of ticks a portable storage interface waits for transfers until letting contraptions move along.";
-		static String mechanicalArmRange = "Maximum distance in blocks a Mechanical Arm can reach across.";
-	}
-
 }

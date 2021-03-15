@@ -1,18 +1,18 @@
 package com.simibubi.create.foundation.utility.outliner;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
 import com.simibubi.create.foundation.renderState.SuperRenderTypeBuffer;
 import com.simibubi.create.foundation.utility.AnimationTickHolder;
 
+import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.vector.Vector3d;
+import net.minecraft.util.math.Vec3d;
 
 public class LineOutline extends Outline {
 
-	protected Vector3d start = Vector3d.ZERO;
-	protected Vector3d end = Vector3d.ZERO;
+	protected Vec3d start = Vec3d.ZERO;
+	protected Vec3d end = Vec3d.ZERO;
 
-	public LineOutline set(Vector3d start, Vector3d end) {
+	public LineOutline set(Vec3d start, Vec3d end) {
 		this.start = start;
 		this.end = end;
 		return this;
@@ -39,7 +39,7 @@ public class LineOutline extends Outline {
 		}
 
 		@Override
-		public LineOutline set(Vector3d start, Vector3d end) {
+		public LineOutline set(Vec3d start, Vec3d end) {
 			if (!end.equals(this.end))
 				super.set(start, end);
 			return this;
@@ -49,8 +49,8 @@ public class LineOutline extends Outline {
 		public void render(MatrixStack ms, SuperRenderTypeBuffer buffer) {
 			float pt = AnimationTickHolder.getPartialTicks();
 			float distanceToTarget = 1 - MathHelper.lerp(pt, prevProgress, progress);
-			Vector3d start = end.add(this.start.subtract(end)
-				.scale(distanceToTarget));
+			Vec3d start = end.add(this.start.subtract(end)
+				.multiply(distanceToTarget));
 			renderCuboidLine(ms, buffer, start, end);
 		}
 

@@ -1,12 +1,12 @@
 package com.simibubi.create.foundation.utility;
 
-import net.minecraft.util.Direction;
-import net.minecraft.util.Direction.Axis;
+import net.minecraft.util.math.Direction;
+import net.minecraft.util.math.Direction.Axis;
 
 public class AngleHelper {
 
 	public static float horizontalAngle(Direction facing) {
-		float angle = facing.getHorizontalAngle();
+		float angle = facing.getHorizontal();
 		if (facing.getAxis() == Axis.X)
 			angle = -angle;
 		return angle;

@@ -1,6 +1,6 @@
 package com.simibubi.create.content.contraptions.components.structureMovement.mounted;
 
-import javax.annotation.Nonnull;
+import org.jetbrains.annotations.NotNull;
 
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.foundation.utility.Lang;
@@ -8,34 +8,34 @@ import com.simibubi.create.foundation.utility.Lang;
 import net.minecraft.block.AbstractRailBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.enums.RailShape;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.BlockItem;
-import net.minecraft.item.ItemUseContext;
-import net.minecraft.state.properties.RailShape;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.SoundEvents;
+import net.minecraft.item.ItemUsageContext;
+import net.minecraft.sound.SoundCategory;
+import net.minecraft.sound.SoundEvents;
+import net.minecraft.util.ActionResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 public class CartAssemblerBlockItem extends BlockItem {
 
-	public CartAssemblerBlockItem(Block block, Properties properties) {
+	public CartAssemblerBlockItem(Block block, Settings properties) {
 		super(block, properties);
 	}
 
 	@Override
-	@Nonnull
-	public ActionResultType onItemUse(ItemUseContext context) {
+	@NotNull
+	public ActionResult useOnBlock(ItemUsageContext context) {
 		if (tryPlaceAssembler(context)) {
-			context.getWorld().playSound(null, context.getPos(), SoundEvents.BLOCK_STONE_PLACE, SoundCategory.BLOCKS, 1, 1);
-			return ActionResultType.SUCCESS;
+			context.getWorld().playSound(null, context.getBlockPos(), SoundEvents.BLOCK_STONE_PLACE, SoundCategory.BLOCKS, 1, 1);
+			return ActionResult.SUCCESS;
 		}
-		return super.onItemUse(context);
+		return super.useOnBlock(context);
 	}
 
-	public boolean tryPlaceAssembler(ItemUseContext context) {
-		BlockPos pos = context.getPos();
+	public boolean tryPlaceAssembler(ItemUsageContext context) {
+		BlockPos pos = context.getBlockPos();
 		World world = context.getWorld();
 		BlockState state = world.getBlockState(pos);
 		Block block = state.getBlock();
@@ -60,13 +60,13 @@ public class CartAssemblerBlockItem extends BlockItem {
 				newType = type;
 		if (newType == null)
 			return false;
-		if (world.isRemote)
+		if (world.isClient)
 			return true;
 
 		newState = newState.with(CartAssemblerBlock.RAIL_TYPE, newType);
 		world.setBlockState(pos, newState);
 		if (!player.isCreative())
-			context.getItem().shrink(1);
+			context.getStack().decrement(1);
 		return true;
 	}
 }

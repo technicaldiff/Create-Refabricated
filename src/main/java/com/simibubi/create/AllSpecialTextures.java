@@ -1,11 +1,11 @@
 package com.simibubi.create;
 
-import net.minecraft.client.Minecraft;
-import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
+import net.minecraft.client.MinecraftClient;
+import net.minecraft.util.Identifier;
 
-@EventBusSubscriber(value = Dist.CLIENT)
+@Environment(EnvType.CLIENT)
 public enum AllSpecialTextures {
 
 	BLANK("blank.png"),
@@ -18,17 +18,17 @@ public enum AllSpecialTextures {
 	;
 
 	public static final String ASSET_PATH = "textures/special/";
-	private ResourceLocation location;
+	private Identifier location;
 
 	private AllSpecialTextures(String filename) {
-		location = new ResourceLocation(Create.ID, ASSET_PATH + filename);
+		location = new Identifier(Create.ID, ASSET_PATH + filename);
 	}
 
 	public void bind() {
-		Minecraft.getInstance().getTextureManager().bindTexture(location);
+		MinecraftClient.getInstance().getTextureManager().bindTexture(location);
 	}
 	
-	public ResourceLocation getLocation() {
+	public Identifier getLocation() {
 		return location;
 	}
 

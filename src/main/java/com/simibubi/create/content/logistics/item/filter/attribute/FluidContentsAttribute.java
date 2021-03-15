@@ -1,24 +1,6 @@
 package com.simibubi.create.content.logistics.item.filter.attribute;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
-
-import javax.annotation.Nullable;
-
-import com.simibubi.create.content.logistics.item.filter.ItemAttribute;
-
-import net.minecraft.fluid.Fluid;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
-import net.minecraftforge.fluids.capability.IFluidHandlerItem;
-import net.minecraftforge.registries.ForgeRegistries;
-
-public class FluidContentsAttribute implements ItemAttribute {
+/*public class FluidContentsAttribute implements ItemAttribute {
     public static final FluidContentsAttribute EMPTY = new FluidContentsAttribute(null);
 
     private final Fluid fluid;
@@ -46,23 +28,23 @@ public class FluidContentsAttribute implements ItemAttribute {
     public Object[] getTranslationParameters() {
         String parameter = "";
         if(fluid != null)
-            parameter = new TranslationTextComponent(fluid.getAttributes().getTranslationKey()).getString();
+            parameter = new TranslatableText(fluid.getAttributes().getTranslationKey()).getString();
         return new Object[] { parameter };
     }
 
     @Override
-    public void writeNBT(CompoundNBT nbt) {
+    public void writeNBT(CompoundTag nbt) {
         if (fluid == null)
             return;
-        ResourceLocation id = ForgeRegistries.FLUIDS.getKey(fluid);
+        Identifier id = ForgeRegistries.FLUIDS.getKey(fluid);
         if (id == null)
             return;
         nbt.putString("id", id.toString());
     }
 
     @Override
-    public ItemAttribute readNBT(CompoundNBT nbt) {
-        return nbt.contains("id") ? new FluidContentsAttribute(ForgeRegistries.FLUIDS.getValue(ResourceLocation.tryCreate(nbt.getString("id")))) : EMPTY;
+    public ItemAttribute readNBT(CompoundTag nbt) {
+        return nbt.contains("id") ? new FluidContentsAttribute(ForgeRegistries.FLUIDS.getValue(Identifier.tryParse(nbt.getString("id")))) : EMPTY;
     }
 
     private List<Fluid> extractFluids(ItemStack stack) {
@@ -79,4 +61,4 @@ public class FluidContentsAttribute implements ItemAttribute {
 
         return fluids;
     }
-}
+}*/

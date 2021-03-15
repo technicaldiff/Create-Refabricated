@@ -2,28 +2,28 @@ package com.simibubi.create.foundation.render.backend.gl;
 
 import java.util.function.Consumer;
 
-import org.lwjgl.opengl.GL30;
+import com.simibubi.create.foundation.render.backend.Backend;
 
 public class GlVertexArray extends GlObject {
-    public GlVertexArray() {
-        setHandle(GL30.glGenVertexArrays());
-    }
+	public GlVertexArray() {
+		setHandle(Backend.compat.genVertexArrays());
+	}
 
-    public void bind() {
-        GL30.glBindVertexArray(handle());
-    }
+	public void bind() {
+		Backend.compat.bindVertexArray(handle());
+	}
 
-    public void unbind() {
-        GL30.glBindVertexArray(0);
-    }
+	public void unbind() {
+		Backend.compat.bindVertexArray(0);
+	}
 
-    public void with(Consumer<GlVertexArray> action) {
-        bind();
-        action.accept(this);
-        unbind();
-    }
+	public void with(Consumer<GlVertexArray> action) {
+		bind();
+		action.accept(this);
+		unbind();
+	}
 
-    protected void deleteInternal(int handle) {
-        GL30.glDeleteVertexArrays(handle);
-    }
+	protected void deleteInternal(int handle) {
+		Backend.compat.deleteVertexArrays(handle);
+	}
 }

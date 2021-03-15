@@ -1,7 +1,5 @@
 package com.simibubi.create.foundation.render.backend.instancing;
 
-import static com.simibubi.create.foundation.render.Compartment.PARTIAL;
-
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
@@ -13,9 +11,8 @@ import org.apache.commons.lang3.tuple.Pair;
 
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
-import com.mojang.blaze3d.matrix.MatrixStack;
 import com.simibubi.create.AllBlockPartials;
-import com.simibubi.create.content.contraptions.base.KineticTileEntityRenderer;
+import com.simibubi.create.content.contraptions.base.KineticBlockEntityRenderer;
 import com.simibubi.create.foundation.render.Compartment;
 import com.simibubi.create.foundation.render.SuperByteBufferCache;
 import com.simibubi.create.foundation.render.backend.Backend;
@@ -25,30 +22,31 @@ import com.simibubi.create.foundation.render.backend.gl.shader.ProgramSpec;
 import com.simibubi.create.foundation.render.backend.gl.shader.ShaderCallback;
 
 import net.minecraft.block.BlockState;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.BlockRendererDispatcher;
-import net.minecraft.client.renderer.BufferBuilder;
-import net.minecraft.client.renderer.RenderType;
-import net.minecraft.client.renderer.model.IBakedModel;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.vector.Matrix4f;
+import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.render.BufferBuilder;
+import net.minecraft.client.render.RenderLayer;
+import net.minecraft.client.render.block.BlockRenderManager;
+import net.minecraft.client.render.model.BakedModel;
+import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.util.math.Direction;
+import net.minecraft.util.math.Matrix4f;
 
 public class RenderMaterial<P extends BasicProgram, MODEL extends InstancedModel<?>> {
 
-    protected final InstancedTileRenderer<?> renderer;
+    protected final InstancedBlockRenderer<?> renderer;
     protected final Map<Compartment<?>, Cache<Object, MODEL>> models;
     protected final ModelFactory<MODEL> factory;
     protected final ProgramSpec<P> programSpec;
-    protected final Predicate<RenderType> layerPredicate;
+    protected final Predicate<RenderLayer> layerPredicate;
 
     /**
      * Creates a material that renders in the default layer (CUTOUT_MIPPED)
      */
-    public RenderMaterial(InstancedTileRenderer<?> renderer, ProgramSpec<P> programSpec, ModelFactory<MODEL> factory) {
-        this(renderer, programSpec, factory, type -> type == RenderType.getCutoutMipped());
+    public RenderMaterial(InstancedBlockRenderer<?> renderer, ProgramSpec<P> programSpec, ModelFactory<MODEL> factory) {
+        this(renderer, programSpec, factory, type -> type == RenderLayer.getCutoutMipped());
     }
 
-    public RenderMaterial(InstancedTileRenderer<?> renderer, ProgramSpec<P> programSpec, ModelFactory<MODEL> factory, Predicate<RenderType> layerPredicate) {
+    public RenderMaterial(InstancedBlockRenderer<?> renderer, ProgramSpec<P> programSpec, ModelFactory<MODEL> factory, Predicate<RenderLayer> layerPredicate) {
         this.renderer = renderer;
         this.models = new HashMap<>();
         this.factory = factory;
@@ -56,18 +54,18 @@ public class RenderMaterial<P extends BasicProgram, MODEL extends InstancedModel
         this.layerPredicate = layerPredicate;
         registerCompartment(Compartment.PARTIAL);
         registerCompartment(Compartment.DIRECTIONAL_PARTIAL);
-        registerCompartment(KineticTileEntityRenderer.KINETIC_TILE);
+        registerCompartment(KineticBlockEntityRenderer.KINETIC_TILE);
     }
 
-    public boolean canRenderInLayer(RenderType layer) {
+    public boolean canRenderInLayer(RenderLayer layer) {
         return layerPredicate.test(layer);
     }
 
-    public void render(RenderType layer, Matrix4f projection, double camX, double camY, double camZ) {
+    public void render(RenderLayer layer, Matrix4f projection, double camX, double camY, double camZ) {
         render(layer, projection, camX, camY, camZ, null);
     }
 
-    public void render(RenderType layer, Matrix4f viewProjection, double camX, double camY, double camZ, ShaderCallback<P> setup) {
+    public void render(RenderLayer layer, Matrix4f viewProjection, double camX, double camY, double camZ, ShaderCallback<P> setup) {
         P program = Backend.getProgram(programSpec);
         program.bind(viewProjection, camX, camY, camZ, FastRenderDispatcher.getDebugMode());
 
@@ -107,7 +105,7 @@ public class RenderMaterial<P extends BasicProgram, MODEL extends InstancedModel
     }
 
     public MODEL getModel(AllBlockPartials partial, BlockState referenceState) {
-        return get(PARTIAL, partial, () -> buildModel(partial.get(), referenceState));
+        return get(Compartment.PARTIAL, partial, () -> buildModel(partial.get(), referenceState));
     }
 
     public MODEL getModel(AllBlockPartials partial, BlockState referenceState, Direction dir) {
@@ -135,15 +133,15 @@ public class RenderMaterial<P extends BasicProgram, MODEL extends InstancedModel
     }
 
     private MODEL buildModel(BlockState renderedState) {
-        BlockRendererDispatcher dispatcher = Minecraft.getInstance().getBlockRendererDispatcher();
-        return buildModel(dispatcher.getModelForState(renderedState), renderedState);
+        BlockRenderManager dispatcher = MinecraftClient.getInstance().getBlockRenderManager();
+        return buildModel(dispatcher.getModel(renderedState), renderedState);
     }
 
-    private MODEL buildModel(IBakedModel model, BlockState renderedState) {
+    private MODEL buildModel(BakedModel model, BlockState renderedState) {
         return buildModel(model, renderedState, new MatrixStack());
     }
 
-    private MODEL buildModel(IBakedModel model, BlockState referenceState, MatrixStack ms) {
+    private MODEL buildModel(BakedModel model, BlockState referenceState, MatrixStack ms) {
         BufferBuilder builder = SuperByteBufferCache.getBufferBuilder(model, referenceState, ms);
 
         return factory.makeModel(renderer, builder);

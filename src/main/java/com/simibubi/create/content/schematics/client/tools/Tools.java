@@ -1,23 +1,23 @@
 package com.simibubi.create.content.schematics.client.tools;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import com.simibubi.create.foundation.gui.AllIcons;
 import com.simibubi.create.foundation.utility.Lang;
 
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.text.Text;
 
 public enum Tools {
 
-	Deploy(new DeployTool(), AllIcons.I_TOOL_DEPLOY),
+	/*Deploy(new DeployTool(), AllIcons.I_TOOL_DEPLOY),
 	Move(new MoveTool(), AllIcons.I_TOOL_MOVE_XZ),
 	MoveY(new MoveVerticalTool(), AllIcons.I_TOOL_MOVE_Y),
 	Rotate(new RotateTool(), AllIcons.I_TOOL_ROTATE),
 	Print(new PlaceTool(), AllIcons.I_CONFIRM),
-	Flip(new FlipTool(), AllIcons.I_TOOL_MIRROR);
+	Flip(new FlipTool(), AllIcons.I_TOOL_MIRROR)*/
+
+	;
 
 	private ISchematicTool tool;
 	private AllIcons icon;
@@ -31,7 +31,7 @@ public enum Tools {
 		return tool;
 	}
 
-	public TranslationTextComponent getDisplayName() {
+	public Text getDisplayName() {
 		return Lang.translate("schematic.tool." + Lang.asId(name()));
 	}
 
@@ -41,13 +41,13 @@ public enum Tools {
 
 	public static List<Tools> getTools(boolean creative) {
 		List<Tools> tools = new ArrayList<>();
-		Collections.addAll(tools, Move, MoveY, Deploy, Rotate, Flip);
+		/*Collections.addAll(tools, Move, MoveY, Deploy, Rotate, Flip);
 		if (creative)
-			tools.add(Print);
+			tools.add(Print);*/
 		return tools;
 	}
 
-	public List<ITextComponent> getDescription() {
+	public List<Text> getDescription() {
 		return Lang.translatedOptions("schematic.tool." + Lang.asId(name()) + ".description", "0", "1", "2", "3");
 	}
 

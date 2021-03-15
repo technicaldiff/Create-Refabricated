@@ -1,14 +1,14 @@
 package com.simibubi.create.foundation.gui;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
 import com.simibubi.create.Create;
 
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.AbstractGui;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
+import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.gui.DrawableHelper;
 import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.util.Identifier;
 
 public enum AllGuiTextures {
 
@@ -84,44 +84,42 @@ public enum AllGuiTextures {
 	// PlacementIndicator
 	PLACEMENT_INDICATOR_SHEET("placement_indicator.png", 0, 0, 16, 256);
 
-	;
-
 	public static final int FONT_COLOR = 0x575F7A;
 
-	public final ResourceLocation location;
+	public final Identifier location;
 	public int width, height;
 	public int startX, startY;
 
-	private AllGuiTextures(String location, int width, int height) {
+	AllGuiTextures(String location, int width, int height) {
 		this(location, 0, 0, width, height);
 	}
 
-	private AllGuiTextures(int startX, int startY) {
+	AllGuiTextures(int startX, int startY) {
 		this("icons.png", startX * 16, startY * 16, 16, 16);
 	}
 
-	private AllGuiTextures(String location, int startX, int startY, int width, int height) {
-		this.location = new ResourceLocation(Create.ID, "textures/gui/" + location);
+	AllGuiTextures(String location, int startX, int startY, int width, int height) {
+		this.location = new Identifier(Create.ID, "textures/gui/" + location);
 		this.width = width;
 		this.height = height;
 		this.startX = startX;
 		this.startY = startY;
 	}
 
-	@OnlyIn(Dist.CLIENT)
+	@Environment(EnvType.CLIENT)
 	public void bind() {
-		Minecraft.getInstance()
+		MinecraftClient.getInstance()
 			.getTextureManager()
 			.bindTexture(location);
 	}
 
-	@OnlyIn(Dist.CLIENT)
-	public void draw(MatrixStack matrixStack, AbstractGui screen, int x, int y) {
+	@Environment(EnvType.CLIENT)
+	public void draw(MatrixStack matrixStack, DrawableHelper screen, int x, int y) {
 		bind();
 		screen.drawTexture(matrixStack, x, y, startX, startY, width, height);
 	}
 
-	@OnlyIn(Dist.CLIENT)
+	@Environment(EnvType.CLIENT)
 	public void draw(MatrixStack matrixStack, int x, int y) {
 		draw(matrixStack, new Screen(null) {
 		}, x, y);

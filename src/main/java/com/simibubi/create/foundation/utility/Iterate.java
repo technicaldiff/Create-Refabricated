@@ -4,9 +4,8 @@ import java.util.Arrays;
 import java.util.EnumSet;
 import java.util.List;
 
-import net.minecraft.util.Direction;
-import net.minecraft.util.Direction.Axis;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Direction;
 
 public class Iterate {
 
@@ -15,17 +14,17 @@ public class Iterate {
 	public static final int[] positiveAndNegative = {1, -1};
 	public static final Direction[] directions = Direction.values();
 	public static final Direction[] horizontalDirections = getHorizontals();
-	public static final Axis[] axes = Axis.values();
+	public static final Direction.Axis[] axes = Direction.Axis.values();
 	public static final EnumSet<Direction.Axis> axisSet = EnumSet.allOf(Direction.Axis.class);
 
 	private static Direction[] getHorizontals() {
 		Direction[] directions = new Direction[4];
 		for (int i = 0; i < 4; i++)
-			directions[i] = Direction.byHorizontalIndex(i);
+			directions[i] = Direction.byId(i);
 		return directions;
 	}
 
-	public static Direction[] directionsInAxis(Axis axis) {
+	public static Direction[] directionsInAxis(Direction.Axis axis) {
 		switch (axis) {
 			case X:
 				return new Direction[]{Direction.EAST, Direction.WEST};

@@ -7,37 +7,37 @@ import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.tree.CommandNode;
 import com.mojang.brigadier.tree.LiteralCommandNode;
 
-import net.minecraft.command.CommandSource;
-import net.minecraft.command.Commands;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.server.command.CommandManager;
+import net.minecraft.server.command.ServerCommandSource;
 
 public class AllCommands {
 
-	public static Predicate<CommandSource> sourceIsPlayer = (cs) -> cs.getEntity() instanceof PlayerEntity;
+	public static Predicate<ServerCommandSource> sourceIsPlayer = (cs) -> cs.getEntity() instanceof PlayerEntity;
 
-	public static void register(CommandDispatcher<CommandSource> dispatcher) {
+	public static void register(CommandDispatcher<ServerCommandSource> dispatcher) {
 
-		LiteralCommandNode<CommandSource> createRoot = dispatcher.register(Commands.literal("create")
+		LiteralCommandNode<ServerCommandSource> createRoot = dispatcher.register(CommandManager.literal("create")
 						//general purpose
-						.then(ToggleDebugCommand.register())
+						/**.then(ToggleDebugCommand.register())
 						.then(OverlayConfigCommand.register())
 						.then(FixLightingCommand.register())
 						.then(ReplaceInCommandBlocksCommand.register())
 						.then(HighlightCommand.register())
-					    .then(ToggleExperimentalRenderingCommand.register())
+					    .then(ToggleExperimentalRenderingCommand.register())*/
 
 						//dev-util
 						//Comment out for release
 						.then(ClearBufferCacheCommand.register())
-						.then(ChunkUtilCommand.register())
+						/**.then(ChunkUtilCommand.register())*/
 						//.then(KillTPSCommand.register())
 		);
 
-		CommandNode<CommandSource> c = dispatcher.findNode(Collections.singleton("c"));
+		CommandNode<ServerCommandSource> c = dispatcher.findNode(Collections.singleton("c"));
 		if (c != null)
 			return;
 
-		dispatcher.register(Commands.literal("c")
+		dispatcher.register(CommandManager.literal("c")
 				.redirect(createRoot)
 		);
 	}

@@ -4,10 +4,10 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
-import net.minecraft.util.Direction;
+import net.minecraft.structure.Structure;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Direction;
 import net.minecraft.world.World;
-import net.minecraft.world.gen.feature.template.Template.BlockInfo;
 
 public abstract class TranslatingContraption extends Contraption {
 
@@ -21,14 +21,14 @@ public abstract class TranslatingContraption extends Contraption {
 			cachedColliders = new HashSet<>();
 			cachedColliderDirection = movementDirection;
 
-			for (BlockInfo info : getBlocks().values()) {
+			for (Structure.StructureBlockInfo info : getBlocks().values()) {
 				BlockPos offsetPos = info.pos.offset(movementDirection);
 				if (info.state.getCollisionShape(world, offsetPos)
 					.isEmpty())
 					continue;
 				if (getBlocks().containsKey(offsetPos)
 					&& !getBlocks().get(offsetPos).state.getCollisionShape(world, offsetPos)
-						.isEmpty())
+					.isEmpty())
 					continue;
 				cachedColliders.add(info.pos);
 			}
@@ -50,5 +50,5 @@ public abstract class TranslatingContraption extends Contraption {
 	public boolean canBeStabilized(Direction facing, BlockPos localPos) {
 		return false;
 	}
-	
+
 }

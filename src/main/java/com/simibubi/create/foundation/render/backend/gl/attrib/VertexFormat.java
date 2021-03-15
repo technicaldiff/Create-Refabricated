@@ -5,61 +5,60 @@ import java.util.Arrays;
 
 public class VertexFormat {
 
-    private final ArrayList<IVertexAttrib> allAttributes;
+	private final ArrayList<VertexAttrib> allAttributes;
 
-    private final int numAttributes;
-    private final int stride;
+	private final int numAttributes;
+	private final int stride;
 
-    public VertexFormat(ArrayList<IVertexAttrib> allAttributes) {
-        this.allAttributes = allAttributes;
+	public VertexFormat(ArrayList<VertexAttrib> allAttributes) {
+		this.allAttributes = allAttributes;
 
-        int numAttributes = 0, stride = 0;
-        for (IVertexAttrib attrib : allAttributes) {
-            VertexAttribSpec spec = attrib.attribSpec();
-            numAttributes += spec.getAttributeCount();
-            stride += spec.getSize();
-        }
-        this.numAttributes = numAttributes;
-        this.stride = stride;
-    }
+		int numAttributes = 0, stride = 0;
+		for (VertexAttrib attrib : allAttributes) {
+			VertexAttribSpec spec = attrib.attribSpec();
+			numAttributes += spec.getAttributeCount();
+			stride += spec.getSize();
+		}
+		this.numAttributes = numAttributes;
+		this.stride = stride;
+	}
 
-    public int getShaderAttributeCount() {
-        return numAttributes;
-    }
+	public static Builder builder() {
+		return new Builder();
+	}
 
-    public int getStride() {
-        return stride;
-    }
+	public int getShaderAttributeCount() {
+		return numAttributes;
+	}
 
-    public void vertexAttribPointers(int index) {
-        int offset = 0;
-        for (IVertexAttrib attrib : this.allAttributes) {
-            VertexAttribSpec spec = attrib.attribSpec();
-            spec.vertexAttribPointer(stride, index, offset);
-            index += spec.getAttributeCount();
-            offset += spec.getSize();
-        }
-    }
+	public int getStride() {
+		return stride;
+	}
 
-    public static Builder builder() {
-        return new Builder();
-    }
+	public void vertexAttribPointers(int index) {
+		int offset = 0;
+		for (VertexAttrib attrib : this.allAttributes) {
+			VertexAttribSpec spec = attrib.attribSpec();
+			spec.vertexAttribPointer(stride, index, offset);
+			index += spec.getAttributeCount();
+			offset += spec.getSize();
+		}
+	}
 
+	public static class Builder {
+		private final ArrayList<VertexAttrib> allAttributes;
 
-    public static class Builder {
-        private final ArrayList<IVertexAttrib> allAttributes;
+		public Builder() {
+			allAttributes = new ArrayList<>();
+		}
 
-        public Builder() {
-            allAttributes = new ArrayList<>();
-        }
+		public <A extends Enum<A> & VertexAttrib> Builder addAttributes(Class<A> attribEnum) {
+			allAttributes.addAll(Arrays.asList(attribEnum.getEnumConstants()));
+			return this;
+		}
 
-        public <A extends Enum<A> & IVertexAttrib> Builder addAttributes(Class<A> attribEnum) {
-            allAttributes.addAll(Arrays.asList(attribEnum.getEnumConstants()));
-            return this;
-        }
-
-        public VertexFormat build() {
-            return new VertexFormat(allAttributes);
-        }
-    }
+		public VertexFormat build() {
+			return new VertexFormat(allAttributes);
+		}
+	}
 }

@@ -1,73 +1,61 @@
 package com.simibubi.create;
 
-import java.util.function.Supplier;
-
-import com.simibubi.create.content.contraptions.fluids.particle.FluidParticleData;
 import com.simibubi.create.content.contraptions.particle.AirFlowParticleData;
-import com.simibubi.create.content.contraptions.particle.AirParticleData;
 import com.simibubi.create.content.contraptions.particle.CubeParticleData;
-import com.simibubi.create.content.contraptions.particle.HeaterParticleData;
-import com.simibubi.create.content.contraptions.particle.ICustomParticleData;
+import com.simibubi.create.content.contraptions.particle.CustomParticleData;
 import com.simibubi.create.content.contraptions.particle.RotationIndicatorParticleData;
 import com.simibubi.create.foundation.utility.Lang;
+import net.minecraft.particle.ParticleEffect;
+import net.minecraft.particle.ParticleType;
 
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.particle.ParticleManager;
-import net.minecraft.particles.IParticleData;
-import net.minecraft.particles.ParticleType;
-import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.client.event.ParticleFactoryRegisterEvent;
-import net.minecraftforge.event.RegistryEvent;
-import net.minecraftforge.registries.IForgeRegistry;
+import java.util.function.Supplier;
 
 public enum AllParticleTypes {
 
 	ROTATION_INDICATOR(RotationIndicatorParticleData::new),
 	AIR_FLOW(AirFlowParticleData::new),
-	AIR(AirParticleData::new),
-	HEATER_PARTICLE(HeaterParticleData::new),
+	/*AIR(AirParticleData::new),
+	HEATER_PARTICLE(HeaterParticleData::new),*/
 	CUBE(CubeParticleData::new),
-	FLUID_PARTICLE(FluidParticleData::new),
+	/*FLUID_PARTICLE(FluidParticleData::new),
 	BASIN_FLUID(FluidParticleData::new),
-	FLUID_DRIP(FluidParticleData::new)
+	FLUID_DRIP(FluidParticleData::new)*/
 
 	;
 
-	private ParticleEntry<?> entry;
+	/**private ParticleEntry<?> entry;*/
 
-	<D extends IParticleData> AllParticleTypes(Supplier<? extends ICustomParticleData<D>> typeFactory) {
+	<D extends ParticleEffect> AllParticleTypes(Supplier<? extends CustomParticleData<D>> typeFactory) {
 		String asId = Lang.asId(this.name());
-		entry = new ParticleEntry<>(new ResourceLocation(Create.ID, asId), typeFactory);
+		//entry = new ParticleEntry<>(new Identifier(Create.ID, asId), typeFactory);
 	}
 
-	public static void register(RegistryEvent.Register<ParticleType<?>> event) {
+	/*public static void register(RegistryEvent.Register<ParticleType<?>> event) {
 		for (AllParticleTypes particle : values())
 			particle.entry.register(event.getRegistry());
 	}
 
-	@OnlyIn(Dist.CLIENT)
+	@Environment(EnvType.CLIENT)
 	public static void registerFactories(ParticleFactoryRegisterEvent event) {
-		ParticleManager particles = Minecraft.getInstance().particles;
+		ParticleManager particles = MinecraftClient.getInstance().particleManager;
 		for (AllParticleTypes particle : values())
 			particle.entry.registerFactory(particles);
-	}
+	}*/
 
 	public ParticleType<?> get() {
-		return entry.getOrCreateType();
+		return null; /**entry.getOrCreateType()*/
 	}
 
 	public String parameter() {
 		return Lang.asId(name());
 	}
 
-	private class ParticleEntry<D extends IParticleData> {
+	/*private class ParticleEntry<D extends ParticleEffect> {
 		Supplier<? extends ICustomParticleData<D>> typeFactory;
 		ParticleType<D> type;
-		ResourceLocation id;
+		Identifier id;
 
-		public ParticleEntry(ResourceLocation id, Supplier<? extends ICustomParticleData<D>> typeFactory) {
+		public ParticleEntry(Identifier id, Supplier<? extends ICustomParticleData<D>> typeFactory) {
 			this.id = id;
 			this.typeFactory = typeFactory;
 		}
@@ -85,12 +73,12 @@ public enum AllParticleTypes {
 			return type;
 		}
 
-		@OnlyIn(Dist.CLIENT)
+		@Environment(EnvType.CLIENT)
 		void registerFactory(ParticleManager particles) {
 			typeFactory.get()
 				.register(getOrCreateType(), particles);
 		}
 
-	}
+	}*/
 
 }

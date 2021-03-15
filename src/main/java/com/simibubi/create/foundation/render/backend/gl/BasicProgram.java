@@ -4,58 +4,58 @@ import org.lwjgl.opengl.GL20;
 
 import com.simibubi.create.foundation.render.backend.Backend;
 import com.simibubi.create.foundation.render.backend.gl.shader.GlProgram;
+import com.simibubi.create.foundation.render.backend.gl.shader.ProgramFogMode;
 import com.simibubi.create.foundation.utility.AnimationTickHolder;
 
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.vector.Matrix4f;
+import net.minecraft.util.Identifier;
+import net.minecraft.util.math.Matrix4f;
 
 public class BasicProgram extends GlProgram {
-    protected final int uTime;
-    protected final int uViewProjection;
-    protected final int uDebug;
-    protected final int uCameraPos;
-    protected final int uFogRange;
-    protected final int uFogColor;
+	protected final int uTime;
+	protected final int uViewProjection;
+	protected final int uDebug;
+	protected final int uCameraPos;
 
-    protected int uBlockAtlas;
-    protected int uLightMap;
+	protected final ProgramFogMode fogMode;
 
-    public BasicProgram(ResourceLocation name, int handle) {
-        super(name, handle);
-        uTime = getUniformLocation("uTime");
-        uViewProjection = getUniformLocation("uViewProjection");
-        uDebug = getUniformLocation("uDebug");
-        uCameraPos = getUniformLocation("uCameraPos");
-        uFogRange = getUniformLocation("uFogRange");
-        uFogColor = getUniformLocation("uFogColor");
+	protected int uBlockAtlas;
+	protected int uLightMap;
 
-        bind();
-        registerSamplers();
-        unbind();
-    }
+	public BasicProgram(Identifier name, int handle, ProgramFogMode.Factory fogFactory) {
+		super(name, handle);
+		uTime = getUniformLocation("uTime");
+		uViewProjection = getUniformLocation("uViewProjection");
+		uDebug = getUniformLocation("uDebug");
+		uCameraPos = getUniformLocation("uCameraPos");
 
-    protected void registerSamplers() {
-        uBlockAtlas = setSamplerBinding("uBlockAtlas", 0);
-        uLightMap = setSamplerBinding("uLightMap", 2);
-    }
+		fogMode = fogFactory.create(this);
 
-    public void bind(Matrix4f viewProjection, double camX, double camY, double camZ, int debugMode) {
-        super.bind();
+		bind();
+		registerSamplers();
+		unbind();
+	}
 
-        GL20.glUniform1i(uDebug, debugMode);
-        GL20.glUniform1f(uTime, AnimationTickHolder.getRenderTick());
+	protected static void uploadMatrixUniform(int uniform, Matrix4f mat) {
+		Backend.MATRIX_BUFFER.position(0);
+		mat.writeToBuffer(Backend.MATRIX_BUFFER);
+		Backend.MATRIX_BUFFER.rewind();
+		GL20.glUniformMatrix4fv(uniform, false, Backend.MATRIX_BUFFER);
+	}
 
-        uploadMatrixUniform(uViewProjection, viewProjection);
-        GL20.glUniform3f(uCameraPos, (float) camX, (float) camY, (float) camZ);
+	protected void registerSamplers() {
+		uBlockAtlas = setSamplerBinding("uBlockAtlas", 0);
+		uLightMap = setSamplerBinding("uLightMap", 2);
+	}
 
-        GL20.glUniform2f(uFogRange, GlFog.getFogStart(), GlFog.getFogEnd());
-        GL20.glUniform4fv(uFogColor, GlFog.FOG_COLOR);
-    }
+	public void bind(Matrix4f viewProjection, double camX, double camY, double camZ, int debugMode) {
+		super.bind();
 
-    protected static void uploadMatrixUniform(int uniform, Matrix4f mat) {
-        Backend.MATRIX_BUFFER.position(0);
-        mat.write(Backend.MATRIX_BUFFER);
-        Backend.MATRIX_BUFFER.rewind();
-        GL20.glUniformMatrix4fv(uniform, false, Backend.MATRIX_BUFFER);
-    }
+		GL20.glUniform1i(uDebug, debugMode);
+		GL20.glUniform1f(uTime, AnimationTickHolder.getRenderTick());
+
+		uploadMatrixUniform(uViewProjection, viewProjection);
+		GL20.glUniform3f(uCameraPos, (float) camX, (float) camY, (float) camZ);
+
+		fogMode.bind();
+	}
 }

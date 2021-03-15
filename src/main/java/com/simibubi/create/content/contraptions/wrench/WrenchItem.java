@@ -1,56 +1,55 @@
 package com.simibubi.create.content.contraptions.wrench;
 
-import javax.annotation.Nonnull;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import com.simibubi.create.AllItems;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.item.minecart.AbstractMinecartEntity;
+import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.vehicle.AbstractMinecartEntity;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.ItemUseContext;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.DamageSource;
-import net.minecraftforge.event.entity.player.AttackEntityEvent;
+import net.minecraft.item.ItemUsageContext;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.Hand;
+import net.minecraft.util.hit.EntityHitResult;
+import net.minecraft.world.World;
 
 public class WrenchItem extends Item {
 
-	public WrenchItem(Properties properties) {
+	public WrenchItem(Settings properties) {
 		super(properties);
 	}
 
-	@Nonnull
+	@NotNull
 	@Override
-	public ActionResultType onItemUse(ItemUseContext context) {
+	public ActionResult useOnBlock(ItemUsageContext context) {
 		PlayerEntity player = context.getPlayer();
-		if (player == null || !player.isAllowEdit())
-			return super.onItemUse(context);
+		if (player == null || !player.canModifyBlocks())
+			return super.useOnBlock(context);
 
 		BlockState state = context.getWorld()
-			.getBlockState(context.getPos());
-		if (!(state.getBlock() instanceof IWrenchable))
-			return super.onItemUse(context);
-		IWrenchable actor = (IWrenchable) state.getBlock();
+			.getBlockState(context.getBlockPos());
+		if (!(state.getBlock() instanceof Wrenchable))
+			return super.useOnBlock(context);
+		Wrenchable actor = (Wrenchable) state.getBlock();
 
 		if (player.isSneaking())
 			return actor.onSneakWrenched(state, context);
 		return actor.onWrenched(state, context);
 	}
 	
-	public static void wrenchInstaKillsMinecarts(AttackEntityEvent event) {
-		Entity target = event.getTarget();
-		if (!(target instanceof AbstractMinecartEntity))
+	public static void wrenchInstaKillsMinecarts(PlayerEntity playerEntity, World world, Hand hand, Entity entity, @Nullable EntityHitResult entityHitResult) {
+		if (!(entity instanceof AbstractMinecartEntity))
 			return;
-		PlayerEntity player = event.getPlayer();
-		ItemStack heldItem = player.getHeldItemMainhand();
-		if (!AllItems.WRENCH.isIn(heldItem))
+		if (!playerEntity.isHolding(AllItems.WRENCH))
 			return;
-		if (player.isCreative())
+		if (playerEntity.isCreative())
 			return;
-		AbstractMinecartEntity minecart = (AbstractMinecartEntity) target;
-		minecart.attackEntityFrom(DamageSource.causePlayerDamage(player), 100);
+		AbstractMinecartEntity minecart = (AbstractMinecartEntity) entity;
+		minecart.damage(DamageSource.player(playerEntity), 100);
 	}
 	
 }

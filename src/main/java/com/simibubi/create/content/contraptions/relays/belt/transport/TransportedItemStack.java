@@ -3,15 +3,14 @@ package com.simibubi.create.content.contraptions.relays.belt.transport;
 import java.util.Random;
 
 import com.simibubi.create.content.contraptions.relays.belt.BeltHelper;
-import com.simibubi.create.content.logistics.InWorldProcessing;
 
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.Direction;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.util.math.Direction;
 
 public class TransportedItemStack implements Comparable<TransportedItemStack> {
 
-	private static Random R = new Random();
+	private static final Random R = new Random();
 
 	public ItemStack stack;
 	public float beltPosition;
@@ -24,7 +23,7 @@ public class TransportedItemStack implements Comparable<TransportedItemStack> {
 	public float prevBeltPosition;
 	public float prevSideOffset;
 
-	public InWorldProcessing.Type processedBy;
+	//public InWorldProcessing.Type processedBy;
 	public int processingTime;
 
 	public TransportedItemStack(ItemStack stack) {
@@ -33,6 +32,19 @@ public class TransportedItemStack implements Comparable<TransportedItemStack> {
 		angle = centered ? 180 : R.nextInt(360);
 		sideOffset = prevSideOffset = getTargetSideOffset();
 		insertedFrom = Direction.UP;
+	}
+
+	public static TransportedItemStack read(CompoundTag nbt) {
+		TransportedItemStack stack = new TransportedItemStack(ItemStack.fromTag(nbt.getCompound("Item")));
+		stack.beltPosition = nbt.getFloat("Pos");
+		stack.prevBeltPosition = nbt.getFloat("PrevPos");
+		stack.sideOffset = nbt.getFloat("Offset");
+		stack.prevSideOffset = nbt.getFloat("PrevOffset");
+		stack.insertedAt = nbt.getInt("InSegment");
+		stack.angle = nbt.getInt("Angle");
+		stack.insertedFrom = Direction.byId(nbt.getInt("InDirection"));
+		stack.locked = nbt.getBoolean("Locked");
+		return stack;
 	}
 
 	public float getTargetSideOffset() {
@@ -51,7 +63,7 @@ public class TransportedItemStack implements Comparable<TransportedItemStack> {
 		copy.insertedFrom = insertedFrom;
 		copy.prevBeltPosition = prevBeltPosition;
 		copy.prevSideOffset = prevSideOffset;
-		copy.processedBy = processedBy;
+		//copy.processedBy = processedBy;
 		copy.processingTime = processingTime;
 		return copy;
 	}
@@ -63,31 +75,18 @@ public class TransportedItemStack implements Comparable<TransportedItemStack> {
 		return copy;
 	}
 
-	public CompoundNBT serializeNBT() {
-		CompoundNBT nbt = new CompoundNBT();
-		nbt.put("Item", stack.serializeNBT());
+	public CompoundTag serializeNBT() {
+		CompoundTag nbt = new CompoundTag();
+		nbt.put("Item", stack.toTag(nbt));
 		nbt.putFloat("Pos", beltPosition);
 		nbt.putFloat("PrevPos", prevBeltPosition);
 		nbt.putFloat("Offset", sideOffset);
 		nbt.putFloat("PrevOffset", prevSideOffset);
 		nbt.putInt("InSegment", insertedAt);
 		nbt.putInt("Angle", angle);
-		nbt.putInt("InDirection", insertedFrom.getIndex());
+		nbt.putInt("InDirection", insertedFrom.getId());
 		nbt.putBoolean("Locked", locked);
 		return nbt;
-	}
-
-	public static TransportedItemStack read(CompoundNBT nbt) {
-		TransportedItemStack stack = new TransportedItemStack(ItemStack.read(nbt.getCompound("Item")));
-		stack.beltPosition = nbt.getFloat("Pos");
-		stack.prevBeltPosition = nbt.getFloat("PrevPos");
-		stack.sideOffset = nbt.getFloat("Offset");
-		stack.prevSideOffset = nbt.getFloat("PrevOffset");
-		stack.insertedAt = nbt.getInt("InSegment");
-		stack.angle = nbt.getInt("Angle");
-		stack.insertedFrom = Direction.byIndex(nbt.getInt("InDirection"));
-		stack.locked = nbt.getBoolean("Locked");
-		return stack;
 	}
 
 }

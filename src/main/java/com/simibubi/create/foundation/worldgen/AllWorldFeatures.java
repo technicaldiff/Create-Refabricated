@@ -2,92 +2,60 @@ package com.simibubi.create.foundation.worldgen;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 import com.simibubi.create.AllBlocks;
-import com.simibubi.create.Create;
-import com.simibubi.create.content.palettes.AllPaletteBlocks;
-import com.tterrag.registrate.util.nullness.NonNullSupplier;
+import com.simibubi.create.foundation.utility.Lang;
 
-import net.minecraft.block.Block;
+import net.fabricmc.fabric.api.biome.v1.BiomeModifications;
+import net.fabricmc.fabric.api.biome.v1.BiomeSelectors;
+import net.minecraft.util.Identifier;
+import net.minecraft.util.registry.BuiltinRegistries;
 import net.minecraft.util.registry.Registry;
-import net.minecraft.util.registry.WorldGenRegistries;
-import net.minecraft.world.biome.Biome.Category;
-import net.minecraft.world.biome.Biomes;
-import net.minecraft.world.gen.GenerationStage;
-import net.minecraftforge.common.ForgeConfigSpec;
-import net.minecraftforge.event.world.BiomeLoadingEvent;
-import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraft.util.registry.RegistryKey;
+import net.minecraft.world.biome.Biome;
+import net.minecraft.world.gen.GenerationStep;
+import net.minecraft.world.gen.feature.ConfiguredFeature;
 
-public class AllWorldFeatures {
+public enum AllWorldFeatures {
 
-	static Map<String, ConfigDrivenFeatureEntry> entries = new HashMap<>();
+    ZINC_ORE_DESERT(new OreFeature(AllBlocks.ZINC_ORE, 17, 5).inBiomes(Biome.Category.DESERT)),
+    ZINC_ORE(new OreFeature(AllBlocks.ZINC_ORE, 14, 4)),
 
-	static final ConfigDrivenFeatureEntry
+    ;
 
-	COPPER = register("copper_ore", AllBlocks.COPPER_ORE, 18, 2).between(40, 85),
+    /**
+     * Increment this number if all worldgen entries should be overwritten in this
+     * update. Worlds from the previous version will overwrite potentially changed
+     * values with the new defaults.
+     */
+    public static final int forcedUpdateVersion = 1;
 
-		ZINC = register("zinc_ore", AllBlocks.ZINC_ORE, 14, 4).between(15, 70),
+    public OreFeature feature;
+    private final Map<Biome.Category, ConfiguredFeature<?, ?>> featureInstances;
 
-		LIMESTONE = register("limestone", AllPaletteBlocks.LIMESTONE, 128, 1 / 64f).between(30, 70),
+    AllWorldFeatures(OreFeature feature) {
+        this.feature = feature;
+        this.featureInstances = new HashMap<>();
+        this.feature.setId(Lang.asId(name()));
+    }
 
-		WEATHERED_LIMESTONE =
-			register("weathered_limestone", AllPaletteBlocks.WEATHERED_LIMESTONE, 128, 1 / 64f).between(10, 30),
+    public static void reload() {
+    	for (AllWorldFeatures entry : AllWorldFeatures.values()) {
+    		for (Biome biome : BuiltinRegistries.BIOME) {
+    			if (biome.getCategory() == Biome.Category.THEEND || biome.getCategory() == Biome.Category.NETHER) continue;
+    			if (entry.featureInstances.containsKey(biome.getCategory())) continue;
 
-		DOLOMITE = register("dolomite", AllPaletteBlocks.DOLOMITE, 128, 1 / 64f).between(20, 70),
+				Optional<ConfiguredFeature<?, ?>> createFeature = entry.feature.createFeature(biome);
+				if (!createFeature.isPresent()) continue;
 
-		GABBRO = register("gabbro", AllPaletteBlocks.GABBRO, 128, 1 / 64f).between(20, 70),
+				RegistryKey<ConfiguredFeature<?, ?>> x = RegistryKey.of(Registry.CONFIGURED_FEATURE_WORLDGEN, new Identifier("create", entry.name().toLowerCase()  + "_" + biome.getCategory().toString().toLowerCase()));
+			 	Registry.register(BuiltinRegistries.CONFIGURED_FEATURE, x.getValue(), createFeature.get());
 
-		SCORIA = register("scoria", AllPaletteBlocks.NATURAL_SCORIA, 128, 1 / 32f).between(0, 10)
-
-	;
-
-	private static ConfigDrivenFeatureEntry register(String id, NonNullSupplier<? extends Block> block, int clusterSize,
-		float frequency) {
-		ConfigDrivenFeatureEntry configDrivenFeatureEntry =
-			new ConfigDrivenFeatureEntry(id, block, clusterSize, frequency);
-		entries.put(id, configDrivenFeatureEntry);
-		return configDrivenFeatureEntry;
-	}
-
-	/**
-	 * Increment this number if all worldgen entries should be overwritten in this
-	 * update. Worlds from the previous version will overwrite potentially changed
-	 * values with the new defaults.
-	 */
-	public static final int forcedUpdateVersion = 2;
-
-	public static void registerFeatures() {
-		ForgeRegistries.FEATURES.register(ConfigDrivenOreFeature.INSTANCE);
-		ForgeRegistries.DECORATORS.register(ConfigDrivenDecorator.INSTANCE);
-		entries.entrySet()
-			.forEach((entry) -> {
-				Registry.register(WorldGenRegistries.CONFIGURED_FEATURE, Create.ID + "_" + entry.getKey(),
-					entry.getValue()
-						.getFeature());
-			});
-	}
-
-	public static void reload(BiomeLoadingEvent event) {
-		entries.values()
-			.forEach(entry -> {
-				if (event.getName() == Biomes.THE_VOID.getRegistryName())
-					return;
-				if (event.getCategory() == Category.NETHER)
-					return;
-				event.getGeneration()
-					.feature(GenerationStage.Decoration.UNDERGROUND_ORES, entry.getFeature());
-			});
-	}
-
-	public static void fillConfig(ForgeConfigSpec.Builder builder) {
-		entries.values()
-			.forEach(entry -> {
-				builder.push(entry.id);
-				entry.addToConfig(builder);
-				builder.pop();
-			});
-	}
-
-	public static void register() {}
+				entry.featureInstances.put(biome.getCategory(), createFeature.get());
+				BiomeModifications.addFeature(BiomeSelectors.categories(biome.getCategory()), GenerationStep.Feature.UNDERGROUND_ORES, x);
+			}
+		}
+    }
 
 }

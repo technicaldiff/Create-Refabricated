@@ -6,8 +6,8 @@ import com.simibubi.create.foundation.render.backend.instancing.InstancedModel;
 import com.simibubi.create.foundation.render.backend.instancing.MaterialType;
 
 public class KineticRenderMaterials {
-    public static final MaterialType<InstancedModel<RotatingData>> ROTATING = new MaterialType<>();
-    public static final MaterialType<InstancedModel<BeltData>> BELTS = new MaterialType<>();
+	public static final MaterialType<InstancedModel<RotatingData>> ROTATING = new MaterialType<>();
+	public static final MaterialType<InstancedModel<BeltData>> BELTS = new MaterialType<>();
 
-    public static final MaterialType<InstancedModel<ContraptionActorData>> ACTORS = new MaterialType<>();
+	public static final MaterialType<InstancedModel<ContraptionActorData>> ACTORS = new MaterialType<>();
 }

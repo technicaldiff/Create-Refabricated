@@ -1,7 +1,5 @@
 package com.simibubi.create.content.contraptions.relays.belt.transport;
 
-import static com.simibubi.create.content.contraptions.relays.belt.transport.BeltTunnelInteractionHandler.flapTunnel;
-
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -9,38 +7,34 @@ import java.util.List;
 import java.util.function.Function;
 
 import com.simibubi.create.content.contraptions.relays.belt.BeltBlock;
+import com.simibubi.create.content.contraptions.relays.belt.BeltBlockEntity;
 import com.simibubi.create.content.contraptions.relays.belt.BeltHelper;
 import com.simibubi.create.content.contraptions.relays.belt.BeltSlope;
-import com.simibubi.create.content.contraptions.relays.belt.BeltTileEntity;
-import com.simibubi.create.foundation.tileEntity.TileEntityBehaviour;
-import com.simibubi.create.foundation.tileEntity.behaviour.belt.BeltProcessingBehaviour;
-import com.simibubi.create.foundation.tileEntity.behaviour.belt.BeltProcessingBehaviour.ProcessingResult;
-import com.simibubi.create.foundation.tileEntity.behaviour.belt.DirectBeltInputBehaviour;
-import com.simibubi.create.foundation.tileEntity.behaviour.belt.TransportedItemStackHandlerBehaviour;
-import com.simibubi.create.foundation.tileEntity.behaviour.belt.TransportedItemStackHandlerBehaviour.TransportedResult;
-import com.simibubi.create.foundation.utility.BlockHelper;
-import com.simibubi.create.foundation.utility.ServerSpeedProvider;
+import com.simibubi.create.foundation.block.entity.BlockEntityBehaviour;
+import com.simibubi.create.foundation.block.entity.behaviour.belt.BeltProcessingBehaviour;
+import com.simibubi.create.foundation.block.entity.behaviour.belt.DirectBeltInputBehaviour;
+import com.simibubi.create.foundation.block.entity.behaviour.belt.TransportedItemStackHandlerBehaviour;
 
-import net.minecraft.entity.item.ItemEntity;
+import net.minecraft.entity.ItemEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.nbt.ListNBT;
-import net.minecraft.util.Direction;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.ListTag;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.vector.Vector3d;
+import net.minecraft.util.math.Direction;
+import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.Vec3i;
 import net.minecraft.world.World;
-import net.minecraftforge.common.util.Constants.NBT;
 
 public class BeltInventory {
 
-	final BeltTileEntity belt;
-	private final List<TransportedItemStack> items;
+	final BeltBlockEntity belt;
 	final List<TransportedItemStack> toInsert;
 	final List<TransportedItemStack> toRemove;
-	boolean beltMovementPositive;
 	final float SEGMENT_WINDOW = .75f;
+	private final List<TransportedItemStack> items;
+	boolean beltMovementPositive;
 
-	public BeltInventory(BeltTileEntity te) {
+	public BeltInventory(BeltBlockEntity te) {
 		this.belt = te;
 		items = new LinkedList<>();
 		toInsert = new LinkedList<>();
@@ -58,10 +52,10 @@ public class BeltInventory {
 			belt.markDirty();
 			belt.sendData();
 		}
-		
+
 		if (belt.getSpeed() == 0)
 			return;
-		
+
 		// Reverse item collection if belt just reversed
 		if (beltMovementPositive != belt.getDirectionAwareBeltMovementSpeed() > 0) {
 			beltMovementPositive = !beltMovementPositive;
@@ -78,11 +72,11 @@ public class BeltInventory {
 		// Useful stuff
 		float beltSpeed = belt.getDirectionAwareBeltMovementSpeed();
 		Direction movementFacing = belt.getMovementFacing();
-		boolean horizontal = belt.getBlockState()
+		boolean horizontal = belt.getCachedState()
 			.get(BeltBlock.SLOPE) == BeltSlope.HORIZONTAL;
 		float spacing = 1;
 		World world = belt.getWorld();
-		boolean onClient = world.isRemote;
+		boolean onClient = world.isClient;
 
 		// resolve ending only when items will reach it this tick
 		Ending ending = Ending.UNRESOLVED;
@@ -101,8 +95,8 @@ public class BeltInventory {
 			}
 
 			float movement = beltSpeed;
-			if (onClient)
-				movement *= ServerSpeedProvider.get();
+			/**if (onClient)
+			 movement *= ServerSpeedProvider.get();*/
 
 			// Don't move if held by processing (client)
 			if (onClient && currentItem.locked)
@@ -144,16 +138,16 @@ public class BeltInventory {
 			}
 
 			// Belt Tunnels
-			if (BeltTunnelInteractionHandler.flapTunnelsAndCheckIfStuck(this, currentItem, nextOffset))
-				continue;
+			/**if (BeltTunnelInteractionHandler.flapTunnelsAndCheckIfStuck(this, currentItem, nextOffset))
+			 continue;*/
 
 			// Belt Funnels
-			if (BeltFunnelInteractionHandler.checkForFunnels(this, currentItem, nextOffset))
-				continue;
+			/**if (BeltFunnelInteractionHandler.checkForFunnels(this, currentItem, nextOffset))
+			 continue;*/
 
 			// Horizontal Crushing Wheels
-			if (BeltCrusherInteractionHandler.checkForCrushers(this, currentItem, nextOffset))
-				continue;
+			/**if (BeltCrusherInteractionHandler.checkForCrushers(this, currentItem, nextOffset))
+			 continue;*/
 
 			// Apply Movement
 			currentItem.beltPosition += limitedMovement;
@@ -174,21 +168,21 @@ public class BeltInventory {
 
 			if (ending == Ending.INSERT) {
 				DirectBeltInputBehaviour inputBehaviour =
-					TileEntityBehaviour.get(world, nextPosition, DirectBeltInputBehaviour.TYPE);
+					BlockEntityBehaviour.get(world, nextPosition, DirectBeltInputBehaviour.TYPE);
 				if (inputBehaviour == null)
 					continue;
 				if (!inputBehaviour.canInsertFromSide(movementFacing))
 					continue;
 
 				ItemStack remainder = inputBehaviour.handleInsertion(currentItem, movementFacing, false);
-				if (remainder.equals(currentItem.stack, false))
+				if (!remainder.equals(currentItem.stack))
 					continue;
 
 				currentItem.stack = remainder;
 				if (remainder.isEmpty())
 					iterator.remove();
 
-				flapTunnel(this, lastOffset, movementFacing, false);
+				/**flapTunnel(this, lastOffset, movementFacing, false);*/
 				belt.sendData();
 				continue;
 			}
@@ -199,7 +193,7 @@ public class BeltInventory {
 			if (ending == Ending.EJECT) {
 				eject(currentItem);
 				iterator.remove();
-				flapTunnel(this, lastOffset, movementFacing, false);
+				/**flapTunnel(this, lastOffset, movementFacing, false);*/
 				belt.sendData();
 				continue;
 			}
@@ -223,10 +217,10 @@ public class BeltInventory {
 				return false;
 			}
 
-			ProcessingResult result = processingBehaviour.handleHeldItem(currentItem, stackHandlerBehaviour);
-			if (result == ProcessingResult.REMOVE)
+			BeltProcessingBehaviour.ProcessingResult result = processingBehaviour.handleHeldItem(currentItem, stackHandlerBehaviour);
+			if (result == BeltProcessingBehaviour.ProcessingResult.REMOVE)
 				return true;
-			if (result == ProcessingResult.HOLD)
+			if (result == BeltProcessingBehaviour.ProcessingResult.HOLD)
 				return false;
 
 			currentItem.locked = false;
@@ -253,11 +247,11 @@ public class BeltInventory {
 				if (BeltProcessingBehaviour.isBlocked(belt.getWorld(), BeltHelper.getPositionForOffset(belt, segment)))
 					continue;
 
-				ProcessingResult result = processingBehaviour.handleReceivedItem(currentItem, stackHandlerBehaviour);
-				if (result == ProcessingResult.REMOVE)
+				BeltProcessingBehaviour.ProcessingResult result = processingBehaviour.handleReceivedItem(currentItem, stackHandlerBehaviour);
+				if (result == BeltProcessingBehaviour.ProcessingResult.REMOVE)
 					return true;
 
-				if (result == ProcessingResult.HOLD) {
+				if (result == BeltProcessingBehaviour.ProcessingResult.HOLD) {
 					currentItem.beltPosition = segment + .5f + (beltMovementPositive ? 1 / 512f : -1 / 512f);
 					currentItem.locked = true;
 					belt.sendData();
@@ -270,23 +264,13 @@ public class BeltInventory {
 	}
 
 	protected BeltProcessingBehaviour getBeltProcessingAtSegment(int segment) {
-		return TileEntityBehaviour.get(belt.getWorld(), BeltHelper.getPositionForOffset(belt, segment)
+		return BlockEntityBehaviour.get(belt.getWorld(), BeltHelper.getPositionForOffset(belt, segment)
 			.up(2), BeltProcessingBehaviour.TYPE);
 	}
 
 	protected TransportedItemStackHandlerBehaviour getTransportedItemStackHandlerAtSegment(int segment) {
-		return TileEntityBehaviour.get(belt.getWorld(), BeltHelper.getPositionForOffset(belt, segment),
+		return BlockEntityBehaviour.get(belt.getWorld(), BeltHelper.getPositionForOffset(belt, segment),
 			TransportedItemStackHandlerBehaviour.TYPE);
-	}
-
-	private enum Ending {
-		UNRESOLVED(0), EJECT(0), INSERT(.25f), FUNNEL(.5f), BLOCKED(.45f);
-
-		private float margin;
-
-		Ending(float f) {
-			this.margin = f;
-		}
 	}
 
 	private Ending resolveEnding() {
@@ -297,22 +281,22 @@ public class BeltInventory {
 //			return Ending.FUNNEL;
 
 		DirectBeltInputBehaviour inputBehaviour =
-			TileEntityBehaviour.get(world, nextPosition, DirectBeltInputBehaviour.TYPE);
+			BlockEntityBehaviour.get(world, nextPosition, DirectBeltInputBehaviour.TYPE);
 		if (inputBehaviour != null)
 			return Ending.INSERT;
 
-		if (BlockHelper.hasBlockSolidSide(world.getBlockState(nextPosition), world, nextPosition, belt.getMovementFacing()
-			.getOpposite()))
-			return Ending.BLOCKED;
+		/**if (Block.hasSolidSide(world.getBlockState(nextPosition), world, nextPosition, belt.getMovementFacing()
+		 .getOpposite()))
+		 return Ending.BLOCKED;*/
 
 		return Ending.EJECT;
 	}
 
-	//
-
 	public boolean canInsertAt(int segment) {
 		return canInsertAtFromSide(segment, Direction.UP);
 	}
+
+	//
 
 	public boolean canInsertAtFromSide(int segment, Direction side) {
 		float segmentPos = segment;
@@ -335,10 +319,8 @@ public class BeltInventory {
 
 	private boolean isBlocking(int segment, Direction side, float segmentPos, TransportedItemStack stack) {
 		float currentPos = stack.beltPosition;
-		if (stack.insertedAt == segment && stack.insertedFrom == side
-			&& (beltMovementPositive ? currentPos <= segmentPos + 1 : currentPos >= segmentPos - 1))
-			return true;
-		return false;
+		return stack.insertedAt == segment && stack.insertedFrom == side
+			&& (beltMovementPositive ? currentPos <= segmentPos + 1 : currentPos >= segmentPos - 1);
 	}
 
 	public void addItem(TransportedItemStack newStack) {
@@ -371,16 +353,16 @@ public class BeltInventory {
 		return null;
 	}
 
-	public void read(CompoundNBT nbt) {
+	public void read(CompoundTag nbt) {
 		items.clear();
-		nbt.getList("Items", NBT.TAG_COMPOUND)
-			.forEach(inbt -> items.add(TransportedItemStack.read((CompoundNBT) inbt)));
+		nbt.getList("Items", nbt.getType())
+			.forEach(inbt -> items.add(TransportedItemStack.read((CompoundTag) inbt)));
 		beltMovementPositive = nbt.getBoolean("PositiveOrder");
 	}
 
-	public CompoundNBT write() {
-		CompoundNBT nbt = new CompoundNBT();
-		ListNBT itemsNBT = new ListNBT();
+	public CompoundTag write() {
+		CompoundTag nbt = new CompoundTag();
+		ListTag itemsNBT = new ListTag();
 		items.forEach(stack -> itemsNBT.add(stack.serializeNBT()));
 		nbt.put("Items", itemsNBT);
 		nbt.putBoolean("PositiveOrder", beltMovementPositive);
@@ -389,17 +371,18 @@ public class BeltInventory {
 
 	public void eject(TransportedItemStack stack) {
 		ItemStack ejected = stack.stack;
-		Vector3d outPos = BeltHelper.getVectorForOffset(belt, stack.beltPosition);
+		Vec3d outPos = BeltHelper.getVectorForOffset(belt, stack.beltPosition);
 		float movementSpeed = Math.max(Math.abs(belt.getBeltMovementSpeed()), 1 / 8f);
-		Vector3d outMotion = Vector3d.of(belt.getBeltChainDirection()).scale(movementSpeed)
+		Vec3i x = belt.getBeltChainDirection();
+		Vec3d outMotion = new Vec3d(x.getX(), x.getY(), x.getZ()).multiply(movementSpeed)
 			.add(0, 1 / 8f, 0);
-		outPos = outPos.add(outMotion.normalize().scale(0.001));
+		outPos = outPos.add(outMotion.normalize().multiply(0.001));
 		ItemEntity entity = new ItemEntity(belt.getWorld(), outPos.x, outPos.y + 6 / 16f, outPos.z, ejected);
-		entity.setMotion(outMotion);
-		entity.setDefaultPickupDelay();
-		entity.velocityChanged = true;
+		entity.setVelocity(outMotion);
+		entity.setToDefaultPickupDelay();
+		entity.velocityModified = true;
 		belt.getWorld()
-			.addEntity(entity);
+			.spawnEntity(entity);
 	}
 
 	public void ejectAll() {
@@ -408,14 +391,14 @@ public class BeltInventory {
 	}
 
 	public void applyToEachWithin(float position, float maxDistanceToPosition,
-		Function<TransportedItemStack, TransportedResult> processFunction) {
+								  Function<TransportedItemStack, TransportedItemStackHandlerBehaviour.TransportedResult> processFunction) {
 		boolean dirty = false;
 		for (TransportedItemStack transported : items) {
 			ItemStack stackBefore = transported.stack.copy();
 			if (Math.abs(position - transported.beltPosition) >= maxDistanceToPosition)
 				continue;
-			TransportedResult result = processFunction.apply(transported);
-			if (result == null|| result.didntChangeFrom(stackBefore))
+			TransportedItemStackHandlerBehaviour.TransportedResult result = processFunction.apply(transported);
+			if (result == null || result.didntChangeFrom(stackBefore))
 				continue;
 
 			dirty = true;
@@ -435,6 +418,16 @@ public class BeltInventory {
 
 	public List<TransportedItemStack> getTransportedItems() {
 		return items;
+	}
+
+	private enum Ending {
+		UNRESOLVED(0), EJECT(0), INSERT(.25f), FUNNEL(.5f), BLOCKED(.45f);
+
+		private final float margin;
+
+		Ending(float f) {
+			this.margin = f;
+		}
 	}
 
 }

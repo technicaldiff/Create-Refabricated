@@ -1,26 +1,26 @@
 package com.simibubi.create.content.contraptions.base;
 
+import com.simibubi.create.foundation.render.backend.instancing.InstancedBlockRenderer;
 import com.simibubi.create.foundation.render.backend.instancing.InstancedTileRenderRegistry;
-import com.simibubi.create.foundation.render.backend.instancing.InstancedTileRenderer;
 
-import net.minecraft.state.properties.BlockStateProperties;
-import net.minecraft.tileentity.TileEntityType;
-import net.minecraft.util.Direction;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.fml.DistExecutor;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.loader.api.FabricLoader;
+import net.minecraft.block.entity.BlockEntityType;
+import net.minecraft.state.property.Properties;
+import net.minecraft.util.math.Direction;
 
 public class BackHalfShaftInstance extends HalfShaftInstance {
-    public static void register(TileEntityType<? extends KineticTileEntity> type) {
-        DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () ->
-                InstancedTileRenderRegistry.instance.register(type, BackHalfShaftInstance::new));
+    public static void register(BlockEntityType<? extends KineticBlockEntity> type) {
+		if (FabricLoader.getInstance().getEnvironmentType() == EnvType.CLIENT)
+			InstancedTileRenderRegistry.instance.register(type, BackHalfShaftInstance::new);
     }
 
-    public BackHalfShaftInstance(InstancedTileRenderer modelManager, KineticTileEntity tile) {
+    public BackHalfShaftInstance(InstancedBlockRenderer<?> modelManager, KineticBlockEntity tile) {
         super(modelManager, tile);
     }
 
     @Override
     protected Direction getShaftDirection() {
-        return tile.getBlockState().get(BlockStateProperties.FACING).getOpposite();
+        return tile.getCachedState().get(Properties.FACING).getOpposite();
     }
 }

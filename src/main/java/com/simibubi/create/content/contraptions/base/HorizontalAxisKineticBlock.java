@@ -4,46 +4,46 @@ import com.simibubi.create.foundation.utility.Iterate;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
-import net.minecraft.item.BlockItemUseContext;
-import net.minecraft.state.Property;
-import net.minecraft.state.StateContainer.Builder;
-import net.minecraft.state.properties.BlockStateProperties;
-import net.minecraft.util.Direction;
-import net.minecraft.util.Direction.Axis;
-import net.minecraft.util.Direction.AxisDirection;
-import net.minecraft.util.Mirror;
-import net.minecraft.util.Rotation;
+import net.minecraft.item.ItemPlacementContext;
+import net.minecraft.state.StateManager.Builder;
+import net.minecraft.state.property.Properties;
+import net.minecraft.state.property.Property;
+import net.minecraft.util.BlockMirror;
+import net.minecraft.util.BlockRotation;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.IWorldReader;
+import net.minecraft.util.math.Direction;
+import net.minecraft.util.math.Direction.Axis;
+import net.minecraft.util.math.Direction.AxisDirection;
+import net.minecraft.world.WorldView;
 
 public abstract class HorizontalAxisKineticBlock extends KineticBlock {
 
-	public static final Property<Axis> HORIZONTAL_AXIS = BlockStateProperties.HORIZONTAL_AXIS;
+	public static final Property<Axis> HORIZONTAL_AXIS = Properties.HORIZONTAL_AXIS;
 
-	public HorizontalAxisKineticBlock(Properties properties) {
+	public HorizontalAxisKineticBlock(Settings properties) {
 		super(properties);
 	}
 
 	@Override
-	protected void fillStateContainer(Builder<Block, BlockState> builder) {
+	protected void appendProperties(Builder<Block, BlockState> builder) {
 		builder.add(HORIZONTAL_AXIS);
-		super.fillStateContainer(builder);
+		super.appendProperties(builder);
 	}
 
 	@Override
-	public BlockState getStateForPlacement(BlockItemUseContext context) {
+	public BlockState getPlacementState(ItemPlacementContext context) {
 		Axis preferredAxis = getPreferredHorizontalAxis(context);
 		if (preferredAxis != null)
 			return this.getDefaultState().with(HORIZONTAL_AXIS, preferredAxis);
-		return this.getDefaultState().with(HORIZONTAL_AXIS, context.getPlacementHorizontalFacing().rotateY().getAxis());
+		return this.getDefaultState().with(HORIZONTAL_AXIS, context.getPlayerFacing().rotateYClockwise().getAxis());
 	}
 
-	public static Axis getPreferredHorizontalAxis(BlockItemUseContext context) {
+	public static Axis getPreferredHorizontalAxis(ItemPlacementContext context) {
 		Direction prefferedSide = null;
 		for (Direction side : Iterate.horizontalDirections) {
-			BlockState blockState = context.getWorld().getBlockState(context.getPos().offset(side));
-			if (blockState.getBlock() instanceof IRotate) {
-				if (((IRotate) blockState.getBlock()).hasShaftTowards(context.getWorld(), context.getPos().offset(side),
+			BlockState blockState = context.getWorld().getBlockState(context.getBlockPos().offset(side));
+			if (blockState.getBlock() instanceof Rotating) {
+				if (((Rotating) blockState.getBlock()).hasShaftTowards(context.getWorld(), context.getBlockPos().offset(side),
 						blockState, side.getOpposite()))
 					if (prefferedSide != null && prefferedSide.getAxis() != side.getAxis()) {
 						prefferedSide = null;
@@ -62,19 +62,19 @@ public abstract class HorizontalAxisKineticBlock extends KineticBlock {
 	}
 
 	@Override
-	public boolean hasShaftTowards(IWorldReader world, BlockPos pos, BlockState state, Direction face) {
+	public boolean hasShaftTowards(WorldView world, BlockPos pos, BlockState state, Direction face) {
 		return face.getAxis() == state.get(HORIZONTAL_AXIS);
 	}
 
 	@Override
-	public BlockState rotate(BlockState state, Rotation rot) {
+	public BlockState rotate(BlockState state, BlockRotation rot) {
 		Axis axis = state.get(HORIZONTAL_AXIS);
 		return state.with(HORIZONTAL_AXIS,
-				rot.rotate(Direction.getFacingFromAxis(AxisDirection.POSITIVE, axis)).getAxis());
+				rot.rotate(Direction.get(AxisDirection.POSITIVE, axis)).getAxis());
 	}
 
 	@Override
-	public BlockState mirror(BlockState state, Mirror mirrorIn) {
+	public BlockState mirror(BlockState state, BlockMirror mirrorIn) {
 		return state;
 	}
 

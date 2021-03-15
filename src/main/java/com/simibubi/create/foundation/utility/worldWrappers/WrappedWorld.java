@@ -4,34 +4,30 @@ import java.util.Collections;
 import java.util.List;
 import java.util.function.Predicate;
 
-import javax.annotation.Nullable;
-import javax.annotation.ParametersAreNonnullByDefault;
+import org.jetbrains.annotations.Nullable;
 
-import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.fluid.Fluid;
-import net.minecraft.item.crafting.RecipeManager;
+import net.minecraft.item.map.MapState;
+import net.minecraft.recipe.RecipeManager;
 import net.minecraft.scoreboard.Scoreboard;
-import net.minecraft.tags.ITagCollectionSupplier;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.Direction;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.SoundEvent;
+import net.minecraft.sound.SoundCategory;
+import net.minecraft.sound.SoundEvent;
+import net.minecraft.tag.TagManager;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.registry.DynamicRegistries;
-import net.minecraft.world.ITickList;
+import net.minecraft.util.math.Direction;
+import net.minecraft.util.registry.DynamicRegistryManager;
+import net.minecraft.world.MutableWorldProperties;
+import net.minecraft.world.TickScheduler;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
-import net.minecraft.world.chunk.AbstractChunkProvider;
-import net.minecraft.world.lighting.WorldLightManager;
-import net.minecraft.world.storage.ISpawnWorldInfo;
-import net.minecraft.world.storage.MapData;
+import net.minecraft.world.chunk.ChunkManager;
+import net.minecraft.world.chunk.light.LightingProvider;
 
-@MethodsReturnNonnullByDefault
-@ParametersAreNonnullByDefault
 public class WrappedWorld extends World {
 
 	protected World world;
@@ -43,8 +39,8 @@ public class WrappedWorld extends World {
 	}
 
 	public WrappedWorld(World world) {
-		super((ISpawnWorldInfo) world.getWorldInfo(), world.getRegistryKey(), world.getDimension(), world::getProfiler,
-			world.isRemote, world.isDebugWorld(), 0);
+		super((MutableWorldProperties) world.getLevelProperties(), world.getRegistryKey(), world.getDimension(), world::getProfiler,
+			world.isClient, world.isDebugWorld(), 0);
 		this.world = world;
 	}
 
@@ -53,8 +49,8 @@ public class WrappedWorld extends World {
 	}
 	
 	@Override
-	public WorldLightManager getLightingProvider() {
-		return super.getLightingProvider();
+	public LightingProvider getLightingProvider() {
+		return world.getLightingProvider();
 	}
 	
 	@Override
@@ -63,13 +59,13 @@ public class WrappedWorld extends World {
 	}
 
 	@Override
-	public boolean hasBlockState(@Nullable BlockPos p_217375_1_, @Nullable Predicate<BlockState> p_217375_2_) {
-		return world.hasBlockState(p_217375_1_, p_217375_2_);
+	public boolean testBlockState(@Nullable BlockPos p_217375_1_, @Nullable Predicate<BlockState> p_217375_2_) {
+		return world.testBlockState(p_217375_1_, p_217375_2_);
 	}
 
 	@Override
-	public TileEntity getTileEntity(@Nullable BlockPos pos) {
-		return world.getTileEntity(pos);
+	public BlockEntity getBlockEntity(@Nullable BlockPos pos) {
+		return world.getBlockEntity(pos);
 	}
 
 	@Override
@@ -78,32 +74,32 @@ public class WrappedWorld extends World {
 	}
 
 	@Override
-	public int getLight(BlockPos pos) {
+	public int getLightLevel(BlockPos pos) {
 		return 15;
 	}
 
 	@Override
-	public void notifyBlockUpdate(BlockPos pos, BlockState oldState, BlockState newState, int flags) {
-		world.notifyBlockUpdate(pos, oldState, newState, flags);
+	public void updateListeners(BlockPos pos, BlockState oldState, BlockState newState, int flags) {
+		world.updateListeners(pos, oldState, newState, flags);
 	}
 
 	@Override
-	public ITickList<Block> getPendingBlockTicks() {
-		return world.getPendingBlockTicks();
+	public TickScheduler<Block> getBlockTickScheduler() {
+		return world.getBlockTickScheduler();
 	}
 
 	@Override
-	public ITickList<Fluid> getPendingFluidTicks() {
-		return world.getPendingFluidTicks();
+	public TickScheduler<Fluid> getFluidTickScheduler() {
+		return world.getFluidTickScheduler();
 	}
 
 	@Override
-	public AbstractChunkProvider getChunkProvider() {
+	public ChunkManager getChunkManager() {
 		return provider;
 	}
 
 	@Override
-	public void playEvent(@Nullable PlayerEntity player, int type, BlockPos pos, int data) {}
+	public void syncWorldEvent(@Nullable PlayerEntity player, int type, BlockPos pos, int data) {}
 
 	@Override
 	public List<? extends PlayerEntity> getPlayers() {
@@ -115,29 +111,29 @@ public class WrappedWorld extends World {
 		SoundCategory category, float volume, float pitch) {}
 
 	@Override
-	public void playMovingSound(@Nullable PlayerEntity p_217384_1_, Entity p_217384_2_, SoundEvent p_217384_3_,
+	public void playSoundFromEntity(@Nullable PlayerEntity p_217384_1_, Entity p_217384_2_, SoundEvent p_217384_3_,
 		SoundCategory p_217384_4_, float p_217384_5_, float p_217384_6_) {}
 
 	@Override
-	public Entity getEntityByID(int id) {
+	public Entity getEntityById(int id) {
 		return null;
 	}
 
 	@Override
-	public MapData getMapData(String mapName) {
+	public MapState getMapState(String mapName) {
 		return null;
 	}
 
 	@Override
-	public boolean addEntity(@Nullable Entity entityIn) {
+	public boolean spawnEntity(@Nullable Entity entityIn) {
 		if (entityIn == null)
 			return false;
 		entityIn.setWorld(world);
-		return world.addEntity(entityIn);
+		return world.spawnEntity(entityIn);
 	}
 
 	@Override
-	public void registerMapData(MapData mapDataIn) {}
+	public void putMapState(MapState mapDataIn) {}
 
 	@Override
 	public int getNextMapId() {
@@ -145,7 +141,7 @@ public class WrappedWorld extends World {
 	}
 
 	@Override
-	public void sendBlockBreakProgress(int breakerId, BlockPos pos, int progress) {}
+	public void setBlockBreakingInfo(int breakerId, BlockPos pos, int progress) {}
 
 	@Override
 	public Scoreboard getScoreboard() {
@@ -158,8 +154,8 @@ public class WrappedWorld extends World {
 	}
 
 	@Override
-	public ITagCollectionSupplier getTags() {
-		return world.getTags();
+	public TagManager getTagManager() {
+		return world.getTagManager();
 	}
 
 	@Override
@@ -168,7 +164,7 @@ public class WrappedWorld extends World {
 	}
 
 	@Override
-	public DynamicRegistries getRegistryManager() {
+	public DynamicRegistryManager getRegistryManager() {
 		return world.getRegistryManager();
 	}
 

@@ -1,39 +1,39 @@
 package com.simibubi.create.content.contraptions.components.structureMovement.bearing;
 
-import com.simibubi.create.AllTileEntities;
-import com.simibubi.create.foundation.block.ITE;
+import com.simibubi.create.AllBlockEntities;
+import com.simibubi.create.foundation.block.IBE;
 
 import net.minecraft.block.BlockState;
+import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.ActionResultType;
+import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
+import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.world.IBlockReader;
+import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 
-public class ClockworkBearingBlock extends BearingBlock implements ITE<ClockworkBearingTileEntity> {
+public class ClockworkBearingBlock extends BearingBlock implements IBE<ClockworkBearingBlockEntity> {
 
-	public ClockworkBearingBlock(Properties properties) {
+	public ClockworkBearingBlock(Settings properties) {
 		super(properties);
 	}
 
 	@Override
-	public TileEntity createTileEntity(BlockState state, IBlockReader world) {
-		return AllTileEntities.CLOCKWORK_BEARING.create();
+	public BlockEntity createBlockEntity(BlockView world) {
+		return AllBlockEntities.CLOCKWORK_BEARING.instantiate();
 	}
 
 	@Override
-	public ActionResultType onUse(BlockState state, World worldIn, BlockPos pos,
-			PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
-		if (!player.isAllowEdit())
-			return ActionResultType.FAIL;
+	public ActionResult onUse(BlockState state, World worldIn, BlockPos pos,
+			PlayerEntity player, Hand handIn, BlockHitResult hit) {
+		if (!player.canModifyBlocks())
+			return ActionResult.FAIL;
 		if (player.isSneaking())
-			return ActionResultType.FAIL;
-		if (player.getHeldItem(handIn).isEmpty()) {
-			if (!worldIn.isRemote) {
-				withTileEntityDo(worldIn, pos, te -> {
+			return ActionResult.FAIL;
+		if (player.getStackInHand(handIn).isEmpty()) {
+			if (!worldIn.isClient) {
+				withBlockEntityDo(worldIn, pos, te -> {
 					if (te.running) {
 						te.disassemble();
 						return;
@@ -41,14 +41,14 @@ public class ClockworkBearingBlock extends BearingBlock implements ITE<Clockwork
 					te.assembleNextTick = true;
 				});
 			}
-			return ActionResultType.SUCCESS;
+			return ActionResult.SUCCESS;
 		}
-		return ActionResultType.PASS;
+		return ActionResult.PASS;
 	}
 
 	@Override
-	public Class<ClockworkBearingTileEntity> getTileEntityClass() {
-		return ClockworkBearingTileEntity.class;
+	public Class<ClockworkBearingBlockEntity> getBlockEntityClass() {
+		return ClockworkBearingBlockEntity.class;
 	}
 
 }

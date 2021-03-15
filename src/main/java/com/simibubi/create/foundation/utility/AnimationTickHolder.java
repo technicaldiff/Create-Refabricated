@@ -1,6 +1,6 @@
 package com.simibubi.create.foundation.utility;
 
-import net.minecraft.client.Minecraft;
+import net.minecraft.client.MinecraftClient;
 
 public class AnimationTickHolder {
 
@@ -11,7 +11,7 @@ public class AnimationTickHolder {
 	}
 
 	public static void tick() {
-		if (!Minecraft.getInstance().isGamePaused()) {
+		if (!MinecraftClient.getInstance().isPaused()) {
 			ticks = (ticks + 1) % 1_728_000; // wrap around every 24 hours so we maintain enough floating point precision
 		}
 	}
@@ -21,8 +21,8 @@ public class AnimationTickHolder {
 	}
 
 	public static float getPartialTicks() {
-		Minecraft mc = Minecraft.getInstance();
-		return (mc.isGamePaused() ? mc.renderPartialTicksPaused : mc.getRenderPartialTicks());
+		MinecraftClient mc = MinecraftClient.getInstance();
+		return /*(mc.isPaused() ? mc.pausedTickDelta :*/ mc.getTickDelta(); // TODO FIX ANIMATION HOLDER
 	}
 
 	public static int getTicks() {

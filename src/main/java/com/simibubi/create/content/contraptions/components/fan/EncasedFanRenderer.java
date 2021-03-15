@@ -1,45 +1,44 @@
 package com.simibubi.create.content.contraptions.components.fan;
 
-import static net.minecraft.state.properties.BlockStateProperties.FACING;
-
-import com.mojang.blaze3d.matrix.MatrixStack;
-import com.mojang.blaze3d.vertex.IVertexBuilder;
 import com.simibubi.create.AllBlockPartials;
-import com.simibubi.create.content.contraptions.base.KineticTileEntity;
-import com.simibubi.create.content.contraptions.base.KineticTileEntityRenderer;
+import com.simibubi.create.content.contraptions.base.KineticBlockEntity;
+import com.simibubi.create.content.contraptions.base.KineticBlockEntityRenderer;
 import com.simibubi.create.foundation.render.SuperByteBuffer;
 import com.simibubi.create.foundation.render.backend.FastRenderDispatcher;
 import com.simibubi.create.foundation.utility.AnimationTickHolder;
-
-import net.minecraft.client.renderer.IRenderTypeBuffer;
-import net.minecraft.client.renderer.RenderType;
-import net.minecraft.client.renderer.WorldRenderer;
-import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
-import net.minecraft.util.Direction;
+import net.minecraft.client.render.RenderLayer;
+import net.minecraft.client.render.VertexConsumer;
+import net.minecraft.client.render.VertexConsumerProvider;
+import net.minecraft.client.render.WorldRenderer;
+import net.minecraft.client.render.block.entity.BlockEntityRenderDispatcher;
+import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.MathHelper;
 
-public class EncasedFanRenderer extends KineticTileEntityRenderer {
+import static net.minecraft.state.property.Properties.FACING;
 
-	public EncasedFanRenderer(TileEntityRendererDispatcher dispatcher) {
+public class EncasedFanRenderer extends KineticBlockEntityRenderer {
+
+	public EncasedFanRenderer(BlockEntityRenderDispatcher dispatcher) {
 		super(dispatcher);
 	}
 
 	@Override
-	protected void renderSafe(KineticTileEntity te, float partialTicks, MatrixStack ms, IRenderTypeBuffer buffer,
-		int light, int overlay) {
+	protected void renderSafe(KineticBlockEntity te, float partialTicks, MatrixStack ms, VertexConsumerProvider buffer,
+							  int light, int overlay) {
 		if (FastRenderDispatcher.available(te.getWorld())) return;
 
-		Direction direction = te.getBlockState()
+		Direction direction = te.getCachedState()
 			.get(FACING);
-		IVertexBuilder vb = buffer.getBuffer(RenderType.getCutoutMipped());
+		VertexConsumer vb = buffer.getBuffer(RenderLayer.getCutoutMipped());
 
 		int lightBehind = WorldRenderer.getLightmapCoordinates(te.getWorld(), te.getPos().offset(direction.getOpposite()));
 		int lightInFront = WorldRenderer.getLightmapCoordinates(te.getWorld(), te.getPos().offset(direction));
 		
 		SuperByteBuffer shaftHalf =
-			AllBlockPartials.SHAFT_HALF.renderOnDirectionalSouth(te.getBlockState(), direction.getOpposite());
+			AllBlockPartials.SHAFT_HALF.renderOnDirectionalSouth(te.getCachedState(), direction.getOpposite());
 		SuperByteBuffer fanInner =
-			AllBlockPartials.ENCASED_FAN_INNER.renderOnDirectionalSouth(te.getBlockState(), direction.getOpposite());
+			AllBlockPartials.ENCASED_FAN_INNER.renderOnDirectionalSouth(te.getCachedState(), direction.getOpposite());
 		
 		float time = AnimationTickHolder.getRenderTick();
 		float speed = te.getSpeed() * 5;

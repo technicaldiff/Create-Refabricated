@@ -14,7 +14,7 @@ import com.simibubi.create.foundation.render.backend.gl.attrib.ModelVertexAttrib
 import com.simibubi.create.foundation.render.backend.gl.shader.ProgramSpec;
 import com.simibubi.create.foundation.render.backend.gl.shader.ShaderConstants;
 
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.Identifier;
 
 public class AllProgramSpecs {
     public static final ProgramSpec<BasicProgram> ROTATING = register(ProgramSpec.builder("rotating", BasicProgram::new)
@@ -65,17 +65,17 @@ public class AllProgramSpecs {
                                                                                                 .createProgramSpec());
 
     public static class Locations {
-        public static final ResourceLocation INSTANCED = loc("instanced.frag");
-        public static final ResourceLocation CONTRAPTION = loc("contraption.frag");
+        public static final Identifier INSTANCED = loc("instanced.frag");
+        public static final Identifier CONTRAPTION = loc("contraption.frag");
 
-        public static final ResourceLocation ROTATING = loc("rotating.vert");
-        public static final ResourceLocation BELT = loc("belt.vert");
-        public static final ResourceLocation CONTRAPTION_STRUCTURE = loc("contraption_structure.vert");
-        public static final ResourceLocation CONTRAPTION_ACTOR = loc("contraption_actor.vert");
+        public static final Identifier ROTATING = loc("rotating.vert");
+        public static final Identifier BELT = loc("belt.vert");
+        public static final Identifier CONTRAPTION_STRUCTURE = loc("contraption_structure.vert");
+        public static final Identifier CONTRAPTION_ACTOR = loc("contraption_actor.vert");
 
 
-        private static ResourceLocation loc(String name) {
-            return new ResourceLocation(Create.ID, "shader/" + name);
+        private static Identifier loc(String name) {
+            return new Identifier(Create.ID, "shader/" + name);
         }
     }
 }

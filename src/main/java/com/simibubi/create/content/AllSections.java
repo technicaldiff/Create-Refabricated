@@ -1,6 +1,8 @@
 package com.simibubi.create.content;
 
-import com.simibubi.create.Create;
+import java.util.IdentityHashMap;
+import java.util.Map;
+
 import com.simibubi.create.foundation.item.ItemDescription.Palette;
 
 import net.minecraft.block.Block;
@@ -33,6 +35,8 @@ public enum AllSections {
 
 	;
 
+	private static Map<Object, AllSections> sectionLookup = new IdentityHashMap<>();
+
 	private Palette tooltipPalette;
 
 	private AllSections(Palette tooltipPalette) {
@@ -43,6 +47,10 @@ public enum AllSections {
 		return tooltipPalette;
 	}
 
+	public static void addToSection(Object entry, AllSections section) {
+		sectionLookup.put(entry, section);
+	}
+
 	public static AllSections of(ItemStack stack) {
 		Item item = stack.getItem();
 		if (item instanceof BlockItem)
@@ -51,13 +59,10 @@ public enum AllSections {
 	}
 
 	static AllSections ofItem(Item item) {
-		return Create.registrate()
-			.getSection(item);
+		return sectionLookup.getOrDefault(item, UNASSIGNED);
 	}
 
 	static AllSections ofBlock(Block block) {
-		return Create.registrate()
-			.getSection(block);
+		return sectionLookup.getOrDefault(block, UNASSIGNED);
 	}
-
 }

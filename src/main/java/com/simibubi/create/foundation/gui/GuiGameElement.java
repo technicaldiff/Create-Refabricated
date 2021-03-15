@@ -1,43 +1,34 @@
 package com.simibubi.create.foundation.gui;
 
-import javax.annotation.Nullable;
+import org.jetbrains.annotations.Nullable;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.platform.GlStateManager;
-import com.mojang.blaze3d.platform.GlStateManager.DestFactor;
-import com.mojang.blaze3d.platform.GlStateManager.SourceFactor;
 import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.blaze3d.vertex.IVertexBuilder;
 import com.simibubi.create.AllBlockPartials;
-import com.simibubi.create.foundation.fluid.FluidRenderer;
 import com.simibubi.create.foundation.utility.ColorHelper;
 import com.simibubi.create.foundation.utility.VecHelper;
-import com.simibubi.create.foundation.utility.VirtualEmptyModelData;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.FireBlock;
-import net.minecraft.block.FlowingFluidBlock;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.Atlases;
-import net.minecraft.client.renderer.BlockRendererDispatcher;
-import net.minecraft.client.renderer.IRenderTypeBuffer;
-import net.minecraft.client.renderer.ItemRenderer;
-import net.minecraft.client.renderer.RenderHelper;
-import net.minecraft.client.renderer.RenderType;
-import net.minecraft.client.renderer.RenderTypeLookup;
-import net.minecraft.client.renderer.model.IBakedModel;
-import net.minecraft.client.renderer.model.ItemCameraTransforms;
-import net.minecraft.client.renderer.texture.AtlasTexture;
-import net.minecraft.client.renderer.texture.OverlayTexture;
+import net.minecraft.block.FluidBlock;
+import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.render.DiffuseLighting;
+import net.minecraft.client.render.OverlayTexture;
+import net.minecraft.client.render.RenderLayer;
+import net.minecraft.client.render.RenderLayers;
+import net.minecraft.client.render.VertexConsumer;
+import net.minecraft.client.render.VertexConsumerProvider;
+import net.minecraft.client.render.block.BlockRenderManager;
+import net.minecraft.client.render.model.BakedModel;
+import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.client.util.math.Vector3f;
 import net.minecraft.fluid.Fluid;
-import net.minecraft.inventory.container.PlayerContainer;
+import net.minecraft.item.ItemConvertible;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.IItemProvider;
+import net.minecraft.screen.PlayerScreenHandler;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.util.math.vector.Vector3f;
-import net.minecraftforge.fluids.FluidStack;
+import net.minecraft.util.math.Vec3d;
 
 public class GuiGameElement {
 
@@ -45,7 +36,7 @@ public class GuiGameElement {
 		return new GuiItemRenderBuilder(stack);
 	}
 
-	public static GuiRenderBuilder of(IItemProvider itemProvider) {
+	public static GuiRenderBuilder of(ItemConvertible itemProvider) {
 		return new GuiItemRenderBuilder(itemProvider);
 	}
 
@@ -60,16 +51,16 @@ public class GuiGameElement {
 	public static GuiRenderBuilder of(Fluid fluid) {
 		return new GuiBlockStateRenderBuilder(fluid.getDefaultState()
 			.getBlockState()
-			.with(FlowingFluidBlock.LEVEL, 0));
+			.with(FluidBlock.LEVEL, 0));
 	}
 
 	public static abstract class GuiRenderBuilder {
-		double xBeforeScale, yBeforeScale, zBeforeScale = 0;
+		double xBeforeScale, yBeforeScale;
 		double x, y, z;
 		double xRot, yRot, zRot;
 		double scale = 1;
 		int color = 0xFFFFFF;
-		Vector3d rotationOffset = Vector3d.ZERO;
+		Vec3d rotationOffset = Vec3d.ZERO;
 
 		public GuiRenderBuilder atLocal(double x, double y, double z) {
 			this.x = x;
@@ -81,13 +72,6 @@ public class GuiGameElement {
 		public GuiRenderBuilder at(double x, double y) {
 			this.xBeforeScale = x;
 			this.yBeforeScale = y;
-			return this;
-		}
-
-		public GuiRenderBuilder at(double x, double y, double z) {
-			this.xBeforeScale = x;
-			this.yBeforeScale = y;
-			this.zBeforeScale = z;
 			return this;
 		}
 
@@ -113,28 +97,24 @@ public class GuiGameElement {
 			return this;
 		}
 
-		public GuiRenderBuilder withRotationOffset(Vector3d offset) {
+		public GuiRenderBuilder withRotationOffset(Vec3d offset) {
 			this.rotationOffset = offset;
 			return this;
 		}
 
-		public abstract void render(MatrixStack matrixStack);
+		public abstract void render();
 
-		@Deprecated
-		protected void prepare() {}
-
-		protected void prepareMatrix(MatrixStack matrixStack) {
-			matrixStack.push();
+		protected void prepare() {
+			RenderSystem.pushMatrix();
 			RenderSystem.enableBlend();
 			RenderSystem.enableRescaleNormal();
 			RenderSystem.enableAlphaTest();
-			RenderHelper.enableGuiDepthLighting();
+			DiffuseLighting.enableGuiDepthLighting();
 			RenderSystem.alphaFunc(516, 0.1F);
-			RenderSystem.blendFunc(SourceFactor.SRC_ALPHA, DestFactor.ONE_MINUS_SRC_ALPHA);
+			RenderSystem.blendFunc(GlStateManager.SrcFactor.SRC_ALPHA, GlStateManager.DstFactor.ONE_MINUS_SRC_ALPHA);
 			RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
 		}
 
-		@Deprecated
 		protected void transform() {
 			RenderSystem.translated(xBeforeScale, yBeforeScale, 0);
 			RenderSystem.scaled(scale, scale, scale);
@@ -147,23 +127,8 @@ public class GuiGameElement {
 			RenderSystem.translated(-rotationOffset.x, -rotationOffset.y, -rotationOffset.z);
 		}
 
-		protected void transformMatrix(MatrixStack matrixStack) {
-			matrixStack.translate(xBeforeScale, yBeforeScale, zBeforeScale);
-			matrixStack.scale((float) scale, (float) scale, (float) scale);
-			matrixStack.translate(x, y, z);
-			matrixStack.scale(1, -1, 1);
-			matrixStack.translate(rotationOffset.x, rotationOffset.y, rotationOffset.z);
-			matrixStack.multiply(Vector3f.POSITIVE_Z.getDegreesQuaternion((float) zRot));
-			matrixStack.multiply(Vector3f.POSITIVE_X.getDegreesQuaternion((float) xRot));
-			matrixStack.multiply(Vector3f.POSITIVE_Y.getDegreesQuaternion((float) yRot));
-			matrixStack.translate(-rotationOffset.x, -rotationOffset.y, -rotationOffset.z);
-		}
-
-		@Deprecated
-		protected void cleanUp() {}
-
-		protected void cleanUpMatrix(MatrixStack matrixStack) {
-			matrixStack.pop();
+		protected void cleanUp() {
+			RenderSystem.popMatrix();
 			RenderSystem.disableAlphaTest();
 			RenderSystem.disableRescaleNormal();
 		}
@@ -171,42 +136,43 @@ public class GuiGameElement {
 
 	private static class GuiBlockModelRenderBuilder extends GuiRenderBuilder {
 
-		protected IBakedModel blockmodel;
+		protected BakedModel blockmodel;
 		protected BlockState blockState;
 
-		public GuiBlockModelRenderBuilder(IBakedModel blockmodel, @Nullable BlockState blockState) {
+		public GuiBlockModelRenderBuilder(BakedModel blockmodel, @Nullable BlockState blockState) {
 			this.blockState = blockState == null ? Blocks.AIR.getDefaultState() : blockState;
 			this.blockmodel = blockmodel;
 		}
 
 		@Override
-		public void render(MatrixStack matrixStack) {
-			prepareMatrix(matrixStack);
+		public void render() {
+			prepare();
 
-			Minecraft mc = Minecraft.getInstance();
-			BlockRendererDispatcher blockRenderer = mc.getBlockRendererDispatcher();
-			IRenderTypeBuffer.Impl buffer = mc.getBufferBuilders()
+			MinecraftClient mc = MinecraftClient.getInstance();
+			BlockRenderManager blockRenderer = mc.getBlockRenderManager();
+			VertexConsumerProvider.Immediate buffer = mc.getBufferBuilders()
 				.getEntityVertexConsumers();
-			RenderType renderType = blockState.getBlock() == Blocks.AIR ? Atlases.getEntityTranslucentCull()
-				: RenderTypeLookup.getEntityBlockLayer(blockState, true);
-			IVertexBuilder vb = buffer.getBuffer(renderType);
+			RenderLayer renderType = /**blockState.getBlock() == Blocks.AIR ? Atlases.getEntityTranslucent()
+			 :*/RenderLayers.getEntityBlockLayer(blockState, false);
+			VertexConsumer vb = buffer.getBuffer(renderType);
+			MatrixStack ms = new MatrixStack();
 
-			transformMatrix(matrixStack);
+			transform();
 
 			mc.getTextureManager()
-				.bindTexture(PlayerContainer.BLOCK_ATLAS_TEXTURE);
-			renderModel(blockRenderer, buffer, renderType, vb, matrixStack);
+				.bindTexture(PlayerScreenHandler.BLOCK_ATLAS_TEXTURE);
+			renderModel(blockRenderer, buffer, renderType, vb, ms);
 
-			cleanUpMatrix(matrixStack);
+			cleanUp();
 		}
 
-		protected void renderModel(BlockRendererDispatcher blockRenderer, IRenderTypeBuffer.Impl buffer,
-			RenderType renderType, IVertexBuilder vb, MatrixStack ms) {
-			int color = Minecraft.getInstance().getBlockColors().getColor(blockState, null, null, 0);
-			Vector3d rgb = ColorHelper.getRGB(color == -1 ? this.color : color);
-			blockRenderer.getBlockModelRenderer()
-				.renderModel(ms.peek(), vb, blockState, blockmodel, (float) rgb.x, (float) rgb.y, (float) rgb.z,
-					0xF000F0, OverlayTexture.DEFAULT_UV, VirtualEmptyModelData.INSTANCE);
+		protected void renderModel(BlockRenderManager blockRenderer, VertexConsumerProvider.Immediate buffer,
+								   RenderLayer renderType, VertexConsumer vb, MatrixStack ms) {
+			int color = MinecraftClient.getInstance().getBlockColors().getColor(blockState, null, null, 0);
+			Vector3f rgb = ColorHelper.getRGB(color == -1 ? this.color : color);
+			blockRenderer.getModelRenderer()
+				.render(ms.peek(), vb, blockState, blockmodel, rgb.getX(), rgb.getY(), rgb.getZ(),
+					0xF000F0, OverlayTexture.DEFAULT_UV);
 			buffer.draw();
 		}
 	}
@@ -214,22 +180,21 @@ public class GuiGameElement {
 	public static class GuiBlockStateRenderBuilder extends GuiBlockModelRenderBuilder {
 
 		public GuiBlockStateRenderBuilder(BlockState blockstate) {
-			super(Minecraft.getInstance()
-				.getBlockRendererDispatcher()
-				.getModelForState(blockstate), blockstate);
+			super(MinecraftClient.getInstance()
+				.getBlockRenderManager()
+				.getModel(blockstate), blockstate);
 		}
 
 		@Override
-		protected void renderModel(BlockRendererDispatcher blockRenderer, IRenderTypeBuffer.Impl buffer,
-			RenderType renderType, IVertexBuilder vb, MatrixStack ms) {
+		protected void renderModel(BlockRenderManager blockRenderer, VertexConsumerProvider.Immediate buffer,
+								   RenderLayer renderType, VertexConsumer vb, MatrixStack ms) {
 			if (blockState.getBlock() instanceof FireBlock) {
-				RenderHelper.disableGuiDepthLighting();
-				blockRenderer.renderBlock(blockState, ms, buffer, 0xF000F0, OverlayTexture.DEFAULT_UV,
-					VirtualEmptyModelData.INSTANCE);
-				RenderHelper.enable();
-				buffer.draw();
-				return;
-			}
+		 		DiffuseLighting.disableGuiDepthLighting();
+		 		blockRenderer.renderBlockAsEntity(blockState, ms, buffer, 0xF000F0, OverlayTexture.DEFAULT_UV);
+		 		DiffuseLighting.enable();
+		 		buffer.draw();
+		 		return;
+		 	}
 
 			super.renderModel(blockRenderer, buffer, renderType, vb, ms);
 
@@ -238,11 +203,11 @@ public class GuiGameElement {
 				return;
 
 			RenderSystem.pushMatrix();
-			RenderHelper.disableStandardItemLighting();
-			FluidRenderer.renderTiledFluidBB(new FluidStack(blockState.getFluidState()
-				.getFluid(), 1000), 0, 0, 0, 1.0001f, 1.0001f, 1.0001f, buffer, ms, 0xf000f0, true);
-			buffer.draw(RenderType.getTranslucent());
-			RenderHelper.enable();
+			DiffuseLighting.disable();
+			/*FluidRenderer.renderTiledFluidBB(new FluidStack(blockState.getFluidState()
+			 .getFluid(), 1000), 0, 0, 0, 1.0001f, 1.0001f, 1.0001f, buffer, ms, 0xf000f0, true);*/
+			buffer.draw(RenderLayer.getTranslucent());
+			DiffuseLighting.enable();
 			RenderSystem.popMatrix();
 		}
 	}
@@ -263,69 +228,20 @@ public class GuiGameElement {
 			this.stack = stack;
 		}
 
-		public GuiItemRenderBuilder(IItemProvider provider) {
+		public GuiItemRenderBuilder(ItemConvertible provider) {
 			this(new ItemStack(provider));
 		}
 
 		@Override
-		public void render(MatrixStack matrixStack) {
-			prepareMatrix(matrixStack);
-//			matrixStack.translate(0, 80, 0);
-			transformMatrix(matrixStack);
-			renderItemIntoGUI(matrixStack, stack);
-			cleanUpMatrix(matrixStack);
-		}
-		/*
 		public void render() {
 			prepare();
 			transform();
 			RenderSystem.scaled(1, -1, 1);
 			RenderSystem.translated(0, 0, -75);
-			Minecraft.getInstance()
+			MinecraftClient.getInstance()
 				.getItemRenderer()
-				.renderItemIntoGUI(stack, 0, 0);
+				.renderGuiItemIcon(stack, 0, 0);
 			cleanUp();
-			}
-		 */
-
-		public static void renderItemIntoGUI(MatrixStack matrixStack, ItemStack stack) {
-			ItemRenderer renderer = Minecraft.getInstance()
-				.getItemRenderer();
-			IBakedModel bakedModel = renderer.getItemModelWithOverrides(stack, null, null);
-			matrixStack.push();
-			renderer.textureManager.bindTexture(AtlasTexture.LOCATION_BLOCKS_TEXTURE);
-			renderer.textureManager.getTexture(AtlasTexture.LOCATION_BLOCKS_TEXTURE)
-				.setBlurMipmapDirect(false, false);
-			RenderSystem.enableRescaleNormal();
-			RenderSystem.enableAlphaTest();
-			RenderSystem.defaultAlphaFunc();
-			RenderSystem.enableBlend();
-			RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA,
-				GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
-			RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
-			matrixStack.translate((float) 0, (float) 0, 100.0F + renderer.zLevel);
-			matrixStack.translate(8.0F, 8.0F, 0.0F);
-			matrixStack.scale(16.0F, 16.0F, 16.0F);
-			IRenderTypeBuffer.Impl irendertypebuffer$impl = Minecraft.getInstance()
-				.getBufferBuilders()
-				.getEntityVertexConsumers();
-			boolean flag = !bakedModel.isSideLit();
-			if (flag) {
-				RenderHelper.disableGuiDepthLighting();
-			}
-
-			renderer.renderItem(stack, ItemCameraTransforms.TransformType.GUI, false, matrixStack,
-				irendertypebuffer$impl, 15728880, OverlayTexture.DEFAULT_UV, bakedModel);
-			irendertypebuffer$impl.draw();
-			RenderSystem.enableDepthTest();
-			if (flag) {
-				RenderHelper.enableGuiDepthLighting();
-			}
-
-			RenderSystem.disableAlphaTest();
-			RenderSystem.disableRescaleNormal();
-			RenderSystem.enableCull();
-			matrixStack.pop();
 		}
 
 	}

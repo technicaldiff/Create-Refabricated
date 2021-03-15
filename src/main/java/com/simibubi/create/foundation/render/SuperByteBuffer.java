@@ -3,30 +3,29 @@ package com.simibubi.create.foundation.render;
 import java.nio.Buffer;
 import java.nio.ByteBuffer;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
-import com.mojang.blaze3d.vertex.IVertexBuilder;
 import com.simibubi.create.content.contraptions.components.structureMovement.render.ContraptionRenderDispatcher;
 import com.simibubi.create.foundation.block.render.SpriteShiftEntry;
 
 import it.unimi.dsi.fastutil.longs.Long2DoubleMap;
 import it.unimi.dsi.fastutil.longs.Long2DoubleOpenHashMap;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.BufferBuilder;
-import net.minecraft.client.renderer.texture.TextureAtlasSprite;
-import net.minecraft.util.Direction;
+import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.render.BufferBuilder;
+import net.minecraft.client.render.VertexConsumer;
+import net.minecraft.client.texture.Sprite;
+import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.client.util.math.Vector3f;
+import net.minecraft.client.util.math.Vector4f;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.vector.Matrix3f;
-import net.minecraft.util.math.vector.Matrix4f;
-import net.minecraft.util.math.vector.Vector3f;
-import net.minecraft.util.math.vector.Vector4f;
+import net.minecraft.util.math.Direction;
+import net.minecraft.util.math.Matrix3f;
+import net.minecraft.util.math.Matrix4f;
 import net.minecraft.world.LightType;
 import net.minecraft.world.World;
-import net.minecraftforge.client.model.pipeline.LightUtil;
 
 public class SuperByteBuffer extends TemplateBuffer {
 
-	public interface IVertexLighter {
-		public int getPackedLight(float x, float y, float z);
+	public interface VertexLighter {
+		int getPackedLight(float x, float y, float z);
 	}
 
 	// Vertex Position
@@ -50,12 +49,12 @@ public class SuperByteBuffer extends TemplateBuffer {
 		transforms = new MatrixStack();
 	}
 
-	public static float getUnInterpolatedU(TextureAtlasSprite sprite, float u) {
+	public static float getUnInterpolatedU(Sprite sprite, float u) {
 		float f = sprite.getMaxU() - sprite.getMinU();
 		return (u - sprite.getMinU()) / f * 16.0F;
 	}
 
-	public static float getUnInterpolatedV(TextureAtlasSprite sprite, float v) {
+	public static float getUnInterpolatedV(Sprite sprite, float v) {
 		float f = sprite.getMaxV() - sprite.getMinV();
 		return (v - sprite.getMinV()) / f * 16.0F;
 	}
@@ -66,7 +65,11 @@ public class SuperByteBuffer extends TemplateBuffer {
 	Vector3f normal = new Vector3f();
 	Vector4f lightPos = new Vector4f();
 
-	public void renderInto(MatrixStack input, IVertexBuilder builder) {
+	float diffuseLight(float x, float y, float z) {
+		return Math.min(x * x * 0.6f + y * y * ((3f + y) / 4f) + z * z * 0.8f, 1f);
+	}
+
+	public void renderInto(MatrixStack input, VertexConsumer builder) {
 		ByteBuffer buffer = template;
 		if (((Buffer) buffer).limit() == 0)
 			return;
@@ -104,10 +107,10 @@ public class SuperByteBuffer extends TemplateBuffer {
 			float normalY = getNY(buffer, i) / 127f;
 			float normalZ = getNZ(buffer, i) / 127f;
 
-			float staticDiffuse = LightUtil.diffuseLight(normalX, normalY, normalZ);
+			float staticDiffuse = diffuseLight(normalX, normalY, normalZ);
 			normal.set(normalX, normalY, normalZ);
 			normal.transform(normalMat);
-			float instanceDiffuse = LightUtil.diffuseLight(normal.getX(), normal.getY(), normal.getZ());
+			float instanceDiffuse = diffuseLight(normal.getX(), normal.getY(), normal.getZ());
 
 			pos.set(x, y, z, 1F);
 			pos.transform(modelMat);
@@ -143,7 +146,7 @@ public class SuperByteBuffer extends TemplateBuffer {
 					lightPos.transform(localTransforms);
 					lightPos.transform(lightTransform);
 
-					light = getLight(Minecraft.getInstance().world, lightPos);
+					light = getLight(MinecraftClient.getInstance().world, lightPos);
 					if (otherBlockLight >= 0) {
 						light = ContraptionRenderDispatcher.getMaxBlockLight(light, otherBlockLight);
 					}
@@ -153,7 +156,7 @@ public class SuperByteBuffer extends TemplateBuffer {
 				builder.light(getLight(buffer, i));
 
 			builder.normal(normal.getX(), normal.getY(), normal.getZ())
-				.endVertex();
+				.next();
 		}
 
 		transforms = new MatrixStack();
@@ -188,8 +191,8 @@ public class SuperByteBuffer extends TemplateBuffer {
 
 	public SuperByteBuffer shiftUV(SpriteShiftEntry entry) {
 		this.spriteShiftFunc = (builder, u, v) -> {
-			float targetU = entry.getTarget().getInterpolatedU((getUnInterpolatedU(entry.getOriginal(), u)));
-			float targetV = entry.getTarget().getInterpolatedV((getUnInterpolatedV(entry.getOriginal(), v)));
+			float targetU = entry.getTarget().getFrameU((getUnInterpolatedU(entry.getOriginal(), u)));
+			float targetV = entry.getTarget().getFrameV((getUnInterpolatedV(entry.getOriginal(), v)));
 			builder.texture(targetU, targetV);
 		};
 		return this;
@@ -206,8 +209,8 @@ public class SuperByteBuffer extends TemplateBuffer {
 
 	public SuperByteBuffer shiftUVtoSheet(SpriteShiftEntry entry, float uTarget, float vTarget, int sheetSize) {
 		this.spriteShiftFunc = (builder, u, v) -> {
-			float targetU = entry.getTarget().getInterpolatedU((getUnInterpolatedU(entry.getOriginal(), u) / sheetSize) + uTarget * 16);
-			float targetV = entry.getTarget().getInterpolatedV((getUnInterpolatedV(entry.getOriginal(), v) / sheetSize) + vTarget * 16);
+			float targetU = entry.getTarget().getFrameU((getUnInterpolatedU(entry.getOriginal(), u) / sheetSize) + uTarget * 16);
+			float targetV = entry.getTarget().getFrameV((getUnInterpolatedV(entry.getOriginal(), v) / sheetSize) + vTarget * 16);
 			builder.texture(targetU, targetV);
 		};
 		return this;
@@ -245,9 +248,9 @@ public class SuperByteBuffer extends TemplateBuffer {
 	private static int getLight(World world, Vector4f lightPos) {
 		BlockPos.Mutable pos = new BlockPos.Mutable();
 		double sky = 0, block = 0;
-		pos.setPos(lightPos.getX() + 0, lightPos.getY() + 0, lightPos.getZ() + 0);
-		sky += skyLightCache.computeIfAbsent(pos.toLong(), $ -> world.getLightLevel(LightType.SKY, pos));
-		block += blockLightCache.computeIfAbsent(pos.toLong(), $ -> world.getLightLevel(LightType.BLOCK, pos));
+		pos.set(lightPos.getX() + 0, lightPos.getY() + 0, lightPos.getZ() + 0);
+		sky += skyLightCache.computeIfAbsent(Long.parseLong(pos.toString()), $ -> world.getLightLevel(LightType.SKY, pos)); // TODO THIS SEEMS COMPLETELY WRONG
+		block += blockLightCache.computeIfAbsent(Long.parseLong(pos.toString()), $ -> world.getLightLevel(LightType.BLOCK, pos));
 		return ((int) sky) << 20 | ((int) block) << 4;
 	}
 
@@ -257,7 +260,7 @@ public class SuperByteBuffer extends TemplateBuffer {
 
 	@FunctionalInterface
 	public interface SpriteShiftFunc {
-		void shift(IVertexBuilder builder, float u, float v);
+		void shift(VertexConsumer builder, float u, float v);
 	}
 
 }

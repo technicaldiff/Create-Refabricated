@@ -2,16 +2,14 @@ package com.simibubi.create;
 
 import org.lwjgl.glfw.GLFW;
 
-import net.minecraft.client.Minecraft;
+import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
+import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.client.settings.KeyBinding;
-import net.minecraftforge.fml.client.registry.ClientRegistry;
+import net.minecraft.client.options.KeyBinding;
 
 public enum AllKeys {
-
 	TOOL_MENU("toolmenu", GLFW.GLFW_KEY_LEFT_ALT), 
 	ACTIVATE_TOOL("", GLFW.GLFW_KEY_LEFT_CONTROL),
-
 	;
 
 	private KeyBinding keybind;
@@ -31,7 +29,7 @@ public enum AllKeys {
 			if (!key.modifiable)
 				continue;
 
-			ClientRegistry.registerKeyBinding(key.keybind);
+			KeyBindingHelper.registerKeyBinding(key.keybind);
 		}
 	}
 
@@ -42,7 +40,7 @@ public enum AllKeys {
 	public boolean isPressed() {
 		if (!modifiable)
 			return isKeyDown(key);
-		return keybind.isKeyDown();
+		return keybind.isPressed();
 	}
 
 	public String getBoundKey() {
@@ -50,11 +48,11 @@ public enum AllKeys {
 	}
 
 	public int getBoundCode() {
-		return keybind.getKey().getKeyCode();
+		return KeyBindingHelper.getBoundKeyOf(keybind).getCode();
 	}
 
 	public static boolean isKeyDown(int key) {
-		return GLFW.glfwGetKey(Minecraft.getInstance().getWindow().getHandle(), key) != 0;
+		return GLFW.glfwGetKey(MinecraftClient.getInstance().getWindow().getHandle(), key) != 0;
 	}
 
 	public static boolean ctrlDown() {
@@ -68,5 +66,4 @@ public enum AllKeys {
 	public static boolean altDown() {
 		return Screen.hasAltDown();
 	}
-
 }

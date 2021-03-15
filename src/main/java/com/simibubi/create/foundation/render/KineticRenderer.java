@@ -7,20 +7,21 @@ import com.simibubi.create.content.contraptions.base.RotatingInstancedModel;
 import com.simibubi.create.content.contraptions.relays.belt.BeltInstancedModel;
 import com.simibubi.create.foundation.render.backend.gl.BasicProgram;
 import com.simibubi.create.foundation.render.backend.gl.shader.ShaderCallback;
-import com.simibubi.create.foundation.render.backend.instancing.InstancedTileRenderer;
+import com.simibubi.create.foundation.render.backend.instancing.InstancedBlockRenderer;
 import com.simibubi.create.foundation.render.backend.instancing.RenderMaterial;
+import com.simibubi.create.foundation.utility.extensions.Matrix4fUtils;
 
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.RenderType;
+import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.render.RenderLayer;
 import net.minecraft.entity.Entity;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.vector.Matrix4f;
+import net.minecraft.util.math.Matrix4f;
 
-public class KineticRenderer extends InstancedTileRenderer<BasicProgram> {
+public class KineticRenderer extends InstancedBlockRenderer<BasicProgram> {
     public static int MAX_ORIGIN_DISTANCE = 100;
 
-    public BlockPos originCoordinate = BlockPos.ZERO;
+    public BlockPos originCoordinate = BlockPos.ORIGIN;
 
     @Override
     public void registerMaterials() {
@@ -37,8 +38,8 @@ public class KineticRenderer extends InstancedTileRenderer<BasicProgram> {
     public void tick() {
         super.tick();
 
-        Minecraft mc = Minecraft.getInstance();
-        Entity renderViewEntity = mc.renderViewEntity;
+        MinecraftClient mc = MinecraftClient.getInstance();
+        Entity renderViewEntity = mc.targetedEntity; //TODO COULD BE WRONG renderViewEntity
 
         if (renderViewEntity == null) return;
 
@@ -54,14 +55,14 @@ public class KineticRenderer extends InstancedTileRenderer<BasicProgram> {
 
             originCoordinate = renderViewPosition;
 
-            ArrayList<TileEntity> instancedTiles = new ArrayList<>(instances.keySet());
+            ArrayList<BlockEntity> instancedTiles = new ArrayList<>(instances.keySet());
             invalidate();
             instancedTiles.forEach(this::add);
         }
     }
 
     @Override
-    public void render(RenderType layer, Matrix4f viewProjection, double camX, double camY, double camZ, ShaderCallback<BasicProgram> callback) {
+    public void render(RenderLayer layer, Matrix4f viewProjection, double camX, double camY, double camZ, ShaderCallback<BasicProgram> callback) {
         BlockPos originCoordinate = getOriginCoordinate();
 
         camX -= originCoordinate.getX();
@@ -70,8 +71,7 @@ public class KineticRenderer extends InstancedTileRenderer<BasicProgram> {
 
         Matrix4f translate = Matrix4f.translate((float) -camX, (float) -camY, (float) -camZ);
 
-        translate.multiplyBackward(viewProjection);
-
+        Matrix4fUtils.multiplyBackward(translate, viewProjection);
         super.render(layer, translate, camX, camY, camZ, callback);
     }
 }

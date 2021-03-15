@@ -1,41 +1,40 @@
 package com.simibubi.create.content.contraptions.components.fan;
 
-import static net.minecraft.state.properties.BlockStateProperties.FACING;
-
 import com.simibubi.create.AllBlockPartials;
-import com.simibubi.create.content.contraptions.base.IRotate;
-import com.simibubi.create.content.contraptions.base.KineticTileInstance;
+import com.simibubi.create.content.contraptions.base.KineticBlockInstance;
+import com.simibubi.create.content.contraptions.base.Rotating;
 import com.simibubi.create.content.contraptions.base.RotatingData;
 import com.simibubi.create.foundation.render.backend.instancing.InstanceKey;
+import com.simibubi.create.foundation.render.backend.instancing.InstancedBlockRenderer;
 import com.simibubi.create.foundation.render.backend.instancing.InstancedModel;
 import com.simibubi.create.foundation.render.backend.instancing.InstancedTileRenderRegistry;
-import com.simibubi.create.foundation.render.backend.instancing.InstancedTileRenderer;
-
-import net.minecraft.tileentity.TileEntityType;
-import net.minecraft.util.Direction;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.loader.api.FabricLoader;
+import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.LightType;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.fml.DistExecutor;
 
-public class FanInstance extends KineticTileInstance<EncasedFanTileEntity> {
-    public static void register(TileEntityType<? extends EncasedFanTileEntity> type) {
-        DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () ->
-                InstancedTileRenderRegistry.instance.register(type, FanInstance::new));
+import static net.minecraft.state.property.Properties.FACING;
+
+public class FanInstance extends KineticBlockInstance<EncasedFanBlockEntity> {
+    public static void register(BlockEntityType<? extends EncasedFanBlockEntity> type) {
+        if (FabricLoader.getInstance().getEnvironmentType() == EnvType.CLIENT)
+        	InstancedTileRenderRegistry.instance.register(type, FanInstance::new);
     }
 
     protected InstanceKey<RotatingData> shaft;
     protected InstanceKey<RotatingData> fan;
 
-    public FanInstance(InstancedTileRenderer modelManager, EncasedFanTileEntity tile) {
+    public FanInstance(InstancedBlockRenderer modelManager, EncasedFanBlockEntity tile) {
         super(modelManager, tile);
     }
 
     @Override
     protected void init() {
         final Direction direction = lastState.get(FACING);
-        final Direction.Axis axis = ((IRotate) lastState.getBlock()).getRotationAxis(lastState);
+        final Direction.Axis axis = ((Rotating) lastState.getBlock()).getRotationAxis(lastState);
 
         InstancedModel<RotatingData> shaftHalf =
                 AllBlockPartials.SHAFT_HALF.renderOnDirectionalSouthRotating(modelManager, lastState, direction.getOpposite());
@@ -49,8 +48,8 @@ public class FanInstance extends KineticTileInstance<EncasedFanTileEntity> {
 
             data.setRotationalSpeed(tile.getSpeed())
                 .setRotationOffset(getRotationOffset(axis))
-                .setRotationAxis(Direction.getFacingFromAxis(Direction.AxisDirection.POSITIVE, axis).getUnitVector())
-                .setTileEntity(tile)
+                .setRotationAxis(Direction.get(Direction.AxisDirection.POSITIVE, axis).getUnitVector())
+                .setBlockEntity(tile)
                 .setBlockLight(blockLight)
                 .setSkyLight(skyLight);
         });
@@ -61,8 +60,8 @@ public class FanInstance extends KineticTileInstance<EncasedFanTileEntity> {
 
             data.setRotationalSpeed(getFanSpeed())
                 .setRotationOffset(getRotationOffset(axis))
-                .setRotationAxis(Direction.getFacingFromAxis(Direction.AxisDirection.POSITIVE, axis).getUnitVector())
-                .setTileEntity(tile)
+                .setRotationAxis(Direction.get(Direction.AxisDirection.POSITIVE, axis).getUnitVector())
+                .setBlockEntity(tile)
                 .setBlockLight(blockLight)
                 .setSkyLight(skyLight);
         });
@@ -86,7 +85,7 @@ public class FanInstance extends KineticTileInstance<EncasedFanTileEntity> {
             data.setColor(tile.network)
                 .setRotationalSpeed(getFanSpeed())
                 .setRotationOffset(getRotationOffset(axis))
-                .setRotationAxis(Direction.getFacingFromAxis(Direction.AxisDirection.POSITIVE, axis).getUnitVector());
+                .setRotationAxis(Direction.get(Direction.AxisDirection.POSITIVE, axis).getUnitVector());
         });
     }
 

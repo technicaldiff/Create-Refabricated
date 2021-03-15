@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import com.simibubi.create.foundation.utility.BlockHelper;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -14,30 +12,25 @@ import net.minecraft.block.GrassPathBlock;
 import net.minecraft.block.SeaPickleBlock;
 import net.minecraft.block.SnowBlock;
 import net.minecraft.block.TurtleEggBlock;
+import net.minecraft.block.enums.SlabType;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
-import net.minecraft.entity.item.ArmorStandEntity;
-import net.minecraft.entity.item.BoatEntity;
-import net.minecraft.entity.item.ItemFrameEntity;
-import net.minecraft.entity.item.minecart.AbstractMinecartEntity;
+import net.minecraft.entity.decoration.ArmorStandEntity;
+import net.minecraft.entity.decoration.ItemFrameEntity;
+import net.minecraft.entity.vehicle.AbstractMinecartEntity;
+import net.minecraft.entity.vehicle.BoatEntity;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
-import net.minecraft.state.properties.BlockStateProperties;
-import net.minecraft.state.properties.SlabType;
+import net.minecraft.state.property.Properties;
 
 public class ItemRequirement {
 
-	public enum ItemUseType {
-		CONSUME, DAMAGE
-	}
-
-	ItemUseType usage;
-	List<ItemStack> requiredItems;
-
 	public static ItemRequirement INVALID = new ItemRequirement();
 	public static ItemRequirement NONE = new ItemRequirement();
+	ItemUseType usage;
+	List<ItemStack> requiredItems;
 
 	private ItemRequirement() {
 	}
@@ -55,13 +48,13 @@ public class ItemRequirement {
 		Block block = state.getBlock();
 		if (block == Blocks.AIR)
 			return NONE;
-		if (block instanceof ISpecialBlockItemRequirement)
-			return ((ISpecialBlockItemRequirement) block).getRequiredItems(state);
+		if (block instanceof SpecialBlockItemRequirement)
+			return ((SpecialBlockItemRequirement) block).getRequiredItems(state);
 
-		Item item = BlockItem.BLOCK_TO_ITEM.getOrDefault(state.getBlock(), Items.AIR);
+		Item item = BlockItem.BLOCK_ITEMS.getOrDefault(state.getBlock(), Items.AIR);
 
 		// double slab needs two items
-		if (BlockHelper.hasBlockStateProperty(state, BlockStateProperties.SLAB_TYPE) && state.get(BlockStateProperties.SLAB_TYPE) == SlabType.DOUBLE)
+		if (state.contains(Properties.SLAB_TYPE) && state.get(Properties.SLAB_TYPE) == SlabType.DOUBLE)
 			return new ItemRequirement(ItemUseType.CONSUME, Arrays.asList(new ItemStack(item, 2)));
 		if (block instanceof TurtleEggBlock)
 			return new ItemRequirement(ItemUseType.CONSUME, Arrays.asList(new ItemStack(item, state.get(TurtleEggBlock.EGGS).intValue())));
@@ -69,7 +62,7 @@ public class ItemRequirement {
 			return new ItemRequirement(ItemUseType.CONSUME, Arrays.asList(new ItemStack(item, state.get(SeaPickleBlock.PICKLES).intValue())));
 		if (block instanceof SnowBlock)
 			return new ItemRequirement(ItemUseType.CONSUME, Arrays.asList(new ItemStack(item, state.get(SnowBlock.LAYERS).intValue())));
-		if (block instanceof GrassPathBlock)
+		if (block instanceof GrassPathBlock) // TODO MIGHT BE WRONG
 			return new ItemRequirement(ItemUseType.CONSUME, Arrays.asList(new ItemStack(Items.GRASS_BLOCK)));
 		if (block instanceof FarmlandBlock)
 			return new ItemRequirement(ItemUseType.CONSUME, Arrays.asList(new ItemStack(Items.DIRT)));
@@ -80,13 +73,13 @@ public class ItemRequirement {
 	public static ItemRequirement of(Entity entity) {
 		EntityType<?> type = entity.getType();
 
-		if (entity instanceof ISpecialEntityItemRequirement)
-			return ((ISpecialEntityItemRequirement) entity).getRequiredItems();
+		if (entity instanceof SpecialEntityItemRequirement)
+			return ((SpecialEntityItemRequirement) entity).getRequiredItems();
 
 		if (type == EntityType.ITEM_FRAME) {
 			ItemFrameEntity ife = (ItemFrameEntity) entity;
 			ItemStack frame = new ItemStack(Items.ITEM_FRAME);
-			ItemStack displayedItem = ife.getDisplayedItem();
+			ItemStack displayedItem = ife.getHeldItemStack();
 			if (displayedItem.isEmpty())
 				return new ItemRequirement(ItemUseType.CONSUME, Items.ITEM_FRAME);
 			return new ItemRequirement(ItemUseType.CONSUME, Arrays.asList(frame, displayedItem));
@@ -98,25 +91,29 @@ public class ItemRequirement {
 		if (type == EntityType.ARMOR_STAND) {
 			List<ItemStack> requirements = new ArrayList<>();
 			ArmorStandEntity armorStandEntity = (ArmorStandEntity) entity;
-			armorStandEntity.getEquipmentAndArmor().forEach(requirements::add);
+			armorStandEntity.getItemsEquipped().forEach(requirements::add);
 			requirements.add(new ItemStack(Items.ARMOR_STAND));
 			return new ItemRequirement(ItemUseType.CONSUME, requirements);
 		}
 
 		if (entity instanceof AbstractMinecartEntity) {
 			AbstractMinecartEntity minecartEntity = (AbstractMinecartEntity) entity;
-			return new ItemRequirement(ItemUseType.CONSUME, minecartEntity.getCartItem().getItem());
+			return new ItemRequirement(ItemUseType.CONSUME, (List<ItemStack>) minecartEntity.getItemsEquipped()); // TODO COULD BE WRONG minecartEntity CHECK
 		}
 
 		if (entity instanceof BoatEntity) {
 			BoatEntity boatEntity = (BoatEntity) entity;
-			return new ItemRequirement(ItemUseType.CONSUME, boatEntity.getItemBoat().getItem());
+			return new ItemRequirement(ItemUseType.CONSUME, boatEntity.asItem());
 		}
 
 		if (type == EntityType.END_CRYSTAL)
 			return new ItemRequirement(ItemUseType.CONSUME, Items.END_CRYSTAL);
 
 		return INVALID;
+	}
+
+	public static boolean validate(ItemStack required, ItemStack present) {
+		return required.isEmpty() || required.getItem() == present.getItem();
 	}
 
 	public boolean isEmpty() {
@@ -135,8 +132,8 @@ public class ItemRequirement {
 		return usage;
 	}
 
-	public static boolean validate(ItemStack required, ItemStack present) {
-		return required.isEmpty() || required.getItem() == present.getItem();
+	public enum ItemUseType {
+		CONSUME, DAMAGE
 	}
 
 }

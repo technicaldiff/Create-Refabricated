@@ -2,36 +2,33 @@ package com.simibubi.create.content.contraptions.base;
 
 import java.util.Random;
 
-import com.simibubi.create.content.contraptions.base.IRotate.SpeedLevel;
-import com.simibubi.create.content.contraptions.particle.RotationIndicatorParticleData;
-import com.simibubi.create.foundation.advancement.AllTriggers;
 import com.simibubi.create.foundation.utility.VecHelper;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
-import net.minecraft.particles.IParticleData;
-import net.minecraft.particles.ParticleTypes;
-import net.minecraft.util.Direction.Axis;
+import net.minecraft.particle.ParticleEffect;
+import net.minecraft.particle.ParticleTypes;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.vector.Vector3d;
+import net.minecraft.util.math.Direction;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
-import net.minecraft.world.server.ServerWorld;
 
 public class KineticEffectHandler {
 
 	int overStressedTime;
 	float overStressedEffect;
 	int particleSpawnCountdown;
-	KineticTileEntity kte;
+	KineticBlockEntity kte;
 
-	public KineticEffectHandler(KineticTileEntity kte) {
+	public KineticEffectHandler(KineticBlockEntity kte) {
 		this.kte = kte;
 	}
 
 	public void tick() {
 		World world = kte.getWorld();
 
-		if (world.isRemote) {
+		if (world.isClient) {
 			if (overStressedTime > 0)
 				if (--overStressedTime == 0)
 					if (kte.isOverStressed()) {
@@ -58,16 +55,16 @@ public class KineticEffectHandler {
 		particleSpawnCountdown = 2;
 	}
 
-	public void spawnEffect(IParticleData particle, float maxMotion, int amount) {
+	public void spawnEffect(ParticleEffect particle, float maxMotion, int amount) {
 		World world = kte.getWorld();
 		if (world == null)
 			return;
-		if (!world.isRemote)
+		if (!world.isClient)
 			return;
-		Random r = world.rand;
+		Random r = world.random;
 		for (int i = 0; i < amount; i++) {
-			Vector3d motion = VecHelper.offsetRandomly(Vector3d.ZERO, r, maxMotion);
-			Vector3d position = VecHelper.getCenterOf(kte.getPos());
+			Vec3d motion = VecHelper.offsetRandomly(Vec3d.ZERO, r, maxMotion);
+			Vec3d position = VecHelper.getCenterOf(kte.getPos());
 			world.addParticle(particle, position.x, position.y, position.z, motion.x, motion.y, motion.z);
 		}
 	}
@@ -77,7 +74,7 @@ public class KineticEffectHandler {
 		if (speed == 0)
 			return;
 
-		BlockState state = kte.getBlockState();
+		BlockState state = kte.getCachedState();
 		Block block = state.getBlock();
 		if (!(block instanceof KineticBlock))
 			return;
@@ -86,7 +83,7 @@ public class KineticEffectHandler {
 		float radius1 = kb.getParticleInitialRadius();
 		float radius2 = kb.getParticleTargetRadius();
 
-		Axis axis = kb.getRotationAxis(state);
+		Direction.Axis axis = kb.getRotationAxis(state);
 		BlockPos pos = kte.getPos();
 		World world = kte.getWorld();
 		if (axis == null)
@@ -95,17 +92,17 @@ public class KineticEffectHandler {
 			return;
 
 		char axisChar = axis.name().charAt(0);
-		Vector3d vec = VecHelper.getCenterOf(pos);
-		SpeedLevel speedLevel = SpeedLevel.of(speed);
+		Vec3d vec = VecHelper.getCenterOf(pos);
+		Rotating.SpeedLevel speedLevel = Rotating.SpeedLevel.of(speed);
 		int color = speedLevel.getColor();
 		int particleSpeed = speedLevel.getParticleSpeed();
 		particleSpeed *= Math.signum(speed);
 
 		if (world instanceof ServerWorld) {
-			AllTriggers.triggerForNearbyPlayers(AllTriggers.ROTATION, world, pos, 5);
-			RotationIndicatorParticleData particleData =
-				new RotationIndicatorParticleData(color, particleSpeed, radius1, radius2, 10, axisChar);
-			((ServerWorld) world).spawnParticle(particleData, vec.x, vec.y, vec.z, 20, 0, 0, 0, 1);
+			/**AllTriggers.triggerForNearbyPlayers(AllTriggers.ROTATION, world, pos, 5); TODO FIX TRIGGER FOR ADVANCEMENT
+			 RotationIndicatorParticleData particleData = // TODO ROTATION INDICATOR PARTICLE
+			 new RotationIndicatorParticleData(color, particleSpeed, radius1, radius2, 10, axisChar);
+			 ((ServerWorld) world).spawnParticles(particleData, vec.x, vec.y, vec.z, 20, 0, 0, 0, 1);*/
 		}
 	}
 

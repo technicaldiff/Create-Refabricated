@@ -1,12 +1,12 @@
 package com.simibubi.create.foundation.render;
 
-import java.nio.Buffer;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 
 import com.mojang.datafixers.util.Pair;
+import com.simibubi.create.foundation.mixin.accessor.BufferBuilderAccessor;
 
-import net.minecraft.client.renderer.BufferBuilder;
+import net.minecraft.client.render.BufferBuilder;
 
 public class TemplateBuffer {
     protected ByteBuffer template;
@@ -14,28 +14,27 @@ public class TemplateBuffer {
     protected int vertexCount;
 
     public TemplateBuffer(BufferBuilder buf) {
-        Pair<BufferBuilder.DrawState, ByteBuffer> state = buf.popData();
+        Pair<BufferBuilder.DrawArrayParameters, ByteBuffer> state = buf.popData();
         ByteBuffer rendered = state.getSecond();
         rendered.order(ByteOrder.nativeOrder()); // Vanilla bug, endianness does not carry over into sliced buffers
 
-        formatSize = buf.getVertexFormat()
-                        .getSize();
+        formatSize = ((BufferBuilderAccessor) buf).create$format().getVertexSize(); // TODO COULD BE WRONG formatSize
         vertexCount = state.getFirst().getCount();
         int size = vertexCount * formatSize;
 
         template = ByteBuffer.allocate(size);
         template.order(rendered.order());
-        ((Buffer)template).limit(((Buffer)rendered).limit());
+        template.limit(rendered.limit());
         template.put(rendered);
-        ((Buffer)template).rewind();
+        template.rewind();
     }
 
     public boolean isEmpty() {
-        return ((Buffer) template).limit() == 0;
+        return template.limit() == 0;
     }
 
     protected int vertexCount(ByteBuffer buffer) {
-        return ((Buffer)buffer).limit() / formatSize;
+        return buffer.limit() / formatSize;
     }
 
     protected int getBufferPosition(int vertexIndex) {

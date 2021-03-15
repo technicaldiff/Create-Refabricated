@@ -8,40 +8,40 @@ import net.minecraft.block.Blocks;
 import net.minecraft.block.SaplingBlock;
 import net.minecraft.item.BoneMealItem;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemUseContext;
-import net.minecraft.util.ActionResultType;
+import net.minecraft.item.ItemUsageContext;
+import net.minecraft.server.world.ServerWorld;
+import net.minecraft.util.ActionResult;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.server.ServerWorld;
 
 public class TreeFertilizerItem extends Item {
 
-	public TreeFertilizerItem(Properties properties) {
+	public TreeFertilizerItem(Settings properties) {
 		super(properties);
 	}
 
 	@Override
-	public ActionResultType onItemUse(ItemUseContext context) {
+	public ActionResult useOnBlock(ItemUsageContext context) {
 		BlockState state = context.getWorld()
-			.getBlockState(context.getPos());
+			.getBlockState(context.getBlockPos());
 		Block block = state.getBlock();
 		if (block instanceof SaplingBlock) {
 
-			if (context.getWorld().isRemote) {
-				BoneMealItem.spawnBonemealParticles(context.getWorld(), context.getPos(), 100);
-				return ActionResultType.SUCCESS;
+			if (context.getWorld().isClient) {
+				BoneMealItem.createParticles(context.getWorld(), context.getBlockPos(), 100);
+				return ActionResult.SUCCESS;
 			}
 
-			TreesDreamWorld world = new TreesDreamWorld((ServerWorld) context.getWorld(), context.getPos());
-			BlockPos saplingPos = context.getPos();
+			TreesDreamWorld world = new TreesDreamWorld((ServerWorld) context.getWorld(), context.getBlockPos());
+			BlockPos saplingPos = context.getBlockPos();
 
-			for (BlockPos pos : BlockPos.getAllInBoxMutable(-1, 0, -1, 1, 0, 1)) {
+			for (BlockPos pos : BlockPos.iterate(-1, 0, -1, 1, 0, 1)) {
 				if (context.getWorld()
 					.getBlockState(saplingPos.add(pos))
 					.getBlock() == block)
 					world.setBlockState(pos.up(10), state.with(SaplingBlock.STAGE, 1));
 			}
 
-			((SaplingBlock) block).grow(world, world.getRandom(), BlockPos.ZERO.up(10),
+			((SaplingBlock) block).grow(world, world.getRandom(), BlockPos.ORIGIN.up(10),
 				state.with(SaplingBlock.STAGE, 1));
 
 			for (BlockPos pos : world.blocksAdded.keySet()) {
@@ -51,11 +51,11 @@ public class TreeFertilizerItem extends Item {
 				// Don't replace Bedrock
 				if (context.getWorld()
 					.getBlockState(actualPos)
-					.getBlockHardness(context.getWorld(), actualPos) == -1)
+					.getHardness(context.getWorld(), actualPos) == -1)
 					continue;
 				// Don't replace solid blocks with leaves
 				if (!world.getBlockState(pos)
-					.isNormalCube(world, pos)
+					.isFullCube(world, pos)
 					&& !context.getWorld()
 						.getBlockState(actualPos)
 						.getCollisionShape(context.getWorld(), actualPos)
@@ -73,13 +73,13 @@ public class TreeFertilizerItem extends Item {
 
 			if (context.getPlayer() != null && !context.getPlayer()
 				.isCreative())
-				context.getItem()
-					.shrink(1);
-			return ActionResultType.SUCCESS;
+				context.getStack()
+					.decrement(1);
+			return ActionResult.SUCCESS;
 
 		}
 
-		return super.onItemUse(context);
+		return super.useOnBlock(context);
 	}
 
 	private class TreesDreamWorld extends PlacementSimulationServerWorld {

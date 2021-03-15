@@ -5,50 +5,52 @@ import org.lwjgl.opengl.GL20;
 import com.simibubi.create.foundation.render.backend.Backend;
 import com.simibubi.create.foundation.render.backend.gl.GlObject;
 
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.Identifier;
 
 public class GlShader extends GlObject {
 
-    public final ResourceLocation name;
-    public final ShaderType type;
+	public final Identifier name;
+	public final ShaderType type;
 
-    public GlShader(ShaderType type, ResourceLocation name, String source, PreProcessor preProcessor) {
-        this.type = type;
-        this.name = name;
-        int handle = GL20.glCreateShader(type.glEnum);
+	public GlShader(ShaderType type, Identifier name, String source, PreProcessor preProcessor) {
+		this.type = type;
+		this.name = name;
+		int handle = GL20.glCreateShader(type.glEnum);
 
-        if (preProcessor != null) {
-            source = preProcessor.process(source);
-            Backend.log.info("Preprocessor run on " + name);// + ":\n" + source);
-        }
+		if (preProcessor != null) {
+			source = preProcessor.process(source);
 
-        GL20.glShaderSource(handle, source);
-        GL20.glCompileShader(handle);
+			if (Backend.SHADER_DEBUG_OUTPUT)
+				Backend.log.info("Preprocessor run on " + name);// + ":\n" + source);
+		}
 
-        String log = GL20.glGetShaderInfoLog(handle);
+		GL20.glShaderSource(handle, source);
+		GL20.glCompileShader(handle);
 
-        if (!log.isEmpty()) {
-            Backend.log.warn("Shader compilation log for " + name + ": " + log);
-        }
+		String log = GL20.glGetShaderInfoLog(handle);
 
-        if (GL20.glGetShaderi(handle, GL20.GL_COMPILE_STATUS) != GL20.GL_TRUE) {
-            throw new RuntimeException("Could not compile shader");
-        }
+		if (!log.isEmpty()) {
+			Backend.log.warn("Shader compilation log for " + name + ": " + log);
+		}
 
-        setHandle(handle);
-    }
+		if (GL20.glGetShaderi(handle, GL20.GL_COMPILE_STATUS) != GL20.GL_TRUE) {
+			throw new RuntimeException("Could not compile shader");
+		}
 
-    @Override
-    protected void deleteInternal(int handle) {
-        GL20.glDeleteShader(handle);
-    }
+		setHandle(handle);
+	}
 
-    @FunctionalInterface
-    public interface PreProcessor {
-        String process(String source);
+	@Override
+	protected void deleteInternal(int handle) {
+		GL20.glDeleteShader(handle);
+	}
 
-        default PreProcessor andThen(PreProcessor that) {
-            return source -> that.process(this.process(source));
-        }
-    }
+	@FunctionalInterface
+	public interface PreProcessor {
+		String process(String source);
+
+		default PreProcessor andThen(PreProcessor that) {
+			return source -> that.process(this.process(source));
+		}
+	}
 }
