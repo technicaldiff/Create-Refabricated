@@ -1,7 +1,0 @@
-{
-	"parent": "create:block/redstone_contact/block",
-    "textures": {
-        "particle": "create:block/contact_side_powered",
-        "1": "create:block/contact_side_powered"
-    }
-}
