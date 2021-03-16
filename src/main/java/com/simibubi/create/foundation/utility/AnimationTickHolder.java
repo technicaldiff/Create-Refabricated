@@ -1,9 +1,10 @@
 package com.simibubi.create.foundation.utility;
 
+import com.simibubi.create.foundation.mixin.accessor.MinecraftClientAccessor;
+
 import net.minecraft.client.MinecraftClient;
 
 public class AnimationTickHolder {
-
 	private static int ticks;
 
 	public static void reset() {
@@ -22,7 +23,7 @@ public class AnimationTickHolder {
 
 	public static float getPartialTicks() {
 		MinecraftClient mc = MinecraftClient.getInstance();
-		return /*(mc.isPaused() ? mc.pausedTickDelta :*/ mc.getTickDelta(); // TODO FIX ANIMATION HOLDER
+		return (mc.isPaused() ? ((MinecraftClientAccessor) mc).getPausedTickDelta() : mc.getTickDelta());
 	}
 
 	public static int getTicks() {

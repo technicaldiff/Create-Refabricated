@@ -23,8 +23,7 @@ import net.minecraft.util.math.Matrix4f;
 
 @Environment(EnvType.CLIENT)
 @Mixin(WorldRenderer.class)
-public class RenderHooksMixin {
-
+public class WorldRendererMixin {
 	@Shadow
 	private ClientWorld world;
 
@@ -54,6 +53,7 @@ public class RenderHooksMixin {
         //OptifineHandler.refresh();
         Backend.refresh();
 
-        //if (Backend.canUseInstancing() && world != null) world.loadedTileEntityList.forEach(CreateClient.kineticRenderer::add);*/
+        if (Backend.canUseInstancing() && world != null)
+        	world.blockEntities.forEach(CreateClient.kineticRenderer::add);
 	}
 }

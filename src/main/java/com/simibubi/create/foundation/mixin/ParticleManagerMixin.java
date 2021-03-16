@@ -5,11 +5,14 @@ import org.spongepowered.asm.mixin.Shadow;
 
 import com.simibubi.create.foundation.utility.extensions.ParticleManagerExtensions;
 
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.client.particle.ParticleFactory;
 import net.minecraft.client.particle.ParticleManager;
 import net.minecraft.particle.ParticleEffect;
 import net.minecraft.particle.ParticleType;
 
+@Environment(EnvType.CLIENT)
 @Mixin(ParticleManager.class)
 public abstract class ParticleManagerMixin implements ParticleManagerExtensions {
 	@Shadow

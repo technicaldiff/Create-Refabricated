@@ -6,9 +6,12 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 
 import com.simibubi.create.foundation.block.entity.behaviour.scrollvalue.ScrollValueHandler;
 
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.client.Mouse;
 import net.minecraft.entity.player.PlayerInventory;
 
+@Environment(EnvType.CLIENT)
 @Mixin(Mouse.class)
 public class MouseMixin {
 	@Redirect(at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/player/PlayerInventory;scrollInHotbar(D)V"), method = "onMouseScroll(JDD)V")

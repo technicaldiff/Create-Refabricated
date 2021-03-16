@@ -26,6 +26,7 @@ import com.simibubi.create.foundation.item.TooltipHelper;
 
 import me.pepperbell.reghelper.ItemRegBuilder;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
+import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.item.FoodComponent;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
@@ -156,7 +157,7 @@ public class AllItems {
 		.register();
 
 	public static final GogglesItem GOGGLES = createBuilder("goggles", GogglesItem::new)
-		.properties(p -> p.maxCount(1))
+		.properties(p -> p.maxCount(1).equipmentSlot(stack -> EquipmentSlot.HEAD))
 //		.model(AssetLookup.existingItemModel())
 //		.lang("Engineer's Goggles")
 		.register();

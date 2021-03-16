@@ -12,12 +12,12 @@ import java.util.function.Supplier;
 import com.simibubi.create.content.contraptions.base.KineticRenderMaterials;
 import com.simibubi.create.content.contraptions.base.RotatingData;
 import com.simibubi.create.content.contraptions.relays.belt.BeltData;
-import com.simibubi.create.foundation.mixinterface.BakedModelManagerExtension;
 import com.simibubi.create.foundation.render.SuperByteBuffer;
 import com.simibubi.create.foundation.render.backend.instancing.InstancedBlockRenderer;
 import com.simibubi.create.foundation.render.backend.instancing.InstancedModel;
 import com.simibubi.create.foundation.utility.AngleHelper;
 import com.simibubi.create.foundation.utility.MatrixStacker;
+import com.simibubi.create.foundation.utility.extensions.BakedModelManagerExtensions;
 
 import net.fabricmc.fabric.api.client.model.ModelLoadingRegistry;
 import net.minecraft.block.BlockState;
@@ -177,7 +177,7 @@ public class AllBlockPartials {
 	}
 
 	public static void onModelBake() {
-		BakedModelManagerExtension e = (BakedModelManagerExtension) MinecraftClient.getInstance().getBakedModelManager();
+		BakedModelManagerExtensions e = (BakedModelManagerExtensions) MinecraftClient.getInstance().getBakedModelManager();
 		for (AllBlockPartials partial : all)
 			partial.bakedModel = e.getModel(partial.modelLocation);
 	}

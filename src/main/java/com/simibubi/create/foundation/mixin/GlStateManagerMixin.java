@@ -9,9 +9,12 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.simibubi.create.foundation.render.backend.gl.GlFog;
 
-@Mixin(GlStateManager.class)
-public class FogColorTrackerMixin {
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 
+@Environment(EnvType.CLIENT)
+@Mixin(GlStateManager.class)
+public class GlStateManagerMixin {
 	@Inject(at = @At("TAIL"), method = "fog")
 	private static void copyFogColor(int pname, float[] params, CallbackInfo ci) {
 		if (pname == GL11.GL_FOG_COLOR) {

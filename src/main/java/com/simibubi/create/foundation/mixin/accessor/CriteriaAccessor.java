@@ -7,8 +7,7 @@ import net.minecraft.advancement.criterion.Criteria;
 import net.minecraft.advancement.criterion.Criterion;
 
 @Mixin(Criteria.class)
-public interface CriteriaRegistryAccessor {
-
+public interface CriteriaAccessor {
 	@Invoker("register")
 	static <T extends Criterion<?>> T register(T object) {
 		throw new RuntimeException("Invoker :)");

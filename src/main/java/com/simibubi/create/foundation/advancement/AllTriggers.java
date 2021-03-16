@@ -4,7 +4,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.function.Predicate;
 
-import com.simibubi.create.foundation.mixin.accessor.CriteriaRegistryAccessor;
+import com.simibubi.create.foundation.mixin.accessor.CriteriaAccessor;
 
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.server.network.ServerPlayerEntity;
@@ -74,7 +74,7 @@ public class AllTriggers {
 	}
 
 	public static void register() {
-		triggers.forEach(CriteriaRegistryAccessor::register);
+		triggers.forEach(CriteriaAccessor::register);
 	}
 
 	public static void triggerFor(ITriggerable trigger, PlayerEntity player) {

@@ -9,8 +9,8 @@ import com.simibubi.create.content.contraptions.components.structureMovement.Ori
 import com.simibubi.create.content.contraptions.components.structureMovement.OrientedContraptionEntityRenderer;
 import com.simibubi.create.content.contraptions.components.structureMovement.glue.SuperGlueEntity;
 import com.simibubi.create.content.contraptions.components.structureMovement.glue.SuperGlueRenderer;
-import com.simibubi.create.foundation.mixinterface.EntityTypeExtension;
 import com.simibubi.create.foundation.utility.Lang;
+import com.simibubi.create.foundation.utility.extensions.EntityTypeExtensions;
 
 import me.pepperbell.reghelper.EntityTypeRegBuilder;
 import net.fabricmc.api.EnvType;
@@ -52,7 +52,7 @@ public class AllEntityTypes {
 				.trackingTickInterval(updateFrequency))
 			.properties(propertyBuilder)
 			.register();
-		((EntityTypeExtension) type).setAlwaysUpdateVelocity(TriState.of(sendVelocity));
+		((EntityTypeExtensions) type).setAlwaysUpdateVelocity(TriState.of(sendVelocity));
 		return type;
 	}
 

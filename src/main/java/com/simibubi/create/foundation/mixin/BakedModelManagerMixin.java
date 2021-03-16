@@ -16,8 +16,10 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import com.simibubi.create.AllBlockPartials;
-import com.simibubi.create.foundation.mixinterface.BakedModelManagerExtension;
+import com.simibubi.create.foundation.utility.extensions.BakedModelManagerExtensions;
 
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.block.Block;
 import net.minecraft.client.render.block.BlockModels;
 import net.minecraft.client.render.model.BakedModel;
@@ -29,8 +31,9 @@ import net.minecraft.resource.ResourceManager;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.profiler.Profiler;
 
+@Environment(EnvType.CLIENT)
 @Mixin(BakedModelManager.class)
-public class BakedModelManagerMixin implements BakedModelManagerExtension {
+public class BakedModelManagerMixin implements BakedModelManagerExtensions {
 	@Shadow
 	private Map<Identifier, BakedModel> models;
 

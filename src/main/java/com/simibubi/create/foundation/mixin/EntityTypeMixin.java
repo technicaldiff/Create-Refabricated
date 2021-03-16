@@ -5,13 +5,13 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-import com.simibubi.create.foundation.mixinterface.EntityTypeExtension;
+import com.simibubi.create.foundation.utility.extensions.EntityTypeExtensions;
 
 import net.fabricmc.fabric.api.util.TriState;
 import net.minecraft.entity.EntityType;
 
 @Mixin(EntityType.class)
-public class EntityTypeMixin implements EntityTypeExtension {
+public class EntityTypeMixin implements EntityTypeExtensions {
 	private TriState alwaysUpdateVelocity = TriState.DEFAULT;
 
 	@Override

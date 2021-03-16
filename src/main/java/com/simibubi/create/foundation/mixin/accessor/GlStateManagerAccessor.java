@@ -5,6 +5,10 @@ import org.spongepowered.asm.mixin.gen.Accessor;
 
 import com.mojang.blaze3d.platform.GlStateManager;
 
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
+
+@Environment(EnvType.CLIENT)
 @Mixin(GlStateManager.class)
 public interface GlStateManagerAccessor {
 	@Accessor("FOG")
