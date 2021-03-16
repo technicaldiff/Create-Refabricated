@@ -59,7 +59,7 @@ public class PulleyBlock extends HorizontalAxisKineticBlock implements IBE<Pulle
                 if (below.getBlock() instanceof RopeBlockBase)
                     worldIn.breakBlock(pos.down(), true);
             }
-            //if (state.hasTileEntity())
+            if (state.getBlock().hasBlockEntity())
                 worldIn.removeBlockEntity(pos);
         }
     }
@@ -119,7 +119,7 @@ public class PulleyBlock extends HorizontalAxisKineticBlock implements IBE<Pulle
                         worldIn.breakBlock(pos.down(), true);
                 }
             }
-            if (/*state.hasTileEntity() &&*/ state.getBlock() != newState.getBlock()) {
+            if (state.getBlock().hasBlockEntity() && state.getBlock() != newState.getBlock()) {
                 worldIn.removeBlockEntity(pos);
             }
         }

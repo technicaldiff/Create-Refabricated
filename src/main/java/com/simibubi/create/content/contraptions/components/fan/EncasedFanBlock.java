@@ -42,7 +42,7 @@ public class EncasedFanBlock extends DirectionalKineticBlock implements IBE<Enca
 
 	@Override
 	public void onStateReplaced(BlockState state, World world, BlockPos pos, BlockState p_196243_4_, boolean p_196243_5_) {
-		if (/*state.hasTileEntity() &&*/ (state.getBlock() != p_196243_4_.getBlock() /*|| !p_196243_4_.hasTileEntity()*/)) {
+		if (state.getBlock().hasBlockEntity() && (state.getBlock() != p_196243_4_.getBlock() || !p_196243_4_.getBlock().hasBlockEntity())) {
 			withBlockEntityDo(world, pos, EncasedFanBlockEntity::updateChute);
 			world.removeBlockEntity(pos);
 		}
