@@ -35,6 +35,9 @@ import com.simibubi.create.content.contraptions.relays.gearbox.GearshiftBlockEnt
 import com.simibubi.create.content.logistics.block.diodes.AdjustablePulseRepeaterBlockEntity;
 import com.simibubi.create.content.logistics.block.diodes.AdjustableRepeaterBlockEntity;
 import com.simibubi.create.content.logistics.block.diodes.AdjustableRepeaterRenderer;
+import com.simibubi.create.content.logistics.block.mechanicalArm.ArmBlockEntity;
+import com.simibubi.create.content.logistics.block.mechanicalArm.ArmInstance;
+import com.simibubi.create.content.logistics.block.mechanicalArm.ArmRenderer;
 import com.simibubi.create.content.logistics.block.redstone.AnalogLeverBlockEntity;
 import com.simibubi.create.content.logistics.block.redstone.AnalogLeverRenderer;
 import me.pepperbell.reghelper.BlockEntityTypeRegBuilder;
@@ -220,7 +223,7 @@ public class AllBlockEntities {
 	public static final BlockEntityType<BrassTunnelBlockEntity> BRASS_TUNNEL = createBuilder("brass_tunnel", BrassTunnelBlockEntity::new)
 		.validBlocks(AllBlocks.BRASS_TUNNEL)
 		.renderer(() -> BeltTunnelRenderer::new)
-		.register();
+		.register();*/
 
 	public static final BlockEntityType<ArmBlockEntity> MECHANICAL_ARM = createBuilder("mechanical_arm", ArmBlockEntity::new)
 		.validBlocks(AllBlocks.MECHANICAL_ARM)
@@ -228,7 +231,7 @@ public class AllBlockEntities {
 		.onRegister(ArmInstance::register)
 		.register();
 
-	public static final BlockEntityType<MechanicalPistonBlockEntity> MECHANICAL_PISTON = createBuilder("mechanical_piston", MechanicalPistonBlockEntity::new)
+	/*public static final BlockEntityType<MechanicalPistonBlockEntity> MECHANICAL_PISTON = createBuilder("mechanical_piston", MechanicalPistonBlockEntity::new)
 		.validBlocks(AllBlocks.MECHANICAL_PISTON, AllBlocks.STICKY_MECHANICAL_PISTON)
 		.renderer(() -> MechanicalPistonRenderer::new)
 		.onRegister(ShaftInstance::register)

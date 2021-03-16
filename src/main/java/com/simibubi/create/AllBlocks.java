@@ -27,6 +27,8 @@ import com.simibubi.create.content.logistics.block.diodes.AdjustableRepeaterBloc
 import com.simibubi.create.content.logistics.block.diodes.PoweredLatchBlock;
 import com.simibubi.create.content.logistics.block.diodes.PulseRepeaterBlock;
 import com.simibubi.create.content.logistics.block.diodes.ToggleLatchBlock;
+import com.simibubi.create.content.logistics.block.mechanicalArm.ArmBlock;
+import com.simibubi.create.content.logistics.block.mechanicalArm.ArmItem;
 import com.simibubi.create.content.logistics.block.redstone.AnalogLeverBlock;
 import com.simibubi.create.foundation.config.StressConfigDefaults;
 import com.simibubi.create.foundation.data.BuilderConsumers;
@@ -889,19 +891,20 @@ public class AllBlocks {
 		currentSection = AllSections.LOGISTICS;
 	}
 
-	/*public static final ArmBlock MECHANICAL_ARM = createBuilder("mechanical_arm", ArmBlock::new)
+	public static final ArmBlock MECHANICAL_ARM = createBuilder("mechanical_arm", ArmBlock::new)
 		.initialProperties(SharedProperties::softMetal)
-		.blockstate((c, p) -> p.getVariantBuilder(c.get())
-		.forAllStates(s -> ConfiguredModel.builder()
-			.modelFile(AssetLookup.partialBaseModel(c, p))
-			.rotationX(s.get(ArmBlock.CEILING) ? 180 : 0)
-			.build()))
-		.transform(StressConfigDefaults.setImpact(8.0))
+//		.blockstate((c, p) -> p.getVariantBuilder(c.get())
+//		.forAllStates(s -> ConfiguredModel.builder()
+//			.modelFile(AssetLookup.partialBaseModel(c, p))
+//			.rotationX(s.get(ArmBlock.CEILING) ? 180 : 0)
+//			.build()))
+//		.transform(StressConfigDefaults.setImpact(8.0))
 		.item(ArmItem::new)
-		.transform(customItemModel())
+//		.transform(customItemModel())
+		.build()
 		.register();
 
-	public static final AndesiteFunnelBlock ANDESITE_FUNNEL = createBuilder("andesite_funnel", AndesiteFunnelBlock::new)
+	/*public static final AndesiteFunnelBlock ANDESITE_FUNNEL = createBuilder("andesite_funnel", AndesiteFunnelBlock::new)
 		.initialProperties(SharedProperties::stone)
 		.tag(AllBlockTags.SAFE_NBT.tag)
 		.onRegister(addMovementBehaviour(FunnelMovementBehaviour.andesite()))
