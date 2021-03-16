@@ -86,8 +86,8 @@ public class EncasedFanBlockEntity extends GeneratingKineticBlockEntity implemen
 			return false;
 		BlockState checkState = world.getBlockState(pos.down());
 
-		if (!checkState.getBlock()
-			.isIn(AllBlockTags.FAN_HEATERS.tag))
+		if (true /*!checkState.getBlock()
+			.isIn(AllBlockTags.FAN_HEATERS.tag)*/) // TODO should be changed to check for Tags when the Tags work -smellypengu
 			return false;
 
 		/*if (BlockHelper.hasBlockStateProperty(checkState, BlazeBurnerBlock.HEAT_LEVEL) && !checkState.get(BlazeBurnerBlock.HEAT_LEVEL)
