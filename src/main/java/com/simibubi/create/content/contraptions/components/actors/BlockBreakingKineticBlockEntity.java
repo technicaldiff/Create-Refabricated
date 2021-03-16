@@ -137,7 +137,7 @@ public abstract class BlockBreakingKineticBlockEntity extends KineticBlockEntity
 	public void onBlockBroken(BlockState stateToBreak) {
 		FluidState FluidState = world.getFluidState(breakingPos);
 		world.syncWorldEvent(2001, breakingPos, Block.getRawIdFromState(stateToBreak));
-		BlockEntity be = /*stateToBreak.hasTileEntity() ?*/ world.getBlockEntity(breakingPos) /*: null*/;
+		BlockEntity be = stateToBreak.getBlock().hasBlockEntity() ? world.getBlockEntity(breakingPos) : null;
 		Vec3d vec = VecHelper.offsetRandomly(VecHelper.getCenterOf(breakingPos), world.random, .125f);
 
 		Block.getDroppedStacks(stateToBreak, (ServerWorld) world, breakingPos, be).forEach((stack) -> {
