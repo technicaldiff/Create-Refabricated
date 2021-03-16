@@ -7,6 +7,7 @@ import com.simibubi.create.content.contraptions.components.structureMovement.Con
 import com.simibubi.create.content.contraptions.components.structureMovement.ControlledContraptionEntity;
 import com.simibubi.create.content.contraptions.components.structureMovement.OrientedContraptionEntity;
 import com.simibubi.create.content.contraptions.components.structureMovement.OrientedContraptionEntityRenderer;
+import com.simibubi.create.content.contraptions.components.structureMovement.gantry.GantryContraptionEntity;
 import com.simibubi.create.content.contraptions.components.structureMovement.glue.SuperGlueEntity;
 import com.simibubi.create.content.contraptions.components.structureMovement.glue.SuperGlueRenderer;
 import com.simibubi.create.foundation.utility.Lang;
@@ -28,8 +29,8 @@ public class AllEntityTypes {
 		contraption("contraption", OrientedContraptionEntity::new, 5, 3, true);
 	public static final EntityType<ControlledContraptionEntity> CONTROLLED_CONTRAPTION =
 		contraption("stationary_contraption", ControlledContraptionEntity::new, 20, 40, false);
-//	public static final EntityType<GantryContraptionEntity> GANTRY_CONTRAPTION =
-//		contraption("gantry_contraption", GantryContraptionEntity::new, 10, 40, false);
+	public static final EntityType<GantryContraptionEntity> GANTRY_CONTRAPTION =
+		contraption("gantry_contraption", GantryContraptionEntity::new, 10, 40, false);
 	public static final EntityType<SuperGlueEntity> SUPER_GLUE = register("super_glue",
 		SuperGlueEntity::new, SpawnGroup.MISC, 10, Integer.MAX_VALUE, false, SuperGlueEntity::build);
 //	public static final RegistryEntry<EntityType<SeatEntity>> SEAT =
@@ -66,7 +67,7 @@ public class AllEntityTypes {
 	public static void registerRenderers() {
 		EntityRendererRegistry.INSTANCE.register(CONTROLLED_CONTRAPTION, ContraptionEntityRenderer::new);
 		EntityRendererRegistry.INSTANCE.register(ORIENTED_CONTRAPTION, OrientedContraptionEntityRenderer::new);
-//		EntityRendererRegistry.INSTANCE.register(GANTRY_CONTRAPTION, ContraptionEntityRenderer::new);
+		EntityRendererRegistry.INSTANCE.register(GANTRY_CONTRAPTION, ContraptionEntityRenderer::new);
 		EntityRendererRegistry.INSTANCE.register(SUPER_GLUE, SuperGlueRenderer::new);
 //		EntityRendererRegistry.INSTANCE.register(SEAT, SeatEntity.Render::new);
 	}

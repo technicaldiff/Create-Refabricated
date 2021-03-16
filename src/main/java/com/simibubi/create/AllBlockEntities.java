@@ -16,10 +16,13 @@ import com.simibubi.create.content.contraptions.components.structureMovement.bea
 import com.simibubi.create.content.contraptions.components.structureMovement.bearing.MechanicalBearingBlockEntity;
 import com.simibubi.create.content.contraptions.components.structureMovement.bearing.WindmillBearingBlockEntity;
 import com.simibubi.create.content.contraptions.components.structureMovement.chassis.ChassisBlockEntity;
+import com.simibubi.create.content.contraptions.components.structureMovement.gantry.GantryPinionBlockEntity;
+import com.simibubi.create.content.contraptions.components.structureMovement.gantry.GantryPinionRenderer;
 import com.simibubi.create.content.contraptions.components.structureMovement.mounted.CartAssemblerBlockEntity;
 import com.simibubi.create.content.contraptions.components.structureMovement.pulley.PulleyBlockEntity;
 import com.simibubi.create.content.contraptions.components.structureMovement.pulley.PulleyRenderer;
 import com.simibubi.create.content.contraptions.components.waterwheel.WaterWheelBlockEntity;
+import com.simibubi.create.content.contraptions.relays.advanced.GantryShaftBlockEntity;
 import com.simibubi.create.content.contraptions.relays.belt.BeltBlockEntity;
 import com.simibubi.create.content.contraptions.relays.belt.BeltInstance;
 import com.simibubi.create.content.contraptions.relays.belt.BeltRenderer;
@@ -133,7 +136,7 @@ public class AllBlockEntities {
 		.onRegister(HorizontalHalfShaftInstance::register)
 		.register();
 	
-	/*public static final BlockEntityType<GantryShaftBlockEntity> GANTRY_SHAFT = createBuilder("gantry_shaft", GantryShaftBlockEntity::new)
+	public static final BlockEntityType<GantryShaftBlockEntity> GANTRY_SHAFT = createBuilder("gantry_shaft", GantryShaftBlockEntity::new)
 		.validBlocks(AllBlocks.GANTRY_SHAFT)
 		.renderer(() -> KineticBlockEntityRenderer::new)
 		.onRegister(SingleRotatingInstance::register)
@@ -145,7 +148,7 @@ public class AllBlockEntities {
 		.onRegister(ShaftInstance::register)
 		.register();
 
-	public static final BlockEntityType<PumpBlockEntity> MECHANICAL_PUMP = createBuilder("mechanical_pump", PumpBlockEntity::new)
+	/*public static final BlockEntityType<PumpBlockEntity> MECHANICAL_PUMP = createBuilder("mechanical_pump", PumpBlockEntity::new)
 		.validBlocks(AllBlocks.MECHANICAL_PUMP)
 		.renderer(() -> PumpRenderer::new)
 		.onRegister(PumpCogInstance::register)

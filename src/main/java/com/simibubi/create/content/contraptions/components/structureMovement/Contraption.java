@@ -3,14 +3,17 @@ package com.simibubi.create.content.contraptions.components.structureMovement;
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.AllMovementBehaviours;
 import com.simibubi.create.content.contraptions.base.KineticBlockEntity;
+import com.simibubi.create.content.contraptions.base.Rotating;
 import com.simibubi.create.content.contraptions.components.structureMovement.bearing.MechanicalBearingBlock;
 import com.simibubi.create.content.contraptions.components.structureMovement.bearing.StabilizedContraption;
 import com.simibubi.create.content.contraptions.components.structureMovement.chassis.AbstractChassisBlock;
 import com.simibubi.create.content.contraptions.components.structureMovement.chassis.ChassisBlockEntity;
+import com.simibubi.create.content.contraptions.components.structureMovement.gantry.GantryPinionBlock;
 import com.simibubi.create.content.contraptions.components.structureMovement.glue.SuperGlueEntity;
 import com.simibubi.create.content.contraptions.components.structureMovement.glue.SuperGlueHandler;
 import com.simibubi.create.content.contraptions.components.structureMovement.pulley.PulleyBlock;
 import com.simibubi.create.content.contraptions.components.structureMovement.pulley.PulleyBlockEntity;
+import com.simibubi.create.content.contraptions.relays.advanced.GantryShaftBlock;
 import com.simibubi.create.foundation.render.backend.light.EmptyLighter;
 import com.simibubi.create.foundation.utility.*;
 import net.fabricmc.api.EnvType;
@@ -255,39 +258,35 @@ public abstract class Contraption {
 	 }
 	 }*/
 
-	/*protected void moveGantryPinion(World world, BlockPos pos, Queue<BlockPos> frontier, Set<BlockPos> visited,
-	 BlockState state) {
-	 BlockPos offset = pos.offset(state.get(GantryPinionBlock.FACING));
-	 if (!visited.contains(offset))
-	 frontier.add(offset);
-	 Direction.Axis rotationAxis = ((IRotate) state.getBlock()).getRotationAxis(state);
-	 for (Direction d : Iterate.directionsInAxis(rotationAxis)) {
-	 offset = pos.offset(d);
-	 BlockState offsetState = world.getBlockState(offset);
-	 if (AllBlocks.GANTRY_SHAFT.has(offsetState) && offsetState.get(GantryShaftBlock.FACING)
-	 .getAxis() == d.getAxis())
-	 if (!visited.contains(offset))
-	 frontier.add(offset);
-	 }
-	 }*/
+	protected void moveGantryPinion(World world, BlockPos pos, Queue<BlockPos> frontier, Set<BlockPos> visited, BlockState state) {
+ 		BlockPos offset = pos.offset(state.get(GantryPinionBlock.FACING));
+		if (!visited.contains(offset))
+	 		frontier.add(offset);
+		Direction.Axis rotationAxis = ((Rotating) state.getBlock()).getRotationAxis(state);
+		for (Direction d : Iterate.directionsInAxis(rotationAxis)) {
+			offset = pos.offset(d);
+			BlockState offsetState = world.getBlockState(offset);
+			if (AllBlocks.GANTRY_SHAFT.getStateManager().getStates().contains(offsetState) && offsetState.get(GantryShaftBlock.FACING)
+				.getAxis() == d.getAxis())
+				if (!visited.contains(offset))
+					frontier.add(offset);
+		}
+	}
 
-	/*
-	 * protected void moveGantryShaft(World world, BlockPos pos, Queue<BlockPos> frontier, Set<BlockPos> visited,
-	 * BlockState state) {
-	 * for (Direction d : Iterate.directions) {
-	 * BlockPos offset = pos.offset(d);
-	 * if (!visited.contains(offset)) {
-	 * BlockState offsetState = world.getBlockState(offset);
-	 * Direction facing = state.get(GantryShaftBlock.FACING);
-	 * if (d.getAxis() == facing.getAxis() && AllBlocks.GANTRY_SHAFT.has(offsetState)
-	 * && offsetState.get(GantryShaftBlock.FACING) == facing)
-	 * frontier.add(offset);
-	 * else if (AllBlocks.GANTRY_PINION.has(offsetState) && offsetState.get(GantryPinionBlock.FACING) == d)
-	 * frontier.add(offset);
-	 * }
-	 * }
-	 * }
-	 */
+	protected void moveGantryShaft(World world, BlockPos pos, Queue<BlockPos> frontier, Set<BlockPos> visited, BlockState state) {
+		for (Direction d : Iterate.directions) {
+	 		BlockPos offset = pos.offset(d);
+			if (!visited.contains(offset)) {
+	 			BlockState offsetState = world.getBlockState(offset);
+	 			Direction facing = state.get(GantryShaftBlock.FACING);
+	 			if (d.getAxis() == facing.getAxis() && AllBlocks.GANTRY_SHAFT.getStateManager().getStates().contains(offsetState)
+					&& offsetState.get(GantryShaftBlock.FACING) == facing)
+	 				frontier.add(offset);
+	 			else if (AllBlocks.GANTRY_PINION.getStateManager().getStates().contains(offsetState) && offsetState.get(GantryPinionBlock.FACING) == d)
+	 				frontier.add(offset);
+			}
+	 	}
+	}
 
 	public void onEntityTick(World world) {
 		/*fluidStorage.forEach((pos, mfs) -> mfs.tick(entity, pos, world.isClient));*/
@@ -392,11 +391,11 @@ public abstract class Contraption {
 		/*if (AllBlocks.BELT.hasBlockEntity(state))
 			moveBelt(pos, frontier, visited, state);*/
 
-		/*if (AllBlocks.GANTRY_PINION.has(state))
-		 moveGantryPinion(world, pos, frontier, visited, state);
+		if (AllBlocks.GANTRY_PINION.getStateManager().getStates().contains(state))
+	 		moveGantryPinion(world, pos, frontier, visited, state);
 
-		 if (AllBlocks.GANTRY_SHAFT.has(state))
-		 moveGantryShaft(world, pos, frontier, visited, state);*/
+	 	if (AllBlocks.GANTRY_SHAFT.getStateManager().getStates().contains(state))
+	 		moveGantryShaft(world, pos, frontier, visited, state);
 
 		 // Bearings potentially create stabilized sub-contraptions
 		if (AllBlocks.MECHANICAL_BEARING.getStateManager().getStates().contains(state))
@@ -429,8 +428,8 @@ public abstract class Contraption {
 		// Cart assemblers attach themselves
 		BlockPos posDown = pos.down();
 		BlockState stateBelow = world.getBlockState(posDown);
-		/*if (!visited.contains(posDown) && AllBlocks.CART_ASSEMBLER.has(stateBelow))
-		 frontier.add(posDown);*/
+		if (!visited.contains(posDown) && AllBlocks.CART_ASSEMBLER.getStateManager().getStates().contains(stateBelow))
+	 		frontier.add(posDown);
 
 		Map<Direction, SuperGlueEntity> superglue = SuperGlueHandler.gatherGlue(world, pos);
 

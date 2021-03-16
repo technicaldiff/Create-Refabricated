@@ -69,7 +69,7 @@ public abstract class DirectionalAxisKineticBlock extends DirectionalKineticBloc
 
 			for (Direction side : Iterate.horizontalDirections) {
 				if (!prefersConnectionTo(world, pos, side, true)
-					&& !prefersConnectionTo(world, pos, side.rotateYClockwise(), false)) // TODO I THINK ITS rotateYClockwise
+					&& !prefersConnectionTo(world, pos, side.rotateYClockwise(), false))
 					continue;
 				if (prefferedSide != null && prefferedSide.getAxis() != side.getAxis()) {
 					prefferedSide = null;

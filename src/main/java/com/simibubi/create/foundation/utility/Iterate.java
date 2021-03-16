@@ -20,7 +20,7 @@ public class Iterate {
 	private static Direction[] getHorizontals() {
 		Direction[] directions = new Direction[4];
 		for (int i = 0; i < 4; i++)
-			directions[i] = Direction.byId(i);
+			directions[i] = Direction.fromHorizontal(i);
 		return directions;
 	}
 

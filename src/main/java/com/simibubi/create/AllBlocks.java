@@ -12,10 +12,12 @@ import com.simibubi.create.content.contraptions.components.structureMovement.bea
 import com.simibubi.create.content.contraptions.components.structureMovement.bearing.WindmillBearingBlock;
 import com.simibubi.create.content.contraptions.components.structureMovement.chassis.LinearChassisBlock;
 import com.simibubi.create.content.contraptions.components.structureMovement.chassis.RadialChassisBlock;
+import com.simibubi.create.content.contraptions.components.structureMovement.gantry.GantryPinionBlock;
 import com.simibubi.create.content.contraptions.components.structureMovement.mounted.CartAssemblerBlock;
 import com.simibubi.create.content.contraptions.components.structureMovement.mounted.CartAssemblerBlockItem;
 import com.simibubi.create.content.contraptions.components.structureMovement.pulley.PulleyBlock;
 import com.simibubi.create.content.contraptions.components.waterwheel.WaterWheelBlock;
+import com.simibubi.create.content.contraptions.relays.advanced.GantryShaftBlock;
 import com.simibubi.create.content.contraptions.relays.belt.BeltBlock;
 import com.simibubi.create.content.contraptions.relays.elementary.CogWheelBlock;
 import com.simibubi.create.content.contraptions.relays.elementary.CogwheelBlockItem;
@@ -537,37 +539,39 @@ public class AllBlocks {
 		.blockstate((c, p) -> BlockStateGen.directionalBlockIgnoresWaterlogged(c, p, state -> p.models()
 			.getExistingFile(p.modLoc("block/mechanical_piston/" + state.get(MechanicalPistonHeadBlock.TYPE)
 				.asString() + "/head"))))
-		.register();
+		.register();*/
 
 	public static final GantryPinionBlock GANTRY_PINION = createBuilder("gantry_pinion", GantryPinionBlock::new)
 		.initialProperties(SharedProperties::stone)
-		.properties(Block.Properties::nonOpaque)
-		.blockstate(BlockStateGen.directionalAxisBlockProvider())
+		.addLayer(() -> RenderLayer::getCutoutMipped)
+//		.blockstate(BlockStateGen.directionalAxisBlockProvider())
 		.item()
-		.transform(customItemModel())
+//		.transform(customItemModel())
+		.build()
 		.register();
 
 	public static final GantryShaftBlock GANTRY_SHAFT = createBuilder("gantry_shaft", GantryShaftBlock::new)
 		.initialProperties(SharedProperties::stone)
-		.blockstate((c, p) -> p.directionalBlock(c.get(), s -> {
-			boolean isPowered = s.get(GantryShaftBlock.POWERED);
-			boolean isFlipped = s.get(GantryShaftBlock.FACING)
-				.getDirection() == AxisDirection.NEGATIVE;
-			String partName = s.get(GantryShaftBlock.PART)
-				.asString();
-			String flipped = isFlipped ? "_flipped" : "";
-			String powered = isPowered ? "_powered" : "";
-			ModelFile existing = AssetLookup.partialBaseModel(c, p, partName);
-			if (!isPowered && !isFlipped)
-				return existing;
-			return p.models()
-				.withExistingParent("block/" + c.getName() + "_" + partName + powered + flipped,
-				existing.getLocation())
-				.texture("2", p.modLoc("block/" + c.getName() + powered + flipped));
-		}))
+//		.blockstate((c, p) -> p.directionalBlock(c.get(), s -> {
+//			boolean isPowered = s.get(GantryShaftBlock.POWERED);
+//			boolean isFlipped = s.get(GantryShaftBlock.FACING)
+//				.getDirection() == AxisDirection.NEGATIVE;
+//			String partName = s.get(GantryShaftBlock.PART)
+//				.asString();
+//			String flipped = isFlipped ? "_flipped" : "";
+//			String powered = isPowered ? "_powered" : "";
+//			ModelFile existing = AssetLookup.partialBaseModel(c, p, partName);
+//			if (!isPowered && !isFlipped)
+//				return existing;
+//			return p.models()
+//				.withExistingParent("block/" + c.getName() + "_" + partName + powered + flipped,
+//				existing.getLocation())
+//				.texture("2", p.modLoc("block/" + c.getName() + powered + flipped));
+//		}))
 		.item()
-		.transform(customItemModel("_", "block_single"))
-		.register();*/
+//		.transform(customItemModel("_", "block_single"))
+		.build()
+		.register();
 
 	public static final WindmillBearingBlock WINDMILL_BEARING = createBuilder("windmill_bearing", WindmillBearingBlock::new)
 		.consume(BuilderConsumers.bearing("windmill", "gearbox", true))

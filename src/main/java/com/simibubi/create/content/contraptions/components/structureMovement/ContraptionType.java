@@ -3,6 +3,7 @@ package com.simibubi.create.content.contraptions.components.structureMovement;
 import com.simibubi.create.content.contraptions.components.structureMovement.bearing.BearingContraption;
 import com.simibubi.create.content.contraptions.components.structureMovement.bearing.ClockworkContraption;
 import com.simibubi.create.content.contraptions.components.structureMovement.bearing.StabilizedContraption;
+import com.simibubi.create.content.contraptions.components.structureMovement.gantry.GantryContraption;
 import com.simibubi.create.content.contraptions.components.structureMovement.mounted.MountedContraption;
 import com.simibubi.create.content.contraptions.components.structureMovement.pulley.PulleyContraption;
 
@@ -20,8 +21,8 @@ public class ContraptionType {
 		PULLEY = register("pulley", PulleyContraption::new),
 		CLOCKWORK = register("clockwork", ClockworkContraption::new),
 		MOUNTED = register("mounted", MountedContraption::new),
-		STABILIZED = register("stabilized",StabilizedContraption::new);
-		//GANTRY = register("gantry", GantryContraption::new);
+		STABILIZED = register("stabilized",StabilizedContraption::new),
+		GANTRY = register("gantry",GantryContraption::new);
 
 	Supplier<? extends Contraption> factory;
 	String id;
