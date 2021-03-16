@@ -15,12 +15,16 @@ import com.simibubi.create.content.contraptions.relays.belt.item.BeltConnectorHa
 import com.simibubi.create.content.curiosities.symmetry.SymmetryHandler;
 import com.simibubi.create.content.curiosities.tools.DeforesterItem;
 import com.simibubi.create.events.custom.ClientWorldEvents;
+import com.simibubi.create.foundation.block.entity.behaviour.linked.LinkHandler;
+import com.simibubi.create.foundation.block.entity.behaviour.linked.LinkRenderer;
 import com.simibubi.create.foundation.block.entity.behaviour.scrollvalue.ScrollValueRenderer;
 import com.simibubi.create.foundation.block.render.SpriteShifter;
+import com.simibubi.create.foundation.collision.CollisionDebugger;
 import com.simibubi.create.foundation.gui.ScreenOpener;
 import com.simibubi.create.foundation.item.TooltipHelper;
 import com.simibubi.create.foundation.render.backend.FastRenderDispatcher;
 import com.simibubi.create.foundation.render.backend.RenderWork;
+import com.simibubi.create.foundation.render.backend.light.LightVolumeDebugger;
 import com.simibubi.create.foundation.renderState.SuperRenderTypeBuffer;
 import com.simibubi.create.foundation.utility.AnimationTickHolder;
 import com.simibubi.create.foundation.utility.placement.PlacementHelpers;
@@ -30,8 +34,11 @@ import net.fabricmc.fabric.api.client.item.v1.ItemTooltipCallback;
 import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
 import net.fabricmc.fabric.api.client.rendering.v1.WorldRenderContext;
 import net.fabricmc.fabric.api.client.rendering.v1.WorldRenderEvents;
+import net.fabricmc.fabric.api.client.screen.v1.ScreenMouseEvents;
 import net.fabricmc.fabric.api.event.client.ClientSpriteRegistryCallback;
 import net.fabricmc.fabric.api.event.player.PlayerBlockBreakEvents;
+import net.fabricmc.fabric.api.event.player.UseBlockCallback;
+import net.fabricmc.fabric.api.event.player.UseItemCallback;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.item.TooltipContext;
 import net.minecraft.client.texture.SpriteAtlasTexture;
@@ -56,6 +63,8 @@ public class ClientEvents {
 		WorldRenderEvents.END.register(SymmetryHandler::render);
 		PlayerBlockBreakEvents.AFTER.register(SymmetryHandler::onBlockDestroyed);
 
+		UseBlockCallback.EVENT.register(LinkHandler::onBlockActivated);
+
 		AllBlockPartials.onModelRegistry();
 
 		HudRenderCallback.EVENT.register(GoggleOverlayRenderer::lookingAtBlocksThroughGogglesShowsTooltip);
@@ -72,6 +81,7 @@ public class ClientEvents {
 
 		ScreenOpener.tick();
 		BeltConnectorHandler.tick();
+		LinkRenderer.tick();
 		ScrollValueRenderer.tick();
 		ChassisRangeDisplay.tick();
 		KineticDebugger.tick();
@@ -107,8 +117,8 @@ public class ClientEvents {
 		CreateClient.ghostBlocks.renderAll(ms, buffer);
 
 		CreateClient.outliner.renderOutlines(ms, buffer);
-//		LightVolumeDebugger.render(ms, buffer);
-//		CollisionDebugger.render(ms, buffer);
+		LightVolumeDebugger.render(ms, buffer);
+		CollisionDebugger.render(ms, buffer);
 		buffer.draw();
 		RenderSystem.enableCull();
 

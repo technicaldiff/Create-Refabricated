@@ -51,7 +51,7 @@ public class CollisionDebugger {
 		outline.render(ms, buffer);
 		ms.pop();
 
-//		ms.push();
+//		ms.push();                do not uncomment this
 //		if (motion.length() != 0 && (seperation == null || seperation.getTimeOfImpact() != 1)) {
 //			outline.getParams()
 //				.colored(0x6544ff)

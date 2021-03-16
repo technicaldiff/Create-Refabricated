@@ -28,12 +28,12 @@ public class CommonEvents {
 	}
 
 	public static void onLoadWorld(MinecraftServer server, ServerWorld world) {
-		//Create.redstoneLinkNetworkHandler.onLoadWorld(world);
+		Create.redstoneLinkNetworkHandler.onLoadWorld(world);
 		Create.torquePropagator.onLoadWorld(world);
 	}
 
 	public static void onUnloadWorld(MinecraftServer server, ServerWorld world) {
-		//Create.redstoneLinkNetworkHandler.onUnloadWorld(world);
+		Create.redstoneLinkNetworkHandler.onUnloadWorld(world);
 		Create.torquePropagator.onUnloadWorld(world);
 		WorldAttached.invalidateWorld(world);
 	}

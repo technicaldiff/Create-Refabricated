@@ -40,6 +40,8 @@ import com.simibubi.create.content.logistics.block.mechanicalArm.ArmInstance;
 import com.simibubi.create.content.logistics.block.mechanicalArm.ArmRenderer;
 import com.simibubi.create.content.logistics.block.redstone.AnalogLeverBlockEntity;
 import com.simibubi.create.content.logistics.block.redstone.AnalogLeverRenderer;
+import com.simibubi.create.content.logistics.block.redstone.RedstoneLinkBlockEntity;
+import com.simibubi.create.foundation.block.entity.render.SmartBlockEntityRenderer;
 import me.pepperbell.reghelper.BlockEntityTypeRegBuilder;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityType;
@@ -396,12 +398,12 @@ public class AllBlockEntities {
 		.register();
 
 	// Logistics
-	/*public static final BlockEntityType<RedstoneLinkBlockEntity> REDSTONE_LINK = createBuilder("redstone_link", RedstoneLinkBlockEntity::new)
+	public static final BlockEntityType<RedstoneLinkBlockEntity> REDSTONE_LINK = createBuilder("redstone_link", RedstoneLinkBlockEntity::new)
 		.validBlocks(AllBlocks.REDSTONE_LINK)
 		.renderer(() -> SmartBlockEntityRenderer::new)
 		.register();
 
-	public static final BlockEntityType<NixieTubeBlockEntity> NIXIE_TUBE = createBuilder("nixie_tube", NixieTubeBlockEntity::new)
+	/*public static final BlockEntityType<NixieTubeBlockEntity> NIXIE_TUBE = createBuilder("nixie_tube", NixieTubeBlockEntity::new)
 		.validBlocks(AllBlocks.NIXIE_TUBE)
 		.renderer(() -> NixieTubeRenderer::new)
 		.register();

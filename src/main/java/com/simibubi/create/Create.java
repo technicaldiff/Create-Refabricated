@@ -1,5 +1,6 @@
 package com.simibubi.create;
 
+import com.simibubi.create.content.logistics.RedstoneLinkNetworkHandler;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.spongepowered.asm.mixin.MixinEnvironment;
@@ -31,6 +32,7 @@ public class Create implements ModInitializer  {
 	public static ItemGroup baseCreativeTab = FabricItemGroupBuilder.build(id("base"), () -> new ItemStack(AllBlocks.COGWHEEL));
 	public static ItemGroup palettesCreativeTab = FabricItemGroupBuilder.build(id("palettes"), () -> new ItemStack(AllBlocks.ZINC_BLOCK));
 
+	public static RedstoneLinkNetworkHandler redstoneLinkNetworkHandler;
 	public static TorquePropagator torquePropagator;
 	public static Random random;
 
@@ -49,6 +51,7 @@ public class Create implements ModInitializer  {
 
 		random = new Random();
 
+		redstoneLinkNetworkHandler = new RedstoneLinkNetworkHandler();
 		torquePropagator = new TorquePropagator();
 
 		AllPackets.registerPackets();

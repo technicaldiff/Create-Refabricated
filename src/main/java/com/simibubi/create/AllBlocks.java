@@ -30,6 +30,7 @@ import com.simibubi.create.content.logistics.block.diodes.ToggleLatchBlock;
 import com.simibubi.create.content.logistics.block.mechanicalArm.ArmBlock;
 import com.simibubi.create.content.logistics.block.mechanicalArm.ArmItem;
 import com.simibubi.create.content.logistics.block.redstone.AnalogLeverBlock;
+import com.simibubi.create.content.logistics.block.redstone.RedstoneLinkBlock;
 import com.simibubi.create.foundation.config.StressConfigDefaults;
 import com.simibubi.create.foundation.data.BuilderConsumers;
 import com.simibubi.create.foundation.data.SharedProperties;
@@ -979,16 +980,17 @@ public class AllBlocks {
 		.addLayer(() -> RenderLayer::getTranslucent)
 		.item()
 		.transform(customItemModel())
-		.register();
+		.register();*/
 
 	public static final RedstoneLinkBlock REDSTONE_LINK = createBuilder("redstone_link", RedstoneLinkBlock::new)
 		.initialProperties(SharedProperties::wooden)
-		.tag(AllBlockTags.BRITTLE.tag, AllBlockTags.SAFE_NBT.tag)
-		.blockstate(new RedstoneLinkGenerator()::generate)
+//		.tag(AllBlockTags.BRITTLE.tag, AllBlockTags.SAFE_NBT.tag)
+//		.blockstate(new RedstoneLinkGenerator()::generate)
 		.addLayer(() -> RenderLayer::getCutoutMipped)
 		.item()
-		.transform(customItemModel("_", "transmitter"))
-		.register();*/
+//		.transform(customItemModel("_", "transmitter"))
+		.build()
+		.register();
 
 	public static final AnalogLeverBlock ANALOG_LEVER = createBuilder("analog_lever", AnalogLeverBlock::new)
 		.initialProperties(() -> Blocks.LEVER)

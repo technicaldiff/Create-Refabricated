@@ -12,21 +12,11 @@ import com.simibubi.create.content.contraptions.components.structureMovement.mou
 
 import com.simibubi.create.content.contraptions.components.structureMovement.pulley.PulleyBlock;
 import com.simibubi.create.content.contraptions.components.structureMovement.pulley.PulleyBlockEntity;
-import net.minecraft.block.AbstractPressurePlateBlock;
-import net.minecraft.block.AbstractRailBlock;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.CarpetBlock;
-import net.minecraft.block.DoorBlock;
-import net.minecraft.block.FenceGateBlock;
-import net.minecraft.block.FlowerPotBlock;
-import net.minecraft.block.GrindstoneBlock;
-import net.minecraft.block.LadderBlock;
-import net.minecraft.block.RedstoneWireBlock;
-import net.minecraft.block.TorchBlock;
-import net.minecraft.block.WallMountedBlock;
-import net.minecraft.block.WallTorchBlock;
+import com.simibubi.create.content.logistics.block.redstone.RedstoneLinkBlock;
+import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.block.enums.Attachment;
+import net.minecraft.block.enums.WallMountLocation;
 import net.minecraft.block.piston.PistonBehavior;
 import net.minecraft.state.property.Properties;
 import net.minecraft.util.math.BlockPos;
@@ -103,8 +93,8 @@ public class BlockMovementTraits {
 			return false;
 		if (block instanceof AbstractRailBlock)
 			return true;
-		/*if (block instanceof RedstoneDiodeBlock)
-			return true;*/
+		if (block instanceof AbstractRedstoneGateBlock)
+			return true;
 		if (block instanceof RedstoneWireBlock)
 			return true;
 		if (block instanceof CarpetBlock)
@@ -127,29 +117,29 @@ public class BlockMovementTraits {
 			return direction == Direction.DOWN;
 		if (block instanceof DoorBlock)
 			return direction == Direction.DOWN;
-		/*if (block instanceof RedstoneLinkBlock)
-			return direction.getOpposite() == state.get(RedstoneLinkBlock.FACING);*/
+		if (block instanceof RedstoneLinkBlock)
+			return direction.getOpposite() == state.get(RedstoneLinkBlock.FACING);
 		if (block instanceof FlowerPotBlock)
 			return direction == Direction.DOWN;
-		/*if (block instanceof RedstoneDiodeBlock)
-			return direction == Direction.DOWN;*/
+		if (block instanceof AbstractRedstoneGateBlock)
+			return direction == Direction.DOWN;
 		if (block instanceof RedstoneWireBlock)
 			return direction == Direction.DOWN;
 		if (block instanceof CarpetBlock)
 			return direction == Direction.DOWN;
-		/*if (block instanceof RedstoneWallTorchBlock)
-			return state.get(RedstoneWallTorchBlock.FACING) == direction.getOpposite();*/
+		if (block instanceof WallRedstoneTorchBlock)
+			return state.get(WallRedstoneTorchBlock.FACING) == direction.getOpposite();
 		if (block instanceof TorchBlock)
 			return direction == Direction.DOWN;
-		/*if (block instanceof HorizontalFaceBlock) {
-			AttachFace attachFace = state.get(HorizontalFaceBlock.FACE);
-			 if (attachFace == AttachFace.CEILING)
+		if (block instanceof WallMountedBlock) {
+			WallMountLocation attachFace = state.get(WallMountedBlock.FACE);
+			 if (attachFace == WallMountLocation.CEILING)
 				return direction == Direction.UP;
-			 if (attachFace == AttachFace.FLOOR)
+			 if (attachFace == WallMountLocation.FLOOR)
 				return direction == Direction.DOWN;
-			 if (attachFace == AttachFace.WALL)
-				return direction.getOpposite() == state.get(HorizontalFaceBlock.HORIZONTAL_FACING);
-		}*/
+			 if (attachFace == WallMountLocation.WALL)
+				return direction.getOpposite() == state.get(WallMountedBlock.FACING);
+		}
 		if (state.contains(Properties.HANGING))
 			return direction == (state.get(Properties.HANGING) ? Direction.UP : Direction.DOWN);
 		if (block instanceof AbstractRailBlock)
@@ -162,14 +152,14 @@ public class BlockMovementTraits {
 			return direction == state.get(NozzleBlock.FACING).getOpposite();
 		/*if (block instanceof EngineBlock)
 			return direction == state.get(EngineBlock.HORIZONTAL_FACING).getOpposite();*/
-		/*if (block instanceof BellBlock) {
-			BellAttachment attachment = state.get(Properties.BELL_ATTACHMENT);
-			if (attachment == BellAttachment.FLOOR)
+		if (block instanceof BellBlock) {
+			Attachment attachment = state.get(Properties.ATTACHMENT);
+			if (attachment == Attachment.FLOOR)
 				return direction == Direction.DOWN;
-			if (attachment == BellAttachment.CEILING)
+			if (attachment == Attachment.CEILING)
 				return direction == Direction.UP;
-			return direction == state.get(HorizontalBlock.HORIZONTAL_FACING);
-		}*/
+			return direction == state.get(HorizontalFacingBlock.FACING);
+		}
 		/*if (state.getBlock() instanceof SailBlock)
 			return direction.getAxis() != state.get(SailBlock.FACING).getAxis();
 		if (state.getBlock() instanceof FluidTankBlock)
