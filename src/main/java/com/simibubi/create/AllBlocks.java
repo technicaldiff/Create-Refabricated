@@ -16,6 +16,7 @@ import com.simibubi.create.content.contraptions.components.structureMovement.gan
 import com.simibubi.create.content.contraptions.components.structureMovement.mounted.CartAssemblerBlock;
 import com.simibubi.create.content.contraptions.components.structureMovement.mounted.CartAssemblerBlockItem;
 import com.simibubi.create.content.contraptions.components.structureMovement.pulley.PulleyBlock;
+import com.simibubi.create.content.contraptions.components.turntable.TurntableBlock;
 import com.simibubi.create.content.contraptions.components.waterwheel.WaterWheelBlock;
 import com.simibubi.create.content.contraptions.relays.advanced.GantryShaftBlock;
 import com.simibubi.create.content.contraptions.relays.belt.BeltBlock;
@@ -237,12 +238,12 @@ public class AllBlocks {
 		.build()
 		.register();
 
-	/*public static final TurntableBlock TURNTABLE = createBuilder("turntable", TurntableBlock::new)
+	public static final TurntableBlock TURNTABLE = createBuilder("turntable", TurntableBlock::new)
 		.initialProperties(SharedProperties::wooden)
-		.blockstate((c, p) -> p.simpleBlock(c.getEntry(), AssetLookup.standardModel(c, p)))
-		.transform(StressConfigDefaults.setImpact(4.0))
+//		.blockstate((c, p) -> p.simpleBlock(c.getEntry(), AssetLookup.standardModel(c, p)))
+		.consume(StressConfigDefaults.impactConsumer(4.0))
 		.simpleItem()
-		.register();*/
+		.register();
 
 	public static final HandCrankBlock HAND_CRANK = createBuilder("hand_crank", HandCrankBlock::new)
 		.initialProperties(SharedProperties::wooden)

@@ -13,6 +13,7 @@ import com.simibubi.create.CreateClient;
 import com.simibubi.create.content.contraptions.KineticDebugger;
 import com.simibubi.create.content.contraptions.components.structureMovement.chassis.ChassisRangeDisplay;
 import com.simibubi.create.content.contraptions.components.structureMovement.render.ContraptionRenderDispatcher;
+import com.simibubi.create.content.contraptions.components.turntable.TurntableHandler;
 import com.simibubi.create.content.contraptions.goggles.GoggleOverlayRenderer;
 import com.simibubi.create.content.contraptions.relays.belt.item.BeltConnectorHandler;
 import com.simibubi.create.content.curiosities.symmetry.SymmetryHandler;
@@ -117,6 +118,7 @@ public class ClientEvents {
 	}
 
 	public static void onRenderWorld(WorldRenderContext context) {
+		TurntableHandler.gameRenderTick();
 		ContraptionRenderDispatcher.renderTick();
 
 		Vec3d cameraPos = context.camera().getPos();

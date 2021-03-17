@@ -21,6 +21,7 @@ import com.simibubi.create.content.contraptions.components.structureMovement.gan
 import com.simibubi.create.content.contraptions.components.structureMovement.mounted.CartAssemblerBlockEntity;
 import com.simibubi.create.content.contraptions.components.structureMovement.pulley.PulleyBlockEntity;
 import com.simibubi.create.content.contraptions.components.structureMovement.pulley.PulleyRenderer;
+import com.simibubi.create.content.contraptions.components.turntable.TurntableBlockEntity;
 import com.simibubi.create.content.contraptions.components.waterwheel.WaterWheelBlockEntity;
 import com.simibubi.create.content.contraptions.relays.advanced.GantryShaftBlockEntity;
 import com.simibubi.create.content.contraptions.relays.belt.BeltBlockEntity;
@@ -117,11 +118,11 @@ public class AllBlockEntities {
 		.onRegister(SplitShaftInstance::register)
 		.register();
 
-	/*public static final BlockEntityType<TurntableBlockEntity> TURNTABLE = createBuilder("turntable", TurntableBlockEntity::new)
+	public static final BlockEntityType<TurntableBlockEntity> TURNTABLE = createBuilder("turntable", TurntableBlockEntity::new)
 		.validBlocks(AllBlocks.TURNTABLE)
 		.renderer(() -> KineticBlockEntityRenderer::new)
 		.onRegister(SingleRotatingInstance::register)
-		.register();*/
+		.register();
 
 	public static final BlockEntityType<HandCrankBlockEntity> HAND_CRANK = createBuilder("hand_crank", HandCrankBlockEntity::new)
 		.validBlocks(AllBlocks.HAND_CRANK, AllBlocks.COPPER_VALVE_HANDLE)
