@@ -39,7 +39,7 @@ public class KineticRenderer extends InstancedBlockRenderer<BasicProgram> {
         super.tick();
 
         MinecraftClient mc = MinecraftClient.getInstance();
-        Entity renderViewEntity = mc.targetedEntity; //TODO COULD BE WRONG renderViewEntity
+        Entity renderViewEntity = mc.cameraEntity;
 
         if (renderViewEntity == null) return;
 

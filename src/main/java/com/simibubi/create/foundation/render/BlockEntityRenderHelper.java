@@ -4,6 +4,7 @@ import java.util.Iterator;
 
 import com.simibubi.create.Create;
 import com.simibubi.create.content.contraptions.components.structureMovement.render.ContraptionRenderDispatcher;
+import com.simibubi.create.foundation.render.backend.instancing.InstanceRendered;
 import com.simibubi.create.foundation.utility.AnimationTickHolder;
 import com.simibubi.create.foundation.utility.MatrixStacker;
 import com.simibubi.create.foundation.utility.worldWrappers.PlacementSimulationWorld;
@@ -36,7 +37,7 @@ public class BlockEntityRenderHelper {
 
 		for (Iterator<BlockEntity> iterator = customRenderTEs.iterator(); iterator.hasNext();) {
 			BlockEntity blockEntity = iterator.next();
-			//if (blockEntity instanceof IInstanceRendered) continue; // TODO: some things still need to render
+			if (blockEntity instanceof InstanceRendered) continue;
 
 			BlockEntityRenderer<BlockEntity> renderer = BlockEntityRenderDispatcher.INSTANCE.get(blockEntity);
 			if (renderer == null) {

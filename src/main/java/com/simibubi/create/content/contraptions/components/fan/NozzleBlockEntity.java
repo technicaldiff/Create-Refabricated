@@ -127,10 +127,10 @@ public class NozzleBlockEntity extends SmartBlockEntity {
 			return 0;
 
 		AirCurrentSource source = (AirCurrentSource) te;
-		/*if (source instanceof EncasedFanTileEntity && ((EncasedFanTileEntity) source).isGenerator)
-			return 0;*/
-		/*if (source.getAirCurrent() == null)
-			return 0;*/
+		if (source instanceof EncasedFanBlockEntity && ((EncasedFanBlockEntity) source).isGenerator)
+			return 0;
+		if (source.getAirCurrent() == null)
+			return 0;
 		if (source.getSpeed() == 0)
 			return 0;
 		pushing = source.getAirFlowDirection() == source.getAirflowOriginSide();
