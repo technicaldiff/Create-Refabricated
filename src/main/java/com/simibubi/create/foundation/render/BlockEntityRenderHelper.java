@@ -36,8 +36,8 @@ public class BlockEntityRenderHelper {
 			.getModel();
 
 		for (Iterator<BlockEntity> iterator = customRenderTEs.iterator(); iterator.hasNext();) {
-			BlockEntity blockEntity = iterator.next();
-			if (blockEntity instanceof InstanceRendered) continue;
+			BlockEntity blockEntity = iterator.next();               // note: this comment is from upstream
+			//if (blockEntity instanceof InstanceRendered) continue; // TODO: some things still need to render
 
 			BlockEntityRenderer<BlockEntity> renderer = BlockEntityRenderDispatcher.INSTANCE.get(blockEntity);
 			if (renderer == null) {
