@@ -1,34 +1,30 @@
 package com.simibubi.create.foundation.item;
 
-import java.util.Random;
-
 import com.simibubi.create.foundation.mixin.accessor.ItemRendererAccessor;
 import com.simibubi.create.foundation.renderState.RenderTypes;
-import com.simibubi.create.foundation.utility.Iterate;
 import com.simibubi.create.foundation.utility.MixinHelper;
 
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.VertexConsumer;
 import net.minecraft.client.render.VertexConsumerProvider;
+import net.minecraft.client.render.item.BuiltinModelItemRenderer;
 import net.minecraft.client.render.item.ItemRenderer;
 import net.minecraft.client.render.model.BakedModel;
 import net.minecraft.client.render.model.json.ModelTransformation;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.math.Direction;
 
 public class PartialItemModelRenderer {
+	private static PartialItemModelRenderer instance;
 
-	static PartialItemModelRenderer instance;
+	private ItemStack stack;
+	private int overlay;
+	private MatrixStack ms;
+	private ModelTransformation.Mode transformType;
+	private VertexConsumerProvider buffer;
 
-	ItemStack stack;
-	int overlay;
-	MatrixStack ms;
-	ModelTransformation.Mode transformType;
-	VertexConsumerProvider buffer;
-
-	static PartialItemModelRenderer get() {
+	private static PartialItemModelRenderer get() {
 		if (instance == null)
 			instance = new PartialItemModelRenderer();
 		return instance;
@@ -70,25 +66,15 @@ public class PartialItemModelRenderer {
 		if (!model.isBuiltin())
 			renderBakedItemModel(model, light, ms,
 				ItemRenderer.getArmorGlintConsumer(buffer, type, true, stack.hasGlint()));
-		/*else
-			stack.getItem()
-				.getItemStackTileEntityRenderer()
-				.render(stack, transformType, ms, buffer, light, overlay);*/
+		else
+			BuiltinModelItemRenderer.INSTANCE
+				.render(stack, transformType, ms, buffer, light, overlay);
 
 		ms.pop();
 	}
 
 	private void renderBakedItemModel(BakedModel model, int light, MatrixStack ms, VertexConsumer vertices) {
-		ItemRendererAccessor ir = MixinHelper.cast(MinecraftClient.getInstance().getItemRenderer());
-		Random random = new Random();
-
-		for (Direction direction : Iterate.directions) {
-			random.setSeed(42L);
-			ir.create$renderBakedItemQuads(ms, vertices, model.getQuads(null, direction, random), stack, light, overlay);
-		}
-
-		random.setSeed(42L);
-		ir.create$renderBakedItemQuads(ms, vertices, model.getQuads(null, null, random), stack, light, overlay);
+		ItemRendererAccessor access = MixinHelper.cast(MinecraftClient.getInstance().getItemRenderer());
+		access.create$renderBakedItemModel(model, stack, light, overlay, ms, vertices);
 	}
-
 }
