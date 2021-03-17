@@ -10,11 +10,10 @@ import net.minecraft.client.util.math.Vector3f;
 import net.minecraft.item.ItemStack;
 
 public class WrenchItemRenderer extends CustomRenderedItemModelRenderer<WrenchModel> {
-
 	@Override
 	public void render(ItemStack stack, WrenchModel model, PartialItemModelRenderer renderer, MatrixStack ms,
 						  VertexConsumerProvider buffer, int light, int overlay) {
-		//renderer.render(model.getBakedModel(), light);
+		renderer.render(model.getBakedModel(), light);
 
 		float worldTime = AnimationTickHolder.getRenderTick();
 		float angle = worldTime * -.5f % 360;

@@ -12,16 +12,14 @@ import net.minecraft.client.texture.Sprite;
 import net.minecraft.util.math.Direction;
 
 public class WrappedBakedModel implements BakedModel {
-
-	public BakedModel template;
+	protected BakedModel template;
 
 	public WrappedBakedModel(BakedModel template) {
 		this.template = template;
 	}
-
-	@Override
-	public ModelOverrideList getOverrides() {
-		return template.getOverrides();
+	
+	public BakedModel getBakedModel() {
+		return template;
 	}
 
 	@Override
@@ -35,6 +33,21 @@ public class WrappedBakedModel implements BakedModel {
 	}
 
 	@Override
+	public boolean isBuiltin() {
+		return template.isBuiltin();
+	}
+
+	@Override
+	public ModelOverrideList getOverrides() {
+		return template.getOverrides();
+	}
+
+	@Override
+	public ModelTransformation getTransformation() {
+		return template.getTransformation();
+	}
+
+	@Override
 	public List<BakedQuad> getQuads(BlockState state, Direction side, Random rand) {
 		return template.getQuads(state, side, rand);
 	}
@@ -45,17 +58,7 @@ public class WrappedBakedModel implements BakedModel {
 	}
 
 	@Override
-	public ModelTransformation getTransformation() {
-		return template.getTransformation();
-	}
-
-	@Override
 	public boolean isSideLit() {
 		return template.isSideLit();
-	}
-
-	@Override
-	public boolean isBuiltin() {
-		return false;
 	}
 }

@@ -1,16 +1,15 @@
 package com.simibubi.create.foundation.block.render;
 
 import com.simibubi.create.foundation.item.PartialItemModelRenderer;
+import com.simibubi.create.foundation.render.CustomItemRenderer;
 
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.VertexConsumerProvider;
-import net.minecraft.client.render.item.BuiltinModelItemRenderer;
 import net.minecraft.client.render.model.json.ModelTransformation;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.item.ItemStack;
 
-public class CustomRenderedItemModelRenderer<M extends CustomRenderedItemModel> extends BuiltinModelItemRenderer {
-
+public class CustomRenderedItemModelRenderer<M extends CustomRenderedItemModel> implements CustomItemRenderer {
 	@Override
 	@SuppressWarnings("unchecked")
 	public void render(ItemStack stack, ModelTransformation.Mode p_239207_2_, MatrixStack ms, VertexConsumerProvider buffer, int light, int overlay) {
@@ -29,5 +28,4 @@ public class CustomRenderedItemModelRenderer<M extends CustomRenderedItemModel> 
 		VertexConsumerProvider buffer, int light, int overlay) {
 
 	}
-
 }

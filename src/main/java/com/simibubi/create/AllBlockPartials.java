@@ -7,11 +7,13 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Consumer;
 import java.util.function.Supplier;
 
 import com.simibubi.create.content.contraptions.base.KineticRenderMaterials;
 import com.simibubi.create.content.contraptions.base.RotatingData;
 import com.simibubi.create.content.contraptions.relays.belt.BeltData;
+import com.simibubi.create.events.custom.ModelsBakedCallback;
 import com.simibubi.create.foundation.render.SuperByteBuffer;
 import com.simibubi.create.foundation.render.backend.instancing.InstancedBlockRenderer;
 import com.simibubi.create.foundation.render.backend.instancing.InstancedModel;
@@ -23,7 +25,10 @@ import net.fabricmc.fabric.api.client.model.ModelLoadingRegistry;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.model.BakedModel;
+import net.minecraft.client.render.model.BakedModelManager;
+import net.minecraft.client.render.model.ModelLoader;
 import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.resource.ResourceManager;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.Direction;
 
@@ -169,17 +174,15 @@ public class AllBlockPartials {
 		return partials;
 	}
 	
-	public static void onModelRegistry() {
-		ModelLoadingRegistry.INSTANCE.registerModelProvider((manager, out) -> {
-			for (AllBlockPartials partial : all)
-				out.accept(partial.modelLocation);
-		});
+	public static void onModelRegistry(ResourceManager manager, Consumer<Identifier> out) {
+		for (AllBlockPartials partial : all)
+			out.accept(partial.modelLocation);
 	}
 
-	public static void onModelBake() {
-		BakedModelManagerExtensions e = (BakedModelManagerExtensions) MinecraftClient.getInstance().getBakedModelManager();
+	public static void onModelBake(BakedModelManager manager, Map<Identifier, BakedModel> models, ModelLoader loader) {
+		BakedModelManagerExtensions extensions = (BakedModelManagerExtensions) manager;
 		for (AllBlockPartials partial : all)
-			partial.bakedModel = e.getModel(partial.modelLocation);
+			partial.bakedModel = extensions.getModel(partial.modelLocation);
 	}
 
 	public BakedModel get() {

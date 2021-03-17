@@ -2,6 +2,9 @@ package com.simibubi.create.events;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.function.Consumer;
+import java.util.function.Function;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.simibubi.create.AllBlockPartials;
@@ -15,6 +18,7 @@ import com.simibubi.create.content.contraptions.relays.belt.item.BeltConnectorHa
 import com.simibubi.create.content.curiosities.symmetry.SymmetryHandler;
 import com.simibubi.create.content.curiosities.tools.DeforesterItem;
 import com.simibubi.create.events.custom.ClientWorldEvents;
+import com.simibubi.create.events.custom.ModelsBakedCallback;
 import com.simibubi.create.foundation.block.entity.behaviour.linked.LinkHandler;
 import com.simibubi.create.foundation.block.entity.behaviour.linked.LinkRenderer;
 import com.simibubi.create.foundation.block.entity.behaviour.scrollvalue.ScrollValueRenderer;
@@ -31,22 +35,31 @@ import com.simibubi.create.foundation.utility.placement.PlacementHelpers;
 
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.item.v1.ItemTooltipCallback;
+import net.fabricmc.fabric.api.client.model.ModelLoadingRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
 import net.fabricmc.fabric.api.client.rendering.v1.WorldRenderContext;
 import net.fabricmc.fabric.api.client.rendering.v1.WorldRenderEvents;
-import net.fabricmc.fabric.api.client.screen.v1.ScreenMouseEvents;
 import net.fabricmc.fabric.api.event.client.ClientSpriteRegistryCallback;
 import net.fabricmc.fabric.api.event.player.PlayerBlockBreakEvents;
 import net.fabricmc.fabric.api.event.player.UseBlockCallback;
-import net.fabricmc.fabric.api.event.player.UseItemCallback;
+import net.minecraft.block.Block;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.item.TooltipContext;
+import net.minecraft.client.render.block.BlockModels;
+import net.minecraft.client.render.model.BakedModel;
+import net.minecraft.client.render.model.BakedModelManager;
+import net.minecraft.client.render.model.ModelLoader;
 import net.minecraft.client.texture.SpriteAtlasTexture;
+import net.minecraft.client.util.ModelIdentifier;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.client.world.ClientWorld;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.resource.ResourceManager;
 import net.minecraft.text.Text;
+import net.minecraft.util.Identifier;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.registry.Registry;
 
 public class ClientEvents {
 	private static final String itemPrefix = "item." + Create.ID;
@@ -58,14 +71,15 @@ public class ClientEvents {
 		ClientWorldEvents.UNLOAD.register(ClientEvents::onUnloadWorld);
 		WorldRenderEvents.END.register(ClientEvents::onRenderWorld);
 		ItemTooltipCallback.EVENT.register(ClientEvents::addToItemTooltip);
+		
+		ModelLoadingRegistry.INSTANCE.registerModelProvider(ClientEvents::provideExtraModels);
+		ModelsBakedCallback.EVENT.register(ClientEvents::onModelsBaked);
 
 		ClientTickEvents.END_CLIENT_TICK.register(SymmetryHandler::onClientTick);
 		WorldRenderEvents.END.register(SymmetryHandler::render);
 		PlayerBlockBreakEvents.AFTER.register(SymmetryHandler::onBlockDestroyed);
 
 		UseBlockCallback.EVENT.register(LinkHandler::onBlockActivated);
-
-		AllBlockPartials.onModelRegistry();
 
 		HudRenderCallback.EVENT.register(GoggleOverlayRenderer::lookingAtBlocksThroughGogglesShowsTooltip);
 		PlayerBlockBreakEvents.AFTER.register(DeforesterItem::onBlockDestroyed);
@@ -150,5 +164,54 @@ public class ClientEvents {
 
 	protected static boolean isGameActive() {
 		return !(MinecraftClient.getInstance().world == null || MinecraftClient.getInstance().player == null);
+	}
+
+	public static void provideExtraModels(ResourceManager manager, Consumer<Identifier> out) {
+		AllBlockPartials.onModelRegistry(manager, out);
+		CreateClient.getCustomRenderedItems().foreach((item, modelFunc) -> modelFunc.apply(null)
+				.getModelLocations()
+				.forEach(out::accept));
+	}
+
+	public static void onModelsBaked(BakedModelManager manager, Map<Identifier, BakedModel> models, ModelLoader loader) {
+		AllBlockPartials.onModelBake(manager, models, loader);
+		CreateClient.getCustomBlockModels()
+			.foreach((block, modelFunc) -> swapModels(models, getAllBlockStateModelLocations(block), modelFunc));
+		CreateClient.getCustomItemModels()
+			.foreach((item, modelFunc) -> swapModels(models, getItemModelLocation(item), modelFunc));
+		CreateClient.getCustomRenderedItems().foreach((item, modelFunc) -> {
+			swapModels(models, getItemModelLocation(item), m -> modelFunc.apply(m)
+				.loadPartials(loader));
+		});
+	}
+
+	protected static ModelIdentifier getItemModelLocation(Item item) {
+		return new ModelIdentifier(Registry.ITEM.getId(item), "inventory");
+	}
+
+	protected static List<ModelIdentifier> getAllBlockStateModelLocations(Block block) {
+		List<ModelIdentifier> models = new ArrayList<>();
+		block.getStateManager()
+			.getStates()
+			.forEach(state -> {
+				models.add(getBlockModelLocation(block, BlockModels.propertyMapToString(state.getEntries())));
+			});
+		return models;
+	}
+
+	protected static ModelIdentifier getBlockModelLocation(Block block, String suffix) {
+		return new ModelIdentifier(Registry.BLOCK.getId(block), suffix);
+	}
+
+	protected static <T extends BakedModel> void swapModels(Map<Identifier, BakedModel> modelRegistry,
+		List<ModelIdentifier> locations, Function<BakedModel, T> factory) {
+		locations.forEach(location -> {
+			swapModels(modelRegistry, location, factory);
+		});
+	}
+	
+	protected static <T extends BakedModel> void swapModels(Map<Identifier, BakedModel> modelRegistry,
+		ModelIdentifier location, Function<BakedModel, T> factory) {
+		modelRegistry.put(location, factory.apply(modelRegistry.get(location)));
 	}
 }

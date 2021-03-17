@@ -6,19 +6,17 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 import com.simibubi.create.Create;
+import com.simibubi.create.foundation.render.CustomItemRenderer;
 
-import net.minecraft.client.render.item.BuiltinModelItemRenderer;
 import net.minecraft.client.render.model.BakedModel;
 import net.minecraft.client.render.model.ModelLoader;
 import net.minecraft.client.render.model.ModelRotation;
 import net.minecraft.util.Identifier;
 
-@SuppressWarnings("deprecation")
 public abstract class CustomRenderedItemModel extends WrappedBakedModel {
-
 	protected String basePath;
 	protected Map<String, BakedModel> partials = new HashMap<>();
-	protected BuiltinModelItemRenderer renderer;
+	protected CustomItemRenderer renderer;
 
 	public CustomRenderedItemModel(BakedModel template, String basePath) {
 		super(template);
@@ -30,11 +28,11 @@ public abstract class CustomRenderedItemModel extends WrappedBakedModel {
 		return partials.keySet().stream().map(this::getPartialModelLocation).collect(Collectors.toList());
 	}
 
-	public BuiltinModelItemRenderer getRenderer() {
+	public CustomItemRenderer getRenderer() {
 		return renderer;
 	}
 
-	public abstract BuiltinModelItemRenderer createRenderer();
+	public abstract CustomItemRenderer createRenderer();
 
 	@Override
 	public boolean isBuiltin() {
@@ -47,14 +45,14 @@ public abstract class CustomRenderedItemModel extends WrappedBakedModel {
 			this.partials.put(name, null);
 	}
 
-	public CustomRenderedItemModel loadPartials(ModelLoader modelLoader) {
+	public CustomRenderedItemModel loadPartials(ModelLoader loader) {
 		for (String name : partials.keySet())
-			partials.put(name, loadModel(modelLoader, name));
+			partials.put(name, loadModel(loader, name));
 		return this;
 	}
 
-	private BakedModel loadModel(ModelLoader modelLoader, String name) {
-		return modelLoader.bake(getPartialModelLocation(name), ModelRotation.X0_Y0);
+	private BakedModel loadModel(ModelLoader loader, String name) {
+		return loader.bake(getPartialModelLocation(name), ModelRotation.X0_Y0);
 	}
 
 	private Identifier getPartialModelLocation(String name) {

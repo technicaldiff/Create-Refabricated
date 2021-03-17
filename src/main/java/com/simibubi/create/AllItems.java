@@ -6,7 +6,9 @@ import static com.simibubi.create.content.AllSections.LOGISTICS;
 import static com.simibubi.create.content.AllSections.MATERIALS;
 import static com.simibubi.create.content.AllSections.SCHEMATICS;
 
+import java.util.function.Consumer;
 import java.util.function.Function;
+import java.util.function.Supplier;
 
 import com.simibubi.create.content.AllSections;
 import com.simibubi.create.content.contraptions.components.structureMovement.glue.SuperGlueItem;
@@ -15,17 +17,25 @@ import com.simibubi.create.content.contraptions.goggles.GogglesItem;
 import com.simibubi.create.content.contraptions.relays.belt.item.BeltConnectorItem;
 import com.simibubi.create.content.contraptions.relays.gearbox.VerticalGearboxItem;
 import com.simibubi.create.content.contraptions.wrench.WrenchItem;
+import com.simibubi.create.content.contraptions.wrench.WrenchModel;
 import com.simibubi.create.content.curiosities.BuildersTeaItem;
 import com.simibubi.create.content.curiosities.RefinedRadianceItem;
 import com.simibubi.create.content.curiosities.TreeFertilizerItem;
 import com.simibubi.create.content.curiosities.symmetry.SymmetryWandItem;
+import com.simibubi.create.content.curiosities.symmetry.client.SymmetryWandModel;
 import com.simibubi.create.content.curiosities.tools.DeforesterItem;
+import com.simibubi.create.content.curiosities.tools.DeforesterModel;
+import com.simibubi.create.foundation.block.render.CustomRenderedItemModel;
 import com.simibubi.create.foundation.item.HiddenIngredientItem;
 import com.simibubi.create.foundation.item.TagDependentIngredientItem;
 import com.simibubi.create.foundation.item.TooltipHelper;
+import com.simibubi.create.foundation.render.CustomItemRendererRegistry;
 
 import me.pepperbell.reghelper.ItemRegBuilder;
+import net.fabricmc.api.EnvType;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
+import net.fabricmc.loader.api.FabricLoader;
+import net.minecraft.client.render.model.BakedModel;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.item.FoodComponent;
 import net.minecraft.item.Item;
@@ -152,7 +162,7 @@ public class AllItems {
 
 	public static final WrenchItem WRENCH = createBuilder("wrench", WrenchItem::new)
 		.properties(p -> p.maxCount(1))
-//		.transform(CreateRegistrate.customRenderedItem(() -> WrenchModel::new)) TODO
+		.consume(customRenderedItem(() -> WrenchModel::new))
 //		.model(AssetLookup.itemModelWithPartials())
 		.register();
 
@@ -205,12 +215,12 @@ public class AllItems {
 //		.register();
 
 	public static final DeforesterItem DEFORESTER = createBuilder("deforester", DeforesterItem::new)
-//		.transform(CreateRegistrate.customRenderedItem(() -> DeforesterModel::new)) TODO
+		.consume(customRenderedItem(() -> DeforesterModel::new))
 //		.model(AssetLookup.itemModelWithPartials())
 		.register();
 
 	public static final SymmetryWandItem WAND_OF_SYMMETRY = createBuilder("wand_of_symmetry", SymmetryWandItem::new)
-//		.transform(CreateRegistrate.customRenderedItem(() -> SymmetryWandModel::new))
+		.consume(customRenderedItem(() -> SymmetryWandModel::new))
 //		.model(AssetLookup.itemModelWithPartials())
 		.register();
 
@@ -262,6 +272,17 @@ public class AllItems {
 				props -> new TagDependentIngredientItem(props, new Identifier("forge", "ores/" + metalName)))
 //			.tag(AllItemTags.CRUSHED_ORES.tag)
 			.register();
+	}
+	
+	private static <T extends Item> Consumer<ItemRegBuilder<T>> customRenderedItem(Supplier<Function<BakedModel, ? extends CustomRenderedItemModel>> supplier) {
+		return b -> {
+			if (FabricLoader.getInstance().getEnvironmentType() == EnvType.CLIENT) {
+				b.onRegister(item -> {
+					CustomItemRendererRegistry.registerRenderer(item, supplier.get().apply(null).createRenderer());
+					CreateClient.getCustomRenderedItems().register(() -> item, supplier.get());
+				});
+			}
+		};
 	}
 
 	private static <T extends Item> ItemRegBuilder<T> createBuilder(String id, Function<FabricItemSettings, T> function) {

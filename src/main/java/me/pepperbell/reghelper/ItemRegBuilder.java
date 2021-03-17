@@ -31,6 +31,11 @@ public class ItemRegBuilder<T extends Item> {
 		return this;
 	}
 
+	public ItemRegBuilder<T> consume(Consumer<ItemRegBuilder<T>> consumer) {
+		consumer.accept(this);
+		return this;
+	}
+
 	public ItemRegBuilder<T> onRegister(Consumer<T> consumer) {
 		onRegister.add(consumer);
 		return this;

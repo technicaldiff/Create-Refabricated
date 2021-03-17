@@ -11,14 +11,13 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.MathHelper;
 
 public class SymmetryWandItemRenderer extends CustomRenderedItemModelRenderer<SymmetryWandModel> {
-
 	@Override
 	public void render(ItemStack stack, SymmetryWandModel model, PartialItemModelRenderer renderer, MatrixStack ms,
 					   VertexConsumerProvider buffer, int light, int overlay) {
 		float worldTime = AnimationTickHolder.getRenderTick() / 20;
 		int maxLight = 0xF000F0;
 
-		//renderer.render(model.getBakedModel(), light);
+		renderer.render(model.getBakedModel(), light);
 		renderer.renderSolidGlowing(model.getPartial("core"), maxLight);
 		renderer.renderGlowing(model.getPartial("core_glow"), maxLight);
 
@@ -30,5 +29,4 @@ public class SymmetryWandItemRenderer extends CustomRenderedItemModelRenderer<Sy
 		
 		renderer.renderGlowing(model.getPartial("bits"), maxLight);
 	}
-
 }
