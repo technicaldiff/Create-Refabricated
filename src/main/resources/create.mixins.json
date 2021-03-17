@@ -14,9 +14,9 @@
   ],
   "client": [
     "BakedModelManagerMixin",
+    "BuiltinModelItemRendererMixin",
     "ChunkBuilder$ChunkDataMixin",
     "GlStateManagerMixin",
-    "ItemRendererMixin",
     "MouseMixin",
     "ParticleManagerMixin",
     "WorldRendererMixin",
