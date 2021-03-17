@@ -7,6 +7,7 @@ import java.util.function.Supplier;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.fabric.api.client.rendereregistry.v1.EntityRendererRegistry;
+import net.fabricmc.fabric.api.object.builder.v1.entity.FabricEntityTypeBuilder;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
@@ -19,7 +20,7 @@ public class EntityTypeRegBuilder<T extends Entity> {
 	private final Identifier identifier;
 	private final EntityFactory<T> factory;
 	private final SpawnGroup spawnGroup;
-	private Deque<Consumer<EntityType.Builder<T>>> builderDeque = new ArrayDeque<>();
+	private Deque<Consumer<FabricEntityTypeBuilder<T>>> builderDeque = new ArrayDeque<>();
 	private EntityRendererRegistry.Factory rendererFactory;
 	private Deque<Consumer<EntityType<T>>> onRegister = new ArrayDeque<>();
 
@@ -33,7 +34,7 @@ public class EntityTypeRegBuilder<T extends Entity> {
 		return identifier;
 	}
 
-	public EntityTypeRegBuilder<T> properties(Consumer<EntityType.Builder<T>> consumer) {
+	public EntityTypeRegBuilder<T> properties(Consumer<FabricEntityTypeBuilder<T>> consumer) {
 		builderDeque.add(consumer);
 		return this;
 	}
@@ -51,11 +52,11 @@ public class EntityTypeRegBuilder<T extends Entity> {
 	}
 
 	public EntityType<T> register() {
-		EntityType.Builder<T> builder = EntityType.Builder.create(factory, spawnGroup);
-		for (Consumer<EntityType.Builder<T>> consumer : builderDeque) {
+		FabricEntityTypeBuilder<T> builder = FabricEntityTypeBuilder.create(spawnGroup, factory);
+		for (Consumer<FabricEntityTypeBuilder<T>> consumer : builderDeque) {
 			consumer.accept(builder);
 		}
-		EntityType<T> type = builder.build(identifier.toString());
+		EntityType<T> type = builder.build();
 		Registry.register(Registry.ENTITY_TYPE, identifier, type);
 		if (rendererFactory != null) {
 			EntityRendererRegistry.INSTANCE.register(type, rendererFactory);

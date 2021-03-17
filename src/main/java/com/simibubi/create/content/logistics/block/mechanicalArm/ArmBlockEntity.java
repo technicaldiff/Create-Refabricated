@@ -15,7 +15,7 @@ import com.simibubi.create.foundation.gui.AllIcons;
 import com.simibubi.create.foundation.gui.widgets.InterpolatedAngle;
 import com.simibubi.create.foundation.item.TooltipHelper;
 import com.simibubi.create.foundation.utility.AngleHelper;
-import com.simibubi.create.foundation.utility.CNBTHelper;
+import com.simibubi.create.foundation.utility.NBTHelper;
 import com.simibubi.create.foundation.utility.Lang;
 import com.simibubi.create.foundation.utility.VecHelper;
 import net.fabricmc.api.EnvType;
@@ -410,7 +410,7 @@ public class ArmBlockEntity extends KineticBlockEntity {
 			compound.put("InteractionPoints", pointsNBT);
 		}
 
-		CNBTHelper.writeEnum(compound, "Phase", phase);
+		NBTHelper.writeEnum(compound, "Phase", phase);
 		compound.putBoolean("Powered", redstoneLocked);
 		compound.put("HeldItem", heldItem.getTag());
 		compound.putInt("TargetPointIndex", chasedPointIndex);
@@ -425,7 +425,7 @@ public class ArmBlockEntity extends KineticBlockEntity {
 
 		super.fromTag(state, compound, clientPacket);
 		heldItem = ItemStack.fromTag(compound.getCompound("HeldItem"));
-		phase = CNBTHelper.readEnum(compound, "Phase", Phase.class);
+		phase = NBTHelper.readEnum(compound, "Phase", Phase.class);
 		chasedPointIndex = compound.getInt("TargetPointIndex");
 		chasedPointProgress = compound.getFloat("MovementProgress");
 		interactionPointTag = compound.getList("InteractionPoints", NbtType.COMPOUND);

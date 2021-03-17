@@ -41,13 +41,13 @@ public class BlockFace extends Pair<BlockPos, Direction> {
 	public CompoundTag serializeNBT() {
 		CompoundTag compoundNBT = new CompoundTag();
 		compoundNBT.put("Pos", NbtHelper.fromBlockPos(getPos()));
-		CNBTHelper.writeEnum(compoundNBT, "Face", getFace());
+		NBTHelper.writeEnum(compoundNBT, "Face", getFace());
 		return compoundNBT;
 	}
 
 	public static BlockFace fromNBT(CompoundTag compound) {
 		return new BlockFace(NbtHelper.toBlockPos(compound.getCompound("Pos")),
-			CNBTHelper.readEnum(compound, "Face", Direction.class));
+			NBTHelper.readEnum(compound, "Face", Direction.class));
 	}
 
 }

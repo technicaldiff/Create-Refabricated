@@ -604,18 +604,18 @@ public abstract class Contraption {
 			});
 
 		superglue.clear();
-		CNBTHelper.iterateCompoundList(nbt.getList("Superglue", NbtType.COMPOUND), c -> superglue
+		NBTHelper.iterateCompoundList(nbt.getList("Superglue", NbtType.COMPOUND), c -> superglue
 			.add(Pair.of(NbtHelper.toBlockPos(c.getCompound("Pos")), Direction.byId(c.getByte("Direction"))))); // TODO: BY ID INSTEAD OF BY INDEX?
 
 		seats.clear();
-		CNBTHelper.iterateCompoundList(nbt.getList("Seats", NbtType.COMPOUND), c -> seats.add(NbtHelper.toBlockPos(c)));
+		NBTHelper.iterateCompoundList(nbt.getList("Seats", NbtType.COMPOUND), c -> seats.add(NbtHelper.toBlockPos(c)));
 
 		seatMapping.clear();
-		CNBTHelper.iterateCompoundList(nbt.getList("Passengers", NbtType.COMPOUND),
+		NBTHelper.iterateCompoundList(nbt.getList("Passengers", NbtType.COMPOUND),
 			c -> seatMapping.put(NbtHelper.toUuid(c.getCompound("Id")), c.getInt("Seat")));
 
 		stabilizedSubContraptions.clear();
-		CNBTHelper.iterateCompoundList(nbt.getList("SubContraptions", NbtType.COMPOUND), c -> stabilizedSubContraptions
+		NBTHelper.iterateCompoundList(nbt.getList("SubContraptions", NbtType.COMPOUND), c -> stabilizedSubContraptions
 			.put(NbtHelper.toUuid(c.getCompound("Id")), BlockFace.fromNBT(c.getCompound("Location"))));
 
 		/*storage.clear();
@@ -654,7 +654,7 @@ public abstract class Contraption {
 		 fluidInventory = new CombinedTankWrapper(fluidHandlers);*/
 
 		if (nbt.contains("BoundsFront"))
-			bounds = CNBTHelper.readAABB(nbt.getList("BoundsFront", 5));
+			bounds = NBTHelper.readAABB(nbt.getList("BoundsFront", 5));
 
 		stalled = nbt.getBoolean("Stalled");
 		anchor = NbtHelper.toBlockPos(nbt.getCompound("Anchor"));
@@ -708,15 +708,15 @@ public abstract class Contraption {
 		 fluidStorageNBT.add(c);
 		 }*/
 
-		nbt.put("Seats", CNBTHelper.writeCompoundList(getSeats(), NbtHelper::fromBlockPos));
-		nbt.put("Passengers", CNBTHelper.writeCompoundList(getSeatMapping().entrySet(), e -> {
+		nbt.put("Seats", NBTHelper.writeCompoundList(getSeats(), NbtHelper::fromBlockPos));
+		nbt.put("Passengers", NBTHelper.writeCompoundList(getSeatMapping().entrySet(), e -> {
 			CompoundTag tag = new CompoundTag();
 			tag.put("Id", NbtHelper.fromUuid(e.getKey()));
 			tag.putInt("Seat", e.getValue());
 			return tag;
 		}));
 
-		nbt.put("SubContraptions", CNBTHelper.writeCompoundList(stabilizedSubContraptions.entrySet(), e -> {
+		nbt.put("SubContraptions", NBTHelper.writeCompoundList(stabilizedSubContraptions.entrySet(), e -> {
 			CompoundTag tag = new CompoundTag();
 			tag.put("Id", NbtHelper.fromUuid(e.getKey()));
 			tag.put("Location", e.getValue()
@@ -733,7 +733,7 @@ public abstract class Contraption {
 		nbt.putBoolean("Stalled", stalled);
 
 		if (bounds != null) {
-			ListTag bb = CNBTHelper.writeAABB(bounds);
+			ListTag bb = NBTHelper.writeAABB(bounds);
 			nbt.put("BoundsFront", bb);
 		}
 

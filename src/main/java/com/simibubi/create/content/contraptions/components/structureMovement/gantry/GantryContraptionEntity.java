@@ -9,7 +9,9 @@ import com.simibubi.create.content.contraptions.components.structureMovement.Str
 import com.simibubi.create.content.contraptions.relays.advanced.GantryShaftBlock;
 import com.simibubi.create.content.contraptions.relays.advanced.GantryShaftBlockEntity;
 import com.simibubi.create.foundation.networking.AllPackets;
-import com.simibubi.create.foundation.utility.CNBTHelper;
+import com.simibubi.create.foundation.utility.NBTHelper;
+import com.simibubi.create.foundation.utility.ServerSpeedProvider;
+
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.block.BlockState;
@@ -26,10 +28,9 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
 public class GantryContraptionEntity extends AbstractContraptionEntity {
-
-	Direction movementAxis;
-	double clientOffsetDiff;
-	double axisMotion;
+	private Direction movementAxis;
+	private double clientOffsetDiff;
+	private double axisMotion;
 
 	public GantryContraptionEntity(EntityType<?> entityTypeIn, World worldIn) {
 		super(entityTypeIn, worldIn);
@@ -77,7 +78,7 @@ public class GantryContraptionEntity extends AbstractContraptionEntity {
 		BlockPos gantryShaftPos = new BlockPos(currentPosition).offset(facing.getOpposite());
 
 		BlockEntity te = world.getBlockEntity(gantryShaftPos);
-		if (!(te instanceof GantryShaftBlockEntity) || !AllBlocks.GANTRY_SHAFT.getStateManager().getStates().contains(te.getCachedState())) {
+		if (!(te instanceof GantryShaftBlockEntity) || AllBlocks.GANTRY_SHAFT != te.getCachedState().getBlock()) {
 			if (!world.isClient) {
 				setContraptionMotion(Vec3d.ZERO);
 				disassemble();
@@ -123,12 +124,12 @@ public class GantryContraptionEntity extends AbstractContraptionEntity {
 
 	@Override
 	protected void writeAdditional(CompoundTag compound, boolean spawnPacket) {
-		CNBTHelper.writeEnum(compound, "GantryAxis", movementAxis);
+		NBTHelper.writeEnum(compound, "GantryAxis", movementAxis);
 		super.writeAdditional(compound, spawnPacket);
 	}
 
 	protected void readAdditional(CompoundTag compound, boolean spawnData) {
-		movementAxis = CNBTHelper.readEnum(compound, "GantryAxis", Direction.class);
+		movementAxis = NBTHelper.readEnum(compound, "GantryAxis", Direction.class);
 		super.readAdditional(compound, spawnData);
 	}
 
@@ -177,7 +178,7 @@ public class GantryContraptionEntity extends AbstractContraptionEntity {
 		float modifier = movementAxis.getDirection()
 			.offset();
 		setContraptionMotion(Vec3d.of(movementAxis.getVector())
-			.multiply((axisMotion + clientOffsetDiff * modifier / 2f) /* ServerSpeedProvider.get()*/));
+			.multiply((axisMotion + clientOffsetDiff * modifier / 2f) * ServerSpeedProvider.get()));
 	}
 
 	public double getAxisCoord() {
@@ -199,5 +200,4 @@ public class GantryContraptionEntity extends AbstractContraptionEntity {
 		ce.axisMotion = packet.motion;
 		ce.clientOffsetDiff = packet.coord - ce.getAxisCoord();
 	}
-
 }

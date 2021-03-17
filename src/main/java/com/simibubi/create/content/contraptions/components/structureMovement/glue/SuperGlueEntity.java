@@ -14,6 +14,7 @@ import com.simibubi.create.foundation.utility.BlockFace;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
+import net.fabricmc.fabric.api.object.builder.v1.entity.FabricEntityTypeBuilder;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayerEntity;
@@ -146,7 +147,6 @@ public class SuperGlueEntity extends Entity implements SpecialEntityItemRequirem
 				onBroken(null);
 			}
 		}
-
 	}
 
 	public boolean isVisible() {
@@ -380,15 +380,15 @@ public class SuperGlueEntity extends Entity implements SpecialEntityItemRequirem
 	@Override
 	public void calculateDimensions() {}
 
-	public static EntityType.Builder<?> build(EntityType.Builder<?> builder) {
+	public static FabricEntityTypeBuilder<?> build(FabricEntityTypeBuilder<?> builder) {
 		@SuppressWarnings("unchecked")
-		EntityType.Builder<SuperGlueEntity> entityBuilder = (EntityType.Builder<SuperGlueEntity>) builder;
+		FabricEntityTypeBuilder<SuperGlueEntity> entityBuilder = (FabricEntityTypeBuilder<SuperGlueEntity>) builder;
 		return entityBuilder;
 	}
 
 	@Override
 	public Packet<?> createSpawnPacket() {
-		return new EntitySpawnS2CPacket();
+		return new EntitySpawnS2CPacket(this);
 	}
 
 	@Override

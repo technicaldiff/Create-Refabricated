@@ -9,7 +9,7 @@ import org.apache.commons.lang3.tuple.Pair;
 import com.simibubi.create.content.contraptions.components.structureMovement.AssemblyException;
 import com.simibubi.create.content.contraptions.components.structureMovement.Contraption;
 import com.simibubi.create.content.contraptions.components.structureMovement.ContraptionType;
-import com.simibubi.create.foundation.utility.CNBTHelper;
+import com.simibubi.create.foundation.utility.NBTHelper;
 
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.math.BlockPos;
@@ -106,14 +106,14 @@ public class ClockworkContraption extends Contraption {
 		CompoundTag tag = super.writeNBT(spawnPacket);
 		tag.putInt("facing", facing.getId());
 		tag.putInt("offset", offset);
-		CNBTHelper.writeEnum(tag, "HandType", handType);
+		NBTHelper.writeEnum(tag, "HandType", handType);
 		return tag;
 	}
 
 	@Override
 	public void readNBT(World world, CompoundTag tag, boolean spawnData) {
 		facing = Direction.byId(tag.getInt("facing"));
-		handType = CNBTHelper.readEnum(tag, "HandType", HandType.class);
+		handType = NBTHelper.readEnum(tag, "HandType", HandType.class);
 		offset = tag.getInt("offset");
 		super.readNBT(world, tag, spawnData);
 	}

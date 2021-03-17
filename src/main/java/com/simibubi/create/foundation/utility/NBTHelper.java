@@ -5,18 +5,20 @@ import java.util.List;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
+import org.jetbrains.annotations.NotNull;
+
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.FloatTag;
 import net.minecraft.nbt.ListTag;
+import net.minecraft.nbt.Tag;
 import net.minecraft.util.math.Box;
 
-public class CNBTHelper {
-
+public class NBTHelper {
 	public static void putMarker(CompoundTag nbt, String marker) {
 		nbt.putBoolean(marker, true);
 	}
-	
+
 	public static <T extends Enum<?>> T readEnum(CompoundTag nbt, String key, Class<T> enumClass) {
 		T[] enumConstants = enumClass.getEnumConstants();
 		String name = nbt.getString(key);
@@ -28,11 +30,11 @@ public class CNBTHelper {
 		}
 		return enumConstants[0];
 	}
-	
+
 	public static <T extends Enum<?>> void writeEnum(CompoundTag nbt, String key, T enumConstant) {
 		nbt.putString(key, enumConstant.name());
 	}
-	
+
 	public static <T> ListTag writeCompoundList(Iterable<T> list, Function<T, CompoundTag> serializer) {
 		ListTag listNBT = new ListTag();
 		list.forEach(t -> listNBT.add(serializer.apply(t)));
@@ -44,19 +46,19 @@ public class CNBTHelper {
 		listNBT.forEach(inbt -> list.add(deserializer.apply((CompoundTag) inbt)));
 		return list;
 	}
-	
+
 	public static <T> void iterateCompoundList(ListTag listNBT, Consumer<CompoundTag> consumer) {
 		listNBT.forEach(inbt -> consumer.accept((CompoundTag) inbt));
 	}
-	
-	/*public static ListTag writeItemList(List<ItemStack> stacks) {
-		return writeCompoundList(stacks, ItemStack::writeNbt);
-	}*/
+
+	public static ListTag writeItemList(List<ItemStack> stacks) {
+		return writeCompoundList(stacks, stack -> stack.toTag(new CompoundTag()));
+	}
 
 	public static List<ItemStack> readItemList(ListTag stacks) {
 		return readCompoundList(stacks, ItemStack::fromTag);
 	}
-	
+
 	public static ListTag writeAABB(Box bb) {
 		ListTag bbtag = new ListTag();
 		bbtag.add(FloatTag.of((float) bb.minX));
@@ -73,7 +75,13 @@ public class CNBTHelper {
 			return null;
 		return new Box(bbtag.getFloat(0), bbtag.getFloat(1), bbtag.getFloat(2), bbtag.getFloat(3),
 				bbtag.getFloat(4), bbtag.getFloat(5));
-
 	}
 
+	@NotNull
+	public static Tag getINBT(CompoundTag nbt, String id) {
+		Tag inbt = nbt.get(id);
+		if (inbt != null)
+			return inbt;
+		return new CompoundTag();
+	}
 }

@@ -7,7 +7,7 @@ import org.jetbrains.annotations.Nullable;
 import com.simibubi.create.AllItems;
 import com.simibubi.create.content.contraptions.components.structureMovement.Contraption;
 import com.simibubi.create.content.contraptions.components.structureMovement.OrientedContraptionEntity;
-import com.simibubi.create.foundation.utility.CNBTHelper;
+import com.simibubi.create.foundation.utility.NBTHelper;
 
 import net.minecraft.block.AbstractRailBlock;
 import net.minecraft.block.BlockState;
@@ -157,7 +157,7 @@ public class MinecartContraptionItem extends Item {
 			Optional<Direction> intialOrientation = Optional.empty();
 			if (contraptionTag.contains("InitialOrientation"))
 				intialOrientation =
-					Optional.of(CNBTHelper.readEnum(contraptionTag, "InitialOrientation", Direction.class));
+					Optional.of(NBTHelper.readEnum(contraptionTag, "InitialOrientation", Direction.class));
 
 			Contraption mountedContraption = Contraption.fromNBT(world, contraptionTag, false);
 			OrientedContraptionEntity contraptionEntity =
@@ -237,7 +237,7 @@ public class MinecartContraptionItem extends Item {
 		tag.remove("Motion");
 
 		if (entity.isInitialOrientationPresent())
-			CNBTHelper.writeEnum(tag, "InitialOrientation", entity.getInitialOrientation());
+			NBTHelper.writeEnum(tag, "InitialOrientation", entity.getInitialOrientation());
 
 		stack.getOrCreateTag()
 			.put("Contraption", tag);

@@ -4,7 +4,7 @@ import static com.simibubi.create.foundation.utility.AngleHelper.angleLerp;
 
 import com.simibubi.create.AllEntityTypes;
 import com.simibubi.create.content.contraptions.components.structureMovement.bearing.BearingContraption;
-import com.simibubi.create.foundation.utility.CNBTHelper;
+import com.simibubi.create.foundation.utility.NBTHelper;
 import com.simibubi.create.foundation.utility.MatrixStacker;
 import com.simibubi.create.foundation.utility.VecHelper;
 
@@ -66,7 +66,7 @@ public class ControlledContraptionEntity extends AbstractContraptionEntity {
 		super.readAdditional(compound, spawnPacket);
 		controllerPos = NbtHelper.toBlockPos(compound.getCompound("Controller"));
 		if (compound.contains("Axis"))
-			rotationAxis = CNBTHelper.readEnum(compound, "Axis", Direction.Axis.class);
+			rotationAxis = NBTHelper.readEnum(compound, "Axis", Direction.Axis.class);
 		angle = compound.getFloat("Angle");
 	}
 
@@ -75,7 +75,7 @@ public class ControlledContraptionEntity extends AbstractContraptionEntity {
 		super.writeAdditional(compound, spawnPacket);
 		compound.put("Controller", NbtHelper.fromBlockPos(controllerPos));
 		if (rotationAxis != null)
-			CNBTHelper.writeEnum(compound, "Axis", rotationAxis);
+			NBTHelper.writeEnum(compound, "Axis", rotationAxis);
 		compound.putFloat("Angle", angle);
 	}
 

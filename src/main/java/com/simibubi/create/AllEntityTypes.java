@@ -11,13 +11,12 @@ import com.simibubi.create.content.contraptions.components.structureMovement.gan
 import com.simibubi.create.content.contraptions.components.structureMovement.glue.SuperGlueEntity;
 import com.simibubi.create.content.contraptions.components.structureMovement.glue.SuperGlueRenderer;
 import com.simibubi.create.foundation.utility.Lang;
-import com.simibubi.create.foundation.utility.extensions.EntityTypeExtensions;
 
 import me.pepperbell.reghelper.EntityTypeRegBuilder;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.client.rendereregistry.v1.EntityRendererRegistry;
-import net.fabricmc.fabric.api.util.TriState;
+import net.fabricmc.fabric.api.object.builder.v1.entity.FabricEntityTypeBuilder;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.EntityType.EntityFactory;
@@ -46,14 +45,14 @@ public class AllEntityTypes {
 
 	private static <T extends Entity> EntityType<T> register(String name, EntityFactory<T> factory,
 		SpawnGroup group, int range, int updateFrequency, boolean sendVelocity,
-		Consumer<EntityType.Builder<T>> propertyBuilder) {
+		Consumer<FabricEntityTypeBuilder<T>> propertyBuilder) {
 		String id = Lang.asId(name);
 		EntityType<T> type = createBuilder(id, factory, group)
-			.properties(b -> b.maxTrackingRange(range)
-				.trackingTickInterval(updateFrequency))
+			.properties(b -> b.trackRangeChunks(range)
+				.trackedUpdateRate(updateFrequency)
+				.forceTrackedVelocityUpdates(sendVelocity))
 			.properties(propertyBuilder)
 			.register();
-		((EntityTypeExtensions) type).setAlwaysUpdateVelocity(TriState.of(sendVelocity));
 		return type;
 	}
 

@@ -9,7 +9,7 @@ import com.simibubi.create.content.contraptions.base.KineticBlockEntity;
 import com.simibubi.create.foundation.gui.widgets.InterpolatedChasingValue;
 import com.simibubi.create.foundation.gui.widgets.InterpolatedValue;
 import com.simibubi.create.foundation.utility.AnimationTickHolder;
-import com.simibubi.create.foundation.utility.CNBTHelper;
+import com.simibubi.create.foundation.utility.NBTHelper;
 import com.simibubi.create.foundation.utility.VecHelper;
 
 import net.minecraft.block.BlockState;
@@ -43,7 +43,7 @@ public class CuckooClockBlockEntity extends KineticBlockEntity {
 	protected void fromTag(BlockState state, CompoundTag compound, boolean clientPacket) {
 		super.fromTag(state, compound, clientPacket);
 		if (clientPacket && compound.contains("Animation")) {
-			animationType = CNBTHelper.readEnum(compound, "Animation", Animation.class);
+			animationType = NBTHelper.readEnum(compound, "Animation", Animation.class);
 			animationProgress.lastValue = 0;
 			animationProgress.value = 0;
 		}
@@ -52,7 +52,7 @@ public class CuckooClockBlockEntity extends KineticBlockEntity {
 	@Override
 	public void toTag(CompoundTag compound, boolean clientPacket) {
 		if (clientPacket && sendAnimationUpdate)
-			CNBTHelper.writeEnum(compound, "Animation", animationType);
+			NBTHelper.writeEnum(compound, "Animation", animationType);
 		sendAnimationUpdate = false;
 		super.toTag(compound, clientPacket);
 	}

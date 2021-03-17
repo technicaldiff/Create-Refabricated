@@ -4,7 +4,7 @@
   "package": "com.simibubi.create.foundation.mixin",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
-    "EntityTypeMixin",
+    "EntitySpawnS2CPacketMixin",
     "Matrix4fMixin",
     "WorldMixin",
     "accessor.BiomeAccessAccessor",
@@ -16,6 +16,7 @@
     "BakedModelManagerMixin",
     "BuiltinModelItemRendererMixin",
     "ChunkBuilder$ChunkDataMixin",
+    "ClientPlayNetworkHandlerMixin",
     "GlStateManagerMixin",
     "MouseMixin",
     "ParticleManagerMixin",

@@ -5,7 +5,7 @@ import com.simibubi.create.AllBlocks;
 import com.simibubi.create.content.contraptions.base.KineticBlockEntity;
 import com.simibubi.create.content.contraptions.base.Rotating;
 import com.simibubi.create.content.contraptions.relays.belt.transport.BeltInventory;
-import com.simibubi.create.foundation.utility.CNBTHelper;
+import com.simibubi.create.foundation.utility.NBTHelper;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.nbt.CompoundTag;
@@ -163,10 +163,10 @@ public class BeltBlockEntity extends KineticBlockEntity {
 		compound.putBoolean("IsController", isController());
 		compound.putInt("Length", beltLength);
 		compound.putInt("Index", index);
-		CNBTHelper.writeEnum(compound, "Casing", casing);
+		NBTHelper.writeEnum(compound, "Casing", casing);
 
 		if (color.isPresent())
-			CNBTHelper.writeEnum(compound, "Dye", color.get());
+			NBTHelper.writeEnum(compound, "Dye", color.get());
 
 		if (isController())
 			compound.put("Inventory", getInventory().write());

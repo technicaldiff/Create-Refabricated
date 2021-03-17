@@ -6,7 +6,7 @@ import java.util.function.Predicate;
 import com.simibubi.create.foundation.block.entity.BlockEntityBehaviour;
 import com.simibubi.create.foundation.block.entity.SmartBlockEntity;
 import com.simibubi.create.foundation.block.entity.behaviour.BehaviourType;
-import com.simibubi.create.foundation.utility.CNBTHelper;
+import com.simibubi.create.foundation.utility.NBTHelper;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -86,7 +86,7 @@ public class BracketedBlockEntityBehaviour extends BlockEntityBehaviour {
 	public void write(CompoundTag nbt, boolean clientPacket) {
 		bracket.ifPresent(p -> nbt.put("Bracket", NbtHelper.fromBlockState(p)));
 		if (clientPacket && reRender) {
-			CNBTHelper.putMarker(nbt, "Redraw");
+			NBTHelper.putMarker(nbt, "Redraw");
 			reRender = false;
 		}
 		super.write(nbt, clientPacket);

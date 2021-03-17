@@ -12,7 +12,7 @@ import com.simibubi.create.content.contraptions.components.structureMovement.Con
 import com.simibubi.create.content.contraptions.components.structureMovement.NonStationaryLighter;
 import com.simibubi.create.content.contraptions.components.structureMovement.mounted.CartAssemblerBlockEntity.CartMovementMode;
 import com.simibubi.create.foundation.utility.BlockHelper;
-import com.simibubi.create.foundation.utility.CNBTHelper;
+import com.simibubi.create.foundation.utility.NBTHelper;
 import com.simibubi.create.foundation.utility.Iterate;
 import com.simibubi.create.foundation.utility.VecHelper;
 
@@ -120,13 +120,13 @@ public class MountedContraption extends Contraption {
 	@Override
 	public CompoundTag writeNBT(boolean spawnPacket) {
 		CompoundTag tag = super.writeNBT(spawnPacket);
-		CNBTHelper.writeEnum(tag, "RotationMode", rotationMode);
+		NBTHelper.writeEnum(tag, "RotationMode", rotationMode);
 		return tag;
 	}
 
 	@Override
 	public void readNBT(World world, CompoundTag nbt, boolean spawnData) {
-		rotationMode = CNBTHelper.readEnum(nbt, "RotationMode", CartMovementMode.class);
+		rotationMode = NBTHelper.readEnum(nbt, "RotationMode", CartMovementMode.class);
 		super.readNBT(world, nbt, spawnData);
 	}
 

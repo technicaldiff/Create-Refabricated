@@ -4,7 +4,7 @@ import java.util.function.Supplier;
 
 import com.google.common.collect.ImmutableMap;
 import com.simibubi.create.AllBlockPartials;
-import com.simibubi.create.foundation.utility.CNBTHelper;
+import com.simibubi.create.foundation.utility.NBTHelper;
 import com.simibubi.create.foundation.utility.VecHelper;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -148,7 +148,7 @@ public abstract class ArmInteractionPoint {
 	CompoundTag serialize(BlockPos anchor) {
 		CompoundTag nbt = new CompoundTag();
 		nbt.put("Pos", NbtHelper.fromBlockPos(pos.subtract(anchor)));
-		CNBTHelper.writeEnum(nbt, "Mode", mode);
+		NBTHelper.writeEnum(nbt, "Mode", mode);
 		return nbt;
 	}
 
@@ -157,7 +157,7 @@ public abstract class ArmInteractionPoint {
 		ArmInteractionPoint interactionPoint = createAt(world, pos.add(anchor));
 		if (interactionPoint == null)
 			return null;
-		interactionPoint.mode = CNBTHelper.readEnum(nbt, "Mode", Mode.class);
+		interactionPoint.mode = NBTHelper.readEnum(nbt, "Mode", Mode.class);
 		return interactionPoint;
 	}
 
