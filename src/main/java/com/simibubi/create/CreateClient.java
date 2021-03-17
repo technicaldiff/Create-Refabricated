@@ -3,6 +3,7 @@ package com.simibubi.create;
 import com.simibubi.create.content.contraptions.base.KineticBlockEntityRenderer;
 import com.simibubi.create.content.contraptions.components.structureMovement.render.ContraptionRenderDispatcher;
 import com.simibubi.create.content.palettes.AllPaletteBlocks;
+import com.simibubi.create.content.schematics.ClientSchematicLoader;
 import com.simibubi.create.events.ClientEvents;
 import com.simibubi.create.foundation.ResourceReloadHandler;
 import com.simibubi.create.foundation.block.render.CustomBlockModels;
@@ -22,6 +23,10 @@ import net.minecraft.resource.ReloadableResourceManager;
 import net.minecraft.resource.ResourceManager;
 
 public class CreateClient implements ClientModInitializer {
+
+	public static ClientSchematicLoader schematicSender;
+	//public static SchematicHandler schematicHandler;
+	//public static SchematicAndQuillHandler schematicAndQuillHandler;
 	public static SuperByteBufferCache bufferCache;
 	public static KineticRenderer kineticRenderer;
 	public static final Outliner outliner = new Outliner();
@@ -40,6 +45,10 @@ public class CreateClient implements ClientModInitializer {
 		AllPackets.clientInit();
 
 		kineticRenderer = new KineticRenderer();
+
+		schematicSender = new ClientSchematicLoader();
+		//schematicHandler = new SchematicHandler();
+		//schematicAndQuillHandler = new SchematicAndQuillHandler();
 
 		bufferCache = new SuperByteBufferCache();
 		bufferCache.registerCompartment(KineticBlockEntityRenderer.KINETIC_TILE);

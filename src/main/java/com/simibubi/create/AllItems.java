@@ -25,6 +25,8 @@ import com.simibubi.create.content.curiosities.symmetry.SymmetryWandItem;
 import com.simibubi.create.content.curiosities.symmetry.client.SymmetryWandModel;
 import com.simibubi.create.content.curiosities.tools.DeforesterItem;
 import com.simibubi.create.content.curiosities.tools.DeforesterModel;
+import com.simibubi.create.content.schematics.item.SchematicAndQuillItem;
+import com.simibubi.create.content.schematics.item.SchematicItem;
 import com.simibubi.create.foundation.block.render.CustomRenderedItemModel;
 import com.simibubi.create.foundation.item.HiddenIngredientItem;
 import com.simibubi.create.foundation.item.TagDependentIngredientItem;
@@ -239,13 +241,13 @@ public class AllItems {
 		.properties(p -> p.maxCount(1))
 		.register();
 
-//	public static final SchematicAndQuillItem SCHEMATIC_AND_QUILL = createBuilder("schematic_and_quill", SchematicAndQuillItem::new)
-//		.properties(p -> p.maxCount(1))
-//		.register();
+	public static final SchematicAndQuillItem SCHEMATIC_AND_QUILL = createBuilder("schematic_and_quill", SchematicAndQuillItem::new)
+		.properties(p -> p.maxCount(1))
+		.register();
 
-//	public static final SchematicItem SCHEMATIC = createBuilder("schematic", SchematicItem::new)
-//		.properties(p -> p.maxCount(1))
-//		.register();
+	public static final SchematicItem SCHEMATIC = createBuilder("schematic", SchematicItem::new)
+		.properties(p -> p.maxCount(1))
+		.register();
 
 	// Shortcuts
 

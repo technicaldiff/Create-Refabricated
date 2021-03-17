@@ -8,6 +8,7 @@ import com.simibubi.create.content.contraptions.components.structureMovement.syn
 import com.simibubi.create.content.contraptions.components.structureMovement.sync.LimbSwingUpdatePacket;
 import com.simibubi.create.content.curiosities.symmetry.SymmetryEffectPacket;
 import com.simibubi.create.content.logistics.block.mechanicalArm.ArmPlacementPacket;
+import com.simibubi.create.content.schematics.packet.*;
 import com.simibubi.create.foundation.block.entity.behaviour.scrollvalue.ScrollValueUpdatePacket;
 
 import me.pepperbell.simplenetworking.C2SPacket;
@@ -21,12 +22,12 @@ public enum AllPackets {
 	// Client to Server
 	@SuppressWarnings("deprecation")
 	NBT(NbtPacket.class),
-//	CONFIGURE_SCHEMATICANNON(ConfigureSchematicannonPacket.class, ConfigureSchematicannonPacket::new, PLAY_TO_SERVER),
+	CONFIGURE_SCHEMATICANNON(ConfigureSchematicannonPacket.class),
 //	CONFIGURE_FLEXCRATE(ConfigureFlexcratePacket.class, ConfigureFlexcratePacket::new, PLAY_TO_SERVER),
 //	CONFIGURE_STOCKSWITCH(ConfigureStockswitchPacket.class, ConfigureStockswitchPacket::new, PLAY_TO_SERVER),
 //	CONFIGURE_SEQUENCER(ConfigureSequencedGearshiftPacket.class, ConfigureSequencedGearshiftPacket::new, PLAY_TO_SERVER),
-//	PLACE_SCHEMATIC(SchematicPlacePacket.class, SchematicPlacePacket::new, PLAY_TO_SERVER),
-//	UPLOAD_SCHEMATIC(SchematicUploadPacket.class, SchematicUploadPacket::new, PLAY_TO_SERVER),
+	PLACE_SCHEMATIC(SchematicPlacePacket.class),
+	UPLOAD_SCHEMATIC(SchematicUploadPacket.class),
 //	CONFIGURE_FILTER(FilterScreenPacket.class, FilterScreenPacket::new, PLAY_TO_SERVER),
 //	CONFIGURE_FILTERING_AMOUNT(FilteringCountUpdatePacket.class, FilteringCountUpdatePacket::new, PLAY_TO_SERVER),
 	CONFIGURE_SCROLLABLE(ScrollValueUpdatePacket.class),
@@ -35,8 +36,8 @@ public enum AllPackets {
 	CLIENT_MOTION(ClientMotionPacket.class),
 	PLACE_ARM(ArmPlacementPacket.class),
 //	MINECART_COUPLING_CREATION(CouplingCreationPacket.class, CouplingCreationPacket::new, PLAY_TO_SERVER),
-//	INSTANT_SCHEMATIC(InstantSchematicPacket.class, InstantSchematicPacket::new, PLAY_TO_SERVER),
-//	SYNC_SCHEMATIC(SchematicSyncPacket.class, SchematicSyncPacket::new, PLAY_TO_SERVER),
+	INSTANT_SCHEMATIC(InstantSchematicPacket.class),
+	SYNC_SCHEMATIC(SchematicSyncPacket.class),
 	LEFT_CLICK(LeftClickPacket.class),
 
 	// Server to Client
