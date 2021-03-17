@@ -33,24 +33,34 @@ import com.simibubi.create.content.logistics.block.mechanicalArm.ArmBlock;
 import com.simibubi.create.content.logistics.block.mechanicalArm.ArmItem;
 import com.simibubi.create.content.logistics.block.redstone.AnalogLeverBlock;
 import com.simibubi.create.content.logistics.block.redstone.RedstoneLinkBlock;
+import com.simibubi.create.foundation.block.render.CustomRenderedItemModel;
 import com.simibubi.create.foundation.config.StressConfigDefaults;
 import com.simibubi.create.foundation.data.BuilderConsumers;
 import com.simibubi.create.foundation.data.SharedProperties;
 import com.simibubi.create.foundation.item.TooltipHelper;
+import com.simibubi.create.foundation.render.CustomItemRendererRegistry;
+
 import me.pepperbell.reghelper.BlockRegBuilder;
+import me.pepperbell.reghelper.ItemRegBuilder;
+import net.fabricmc.api.EnvType;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.fabricmc.fabric.api.tool.attribute.v1.FabricToolTags;
+import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.MaterialColor;
 import net.minecraft.client.render.RenderLayer;
+import net.minecraft.client.render.model.BakedModel;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.util.DyeColor;
 import net.minecraft.util.Identifier;
 
+import java.util.function.Consumer;
 import java.util.function.Function;
+import java.util.function.Supplier;
 
 public class AllBlocks {
 	private static AllSections currentSection;
@@ -86,7 +96,7 @@ public class AllBlocks {
 		.initialProperties(SharedProperties::stone)
 		.consume(StressConfigDefaults.noImpactConsumer())
 //		.blockstate(BlockStateGen.axisBlockProvider(false))
-//		.onRegister(CreateRegistrate.blockModel(() -> BracketedKineticBlockModel::new))
+//		.onRegister(blockModel(() -> BracketedKineticBlockModel::new))
 		.simpleItem()
 		.register();
 
@@ -95,7 +105,7 @@ public class AllBlocks {
 		.consume(StressConfigDefaults.noImpactConsumer())
 		.properties(p -> p.sounds(BlockSoundGroup.WOOD))
 //		.blockstate(BlockStateGen.axisBlockProvider(false))
-//		.onRegister(CreateRegistrate.blockModel(() -> BracketedKineticBlockModel::new))
+//		.onRegister(blockModel(() -> BracketedKineticBlockModel::new))
 		.item(CogwheelBlockItem::new)
 		.build()
 		.register();
@@ -105,7 +115,7 @@ public class AllBlocks {
 		.properties(p -> p.sounds(BlockSoundGroup.WOOD))
 		.consume(StressConfigDefaults.noImpactConsumer())
 //		.blockstate(BlockStateGen.axisBlockProvider(false))
-//		.onRegister(CreateRegistrate.blockModel(() -> BracketedKineticBlockModel::new))
+//		.onRegister(blockModel(() -> BracketedKineticBlockModel::new))
 		.item(CogwheelBlockItem::new)
 		.build()
 		.register();
@@ -1120,6 +1130,14 @@ public class AllBlocks {
 //		.tag(Tags.Items.STORAGE_BLOCKS)
 //		.build()
 		.register();
+
+	private static <T extends Block> Consumer<T> blockModel(Supplier<Function<BakedModel, ? extends BakedModel>> supplier) {
+		return block -> {
+			if (FabricLoader.getInstance().getEnvironmentType() == EnvType.CLIENT) {
+				CreateClient.getCustomBlockModels().register(() -> block, supplier.get());
+			}
+		};
+	}
 
 	private static <T extends Block> BlockRegBuilder<T> createBuilder(String id, Function<FabricBlockSettings, T> function) {
 		BlockRegBuilder<T> builder = BlockRegBuilder.create(new Identifier(Create.ID, id), function);
