@@ -19,7 +19,7 @@ public class AllPaletteBlocks {
 		.nonOpaque()
 		.sounds(BlockSoundGroup.GLASS));
 
-	public static void registerBlocks() {
+	public static void register() {
 		Registry.register(Registry.BLOCK, new Identifier(Create.ID, "tiled_glass"), TILED_GLASS);
 	}
 

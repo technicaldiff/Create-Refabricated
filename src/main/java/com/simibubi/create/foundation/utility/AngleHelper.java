@@ -4,9 +4,8 @@ import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Direction.Axis;
 
 public class AngleHelper {
-
 	public static float horizontalAngle(Direction facing) {
-		float angle = facing.getHorizontal();
+		float angle = facing.asRotation();
 		if (facing.getAxis() == Axis.X)
 			angle = -angle;
 		return angle;
@@ -37,5 +36,4 @@ public class AngleHelper {
 		target = target % 360;
 		return (float) (((((target - current) % 360) + 540) % 360) - 180);
 	}
-
 }

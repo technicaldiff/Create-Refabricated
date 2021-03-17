@@ -5,7 +5,6 @@ import com.simibubi.create.Create;
 import com.simibubi.create.foundation.utility.AngleHelper;
 import com.simibubi.create.foundation.utility.MatrixStacker;
 import com.simibubi.create.foundation.utility.VecHelper;
-
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.client.rendereregistry.v1.EntityRendererRegistry;
@@ -29,7 +28,6 @@ import net.minecraft.world.World;
 
 @Environment(EnvType.CLIENT)
 public class SuperGlueRenderer extends EntityRenderer<SuperGlueEntity> {
-
 	private Identifier regular = new Identifier(Create.ID, "textures/entity/super_glue/slime.png");
 
 	private Vec3d[] quad1;
@@ -37,8 +35,8 @@ public class SuperGlueRenderer extends EntityRenderer<SuperGlueEntity> {
 	private float[] u = { 0, 1, 1, 0 };
 	private float[] v = { 0, 0, 1, 1 };
 
-	public SuperGlueRenderer(EntityRenderDispatcher entityRenderDispatcher, EntityRendererRegistry.Context context) {
-		super(entityRenderDispatcher);
+	public SuperGlueRenderer(EntityRenderDispatcher dispatcher, EntityRendererRegistry.Context context) {
+		super(dispatcher);
 		initQuads();
 	}
 
@@ -54,8 +52,8 @@ public class SuperGlueRenderer extends EntityRenderer<SuperGlueEntity> {
 
 		PlayerEntity player = MinecraftClient.getInstance().player;
 		boolean visible = entity.isVisible();
-		boolean holdingGlue = player.getMainHandStack().isItemEqualIgnoreDamage(AllItems.SUPER_GLUE.getDefaultStack())
-			|| player.getOffHandStack().isItemEqualIgnoreDamage(AllItems.SUPER_GLUE.getDefaultStack());
+		boolean holdingGlue = AllItems.SUPER_GLUE == player.getMainHandStack().getItem()
+			|| AllItems.SUPER_GLUE == player.getOffHandStack().getItem();
 
 		if (!visible && !holdingGlue)
 			return;

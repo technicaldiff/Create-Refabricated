@@ -5,16 +5,20 @@ import org.jetbrains.annotations.Nullable;
 
 import com.simibubi.create.AllEntityTypes;
 import com.simibubi.create.AllItems;
+import com.simibubi.create.AllSoundEvents;
 import com.simibubi.create.content.contraptions.components.structureMovement.BlockMovementTraits;
 import com.simibubi.create.content.schematics.ItemRequirement;
+import com.simibubi.create.content.schematics.ItemRequirement.ItemUseType;
 import com.simibubi.create.content.schematics.SpecialEntityItemRequirement;
 import com.simibubi.create.foundation.networking.AllPackets;
+import com.simibubi.create.foundation.networking.entity.ExtraSpawnDataEntity;
 import com.simibubi.create.foundation.utility.AnimationTickHolder;
 import com.simibubi.create.foundation.utility.BlockFace;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricEntityTypeBuilder;
+import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayerEntity;
@@ -31,6 +35,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.Packet;
+import net.minecraft.network.PacketByteBuf;
 import net.minecraft.network.packet.s2c.play.EntitySpawnS2CPacket;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundEvents;
@@ -49,8 +54,7 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
-public class SuperGlueEntity extends Entity implements SpecialEntityItemRequirement {
-
+public class SuperGlueEntity extends Entity implements ExtraSpawnDataEntity, SpecialEntityItemRequirement {
 	private int validationTimer;
 	protected BlockPos hangingPosition;
 	protected Direction facingDirection = Direction.SOUTH;
@@ -81,12 +85,12 @@ public class SuperGlueEntity extends Entity implements SpecialEntityItemRequirem
 		playSound(SoundEvents.ENTITY_SLIME_SQUISH_SMALL, 1.0F, 1.0F);
 		if (onValidSurface()) {
 			AllPackets.CHANNEL.sendToClientsTracking(new GlueEffectPacket(getHangingPosition(), getFacingDirection().getOpposite(), false), this);
-//			playSound(AllSoundEvents.SLIME_ADDED.get(), 0.5F, 0.5F);
+			playSound(AllSoundEvents.SLIME_ADDED.get(), 0.5F, 0.5F);
 		}
 	}
 
 	public void playPlaceSound() {
-//		playSound(AllSoundEvents.SLIME_ADDED.get(), 0.5F, 0.75F);
+		playSound(AllSoundEvents.SLIME_ADDED.get(), 0.5F, 0.75F);
 	}
 
 	protected void updateFacingWithBoundingBox() {
@@ -147,6 +151,7 @@ public class SuperGlueEntity extends Entity implements SpecialEntityItemRequirem
 				onBroken(null);
 			}
 		}
+
 	}
 
 	public boolean isVisible() {
@@ -161,7 +166,7 @@ public class SuperGlueEntity extends Entity implements SpecialEntityItemRequirem
 	public boolean onValidSurface() {
 		BlockPos pos = hangingPosition;
 		BlockPos pos2 = hangingPosition.offset(getFacingDirection().getOpposite());
-		if (!world.isRegionLoaded(pos, BlockPos.fromLong(0)) || !world.isRegionLoaded(pos2, BlockPos.fromLong(0)))
+		if (!world.isChunkLoaded(pos) || !world.isChunkLoaded(pos2))
 			return true;
 		if (!isValidFace(world, pos2, getFacingDirection())
 			&& !isValidFace(world, pos, getFacingDirection().getOpposite()))
@@ -232,10 +237,10 @@ public class SuperGlueEntity extends Entity implements SpecialEntityItemRequirem
 		return 0.0F;
 	}
 
-	/*@Override
-	public ItemStack getPickedResult(HitResult target) {
-		return AllItems.SUPER_GLUE.asStack();
-	}*/
+//	@Override
+//	public ItemStack getPickedResult(HitResult target) {
+//		return new ItemStack(AllItems.SUPER_GLUE);
+//	}
 
 	@Override
 	public void pushAwayFrom(Entity entityIn) {
@@ -244,9 +249,9 @@ public class SuperGlueEntity extends Entity implements SpecialEntityItemRequirem
 
 	@Override
 	public ActionResult interact(PlayerEntity player, Hand hand) {
-		/*DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> {*/
+		if (FabricLoader.getInstance().getEnvironmentType() == EnvType.CLIENT) {
 			triggerPlaceBlock(player, hand);
-		/*});*/
+		}
 		return ActionResult.CONSUME;
 	}
 
@@ -333,7 +338,7 @@ public class SuperGlueEntity extends Entity implements SpecialEntityItemRequirem
 	@Override
 	public float applyRotation(BlockRotation transformRotation) {
 		if (this.getFacingDirection()
-			.getAxis() != Axis.Y) {
+			.getAxis() != Direction.Axis.Y) {
 			switch (transformRotation) {
 			case CLOCKWISE_180:
 				facingDirection = facingDirection.getOpposite();
@@ -392,15 +397,15 @@ public class SuperGlueEntity extends Entity implements SpecialEntityItemRequirem
 	}
 
 	@Override
-	public void fromTag(CompoundTag tag) {
-		readCustomDataFromTag(tag);
+	public void writeSpawnData(PacketByteBuf buffer) {
+		CompoundTag compound = new CompoundTag();
+		writeCustomDataToTag(compound);
+		buffer.writeCompoundTag(compound);
 	}
 
 	@Override
-	public CompoundTag toTag(CompoundTag tag) {
-		CompoundTag compound = new CompoundTag();
-		writeCustomDataToTag(compound);
-		return super.toTag(tag);
+	public void readSpawnData(PacketByteBuf additionalData) {
+		readCustomDataFromTag(additionalData.readCompoundTag());
 	}
 
 	public Direction getFacingDirection() {
@@ -409,7 +414,7 @@ public class SuperGlueEntity extends Entity implements SpecialEntityItemRequirem
 
 	@Override
 	public ItemRequirement getRequiredItems() {
-		return new ItemRequirement(ItemRequirement.ItemUseType.DAMAGE, AllItems.SUPER_GLUE);
+		return new ItemRequirement(ItemUseType.DAMAGE, AllItems.SUPER_GLUE);
 	}
 
 	@Override

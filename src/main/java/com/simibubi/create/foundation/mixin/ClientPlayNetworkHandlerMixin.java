@@ -43,7 +43,7 @@ public class ClientPlayNetworkHandlerMixin {
 		return entity;
 	}
 
-	@Inject(at = @At(value = "INVOKE", target = "addEntity(ILnet/minecraft/entity/Entity;)V", shift = Shift.AFTER), method = "onEntitySpawn(Lnet/minecraft/network/packet/s2c/play/EntitySpawnS2CPacket;)V", locals = LocalCapture.CAPTURE_FAILHARD)
+	@Inject(at = @At(value = "INVOKE", target = "Lnet/minecraft/client/world/ClientWorld;addEntity(ILnet/minecraft/entity/Entity;)V", shift = Shift.AFTER), method = "onEntitySpawn(Lnet/minecraft/network/packet/s2c/play/EntitySpawnS2CPacket;)V", locals = LocalCapture.CAPTURE_FAILHARD)
 	public void afterAddEntity(EntitySpawnS2CPacket packet, CallbackInfo ci, double x, double y, double z, Entity entity) {
 		if (entity instanceof ExtraSpawnDataEntity) {
 			PacketByteBuf extraData = ((EntitySpawnS2CPacketExtensions) packet).getExtraDataBuf();

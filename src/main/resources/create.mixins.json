@@ -10,7 +10,8 @@
     "accessor.BiomeAccessAccessor",
     "accessor.CriteriaAccessor",
     "accessor.ItemAccessor",
-    "accessor.MinecraftServerAccessor"
+    "accessor.MinecraftServerAccessor",
+    "accessor.Vector3fAccessor"
   ],
   "client": [
     "BakedModelManagerMixin",

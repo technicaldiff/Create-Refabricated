@@ -43,11 +43,13 @@ public class Create implements ModInitializer  {
 		AllItems.register();
 		AllFluids.register();
 		AllTags.register();
-		AllPaletteBlocks.registerBlocks();
+		AllPaletteBlocks.register();
 		AllEntityTypes.register();
 		AllBlockEntities.register();
 		AllMovementBehaviours.register();
 		AllConfigs.register();
+
+		AllSoundEvents.register();
 
 		random = new Random();
 

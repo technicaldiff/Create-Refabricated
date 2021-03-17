@@ -3,13 +3,12 @@ package com.simibubi.create.foundation.utility;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.client.util.math.Vector3f;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Direction;
+import net.minecraft.util.math.Direction.Axis;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.math.Vec3i;
 
 public class MatrixStacker {
-
-	static Vec3d center = VecHelper.getCenterOf(BlockPos.ZERO);
+	static Vec3d center = VecHelper.getCenterOf(BlockPos.ORIGIN);
 	static MatrixStacker instance;
 
 	MatrixStack ms;
@@ -21,9 +20,9 @@ public class MatrixStacker {
 		return instance;
 	}
 
-	public MatrixStacker rotate(double angle, Direction.Axis axis) {
+	public MatrixStacker rotate(double angle, Axis axis) {
 		Vector3f vec =
-			axis == Direction.Axis.X ? Vector3f.POSITIVE_X : axis == Direction.Axis.Y ? Vector3f.POSITIVE_Y : Vector3f.POSITIVE_Z;
+			axis == Axis.X ? Vector3f.POSITIVE_X : axis == Axis.Y ? Vector3f.POSITIVE_Y : Vector3f.POSITIVE_Z;
 		return multiply(vec, angle);
 	}
 
@@ -78,5 +77,4 @@ public class MatrixStacker {
 		ms.multiply(axis.getDegreesQuaternion((float) angle));
 		return this;
 	}
-
 }
