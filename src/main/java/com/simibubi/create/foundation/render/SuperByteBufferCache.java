@@ -12,6 +12,7 @@ import org.lwjgl.opengl.GL11;
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
 import com.simibubi.create.AllBlockPartials;
+import com.simibubi.create.foundation.block.render.HiddenBakedModel;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.client.MinecraftClient;
@@ -112,7 +113,9 @@ public class SuperByteBufferCache {
 		BufferBuilder builder = new BufferBuilder(512);
 
 		builder.begin(GL11.GL_QUADS, VertexFormats.POSITION_COLOR_TEXTURE_LIGHT_NORMAL);
-		blockRenderer.render(mc.world, model, referenceState, BlockPos.ORIGIN.up(255), ms, builder, true, mc.world.random, 42, OverlayTexture.DEFAULT_UV);
+		HiddenBakedModel.withUnhidden(model, () -> {
+			blockRenderer.render(mc.world, model, referenceState, BlockPos.ORIGIN.up(255), ms, builder, true, mc.world.random, 42, OverlayTexture.DEFAULT_UV);
+		});
 		builder.end();
 		return builder;
 	}

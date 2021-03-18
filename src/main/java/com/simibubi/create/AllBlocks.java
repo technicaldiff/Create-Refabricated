@@ -1,5 +1,9 @@
 package com.simibubi.create;
 
+import java.util.function.Consumer;
+import java.util.function.Function;
+import java.util.function.Supplier;
+
 import com.simibubi.create.content.AllSections;
 import com.simibubi.create.content.contraptions.components.clock.CuckooClockBlock;
 import com.simibubi.create.content.contraptions.components.crank.HandCrankBlock;
@@ -20,6 +24,7 @@ import com.simibubi.create.content.contraptions.components.turntable.TurntableBl
 import com.simibubi.create.content.contraptions.components.waterwheel.WaterWheelBlock;
 import com.simibubi.create.content.contraptions.relays.advanced.GantryShaftBlock;
 import com.simibubi.create.content.contraptions.relays.belt.BeltBlock;
+import com.simibubi.create.content.contraptions.relays.elementary.BracketedKineticBlockModel;
 import com.simibubi.create.content.contraptions.relays.elementary.CogWheelBlock;
 import com.simibubi.create.content.contraptions.relays.elementary.CogwheelBlockItem;
 import com.simibubi.create.content.contraptions.relays.elementary.ShaftBlock;
@@ -34,15 +39,12 @@ import com.simibubi.create.content.logistics.block.mechanicalArm.ArmBlock;
 import com.simibubi.create.content.logistics.block.mechanicalArm.ArmItem;
 import com.simibubi.create.content.logistics.block.redstone.AnalogLeverBlock;
 import com.simibubi.create.content.logistics.block.redstone.RedstoneLinkBlock;
-import com.simibubi.create.foundation.block.render.CustomRenderedItemModel;
 import com.simibubi.create.foundation.config.StressConfigDefaults;
 import com.simibubi.create.foundation.data.BuilderConsumers;
 import com.simibubi.create.foundation.data.SharedProperties;
 import com.simibubi.create.foundation.item.TooltipHelper;
-import com.simibubi.create.foundation.render.CustomItemRendererRegistry;
 
 import me.pepperbell.reghelper.BlockRegBuilder;
-import me.pepperbell.reghelper.ItemRegBuilder;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.fabricmc.fabric.api.tool.attribute.v1.FabricToolTags;
@@ -53,15 +55,10 @@ import net.minecraft.block.Blocks;
 import net.minecraft.block.MaterialColor;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.model.BakedModel;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.util.DyeColor;
 import net.minecraft.util.Identifier;
-
-import java.util.function.Consumer;
-import java.util.function.Function;
-import java.util.function.Supplier;
 
 public class AllBlocks {
 	private static AllSections currentSection;
@@ -97,7 +94,7 @@ public class AllBlocks {
 		.initialProperties(SharedProperties::stone)
 		.consume(StressConfigDefaults.noImpactConsumer())
 //		.blockstate(BlockStateGen.axisBlockProvider(false))
-//		.onRegister(blockModel(() -> BracketedKineticBlockModel::new))
+		.onRegister(blockModel(() -> BracketedKineticBlockModel::new))
 		.simpleItem()
 		.register();
 
@@ -106,7 +103,7 @@ public class AllBlocks {
 		.consume(StressConfigDefaults.noImpactConsumer())
 		.properties(p -> p.sounds(BlockSoundGroup.WOOD))
 //		.blockstate(BlockStateGen.axisBlockProvider(false))
-//		.onRegister(blockModel(() -> BracketedKineticBlockModel::new))
+		.onRegister(blockModel(() -> BracketedKineticBlockModel::new))
 		.item(CogwheelBlockItem::new)
 		.build()
 		.register();
@@ -116,7 +113,7 @@ public class AllBlocks {
 		.properties(p -> p.sounds(BlockSoundGroup.WOOD))
 		.consume(StressConfigDefaults.noImpactConsumer())
 //		.blockstate(BlockStateGen.axisBlockProvider(false))
-//		.onRegister(blockModel(() -> BracketedKineticBlockModel::new))
+		.onRegister(blockModel(() -> BracketedKineticBlockModel::new))
 		.item(CogwheelBlockItem::new)
 		.build()
 		.register();

@@ -8,6 +8,7 @@ import java.util.Random;
 import org.jetbrains.annotations.Nullable;
 import org.lwjgl.system.MemoryStack;
 
+import com.simibubi.create.foundation.block.render.HiddenBakedModel;
 import com.simibubi.create.foundation.renderState.SuperRenderTypeBuffer;
 
 import net.minecraft.block.BlockState;
@@ -59,7 +60,9 @@ public abstract class GhostBlockRenderer {
 			BlockPos pos = params.pos;
 			ms.translate(pos.getX(), pos.getY(), pos.getZ());
 
-			dispatcher.getModelRenderer().render(ms.peek(), vb, params.state, model, 1f, 1f, 1f, 0xF000F0, OverlayTexture.DEFAULT_UV);
+			HiddenBakedModel.withUnhidden(model, () -> {
+				dispatcher.getModelRenderer().render(ms.peek(), vb, params.state, model, 1f, 1f, 1f, 0xF000F0, OverlayTexture.DEFAULT_UV);
+			});
 
 			ms.pop();
 		}

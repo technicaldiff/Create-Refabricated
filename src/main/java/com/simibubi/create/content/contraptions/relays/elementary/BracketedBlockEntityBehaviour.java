@@ -74,7 +74,7 @@ public class BracketedBlockEntityBehaviour extends BlockEntityBehaviour {
 			blockEntity.notifyUpdate();
 	}
 
-	public boolean isBacketPresent() {
+	public boolean isBracketPresent() {
 		return getBracket() != Blocks.AIR.getDefaultState();
 	}
 
