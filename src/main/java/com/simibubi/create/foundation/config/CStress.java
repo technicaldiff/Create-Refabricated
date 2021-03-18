@@ -1,8 +1,6 @@
 package com.simibubi.create.foundation.config;
 
 public class CStress {
-	// "[in Stress Units]"
-	// "Configure the individual stress impact of mechanical blocks. Note that this cost is doubled for every speed increase it receives."
 	float mechanicalBearing = 4.0f;
 	float clockworkBearing = 4.0f;
 	float turntable = 4.0f;
@@ -41,6 +39,7 @@ public class CStress {
 	float shaft = 0.0f;
 	// "[in Stress Units]"
 	// "Configure how much stress a source can accommodate for."
+	// YTG1234: What's that comment for?
 	float creativeMotor = 16384.0f;
 	float furnaceEngine = 1024.0f;
 	float handCrank = 8.0f;

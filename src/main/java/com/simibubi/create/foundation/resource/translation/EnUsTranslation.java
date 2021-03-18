@@ -18,11 +18,13 @@ public final class EnUsTranslation extends CreateTranslation {
 		addRecipes(lang);
 		addSchematics(lang);
 		addServer(lang);
+		addStress(lang);
 	}
 
 	private static void addClient(JLang lang) {
 		final String CLIENT = "client";
 		text(lang, CLIENT, "Client");
+		tooltip(lang, CLIENT, "Client-only settings - If you're looking for general settings, look inside your worlds serverconfig folder!");
 
 		// Option Names
 		text(lang, "enableTooltips", "Enable Tooltips", CLIENT);
@@ -36,7 +38,6 @@ public final class EnUsTranslation extends CreateTranslation {
 		text(lang, "smoothPlacementIndicator", "Smooth Placement Indicator", CLIENT);
 
 		// Tooltips
-		tooltip(lang, CLIENT, "Client-only settings - If you're looking for general settings, look inside your worlds serverconfig folder!");
 		tooltip(lang, "enableTooltips", "Show item descriptions on Shift and controls on Ctrl.", CLIENT);
 		tooltip(lang, "enableOverstressedTooltip", "Display a tooltip when looking at overstressed components.", CLIENT);
 		tooltip(lang, "explainRenderErrors", "Log a stack-trace when rendering issues happen within a moving contraption.", CLIENT);
@@ -222,5 +223,23 @@ public final class EnUsTranslation extends CreateTranslation {
 
 		text(lang, "tickrateSyncTimer", "Tick Rate Sync Timer", SERVER);
 		tooltip(lang, "tickrateSyncTimer", "[in Ticks] The amount of time a server waits before sending out tickrate synchronization packets.\nThese packets help animations to be more accurate when tps is below 20.", SERVER);
+	}
+
+	private static void addStress(JLang lang) {
+		final String STRESS = "stress";
+		text(lang, STRESS, "Stress");
+		tooltip(lang, STRESS, "[in Stress Units]\nConfigure the individual stress impact of mechanical blocks. Note that this cost is doubled for every speed increase it receives.");
+
+		text(lang, "mechanicalBearing", "Mechanical Bearing", STRESS);
+		text(lang, "clockworkBearing", "Clockwork Bearing", STRESS);
+		text(lang, "turntable", "Turntable", STRESS);
+		text(lang, "sequencedGearshift", "Sequenced Gearshift", STRESS);
+		text(lang, "stickyMechanicalPiston", "Sticky Mechanical Piston", STRESS);
+		text(lang, "crushingWheel", "Crushing Wheel", STRESS);
+		text(lang, "mechanicalArm", "Mechanical Arm", STRESS);
+		text(lang, "ropePulley", "Rope Pulley", STRESS);
+		text(lang, "mechanicalCrafter", "Mechanical Crafter", STRESS);
+		text(lang, "mechanicalDrill", "Mechanical Drill", STRESS);
+		text(lang, "flywheel", "Flywheel", STRESS);
 	}
 }
