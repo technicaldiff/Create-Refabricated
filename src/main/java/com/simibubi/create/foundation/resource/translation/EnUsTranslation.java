@@ -16,6 +16,7 @@ public final class EnUsTranslation extends CreateTranslation {
 		addKinetics(lang);
 		addLogistics(lang);
 		addRecipes(lang);
+		addSchematics(lang);
 	}
 
 	private static void addClient(JLang lang) {
@@ -187,5 +188,30 @@ public final class EnUsTranslation extends CreateTranslation {
 		tooltip(lang, "lightSourceCountForRefinedRadiance", "The amount of Light sources destroyed before Chromatic Compound turns into Refined Radiance.", RECIPES);
 		tooltip(lang, "enableRefinedRadianceRecipe", "Allow the standard in-world Refined Radiance recipes.", RECIPES);
 		tooltip(lang, "enableShadowSteelRecipe", "Allow the standard in-world Shadow Steel recipe.", RECIPES);
+	}
+
+	private static void addSchematics(JLang lang) {
+		final String SCHEMATICS = "schematics";
+		text(lang, SCHEMATICS, "Schematics");
+
+		// Option Names
+		text(lang, "maxSchematics", "Maximum Schematics", SCHEMATICS);
+		text(lang, "maxTotalSchematicSize", "Maximum Total Schematic Size", SCHEMATICS);
+		text(lang, "maxSchematicPacketSize", "Maximum Schematic Packet Size", SCHEMATICS);
+		text(lang, "schematicIdleTimeout", "Schematic Idle Timeout", SCHEMATICS);
+		text(lang, "schematicannonDelay", "Schematicannon Delay", SCHEMATICS);
+		text(lang, "schematicannonSkips", "Schematicannon Skips", SCHEMATICS);
+		text(lang, "schematicannonGunpowderWorth", "Schematicannon Gunpowder Worth", SCHEMATICS);
+		text(lang, "schematicannonFuelUsage", "Schematicannon FuelUsage", SCHEMATICS);
+
+		// Tooltips
+		tooltip(lang, "maxSchematics", "The amount of Schematics a player can upload until previous ones are overwritten.", SCHEMATICS);
+		tooltip(lang, "maxTotalSchematicSize", "[in Kilobytes] The maximum allowed file size of uploaded Schematics.", SCHEMATICS);
+		tooltip(lang, "maxSchematicPacketSize", "[in Bytes] The maximum packet size uploaded Schematics are split into.", SCHEMATICS);
+		tooltip(lang, "schematicIdleTimeout", "Amount of game ticks without new packets arriving until an active schematic upload process is discarded.", SCHEMATICS);
+		tooltip(lang, "schematicannonDelay", "Amount of game ticks between shots of the cannon.\nHigher => Slower", SCHEMATICS);
+		tooltip(lang, "schematicannonSkips", "Amount of block positions per tick scanned by a running cannon.\nHigher => Faster", SCHEMATICS);
+		tooltip(lang, "schematicannonGunpowderWorth", "% of Schematicannon's Fuel filled by 1 Gunpowder.", SCHEMATICS);
+		tooltip(lang, "schematicannonFuelUsage", "% of Schematicannon's Fuel used for each fired block.", SCHEMATICS);
 	}
 }
