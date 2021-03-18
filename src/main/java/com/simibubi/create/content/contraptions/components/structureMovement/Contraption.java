@@ -16,6 +16,7 @@ import com.simibubi.create.content.contraptions.components.structureMovement.pul
 import com.simibubi.create.content.contraptions.relays.advanced.GantryShaftBlock;
 import com.simibubi.create.foundation.render.backend.light.EmptyLighter;
 import com.simibubi.create.foundation.utility.*;
+import com.simibubi.create.foundation.utility.worldWrappers.WrappedWorld;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.util.NbtType;
@@ -800,15 +801,16 @@ public abstract class Contraption {
 				BlockEntity be = BlockEntity.createFromTag(info.state, tag);
 				if (be == null)
 					return;
-				/*be.setLocation(new WrappedWorld(world) { //TODO POSITION THING IDK IF CORRECT
+				be.setLocation(new WrappedWorld(world) {
 
-				 @Override public BlockState getBlockState(BlockPos pos) {
-				 if (!pos.equals(be.getPos()))
-				 return Blocks.AIR.getDefaultState();
-				 return info.state;
-				 }
+					@Override
+					public BlockState getBlockState(BlockPos pos) {
+						if (!pos.equals(be.getPos()))
+							return Blocks.AIR.getDefaultState();
+						return info.state;
+					}
 
-				 }, be.getPos());*/
+			 	}, be.getPos());
 				if (be instanceof KineticBlockEntity)
 					((KineticBlockEntity) be).setSpeed(0);
 				be.getCachedState();
