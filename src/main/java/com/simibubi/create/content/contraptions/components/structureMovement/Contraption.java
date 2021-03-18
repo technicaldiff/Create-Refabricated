@@ -34,6 +34,7 @@ import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
+import net.minecraft.world.chunk.BiMapPalette;
 import org.apache.commons.lang3.tuple.MutablePair;
 import org.apache.commons.lang3.tuple.Pair;
 import org.jetbrains.annotations.Nullable;
@@ -742,17 +743,25 @@ public abstract class Contraption {
 
 	private CompoundTag writeBlocksCompound() {
 		CompoundTag compound = new CompoundTag();
+		//todo: oh no
+		//BiMapPalette<BlockState> palette = new BiMapPalette<>(GameData.getBlockStateIDMap(), 16,
+		// (i, s) -> {throw new IllegalStateException("Palette Map index exceeded maximum");},
+		// NbtHelper::readBlockState, NbtHelper::writeBlockState);
 		ListTag blockList = new ListTag();
 
 		for (Structure.StructureBlockInfo block : this.blocks.values()) {
+			//int id = palette.idFor(block.state);
 			CompoundTag c = new CompoundTag();
 			c.putLong("Pos", block.pos.asLong());
+			//c.putInt("State", id);
 			c.put("State", (Tag) BlockState.CODEC.encodeStart(NbtOps.INSTANCE, block.state).get());
 			if (block.tag != null)
 				c.put("Data", block.tag);
 			blockList.add(c);
 		}
-
+		ListTag paletteNBT = new ListTag();
+		//palette.writePaletteToList(paletteNBT);
+		compound.put("Palette", paletteNBT);
 		compound.put("BlockList", blockList);
 
 		return compound;

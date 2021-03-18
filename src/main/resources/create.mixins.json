@@ -11,7 +11,8 @@
     "accessor.CriteriaAccessor",
     "accessor.ItemAccessor",
     "accessor.MinecraftServerAccessor",
-    "accessor.Vector3fAccessor"
+    "accessor.Vector3fAccessor",
+		"accessor.ServerPlayNetworkHandlerAccessor"
   ],
   "client": [
     "BakedModelManagerMixin",

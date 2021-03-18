@@ -148,7 +148,7 @@ public abstract class Outline {
 			.overlay(OverlayTexture.DEFAULT_UV)
 			.light(j, k)
 			.normal(peek.getNormal(), xOffset, yOffset, zOffset)
-			.next(); // TODO could be wrong?
+			.next();
 
 		transformNormals = null;
 	}

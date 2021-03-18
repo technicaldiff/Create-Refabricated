@@ -57,27 +57,28 @@ public interface PlacementHelper {
 
 	//only gets called when placementOffset is successful
 	default void renderAt(BlockPos pos, BlockState state, BlockHitResult ray, PlacementOffset offset) {
+		// note: this comment is from upstream
 		//IPlacementHelper.renderArrow(VecHelper.getCenterOf(pos), VecHelper.getCenterOf(offset.getPos()), ray.getFace());
 
 		displayGhost(offset);
 	}
 
-	/**static void renderArrow(Vec3d center, Vec3d target, Direction arrowPlane) { TODO render arrow
+	static void renderArrow(Vec3d center, Vec3d target, Direction arrowPlane) {
 		renderArrow(center, target, arrowPlane, 1D);
 	}
 
 	static void renderArrow(Vec3d center, Vec3d target, Direction arrowPlane, double distanceFromCenter) {
 		Vec3d direction = target.subtract(center).normalize();
-		Vec3d facing = new Vec3d(arrowPlane.getDirectionVec());
+		Vec3d facing = Vec3d.of(arrowPlane.getVector());
 		Vec3d start = center.add(direction);
-		Vec3d offset = direction.scale(distanceFromCenter-1);
-		Vec3d offsetA = direction.crossProduct(facing).normalize().scale(.25);
-		Vec3d offsetB = facing.crossProduct(direction).normalize().scale(.25);
-		Vec3d endA = center.add(direction.scale(.75)).add(offsetA);
-		Vec3d endB = center.add(direction.scale(.75)).add(offsetB);
+		Vec3d offset = direction.multiply(distanceFromCenter-1);
+		Vec3d offsetA = direction.crossProduct(facing).normalize().multiply(.25);
+		Vec3d offsetB = facing.crossProduct(direction).normalize().multiply(.25);
+		Vec3d endA = center.add(direction.multiply(.75)).add(offsetA);
+		Vec3d endB = center.add(direction.multiply(.75)).add(offsetB);
 		CreateClient.outliner.showLine("placementArrowA" + center + target, start.add(offset), endA.add(offset)).lineWidth(1/16f);
 		CreateClient.outliner.showLine("placementArrowB" + center + target, start.add(offset), endB.add(offset)).lineWidth(1/16f);
-	}*/
+	}
 
 	default void displayGhost(PlacementOffset offset) {
 		if (!offset.hasGhostState())

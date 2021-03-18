@@ -1,10 +1,12 @@
 package com.simibubi.create.content.contraptions.components.fan;
 
+import com.simibubi.create.foundation.mixin.accessor.ServerPlayNetworkHandlerAccessor;
 import com.simibubi.create.foundation.utility.VecHelper;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.ShapeContext;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.ItemEntity;
+import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.*;
 import net.minecraft.util.shape.VoxelShape;
@@ -84,8 +86,8 @@ public class AirCurrent {
 			entity.setVelocity(previousMotion.add(new Vec3d(xIn, yIn, zIn).multiply(1 / 8f)));
 			entity.fallDistance = 0;
 
-			/*if (entity instanceof ServerPlayerEntity)
-				((ServerPlayerEntity) entity).networkHandler.floatingTicks = 0;*/
+			if (entity instanceof ServerPlayerEntity)
+				((ServerPlayNetworkHandlerAccessor) ((ServerPlayerEntity) entity).networkHandler).setFloatingTicks(0);
 
 			entityDistance -= .5f;
 			/*InWorldProcessing.Type processingType = getSegmentAt((float) entityDistance);

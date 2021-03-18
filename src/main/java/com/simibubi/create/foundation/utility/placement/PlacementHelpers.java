@@ -66,7 +66,7 @@ public class PlacementHelpers {
 
 		if (mc.player == null)
 			return;
-
+								   // note: this comment is from upstream
 		if (mc.player.isSneaking())//for now, disable all helpers when sneaking TODO add helpers that respect sneaking but still show position
 			return;
 
@@ -119,7 +119,7 @@ public class PlacementHelpers {
 			lastTarget = target;
 	}
 
-	/**@SubscribeEvent TODO Render Placement Indicator
+	/*@SubscribeEvent TODO Render Placement Indicator
 	@Environment(EnvType.CLIENT)
 	public static void onRender(RenderGameOverlayEvent.Pre event) {
 		if (event.getType() != RenderGameOverlayEvent.ElementType.CROSSHAIRS)
@@ -141,7 +141,7 @@ public class PlacementHelpers {
 			//float x = screenX;
 			//x -= mc.fontRenderer.getStringWidth(text)/2f - 0.25f;
 
-			float progress = Math.min(animationTick / 10f/* + event.getPartialTicks()*//**, 1f);
+			float progress = Math.min(animationTick / 10f/* + event.getPartialTicks()*//*, 1f);
 			//int opacity = ((int) (255 * (progress * progress))) << 24;
 
 			//mc.fontRenderer.drawString(text, x, y, 0xFFFFFF | opacity);
@@ -151,7 +151,7 @@ public class PlacementHelpers {
 		}
 	}*/
 
-	/**@Environment(EnvType.CLIENT)
+	/*@Environment(EnvType.CLIENT)
 	private static void drawDirectionIndicator(float partialTicks, float centerX, float centerY, float progress) {
 		float r = .8f;
 		float g = .8f;
@@ -195,7 +195,7 @@ public class PlacementHelpers {
 			textured(centerX, centerY, a, snappedAngle);
 	}*/
 
-	/**private static void fadedArrow(float centerX, float centerY, float r, float g, float b, float a, float length, float snappedAngle) {
+	/*private static void fadedArrow(float centerX, float centerY, float r, float g, float b, float a, float length, float snappedAngle) {
 		RenderSystem.pushMatrix();
 		RenderSystem.disableTexture();
 		RenderSystem.enableBlend();
@@ -229,7 +229,7 @@ public class PlacementHelpers {
 		RenderSystem.popMatrix();
 	}*/
 
-	/**private static void textured(float centerX, float centerY, float alpha, float snappedAngle) {
+	/*private static void textured(float centerX, float centerY, float alpha, float snappedAngle) {
 		RenderSystem.pushMatrix();
 		RenderSystem.enableTexture();
 		//RenderSystem.disableTexture();
