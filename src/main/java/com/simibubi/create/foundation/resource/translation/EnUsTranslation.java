@@ -266,5 +266,11 @@ public final class EnUsTranslation extends CreateTranslation {
 		text(lang, "speedometer", "Speedometer", STRESS);
 		text(lang, "millstone", "Millstone", STRESS);
 		text(lang, "shaft", "Shaft", STRESS);
+		text(lang, "creativeMotor", "Creative Motor", STRESS);
+		text(lang, "furnaceEngine", "Furnace Engine", STRESS);
+		text(lang, "handCrank", "Hand Crank", STRESS);
+		text(lang, "windmillBearing", "Windmill Bearing", STRESS);
+		text(lang, "encasedFanSource", "Encased Fan Source", STRESS);
+		text(lang, "waterWheel", "Water Wheel", STRESS);
 	}
 }
