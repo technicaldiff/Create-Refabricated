@@ -17,6 +17,7 @@ public final class EnUsTranslation extends CreateTranslation {
 		addLogistics(lang);
 		addRecipes(lang);
 		addSchematics(lang);
+		addServer(lang);
 	}
 
 	private static void addClient(JLang lang) {
@@ -213,5 +214,13 @@ public final class EnUsTranslation extends CreateTranslation {
 		tooltip(lang, "schematicannonSkips", "Amount of block positions per tick scanned by a running cannon.\nHigher => Faster", SCHEMATICS);
 		tooltip(lang, "schematicannonGunpowderWorth", "% of Schematicannon's Fuel filled by 1 Gunpowder.", SCHEMATICS);
 		tooltip(lang, "schematicannonFuelUsage", "% of Schematicannon's Fuel used for each fired block.", SCHEMATICS);
+	}
+
+	private static void addServer(JLang lang) {
+		final String SERVER = "server";
+		text(lang, SERVER, "Server");
+
+		text(lang, "tickrateSyncTimer", "Tick Rate Sync Timer", SERVER);
+		tooltip(lang, "tickrateSyncTimer", "[in Ticks] The amount of time a server waits before sending out tickrate synchronization packets.\nThese packets help animations to be more accurate when tps is below 20.", SERVER);
 	}
 }
