@@ -9,6 +9,11 @@ import com.simibubi.create.content.contraptions.components.fan.EncasedFanBlockEn
 import com.simibubi.create.content.contraptions.components.fan.EncasedFanRenderer;
 import com.simibubi.create.content.contraptions.components.fan.FanInstance;
 import com.simibubi.create.content.contraptions.components.fan.NozzleBlockEntity;
+import com.simibubi.create.content.contraptions.components.flywheel.FlyWheelInstance;
+import com.simibubi.create.content.contraptions.components.flywheel.FlywheelBlockEntity;
+import com.simibubi.create.content.contraptions.components.flywheel.FlywheelRenderer;
+import com.simibubi.create.content.contraptions.components.flywheel.engine.EngineRenderer;
+import com.simibubi.create.content.contraptions.components.flywheel.engine.FurnaceEngineBlockEntity;
 import com.simibubi.create.content.contraptions.components.motor.CreativeMotorBlockEntity;
 import com.simibubi.create.content.contraptions.components.motor.CreativeMotorRenderer;
 import com.simibubi.create.content.contraptions.components.structureMovement.bearing.BearingRenderer;
@@ -297,7 +302,7 @@ public class AllBlockEntities {
 	public static final BlockEntityType<PortableFluidInterfaceBlockEntity> PORTABLE_FLUID_INTERFACE = createBuilder("portable_fluid_interface", PortableFluidInterfaceBlockEntity::new)
 		.validBlocks(AllBlocks.PORTABLE_FLUID_INTERFACE)
 		.renderer(() -> PortableStorageInterfaceRenderer::new)
-		.register();
+		.register();*/
 
 	public static final BlockEntityType<FlywheelBlockEntity> FLYWHEEL = createBuilder("flywheel", FlywheelBlockEntity::new)
 		.validBlocks(AllBlocks.FLYWHEEL)
@@ -310,7 +315,7 @@ public class AllBlockEntities {
 		.renderer(() -> EngineRenderer::new)
 		.register();
 
-	public static final BlockEntityType<MillstoneBlockEntity> MILLSTONE = createBuilder("millstone", MillstoneBlockEntity::new)
+	/*public static final BlockEntityType<MillstoneBlockEntity> MILLSTONE = createBuilder("millstone", MillstoneBlockEntity::new)
 		.validBlocks(AllBlocks.MILLSTONE)
 		.renderer(() -> MillstoneRenderer::new)
 		.onRegister(MillStoneCogInstance::register)

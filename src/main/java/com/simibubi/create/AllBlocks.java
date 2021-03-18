@@ -10,6 +10,8 @@ import com.simibubi.create.content.contraptions.components.crank.HandCrankBlock;
 import com.simibubi.create.content.contraptions.components.crank.ValveHandleBlock;
 import com.simibubi.create.content.contraptions.components.fan.EncasedFanBlock;
 import com.simibubi.create.content.contraptions.components.fan.NozzleBlock;
+import com.simibubi.create.content.contraptions.components.flywheel.FlywheelBlock;
+import com.simibubi.create.content.contraptions.components.flywheel.engine.FurnaceEngineBlock;
 import com.simibubi.create.content.contraptions.components.motor.CreativeMotorBlock;
 import com.simibubi.create.content.contraptions.components.structureMovement.bearing.ClockworkBearingBlock;
 import com.simibubi.create.content.contraptions.components.structureMovement.bearing.MechanicalBearingBlock;
@@ -869,27 +871,27 @@ public class AllBlocks {
 		.blockstate(new SequencedGearshiftGenerator()::generate)
 		.item()
 		.transform(customItemModel())
-		.register();
+		.register();*/
 
 	public static final FlywheelBlock FLYWHEEL = createBuilder("flywheel", FlywheelBlock::new)
 		.initialProperties(SharedProperties::softMetal)
 		.properties(AbstractBlock.Settings::nonOpaque)
-		.transform(StressConfigDefaults.setNoImpact())
-		.blockstate(new FlywheelGenerator()::generate)
-		.item()
-		.transform(customItemModel())
+		.consume(StressConfigDefaults.noImpactConsumer())
+//		.blockstate(new FlywheelGenerator()::generate)
+		.simpleItem()
+//		.transform(customItemModel())
 		.register();
 
 	public static final FurnaceEngineBlock FURNACE_ENGINE = createBuilder("furnace_engine", FurnaceEngineBlock::new)
 		.initialProperties(SharedProperties::softMetal)
-		.tag(AllBlockTags.BRITTLE.tag)
-		.blockstate(BlockStateGen.horizontalBlockProvider(true))
-		.transform(StressConfigDefaults.setCapacity(1024.0))
-		.item()
-		.transform(customItemModel())
+//		.tag(AllBlockTags.BRITTLE.tag)
+//		.blockstate(BlockStateGen.horizontalBlockProvider(true))
+		.consume(StressConfigDefaults.capacityConsumer(1024.0))
+		.simpleItem()
+//		.transform(customItemModel())
 		.register();
 
-	public static final SpeedControllerBlock ROTATION_SPEED_CONTROLLER = createBuilder("rotation_speed_controller", SpeedControllerBlock::new)
+	/*public static final SpeedControllerBlock ROTATION_SPEED_CONTROLLER = createBuilder("rotation_speed_controller", SpeedControllerBlock::new)
 		.initialProperties(SharedProperties::softMetal)
 		.tag(AllBlockTags.SAFE_NBT.tag)
 		.transform(StressConfigDefaults.setNoImpact())
