@@ -11,6 +11,7 @@ import com.simibubi.create.AllBlockPartials;
 import com.simibubi.create.Create;
 import com.simibubi.create.CreateClient;
 import com.simibubi.create.content.contraptions.KineticDebugger;
+import com.simibubi.create.content.contraptions.components.structureMovement.ContraptionHandler;
 import com.simibubi.create.content.contraptions.components.structureMovement.chassis.ChassisRangeDisplay;
 import com.simibubi.create.content.contraptions.components.structureMovement.render.ContraptionRenderDispatcher;
 import com.simibubi.create.content.contraptions.components.turntable.TurntableHandler;
@@ -61,6 +62,7 @@ import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.registry.Registry;
+import net.minecraft.world.World;
 
 public class ClientEvents {
 	private static final String itemPrefix = "item." + Create.ID;
@@ -91,8 +93,12 @@ public class ClientEvents {
 		if (!isGameActive())
 			return;
 
+		World world = client.world;
+
 		AnimationTickHolder.tick();
 		FastRenderDispatcher.tick();
+
+		ContraptionHandler.tick(world);
 
 		ScreenOpener.tick();
 		BeltConnectorHandler.tick();
@@ -100,6 +106,7 @@ public class ClientEvents {
 		ScrollValueRenderer.tick();
 		ChassisRangeDisplay.tick();
 		KineticDebugger.tick();
+//		CollisionDebugger.tick();
 		PlacementHelpers.tick();
 		CreateClient.outliner.tickOutlines();
 		CreateClient.ghostBlocks.tickGhosts();
@@ -133,8 +140,8 @@ public class ClientEvents {
 		CreateClient.ghostBlocks.renderAll(ms, buffer);
 
 		CreateClient.outliner.renderOutlines(ms, buffer);
-		LightVolumeDebugger.render(ms, buffer);
-		CollisionDebugger.render(ms, buffer);
+//		LightVolumeDebugger.render(ms, buffer);
+//		CollisionDebugger.render(ms, buffer);
 		buffer.draw();
 		RenderSystem.enableCull();
 

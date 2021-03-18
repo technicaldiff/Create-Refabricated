@@ -95,10 +95,10 @@ public abstract class Contraption {
 		return contraption;
 	}
 
-	private static Structure.StructureBlockInfo readBlockInfo(CompoundTag blockListEntry, BlockState blockstate) {
+	private static Structure.StructureBlockInfo readBlockInfo(CompoundTag blockListEntry, BiMapPalette<BlockState> palette) {
 		return new Structure.StructureBlockInfo(
 			BlockPos.fromLong(blockListEntry.getLong("Pos")),
-			blockstate,
+			Objects.requireNonNull(palette.getByIndex(blockListEntry.getInt("State"))),
 			blockListEntry.contains("Data") ? blockListEntry.getCompound("Data") : null
 		);
 	}
@@ -743,24 +743,22 @@ public abstract class Contraption {
 
 	private CompoundTag writeBlocksCompound() {
 		CompoundTag compound = new CompoundTag();
-		//todo: oh no
-		//BiMapPalette<BlockState> palette = new BiMapPalette<>(GameData.getBlockStateIDMap(), 16,
-		// (i, s) -> {throw new IllegalStateException("Palette Map index exceeded maximum");},
-		// NbtHelper::readBlockState, NbtHelper::writeBlockState);
+		BiMapPalette<BlockState> palette = new BiMapPalette<>(Block.STATE_IDS, 16,
+		null/*(i, s) -> {throw new IllegalStateException("Palette Map index exceeded maximum");}*/,
+		NbtHelper::toBlockState, NbtHelper::fromBlockState);
 		ListTag blockList = new ListTag();
 
 		for (Structure.StructureBlockInfo block : this.blocks.values()) {
-			//int id = palette.idFor(block.state);
+			int id = palette.getIndex(block.state);
 			CompoundTag c = new CompoundTag();
 			c.putLong("Pos", block.pos.asLong());
-			//c.putInt("State", id);
-			c.put("State", (Tag) BlockState.CODEC.encodeStart(NbtOps.INSTANCE, block.state).get());
+			c.putInt("State", id);
 			if (block.tag != null)
 				c.put("Data", block.tag);
 			blockList.add(c);
 		}
 		ListTag paletteNBT = new ListTag();
-		//palette.writePaletteToList(paletteNBT);
+		palette.toTag(paletteNBT);
 		compound.put("Palette", paletteNBT);
 		compound.put("BlockList", blockList);
 
@@ -768,20 +766,23 @@ public abstract class Contraption {
 	}
 
 	private void readBlocksCompound(Tag compound, World world, boolean usePalettedDeserialization) {
+		BiMapPalette<BlockState> palette = null;
 		ListTag blockList;
 		if (usePalettedDeserialization) {
 			CompoundTag c = ((CompoundTag) compound);
+			palette = new BiMapPalette<>(Block.STATE_IDS, 16, null /*(i, s) -> {throw new IllegalStateException("Palette Map index exceeded maximum");}*/, NbtHelper::toBlockState, NbtHelper::fromBlockState);
+			palette.fromTag(c.getList("Palette", 10));
 
 			blockList = c.getList("BlockList", 10);
 		} else {
 			blockList = (ListTag) compound;
 		}
 
+		BiMapPalette<BlockState> finalPalette = palette;
 		blockList.forEach(e -> {
 			CompoundTag c = (CompoundTag) e;
 
-			Structure.StructureBlockInfo info = usePalettedDeserialization ? readBlockInfo(c,
-				BlockState.CODEC.decode(NbtOps.INSTANCE, c.get("State")).map(com.mojang.datafixers.util.Pair::getFirst).result().get()) : legacyReadBlockInfo(c);
+			Structure.StructureBlockInfo info = usePalettedDeserialization ? readBlockInfo(c, finalPalette) : legacyReadBlockInfo(c);
 
 			this.blocks.put(info.pos, info);
 

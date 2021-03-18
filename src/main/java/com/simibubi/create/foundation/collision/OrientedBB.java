@@ -67,6 +67,8 @@ public class OrientedBB {
 			.expand(extents.x, extents.y, extents.z);
 	}
 
+	// from upstream v v
+
 	/*
 	 * The following checks (edge-to-edge) need special separation logic. They are
 	 * not necessary as long as the obb is only rotated around one axis at a time

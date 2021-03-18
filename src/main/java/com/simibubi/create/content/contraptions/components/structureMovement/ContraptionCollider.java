@@ -1,6 +1,7 @@
 package com.simibubi.create.content.contraptions.components.structureMovement;
 
 import com.google.common.base.Predicates;
+import com.simibubi.create.AllBlocks;
 import com.simibubi.create.AllMovementBehaviours;
 import com.simibubi.create.content.contraptions.components.actors.BlockBreakingMovementBehaviour;
 import com.simibubi.create.content.contraptions.components.structureMovement.AbstractContraptionEntity.ContraptionRotationState;
@@ -8,6 +9,7 @@ import com.simibubi.create.content.contraptions.components.structureMovement.syn
 import com.simibubi.create.foundation.collision.ContinuousOBBCollider.ContinuousSeparationManifold;
 import com.simibubi.create.foundation.collision.Matrix3d;
 import com.simibubi.create.foundation.collision.OrientedBB;
+import com.simibubi.create.foundation.mixin.accessor.ServerPlayNetworkHandlerAccessor;
 import com.simibubi.create.foundation.networking.AllPackets;
 import com.simibubi.create.foundation.utility.Iterate;
 import com.simibubi.create.foundation.utility.VecHelper;
@@ -77,7 +79,7 @@ public class ContraptionCollider {
 				continue;
 
 			if (playerType == PlayerType.SERVER && entity instanceof ServerPlayerEntity) {
-				//((ServerPlayerEntity) entity).networkHandler.floatingTicks = 0;
+				((ServerPlayNetworkHandlerAccessor) ((ServerPlayerEntity) entity).networkHandler).setFloatingTicks(0);
 				continue;
 			}
 
@@ -253,7 +255,6 @@ public class ContraptionCollider {
 				limbSwing = 1.0F;
 			AllPackets.CHANNEL.sendToServer(new ClientMotionPacket(entityMotion, true, limbSwing));
 		}
-
 	}
 
 	/** From Entity#getAllowedMovement **/
@@ -426,9 +427,9 @@ public class ContraptionCollider {
 				}
 			}
 
-			/*if (AllBlocks.PULLEY_MAGNET.has(collidedState) && pos.equals(BlockPos.ORIGIN)
+			if (AllBlocks.PULLEY_MAGNET.getStateManager().getStates().contains(collidedState) && pos.equals(BlockPos.ORIGIN)
 				&& movementDirection == Direction.UP)
-				continue;*/
+				continue;
 			if (collidedState.getBlock() instanceof CocoaBlock)
 				continue;
 			if (!collidedState.getMaterial()

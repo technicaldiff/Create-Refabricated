@@ -62,7 +62,7 @@ public class OBBCollider {
 		if (diff > 0)
 			return true;
 
-//		boolean isBestSeperation = distance != 0 && -(diff) <= abs(bestSeparation.getValue());
+//		boolean isBestSeperation = distance != 0 && -(diff) <= abs(bestSeparation.getValue()); from upstream
 		boolean isBestSeperation = checkCount == 2; // Debug specific separations
 
 		if (isBestSeperation) {

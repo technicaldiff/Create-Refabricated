@@ -1,5 +1,8 @@
 package com.simibubi.create.events;
 
+import com.simibubi.create.content.contraptions.components.structureMovement.ContraptionHandler;
+import net.fabricmc.fabric.api.event.lifecycle.v1.ServerEntityEvents;
+import net.fabricmc.fabric.api.event.world.WorldTickCallback;
 import org.jetbrains.annotations.Nullable;
 
 import com.simibubi.create.Create;
@@ -25,6 +28,17 @@ public class CommonEvents {
 		ServerWorldEvents.UNLOAD.register(CommonEvents::onUnloadWorld);
 		ServerLifecycleEvents.SERVER_STARTED.register(CommonEvents::serverStarted);
 		AttackEntityCallback.EVENT.register(CommonEvents::onEntityAttackedByPlayer);
+		ServerEntityEvents.ENTITY_LOAD.register(CommonEvents::onEntityAdded);
+
+		WorldTickCallback.EVENT.register(CommonEvents::onWorldTick);
+	}
+
+	public static void onWorldTick(World world) {
+		ContraptionHandler.tick(world);
+	}
+
+	public static void onEntityAdded(Entity entity, ServerWorld world) {
+		ContraptionHandler.addSpawnedContraptionsToCollisionList(entity, world);
 	}
 
 	public static void onLoadWorld(MinecraftServer server, ServerWorld world) {

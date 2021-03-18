@@ -101,24 +101,26 @@ public class ContinuousOBBCollider extends OBBCollider {
 
 
 				if (abs(mf.stepSeparation) > abs(stepSeparation) && stepSeparation != 0) {
-//					CollisionDebugger.showDebugLine(Vector3d.ZERO, sepVec, 0x111155, "stepsep", -16);
+//					CollisionDebugger.showDebugLine(Vector3d.ZERO, sepVec, 0x111155, "stepsep", -16); from upstream
 					mf.stepSeparation = stepSeparation;
 				}
 
 			} else {
 				if (abs(mf.stepSeparation) > stepSeparation) {
 					mf.stepSeparation = stepSeparation;
-//					CollisionDebugger.showDebugLine(Vector3d.ZERO, stepSeparationVec, 0xff9999, "axis", -16);
+//					CollisionDebugger.showDebugLine(Vector3d.ZERO, stepSeparationVec, 0xff9999, "axis", -16); from upstream
 				}
 			}
 
-//			if (abs(mf.separation) < abs(stepSeparation) && stepSeparation != 0)
+//			if (abs(mf.separation) < abs(stepSeparation) && stepSeparation != 0) from upstream
 		}
 
 		if (isBestSeperation) {
 
 			mf.axis = normalizedAxis;
 			mf.separation = seperation;
+
+			// from upstream v v
 
 			// Visualize values
 //			if (CollisionDebugger.AABB != null) {

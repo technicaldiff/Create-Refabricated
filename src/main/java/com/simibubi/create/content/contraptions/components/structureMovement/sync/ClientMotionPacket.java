@@ -1,5 +1,6 @@
 package com.simibubi.create.content.contraptions.components.structureMovement.sync;
 
+import com.simibubi.create.foundation.mixin.accessor.ServerPlayNetworkHandlerAccessor;
 import com.simibubi.create.foundation.networking.AllPackets;
 import me.pepperbell.simplenetworking.C2SPacket;
 import me.pepperbell.simplenetworking.SimpleChannel;
@@ -49,7 +50,7 @@ public class ClientMotionPacket implements C2SPacket {
 			if (onGround) {
 				player.handleFallDamage(player.fallDistance, 1);
 				player.fallDistance = 0;
-				//player.networkHandler.floatingTicks = 0;
+				((ServerPlayNetworkHandlerAccessor) player.networkHandler).setFloatingTicks(0);
 			}
 			AllPackets.CHANNEL.sendToClientsTracking(new LimbSwingUpdatePacket(player.getEntityId(), player.getPos(), limbSwing), player);
 		});
