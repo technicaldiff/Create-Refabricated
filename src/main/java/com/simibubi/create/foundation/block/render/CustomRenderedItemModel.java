@@ -6,8 +6,8 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 import com.simibubi.create.Create;
-import com.simibubi.create.foundation.render.CustomItemRenderer;
 
+import net.fabricmc.fabric.api.client.rendering.v1.BuiltinItemRendererRegistry.DynamicItemRenderer;
 import net.minecraft.client.render.model.BakedModel;
 import net.minecraft.client.render.model.ModelLoader;
 import net.minecraft.client.render.model.ModelRotation;
@@ -16,7 +16,7 @@ import net.minecraft.util.Identifier;
 public abstract class CustomRenderedItemModel extends WrappedBakedModel {
 	protected String basePath;
 	protected Map<String, BakedModel> partials = new HashMap<>();
-	protected CustomItemRenderer renderer;
+	protected DynamicItemRenderer renderer;
 
 	public CustomRenderedItemModel(BakedModel template, String basePath) {
 		super(template);
@@ -28,11 +28,11 @@ public abstract class CustomRenderedItemModel extends WrappedBakedModel {
 		return partials.keySet().stream().map(this::getPartialModelLocation).collect(Collectors.toList());
 	}
 
-	public CustomItemRenderer getRenderer() {
+	public DynamicItemRenderer getRenderer() {
 		return renderer;
 	}
 
-	public abstract CustomItemRenderer createRenderer();
+	public abstract DynamicItemRenderer createRenderer();
 
 	@Override
 	public boolean isBuiltin() {

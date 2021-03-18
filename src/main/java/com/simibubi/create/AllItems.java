@@ -31,10 +31,10 @@ import com.simibubi.create.foundation.block.render.CustomRenderedItemModel;
 import com.simibubi.create.foundation.item.HiddenIngredientItem;
 import com.simibubi.create.foundation.item.TagDependentIngredientItem;
 import com.simibubi.create.foundation.item.TooltipHelper;
-import com.simibubi.create.foundation.render.CustomItemRendererRegistry;
 
 import me.pepperbell.reghelper.ItemRegBuilder;
 import net.fabricmc.api.EnvType;
+import net.fabricmc.fabric.api.client.rendering.v1.BuiltinItemRendererRegistry;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.client.render.model.BakedModel;
@@ -280,7 +280,7 @@ public class AllItems {
 		return b -> {
 			if (FabricLoader.getInstance().getEnvironmentType() == EnvType.CLIENT) {
 				b.onRegister(item -> {
-					CustomItemRendererRegistry.registerRenderer(item, supplier.get().apply(null).createRenderer());
+					BuiltinItemRendererRegistry.INSTANCE.register(item, supplier.get().apply(null).createRenderer());
 					CreateClient.getCustomRenderedItems().register(() -> item, supplier.get());
 				});
 			}

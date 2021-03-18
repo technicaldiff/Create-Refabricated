@@ -1,8 +1,8 @@
 package com.simibubi.create.content.curiosities.tools;
 
 import com.simibubi.create.foundation.block.render.CustomRenderedItemModel;
-import com.simibubi.create.foundation.render.CustomItemRenderer;
 
+import net.fabricmc.fabric.api.client.rendering.v1.BuiltinItemRendererRegistry.DynamicItemRenderer;
 import net.minecraft.client.render.model.BakedModel;
 
 public class DeforesterModel extends CustomRenderedItemModel {
@@ -12,7 +12,7 @@ public class DeforesterModel extends CustomRenderedItemModel {
 	}
 
 	@Override
-	public CustomItemRenderer createRenderer() {
+	public DynamicItemRenderer createRenderer() {
 		return new DeforesterItemRenderer();
 	}
 }
