@@ -247,10 +247,24 @@ public final class EnUsTranslation extends CreateTranslation {
 		text(lang, "deployer", "Deployer", STRESS);
 		text(lang, "gearbox", "Gearbox", STRESS);
 		text(lang, "mysteriousCuckooClock", "Mysterious Cuckoo Clock", STRESS);
-		text(lang, "stressometer", "Stress-o-meter", STRESS);
+		text(lang, "stressometer", "Stressometer", STRESS);
 		text(lang, "encasedChainDrive", "Encased Chain Drive", STRESS);
 		text(lang, "rotationSpeedController", "Rotation Speed Controller", STRESS);
 		text(lang, "belt", "Belt", STRESS);
 		text(lang, "cogwheel", "Cogwheel", STRESS);
+		text(lang, "mechanicalPump", "Mechanical Pump", STRESS);
+		text(lang, "mechanicalMixer", "Mechanical Mixer", STRESS);
+		text(lang, "andesiteEncasedShaft", "Andesite Encased Shaft", STRESS);
+		text(lang, "adjustableChainGearshift", "Adjustable Chain Gearshift", STRESS);
+		text(lang, "mechanicalPiston", "Mechanical Piston", STRESS);
+		text(lang, "clutch", "Clutch", STRESS);
+		text(lang, "mechanicalPress", "Mechanical Press", STRESS);
+		text(lang, "encasedFan", "Encased Fan", STRESS);
+		text(lang, "gearshift", "Gearshift", STRESS);
+		text(lang, "cuckooClock", "Cuckoo Clock", STRESS);
+		text(lang, "brassEncasedShaft", "Brass Encased Shaft", STRESS);
+		text(lang, "speedometer", "Speedometer", STRESS);
+		text(lang, "millstone", "Millstone", STRESS);
+		text(lang, "shaft", "Shaft", STRESS);
 	}
 }
