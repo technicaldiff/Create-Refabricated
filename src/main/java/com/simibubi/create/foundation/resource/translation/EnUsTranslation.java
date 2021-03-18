@@ -19,6 +19,7 @@ public final class EnUsTranslation extends CreateTranslation {
 		addSchematics(lang);
 		addServer(lang);
 		addStress(lang);
+		addWorldGen(lang);
 	}
 
 	private static void addClient(JLang lang) {
@@ -272,5 +273,12 @@ public final class EnUsTranslation extends CreateTranslation {
 		text(lang, "windmillBearing", "Windmill Bearing", STRESS);
 		text(lang, "encasedFanSource", "Encased Fan Source", STRESS);
 		text(lang, "waterWheel", "Water Wheel", STRESS);
+	}
+
+	private static void addWorldGen(JLang lang) {
+		final String WORLD_GEN = "worldGen";
+		text(lang, WORLD_GEN, "Worldgen");
+
+		// TODO Worldgen
 	}
 }

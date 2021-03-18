@@ -8,16 +8,6 @@ import net.minecraft.util.math.MathHelper;
 public class CWorldGen implements Validatable {
 	boolean disable = false; // "Prevents all worldgen added by Create from taking effect"
 
-	@Override
-	public void validate() throws ConfigData.ValidationException {
-		copperOreMinHeight = Math.max(copperOreMinHeight, 0);
-		copperOreMaxHeight = Math.max(copperOreMaxHeight, 0);
-		copperOreClusterSize = Math.max(copperOreClusterSize, 0);
-		copperOreFrequency = MathHelper.clamp(copperOreFrequency, 0f, 512f);
-		weatheredLimestoneMinHeight = Math.max(weatheredLimestoneMinHeight, 0);
-		// TODO: The rest of them
-	}
-
 	@ConfigEntry.Gui.PrefixText()
 	int copperOreMinHeight = 40; // min 0,
 
@@ -66,4 +56,14 @@ public class CWorldGen implements Validatable {
 	int scoriaMaxHeight = 10; // min 0,
 	int scoriaClusterSize = 128; // min 0,
 	float scoriaFrequency = 0.03125f; // 0.0 ~ 512.0, Amount of clusters generated per Chunk. >1 to spawn multiple. <1 to make it a chance. #  0 to disable.
+
+	@Override
+	public void validate() throws ConfigData.ValidationException {
+		copperOreMinHeight = Math.max(copperOreMinHeight, 0);
+		copperOreMaxHeight = Math.max(copperOreMaxHeight, 0);
+		copperOreClusterSize = Math.max(copperOreClusterSize, 0);
+		copperOreFrequency = MathHelper.clamp(copperOreFrequency, 0f, 512f);
+		weatheredLimestoneMinHeight = Math.max(weatheredLimestoneMinHeight, 0);
+		// TODO: The rest of them
+	}
 }
