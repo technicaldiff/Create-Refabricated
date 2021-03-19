@@ -8,6 +8,7 @@ import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.simibubi.create.Create;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.lwjgl.opengl.GL;
@@ -109,7 +110,7 @@ public class Backend {
     }
 
     public static void refresh() {
-        enabled = true; //TODO CONFIG AllConfigs.CLIENT.experimentalRendering.get() && !OptifineHandler.usingShaders();
+        enabled = Create.getConfig().client.experimentalRendering; //&& !OptifineHandler.usingShaders();
     }
 
     private static <P extends GlProgram, S extends ProgramSpec<P>> void loadProgram(ResourceManager manager, S programSpec) {

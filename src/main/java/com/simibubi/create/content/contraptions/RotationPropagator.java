@@ -6,8 +6,13 @@ import static net.minecraft.state.property.Properties.AXIS;
 import java.util.LinkedList;
 import java.util.List;
 
+import com.simibubi.create.AllBlocks;
+import com.simibubi.create.Create;
 import com.simibubi.create.content.contraptions.base.KineticBlockEntity;
 import com.simibubi.create.content.contraptions.base.Rotating;
+import com.simibubi.create.content.contraptions.relays.advanced.SpeedControllerBlock;
+import com.simibubi.create.content.contraptions.relays.advanced.SpeedControllerBlockEntity;
+import com.simibubi.create.content.contraptions.relays.elementary.CogWheelBlock;
 import com.simibubi.create.content.contraptions.relays.encased.DirectionalShaftHalvesBlockEntity;
 import com.simibubi.create.content.contraptions.relays.encased.SplitShaftBlockEntity;
 import com.simibubi.create.content.contraptions.relays.gearbox.GearboxBlockEntity;
@@ -119,12 +124,10 @@ public class RotationPropagator {
 		final BlockState stateTo = to.getCachedState();
 
 		// Rotation Speed Controller <-> Large Gear
-		/**if (isLargeCogToSpeedController(stateFrom, stateTo, to.getPos() TODO SPEED CONTROLLER CHECK THING
-		 .subtract(from.getPos())))
-		 return SpeedControllerTileEntity.getConveyedSpeed(from, to, true);
-		 if (isLargeCogToSpeedController(stateTo, stateFrom, from.getPos()
-		 .subtract(to.getPos())))
-		 return SpeedControllerTileEntity.getConveyedSpeed(to, from, false);*/
+		if (isLargeCogToSpeedController(stateFrom, stateTo, to.getPos().subtract(from.getPos())))
+	 		return SpeedControllerBlockEntity.getConveyedSpeed(from, to, true);
+		if (isLargeCogToSpeedController(stateTo, stateFrom, from.getPos().subtract(to.getPos())))
+		 	return SpeedControllerBlockEntity.getConveyedSpeed(to, from, false);
 
 		float rotationSpeedModifier = getRotationSpeedModifier(from, to);
 		return from.getTheoreticalSpeed() * rotationSpeedModifier;
@@ -179,8 +182,8 @@ public class RotationPropagator {
 		return true;
 	}
 
-	/*private static boolean isLargeCogToSpeedController(BlockState from, BlockState to, BlockPos diff) {
-		if (!isLargeCog(from) || !AllBlocks.ROTATION_SPEED_CONTROLLER.has(to))
+	private static boolean isLargeCogToSpeedController(BlockState from, BlockState to, BlockPos diff) {
+		if (!isLargeCog(from) || !AllBlocks.ROTATION_SPEED_CONTROLLER.getStateManager().getStates().contains(to))
 			return false;
 		if (!diff.equals(BlockPos.ZERO.down()))
 			return false;
@@ -190,7 +193,7 @@ public class RotationPropagator {
 		if (to.get(SpeedControllerBlock.HORIZONTAL_AXIS) == axis)
 			return false;
 		return true;
-	}*/
+	}
 
 	/**
 	 * Insert the added position to the kinetic network.
@@ -227,7 +230,7 @@ public class RotationPropagator {
 			boolean incompatible =
 				Math.signum(newSpeed) != Math.signum(speedOfNeighbour) && (newSpeed != 0 && speedOfNeighbour != 0);
 
-			boolean tooFast = Math.abs(newSpeed) > 1000; // TODO MAX ROTATION SPEED CONFIG AllConfigs.SERVER.kinetics.maxRotationSpeed.get();
+			boolean tooFast = Math.abs(newSpeed) > Create.getConfig().kinetics.maxRotationSpeed;
 			boolean speedChangedTooOften = currentTE.getFlickerScore() > MAX_FLICKER_SCORE;
 			if (tooFast || speedChangedTooOften) {
 				world.removeBlock(pos, true);

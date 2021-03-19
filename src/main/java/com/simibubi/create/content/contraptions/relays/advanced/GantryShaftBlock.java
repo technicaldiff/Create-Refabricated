@@ -268,7 +268,7 @@ public class GantryShaftBlock extends DirectionalKineticBlock {
 
 		@Override
 		public Predicate<ItemStack> getItemPredicate() {
-			return s -> AllBlocks.GANTRY_SHAFT.asItem().getDefaultStack() == s;
+			return s -> s.isItemEqualIgnoreDamage(AllBlocks.GANTRY_SHAFT.asItem().getDefaultStack());
 		}
 
 		@Override

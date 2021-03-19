@@ -25,6 +25,7 @@ import com.simibubi.create.content.contraptions.components.structureMovement.pul
 import com.simibubi.create.content.contraptions.components.turntable.TurntableBlock;
 import com.simibubi.create.content.contraptions.components.waterwheel.WaterWheelBlock;
 import com.simibubi.create.content.contraptions.relays.advanced.GantryShaftBlock;
+import com.simibubi.create.content.contraptions.relays.advanced.SpeedControllerBlock;
 import com.simibubi.create.content.contraptions.relays.belt.BeltBlock;
 import com.simibubi.create.content.contraptions.relays.elementary.BracketedKineticBlockModel;
 import com.simibubi.create.content.contraptions.relays.elementary.CogWheelBlock;
@@ -32,6 +33,7 @@ import com.simibubi.create.content.contraptions.relays.elementary.CogwheelBlockI
 import com.simibubi.create.content.contraptions.relays.elementary.ShaftBlock;
 import com.simibubi.create.content.contraptions.relays.encased.ClutchBlock;
 import com.simibubi.create.content.contraptions.relays.encased.GearshiftBlock;
+import com.simibubi.create.content.contraptions.relays.gauge.GaugeBlock;
 import com.simibubi.create.content.contraptions.relays.gearbox.GearboxBlock;
 import com.simibubi.create.content.logistics.block.diodes.AdjustableRepeaterBlock;
 import com.simibubi.create.content.logistics.block.diodes.PoweredLatchBlock;
@@ -359,25 +361,25 @@ public class AllBlocks {
 		.blockstate((c, p) -> BlockStateGen.simpleBlock(c, p, AssetLookup.forPowered(c, p)))
 		.item()
 		.transform(customItemModel("_", "block"))
-		.register();
+		.register();*/
 
 	public static final GaugeBlock SPEEDOMETER = createBuilder("speedometer", GaugeBlock::speed)
 		.initialProperties(SharedProperties::wooden)
-		.transform(StressConfigDefaults.setNoImpact())
-		.blockstate(new GaugeGenerator()::generate)
-		.item()
-		.transform(ModelGen.customItemModel("gauge", "_", "item"))
+		.consume(StressConfigDefaults.noImpactConsumer())
+//		.blockstate(new GaugeGenerator()::generate)
+		.simpleItem()
+//		.transform(ModelGen.customItemModel("gauge", "_", "item"))
 		.register();
 
 	public static final GaugeBlock STRESSOMETER = createBuilder("stressometer", GaugeBlock::stress)
 		.initialProperties(SharedProperties::wooden)
-		.transform(StressConfigDefaults.setNoImpact())
-		.blockstate(new GaugeGenerator()::generate)
-		.item()
-		.transform(ModelGen.customItemModel("gauge", "_", "item"))
+		.consume(StressConfigDefaults.noImpactConsumer())
+//		.blockstate(new GaugeGenerator()::generate)
+		.simpleItem()
+//		.transform(ModelGen.customItemModel("gauge", "_", "item"))
 		.register();
 
-	public static final BracketBlock WOODEN_BRACKET = createBuilder("wooden_bracket", BracketBlock::new)
+	/*public static final BracketBlock WOODEN_BRACKET = createBuilder("wooden_bracket", BracketBlock::new)
 		.blockstate(new BracketGenerator("wooden")::generate)
 		.item(BracketBlockItem::new)
 		.transform(BracketGenerator.itemModel("wooden"))
@@ -891,14 +893,14 @@ public class AllBlocks {
 //		.transform(customItemModel())
 		.register();
 
-	/*public static final SpeedControllerBlock ROTATION_SPEED_CONTROLLER = createBuilder("rotation_speed_controller", SpeedControllerBlock::new)
+	public static final SpeedControllerBlock ROTATION_SPEED_CONTROLLER = createBuilder("rotation_speed_controller", SpeedControllerBlock::new)
 		.initialProperties(SharedProperties::softMetal)
-		.tag(AllBlockTags.SAFE_NBT.tag)
-		.transform(StressConfigDefaults.setNoImpact())
-		.blockstate(BlockStateGen.horizontalAxisBlockProvider(true))
-		.item()
-		.transform(customItemModel())
-		.register();*/
+//		.tag(AllBlockTags.SAFE_NBT.tag)
+		.consume(StressConfigDefaults.noImpactConsumer())
+//		.blockstate(BlockStateGen.horizontalAxisBlockProvider(true))
+		.simpleItem()
+//		.transform(customItemModel())
+		.register();
 
 	// Logistics
 

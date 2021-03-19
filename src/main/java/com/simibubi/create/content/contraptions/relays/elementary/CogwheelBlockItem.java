@@ -114,7 +114,7 @@ public class CogwheelBlockItem extends BlockItem {
 
 		@Override
 		public Predicate<ItemStack> getItemPredicate() {
-			return s -> AllBlocks.COGWHEEL.asItem().getDefaultStack() == s;
+			return s -> s.isItemEqualIgnoreDamage(AllBlocks.COGWHEEL.asItem().getDefaultStack());
 		}
 
 		@Override
@@ -162,7 +162,7 @@ public class CogwheelBlockItem extends BlockItem {
 
 		@Override
 		public Predicate<ItemStack> getItemPredicate() {
-			return s -> AllBlocks.LARGE_COGWHEEL.asItem().getDefaultStack() == s;
+			return s -> s.isItemEqualIgnoreDamage(AllBlocks.LARGE_COGWHEEL.asItem().getDefaultStack());
 		}
 
 		@Override
@@ -228,7 +228,7 @@ public class CogwheelBlockItem extends BlockItem {
 
 		@Override
 		public void renderAt(BlockPos pos, BlockState state, BlockHitResult ray, PlacementOffset offset) {
-			//IPlacementHelper.renderArrow(VecHelper.getCenterOf(pos), VecHelper.getCenterOf(offset.getPos()),
+			//IPlacementHelper.renderArrow(VecHelper.getCenterOf(pos), VecHelper.getCenterOf(offset.getPos()), from upstream
 			//	Direction.getFacingFromAxis(Direction.AxisDirection.POSITIVE, state.get(AXIS)), 1D);
 
 			displayGhost(offset);
@@ -273,7 +273,7 @@ public class CogwheelBlockItem extends BlockItem {
 
 		@Override
 		public Predicate<ItemStack> getItemPredicate() {
-			return s -> AllBlocks.LARGE_COGWHEEL.asItem().getDefaultStack() == s;
+			return s -> s.isItemEqualIgnoreDamage(AllBlocks.LARGE_COGWHEEL.asItem().getDefaultStack());
 		}
 
 		@Override
@@ -323,7 +323,7 @@ public class CogwheelBlockItem extends BlockItem {
 
 		@Override
 		public void renderAt(BlockPos pos, BlockState state, BlockHitResult ray, PlacementOffset offset) {
-			//IPlacementHelper.renderArrow(VecHelper.getCenterOf(pos), VecHelper.getCenterOf(offset.getPos()),
+			//IPlacementHelper.renderArrow(VecHelper.getCenterOf(pos), VecHelper.getCenterOf(offset.getPos()), from upstream
 			//	Direction.getFacingFromAxis(Direction.AxisDirection.POSITIVE, offset.getTransform()
 			//		.apply(AllBlocks.LARGE_COGWHEEL.getDefaultState())
 			//		.get(AXIS)));

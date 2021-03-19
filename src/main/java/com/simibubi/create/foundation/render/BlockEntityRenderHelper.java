@@ -65,10 +65,10 @@ public class BlockEntityRenderHelper {
 				
 				String message = "BlockEntity " + BlockEntityType.getId(blockEntity.getType()).toString()
 						+ " didn't want to render while moved.\n";
-//				if (AllConfigs.CLIENT.explainRenderErrors.get()) { TODO FIX CONFIG
-//					Create.logger.error(message, e);
-//					continue;
-//				}
+				if (Create.getConfig().client.explainRenderErrors) {
+					Create.logger.error(message, e);
+					continue;
+				}
 				
 				Create.logger.error(message);
 				continue;

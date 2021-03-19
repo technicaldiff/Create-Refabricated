@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.simibubi.create.AllBlockEntities;
+import com.simibubi.create.Create;
 import com.simibubi.create.content.contraptions.base.KineticBlockEntity;
 import com.simibubi.create.content.logistics.block.mechanicalArm.ArmInteractionPoint.Mode;
 import com.simibubi.create.foundation.advancement.AllTriggers;
@@ -451,7 +452,7 @@ public class ArmBlockEntity extends KineticBlockEntity {
 	}
 
 	public static int getRange() {
-		return 5; //AllConfigs.SERVER.logistics.mechanicalArmRange.get();
+		return Create.getConfig().logistics.mechanicalArmRange;
 	}
 
 	@Override

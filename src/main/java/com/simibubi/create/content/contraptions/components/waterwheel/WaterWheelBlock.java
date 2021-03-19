@@ -2,6 +2,7 @@ package com.simibubi.create.content.contraptions.components.waterwheel;
 
 import com.simibubi.create.AllBlockEntities;
 import com.simibubi.create.AllBlocks;
+import com.simibubi.create.Create;
 import com.simibubi.create.content.contraptions.base.HorizontalKineticBlock;
 import com.simibubi.create.foundation.block.IBE;
 import com.simibubi.create.foundation.utility.Iterate;
@@ -131,7 +132,7 @@ public class WaterWheelBlock extends HorizontalKineticBlock implements IBE<Water
 					AllTriggers.triggerForNearbyPlayers(AllTriggers.CHOCOLATE_WHEEL, world, pos, 5);
 			}*/
 
-			Integer flowModifier = 4 /*AllConfigs.SERVER.kinetics.waterWheelFlowSpeed.get()*/;
+			Integer flowModifier = Create.getConfig().kinetics.waterWheelFlowSpeed;
 			te.setFlow(side, (float) (flowStrength * flowModifier / 2f));
 		});
 	}

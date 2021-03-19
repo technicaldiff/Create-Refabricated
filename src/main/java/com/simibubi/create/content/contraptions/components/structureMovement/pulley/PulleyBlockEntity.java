@@ -2,6 +2,7 @@ package com.simibubi.create.content.contraptions.components.structureMovement.pu
 
 import com.simibubi.create.AllBlockEntities;
 import com.simibubi.create.AllBlocks;
+import com.simibubi.create.Create;
 import com.simibubi.create.content.contraptions.components.structureMovement.AssemblyException;
 import com.simibubi.create.content.contraptions.components.structureMovement.BlockMovementTraits;
 import com.simibubi.create.content.contraptions.components.structureMovement.ContraptionCollider;
@@ -43,7 +44,7 @@ public class PulleyBlockEntity extends LinearActuatorBlockEntity {
 			return;
 		if (speed == 0)
 			return;
-		int maxLength = 128; //AllConfigs.SERVER.kinetics.maxRopeLength.get();
+		int maxLength = Create.getConfig().kinetics.maxRopeLength;
 		int i = 1;
 		while (i <= maxLength) {
 			BlockPos ropePos = pos.down(i);
@@ -195,7 +196,7 @@ public class PulleyBlockEntity extends LinearActuatorBlockEntity {
 
 	@Override
 	protected int getExtensionRange() {
-		return Math.max(0, Math.min(128 /*AllConfigs.SERVER.kinetics.maxRopeLength.get()*/, pos.getY() - 1));
+		return Math.max(0, Math.min(Create.getConfig().kinetics.maxRopeLength, pos.getY() - 1));
 	}
 
 	@Override

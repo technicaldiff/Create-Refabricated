@@ -2,6 +2,7 @@ package com.simibubi.create.content.contraptions.components.structureMovement;
 
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.AllMovementBehaviours;
+import com.simibubi.create.Create;
 import com.simibubi.create.content.contraptions.base.KineticBlockEntity;
 import com.simibubi.create.content.contraptions.base.Rotating;
 import com.simibubi.create.content.contraptions.components.structureMovement.bearing.MechanicalBearingBlock;
@@ -307,7 +308,7 @@ public abstract class Contraption {
 	 }*/
 
 	private void movePulley(World world, BlockPos pos, Queue<BlockPos> frontier, Set<BlockPos> visited) {
- 		int limit = 128; //AllConfigs.SERVER.kinetics.maxRopeLength.get();
+ 		int limit = Create.getConfig().kinetics.maxRopeLength;
  		BlockPos ropePos = pos;
  		while (limit-- >= 0) {
  			ropePos = ropePos.down();
@@ -472,7 +473,7 @@ public abstract class Contraption {
 		}
 
 		addBlock(pos, capture(world, pos));
-		if (blocks.size() <= 1000) // TODO FIX CONFIG MAX BLOCKS MOVED  AllConfigs.SERVER.kinetics.maxBlocksMoved.get())
+		if (blocks.size() <= Create.getConfig().kinetics.maxBlocksMoved)
 			return true;
 		else
 			throw AssemblyException.structureTooLarge();

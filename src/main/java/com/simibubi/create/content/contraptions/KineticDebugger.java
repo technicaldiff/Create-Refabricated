@@ -1,9 +1,11 @@
 package com.simibubi.create.content.contraptions;
 
+import com.simibubi.create.Create;
 import com.simibubi.create.CreateClient;
 import com.simibubi.create.content.contraptions.base.KineticBlockEntity;
 import com.simibubi.create.content.contraptions.base.KineticBlockEntityRenderer;
 import com.simibubi.create.content.contraptions.base.Rotating;
+import com.simibubi.create.foundation.config.AllConfigs;
 import com.simibubi.create.foundation.utility.ColorHelper;
 import com.simibubi.create.foundation.utility.VecHelper;
 
@@ -58,7 +60,7 @@ public class KineticDebugger {
 	}
 
 	public static boolean isActive() {
-		return MinecraftClient.getInstance().options.debugEnabled; //&& AllConfigs.CLIENT.rainbowDebug.get(); TODO CONFIG THING
+		return MinecraftClient.getInstance().options.debugEnabled && Create.getConfig().client.enableRainbowDebug;
 	}
 
 	public static KineticBlockEntity getSelectedTE() {

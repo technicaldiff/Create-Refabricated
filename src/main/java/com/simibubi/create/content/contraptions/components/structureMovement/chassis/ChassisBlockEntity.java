@@ -12,6 +12,7 @@ import java.util.Set;
 
 import com.simibubi.create.AllBlockEntities;
 import com.simibubi.create.AllBlocks;
+import com.simibubi.create.Create;
 import com.simibubi.create.content.contraptions.components.structureMovement.BlockMovementTraits;
 import com.simibubi.create.foundation.block.entity.BlockEntityBehaviour;
 import com.simibubi.create.foundation.block.entity.SmartBlockEntity;
@@ -39,7 +40,7 @@ public class ChassisBlockEntity extends SmartBlockEntity {
 
 	@Override
 	public void addBehaviours(List<BlockEntityBehaviour> behaviours) {
-		int max = 30; //AllConfigs.SERVER.kinetics.maxChassisRange.get();
+		int max = Create.getConfig().kinetics.maxChassisRange;
 		range = new BulkScrollValueBehaviour(Lang.translate("generic.range"), this, new CenteredSideValueBoxTransform(),
 				te -> ((ChassisBlockEntity) te).collectChassisGroup());
 		range.requiresWrench();

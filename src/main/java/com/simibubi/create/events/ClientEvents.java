@@ -152,8 +152,8 @@ public class ClientEvents {
 	}
 
 	public static void addToItemTooltip(ItemStack stack, TooltipContext context, List<Text> texts) {
-		/*if (!AllConfigs.CLIENT.tooltips.get())
-			return;*/
+		if (!Create.getConfig().client.enableTooltips)
+			return;
 		if (MinecraftClient.getInstance().player == null)
 			return;
 

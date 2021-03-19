@@ -6,6 +6,7 @@ import java.util.Map;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.simibubi.create.AllItems;
+import com.simibubi.create.Create;
 import com.simibubi.create.CreateClient;
 import com.simibubi.create.content.contraptions.components.structureMovement.DisplayAssemblyExceptionsProvider;
 import com.simibubi.create.foundation.block.entity.behaviour.ValueBox;
@@ -119,8 +120,8 @@ public class GoggleOverlayRenderer {
 				.getScaledWidth(),
 			mc.getWindow()
 				.getScaledHeight());
-		int posX = tooltipScreen.width / 2 + 20; /** AllConfigs.CLIENT.overlayOffsetX.get(); TODO CONFIG*/
-		int posY = tooltipScreen.height / 2 + 0; /** AllConfigs.CLIENT.overlayOffsetY.get(); TODO CONFIG*/
+		int posX = tooltipScreen.width / 2 + Create.getConfig().client.overlayOffsetX;
+		int posY = tooltipScreen.height / 2 + Create.getConfig().client.overlayOffsetY;
 
 		tooltipScreen.renderTooltip(matrixStack, tooltip, posX, posY);
 

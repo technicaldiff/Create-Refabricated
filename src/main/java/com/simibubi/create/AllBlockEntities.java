@@ -29,6 +29,8 @@ import com.simibubi.create.content.contraptions.components.structureMovement.pul
 import com.simibubi.create.content.contraptions.components.turntable.TurntableBlockEntity;
 import com.simibubi.create.content.contraptions.components.waterwheel.WaterWheelBlockEntity;
 import com.simibubi.create.content.contraptions.relays.advanced.GantryShaftBlockEntity;
+import com.simibubi.create.content.contraptions.relays.advanced.SpeedControllerBlockEntity;
+import com.simibubi.create.content.contraptions.relays.advanced.SpeedControllerRenderer;
 import com.simibubi.create.content.contraptions.relays.belt.BeltBlockEntity;
 import com.simibubi.create.content.contraptions.relays.belt.BeltInstance;
 import com.simibubi.create.content.contraptions.relays.belt.BeltRenderer;
@@ -37,6 +39,9 @@ import com.simibubi.create.content.contraptions.relays.encased.ClutchBlockEntity
 import com.simibubi.create.content.contraptions.relays.encased.ShaftInstance;
 import com.simibubi.create.content.contraptions.relays.encased.SplitShaftInstance;
 import com.simibubi.create.content.contraptions.relays.encased.SplitShaftRenderer;
+import com.simibubi.create.content.contraptions.relays.gauge.GaugeRenderer;
+import com.simibubi.create.content.contraptions.relays.gauge.SpeedGaugeBlockEntity;
+import com.simibubi.create.content.contraptions.relays.gauge.StressGaugeBlockEntity;
 import com.simibubi.create.content.contraptions.relays.gearbox.GearboxBlockEntity;
 import com.simibubi.create.content.contraptions.relays.gearbox.GearboxInstance;
 import com.simibubi.create.content.contraptions.relays.gearbox.GearboxRenderer;
@@ -376,7 +381,7 @@ public class AllBlockEntities {
 		.validBlocks(AllBlocks.SEQUENCED_GEARSHIFT)
 		.renderer(() -> SplitShaftRenderer::new)
 		.onRegister(SplitShaftInstance::register)
-		.register();
+		.register();*/
 
 	public static final BlockEntityType<SpeedControllerBlockEntity> ROTATION_SPEED_CONTROLLER = createBuilder("rotation_speed_controller", SpeedControllerBlockEntity::new)
 		.validBlocks(AllBlocks.ROTATION_SPEED_CONTROLLER)
@@ -394,7 +399,7 @@ public class AllBlockEntities {
 		.validBlocks(AllBlocks.STRESSOMETER)
 		.renderer(() -> GaugeRenderer::stress)
 		.onRegister(ShaftInstance::register)
-		.register();*/
+		.register();
 
 	public static final BlockEntityType<AnalogLeverBlockEntity> ANALOG_LEVER = createBuilder("analog_lever", AnalogLeverBlockEntity::new)
 		.validBlocks(AllBlocks.ANALOG_LEVER)

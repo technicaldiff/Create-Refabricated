@@ -2,6 +2,7 @@ package com.simibubi.create.foundation.worldgen;
 
 import java.util.Optional;
 
+import com.simibubi.create.Create;
 import net.minecraft.block.Block;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.gen.decorator.Decorator;
@@ -59,7 +60,7 @@ public class OreFeature {
     }
 
 	protected boolean canGenerate() {
-		return minHeight < maxHeight && clusterSize > 0 && enable /*&& !AllConfigs.COMMON.worldGen.disable.get()*/;
+		return minHeight < maxHeight && clusterSize > 0 && enable && !Create.getConfig().worldGen.disable;
 	}
 
 }

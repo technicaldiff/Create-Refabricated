@@ -3,6 +3,7 @@ package com.simibubi.create.content.contraptions.components.crank;
 import com.simibubi.create.AllBlockEntities;
 import com.simibubi.create.AllBlockPartials;
 import com.simibubi.create.AllShapes;
+import com.simibubi.create.Create;
 import com.simibubi.create.content.contraptions.base.DirectionalKineticBlock;
 import com.simibubi.create.foundation.block.IBE;
 
@@ -61,7 +62,7 @@ public class HandCrankBlock extends DirectionalKineticBlock implements IBE<HandC
 			return ActionResult.PASS;
 
 		withBlockEntityDo(worldIn, pos, te -> te.turn(player.isSneaking()));
-		player.addExhaustion(getRotationSpeed() * 0.01f/*AllConfigs.SERVER.kinetics.crankHungerMultiplier.getF()*/);
+		player.addExhaustion(getRotationSpeed() * Create.getConfig().kinetics.crankHungerMultiplier);
 		return ActionResult.SUCCESS;
 	}
 

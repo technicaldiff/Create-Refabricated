@@ -5,6 +5,7 @@ import java.util.Map;
 
 import com.simibubi.create.AllBlockEntities;
 import com.simibubi.create.AllBlocks;
+import com.simibubi.create.Create;
 import com.simibubi.create.content.contraptions.base.GeneratingKineticBlockEntity;
 import com.simibubi.create.foundation.utility.Iterate;
 
@@ -61,7 +62,7 @@ public class WaterWheelBlockEntity extends GeneratingKineticBlockEntity {
 		for (Float f : flows.values())
 			speed += f;
 		if (speed != 0)
-			speed += 4 /*AllConfigs.SERVER.kinetics.waterWheelBaseSpeed.get()*/ * Math.signum(speed);
+			speed += Create.getConfig().kinetics.waterWheelBaseSpeed * Math.signum(speed);
 		return speed;
 	}
 

@@ -3,6 +3,7 @@ package com.simibubi.create.content.contraptions.components.fan;
 import com.simibubi.create.AllBlockEntities;
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.AllTags.AllBlockTags;
+import com.simibubi.create.Create;
 import com.simibubi.create.content.contraptions.base.GeneratingKineticBlockEntity;
 import com.simibubi.create.foundation.utility.BlockHelper;
 import com.simibubi.create.registrate.util.nullness.MethodsReturnNonnullByDefault;
@@ -60,7 +61,7 @@ public class EncasedFanBlockEntity extends GeneratingKineticBlockEntity implemen
 
 	@Override
 	public float getGeneratedSpeed() {
-		return isGenerator ? 4 /*AllConfigs.SERVER.kinetics.generatingFanSpeed.get()*/ : 0;
+		return isGenerator ? Create.getConfig().kinetics.generatingFanSpeed : 0;
 	}
 
 	public void queueGeneratorUpdate() {
@@ -168,7 +169,7 @@ public class EncasedFanBlockEntity extends GeneratingKineticBlockEntity implemen
 		super.tick();
 
 		if (!world.isClient && airCurrentUpdateCooldown-- <= 0) {
-			airCurrentUpdateCooldown = 30; //AllConfigs.SERVER.kinetics.fanBlockCheckRate.get();
+			airCurrentUpdateCooldown = Create.getConfig().kinetics.fanBlockCheckRate;
 			updateAirFlow = true;
 		}
 

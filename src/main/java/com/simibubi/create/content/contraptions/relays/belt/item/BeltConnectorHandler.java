@@ -4,6 +4,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 
+import com.simibubi.create.Create;
 import com.simibubi.create.content.contraptions.relays.elementary.ShaftBlock;
 
 import net.minecraft.client.MinecraftClient;
@@ -72,8 +73,8 @@ public class BeltConnectorHandler {
 				return;
 			if (!ShaftBlock.isShaft(world.getBlockState(selected)))
 				selected = selected.offset(((BlockHitResult) rayTrace).getSide());
-			/**if (!selected.withinDistance(first, AllConfigs.SERVER.kinetics.maxBeltLength.get())) TODO maxBeltLength CHECK
-			 return;*/
+			if (!selected.isWithinDistance(first, Create.getConfig().kinetics.maxBeltLength))
+			 return;
 
 			boolean canConnect =
 				BeltConnectorItem.validateAxis(world, selected) && BeltConnectorItem.canConnect(world, first, selected);

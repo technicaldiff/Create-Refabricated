@@ -5,6 +5,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import com.simibubi.create.AllBlockEntities;
+import com.simibubi.create.Create;
 import com.simibubi.create.foundation.block.entity.BlockEntityBehaviour;
 import com.simibubi.create.foundation.block.entity.SmartBlockEntity;
 import com.simibubi.create.foundation.utility.VecHelper;
@@ -76,7 +77,7 @@ public class NozzleBlockEntity extends SmartBlockEntity {
 		Vec3d center = VecHelper.getCenterOf(pos);
 		if (world.isClient && range != 0) {
 			if (world.random.nextInt(
-				MathHelper.clamp((20 /*AllConfigs.SERVER.kinetics.fanPushDistance.get()*/ - (int) range), 1, 10)) == 0) {
+				MathHelper.clamp((Create.getConfig().kinetics.fanPushDistance - (int) range), 1, 10)) == 0) {
 				Vec3d start = VecHelper.offsetRandomly(center, world.random, pushing ? 1 : range / 2);
 				Vec3d motion = center.subtract(start)
 					.normalize()

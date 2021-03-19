@@ -138,7 +138,7 @@ public class RedstoneLinkNetworkHandler {
 	public static boolean withinRange(LinkBehaviour from, LinkBehaviour to) {
 		if (from == to)
 			return true;
-		return from.getPos().isWithinDistance(to.getPos(), 128/*AllConfigs.SERVER.logistics.linkRange.get()*/);
+		return from.getPos().isWithinDistance(to.getPos(), Create.getConfig().logistics.linkRange);
 	}
 
 	public Map<Pair<Frequency, Frequency>, Set<LinkBehaviour>> networksIn(WorldAccess world) {

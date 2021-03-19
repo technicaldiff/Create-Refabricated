@@ -1,5 +1,6 @@
 package com.simibubi.create.content.contraptions.components.structureMovement;
 
+import com.simibubi.create.Create;
 import net.minecraft.block.BlockState;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.text.TranslatableText;
@@ -60,8 +61,7 @@ public class AssemblyException extends Exception {
 	}
 
 	public static AssemblyException structureTooLarge() {
-		//return new AssemblyException("structureTooLarge", AllConfigs.SERVER.kinetics.maxBlocksMoved.get()); // TODO FIX ASSEMBLY EXCEPTIONS WITH CONFIG FILE
-		return new AssemblyException("structureTooLarge", 1);
+		return new AssemblyException("structureTooLarge", Create.getConfig().kinetics.maxBlocksMoved);
 	}
 
 	public static AssemblyException tooManyPistonPoles() {

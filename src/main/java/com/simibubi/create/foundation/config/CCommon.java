@@ -4,7 +4,7 @@ import me.shedaniel.autoconfig.annotation.ConfigEntry;
 
 public class CCommon {
 	@ConfigEntry.Gui.Tooltip
-	boolean logBeErrors = false;
+	public boolean logBeErrors = false;
 }
 
 // TODO: public CWorldGen worldGen = nested(0, CWorldGen::new, Comments.worldGen); "Modify Create's impact on your terrain"

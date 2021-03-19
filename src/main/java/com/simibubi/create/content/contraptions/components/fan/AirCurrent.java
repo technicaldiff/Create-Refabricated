@@ -1,5 +1,7 @@
 package com.simibubi.create.content.contraptions.components.fan;
 
+import com.simibubi.create.Create;
+import com.simibubi.create.content.contraptions.particle.AirFlowParticleData;
 import com.simibubi.create.foundation.mixin.accessor.ServerPlayNetworkHandlerAccessor;
 import com.simibubi.create.foundation.utility.VecHelper;
 import net.minecraft.block.BlockState;
@@ -48,7 +50,7 @@ public class AirCurrent {
 			float offset = pushing ? 0.5f : maxDistance + .5f;
 			Vec3d pos = VecHelper.getCenterOf(source.getAirCurrentPos())
 				.add(Vec3d.of(facing.getVector()).multiply(offset));
-			/*if (world.random.nextFloat() < AllConfigs.CLIENT.fanParticleDensity.get())
+			/*if (world.random.nextFloat() < Create.getConfig().client.fanParticleDensity)
 				world.addParticle(new AirFlowParticleData(source.getAirCurrentPos()), pos.x, pos.y, pos.z, 0, 0, 0);*/
 		}
 

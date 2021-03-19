@@ -33,38 +33,38 @@ public class AllConfigs implements ConfigData {
 	// creating collapsible groups
 	@CollapsibleObject
 	@Tooltip
-	CClient client = new CClient();
+	public CClient client = new CClient();
 
 	@CollapsibleObject
-	CCommon common = new CCommon();
+	public CCommon common = new CCommon();
 
 	@CollapsibleObject
-	CCuriosities curiosities = new CCuriosities();
+	public CCuriosities curiosities = new CCuriosities();
 
 	@CollapsibleObject
-	CFluids fluids = new CFluids();
+	public CFluids fluids = new CFluids();
 
 	@CollapsibleObject
-	CKinetics kinetics = new CKinetics();
+	public CKinetics kinetics = new CKinetics();
 
 	@CollapsibleObject
-	CLogistics logistics = new CLogistics();
+	public CLogistics logistics = new CLogistics();
 
 	@CollapsibleObject
-	CRecipes recipes = new CRecipes();
+	public CRecipes recipes = new CRecipes();
 
 	@CollapsibleObject
-	CSchematics schematics = new CSchematics();
+	public CSchematics schematics = new CSchematics();
 
 	@CollapsibleObject
-	CServer server = new CServer();
+	public CServer server = new CServer();
 
 	@CollapsibleObject
 	@Tooltip(count = 2)
-	CStress stress = new CStress();
+	public CStress stress = new CStress();
 
 	@CollapsibleObject
-	CWorldGen worldGen = new CWorldGen();
+	public CWorldGen worldGen = new CWorldGen();
 
 	@Override
 	public void validatePostLoad() throws ValidationException {

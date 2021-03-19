@@ -7,64 +7,64 @@ import net.minecraft.util.math.MathHelper;
 
 public class CKinetics implements Validatable {
 	@Tooltip
-	boolean disableStress = false;
+	public boolean disableStress = false;
 	@Tooltip
-	int maxBeltLength = 20; // min 5
+	public int maxBeltLength = 20; // min 5
 	@Tooltip
-	int crushingDamage = 4; // min 0
+	public int crushingDamage = 4; // min 0
 	@Tooltip
-	int maxMotorSpeed = 256; // min 64
+	public int maxMotorSpeed = 256; // min 64
 	@Tooltip
-	int waterWheelBaseSpeed = 4; // min 1
+	public int waterWheelBaseSpeed = 4; // min 1
 	@Tooltip
-	int waterWheelFlowSpeed = 4; // min 1
+	public int waterWheelFlowSpeed = 4; // min 1
 	@Tooltip
-	int furnaceEngineSpeed = 16; // min 1
+	public int furnaceEngineSpeed = 16; // min 1
 	@Tooltip
-	int maxRotationSpeed = 256; // min 64
+	public int maxRotationSpeed = 256; // min 64
 	@Tooltip
 	DeployerAggroSetting ignoreDeployerAttacks = DeployerAggroSetting.CREEPERS;
 	@Tooltip
-	int kineticValidationFrequency = 60; // min 5
+	public int kineticValidationFrequency = 60; // min 5
 	@Tooltip
-	float crankHungerMultiplier = 0.01f; // min 0, max 1
+	public float crankHungerMultiplier = 0.01f; // min 0, max 1
 
 	@Tooltip
-	int fanPushDistance = 20; // min 5
+	public int fanPushDistance = 20; // min 5
 	@Tooltip
-	int fanPullDistance = 20; // min 5
+	public int fanPullDistance = 20; // min 5
 	@Tooltip
-	int fanBlockCheckRate = 30; // min 10
+	public int fanBlockCheckRate = 30; // min 10
 	@Tooltip
-	int fanRotationArgmax = 256; // min 64
+	public int fanRotationArgmax = 256; // min 64
 	@Tooltip
-	int generatingFanSpeed = 4; // min 0
+	public int generatingFanSpeed = 4; // min 0
 	@Tooltip
-	int inWorldProcessingTime = 150; // min 0
+	public int inWorldProcessingTime = 150; // min 0
 
 	@Tooltip
-	int maxBlocksMoved = 2048; // min 1
+	public int maxBlocksMoved = 2048; // min 1
 	@Tooltip
-	int maxChassisRange = 16; // min 1
+	public int maxChassisRange = 16; // min 1
 	@Tooltip
-	int maxPistonPoles = 64; // min 1
+	public int maxPistonPoles = 64; // min 1
 	@Tooltip
-	int maxRopeLength = 128; // min 1
+	public int maxRopeLength = 128; // min 1
 	@Tooltip
-	int maxCartCouplingLength = 32; // min 1
+	public int maxCartCouplingLength = 32; // min 1
 
 	@Tooltip
-	float mediumSpeed = 30f; // min 0, max 4096
+	public float mediumSpeed = 30f; // min 0, max 4096
 	@Tooltip
-	float fastSpeed = 100f;// min 0, max 65535
+	public float fastSpeed = 100f;// min 0, max 65535
 	@Tooltip
-	float mediumStressImpact = 4f;// min 0, max 4096
+	public float mediumStressImpact = 4f;// min 0, max 4096
 	@Tooltip
-	float highStressImpact = 8f;// min 0, max 65535
+	public float highStressImpact = 8f;// min 0, max 65535
 	@Tooltip
-	float mediumCapacity = 128f;// min 0, max 4096
+	public float mediumCapacity = 128f;// min 0, max 4096
 	@Tooltip
-	float highCapacity = 512f;// min 0, max 65535
+	public float highCapacity = 512f;// min 0, max 65535
 
 	@Override
 	public void validate() throws ConfigData.ValidationException {

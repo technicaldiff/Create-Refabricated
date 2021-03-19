@@ -1,5 +1,7 @@
 package com.simibubi.create.content.contraptions.components.fan;
 
+import com.simibubi.create.Create;
+import com.simibubi.create.foundation.config.CKinetics;
 import org.jetbrains.annotations.Nullable;
 
 import com.simibubi.create.registrate.util.nullness.MethodsReturnNonnullByDefault;
@@ -28,10 +30,10 @@ public interface AirCurrentSource {
 
 	default float getMaxDistance() {
 		float speed = Math.abs(this.getSpeed());
-		//CKinetics config = AllConfigs.SERVER.kinetics;
-		float distanceFactor = Math.min(speed / 256, 1);//config.fanRotationArgmax.get(), 1);
-		float pushDistance = MathHelper.lerp(distanceFactor, 3, 20);//config.fanPushDistance.get());
-		float pullDistance = MathHelper.lerp(distanceFactor, 3f, 20);//config.fanPullDistance.get());
+		CKinetics config = Create.getConfig().kinetics;
+		float distanceFactor = Math.min(speed / config.fanRotationArgmax, 1);
+		float pushDistance = MathHelper.lerp(distanceFactor, 3, config.fanPushDistance);
+		float pullDistance = MathHelper.lerp(distanceFactor, 3f, config.fanPullDistance);
 		return this.getSpeed() > 0 ? pushDistance : pullDistance;
 	}
 

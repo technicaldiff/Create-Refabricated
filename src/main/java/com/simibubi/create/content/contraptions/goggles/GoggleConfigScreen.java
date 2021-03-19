@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.simibubi.create.AllItems;
+import com.simibubi.create.Create;
 import com.simibubi.create.foundation.gui.AbstractSimiScreen;
 import com.simibubi.create.foundation.gui.GuiGameElement;
 import com.simibubi.create.foundation.utility.Lang;
@@ -43,14 +44,14 @@ public class GoggleConfigScreen extends AbstractSimiScreen {
 		this.width = mc.getWindow().getScaledWidth();
 		this.height = mc.getWindow().getScaledHeight();
 
-		offsetX = 0;/**AllConfigs.CLIENT.overlayOffsetX.get(); TODO CONFIG*/
-		offsetY = 0; /**AllConfigs.CLIENT.overlayOffsetY.get(); TODO CONFIG*/
+		offsetX = Create.getConfig().client.overlayOffsetX;
+		offsetY = Create.getConfig().client.overlayOffsetY;
 	}
 
 	@Override
 	public void removed() {
-		/**AllConfigs.CLIENT.overlayOffsetX.set(offsetX); TODO CONFIG
-		 AllConfigs.CLIENT.overlayOffsetY.set(offsetY); TODO CONFIG */
+		Create.getConfig().client.overlayOffsetX = offsetX;
+		Create.getConfig().client.overlayOffsetY = offsetY;
 	}
 
 	@Override

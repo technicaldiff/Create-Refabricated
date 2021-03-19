@@ -5,7 +5,7 @@ import me.shedaniel.autoconfig.annotation.ConfigEntry;
 
 public class CCuriosities implements Validatable {
 	@ConfigEntry.Gui.Tooltip
-	int maxSymmetryWandRange = 50; // min 10
+	public int maxSymmetryWandRange = 50; // min 10
 
 	@Override
 	public void validate() {

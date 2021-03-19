@@ -1,5 +1,6 @@
 package com.simibubi.create.content.contraptions.base;
 
+import com.simibubi.create.Create;
 import com.simibubi.create.content.contraptions.goggles.GoggleInformationProvider;
 import com.simibubi.create.content.contraptions.wrench.Wrenchable;
 import com.simibubi.create.foundation.item.ItemDescription;
@@ -37,9 +38,9 @@ public interface Rotating extends Wrenchable {
 		public static SpeedLevel of(float speed) {
 			speed = Math.abs(speed);
 
-			if (speed >= 100/*AllConfigs.SERVER.kinetics.fastSpeed.get()*/) {
+			if (speed >= Create.getConfig().kinetics.fastSpeed) {
 				return FAST;
-			} else if (speed >= 30/*AllConfigs.SERVER.kinetics.mediumSpeed.get()*/) {
+			} else if (speed >= Create.getConfig().kinetics.mediumSpeed) {
 				return MEDIUM;
 			}
 			return NONE;
@@ -48,9 +49,9 @@ public interface Rotating extends Wrenchable {
 		public float getSpeedValue() {
 			switch (this) {
 				case FAST:
-					return 100/*AllConfigs.SERVER.kinetics.fastSpeed.get().floatValue()*/;
+					return Create.getConfig().kinetics.fastSpeed;
 				case MEDIUM:
-					return 30/*AllConfigs.SERVER.kinetics.mediumSpeed.get().floatValue()*/;
+					return Create.getConfig().kinetics.mediumSpeed;
 				case NONE:
 				default:
 					return 0;
@@ -101,7 +102,7 @@ public interface Rotating extends Wrenchable {
 		}
 
 		public static boolean isEnabled() {
-			return true; //!AllConfigs.SERVER.kinetics.disableStress.get();
+			return Create.getConfig().kinetics.disableStress;
 		}
 
 		public static Text getFormattedStressText(double stressPercent) {

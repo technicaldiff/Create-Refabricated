@@ -167,7 +167,7 @@ public class BeltConnectorItem extends BlockItem {
 	}
 
 	protected static Integer maxLength() {
-		return 100; // AllConfigs.SERVER.kinetics.maxBeltLength.get(); TODO maxBeltLength CONFIG
+		return Create.getConfig().kinetics.maxBeltLength;
 	}
 
 	public static boolean validateAxis(World world, BlockPos pos) {

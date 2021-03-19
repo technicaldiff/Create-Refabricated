@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.simibubi.create.AllBlockEntities;
 import com.simibubi.create.AllBlocks;
+import com.simibubi.create.Create;
 import com.simibubi.create.content.contraptions.base.GeneratingKineticBlockEntity;
 import com.simibubi.create.foundation.block.entity.BlockEntityBehaviour;
 import com.simibubi.create.foundation.block.entity.behaviour.CenteredSideValueBoxTransform;
@@ -40,7 +41,7 @@ public class CreativeMotorBlockEntity extends GeneratingKineticBlockEntity {
 	@Override
 	public void addBehaviours(List<BlockEntityBehaviour> behaviours) {
 		super.addBehaviours(behaviours);
-		Integer max = 256; //AllConfigs.SERVER.kinetics.maxMotorSpeed.get(); TODO CONFIG maxMotorSpeed
+		Integer max = Create.getConfig().kinetics.maxMotorSpeed;
 
 		CenteredSideValueBoxTransform slot = new CenteredSideValueBoxTransform(
 			(motor, side) -> motor.get(CreativeMotorBlock.FACING) == side.getOpposite());

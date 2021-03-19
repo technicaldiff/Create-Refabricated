@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.simibubi.create.Create;
 import org.jetbrains.annotations.NotNull;
 
 import com.simibubi.create.content.curiosities.symmetry.mirror.CrossPlaneMirror;
@@ -184,7 +185,7 @@ public class SymmetryWandItem extends Item {
 			.getCompound(SYMMETRY));
 
 		Vec3d mirrorPos = symmetry.getPosition();
-		if (mirrorPos.distanceTo(Vec3d.of(pos)) > 50) //AllConfigs.SERVER.curiosities.maxSymmetryWandRange.get())
+		if (mirrorPos.distanceTo(Vec3d.of(pos)) > Create.getConfig().curiosities.maxSymmetryWandRange)
 			return;
 		if (!player.isCreative() && isHoldingBlock(player, block)
 			&& BlockHelper.findAndRemoveInInventory(block, player, 1) == 0)
@@ -249,7 +250,7 @@ public class SymmetryWandItem extends Item {
 			.getCompound(SYMMETRY));
 
 		Vec3d mirrorPos = symmetry.getPosition();
-		if (mirrorPos.distanceTo(Vec3d.of(pos)) > 50) //AllConfigs.SERVER.curiosities.maxSymmetryWandRange.get())
+		if (mirrorPos.distanceTo(Vec3d.of(pos)) > Create.getConfig().curiosities.maxSymmetryWandRange)
 			return;
 
 		symmetry.process(blockSet);

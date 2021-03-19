@@ -7,30 +7,30 @@ import net.minecraft.util.math.MathHelper;
 
 public class CClient implements Validatable {
 	@Tooltip
-	boolean enableTooltips = true;
+	public boolean enableTooltips = true;
 
 	@Tooltip
-	boolean enableOverstressedTooltip = true;
+	public boolean enableOverstressedTooltip = true;
 
 	@Tooltip
-	boolean explainRenderErrors = true;
+	public boolean explainRenderErrors = true;
 
-	float fanParticleDensity = .5f;
-
-	@Tooltip
-	boolean enableRainbowDebug = true;
+	public float fanParticleDensity = .5f;
 
 	@Tooltip
-	boolean experimentalRendering = true;
+	public boolean enableRainbowDebug = true;
 
 	@Tooltip
-	int overlayOffsetX = 20;
+	public boolean experimentalRendering = true;
 
 	@Tooltip
-	int overlayOffsetY = 0;
+	public int overlayOffsetX = 20;
 
 	@Tooltip
-	boolean smoothPlacementIndicator = false;
+	public int overlayOffsetY = 0;
+
+	@Tooltip
+	public boolean smoothPlacementIndicator = false;
 
 	@Override
 	public void validate() throws ConfigData.ValidationException {

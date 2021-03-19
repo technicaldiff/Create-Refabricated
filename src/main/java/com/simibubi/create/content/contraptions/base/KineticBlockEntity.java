@@ -95,7 +95,7 @@ public abstract class KineticBlockEntity extends SmartBlockEntity
 			return;
 
 		if (validationCountdown-- <= 0) {
-			validationCountdown = 20; //AllConfigs.SERVER.kinetics.kineticValidationFrequency.get();
+			validationCountdown = Create.getConfig().kinetics.kineticValidationFrequency;
 			validateKinetics();
 		}
 
@@ -347,9 +347,9 @@ public abstract class KineticBlockEntity extends SmartBlockEntity
 		if (minimumRequiredSpeedLevel == null)
 			return true;
 		if (minimumRequiredSpeedLevel == SpeedLevel.MEDIUM)
-			return Math.abs(getSpeed()) >= 64; //AllConfigs.SERVER.kinetics.mediumSpeed.get();
+			return Math.abs(getSpeed()) >= Create.getConfig().kinetics.mediumSpeed;
 		if (minimumRequiredSpeedLevel == SpeedLevel.FAST)
-			return Math.abs(getSpeed()) >= 128; //AllConfigs.SERVER.kinetics.fastSpeed.get();
+			return Math.abs(getSpeed()) >= Create.getConfig().kinetics.fastSpeed;
 		return true;
 	}
 
@@ -388,7 +388,7 @@ public abstract class KineticBlockEntity extends SmartBlockEntity
 	public boolean addToTooltip(List<Text> tooltip, boolean isPlayerSneaking) {
 		boolean notFastEnough = !isSpeedRequirementFulfilled() && getSpeed() != 0;
 
-		if (overStressed/* && AllConfigs.CLIENT.enableOverstressedTooltip.get()*/) {
+		if (overStressed && Create.getConfig().client.enableOverstressedTooltip) {
 			tooltip.add(componentSpacing.copy().append(Lang.translate("gui.stressometer.overstressed").formatted(GOLD)));
 			Text hint = Lang.translate("gui.contraptions.network_overstressed");
 			List<Text> cutString = TooltipHelper.cutTextComponent(hint, GRAY, Formatting.WHITE);

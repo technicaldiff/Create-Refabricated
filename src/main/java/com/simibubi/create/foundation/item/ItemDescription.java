@@ -22,8 +22,12 @@ import java.util.Arrays;
 import java.util.List;
 
 import com.simibubi.create.AllItems;
+import com.simibubi.create.Create;
 import com.simibubi.create.content.contraptions.base.Rotating;
+import com.simibubi.create.content.contraptions.components.fan.EncasedFanBlock;
+import com.simibubi.create.content.contraptions.components.flywheel.engine.FurnaceEngineBlock;
 import com.simibubi.create.content.contraptions.components.waterwheel.WaterWheelBlock;
+import com.simibubi.create.foundation.config.CKinetics;
 import com.simibubi.create.foundation.utility.Lang;
 
 import net.minecraft.block.Block;
@@ -82,7 +86,7 @@ public class ItemDescription {
 	public ItemDescription withKineticStats(Block block) {
 
 		//boolean isEngine = block instanceof EngineBlock;
-		//CKinetics config = AllConfigs.SERVER.kinetics;
+		CKinetics config = Create.getConfig().kinetics;
 		Rotating.SpeedLevel minimumRequiredSpeedLevel =
 			/*isEngine ? Rotating.SpeedLevel.NONE :*/ ((Rotating) block).getMinimumRequiredSpeedLevel();
 		boolean hasSpeedRequirement = minimumRequiredSpeedLevel != Rotating.SpeedLevel.NONE;
@@ -273,19 +277,18 @@ public class ItemDescription {
 		String value = "";
 
 		if (block instanceof WaterWheelBlock) {
-			int baseSpeed = 4; //AllConfigs.SERVER.kinetics.waterWheelBaseSpeed.get();
-			int speedmod = 4; //AllConfigs.SERVER.kinetics.waterWheelFlowSpeed.get();
+			int baseSpeed = Create.getConfig().kinetics.waterWheelBaseSpeed;
+			int speedmod = Create.getConfig().kinetics.waterWheelFlowSpeed;
 			value = (speedmod + baseSpeed) + "-" + (baseSpeed + (speedmod * 3));
 		}
 
-		/*else if (block instanceof EncasedFanBlock)
-			value = AllConfigs.SERVER.kinetics.generatingFanSpeed.get()
-				.toString();
+		else if (block instanceof EncasedFanBlock)
+			value = Create.getConfig().kinetics.generatingFanSpeed + "";
 
 		else if (block instanceof FurnaceEngineBlock) {
-			int baseSpeed = AllConfigs.SERVER.kinetics.furnaceEngineSpeed.get();
+			int baseSpeed = Create.getConfig().kinetics.furnaceEngineSpeed;
 			value = baseSpeed + "-" + (baseSpeed * 2);
-		}*/
+		}
 
 		return !value.equals("") ? Lang.translate("tooltip.generationSpeed", value, unitRPM) : LiteralText.EMPTY.copy();
 	}

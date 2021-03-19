@@ -3,6 +3,7 @@ package com.simibubi.create.foundation.block;
 import java.util.Optional;
 import java.util.function.Consumer;
 
+import com.simibubi.create.Create;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
@@ -13,8 +14,8 @@ import net.minecraft.world.dimension.DimensionType;
 public interface IBE<T extends BlockEntity> {
 
 	static void report(BlockEntityException e) {
-		/*TODO: FIX THIS if (AllConfigs.COMMON.logTeErrors.get())
-			Create.logger.debug("BlockEntityException thrown!", e);*/
+		if (Create.getConfig().common.logBeErrors)
+			Create.logger.debug("BlockEntityException thrown!", e);
 	}
 
 	Class<T> getBlockEntityClass();

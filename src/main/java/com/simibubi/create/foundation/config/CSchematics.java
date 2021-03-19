@@ -7,22 +7,22 @@ import net.minecraft.util.math.MathHelper;
 
 public class CSchematics implements Validatable {
 	@Tooltip
-	int maxSchematics = 10; // min 1
+	public int maxSchematics = 10; // min 1
 	@Tooltip
-	int maxTotalSchematicSize = 256; // min 16
+	public int maxTotalSchematicSize = 256; // min 16
 	@Tooltip
-	int maxSchematicPacketSize = 1024; // min 256, max 32767
+	public int maxSchematicPacketSize = 1024; // min 256, max 32767
 	@Tooltip
-	int schematicIdleTimeout = 600; // min 100
+	public int schematicIdleTimeout = 600; // min 100
 	// schematicannon group         public ConfigGroup schematicannon = group(0, "schematicannon", "Schematicannon");
 	@Tooltip(count = 2)
-	int schematicannonDelay = 10; // min 1
+	public int schematicannonDelay = 10; // min 1
 	@Tooltip(count = 2)
-	int schematicannonSkips = 10; // min 1
+	public int schematicannonSkips = 10; // min 1
 	@Tooltip
-	float schematicannonGunpowderWorth = 20f; // min 0, max 100
+	public float schematicannonGunpowderWorth = 20f; // min 0, max 100
 	@Tooltip
-	float schematicannonFuelUsage = 0.05f; // min 0, max 100
+	public float schematicannonFuelUsage = 0.05f; // min 0, max 100
 
 	@Override
 	public void validate() throws ConfigData.ValidationException {

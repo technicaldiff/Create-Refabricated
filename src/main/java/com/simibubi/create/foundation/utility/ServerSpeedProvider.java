@@ -1,5 +1,6 @@
 package com.simibubi.create.foundation.utility;
 
+import com.simibubi.create.Create;
 import com.simibubi.create.foundation.gui.widgets.InterpolatedChasingValue;
 import com.simibubi.create.foundation.networking.AllPackets;
 
@@ -35,8 +36,7 @@ public class ServerSpeedProvider {
 	}
 
 	public static Integer getSyncInterval() {
-//		return AllConfigs.SERVER.tickrateSyncTimer.get();
-		return 20;
+		return Create.getConfig().server.tickrateSyncTimer;
 	}
 
 	public static float get() {
