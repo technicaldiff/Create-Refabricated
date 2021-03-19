@@ -2,6 +2,7 @@ package com.simibubi.create;
 
 import com.simibubi.create.content.contraptions.base.KineticBlockEntityRenderer;
 import com.simibubi.create.content.contraptions.components.structureMovement.render.ContraptionRenderDispatcher;
+import com.simibubi.create.content.contraptions.relays.encased.CasingConnectivity;
 import com.simibubi.create.content.palettes.AllPaletteBlocks;
 import com.simibubi.create.content.schematics.ClientSchematicLoader;
 import com.simibubi.create.events.ClientEvents;
@@ -23,7 +24,6 @@ import net.minecraft.resource.ReloadableResourceManager;
 import net.minecraft.resource.ResourceManager;
 
 public class CreateClient implements ClientModInitializer {
-
 	public static ClientSchematicLoader schematicSender;
 	//public static SchematicHandler schematicHandler;
 	//public static SchematicAndQuillHandler schematicAndQuillHandler;
@@ -35,6 +35,7 @@ public class CreateClient implements ClientModInitializer {
 	private static CustomBlockModels customBlockModels;
 	private static CustomItemModels customItemModels;
 	private static CustomRenderedItems customRenderedItems;
+	private static CasingConnectivity casingConnectivity;
 
 	@Override
 	public void onInitializeClient() {
@@ -71,12 +72,6 @@ public class CreateClient implements ClientModInitializer {
 			((ReloadableResourceManager) resourceManager).registerListener(new ResourceReloadHandler());
 	}
 
-	public static CustomBlockModels getCustomBlockModels() {
-		if (customBlockModels == null)
-			customBlockModels = new CustomBlockModels();
-		return customBlockModels;
-	}
-
 	public static CustomItemModels getCustomItemModels() {
 		if (customItemModels == null)
 			customItemModels = new CustomItemModels();
@@ -87,6 +82,18 @@ public class CreateClient implements ClientModInitializer {
 		if (customRenderedItems == null)
 			customRenderedItems = new CustomRenderedItems();
 		return customRenderedItems;
+	}
+
+	public static CustomBlockModels getCustomBlockModels() {
+		if (customBlockModels == null)
+			customBlockModels = new CustomBlockModels();
+		return customBlockModels;
+	}
+
+	public static CasingConnectivity getCasingConnectivity() {
+		if (casingConnectivity == null)
+			casingConnectivity = new CasingConnectivity();
+		return casingConnectivity;
 	}
 
 	public static void invalidateRenderers() {

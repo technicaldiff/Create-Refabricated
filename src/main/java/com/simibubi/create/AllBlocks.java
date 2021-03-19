@@ -1,5 +1,6 @@
 package com.simibubi.create;
 
+import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Supplier;
@@ -17,6 +18,7 @@ import com.simibubi.create.content.contraptions.components.structureMovement.bea
 import com.simibubi.create.content.contraptions.components.structureMovement.bearing.MechanicalBearingBlock;
 import com.simibubi.create.content.contraptions.components.structureMovement.bearing.WindmillBearingBlock;
 import com.simibubi.create.content.contraptions.components.structureMovement.chassis.LinearChassisBlock;
+import com.simibubi.create.content.contraptions.components.structureMovement.chassis.LinearChassisBlock.ChassisCTBehaviour;
 import com.simibubi.create.content.contraptions.components.structureMovement.chassis.RadialChassisBlock;
 import com.simibubi.create.content.contraptions.components.structureMovement.gantry.GantryPinionBlock;
 import com.simibubi.create.content.contraptions.components.structureMovement.mounted.CartAssemblerBlock;
@@ -31,7 +33,9 @@ import com.simibubi.create.content.contraptions.relays.elementary.BracketedKinet
 import com.simibubi.create.content.contraptions.relays.elementary.CogWheelBlock;
 import com.simibubi.create.content.contraptions.relays.elementary.CogwheelBlockItem;
 import com.simibubi.create.content.contraptions.relays.elementary.ShaftBlock;
+import com.simibubi.create.content.contraptions.relays.encased.CasingConnectivity;
 import com.simibubi.create.content.contraptions.relays.encased.ClutchBlock;
+import com.simibubi.create.content.contraptions.relays.encased.EncasedCTBehaviour;
 import com.simibubi.create.content.contraptions.relays.encased.GearshiftBlock;
 import com.simibubi.create.content.contraptions.relays.gauge.GaugeBlock;
 import com.simibubi.create.content.contraptions.relays.gearbox.GearboxBlock;
@@ -43,6 +47,8 @@ import com.simibubi.create.content.logistics.block.mechanicalArm.ArmBlock;
 import com.simibubi.create.content.logistics.block.mechanicalArm.ArmItem;
 import com.simibubi.create.content.logistics.block.redstone.AnalogLeverBlock;
 import com.simibubi.create.content.logistics.block.redstone.RedstoneLinkBlock;
+import com.simibubi.create.foundation.block.connected.CTModel;
+import com.simibubi.create.foundation.block.connected.ConnectedTextureBehaviour;
 import com.simibubi.create.foundation.config.StressConfigDefaults;
 import com.simibubi.create.foundation.data.BuilderConsumers;
 import com.simibubi.create.foundation.data.SharedProperties;
@@ -134,9 +140,9 @@ public class AllBlocks {
 		.initialProperties(SharedProperties::stone)
 		.properties(AbstractBlock.Settings::nonOpaque)
 		.consume(StressConfigDefaults.noImpactConsumer())
-//		.onRegister(CreateRegistrate.connectedTextures(new EncasedCTBehaviour(AllSpriteShifts.ANDESITE_CASING))) TODO
-//		.onRegister(CreateRegistrate.casingConnectivity((block, cc) -> cc.make(block, AllSpriteShifts.ANDESITE_CASING, TODO
-//			(s, f) -> f.getAxis() == s.get(GearboxBlock.AXIS))))
+		.onRegister(connectedTextures(new EncasedCTBehaviour(AllSpriteShifts.ANDESITE_CASING)))
+		.onRegister(casingConnectivity((block, cc) -> cc.make(block, AllSpriteShifts.ANDESITE_CASING,
+			(s, f) -> f.getAxis() == s.get(GearboxBlock.AXIS))))
 //		.blockstate((c, p) -> axisBlock(c, p, $ -> AssetLookup.partialBaseModel(c, p), true))
 		.item()
 //		.transform(customItemModel())
@@ -673,7 +679,7 @@ public class AllBlocks {
 		.initialProperties(SharedProperties::wooden)
 //		.tag(AllBlockTags.SAFE_NBT.tag)
 //		.blockstate(BlockStateGen.linearChassis())
-//		.onRegister(connectedTextures(new ChassisCTBehaviour())) TODO
+		.onRegister(connectedTextures(new ChassisCTBehaviour()))
 //		.lang("Linear Chassis")
 		.simpleItem()
 		.register();
@@ -682,7 +688,7 @@ public class AllBlocks {
 		.initialProperties(SharedProperties::wooden)
 //		.tag(AllBlockTags.SAFE_NBT.tag)
 //		.blockstate(BlockStateGen.linearChassis())
-//		.onRegister(connectedTextures(new ChassisCTBehaviour())) TODO
+		.onRegister(connectedTextures(new ChassisCTBehaviour()))
 		.simpleItem()
 		.register();
 
@@ -915,7 +921,7 @@ public class AllBlocks {
 //			.modelFile(AssetLookup.partialBaseModel(c, p))
 //			.rotationX(s.get(ArmBlock.CEILING) ? 180 : 0)
 //			.build()))
-//		.transform(StressConfigDefaults.setImpact(8.0))
+		.consume(StressConfigDefaults.impactConsumer(8.0))
 		.item(ArmItem::new)
 //		.transform(customItemModel())
 		.build()
@@ -1137,6 +1143,22 @@ public class AllBlocks {
 		return block -> {
 			if (FabricLoader.getInstance().getEnvironmentType() == EnvType.CLIENT) {
 				CreateClient.getCustomBlockModels().register(() -> block, supplier.get());
+			}
+		};
+	}
+
+	private static <T extends Block> Consumer<T> connectedTextures(ConnectedTextureBehaviour behavior) {
+		return block -> {
+			if (FabricLoader.getInstance().getEnvironmentType() == EnvType.CLIENT) {
+				CreateClient.getCustomBlockModels().register(() -> block, model -> new CTModel(model, behavior));
+			}
+		};
+	}
+
+	public static <T extends Block> Consumer<T> casingConnectivity(BiConsumer<T, CasingConnectivity> consumer) {
+		return block -> {
+			if (FabricLoader.getInstance().getEnvironmentType() == EnvType.CLIENT) {
+				consumer.accept(block, CreateClient.getCasingConnectivity());
 			}
 		};
 	}
