@@ -47,6 +47,7 @@ import com.simibubi.create.content.logistics.block.mechanicalArm.ArmBlock;
 import com.simibubi.create.content.logistics.block.mechanicalArm.ArmItem;
 import com.simibubi.create.content.logistics.block.redstone.AnalogLeverBlock;
 import com.simibubi.create.content.logistics.block.redstone.RedstoneLinkBlock;
+import com.simibubi.create.foundation.block.BlockVertexColorProvider;
 import com.simibubi.create.foundation.block.connected.CTModel;
 import com.simibubi.create.foundation.block.connected.ConnectedTextureBehaviour;
 import com.simibubi.create.foundation.config.StressConfigDefaults;
@@ -63,6 +64,7 @@ import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.MaterialColor;
+import net.minecraft.client.color.block.BlockColorProvider;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.model.BakedModel;
 import net.minecraft.item.ItemGroup;
@@ -1139,7 +1141,7 @@ public class AllBlocks {
 //		.build()
 		.register();
 
-	private static <T extends Block> Consumer<T> blockModel(Supplier<Function<BakedModel, ? extends BakedModel>> supplier) {
+	public static <T extends Block> Consumer<T> blockModel(Supplier<Function<BakedModel, ? extends BakedModel>> supplier) {
 		return block -> {
 			if (FabricLoader.getInstance().getEnvironmentType() == EnvType.CLIENT) {
 				CreateClient.getCustomBlockModels().register(() -> block, supplier.get());
@@ -1147,7 +1149,23 @@ public class AllBlocks {
 		};
 	}
 
-	private static <T extends Block> Consumer<T> connectedTextures(ConnectedTextureBehaviour behavior) {
+	public static <T extends Block> Consumer<T> blockColors(Supplier<Supplier<BlockColorProvider>> provider) {
+		return block -> {
+			if (FabricLoader.getInstance().getEnvironmentType() == EnvType.CLIENT) {
+				CreateClient.getColorHandler().register(block, provider.get().get());
+			}
+		};
+	}
+
+	public static <T extends Block> Consumer<T> blockVertexColors(BlockVertexColorProvider provider) {
+		return block -> {
+			if (FabricLoader.getInstance().getEnvironmentType() == EnvType.CLIENT) {
+				CreateClient.getColorHandler().register(block, provider);
+			}
+		};
+	}
+
+	public static <T extends Block> Consumer<T> connectedTextures(ConnectedTextureBehaviour behavior) {
 		return block -> {
 			if (FabricLoader.getInstance().getEnvironmentType() == EnvType.CLIENT) {
 				CreateClient.getCustomBlockModels().register(() -> block, model -> new CTModel(model, behavior));

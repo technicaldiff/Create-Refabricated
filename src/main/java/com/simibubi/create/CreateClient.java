@@ -3,7 +3,6 @@ package com.simibubi.create;
 import com.simibubi.create.content.contraptions.base.KineticBlockEntityRenderer;
 import com.simibubi.create.content.contraptions.components.structureMovement.render.ContraptionRenderDispatcher;
 import com.simibubi.create.content.contraptions.relays.encased.CasingConnectivity;
-import com.simibubi.create.content.palettes.AllPaletteBlocks;
 import com.simibubi.create.content.schematics.ClientSchematicLoader;
 import com.simibubi.create.events.ClientEvents;
 import com.simibubi.create.foundation.ResourceReloadHandler;
@@ -35,6 +34,7 @@ public class CreateClient implements ClientModInitializer {
 	private static CustomBlockModels customBlockModels;
 	private static CustomItemModels customItemModels;
 	private static CustomRenderedItems customRenderedItems;
+	private static AllColorHandlers colorHandlers;
 	private static CasingConnectivity casingConnectivity;
 
 	@Override
@@ -59,9 +59,8 @@ public class CreateClient implements ClientModInitializer {
 
 		AllKeys.register();
 		AllEntityTypes.registerRenderers();
-		AllFluids.registerRenderers();
-
-		AllPaletteBlocks.setRenderLayers();
+//		getColorHandler().init();
+		AllFluids.assignRenderLayers();
 	}
 	
 	public void onClientStarted(MinecraftClient client) {
@@ -88,6 +87,12 @@ public class CreateClient implements ClientModInitializer {
 		if (customBlockModels == null)
 			customBlockModels = new CustomBlockModels();
 		return customBlockModels;
+	}
+
+	public static AllColorHandlers getColorHandler() {
+		if (colorHandlers == null)
+			colorHandlers = new AllColorHandlers();
+		return colorHandlers;
 	}
 
 	public static CasingConnectivity getCasingConnectivity() {

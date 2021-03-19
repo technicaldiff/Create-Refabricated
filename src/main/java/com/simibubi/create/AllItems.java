@@ -37,6 +37,7 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.fabric.api.client.rendering.v1.BuiltinItemRendererRegistry;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.fabricmc.loader.api.FabricLoader;
+import net.minecraft.client.color.item.ItemColorProvider;
 import net.minecraft.client.render.model.BakedModel;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.item.FoodComponent;
@@ -274,6 +275,14 @@ public class AllItems {
 				props -> new TagDependentIngredientItem(props, new Identifier("forge", "ores/" + metalName)))
 //			.tag(AllItemTags.CRUSHED_ORES.tag)
 			.register();
+	}
+
+	public static <T extends Item> Consumer<T> itemColors(Supplier<Supplier<ItemColorProvider>> provider) {
+		return item -> {
+			if (FabricLoader.getInstance().getEnvironmentType() == EnvType.CLIENT) {
+				CreateClient.getColorHandler().register(item, provider.get().get());
+			}
+		};
 	}
 	
 	private static <T extends Item> Consumer<ItemRegBuilder<T>> customRenderedItem(Supplier<Function<BakedModel, ? extends CustomRenderedItemModel>> supplier) {

@@ -27,7 +27,7 @@ public class BlockRegBuilder<T extends Block> {
 	private Deque<Consumer<FabricBlockSettings>> settingsDeque = new ArrayDeque<>();
 	private Supplier<RenderLayer> renderLayer;
 	private BlockItemBuilder<T> itemBuilder;
-	private Deque<Consumer<T>> onRegister = new ArrayDeque<>();
+	private Deque<Consumer<? super T>> onRegister = new ArrayDeque<>();
 	private Deque<Consumer<BlockItemBuilder<T>>> beforeRegisterItem = new ArrayDeque<>();
 	private Deque<Consumer<Item>> onRegisterItem = new ArrayDeque<>();
 
@@ -94,7 +94,7 @@ public class BlockRegBuilder<T extends Block> {
 		return this;
 	}
 
-	public BlockRegBuilder<T> onRegister(Consumer<T> consumer) {
+	public BlockRegBuilder<T> onRegister(Consumer<? super T> consumer) {
 		onRegister.add(consumer);
 		return this;
 	}
@@ -119,7 +119,7 @@ public class BlockRegBuilder<T extends Block> {
 		if (renderLayer != null) {
 			BlockRenderLayerMap.INSTANCE.putBlock(block, renderLayer.get());
 		}
-		for (Consumer<T> consumer : onRegister) {
+		for (Consumer<? super T> consumer : onRegister) {
 			consumer.accept(block);
 		}
 		if (hasItemBuilder()) {

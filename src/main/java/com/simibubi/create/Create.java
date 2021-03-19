@@ -30,12 +30,11 @@ public class Create implements ModInitializer  {
 
 	public static Logger logger = LogManager.getLogger();
 	public static ItemGroup baseCreativeTab = FabricItemGroupBuilder.build(id("base"), () -> new ItemStack(AllBlocks.COGWHEEL));
-	public static ItemGroup palettesCreativeTab = FabricItemGroupBuilder.build(id("palettes"), () -> new ItemStack(AllBlocks.ZINC_BLOCK));
+	public static ItemGroup palettesCreativeTab = FabricItemGroupBuilder.build(id("palettes"), () -> new ItemStack(AllPaletteBlocks.ORNATE_IRON_WINDOW));
 
 	public static RedstoneLinkNetworkHandler redstoneLinkNetworkHandler;
 	public static TorquePropagator torquePropagator;
 	public static Random random;
-
 
 	@Override
 	public void onInitialize() {
@@ -72,6 +71,7 @@ public class Create implements ModInitializer  {
 	public static Identifier id(String path) {
 		return new Identifier(ID, path);
 	}
+
 	public static AllConfigs getConfig() {
 		AllConfigs config = AutoConfig.getConfigHolder(AllConfigs.class).getConfig();
 		try {

@@ -101,11 +101,6 @@ public class CartAssemblerBlock extends AbstractRailBlock
 		super.appendProperties(builder);
 	}
 
-	/*@Override
-	public boolean hasTileEntity(BlockState state) {
-		return true;
-	}*/
-
 	@Override
 	public BlockEntity createBlockEntity(BlockView world) {
 		return AllBlockEntities.CART_ASSEMBLER.instantiate();

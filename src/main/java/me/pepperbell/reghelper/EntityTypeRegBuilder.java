@@ -22,7 +22,7 @@ public class EntityTypeRegBuilder<T extends Entity> {
 	private final SpawnGroup spawnGroup;
 	private Deque<Consumer<FabricEntityTypeBuilder<T>>> builderDeque = new ArrayDeque<>();
 	private EntityRendererRegistry.Factory rendererFactory;
-	private Deque<Consumer<EntityType<T>>> onRegister = new ArrayDeque<>();
+	private Deque<Consumer<EntityType<? super T>>> onRegister = new ArrayDeque<>();
 
 	private EntityTypeRegBuilder(Identifier identifier, EntityFactory<T> factory, SpawnGroup spawnGroup) {
 		this.identifier = identifier;
@@ -46,7 +46,7 @@ public class EntityTypeRegBuilder<T extends Entity> {
 		return this;
 	}
 
-	public EntityTypeRegBuilder<T> onRegister(Consumer<EntityType<T>> consumer) {
+	public EntityTypeRegBuilder<T> onRegister(Consumer<EntityType<? super T>> consumer) {
 		onRegister.add(consumer);
 		return this;
 	}
@@ -61,7 +61,7 @@ public class EntityTypeRegBuilder<T extends Entity> {
 		if (rendererFactory != null) {
 			EntityRendererRegistry.INSTANCE.register(type, rendererFactory);
 		}
-		for (Consumer<EntityType<T>> consumer : onRegister) {
+		for (Consumer<EntityType<? super T>> consumer : onRegister) {
 			consumer.accept(type);
 		}
 		return type;

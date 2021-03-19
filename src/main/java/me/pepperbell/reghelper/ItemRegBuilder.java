@@ -15,7 +15,7 @@ public class ItemRegBuilder<T extends Item> {
 	private final Function<FabricItemSettings, T> function;
 	private FabricItemSettings initialSettings = new FabricItemSettings();
 	private Deque<Consumer<FabricItemSettings>> settingsDeque = new ArrayDeque<>();
-	private Deque<Consumer<T>> onRegister = new ArrayDeque<>();
+	private Deque<Consumer<? super T>> onRegister = new ArrayDeque<>();
 
 	private ItemRegBuilder(Identifier identifier, Function<FabricItemSettings, T> function) {
 		this.identifier = identifier;
@@ -36,7 +36,7 @@ public class ItemRegBuilder<T extends Item> {
 		return this;
 	}
 
-	public ItemRegBuilder<T> onRegister(Consumer<T> consumer) {
+	public ItemRegBuilder<T> onRegister(Consumer<? super T> consumer) {
 		onRegister.add(consumer);
 		return this;
 	}
@@ -48,7 +48,7 @@ public class ItemRegBuilder<T extends Item> {
 		}
 		T item = function.apply(settings);
 		Registry.register(Registry.ITEM, identifier, item);
-		for (Consumer<T> consumer : onRegister) {
+		for (Consumer<? super T> consumer : onRegister) {
 			consumer.accept(item);
 		}
 		return item;

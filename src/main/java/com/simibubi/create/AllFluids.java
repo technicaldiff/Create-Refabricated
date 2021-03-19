@@ -232,7 +232,7 @@ public class AllFluids {
         HONEY_BUCKET = Registry.register(Registry.ITEM, new Identifier(Create.ID, "honey_bucket"), new BucketItem(STILL_HONEY, new Item.Settings().recipeRemainder(Items.BUCKET).maxCount(1).group(Create.baseCreativeTab)));
     }
 
-    public static void registerRenderers() {
+    public static void assignRenderLayers() {
         setupFluidRendering(AllFluids.STILL_CHOCOLATE, AllFluids.FLOWING_CHOCOLATE, new Identifier("create", "chocolate"), 0x00ffffff);
         BlockRenderLayerMap.INSTANCE.putFluids(RenderLayer.getTranslucent(), AllFluids.STILL_CHOCOLATE, AllFluids.FLOWING_CHOCOLATE);
 

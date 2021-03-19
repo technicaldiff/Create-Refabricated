@@ -1,5 +1,5 @@
 {
-	"_": "Missing Localizations: 12",
+	"_": "Missing Localizations: 15",
 
 	"_": "->------------------------]  Game Elements  [------------------------<-",
 
@@ -67,6 +67,8 @@
 	"block.create.creative_crate": "Caja creativa",
 	"block.create.creative_fluid_tank": "Tanque de fluidos creativo",
 	"block.create.creative_motor": "Motor creativo",
+	"block.create.crimson_window": "UNLOCALIZED: Crimson Window",
+	"block.create.crimson_window_pane": "UNLOCALIZED: Crimson Window Pane",
 	"block.create.crushing_wheel": "Rueda trituradora",
 	"block.create.crushing_wheel_controller": "Controlador de Rueda trituradora",
 	"block.create.cuckoo_clock": "Reloj Cucú",
@@ -384,6 +386,8 @@
 	"block.create.turntable": "Plataforma giratoria mecánica",
 	"block.create.vertical_framed_glass": "Vidrio esmaltado vertical",
 	"block.create.vertical_framed_glass_pane": "Panel de vidrio esmaltado vertical",
+	"block.create.warped_window": "UNLOCALIZED: Warped Window",
+	"block.create.warped_window_pane": "UNLOCALIZED: Warped Window Pane",
 	"block.create.water_wheel": "Rueda hidráulica mecánica",
 	"block.create.weathered_limestone": "Piedra caliza erosionada",
 	"block.create.weathered_limestone_bricks": "Ladrillos de piedra caliza erosionada",
@@ -830,7 +834,6 @@
 	"create.gui.assembly.exception.structureTooLarge": "Hay demasiados bloques incluídos en el artilugio.\nEl máximo configurado es: %1$s",
 	"create.gui.assembly.exception.tooManyPistonPoles": "Hay demasiadas Pértigas de extensión conectadas a este Pistón.\nEl máximo configurado es: %1$s",
 	"create.gui.assembly.exception.noPistonPoles": "Faltan pértigas de extensión para el Pistón",
-	"create.gui.assembly.exception.not_enough_sails": "UNLOCALIZED: Attached structure does not include enough sail-like blocks: %1$s\nA minimum of %2$s are required",
 	"create.gui.gauge.info_header": "Información sobre el medidor:",
 	"create.gui.speedometer.title": "Velocidad de rotación",
 	"create.gui.stressometer.title": "Estrés de la red",
