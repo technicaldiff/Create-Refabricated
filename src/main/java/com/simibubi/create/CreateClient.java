@@ -5,6 +5,7 @@ import com.simibubi.create.content.contraptions.components.structureMovement.ren
 import com.simibubi.create.content.contraptions.relays.encased.CasingConnectivity;
 import com.simibubi.create.content.schematics.ClientSchematicLoader;
 import com.simibubi.create.events.ClientEvents;
+import com.simibubi.create.events.custom.BeforeFirstReloadCallback;
 import com.simibubi.create.foundation.ResourceReloadHandler;
 import com.simibubi.create.foundation.block.render.CustomBlockModels;
 import com.simibubi.create.foundation.item.CustomItemModels;
@@ -17,7 +18,6 @@ import com.simibubi.create.foundation.utility.ghost.GhostBlocks;
 import com.simibubi.create.foundation.utility.outliner.Outliner;
 
 import net.fabricmc.api.ClientModInitializer;
-import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientLifecycleEvents;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.resource.ReloadableResourceManager;
 import net.minecraft.resource.ResourceManager;
@@ -39,9 +39,8 @@ public class CreateClient implements ClientModInitializer {
 
 	@Override
 	public void onInitializeClient() {
+		BeforeFirstReloadCallback.EVENT.register(this::beforeFirstReload);
 		ClientEvents.register();
-
-		ClientLifecycleEvents.CLIENT_STARTED.register(this::onClientStarted);
 
 		AllPackets.clientInit();
 
@@ -59,12 +58,13 @@ public class CreateClient implements ClientModInitializer {
 
 		AllKeys.register();
 		AllEntityTypes.registerRenderers();
-//		getColorHandler().init();
 		AllFluids.assignRenderLayers();
 	}
-	
-	public void onClientStarted(MinecraftClient client) {
+
+	public void beforeFirstReload(MinecraftClient client) {
 		Backend.init(client);
+
+		getColorHandler().init();
 
 		ResourceManager resourceManager = client.getResourceManager();
 		if (resourceManager instanceof ReloadableResourceManager)
