@@ -20,4 +20,8 @@ public class SignTypeMixin implements SignTypeExtensions {
 	public String getName() {
 		return name;
 	}
+
+	public String method_24028() {
+		return getName();
+	}
 }
