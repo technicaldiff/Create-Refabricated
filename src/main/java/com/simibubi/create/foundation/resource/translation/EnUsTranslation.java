@@ -277,8 +277,47 @@ public final class EnUsTranslation extends CreateTranslation {
 
 	private static void addWorldGen(JLang lang) {
 		final String WORLD_GEN = "worldGen";
-		text(lang, WORLD_GEN, "Worldgen");
+		text(lang, WORLD_GEN, "World Generation");
 
-		// TODO Worldgen
+		// Option Names
+		text(lang, "disable", "Disable", WORLD_GEN);
+		text(lang, "copperOreMinHeight", "Copper Ore Minimum Height", WORLD_GEN);
+		text(lang, "copperOreMaxHeight", "Copper Ore Maximum Height", WORLD_GEN);
+		text(lang, "copperOreClusterSize", "Copper Ore Cluster Size", WORLD_GEN);
+		text(lang, "copperOreFrequency", "Copper Ore Frequency", WORLD_GEN);
+		text(lang, "weatheredLimestoneMinHeight", "Weathered Limestone Minimum Height", WORLD_GEN);
+		text(lang, "weatheredLimestoneMaxHeight", "Weathered Limestone Maximum Height", WORLD_GEN);
+		text(lang, "weatheredLimestoneClusterSize", "Weathered Limestone Cluster Size", WORLD_GEN);
+		text(lang, "weatheredLimestoneFrequency", "Weathered Limestone Frequency", WORLD_GEN);
+		text(lang, "zincOreMinHeight", "Zinc Ore Minimum Height", WORLD_GEN);
+		text(lang, "zincOreMaxHeight", "Zinc Ore Maximum Height", WORLD_GEN);
+		text(lang, "zincOreClusterSize", "Zinc Ore Cluster Size", WORLD_GEN);
+		text(lang, "zincOreFrequency", "Zinc Ore Frequency", WORLD_GEN);
+		text(lang, "limestoneMinHeight", "Limestone Minimum Height", WORLD_GEN);
+		text(lang, "limestoneMaxHeight", "Limestone Maximum Height", WORLD_GEN);
+		text(lang, "limestoneClusterSize", "Limestone Cluster Size", WORLD_GEN);
+		text(lang, "limestoneFrequency", "Limestone Frequency", WORLD_GEN);
+		text(lang, "dolomiteMinHeight", "Dolomite Minimum Height", WORLD_GEN);
+		text(lang, "dolomiteMaxHeight", "Dolomite Maximum Height", WORLD_GEN);
+		text(lang, "dolomiteClusterSize", "Dolomite Cluster Size", WORLD_GEN);
+		text(lang, "dolomiteFrequency", "Dolomite Frequency", WORLD_GEN);
+		text(lang, "gabbroMinHeight", "Gabbro Minimum Height", WORLD_GEN);
+		text(lang, "gabbroMaxHeight", "Gabbro Maximum Height", WORLD_GEN);
+		text(lang, "gabbroClusterSize", "Gabbro Cluster Size", WORLD_GEN);
+		text(lang, "gabbroFrequency", "Gabbro Frequency", WORLD_GEN);
+		text(lang, "scoriaMinHeight", "Scoria Minimum Height", WORLD_GEN);
+		text(lang, "scoriaMaxHeight", "Scoria Maximum Height", WORLD_GEN);
+		text(lang, "scoriaClusterSize", "Scoria Cluster Size", WORLD_GEN);
+		text(lang, "scoriaFrequency", "Scoria Frequency", WORLD_GEN);
+
+		// Tooltips
+		tooltip(lang, "disable", "Prevents all worldgen added by Create from taking effect", WORLD_GEN);
+		tooltip(lang, "copperOreFrequency", "Amount of clusters generated per Chunk.\n>1 to spawn multiple.\n<1 to make it a chance.\n0 to disable.", WORLD_GEN);
+		tooltip(lang, "weatheredLimestoneFrequency", "Amount of clusters generated per Chunk.\n>1 to spawn multiple.\n<1 to make it a chance.\n0 to disable.", WORLD_GEN);
+		tooltip(lang, "zincOreFrequency", "Amount of clusters generated per Chunk.\n>1 to spawn multiple.\n<1 to make it a chance.\n0 to disable.", WORLD_GEN);
+		tooltip(lang, "limestoneFrequency", "Amount of clusters generated per Chunk.\n>1 to spawn multiple.\n<1 to make it a chance.\n0 to disable.", WORLD_GEN);
+		tooltip(lang, "dolomiteFrequency", "Amount of clusters generated per Chunk.\n>1 to spawn multiple.\n<1 to make it a chance.\n0 to disable.", WORLD_GEN);
+		tooltip(lang, "gabbroFrequency", "Amount of clusters generated per Chunk.\n>1 to spawn multiple.\n<1 to make it a chance.\n0 to disable.", WORLD_GEN);
+		tooltip(lang, "scoriaFrequency", "Amount of clusters generated per Chunk.\n>1 to spawn multiple.\n<1 to make it a chance.\n0 to disable.", WORLD_GEN);
 	}
 }

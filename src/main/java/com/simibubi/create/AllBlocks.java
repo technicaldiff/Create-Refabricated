@@ -6,6 +6,7 @@ import java.util.function.Function;
 import java.util.function.Supplier;
 
 import com.simibubi.create.content.AllSections;
+import com.simibubi.create.content.contraptions.base.CasingBlock;
 import com.simibubi.create.content.contraptions.components.clock.CuckooClockBlock;
 import com.simibubi.create.content.contraptions.components.crank.HandCrankBlock;
 import com.simibubi.create.content.contraptions.components.crank.ValveHandleBlock;
@@ -33,10 +34,7 @@ import com.simibubi.create.content.contraptions.relays.elementary.BracketedKinet
 import com.simibubi.create.content.contraptions.relays.elementary.CogWheelBlock;
 import com.simibubi.create.content.contraptions.relays.elementary.CogwheelBlockItem;
 import com.simibubi.create.content.contraptions.relays.elementary.ShaftBlock;
-import com.simibubi.create.content.contraptions.relays.encased.CasingConnectivity;
-import com.simibubi.create.content.contraptions.relays.encased.ClutchBlock;
-import com.simibubi.create.content.contraptions.relays.encased.EncasedCTBehaviour;
-import com.simibubi.create.content.contraptions.relays.encased.GearshiftBlock;
+import com.simibubi.create.content.contraptions.relays.encased.*;
 import com.simibubi.create.content.contraptions.relays.gauge.GaugeBlock;
 import com.simibubi.create.content.contraptions.relays.gearbox.GearboxBlock;
 import com.simibubi.create.content.logistics.block.diodes.AdjustableRepeaterBlock;
@@ -131,13 +129,13 @@ public class AllBlocks {
 		.build()
 		.register();
 
-	/*public static final EncasedShaftBlock ANDESITE_ENCASED_SHAFT = createBuilder("andesite_encased_shaft", EncasedShaftBlock::andesite)
-		.transform(BuilderTransformers.encasedShaft("andesite", AllSpriteShifts.ANDESITE_CASING))
+	public static final EncasedShaftBlock ANDESITE_ENCASED_SHAFT = createBuilder("andesite_encased_shaft", EncasedShaftBlock::andesite)
+		.consume(BuilderConsumers.encasedShaft("andesite", AllSpriteShifts.ANDESITE_CASING))
 		.register();
 
 	public static final EncasedShaftBlock BRASS_ENCASED_SHAFT = createBuilder("brass_encased_shaft", EncasedShaftBlock::brass)
-		.transform(BuilderTransformers.encasedShaft("brass", AllSpriteShifts.BRASS_CASING))
-		.register();*/
+		.consume(BuilderConsumers.encasedShaft("brass", AllSpriteShifts.BRASS_CASING))
+		.register();
 
 	public static final GearboxBlock GEARBOX = createBuilder("gearbox", GearboxBlock::new)
 		.initialProperties(SharedProperties::stone)
@@ -172,32 +170,33 @@ public class AllBlocks {
 		.build()
 		.register();
 
-	/*public static final EncasedBeltBlock ENCASED_CHAIN_DRIVE = createBuilder("encased_chain_drive", EncasedBeltBlock::new)
+	public static final EncasedBeltBlock ENCASED_CHAIN_DRIVE = createBuilder("encased_chain_drive", EncasedBeltBlock::new)
 		.initialProperties(SharedProperties::stone)
 		.properties(AbstractBlock.Settings::nonOpaque)
-		.transform(StressConfigDefaults.setNoImpact())
-		.blockstate((c, p) -> new EncasedBeltGenerator((state, suffix) -> p.models()
-			.getExistingFile(p.modLoc("block/" + c.getName() + "/" + suffix))).generate(c, p))
+		.consume(StressConfigDefaults.noImpactConsumer())
+//		.blockstate((c, p) -> new EncasedBeltGenerator((state, suffix) -> p.models()
+//			.getExistingFile(p.modLoc("block/" + c.getName() + "/" + suffix))).generate(c, p))
 		.item()
-		.transform(customItemModel())
+//		.transform(customItemModel())
+		.build()
 		.register();
 
 	public static final AdjustablePulleyBlock ADJUSTABLE_CHAIN_GEARSHIFT = createBuilder("adjustable_chain_gearshift", AdjustablePulleyBlock::new)
 		.initialProperties(SharedProperties::stone)
 		.properties(AbstractBlock.Settings::nonOpaque)
-		.transform(StressConfigDefaults.setNoImpact())
-		.blockstate((c, p) -> new EncasedBeltGenerator((state, suffix) -> {
-			String powered = state.get(AdjustablePulleyBlock.POWERED) ? "_powered" : "";
-			return p.models()
-				.withExistingParent(c.getName() + "_" + suffix + powered,
-				p.modLoc("block/encased_chain_drive/" + suffix))
-				.texture("side", p.modLoc("block/" + c.getName() + powered));
-		}).generate(c, p))
+		.consume(StressConfigDefaults.noImpactConsumer())
+//		.blockstate((c, p) -> new EncasedBeltGenerator((state, suffix) -> {
+//			String powered = state.get(AdjustablePulleyBlock.POWERED) ? "_powered" : "";
+//			return p.models()
+//				.withExistingParent(c.getName() + "_" + suffix + powered,
+//				p.modLoc("block/encased_chain_drive/" + suffix))
+//				.texture("side", p.modLoc("block/" + c.getName() + powered));
+//		}).generate(c, p))
 		.item()
-		.model((c, p) -> p.withExistingParent(c.getName(), p.modLoc("block/encased_chain_drive/item"))
-			.texture("side", p.modLoc("block/" + c.getName())))
+//		.model((c, p) -> p.withExistingParent(c.getName(), p.modLoc("block/encased_chain_drive/item"))
+//			.texture("side", p.modLoc("block/" + c.getName())))
 		.build()
-		.register();*/
+		.register();
 
 	public static final BeltBlock BELT = createBuilder("belt", BeltBlock::new)
 		.initialProperties(SharedProperties.beltMaterial, MaterialColor.GRAY)
@@ -838,32 +837,32 @@ public class AllBlocks {
 				.loot((p, b) -> p.addDrop(b, SAIL.get()))
 				.register();
 		}
-	}
+	}*/
 
 	public static final CasingBlock ANDESITE_CASING = createBuilder("andesite_casing", CasingBlock::new)
-		.transform(BuilderTransformers.casing(AllSpriteShifts.ANDESITE_CASING))
+		.consume(BuilderConsumers.casing(AllSpriteShifts.ANDESITE_CASING))
 		.register();
 
 	public static final CasingBlock BRASS_CASING = createBuilder("brass_casing", CasingBlock::new)
-		.transform(BuilderTransformers.casing(AllSpriteShifts.BRASS_CASING))
+		.consume(BuilderConsumers.casing(AllSpriteShifts.BRASS_CASING))
 		.register();
 
 	public static final CasingBlock COPPER_CASING = createBuilder("copper_casing", CasingBlock::new)
-		.transform(BuilderTransformers.casing(AllSpriteShifts.COPPER_CASING))
+		.consume(BuilderConsumers.casing(AllSpriteShifts.COPPER_CASING))
 		.register();
 
 	public static final CasingBlock SHADOW_STEEL_CASING = createBuilder("shadow_steel_casing", CasingBlock::new)
-		.transform(BuilderTransformers.casing(AllSpriteShifts.SHADOW_STEEL_CASING))
-		.lang("Shadow Casing")
+		.consume(BuilderConsumers.casing(AllSpriteShifts.SHADOW_STEEL_CASING))
+//		.lang("Shadow Casing")
 		.register();
 
 	public static final CasingBlock REFINED_RADIANCE_CASING = createBuilder("refined_radiance_casing", CasingBlock::new)
-		.transform(BuilderTransformers.casing(AllSpriteShifts.REFINED_RADIANCE_CASING))
+		.consume(BuilderConsumers.casing(AllSpriteShifts.REFINED_RADIANCE_CASING))
 		.properties(p -> p.luminance($ -> 12))
-		.lang("Radiant Casing")
+//		.lang("Radiant Casing")
 		.register();
 
-	public static final MechanicalCrafterBlock MECHANICAL_CRAFTER = createBuilder("mechanical_crafter", MechanicalCrafterBlock::new)
+	/*public static final MechanicalCrafterBlock MECHANICAL_CRAFTER = createBuilder("mechanical_crafter", MechanicalCrafterBlock::new)
 		.initialProperties(SharedProperties::softMetal)
 		.properties(AbstractBlock.Settings::nonOpaque)
 		.blockstate(BlockStateGen.horizontalBlockProvider(true))

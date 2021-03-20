@@ -2,6 +2,10 @@ package com.simibubi.create.foundation.data;
 
 import java.util.function.Consumer;
 
+import com.simibubi.create.content.contraptions.base.CasingBlock;
+import com.simibubi.create.content.contraptions.relays.encased.EncasedCTBehaviour;
+import com.simibubi.create.content.contraptions.relays.encased.EncasedShaftBlock;
+import com.simibubi.create.foundation.block.connected.CTSpriteShiftEntry;
 import org.jetbrains.annotations.Nullable;
 
 import com.simibubi.create.AllBlocks;
@@ -15,6 +19,9 @@ import net.minecraft.block.enums.PistonType;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.util.DyeColor;
 
+import static com.simibubi.create.AllBlocks.casingConnectivity;
+import static com.simibubi.create.AllBlocks.connectedTextures;
+
 public class BuilderConsumers {
 	public static <B extends Block> Consumer<BlockRegBuilder<B>> cuckooClock() {
 		return b -> b.initialProperties(SharedProperties::wooden)
@@ -27,21 +34,21 @@ public class BuilderConsumers {
 			.build();
 	}
 
-//	public static <B extends EncasedShaftBlock> Consumer<BlockHelper<B>> encasedShaft(String casing,
-//		CTSpriteShiftEntry casingShift) {
-//		return builder -> builder.initialProperties(SharedProperties::stone)
-//			.properties(Block.Properties::nonOpaque)
-//			.onRegister(CreateRegistrate.connectedTextures(new EncasedCTBehaviour(casingShift)))
-//			.onRegister(CreateRegistrate.casingConnectivity(
-//				(block, cc) -> cc.make(block, casingShift, (s, f) -> f.getAxis() != s.get(EncasedShaftBlock.AXIS))))
+	public static <B extends EncasedShaftBlock> Consumer<BlockRegBuilder<B>> encasedShaft(String casing,
+																					  CTSpriteShiftEntry casingShift) {
+		return builder -> builder.initialProperties(SharedProperties::stone)
+			.properties(p -> p.nonOpaque())
+			.onRegister(connectedTextures(new EncasedCTBehaviour(casingShift)))
+			.onRegister(casingConnectivity(
+				(block, cc) -> cc.make(block, casingShift, (s, f) -> f.getAxis() != s.get(EncasedShaftBlock.AXIS))))
 //			.blockstate((c, p) -> axisBlock(c, p, blockState -> p.models()
 //				.getExistingFile(p.modLoc("block/encased_shaft/block_" + casing)), true))
-//			.transform(StressConfigDefaults.setNoImpact())
+			.consume(StressConfigDefaults.noImpactConsumer())
 //			.loot((p, b) -> p.addDrop(b, AllBlocks.SHAFT.get()))
-//			.item()
+			.item()
 //			.model(AssetLookup.customItemModel("encased_shaft", "item_" + casing))
-//			.build();
-//	}
+			.build();
+	}
 
 	public static <B extends ValveHandleBlock> Consumer<BlockRegBuilder<B>> valveHandle(
 		@Nullable DyeColor color) {
@@ -62,14 +69,14 @@ public class BuilderConsumers {
 			.build();
 	}
 
-//	public static <B extends CasingBlock> Consumer<BlockHelper<B>> casing(
-//		CTSpriteShiftEntry ct) {
-//		return b -> b.initialProperties(SharedProperties::stone)
+	public static <B extends CasingBlock> Consumer<BlockRegBuilder<B>> casing(
+		CTSpriteShiftEntry ct) {
+		return b -> b.initialProperties(SharedProperties::stone)
 //			.blockstate((c, p) -> p.simpleBlock(c.get()))
-//			.onRegister(connectedTextures(new EncasedCTBehaviour(ct)))
-//			.onRegister(casingConnectivity((block, cc) -> cc.makeCasing(block, ct)))
-//			.simpleItem();
-//	}
+			.onRegister(connectedTextures(new EncasedCTBehaviour(ct)))
+			.onRegister(casingConnectivity((block, cc) -> cc.makeCasing(block, ct)))
+			.simpleItem();
+	}
 
 //	public static <B extends FunnelBlock> Consumer<BlockHelper<B>> funnel(String type,
 //		Identifier particleTexture) {

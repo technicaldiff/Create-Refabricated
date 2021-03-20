@@ -35,10 +35,7 @@ import com.simibubi.create.content.contraptions.relays.belt.BeltBlockEntity;
 import com.simibubi.create.content.contraptions.relays.belt.BeltInstance;
 import com.simibubi.create.content.contraptions.relays.belt.BeltRenderer;
 import com.simibubi.create.content.contraptions.relays.elementary.SimpleKineticBlockEntity;
-import com.simibubi.create.content.contraptions.relays.encased.ClutchBlockEntity;
-import com.simibubi.create.content.contraptions.relays.encased.ShaftInstance;
-import com.simibubi.create.content.contraptions.relays.encased.SplitShaftInstance;
-import com.simibubi.create.content.contraptions.relays.encased.SplitShaftRenderer;
+import com.simibubi.create.content.contraptions.relays.encased.*;
 import com.simibubi.create.content.contraptions.relays.gauge.GaugeRenderer;
 import com.simibubi.create.content.contraptions.relays.gauge.SpeedGaugeBlockEntity;
 import com.simibubi.create.content.contraptions.relays.gauge.StressGaugeBlockEntity;
@@ -93,7 +90,7 @@ public class AllBlockEntities {
 		.onRegister(GearboxInstance::register)
 		.register();
 
-	/*public static final BlockEntityType<EncasedShaftBlockEntity> ENCASED_SHAFT = createBuilder("encased_shaft", EncasedShaftBlockEntity::new)
+	public static final BlockEntityType<EncasedShaftBlockEntity> ENCASED_SHAFT = createBuilder("encased_shaft", EncasedShaftBlockEntity::new)
 		.validBlocks(AllBlocks.ANDESITE_ENCASED_SHAFT, AllBlocks.BRASS_ENCASED_SHAFT, AllBlocks.ENCASED_CHAIN_DRIVE)
 		.renderer(() -> EncasedShaftRenderer::new)
 		.onRegister(ShaftInstance::register)
@@ -103,7 +100,7 @@ public class AllBlockEntities {
 		.validBlocks(AllBlocks.ADJUSTABLE_CHAIN_GEARSHIFT)
 		.renderer(() -> EncasedShaftRenderer::new)
 		.onRegister(ShaftInstance::register)
-		.register();*/
+		.register();
 
 	public static final BlockEntityType<EncasedFanBlockEntity> ENCASED_FAN = createBuilder("encased_fan", EncasedFanBlockEntity::new)
 		.validBlocks(AllBlocks.ENCASED_FAN)
