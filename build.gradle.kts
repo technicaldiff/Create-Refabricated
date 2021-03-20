@@ -90,9 +90,7 @@ dependencies {
 	}
 }
 
-loom {
-	accessWidener("src/main/resources/create.accesswidener")
-}
+loom.accessWidener("src/main/resources/create.accesswidener")
 
 //////////// Gradle Properties ////////////
 /**
