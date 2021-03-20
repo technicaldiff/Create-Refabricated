@@ -5,6 +5,7 @@ import com.simibubi.create.foundation.item.PartialItemModelRenderer;
 import com.simibubi.create.foundation.utility.AnimationTickHolder;
 
 import net.minecraft.client.render.VertexConsumerProvider;
+import net.minecraft.client.render.model.json.ModelTransformation;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.client.util.math.Vector3f;
 import net.minecraft.item.ItemStack;
@@ -12,7 +13,7 @@ import net.minecraft.item.ItemStack;
 public class DeforesterItemRenderer extends CustomRenderedItemModelRenderer<DeforesterModel> {
 	@Override
 	public void render(ItemStack stack, DeforesterModel model, PartialItemModelRenderer renderer,
-		MatrixStack ms, VertexConsumerProvider buffer, int light, int overlay) {
+		ModelTransformation.Mode mode, MatrixStack ms, VertexConsumerProvider buffer, int light, int overlay) {
 		int maxLight = 0xF000F0;
 		float worldTime = AnimationTickHolder.getRenderTick();
 

@@ -25,6 +25,8 @@ import com.simibubi.create.content.curiosities.symmetry.SymmetryWandItem;
 import com.simibubi.create.content.curiosities.symmetry.client.SymmetryWandModel;
 import com.simibubi.create.content.curiosities.tools.DeforesterItem;
 import com.simibubi.create.content.curiosities.tools.DeforesterModel;
+import com.simibubi.create.content.curiosities.tools.ExtendoGripItem;
+import com.simibubi.create.content.curiosities.tools.ExtendoGripModel;
 import com.simibubi.create.content.schematics.item.SchematicAndQuillItem;
 import com.simibubi.create.content.schematics.item.SchematicItem;
 import com.simibubi.create.foundation.block.render.CustomRenderedItemModel;
@@ -227,10 +229,10 @@ public class AllItems {
 //		.model(AssetLookup.itemModelWithPartials())
 		.register();
 
-//	public static final ExtendoGripItem EXTENDO_GRIP = createBuilder("extendo_grip", ExtendoGripItem::new)
-//		.transform(CreateRegistrate.customRenderedItem(() -> ExtendoGripModel::new))
-////		.model(AssetLookup.itemModelWithPartials())
-//		.register();
+	public static final ExtendoGripItem EXTENDO_GRIP = createBuilder("extendo_grip", ExtendoGripItem::new)
+		.consume(customRenderedItem(() -> ExtendoGripModel::new))
+//		.model(AssetLookup.itemModelWithPartials())
+		.register();
 
 	// Schematics
 

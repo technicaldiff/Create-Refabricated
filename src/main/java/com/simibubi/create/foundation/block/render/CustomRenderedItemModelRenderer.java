@@ -20,11 +20,11 @@ public class CustomRenderedItemModelRenderer<M extends CustomRenderedItemModel> 
 
 		ms.push();
 		ms.translate(0.5F, 0.5F, 0.5F);
-		render(stack, mainModel, renderer, ms, buffer, light, overlay);
+		render(stack, mainModel, renderer, p_239207_2_, ms, buffer, light, overlay);
 		ms.pop();
 	}
 
-	public void render(ItemStack stack, M model, PartialItemModelRenderer renderer, MatrixStack ms,
+	protected void render(ItemStack stack, M model, PartialItemModelRenderer renderer, ModelTransformation.Mode mode, MatrixStack ms,
 		VertexConsumerProvider buffer, int light, int overlay) {
 
 	}

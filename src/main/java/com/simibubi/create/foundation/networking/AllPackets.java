@@ -7,8 +7,13 @@ import com.simibubi.create.content.contraptions.components.structureMovement.glu
 import com.simibubi.create.content.contraptions.components.structureMovement.sync.ClientMotionPacket;
 import com.simibubi.create.content.contraptions.components.structureMovement.sync.LimbSwingUpdatePacket;
 import com.simibubi.create.content.curiosities.symmetry.SymmetryEffectPacket;
+import com.simibubi.create.content.curiosities.tools.ExtendoGripInteractionPacket;
 import com.simibubi.create.content.logistics.block.mechanicalArm.ArmPlacementPacket;
-import com.simibubi.create.content.schematics.packet.*;
+import com.simibubi.create.content.schematics.packet.ConfigureSchematicannonPacket;
+import com.simibubi.create.content.schematics.packet.InstantSchematicPacket;
+import com.simibubi.create.content.schematics.packet.SchematicPlacePacket;
+import com.simibubi.create.content.schematics.packet.SchematicSyncPacket;
+import com.simibubi.create.content.schematics.packet.SchematicUploadPacket;
 import com.simibubi.create.foundation.block.entity.behaviour.scrollvalue.ScrollValueUpdatePacket;
 
 import me.pepperbell.simplenetworking.C2SPacket;
@@ -31,7 +36,7 @@ public enum AllPackets {
 //	CONFIGURE_FILTER(FilterScreenPacket.class, FilterScreenPacket::new, PLAY_TO_SERVER),
 //	CONFIGURE_FILTERING_AMOUNT(FilteringCountUpdatePacket.class, FilteringCountUpdatePacket::new, PLAY_TO_SERVER),
 	CONFIGURE_SCROLLABLE(ScrollValueUpdatePacket.class),
-//	EXTENDO_INTERACT(ExtendoGripInteractionPacket.class, ExtendoGripInteractionPacket::new, PLAY_TO_SERVER),
+	EXTENDO_INTERACT(ExtendoGripInteractionPacket.class),
 //	CONTRAPTION_INTERACT(ContraptionInteractionPacket.class, ContraptionInteractionPacket::new, PLAY_TO_SERVER),
 	CLIENT_MOTION(ClientMotionPacket.class),
 	PLACE_ARM(ArmPlacementPacket.class),
