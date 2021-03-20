@@ -21,7 +21,7 @@ public class ContraptionKineticRenderer extends InstancedBlockRenderer<Contrapti
 
 	@Override
 	public BlockPos getOriginCoordinate() {
-		return (BlockPos) BlockPos.ZERO;
+		return BlockPos.ORIGIN;
 	}
-}
 
+}
