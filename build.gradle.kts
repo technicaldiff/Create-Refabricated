@@ -90,6 +90,10 @@ dependencies {
 	}
 }
 
+loom {
+	accessWidener("src/main/resources/create.accesswidener")
+}
+
 //////////// Gradle Properties ////////////
 /**
  * Should be configured in `gradle.properties` like so:
