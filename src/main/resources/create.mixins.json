@@ -12,6 +12,8 @@
     "accessor.ItemAccessor",
     "accessor.MinecraftServerAccessor",
     "accessor.ServerPlayNetworkHandlerAccessor",
+    "accessor.SignTypeAccessor",
+    "accessor.StairsBlockAccessor",
     "accessor.Vector3fAccessor"
   ],
   "client": [
@@ -30,11 +32,11 @@
     "accessor.GlStateManagerAccessor",
     "accessor.ItemRendererAccessor",
     "accessor.MinecraftClientAccessor",
-    "accessor.StairsBlockAccessor",
     "event.ClientWorldMixin",
     "event.MinecraftClientMixin"
   ],
   "server": [
+    "SignTypeMixin",
     "Vec3dMixin"
   ],
   "injectors": {

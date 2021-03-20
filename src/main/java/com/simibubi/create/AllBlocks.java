@@ -57,6 +57,7 @@ import com.simibubi.create.foundation.item.TooltipHelper;
 
 import me.pepperbell.reghelper.BlockRegBuilder;
 import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.fabricmc.fabric.api.tool.attribute.v1.FabricToolTags;
 import net.fabricmc.loader.api.FabricLoader;
@@ -1168,7 +1169,7 @@ public class AllBlocks {
 	public static <T extends Block> Consumer<T> connectedTextures(ConnectedTextureBehaviour behavior) {
 		return block -> {
 			if (FabricLoader.getInstance().getEnvironmentType() == EnvType.CLIENT) {
-				CreateClient.getCustomBlockModels().register(() -> block, model -> new CTModel(model, behavior));
+				ClientMethods.registerConnectedTextures(block, behavior);
 			}
 		};
 	}
@@ -1192,4 +1193,11 @@ public class AllBlocks {
 	// Load this class
 
 	public static void register() {}
+
+	@Environment(EnvType.CLIENT)
+	private static class ClientMethods {
+		private static void registerConnectedTextures(Block block, ConnectedTextureBehaviour behavior) {
+			CreateClient.getCustomBlockModels().register(() -> block, model -> new CTModel(model, behavior));
+		}
+	}
 }

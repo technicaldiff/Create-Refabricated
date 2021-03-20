@@ -16,6 +16,7 @@ import com.simibubi.create.foundation.block.connected.CTSpriteShifter.CTType;
 import com.simibubi.create.foundation.block.render.SpriteShiftEntry;
 import com.simibubi.create.foundation.block.render.SpriteShifter;
 import com.simibubi.create.foundation.utility.Lang;
+import com.simibubi.create.foundation.utility.extensions.SignTypeExtensions;
 
 import net.minecraft.util.DyeColor;
 import net.minecraft.util.SignType;
@@ -74,7 +75,7 @@ public class AllSpriteShifts {
 	//
 
 	private static void populateMaps() {
-		SignType.stream()
+		SignTypeExtensions.stream()
 			.forEach(woodType -> WOODEN_WINDOWS.put(woodType, vertical("palettes/" + woodType.getName() + "_window")));
 
 		for (PaletteStoneVariants paletteStoneVariants : PaletteStoneVariants.values()) {
