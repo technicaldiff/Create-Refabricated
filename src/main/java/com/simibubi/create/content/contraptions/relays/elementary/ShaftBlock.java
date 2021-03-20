@@ -4,6 +4,9 @@ import java.util.function.Predicate;
 
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.AllShapes;
+import com.simibubi.create.content.contraptions.base.KineticBlockEntity;
+import com.simibubi.create.content.contraptions.relays.encased.EncasedShaftBlock;
+import com.simibubi.create.foundation.utility.placement.PlacementHelper;
 import com.simibubi.create.foundation.utility.placement.PlacementHelpers;
 import com.simibubi.create.foundation.utility.placement.util.PoleHelper;
 import com.simibubi.create.registrate.util.nullness.MethodsReturnNonnullByDefault;
@@ -23,7 +26,7 @@ import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 
 public class ShaftBlock extends AbstractShaftBlock {
-	private static final int placementHelperId = PlacementHelpers.register(new PlacementHelper());
+	private static final int placementHelperId = PlacementHelpers.register(new ShaftPlacementHelper());
 
 	public ShaftBlock(Settings properties) {
 		super(properties);
@@ -55,23 +58,22 @@ public class ShaftBlock extends AbstractShaftBlock {
 			return ActionResult.PASS;
 
 		ItemStack heldItem = player.getStackInHand(hand);
-//		for (EncasedShaftBlock encasedShaft : new EncasedShaftBlock[] { AllBlocks.ANDESITE_ENCASED_SHAFT.get(),
-//			AllBlocks.BRASS_ENCASED_SHAFT.get() }) {
-//
-//			if (!encasedShaft.getCasing()
-//				.isIn(heldItem))
-//				continue;
-//
-//			if (world.isClient)
-//				return ActionResult.SUCCESS;
-//			
-//			AllTriggers.triggerFor(AllTriggers.CASING_SHAFT, player);
-//			KineticBlockEntity.switchToBlockState(world, pos, encasedShaft.getDefaultState()
-//				.with(AXIS, state.get(AXIS)));
-//			return ActionResult.SUCCESS;
-//		}
+		/*for (EncasedShaftBlock encasedShaft : new EncasedShaftBlock[] { AllBlocks.ANDESITE_ENCASED_SHAFT,
+			AllBlocks.BRASS_ENCASED_SHAFT }) {
 
-		com.simibubi.create.foundation.utility.placement.PlacementHelper helper = PlacementHelpers.get(placementHelperId);
+			if (!heldItem.isItemEqualIgnoreDamage(encasedShaft.getCasing().asItem().getDefaultStack()))
+				continue;
+
+			if (world.isClient)
+				return ActionResult.SUCCESS;
+
+//			AllTriggers.triggerFor(AllTriggers.CASING_SHAFT, player);
+			KineticBlockEntity.switchToBlockState(world, pos, encasedShaft.getDefaultState()
+				.with(AXIS, state.get(AXIS)));
+			return ActionResult.SUCCESS;
+		}*/
+
+		PlacementHelper helper = PlacementHelpers.get(placementHelperId);
 		if (helper.matchesItem(heldItem))
 			return helper.getOffset(world, state, pos, ray).placeInWorld(world, (BlockItem) heldItem.getItem(), player, hand, ray);
 
@@ -79,10 +81,10 @@ public class ShaftBlock extends AbstractShaftBlock {
 	}
 
 	@MethodsReturnNonnullByDefault
-	private static class PlacementHelper extends PoleHelper<Direction.Axis> {
+	private static class ShaftPlacementHelper extends PoleHelper<Direction.Axis> {
 		//used for extending a shaft in its axis, like the piston poles. works with shafts and cogs
 
-		private PlacementHelper(){
+		private ShaftPlacementHelper(){
 			super(
 					state -> state.getBlock() instanceof AbstractShaftBlock,
 					state -> state.get(AXIS),
