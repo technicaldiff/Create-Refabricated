@@ -14,107 +14,86 @@ import java.lang.reflect.Field;
 
 public class CWorldGen implements Validatable {
 	@Tooltip
-	public boolean disable = false; // "Prevents all worldgen added by Create from taking effect"
+	public boolean disable = false;
 
-	@Tooltip
 	@Limit(min = 0)
-	public int copperOreMinHeight = 40; // min 0,
+	public int copperOreMinHeight = 40; // min 0
 
-	@Tooltip
 	@Limit(min = 0)
-	public int copperOreMaxHeight = 85; // min 0,
-	@Tooltip
+	public int copperOreMaxHeight = 85; // min 0
 	@Limit(min = 0)
-	public int copperOreClusterSize = 18; // min 0,
-	@Tooltip
+	public int copperOreClusterSize = 18; // min 0
+	@Tooltip(count = 4)
 	@Limit(min = 0, max = 512)
-	public float copperOreFrequency = 2.0f; // 0.0 ~ 512.0, Amount of clusters generated per Chunk. >1 to spawn multiple. <1 to make it a chance. #  0 to disable.
+	public float copperOreFrequency = 2.0f; // 0.0 ~ 512.0,
 
 
-	@Tooltip
-	public @Limit(min = 0)
-	int weatheredLimestoneMinHeight = 10; // min 0,
+	@Limit(min = 0)
+	public int weatheredLimestoneMinHeight = 10; // min 0,
 
-	@Tooltip
 	@Limit(min = 0)
 	public int weatheredLimestoneMaxHeight = 30; // min 0,
-	@Tooltip
 	@Limit(min = 0)
 	public int weatheredLimestoneClusterSize = 128; // min 0,
-	@Tooltip
+	@Tooltip(count = 4)
 	@Limit(min = 0, max = 512)
 	public float weatheredLimestoneFrequency = 0.015625f; // 0.0 ~ 512.0, Amount of clusters generated per Chunk. >1 to spawn multiple. <1 to make it a chance. #  0 to disable.
 
 
-	@Tooltip
 	@Limit(min = 0)
 	public int zincOreMinHeight = 15; // min 0,
 
-	@Tooltip
 	@Limit(min = 0)
 	int zincOreMaxHeight = 70; // min 0,
-	@Tooltip
 	@Limit(min = 0)
 	int zincOreClusterSize = 14; // min 0,
-	@Tooltip
+	@Tooltip(count = 4)
 	@Limit(min = 0, max = 512)
 	public float zincOreFrequency = 4.0f; // 0.0 ~ 512.0, Amount of clusters generated per Chunk. >1 to spawn multiple. <1 to make it a chance. #  0 to disable.
 
 
-	@Tooltip
 	@Limit(min = 0)
 	public int limestoneMinHeight = 30; // min 0,
 
-	@Tooltip
 	@Limit(min = 0)
 	public int limestoneMaxHeight = 70; // min 0,
-	@Tooltip
 	@Limit(min = 0)
 	public int limestoneClusterSize = 128; // min 0,
-	@Tooltip
+	@Tooltip(count = 4)
 	@Limit(min = 0, max = 512)
 	public float limestoneFrequency = 0.015625f; // 0.0 ~ 512.0, Amount of clusters generated per Chunk. >1 to spawn multiple. <1 to make it a chance. #  0 to disable.
 
-	@Tooltip
 	@Limit(min = 0)
 	public int dolomiteMinHeight = 20; // min 0,
 
-	@Tooltip
 	@Limit(min = 0)
 	public int dolomiteMaxHeight = 70; // min 0,
-	@Tooltip
 	@Limit(min = 0)
 	public int dolomiteClusterSize = 128; // min 0,
-	@Tooltip
+	@Tooltip(count = 4)
 	@Limit(min = 0, max = 512)
 	public float dolomiteFrequency = 0.015625f; // 0.0 ~ 512.0, Amount of clusters generated per Chunk. >1 to spawn multiple. <1 to make it a chance. #  0 to disable.
 
 
-	@Tooltip
 	@Limit(min = 0)
 	public int gabbroMinHeight = 20; // min 0,
 
-	@Tooltip
 	@Limit(min = 0)
 	public int gabbroMaxHeight = 70; // min 0,
-	@Tooltip
 	@Limit(min = 0)
 	public int gabbroClusterSize = 128; // min 0,
-	@Tooltip
+	@Tooltip(count = 4)
 	@Limit(min = 0, max = 512)
 	public float gabbroFrequency = 0.015625f; // 0.0 ~ 512.0, Amount of clusters generated per Chunk. >1 to spawn multiple. <1 to make it a chance. #  0 to disable.
 
-	@Tooltip
 	@Limit(min = 0)
 	public int scoriaMinHeight = 0; // min 0,
 
-	@Tooltip
 	@Limit(min = 0)
 	public int scoriaMaxHeight = 10; // min 0,
-	@Tooltip
 	@Limit(min = 0)
 	public int scoriaClusterSize = 128; // min 0,
-	@Tooltip
+	@Tooltip(count = 4)
 	@Limit(min = 0, max = 512)
 	public float scoriaFrequency = 0.03125f; // 0.0 ~ 512.0, Amount of clusters generated per Chunk. >1 to spawn multiple. <1 to make it a chance. #  0 to disable.
 
