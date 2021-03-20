@@ -5,6 +5,7 @@ import com.simibubi.create.content.curiosities.ChromaticCompoundItem;
 import com.simibubi.create.content.curiosities.RefinedRadianceItem;
 import com.simibubi.create.content.curiosities.ShadowSteelItem;
 import com.simibubi.create.foundation.utility.MixinHelper;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.item.ItemStack;
 import org.lwjgl.system.CallbackI;
@@ -17,8 +18,9 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public class ItemEntityMixin {
 	@Inject(method = "Lnet/minecraft/entity/ItemEntity;tick()V", at = @At("HEAD"))
 	public void tick(CallbackInfo ci) {
-		boolean test = ChromaticCompoundItem.onEntityItemUpdate(new ItemStack(AllItems.CHROMATIC_COMPOUND), MixinHelper.cast(this));
-		test = RefinedRadianceItem.onEntityItemUpdate(new ItemStack(AllItems.REFINED_RADIANCE), MixinHelper.cast(this));
-		test = ShadowSteelItem.onEntityItemUpdate(new ItemStack(AllItems.SHADOW_STEEL), MixinHelper.cast(this));
+		//boolean test = ChromaticCompoundItem.onEntityItemUpdate(MixinHelper.<ItemEntity>cast(this).getStack(), MixinHelper.<ItemEntity>cast(this));
+		//test = RefinedRadianceItem.onEntityItemUpdate(MixinHelper.<ItemEntity>cast(this).getStack(), MixinHelper.<ItemEntity>cast(this));
+		//test = ShadowSteelItem.onEntityItemUpdate(MixinHelper.<ItemEntity>cast(this).getStack(), MixinHelper.<ItemEntity>cast(this));
+		//MixinHelper.<Entity>cast(this).setNoGravity(false);
 	}
 }
