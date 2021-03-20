@@ -29,6 +29,7 @@ If applicable, add screenshots to help explain your problem.
 ## System information (please complete the following information):
  - Fabric Loader version [e.g. `0.11.3`]
  - Fabric API version [e.g. `0.32.0+1.16`]
+ - Cloth Config 2 version [e.g. `4.11.14`]
  - Commit hash [e.g. `c8b7bd4d7a065f29b02cb06b9a68f5a841c664a9`]
 
 ## Additional context
