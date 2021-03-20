@@ -18,9 +18,7 @@ import com.simibubi.create.content.contraptions.relays.belt.item.BeltConnectorIt
 import com.simibubi.create.content.contraptions.relays.gearbox.VerticalGearboxItem;
 import com.simibubi.create.content.contraptions.wrench.WrenchItem;
 import com.simibubi.create.content.contraptions.wrench.WrenchModel;
-import com.simibubi.create.content.curiosities.BuildersTeaItem;
-import com.simibubi.create.content.curiosities.RefinedRadianceItem;
-import com.simibubi.create.content.curiosities.TreeFertilizerItem;
+import com.simibubi.create.content.curiosities.*;
 import com.simibubi.create.content.curiosities.symmetry.SymmetryWandItem;
 import com.simibubi.create.content.curiosities.symmetry.client.SymmetryWandModel;
 import com.simibubi.create.content.curiosities.tools.DeforesterItem;
@@ -97,9 +95,9 @@ public class AllItems {
 //		.tag(AllItemTags.UPRIGHT_ON_BELT.tag)
 		.register();
 
-//	public static final CombustibleItem BLAZE_CAKE = createBuilder("blaze_cake", CombustibleItem::new)
-////		.tag(AllItemTags.UPRIGHT_ON_BELT.tag)
-//		.register();
+	public static final CombustibleItem BLAZE_CAKE = createBuilder("blaze_cake", CombustibleItem::new)
+//		.tag(AllItemTags.UPRIGHT_ON_BELT.tag)
+		.register();
 
 	public static final Item BAR_OF_CHOCOLATE = createBuilder("bar_of_chocolate", Item::new)
 		.properties(p -> p.food(new FoodComponent.Builder().hunger(5)
@@ -114,18 +112,18 @@ public class AllItems {
 //		.lang("Builder's Tea")
 		.register();
 
-//	public static final ChromaticCompoundItem CHROMATIC_COMPOUND = createBuilder("chromatic_compound", ChromaticCompoundItem::new)
-//		.properties(p -> p.rarity(Rarity.UNCOMMON))
-////		.model(AssetLookup.existingItemModel())
-//		.onRegister(CreateRegistrate.itemColors(() -> ChromaticCompoundColor::new))
-//		.register();
+	public static final ChromaticCompoundItem CHROMATIC_COMPOUND = createBuilder("chromatic_compound", ChromaticCompoundItem::new)
+		.properties(p -> p.rarity(Rarity.UNCOMMON).maxCount(16))
+		//.model(AssetLookup.existingItemModel())
+		.onRegister(itemColors(() -> ChromaticCompoundColor::new))
+		.register();
 
-//	public static final ShadowSteelItem SHADOW_STEEL = createBuilder("shadow_steel", ShadowSteelItem::new)
-//		.properties(p -> p.rarity(Rarity.UNCOMMON))
-//		.register();
+	public static final ShadowSteelItem SHADOW_STEEL = createBuilder("shadow_steel", ShadowSteelItem::new)
+		.properties(p -> p.rarity(Rarity.UNCOMMON).maxCount(16))
+		.register();
 
 	public static final RefinedRadianceItem REFINED_RADIANCE = createBuilder("refined_radiance", RefinedRadianceItem::new)
-		.properties(p -> p.rarity(Rarity.UNCOMMON))
+		.properties(p -> p.rarity(Rarity.UNCOMMON).maxCount(16))
 		.register();
 
 	public static final Item ELECTRON_TUBE = ingredient("electron_tube"),

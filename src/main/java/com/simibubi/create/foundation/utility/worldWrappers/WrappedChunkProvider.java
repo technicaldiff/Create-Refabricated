@@ -2,6 +2,7 @@ package com.simibubi.create.foundation.utility.worldWrappers;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.function.BooleanSupplier;
 import java.util.stream.Stream;
 
 import org.jetbrains.annotations.Nullable;
@@ -35,6 +36,12 @@ public class WrappedChunkProvider extends ChunkManager {
                 .map(Map.Entry::getKey);
     }
 
+	//@Nullable
+	//@Override
+	//public BlockView getChunk(int x, int z) {
+	//	return getChunk(x, z);
+	//}
+
     @Override
     public BlockView getWorld() {
         return world;
@@ -58,11 +65,6 @@ public class WrappedChunkProvider extends ChunkManager {
 
         return chunk;
     }
-
-    /*@Override
-    public void tick(BooleanSupplier p_217207_1_) { TODO COULD BE WRONG WHEN COMMENTING THIS OUT
-
-    }*/
 
     @Override
     public String getDebugString() {

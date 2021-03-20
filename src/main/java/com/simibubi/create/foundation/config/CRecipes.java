@@ -6,21 +6,21 @@ import me.shedaniel.autoconfig.annotation.ConfigEntry.Gui.Tooltip;
 
 public class CRecipes implements Validatable {
 	@Tooltip
-	boolean allowShapelessInMixer = true;
+	public boolean allowShapelessInMixer = true;
 	@Tooltip
-	boolean allowShapedSquareInPress = true;
+	public boolean allowShapedSquareInPress = true;
 	@Tooltip
-	boolean allowRegularCraftingInCrafter = true;
+	public boolean allowRegularCraftingInCrafter = true;
 	@Tooltip
-	boolean allowStonecuttingOnSaw = true;
+	public boolean allowStonecuttingOnSaw = true;
 	@Tooltip
-	boolean allowWoodcuttingOnSaw = true;
+	public boolean allowWoodcuttingOnSaw = true;
 	@Tooltip
-	int lightSourceCountForRefinedRadiance = 10; // min 1
+	public int lightSourceCountForRefinedRadiance = 10; // min 1
 	@Tooltip
-	boolean enableRefinedRadianceRecipe = true;
+	public boolean enableRefinedRadianceRecipe = true;
 	@Tooltip
-	boolean enableShadowSteelRecipe = true;
+	public boolean enableShadowSteelRecipe = true;
 
 	@Override
 	public void validate() throws ConfigData.ValidationException {

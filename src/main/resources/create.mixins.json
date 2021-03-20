@@ -14,7 +14,10 @@
     "accessor.ServerPlayNetworkHandlerAccessor",
     "accessor.SignTypeAccessor",
     "accessor.StairsBlockAccessor",
-    "accessor.Vector3fAccessor"
+    "accessor.Vector3fAccessor",
+		"ItemEntityMixin",
+		"accessor.BeaconBlockEntityAccessor",
+		"accessor.ItemEntityAccessor"
   ],
   "client": [
     "BakedModelManagerMixin",
