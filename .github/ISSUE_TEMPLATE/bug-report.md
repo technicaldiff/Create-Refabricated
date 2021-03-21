@@ -24,7 +24,9 @@ Steps to reproduce the behavior:
 A clear and concise description of what you expected to happen (e.g. description of what happens in the Forge version if the bug is only here).
 
 ## Screenshots
-If applicable, add screenshots to help explain your problem.
+Attach a screenshot of the ⌥+⇧+F3 screen to help us see your performance stats.
+
+If applicable, add additional screenshots to help explain your problem.
 
 ## System information (please complete the following information):
  - Fabric Loader version [e.g. `0.11.3`]
