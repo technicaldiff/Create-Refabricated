@@ -47,6 +47,7 @@ import com.simibubi.create.content.logistics.block.diodes.ToggleLatchBlock;
 import com.simibubi.create.content.logistics.block.mechanicalArm.ArmBlock;
 import com.simibubi.create.content.logistics.block.mechanicalArm.ArmItem;
 import com.simibubi.create.content.logistics.block.redstone.AnalogLeverBlock;
+import com.simibubi.create.content.logistics.block.redstone.NixieTubeBlock;
 import com.simibubi.create.content.logistics.block.redstone.RedstoneLinkBlock;
 import com.simibubi.create.foundation.block.BlockVertexColorProvider;
 import com.simibubi.create.foundation.block.connected.CTModel;
@@ -998,16 +999,17 @@ public class AllBlocks {
 	public static final CreativeCrateBlock CREATIVE_CRATE = createBuilder("creative_crate", CreativeCrateBlock::new)
 		.transform(BuilderTransformers.crate("creative"))
 		.tag(AllBlockTags.SAFE_NBT.tag)
-		.register();
+		.register();*/
 
 	public static final NixieTubeBlock NIXIE_TUBE = createBuilder("nixie_tube", NixieTubeBlock::new)
 		.initialProperties(SharedProperties::softMetal)
 		.properties(p -> p.luminance($ -> 5))
-		.blockstate(new NixieTubeGenerator()::generate)
+//		.blockstate(new NixieTubeGenerator()::generate)
 		.addLayer(() -> RenderLayer::getTranslucent)
 		.item()
-		.transform(customItemModel())
-		.register();*/
+//		.transform(customItemModel())
+		.build()
+		.register();
 
 	public static final RedstoneLinkBlock REDSTONE_LINK = createBuilder("redstone_link", RedstoneLinkBlock::new)
 		.initialProperties(SharedProperties::wooden)

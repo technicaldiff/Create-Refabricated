@@ -64,9 +64,7 @@ import com.simibubi.create.content.logistics.block.diodes.AdjustableRepeaterRend
 import com.simibubi.create.content.logistics.block.mechanicalArm.ArmBlockEntity;
 import com.simibubi.create.content.logistics.block.mechanicalArm.ArmInstance;
 import com.simibubi.create.content.logistics.block.mechanicalArm.ArmRenderer;
-import com.simibubi.create.content.logistics.block.redstone.AnalogLeverBlockEntity;
-import com.simibubi.create.content.logistics.block.redstone.AnalogLeverRenderer;
-import com.simibubi.create.content.logistics.block.redstone.RedstoneLinkBlockEntity;
+import com.simibubi.create.content.logistics.block.redstone.*;
 import com.simibubi.create.foundation.block.entity.render.SmartBlockEntityRenderer;
 
 import me.pepperbell.reghelper.BlockEntityTypeRegBuilder;
@@ -428,12 +426,12 @@ public class AllBlockEntities {
 		.renderer(() -> SmartBlockEntityRenderer::new)
 		.register();
 
-	/*public static final BlockEntityType<NixieTubeBlockEntity> NIXIE_TUBE = createBuilder("nixie_tube", NixieTubeBlockEntity::new)
+	public static final BlockEntityType<NixieTubeBlockEntity> NIXIE_TUBE = createBuilder("nixie_tube", NixieTubeBlockEntity::new)
 		.validBlocks(AllBlocks.NIXIE_TUBE)
 		.renderer(() -> NixieTubeRenderer::new)
 		.register();
 
-	public static final BlockEntityType<StockpileSwitchBlockEntity> STOCKPILE_SWITCH = createBuilder("stockpile_switch", StockpileSwitchBlockEntity::new)
+	/*public static final BlockEntityType<StockpileSwitchBlockEntity> STOCKPILE_SWITCH = createBuilder("stockpile_switch", StockpileSwitchBlockEntity::new)
 		.validBlocks(AllBlocks.STOCKPILE_SWITCH)
 		.renderer(() -> SmartBlockEntityRenderer::new)
 		.register();
