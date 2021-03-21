@@ -1,18 +1,17 @@
 package com.simibubi.create.content.contraptions.relays.gauge;
 
-import java.util.List;
-
 import com.simibubi.create.AllBlockEntities;
 import com.simibubi.create.content.contraptions.base.Rotating;
 import com.simibubi.create.content.contraptions.goggles.GoggleInformationProvider;
-import net.minecraft.block.entity.BlockEntityType;
+import com.simibubi.create.foundation.item.ItemDescription;
+import com.simibubi.create.foundation.utility.ColorHelper;
+import com.simibubi.create.foundation.utility.Lang;
 import net.minecraft.text.LiteralText;
 import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
-import com.simibubi.create.foundation.item.ItemDescription;
-import com.simibubi.create.foundation.utility.ColorHelper;
-import com.simibubi.create.foundation.utility.Lang;
+
+import java.util.List;
 
 public class StressGaugeBlockEntity extends GaugeBlockEntity {
 

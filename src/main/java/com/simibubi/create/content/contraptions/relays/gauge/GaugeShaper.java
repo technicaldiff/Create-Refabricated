@@ -1,11 +1,12 @@
 package com.simibubi.create.content.contraptions.relays.gauge;
 
-import java.util.Arrays;
+import com.simibubi.create.AllShapes;
+import com.simibubi.create.foundation.utility.VoxelShaper;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.shape.VoxelShape;
-import com.simibubi.create.AllShapes;
-import com.simibubi.create.foundation.utility.VoxelShaper;
+
+import java.util.Arrays;
 
 public class GaugeShaper extends VoxelShaper {
 

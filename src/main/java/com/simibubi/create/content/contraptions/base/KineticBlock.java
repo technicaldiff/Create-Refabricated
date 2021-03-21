@@ -1,7 +1,6 @@
 package com.simibubi.create.content.contraptions.base;
 
 import com.simibubi.create.foundation.item.ItemDescription.Palette;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockEntityProvider;
 import net.minecraft.block.BlockState;

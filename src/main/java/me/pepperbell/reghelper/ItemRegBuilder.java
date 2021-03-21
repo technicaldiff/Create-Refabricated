@@ -1,14 +1,14 @@
 package me.pepperbell.reghelper;
 
-import java.util.ArrayDeque;
-import java.util.Deque;
-import java.util.function.Consumer;
-import java.util.function.Function;
-
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.minecraft.item.Item;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
+
+import java.util.ArrayDeque;
+import java.util.Deque;
+import java.util.function.Consumer;
+import java.util.function.Function;
 
 public class ItemRegBuilder<T extends Item> {
 	private final Identifier identifier;

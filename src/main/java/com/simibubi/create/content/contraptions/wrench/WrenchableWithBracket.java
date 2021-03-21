@@ -1,7 +1,5 @@
 package com.simibubi.create.content.contraptions.wrench;
 
-import java.util.Optional;
-
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
@@ -10,6 +8,8 @@ import net.minecraft.util.ActionResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
+
+import java.util.Optional;
 
 public interface WrenchableWithBracket extends Wrenchable {
 	Optional<ItemStack> removeBracket(BlockView world, BlockPos pos, boolean inOnReplacedContext);

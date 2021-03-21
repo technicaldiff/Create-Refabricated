@@ -1,7 +1,5 @@
 package com.simibubi.create.content.contraptions.components.structureMovement.gantry;
 
-import static net.minecraft.state.property.Properties.FACING;
-
 import com.simibubi.create.AllBlockEntities;
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.content.contraptions.base.KineticBlockEntity;
@@ -10,13 +8,14 @@ import com.simibubi.create.content.contraptions.components.structureMovement.Con
 import com.simibubi.create.content.contraptions.components.structureMovement.DisplayAssemblyExceptionsProvider;
 import com.simibubi.create.content.contraptions.relays.advanced.GantryShaftBlock;
 import com.simibubi.create.content.contraptions.relays.advanced.GantryShaftBlockEntity;
-
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Direction.Axis;
+
+import static net.minecraft.state.property.Properties.FACING;
 
 public class GantryPinionBlockEntity extends KineticBlockEntity implements DisplayAssemblyExceptionsProvider {
 

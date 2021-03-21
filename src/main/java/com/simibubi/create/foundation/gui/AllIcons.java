@@ -2,7 +2,6 @@ package com.simibubi.create.foundation.gui;
 
 import com.simibubi.create.Create;
 import com.simibubi.create.foundation.utility.ColorHelper;
-
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.MinecraftClient;

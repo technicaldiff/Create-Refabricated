@@ -3,7 +3,6 @@ package com.simibubi.create.content.contraptions.wrench;
 import com.simibubi.create.foundation.block.render.CustomRenderedItemModelRenderer;
 import com.simibubi.create.foundation.item.PartialItemModelRenderer;
 import com.simibubi.create.foundation.utility.AnimationTickHolder;
-
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.model.json.ModelTransformation;
 import net.minecraft.client.util.math.MatrixStack;

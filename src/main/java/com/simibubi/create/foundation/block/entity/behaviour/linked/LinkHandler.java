@@ -1,8 +1,6 @@
 package com.simibubi.create.foundation.block.entity.behaviour.linked;
 
 import com.simibubi.create.foundation.block.entity.BlockEntityBehaviour;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;

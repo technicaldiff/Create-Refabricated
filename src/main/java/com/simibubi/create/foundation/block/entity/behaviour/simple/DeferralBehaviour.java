@@ -1,12 +1,11 @@
 package com.simibubi.create.foundation.block.entity.behaviour.simple;
 
-import java.util.function.Supplier;
-
 import com.simibubi.create.foundation.block.entity.BlockEntityBehaviour;
 import com.simibubi.create.foundation.block.entity.SmartBlockEntity;
 import com.simibubi.create.foundation.block.entity.behaviour.BehaviourType;
-
 import net.minecraft.nbt.CompoundTag;
+
+import java.util.function.Supplier;
 
 public class DeferralBehaviour extends BlockEntityBehaviour {
 

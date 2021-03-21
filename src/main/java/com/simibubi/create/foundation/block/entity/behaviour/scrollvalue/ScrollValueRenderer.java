@@ -9,7 +9,6 @@ import com.simibubi.create.foundation.block.entity.behaviour.ValueBox;
 import com.simibubi.create.foundation.block.entity.behaviour.ValueBox.IconValueBox;
 import com.simibubi.create.foundation.block.entity.behaviour.ValueBox.TextValueBox;
 import com.simibubi.create.foundation.utility.Lang;
-
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.world.ClientWorld;
 import net.minecraft.text.LiteralText;

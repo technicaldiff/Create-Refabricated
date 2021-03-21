@@ -1,12 +1,8 @@
 package com.simibubi.create.content.contraptions.relays.elementary;
 
-import java.util.Random;
-import java.util.function.Supplier;
-
 import com.simibubi.create.foundation.block.entity.BlockEntityBehaviour;
 import com.simibubi.create.foundation.block.render.HiddenBakedModel;
 import com.simibubi.create.foundation.block.render.WrappedBakedModel;
-
 import net.fabricmc.fabric.api.renderer.v1.model.FabricBakedModel;
 import net.fabricmc.fabric.api.renderer.v1.render.RenderContext;
 import net.minecraft.block.BlockState;
@@ -15,6 +11,9 @@ import net.minecraft.client.render.model.BakedModel;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.BlockRenderView;
+
+import java.util.Random;
+import java.util.function.Supplier;
 
 public class BracketedKineticBlockModel extends WrappedBakedModel implements FabricBakedModel, HiddenBakedModel {
 	private boolean hidden = true;

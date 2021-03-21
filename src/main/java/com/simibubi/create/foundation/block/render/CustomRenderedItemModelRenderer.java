@@ -1,7 +1,6 @@
 package com.simibubi.create.foundation.block.render;
 
 import com.simibubi.create.foundation.item.PartialItemModelRenderer;
-
 import net.fabricmc.fabric.api.client.rendering.v1.BuiltinItemRendererRegistry.DynamicItemRenderer;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.VertexConsumerProvider;

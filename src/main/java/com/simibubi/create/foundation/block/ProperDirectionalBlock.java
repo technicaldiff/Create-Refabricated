@@ -2,7 +2,6 @@ package com.simibubi.create.foundation.block;
 
 import com.simibubi.create.content.contraptions.wrench.Wrenchable;
 import com.simibubi.create.foundation.utility.DirectionHelper;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.FacingBlock;

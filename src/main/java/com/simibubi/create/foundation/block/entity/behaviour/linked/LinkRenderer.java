@@ -10,7 +10,6 @@ import com.simibubi.create.foundation.block.entity.behaviour.ValueBoxRenderer;
 import com.simibubi.create.foundation.block.entity.behaviour.ValueBoxTransform;
 import com.simibubi.create.foundation.utility.Iterate;
 import com.simibubi.create.foundation.utility.Lang;
-
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.util.math.MatrixStack;

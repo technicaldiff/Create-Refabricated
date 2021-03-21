@@ -1,12 +1,11 @@
 package com.simibubi.create.foundation.block.entity.behaviour.scrollvalue;
 
-import java.util.List;
-import java.util.function.Function;
-
 import com.simibubi.create.foundation.block.entity.SmartBlockEntity;
 import com.simibubi.create.foundation.block.entity.behaviour.ValueBoxTransform;
-
 import net.minecraft.text.Text;
+
+import java.util.List;
+import java.util.function.Function;
 
 public class BulkScrollValueBehaviour extends ScrollValueBehaviour {
 	Function<SmartBlockEntity, List<? extends SmartBlockEntity>> groupGetter;

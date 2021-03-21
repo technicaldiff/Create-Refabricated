@@ -1,7 +1,5 @@
 package com.simibubi.create.content.contraptions.components.fan;
 
-import com.simibubi.create.Create;
-import com.simibubi.create.content.contraptions.particle.AirFlowParticleData;
 import com.simibubi.create.foundation.mixin.accessor.ServerPlayNetworkHandlerAccessor;
 import com.simibubi.create.foundation.utility.VecHelper;
 import net.minecraft.block.BlockState;

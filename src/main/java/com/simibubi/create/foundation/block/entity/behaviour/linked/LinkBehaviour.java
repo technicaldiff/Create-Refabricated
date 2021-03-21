@@ -1,23 +1,21 @@
 package com.simibubi.create.foundation.block.entity.behaviour.linked;
 
-import java.util.function.Function;
-import java.util.function.IntConsumer;
-import java.util.function.IntSupplier;
-
+import com.simibubi.create.Create;
+import com.simibubi.create.content.logistics.RedstoneLinkNetworkHandler;
+import com.simibubi.create.content.logistics.RedstoneLinkNetworkHandler.Frequency;
 import com.simibubi.create.foundation.block.entity.BlockEntityBehaviour;
 import com.simibubi.create.foundation.block.entity.SmartBlockEntity;
 import com.simibubi.create.foundation.block.entity.behaviour.BehaviourType;
 import com.simibubi.create.foundation.block.entity.behaviour.ValueBoxTransform;
+import net.minecraft.block.BlockState;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.math.Vec3d;
 import org.apache.commons.lang3.tuple.Pair;
 
-import com.simibubi.create.Create;
-import com.simibubi.create.content.logistics.RedstoneLinkNetworkHandler;
-import com.simibubi.create.content.logistics.RedstoneLinkNetworkHandler.Frequency;
-
-import net.minecraft.block.BlockState;
-import net.minecraft.item.ItemStack;
+import java.util.function.Function;
+import java.util.function.IntConsumer;
+import java.util.function.IntSupplier;
 
 public class LinkBehaviour extends BlockEntityBehaviour {
 

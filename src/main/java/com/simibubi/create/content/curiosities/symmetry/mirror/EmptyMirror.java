@@ -1,17 +1,16 @@
 package com.simibubi.create.content.curiosities.symmetry.mirror;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import com.google.common.collect.ImmutableList;
 import com.simibubi.create.AllBlockPartials;
-
 import net.minecraft.block.BlockState;
 import net.minecraft.text.Text;
 import net.minecraft.util.StringIdentifiable;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class EmptyMirror extends SymmetryMirror {
 

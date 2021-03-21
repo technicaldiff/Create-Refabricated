@@ -1,7 +1,6 @@
 package com.simibubi.create.content.contraptions.base;
 
 import com.simibubi.create.foundation.utility.Iterate;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.item.ItemPlacementContext;

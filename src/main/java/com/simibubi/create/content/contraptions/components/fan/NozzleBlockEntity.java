@@ -1,15 +1,10 @@
 package com.simibubi.create.content.contraptions.components.fan;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-
 import com.simibubi.create.AllBlockEntities;
 import com.simibubi.create.Create;
 import com.simibubi.create.foundation.block.entity.BlockEntityBehaviour;
 import com.simibubi.create.foundation.block.entity.SmartBlockEntity;
 import com.simibubi.create.foundation.utility.VecHelper;
-
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.Entity;
@@ -25,6 +20,10 @@ import net.minecraft.world.RaycastContext;
 import net.minecraft.world.RaycastContext.FluidHandling;
 import net.minecraft.world.RaycastContext.ShapeType;
 import net.minecraft.world.explosion.Explosion.DestructionType;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 public class NozzleBlockEntity extends SmartBlockEntity {
 

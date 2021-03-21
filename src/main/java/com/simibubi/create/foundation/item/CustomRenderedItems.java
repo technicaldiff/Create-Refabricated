@@ -1,5 +1,10 @@
 package com.simibubi.create.foundation.item;
 
+import com.simibubi.create.foundation.block.render.CustomRenderedItemModel;
+import net.minecraft.client.render.model.BakedModel;
+import net.minecraft.item.Item;
+import org.apache.commons.lang3.tuple.Pair;
+
 import java.util.ArrayList;
 import java.util.IdentityHashMap;
 import java.util.List;
@@ -7,13 +12,6 @@ import java.util.Map;
 import java.util.function.BiConsumer;
 import java.util.function.Function;
 import java.util.function.Supplier;
-
-import org.apache.commons.lang3.tuple.Pair;
-
-import com.simibubi.create.foundation.block.render.CustomRenderedItemModel;
-
-import net.minecraft.client.render.model.BakedModel;
-import net.minecraft.item.Item;
 
 public class CustomRenderedItems {
 	private List<Pair<Supplier<? extends Item>, Function<BakedModel, ? extends CustomRenderedItemModel>>> registered;

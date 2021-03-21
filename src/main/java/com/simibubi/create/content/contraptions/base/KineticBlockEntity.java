@@ -1,12 +1,5 @@
 package com.simibubi.create.content.contraptions.base;
 
-import static net.minecraft.util.Formatting.GOLD;
-import static net.minecraft.util.Formatting.GRAY;
-
-import java.util.List;
-
-import org.jetbrains.annotations.Nullable;
-
 import com.simibubi.create.Create;
 import com.simibubi.create.CreateClient;
 import com.simibubi.create.content.contraptions.KineticNetwork;
@@ -21,7 +14,6 @@ import com.simibubi.create.foundation.item.TooltipHelper;
 import com.simibubi.create.foundation.render.backend.FastRenderDispatcher;
 import com.simibubi.create.foundation.render.backend.instancing.InstanceRendered;
 import com.simibubi.create.foundation.utility.Lang;
-
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.block.Block;
@@ -40,6 +32,12 @@ import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Direction.Axis;
 import net.minecraft.util.math.Direction.AxisDirection;
 import net.minecraft.world.World;
+import org.jetbrains.annotations.Nullable;
+
+import java.util.List;
+
+import static net.minecraft.util.Formatting.GOLD;
+import static net.minecraft.util.Formatting.GRAY;
 
 public abstract class KineticBlockEntity extends SmartBlockEntity
 	implements GoggleInformationProvider, HoveringInformationProvider, InstanceRendered {

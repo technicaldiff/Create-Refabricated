@@ -1,23 +1,20 @@
 package com.simibubi.create.content.logistics.block.redstone;
 
-import static net.minecraft.state.property.Properties.POWERED;
-
-import java.util.List;
-
 import com.simibubi.create.AllBlockEntities;
+import com.simibubi.create.AllBlocks;
 import com.simibubi.create.foundation.block.entity.BlockEntityBehaviour;
 import com.simibubi.create.foundation.block.entity.SmartBlockEntity;
 import com.simibubi.create.foundation.block.entity.behaviour.ValueBoxTransform;
 import com.simibubi.create.foundation.block.entity.behaviour.linked.LinkBehaviour;
-import org.apache.commons.lang3.tuple.Pair;
-
-import com.simibubi.create.AllBlocks;
-
 import net.minecraft.block.BlockState;
-import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
+import org.apache.commons.lang3.tuple.Pair;
+
+import java.util.List;
+
+import static net.minecraft.state.property.Properties.POWERED;
 
 public class RedstoneLinkBlockEntity extends SmartBlockEntity {
 

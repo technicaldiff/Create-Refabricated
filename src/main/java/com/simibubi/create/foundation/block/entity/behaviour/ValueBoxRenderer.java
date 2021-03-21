@@ -1,7 +1,6 @@
 package com.simibubi.create.foundation.block.entity.behaviour;
 
 import com.simibubi.create.content.contraptions.relays.elementary.AbstractShaftBlock;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.FenceBlock;

@@ -1,6 +1,5 @@
 package com.simibubi.create.content.schematics.packet;
 
-import com.simibubi.create.Create;
 import me.pepperbell.simplenetworking.C2SPacket;
 import me.pepperbell.simplenetworking.SimpleChannel;
 import net.minecraft.network.PacketByteBuf;

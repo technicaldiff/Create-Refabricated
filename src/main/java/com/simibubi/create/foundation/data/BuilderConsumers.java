@@ -1,23 +1,21 @@
 package com.simibubi.create.foundation.data;
 
-import java.util.function.Consumer;
-
+import com.simibubi.create.AllBlocks;
 import com.simibubi.create.content.contraptions.base.CasingBlock;
+import com.simibubi.create.content.contraptions.components.crank.ValveHandleBlock;
 import com.simibubi.create.content.contraptions.relays.encased.EncasedCTBehaviour;
 import com.simibubi.create.content.contraptions.relays.encased.EncasedShaftBlock;
 import com.simibubi.create.foundation.block.connected.CTSpriteShiftEntry;
-import org.jetbrains.annotations.Nullable;
-
-import com.simibubi.create.AllBlocks;
-import com.simibubi.create.content.contraptions.components.crank.ValveHandleBlock;
 import com.simibubi.create.foundation.config.StressConfigDefaults;
 import com.simibubi.create.foundation.item.TooltipHelper;
-
 import me.pepperbell.reghelper.BlockRegBuilder;
 import net.minecraft.block.Block;
 import net.minecraft.block.enums.PistonType;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.util.DyeColor;
+import org.jetbrains.annotations.Nullable;
+
+import java.util.function.Consumer;
 
 import static com.simibubi.create.AllBlocks.casingConnectivity;
 import static com.simibubi.create.AllBlocks.connectedTextures;

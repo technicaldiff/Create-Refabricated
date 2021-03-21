@@ -1,9 +1,6 @@
 package com.simibubi.create.content.contraptions.base;
 
-import java.util.Random;
-
 import com.simibubi.create.foundation.utility.VecHelper;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.particle.ParticleEffect;
@@ -13,6 +10,8 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
+
+import java.util.Random;
 
 public class KineticEffectHandler {
 

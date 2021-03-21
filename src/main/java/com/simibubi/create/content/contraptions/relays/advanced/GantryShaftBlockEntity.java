@@ -6,10 +6,8 @@ import com.simibubi.create.content.contraptions.base.KineticBlockEntity;
 import com.simibubi.create.content.contraptions.components.structureMovement.gantry.GantryPinionBlock;
 import com.simibubi.create.content.contraptions.components.structureMovement.gantry.GantryPinionBlockEntity;
 import com.simibubi.create.foundation.utility.Iterate;
-
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.MathHelper;

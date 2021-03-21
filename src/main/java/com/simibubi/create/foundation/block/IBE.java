@@ -1,15 +1,15 @@
 package com.simibubi.create.foundation.block;
 
-import java.util.Optional;
-import java.util.function.Consumer;
-
 import com.simibubi.create.Create;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
-import net.minecraft.world.WorldView;
 import net.minecraft.world.dimension.DimensionType;
+
+import java.util.Optional;
+import java.util.function.Consumer;
 
 public interface IBE<T extends BlockEntity> {
 
@@ -20,7 +20,7 @@ public interface IBE<T extends BlockEntity> {
 
 	Class<T> getBlockEntityClass();
 
-	default void withBlockEntityDo(World world, BlockPos pos, Consumer<T> action) {
+	default void withBlockEntityDo(BlockView world, BlockPos pos, Consumer<T> action) {
 		try {
 			action.accept(getBlockEntity(world, pos));
 		} catch (BlockEntityException ignored) {
@@ -36,7 +36,7 @@ public interface IBE<T extends BlockEntity> {
 	}
 
 	@SuppressWarnings("unchecked")
-	default T getBlockEntity(WorldView worldView, BlockPos pos) throws BlockEntityException {
+	default T getBlockEntity(BlockView worldView, BlockPos pos) throws BlockEntityException {
 		BlockEntity blockEntity = worldView.getBlockEntity(pos);
 		Class<T> expectedClass = getBlockEntityClass();
 

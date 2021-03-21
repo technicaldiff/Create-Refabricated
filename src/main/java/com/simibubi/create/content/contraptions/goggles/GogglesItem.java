@@ -1,7 +1,6 @@
 package com.simibubi.create.content.contraptions.goggles;
 
 import com.simibubi.create.AllItems;
-
 import net.minecraft.block.DispenserBlock;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.mob.MobEntity;

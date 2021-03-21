@@ -1,13 +1,12 @@
 package com.simibubi.create.content.contraptions.components.actors;
 
-import java.nio.ByteBuffer;
-
 import com.simibubi.create.foundation.render.backend.gl.attrib.VertexFormat;
 import com.simibubi.create.foundation.render.backend.instancing.InstanceData;
 import com.simibubi.create.foundation.render.backend.instancing.InstancedModel;
-
 import net.minecraft.client.util.math.Vector3f;
 import net.minecraft.util.math.BlockPos;
+
+import java.nio.ByteBuffer;
 
 public class ContraptionActorData extends InstanceData {
 	public static VertexFormat FORMAT = VertexFormat.builder()

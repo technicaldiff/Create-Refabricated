@@ -1,7 +1,6 @@
 package com.simibubi.create.foundation.block.entity.render;
 
 import com.simibubi.create.foundation.block.entity.SmartBlockEntity;
-
 import com.simibubi.create.foundation.block.entity.behaviour.linked.LinkRenderer;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.block.entity.BlockEntityRenderDispatcher;

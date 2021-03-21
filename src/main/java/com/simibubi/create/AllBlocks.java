@@ -37,6 +37,9 @@ import com.simibubi.create.content.contraptions.relays.elementary.ShaftBlock;
 import com.simibubi.create.content.contraptions.relays.encased.*;
 import com.simibubi.create.content.contraptions.relays.gauge.GaugeBlock;
 import com.simibubi.create.content.contraptions.relays.gearbox.GearboxBlock;
+import com.simibubi.create.content.logistics.block.belts.tunnel.BeltTunnelBlock;
+import com.simibubi.create.content.logistics.block.belts.tunnel.BrassTunnelBlock;
+import com.simibubi.create.content.logistics.block.belts.tunnel.BrassTunnelCTBehaviour;
 import com.simibubi.create.content.logistics.block.diodes.AdjustableRepeaterBlock;
 import com.simibubi.create.content.logistics.block.diodes.PoweredLatchBlock;
 import com.simibubi.create.content.logistics.block.diodes.PulseRepeaterBlock;
@@ -956,16 +959,16 @@ public class AllBlocks {
 		.blockstate(new BeltFunnelGenerator("brass", Create.asResource("block/brass_block"))::generate)
 		.loot((p, b) -> p.addDrop(b, BRASS_FUNNEL.get()))
 		.register();
-
+*/
 	public static final BeltTunnelBlock ANDESITE_TUNNEL = createBuilder("andesite_tunnel", BeltTunnelBlock::new)
-		.transform(BuilderTransformers.beltTunnel("andesite", new Identifier("block/polished_andesite")))
+		//.transform(BuilderTransformers.beltTunnel("andesite", new Identifier("block/polished_andesite")))
 		.register();
 
 	public static final BrassTunnelBlock BRASS_TUNNEL = createBuilder("brass_tunnel", BrassTunnelBlock::new)
-		.transform(BuilderTransformers.beltTunnel("brass", Create.asResource("block/brass_block")))
+		//.transform(BuilderTransformers.beltTunnel("brass", Create.asResource("block/brass_block")))
 		.onRegister(connectedTextures(new BrassTunnelCTBehaviour()))
 		.register();
-
+/*
 	public static final RedstoneContactBlock REDSTONE_CONTACT = createBuilder("redstone_contact", RedstoneContactBlock::new)
 		.initialProperties(SharedProperties::stone)
 		.onRegister(addMovementBehaviour(new ContactMovementBehaviour()))

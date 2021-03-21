@@ -2,7 +2,6 @@ package com.simibubi.create.foundation.block.entity.behaviour.scrollvalue;
 
 import com.simibubi.create.foundation.block.entity.SmartBlockEntity;
 import com.simibubi.create.foundation.networking.BlockEntityConfigurationPacket;
-
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.util.math.BlockPos;
 

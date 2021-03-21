@@ -1,12 +1,7 @@
 package com.simibubi.create.foundation.gui;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.simibubi.create.foundation.gui.widgets.AbstractSimiWidget;
-
 import com.simibubi.create.registrate.util.nullness.MethodsReturnNonnullByDefault;
 import com.simibubi.create.registrate.util.nullness.ParametersAreNonnullByDefault;
 import net.fabricmc.api.EnvType;
@@ -25,6 +20,10 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.text.Text;
 import org.jetbrains.annotations.Nullable;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 @Environment(EnvType.CLIENT)
 @ParametersAreNonnullByDefault

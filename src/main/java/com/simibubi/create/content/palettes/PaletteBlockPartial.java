@@ -1,10 +1,6 @@
 package com.simibubi.create.content.palettes;
 
-import java.util.Arrays;
-import java.util.function.Supplier;
-
 import com.simibubi.create.foundation.mixin.accessor.StairsBlockAccessor;
-
 import me.pepperbell.reghelper.BlockRegBuilder;
 import net.minecraft.block.AbstractBlock.Settings;
 import net.minecraft.block.Block;
@@ -16,6 +12,9 @@ import net.minecraft.tag.BlockTags;
 import net.minecraft.tag.ItemTags;
 import net.minecraft.tag.Tag;
 import net.minecraft.util.Identifier;
+
+import java.util.Arrays;
+import java.util.function.Supplier;
 
 public abstract class PaletteBlockPartial<B extends Block> {
 

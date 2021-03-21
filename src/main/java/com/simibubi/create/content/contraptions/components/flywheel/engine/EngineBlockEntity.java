@@ -1,7 +1,5 @@
 package com.simibubi.create.content.contraptions.components.flywheel.engine;
 
-import java.util.List;
-
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.content.contraptions.components.flywheel.FlywheelBlock;
 import com.simibubi.create.content.contraptions.components.flywheel.FlywheelBlockEntity;
@@ -12,6 +10,8 @@ import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
+
+import java.util.List;
 
 public class EngineBlockEntity extends SmartBlockEntity {
 

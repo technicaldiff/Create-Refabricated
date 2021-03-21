@@ -1,15 +1,5 @@
 package com.simibubi.create.content.palettes;
 
-import static com.simibubi.create.foundation.data.WindowGen.customWindowBlock;
-import static com.simibubi.create.foundation.data.WindowGen.customWindowPane;
-import static com.simibubi.create.foundation.data.WindowGen.framedGlass;
-import static com.simibubi.create.foundation.data.WindowGen.framedGlassPane;
-import static com.simibubi.create.foundation.data.WindowGen.woodenWindowBlock;
-import static com.simibubi.create.foundation.data.WindowGen.woodenWindowPane;
-
-import java.util.function.Function;
-import java.util.function.Supplier;
-
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.AllItems;
 import com.simibubi.create.AllSpriteShifts;
@@ -18,7 +8,6 @@ import com.simibubi.create.content.AllSections;
 import com.simibubi.create.foundation.block.connected.HorizontalCTBehaviour;
 import com.simibubi.create.foundation.block.connected.StandardCTBehaviour;
 import com.simibubi.create.foundation.data.WindowGen;
-
 import me.pepperbell.reghelper.BlockRegBuilder;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.block.Block;
@@ -29,6 +18,11 @@ import net.minecraft.client.render.RenderLayer;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.SignType;
+
+import java.util.function.Function;
+import java.util.function.Supplier;
+
+import static com.simibubi.create.foundation.data.WindowGen.*;
 
 public class AllPaletteBlocks {
 	private static ItemGroup itemGroup = Create.palettesCreativeTab;

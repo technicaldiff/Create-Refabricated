@@ -1,8 +1,5 @@
 package com.simibubi.create.content.contraptions.relays.gearbox;
 
-import java.util.EnumMap;
-import java.util.Map;
-
 import com.simibubi.create.AllBlockPartials;
 import com.simibubi.create.content.contraptions.base.KineticBlockInstance;
 import com.simibubi.create.content.contraptions.base.RotatingData;
@@ -11,7 +8,6 @@ import com.simibubi.create.foundation.render.backend.instancing.InstancedBlockRe
 import com.simibubi.create.foundation.render.backend.instancing.InstancedModel;
 import com.simibubi.create.foundation.render.backend.instancing.InstancedTileRenderRegistry;
 import com.simibubi.create.foundation.utility.Iterate;
-
 import net.fabricmc.api.EnvType;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.block.entity.BlockEntityType;
@@ -19,6 +15,9 @@ import net.minecraft.state.property.Properties;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.world.LightType;
+
+import java.util.EnumMap;
+import java.util.Map;
 
 public class GearboxInstance extends KineticBlockInstance<GearboxBlockEntity> {
 	public static void register(BlockEntityType<? extends GearboxBlockEntity> type) {

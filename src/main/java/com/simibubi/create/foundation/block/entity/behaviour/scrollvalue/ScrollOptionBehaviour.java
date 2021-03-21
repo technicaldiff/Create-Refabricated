@@ -2,7 +2,6 @@ package com.simibubi.create.foundation.block.entity.behaviour.scrollvalue;
 
 import com.simibubi.create.foundation.block.entity.SmartBlockEntity;
 import com.simibubi.create.foundation.block.entity.behaviour.ValueBoxTransform;
-
 import net.minecraft.text.Text;
 
 public class ScrollOptionBehaviour<E extends Enum<E> & NamedIconOptions> extends ScrollValueBehaviour {

@@ -1,7 +1,6 @@
 package com.simibubi.create.foundation.gui;
 
 import com.simibubi.create.Create;
-
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.MinecraftClient;

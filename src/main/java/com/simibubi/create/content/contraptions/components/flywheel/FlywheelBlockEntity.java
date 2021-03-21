@@ -3,9 +3,7 @@ package com.simibubi.create.content.contraptions.components.flywheel;
 import com.simibubi.create.AllBlockEntities;
 import com.simibubi.create.content.contraptions.base.GeneratingKineticBlockEntity;
 import com.simibubi.create.foundation.gui.widgets.InterpolatedChasingValue;
-
 import net.minecraft.block.BlockState;
-import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.math.Box;
 

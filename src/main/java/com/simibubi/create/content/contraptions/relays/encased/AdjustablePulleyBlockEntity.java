@@ -2,9 +2,7 @@ package com.simibubi.create.content.contraptions.relays.encased;
 
 import com.simibubi.create.AllBlockEntities;
 import com.simibubi.create.content.contraptions.base.KineticBlockEntity;
-
 import net.minecraft.block.BlockState;
-import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.nbt.CompoundTag;
 
 public class AdjustablePulleyBlockEntity extends KineticBlockEntity {

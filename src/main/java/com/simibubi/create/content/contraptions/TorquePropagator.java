@@ -1,13 +1,12 @@
 package com.simibubi.create.content.contraptions;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import com.simibubi.create.Create;
 import com.simibubi.create.content.contraptions.base.KineticBlockEntity;
 import com.simibubi.create.foundation.utility.WorldHelper;
-
 import net.minecraft.world.WorldAccess;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class TorquePropagator {
 	static Map<WorldAccess, Map<Long, KineticNetwork>> networks = new HashMap<>();

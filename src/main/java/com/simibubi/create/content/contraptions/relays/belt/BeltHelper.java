@@ -1,7 +1,6 @@
 package com.simibubi.create.content.contraptions.relays.belt;
 
 import com.simibubi.create.foundation.utility.VecHelper;
-
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
@@ -13,7 +12,7 @@ import net.minecraft.world.World;
 public class BeltHelper {
 
 	public static boolean isItemUpright(ItemStack stack) {
-		return true; /**stack.getCapability(CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY) TODO CapabilityFluidHandler / AllItemTags CHECK
+		return true; /*stack.getCapability(CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY) TODO CapabilityFluidHandler / AllItemTags CHECK
 		 .isPresent()
 		 || stack.getItem()
 		 .isIn(AllItemTags.UPRIGHT_ON_BELT.tag);*/

@@ -43,6 +43,9 @@ import com.simibubi.create.content.contraptions.relays.gearbox.GearboxBlockEntit
 import com.simibubi.create.content.contraptions.relays.gearbox.GearboxInstance;
 import com.simibubi.create.content.contraptions.relays.gearbox.GearboxRenderer;
 import com.simibubi.create.content.contraptions.relays.gearbox.GearshiftBlockEntity;
+import com.simibubi.create.content.logistics.block.belts.tunnel.BeltTunnelRenderer;
+import com.simibubi.create.content.logistics.block.belts.tunnel.BeltTunnelTileEntity;
+import com.simibubi.create.content.logistics.block.belts.tunnel.BrassTunnelTileEntity;
 import com.simibubi.create.content.logistics.block.diodes.AdjustablePulseRepeaterBlockEntity;
 import com.simibubi.create.content.logistics.block.diodes.AdjustableRepeaterBlockEntity;
 import com.simibubi.create.content.logistics.block.diodes.AdjustableRepeaterRenderer;
@@ -58,6 +61,7 @@ import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.util.Identifier;
 
+import java.util.function.Function;
 import java.util.function.Supplier;
 
 public class AllBlockEntities {
@@ -228,16 +232,16 @@ public class AllBlockEntities {
 		.renderer(() -> SmartChuteRenderer::new)
 		.register();
 
-	public static final BlockEntityType<BeltTunnelBlockEntity> ANDESITE_TUNNEL = createBuilder("andesite_tunnel", BeltTunnelBlockEntity::new)
+	public static final BlockEntityType<BeltTunnelTileEntity> ANDESITE_TUNNEL = createBuilder("andesite_tunnel", BeltTunnelTileEntity::new)
 		.validBlocks(AllBlocks.ANDESITE_TUNNEL)
 		.renderer(() -> BeltTunnelRenderer::new)
 		.register();
 
-	public static final BlockEntityType<BrassTunnelBlockEntity> BRASS_TUNNEL = createBuilder("brass_tunnel", BrassTunnelBlockEntity::new)
+	public static final BlockEntityType<BrassTunnelTileEntity> BRASS_TUNNEL = createBuilder("brass_tunnel", BrassTunnelTileEntity::new)
 		.validBlocks(AllBlocks.BRASS_TUNNEL)
 		.renderer(() -> BeltTunnelRenderer::new)
-		.register();*/
-
+		.register();
+*/
 	public static final BlockEntityType<ArmBlockEntity> MECHANICAL_ARM = createBuilder("mechanical_arm", ArmBlockEntity::new)
 		.validBlocks(AllBlocks.MECHANICAL_ARM)
 		.renderer(() -> ArmRenderer::new)

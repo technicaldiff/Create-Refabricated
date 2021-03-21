@@ -1,7 +1,6 @@
 package com.simibubi.create.content.schematics.client.tools;
 
 import com.simibubi.create.foundation.renderState.SuperRenderTypeBuffer;
-
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.util.math.MatrixStack;
 

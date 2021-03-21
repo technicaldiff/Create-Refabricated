@@ -1,7 +1,6 @@
 package com.simibubi.create.foundation.block.entity;
 
 import com.simibubi.create.foundation.block.entity.behaviour.BehaviourType;
-
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.nbt.CompoundTag;

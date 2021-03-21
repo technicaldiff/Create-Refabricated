@@ -1,13 +1,10 @@
 package com.simibubi.create.content.logistics.block.mechanicalArm;
 
 import com.simibubi.create.AllBlockEntities;
-import com.simibubi.create.foundation.block.IBE;
-import org.apache.commons.lang3.mutable.MutableBoolean;
-
 import com.simibubi.create.AllShapes;
 import com.simibubi.create.content.contraptions.base.KineticBlock;
 import com.simibubi.create.content.logistics.block.mechanicalArm.ArmBlockEntity.Phase;
-
+import com.simibubi.create.foundation.block.IBE;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.ShapeContext;
@@ -28,6 +25,7 @@ import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldView;
+import org.apache.commons.lang3.mutable.MutableBoolean;
 
 public class ArmBlock extends KineticBlock implements IBE<ArmBlockEntity> {
 

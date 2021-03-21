@@ -1,17 +1,16 @@
 package com.simibubi.create.content.contraptions.relays.elementary;
 
-import java.util.List;
-
 import com.simibubi.create.AllBlockEntities;
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.content.contraptions.base.KineticBlockEntity;
 import com.simibubi.create.content.contraptions.base.Rotating;
 import com.simibubi.create.foundation.block.entity.BlockEntityBehaviour;
-
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
+
+import java.util.List;
 
 public class SimpleKineticBlockEntity extends KineticBlockEntity {
 	public SimpleKineticBlockEntity(BlockEntityType<? extends SimpleKineticBlockEntity> type) {

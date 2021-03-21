@@ -1,7 +1,5 @@
 package com.simibubi.create.content.schematics.client;
 
-import static java.lang.Math.abs;
-
 import com.simibubi.create.foundation.gui.widgets.InterpolatedChasingAngle;
 import com.simibubi.create.foundation.gui.widgets.InterpolatedChasingValue;
 import com.simibubi.create.foundation.utility.AnimationTickHolder;
@@ -15,6 +13,8 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Direction.Axis;
 import net.minecraft.util.math.Vec3d;
+
+import static java.lang.Math.abs;
 
 public class SchematicTransformation {
 

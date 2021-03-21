@@ -3,7 +3,6 @@ package com.simibubi.create.content.contraptions.components.crank;
 import com.simibubi.create.AllBlockPartials;
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.registrate.util.nullness.ParametersAreNonnullByDefault;
-
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.block.BlockState;

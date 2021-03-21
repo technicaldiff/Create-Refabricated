@@ -1,9 +1,5 @@
 package com.simibubi.create.content.contraptions.components.structureMovement.bearing;
 
-import java.util.List;
-
-import org.apache.commons.lang3.tuple.Pair;
-
 import com.simibubi.create.AllBlockEntities;
 import com.simibubi.create.content.contraptions.base.KineticBlockEntity;
 import com.simibubi.create.content.contraptions.components.structureMovement.AbstractContraptionEntity;
@@ -17,7 +13,6 @@ import com.simibubi.create.foundation.block.entity.behaviour.scrollvalue.ScrollO
 import com.simibubi.create.foundation.gui.AllIcons;
 import com.simibubi.create.foundation.utility.AngleHelper;
 import com.simibubi.create.foundation.utility.Lang;
-
 import net.minecraft.block.BlockState;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.state.property.Properties;
@@ -25,6 +20,9 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Direction.Axis;
 import net.minecraft.util.math.MathHelper;
+import org.apache.commons.lang3.tuple.Pair;
+
+import java.util.List;
 
 public class ClockworkBearingBlockEntity extends KineticBlockEntity implements BearingBlockEntity, DisplayAssemblyExceptionsProvider {
 

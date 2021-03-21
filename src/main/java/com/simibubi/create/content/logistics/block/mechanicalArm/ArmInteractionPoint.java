@@ -1,7 +1,5 @@
 package com.simibubi.create.content.logistics.block.mechanicalArm;
 
-import java.util.function.Supplier;
-
 import com.google.common.collect.ImmutableMap;
 import com.simibubi.create.AllBlockPartials;
 import com.simibubi.create.foundation.utility.NBTHelper;
@@ -17,6 +15,8 @@ import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.BlockView;
 import org.jetbrains.annotations.Nullable;
+
+import java.util.function.Supplier;
 
 public abstract class ArmInteractionPoint {
 

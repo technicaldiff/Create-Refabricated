@@ -1,11 +1,5 @@
 package com.simibubi.create.events;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.function.Consumer;
-import java.util.function.Function;
-
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.simibubi.create.AllBlockPartials;
 import com.simibubi.create.Create;
@@ -25,16 +19,13 @@ import com.simibubi.create.foundation.block.entity.behaviour.linked.LinkHandler;
 import com.simibubi.create.foundation.block.entity.behaviour.linked.LinkRenderer;
 import com.simibubi.create.foundation.block.entity.behaviour.scrollvalue.ScrollValueRenderer;
 import com.simibubi.create.foundation.block.render.SpriteShifter;
-import com.simibubi.create.foundation.collision.CollisionDebugger;
 import com.simibubi.create.foundation.gui.ScreenOpener;
 import com.simibubi.create.foundation.item.TooltipHelper;
 import com.simibubi.create.foundation.render.backend.FastRenderDispatcher;
 import com.simibubi.create.foundation.render.backend.RenderWork;
-import com.simibubi.create.foundation.render.backend.light.LightVolumeDebugger;
 import com.simibubi.create.foundation.renderState.SuperRenderTypeBuffer;
 import com.simibubi.create.foundation.utility.AnimationTickHolder;
 import com.simibubi.create.foundation.utility.placement.PlacementHelpers;
-
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.item.v1.ItemTooltipCallback;
 import net.fabricmc.fabric.api.client.model.ModelLoadingRegistry;
@@ -63,6 +54,12 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.function.Consumer;
+import java.util.function.Function;
 
 public class ClientEvents {
 	private static final String itemPrefix = "item." + Create.ID;

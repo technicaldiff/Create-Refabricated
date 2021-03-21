@@ -3,7 +3,6 @@ package com.simibubi.create.content.contraptions.components.motor;
 import com.simibubi.create.AllBlockEntities;
 import com.simibubi.create.AllShapes;
 import com.simibubi.create.content.contraptions.base.DirectionalKineticBlock;
-
 import net.minecraft.block.BlockState;
 import net.minecraft.block.ShapeContext;
 import net.minecraft.block.entity.BlockEntity;

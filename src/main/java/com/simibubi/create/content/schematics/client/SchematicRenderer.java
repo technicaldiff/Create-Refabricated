@@ -1,19 +1,10 @@
 package com.simibubi.create.content.schematics.client;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
-import com.simibubi.create.foundation.render.BlockEntityRenderHelper;
-import org.lwjgl.opengl.GL11;
 import com.simibubi.create.content.schematics.SchematicWorld;
+import com.simibubi.create.foundation.render.BlockEntityRenderHelper;
 import com.simibubi.create.foundation.render.SuperByteBuffer;
 import com.simibubi.create.foundation.renderState.SuperRenderTypeBuffer;
 import com.simibubi.create.foundation.utility.MatrixStacker;
-
 import net.minecraft.block.BlockState;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.BufferBuilder;
@@ -22,6 +13,9 @@ import net.minecraft.client.render.VertexFormats;
 import net.minecraft.client.render.block.BlockRenderManager;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.math.BlockPos;
+import org.lwjgl.opengl.GL11;
+
+import java.util.*;
 
 public class SchematicRenderer {
 

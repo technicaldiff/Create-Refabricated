@@ -2,7 +2,6 @@ package com.simibubi.create.content.contraptions.components.fan;
 
 import com.simibubi.create.AllBlockEntities;
 import com.simibubi.create.AllBlocks;
-import com.simibubi.create.AllTags.AllBlockTags;
 import com.simibubi.create.Create;
 import com.simibubi.create.content.contraptions.base.GeneratingKineticBlockEntity;
 import com.simibubi.create.foundation.utility.BlockHelper;

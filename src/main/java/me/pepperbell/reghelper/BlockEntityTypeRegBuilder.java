@@ -1,13 +1,5 @@
 package me.pepperbell.reghelper;
 
-import java.util.ArrayDeque;
-import java.util.Deque;
-import java.util.function.Consumer;
-import java.util.function.Function;
-import java.util.function.Supplier;
-
-import org.apache.commons.lang3.ArrayUtils;
-
 import net.fabricmc.api.EnvType;
 import net.fabricmc.fabric.api.client.rendereregistry.v1.BlockEntityRendererRegistry;
 import net.fabricmc.loader.api.FabricLoader;
@@ -18,6 +10,13 @@ import net.minecraft.client.render.block.entity.BlockEntityRenderDispatcher;
 import net.minecraft.client.render.block.entity.BlockEntityRenderer;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
+import org.apache.commons.lang3.ArrayUtils;
+
+import java.util.ArrayDeque;
+import java.util.Deque;
+import java.util.function.Consumer;
+import java.util.function.Function;
+import java.util.function.Supplier;
 
 public class BlockEntityTypeRegBuilder<T extends BlockEntity> {
 	private final Identifier identifier;

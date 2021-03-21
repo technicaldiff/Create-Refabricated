@@ -1,18 +1,11 @@
 package com.simibubi.create.content.curiosities;
 
-import java.util.Random;
-
 import com.simibubi.create.AllItems;
 import com.simibubi.create.Create;
-import com.simibubi.create.foundation.config.AllConfigs;
-import com.simibubi.create.foundation.config.CRecipes;
 import com.simibubi.create.foundation.mixin.accessor.BeaconBlockEntityAccessor;
 import com.simibubi.create.foundation.mixin.accessor.ItemEntityAccessor;
 import com.simibubi.create.foundation.utility.ColorHelper;
-import com.simibubi.create.foundation.utility.MixinHelper;
 import com.simibubi.create.foundation.utility.VecHelper;
-
-import me.shedaniel.autoconfig.AutoConfig;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.entity.BeaconBlockEntity;
@@ -31,6 +24,8 @@ import net.minecraft.world.RaycastContext;
 import net.minecraft.world.RaycastContext.FluidHandling;
 import net.minecraft.world.RaycastContext.ShapeType;
 import net.minecraft.world.World;
+
+import java.util.Random;
 
 public class ChromaticCompoundItem extends Item {
 
