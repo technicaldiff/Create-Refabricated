@@ -1,6 +1,12 @@
 package com.simibubi.create;
 
-import com.simibubi.create.content.contraptions.base.*;
+import java.util.function.Supplier;
+
+import com.simibubi.create.content.contraptions.base.BackHalfShaftInstance;
+import com.simibubi.create.content.contraptions.base.HalfShaftInstance;
+import com.simibubi.create.content.contraptions.base.HorizontalHalfShaftInstance;
+import com.simibubi.create.content.contraptions.base.KineticBlockEntityRenderer;
+import com.simibubi.create.content.contraptions.base.SingleRotatingInstance;
 import com.simibubi.create.content.contraptions.components.clock.CuckooClockBlockEntity;
 import com.simibubi.create.content.contraptions.components.clock.CuckooClockRenderer;
 import com.simibubi.create.content.contraptions.components.crank.HandCrankBlockEntity;
@@ -35,7 +41,13 @@ import com.simibubi.create.content.contraptions.relays.belt.BeltBlockEntity;
 import com.simibubi.create.content.contraptions.relays.belt.BeltInstance;
 import com.simibubi.create.content.contraptions.relays.belt.BeltRenderer;
 import com.simibubi.create.content.contraptions.relays.elementary.SimpleKineticBlockEntity;
-import com.simibubi.create.content.contraptions.relays.encased.*;
+import com.simibubi.create.content.contraptions.relays.encased.AdjustablePulleyBlockEntity;
+import com.simibubi.create.content.contraptions.relays.encased.ClutchBlockEntity;
+import com.simibubi.create.content.contraptions.relays.encased.EncasedShaftBlockEntity;
+import com.simibubi.create.content.contraptions.relays.encased.EncasedShaftRenderer;
+import com.simibubi.create.content.contraptions.relays.encased.ShaftInstance;
+import com.simibubi.create.content.contraptions.relays.encased.SplitShaftInstance;
+import com.simibubi.create.content.contraptions.relays.encased.SplitShaftRenderer;
 import com.simibubi.create.content.contraptions.relays.gauge.GaugeRenderer;
 import com.simibubi.create.content.contraptions.relays.gauge.SpeedGaugeBlockEntity;
 import com.simibubi.create.content.contraptions.relays.gauge.StressGaugeBlockEntity;
@@ -56,13 +68,11 @@ import com.simibubi.create.content.logistics.block.redstone.AnalogLeverBlockEnti
 import com.simibubi.create.content.logistics.block.redstone.AnalogLeverRenderer;
 import com.simibubi.create.content.logistics.block.redstone.RedstoneLinkBlockEntity;
 import com.simibubi.create.foundation.block.entity.render.SmartBlockEntityRenderer;
+
 import me.pepperbell.reghelper.BlockEntityTypeRegBuilder;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.util.Identifier;
-
-import java.util.function.Function;
-import java.util.function.Supplier;
 
 public class AllBlockEntities {
 	// Schematics
@@ -230,18 +240,18 @@ public class AllBlockEntities {
 	public static final BlockEntityType<SmartChuteBlockEntity> SMART_CHUTE = createBuilder("smart_chute", SmartChuteBlockEntity::new)
 		.validBlocks(AllBlocks.SMART_CHUTE)
 		.renderer(() -> SmartChuteRenderer::new)
-		.register();
+		.register();*/
 
-	public static final BlockEntityType<BeltTunnelTileEntity> ANDESITE_TUNNEL = createBuilder("andesite_tunnel", BeltTunnelTileEntity::new)
+	public static final BlockEntityType<BeltTunnelTileEntity> ANDESITE_TUNNEL = createBuilder("andesite_tunnel", BeltTunnelTileEntity::create)
 		.validBlocks(AllBlocks.ANDESITE_TUNNEL)
 		.renderer(() -> BeltTunnelRenderer::new)
 		.register();
 
-	public static final BlockEntityType<BrassTunnelTileEntity> BRASS_TUNNEL = createBuilder("brass_tunnel", BrassTunnelTileEntity::new)
+	public static final BlockEntityType<BrassTunnelTileEntity> BRASS_TUNNEL = createBuilder("brass_tunnel", BrassTunnelTileEntity::create)
 		.validBlocks(AllBlocks.BRASS_TUNNEL)
 		.renderer(() -> BeltTunnelRenderer::new)
 		.register();
-*/
+
 	public static final BlockEntityType<ArmBlockEntity> MECHANICAL_ARM = createBuilder("mechanical_arm", ArmBlockEntity::new)
 		.validBlocks(AllBlocks.MECHANICAL_ARM)
 		.renderer(() -> ArmRenderer::new)

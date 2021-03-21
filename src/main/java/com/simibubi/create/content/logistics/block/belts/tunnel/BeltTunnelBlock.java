@@ -49,12 +49,7 @@ public class BeltTunnelBlock extends Block implements IBE<BeltTunnelTileEntity>,
 	public BlockEntity createBlockEntity(BlockView world) {
 		return AllBlockEntities.ANDESITE_TUNNEL.instantiate();
 	}
-	/*
-		@Override
-		public BlockEntity createBlockEntity(BlockState state, BlockView world) {
-			return AllBlockEntities.ANDESITE_TUNNEL.instantiate();
-		}
-	*/
+
 	public enum Shape implements StringIdentifiable {
 		STRAIGHT, WINDOW, CLOSED, T_LEFT, T_RIGHT, CROSS;
 

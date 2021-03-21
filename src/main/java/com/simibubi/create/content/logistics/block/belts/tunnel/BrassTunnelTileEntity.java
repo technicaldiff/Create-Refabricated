@@ -1,5 +1,15 @@
 package com.simibubi.create.content.logistics.block.belts.tunnel;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Random;
+import java.util.Set;
+
+import org.apache.commons.lang3.tuple.Pair;
+import org.jetbrains.annotations.Nullable;
+
+import com.simibubi.create.AllBlockEntities;
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.content.contraptions.relays.belt.BeltBlockEntity;
 import com.simibubi.create.content.contraptions.relays.belt.BeltHelper;
@@ -14,6 +24,7 @@ import com.simibubi.create.foundation.utility.BlockHelper;
 import com.simibubi.create.foundation.utility.Iterate;
 import com.simibubi.create.foundation.utility.Lang;
 import com.simibubi.create.foundation.utility.NBTHelper;
+
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityType;
@@ -27,10 +38,6 @@ import net.minecraft.util.math.Direction.Axis;
 import net.minecraft.util.math.Direction.AxisDirection;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.math.Vec3i;
-import org.apache.commons.lang3.tuple.Pair;
-import org.jetbrains.annotations.Nullable;
-
-import java.util.*;
 
 public class BrassTunnelTileEntity extends BeltTunnelTileEntity {
 	//todo: filters
@@ -62,6 +69,10 @@ public class BrassTunnelTileEntity extends BeltTunnelTileEntity {
 		//tunnelCapability = LazyOptional.of(() -> new BrassTunnelItemHandler(this));
 		previousOutputIndex = 0;
 		syncedOutputActive = false;
+	}
+
+	public static BrassTunnelTileEntity create() {
+		return new BrassTunnelTileEntity(AllBlockEntities.ANDESITE_TUNNEL);
 	}
 
 	@Override
