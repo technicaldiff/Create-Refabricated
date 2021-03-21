@@ -137,15 +137,15 @@ public class BeltInventory {
 			}
 
 			// Belt Tunnels
-			/**if (BeltTunnelInteractionHandler.flapTunnelsAndCheckIfStuck(this, currentItem, nextOffset))
+			/*if (BeltTunnelInteractionHandler.flapTunnelsAndCheckIfStuck(this, currentItem, nextOffset))
 			 continue;*/
 
 			// Belt Funnels
-			/**if (BeltFunnelInteractionHandler.checkForFunnels(this, currentItem, nextOffset))
+			/*if (BeltFunnelInteractionHandler.checkForFunnels(this, currentItem, nextOffset))
 			 continue;*/
 
 			// Horizontal Crushing Wheels
-			/**if (BeltCrusherInteractionHandler.checkForCrushers(this, currentItem, nextOffset))
+			/*if (BeltCrusherInteractionHandler.checkForCrushers(this, currentItem, nextOffset))
 			 continue;*/
 
 			// Apply Movement
@@ -276,7 +276,7 @@ public class BeltInventory {
 		World world = belt.getWorld();
 		BlockPos nextPosition = BeltHelper.getPositionForOffset(belt, beltMovementPositive ? belt.beltLength : -1);
 
-//		if (AllBlocks.BRASS_BELT_FUNNEL.has(world.getBlockState(lastPosition.up())))
+//		if (AllBlocks.BRASS_BELT_FUNNEL.has(world.getBlockState(lastPosition.up()))) from upstream
 //			return Ending.FUNNEL;
 
 		DirectBeltInputBehaviour inputBehaviour =

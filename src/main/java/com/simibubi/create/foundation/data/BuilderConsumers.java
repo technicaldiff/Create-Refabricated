@@ -5,6 +5,8 @@ import com.simibubi.create.content.contraptions.base.CasingBlock;
 import com.simibubi.create.content.contraptions.components.crank.ValveHandleBlock;
 import com.simibubi.create.content.contraptions.relays.encased.EncasedCTBehaviour;
 import com.simibubi.create.content.contraptions.relays.encased.EncasedShaftBlock;
+import com.simibubi.create.content.logistics.block.belts.tunnel.BeltTunnelBlock;
+import com.simibubi.create.content.logistics.block.belts.tunnel.BeltTunnelItem;
 import com.simibubi.create.foundation.block.connected.CTSpriteShiftEntry;
 import com.simibubi.create.foundation.config.StressConfigDefaults;
 import com.simibubi.create.foundation.item.TooltipHelper;
@@ -13,6 +15,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.enums.PistonType;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.util.DyeColor;
+import net.minecraft.util.Identifier;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.function.Consumer;
@@ -111,38 +114,38 @@ public class BuilderConsumers {
 //		};
 //	}
 
-//	public static <B extends BeltTunnelBlock> Consumer<BlockHelper<B>> beltTunnel(
-//		String type, Identifier particleTexture) {
-//		return b -> b.initialProperties(SharedProperties::stone)
-//			.addLayer(() -> RenderLayer::getCutoutMipped)
-//			.properties(Block.Properties::nonOpaque)
+	public static <B extends BeltTunnelBlock> Consumer<BlockRegBuilder<B>> beltTunnel(
+		String type, Identifier particleTexture) {
+		return b -> b.initialProperties(SharedProperties::stone)
+			.addLayer(() -> RenderLayer::getCutoutMipped)
+			.properties(p -> p.nonOpaque())
 //			.blockstate((c, p) -> p.getVariantBuilder(c.get())
 //				.forAllStates(state -> {
 //					String id = "block/" + type + "_tunnel";
-//					Shape shape = state.get(BeltTunnelBlock.SHAPE);
+//					BeltTunnelBlock.Shape shape = state.get(BeltTunnelBlock.SHAPE);
 //					if (shape == BeltTunnelBlock.Shape.CLOSED)
 //						shape = BeltTunnelBlock.Shape.STRAIGHT;
 //					String shapeName = shape.asString();
 //					return ConfiguredModel.builder()
 //						.modelFile(p.models()
-//							.withExistingParent(id + "/" + shapeName, p.modLoc("block/belt_tunnel/" + shapeName))
-//							.texture("1", p.modLoc(id + "_top"))
+//					.withExistingParent(id + "/" + shapeName, p.modLoc("block/belt_tunnel/" + shapeName))
+//						.texture("1", p.modLoc(id + "_top"))
 //							.texture("2", p.modLoc(id))
 //							.texture("3", p.modLoc(id + "_top_window"))
 //							.texture("particle", particleTexture))
 //						.rotationY(state.get(BeltTunnelBlock.HORIZONTAL_AXIS) == Axis.X ? 0 : 90)
 //						.build();
-//				}))
-//			.item(BeltTunnelItem::new)
+//			}))
+			.item(BeltTunnelItem::new)
 //			.model((c, p) -> {
-//				String id = type + "_tunnel";
-//				p.withExistingParent("item/" + id, p.modLoc("block/belt_tunnel/item"))
-//					.texture("1", p.modLoc("block/" + id + "_top"))
-//					.texture("2", p.modLoc("block/" + id))
-//					.texture("particle", particleTexture);
+//			String id = type + "_tunnel";
+//			p.withExistingParent("item/" + id, p.modLoc("block/belt_tunnel/item"))
+//				.texture("1", p.modLoc("block/" + id + "_top"))
+//				.texture("2", p.modLoc("block/" + id))
+//				.texture("particle", particleTexture);
 //			})
-//			.build();
-//	}
+			.build();
+	}
 
 	public static <B extends Block> Consumer<BlockRegBuilder<B>> mechanicalPiston(PistonType type) {
 		return b -> b.initialProperties(SharedProperties::stone)

@@ -5,6 +5,7 @@ import com.simibubi.create.AllBlocks;
 import com.simibubi.create.AllItems;
 import com.simibubi.create.content.contraptions.base.HorizontalKineticBlock;
 import com.simibubi.create.content.contraptions.base.KineticBlockEntity;
+import com.simibubi.create.content.logistics.block.belts.tunnel.BeltTunnelBlock;
 import com.simibubi.create.content.schematics.SpecialBlockItemRequirement;
 import com.simibubi.create.foundation.block.IBE;
 import com.simibubi.create.foundation.utility.Iterate;
@@ -511,8 +512,8 @@ public class BeltBlock extends HorizontalKineticBlock implements IBE<BeltBlockEn
 	private void updateTunnelConnections(WorldAccess world, BlockPos pos) {
 		Block tunnelBlock = world.getBlockState(pos)
 			.getBlock();
-		/**if (tunnelBlock instanceof BeltTunnelBlock)
-		 ((BeltTunnelBlock) tunnelBlock).updateTunnel(world, pos);*/
+		if (tunnelBlock instanceof BeltTunnelBlock)
+		 ((BeltTunnelBlock) tunnelBlock).updateTunnel(world, pos);
 	}
 
 	@Override

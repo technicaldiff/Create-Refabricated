@@ -961,11 +961,11 @@ public class AllBlocks {
 		.register();
 */
 	public static final BeltTunnelBlock ANDESITE_TUNNEL = createBuilder("andesite_tunnel", BeltTunnelBlock::new)
-		//.transform(BuilderTransformers.beltTunnel("andesite", new Identifier("block/polished_andesite")))
+		.consume(BuilderConsumers.beltTunnel("andesite", new Identifier("block/polished_andesite")))
 		.register();
 
 	public static final BrassTunnelBlock BRASS_TUNNEL = createBuilder("brass_tunnel", BrassTunnelBlock::new)
-		//.transform(BuilderTransformers.beltTunnel("brass", Create.asResource("block/brass_block")))
+		.consume(BuilderConsumers.beltTunnel("brass", Create.id("block/brass_block")))
 		.onRegister(connectedTextures(new BrassTunnelCTBehaviour()))
 		.register();
 /*
