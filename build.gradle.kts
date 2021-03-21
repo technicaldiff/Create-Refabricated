@@ -1,12 +1,10 @@
 plugins {
 	id("fabric-loom") version "0.6-SNAPSHOT"
+	checkstyle
 	`maven-publish`
 }
 
 java {
-	sourceCompatibility = JavaVersion.VERSION_1_8
-	targetCompatibility = JavaVersion.VERSION_1_8
-
 	withSourcesJar()
 }
 
@@ -16,6 +14,23 @@ base {
 
 version = properties["mod_version"]!!
 group = properties["maven_group"]!!
+
+allprojects {
+	apply(plugin = "java")
+	java {
+		sourceCompatibility = JavaVersion.VERSION_1_8
+		targetCompatibility = JavaVersion.VERSION_1_8
+
+		withSourcesJar()
+	}
+
+	tasks.withType<JavaCompile> {
+		options.encoding = "UTF-8"
+		if (JavaVersion.current().isJava9Compatible) {
+			options.compilerArgs.addAll(listOf("--release", "8"))
+		}
+	}
+}
 
 repositories {
 	maven("https://maven.fabricmc.net/") {
@@ -88,6 +103,9 @@ dependencies {
 	modApi("me.shedaniel.cloth", "cloth-config-fabric", cloth_config_version) {
 		exclude(group = "net.fabricmc.fabric-api")
 	}
+
+	// Checkstyle stuff
+	checkstyle(project(":checkstyleChecks"))
 }
 
 loom.accessWidener("src/main/resources/create.accesswidener")
@@ -120,14 +138,19 @@ val lambda: () -> Unit = {
 
 	map.forEach { (str, func) ->
 		if (project.hasProperty(createPrefix + str) && (
-				project.property(createPrefix + str) != null &&
-					project.property(createPrefix + str) != false &&
-					project.property(createPrefix + str) != "false"
-				)) {
+						project.property(createPrefix + str) != null &&
+								project.property(createPrefix + str) != false &&
+								project.property(createPrefix + str) != "false"
+						)) {
 			project.func()
 		}
 	}
 }; lambda()
+
+checkstyle {
+	toolVersion = properties["checkstyle_version"] as String
+	configFile = file("checkstyle/checkstyle.xml")
+}
 
 tasks {
 	processResources {
@@ -135,13 +158,6 @@ tasks {
 
 		filesMatching("fabric.mod.json") {
 			expand("version" to project.version)
-		}
-	}
-
-	withType<JavaCompile> {
-		options.encoding = "UTF-8"
-		if (JavaVersion.current().isJava9Compatible) {
-			options.compilerArgs.addAll(listOf("--release", "8"))
 		}
 	}
 
