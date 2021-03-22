@@ -6,3 +6,6 @@ pluginManagement {
         gradlePluginPortal()
     }
 }
+
+rootProject.name = "create"
+include("checkstyleChecks")
