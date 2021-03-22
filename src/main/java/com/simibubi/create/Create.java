@@ -2,8 +2,19 @@ package com.simibubi.create;
 
 import java.util.Random;
 
+import me.shedaniel.autoconfig.AutoConfig;
+import me.shedaniel.autoconfig.ConfigData;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
+import net.minecraft.SharedConstants;
+import net.minecraft.item.ItemGroup;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.Identifier;
+
+import net.fabricmc.api.ModInitializer;
+import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder;
+
 import org.spongepowered.asm.mixin.MixinEnvironment;
 
 import com.simibubi.create.content.contraptions.TorquePropagator;
@@ -15,15 +26,6 @@ import com.simibubi.create.foundation.config.AllConfigs;
 import com.simibubi.create.foundation.networking.AllPackets;
 import com.simibubi.create.foundation.resource.TranslationsHolder;
 import com.simibubi.create.foundation.worldgen.AllWorldFeatures;
-
-import me.shedaniel.autoconfig.AutoConfig;
-import me.shedaniel.autoconfig.ConfigData;
-import net.fabricmc.api.ModInitializer;
-import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder;
-import net.minecraft.SharedConstants;
-import net.minecraft.item.ItemGroup;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.Identifier;
 
 public class Create implements ModInitializer  {
 	public static final String ID = "create";

@@ -3,10 +3,6 @@ package com.simibubi.create;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.simibubi.create.foundation.block.BlockVertexColorProvider;
-import com.simibubi.create.foundation.block.render.ColoredVertexModel;
-import com.simibubi.create.foundation.mixin.accessor.MinecraftClientAccessor;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.RedstoneWireBlock;
@@ -22,6 +18,10 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.state.property.Properties;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.BlockRenderView;
+
+import com.simibubi.create.foundation.block.BlockVertexColorProvider;
+import com.simibubi.create.foundation.block.render.ColoredVertexModel;
+import com.simibubi.create.foundation.mixin.accessor.MinecraftClientAccessor;
 
 public class AllColorHandlers {
 

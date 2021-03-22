@@ -1,10 +1,11 @@
 package com.simibubi.create.content.logistics.block.diodes;
 
+import net.minecraft.client.render.block.entity.BlockEntityRenderDispatcher;
+
 import com.simibubi.create.AllBlockPartials;
 import com.simibubi.create.foundation.block.entity.render.ColoredOverlayBlockEntityRenderer;
 import com.simibubi.create.foundation.render.SuperByteBuffer;
 import com.simibubi.create.foundation.utility.ColorHelper;
-import net.minecraft.client.render.block.entity.BlockEntityRenderDispatcher;
 
 public class AdjustableRepeaterRenderer extends ColoredOverlayBlockEntityRenderer<AdjustableRepeaterBlockEntity> {
 

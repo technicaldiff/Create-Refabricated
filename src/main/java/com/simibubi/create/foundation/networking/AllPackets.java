@@ -1,6 +1,13 @@
 package com.simibubi.create.foundation.networking;
 
 
+import net.minecraft.util.Identifier;
+
+import me.pepperbell.simplenetworking.C2SPacket;
+import me.pepperbell.simplenetworking.Packet;
+import me.pepperbell.simplenetworking.S2CPacket;
+import me.pepperbell.simplenetworking.SimpleChannel;
+
 import com.simibubi.create.Create;
 import com.simibubi.create.content.contraptions.components.structureMovement.gantry.GantryContraptionUpdatePacket;
 import com.simibubi.create.content.contraptions.components.structureMovement.glue.GlueEffectPacket;
@@ -15,12 +22,6 @@ import com.simibubi.create.content.schematics.packet.SchematicPlacePacket;
 import com.simibubi.create.content.schematics.packet.SchematicSyncPacket;
 import com.simibubi.create.content.schematics.packet.SchematicUploadPacket;
 import com.simibubi.create.foundation.block.entity.behaviour.scrollvalue.ScrollValueUpdatePacket;
-
-import me.pepperbell.simplenetworking.C2SPacket;
-import me.pepperbell.simplenetworking.Packet;
-import me.pepperbell.simplenetworking.S2CPacket;
-import me.pepperbell.simplenetworking.SimpleChannel;
-import net.minecraft.util.Identifier;
 
 public enum AllPackets {
 

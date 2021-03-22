@@ -1,13 +1,15 @@
 package com.simibubi.create.content.contraptions.components.fan;
 
-import com.simibubi.create.Create;
-import com.simibubi.create.foundation.config.CKinetics;
-import com.simibubi.create.registrate.util.nullness.MethodsReturnNonnullByDefault;
+import org.jetbrains.annotations.Nullable;
+
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
-import org.jetbrains.annotations.Nullable;
+
+import com.simibubi.create.Create;
+import com.simibubi.create.foundation.config.CKinetics;
+import com.simibubi.create.registrate.util.nullness.MethodsReturnNonnullByDefault;
 
 @MethodsReturnNonnullByDefault
 public interface AirCurrentSource {

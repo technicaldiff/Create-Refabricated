@@ -1,15 +1,16 @@
 package com.simibubi.create.foundation.gui.widgets;
 
-import com.simibubi.create.AllKeys;
-import com.simibubi.create.foundation.block.entity.behaviour.scrollvalue.ScrollValueBehaviour;
-import com.simibubi.create.foundation.utility.Lang;
+import java.util.function.Consumer;
+import java.util.function.Function;
+
 import net.minecraft.text.LiteralText;
 import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 
-import java.util.function.Consumer;
-import java.util.function.Function;
+import com.simibubi.create.AllKeys;
+import com.simibubi.create.foundation.block.entity.behaviour.scrollvalue.ScrollValueBehaviour;
+import com.simibubi.create.foundation.utility.Lang;
 
 public class ScrollInput extends AbstractSimiWidget {
 

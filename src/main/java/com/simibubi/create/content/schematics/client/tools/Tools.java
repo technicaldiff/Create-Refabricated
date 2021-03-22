@@ -1,11 +1,12 @@
 package com.simibubi.create.content.schematics.client.tools;
 
-import com.simibubi.create.foundation.gui.AllIcons;
-import com.simibubi.create.foundation.utility.Lang;
-import net.minecraft.text.Text;
-
 import java.util.ArrayList;
 import java.util.List;
+
+import net.minecraft.text.Text;
+
+import com.simibubi.create.foundation.gui.AllIcons;
+import com.simibubi.create.foundation.utility.Lang;
 
 public enum Tools {
 

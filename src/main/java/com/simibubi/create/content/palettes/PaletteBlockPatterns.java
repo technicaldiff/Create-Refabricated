@@ -1,25 +1,29 @@
 package com.simibubi.create.content.palettes;
 
+import static com.simibubi.create.content.palettes.PaletteBlockPartial.AllPartials;
+import static com.simibubi.create.content.palettes.PaletteBlockPartial.ForPolished;
+import static com.simibubi.create.content.palettes.PatternNameType.Prefix;
+import static com.simibubi.create.content.palettes.PatternNameType.Suffix;
+import static com.simibubi.create.content.palettes.PatternNameType.Wrap;
+
+import java.util.Optional;
+import java.util.function.Function;
+
+import net.minecraft.block.Block;
+import net.minecraft.block.PillarBlock;
+import net.minecraft.client.render.RenderLayer;
+import net.minecraft.util.Identifier;
+
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
+import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
+
 import com.simibubi.create.AllSpriteShifts;
 import com.simibubi.create.Create;
 import com.simibubi.create.foundation.block.connected.CTSpriteShiftEntry;
 import com.simibubi.create.foundation.block.connected.CTSpriteShifter.CTType;
 import com.simibubi.create.foundation.block.connected.ConnectedTextureBehaviour;
 import com.simibubi.create.foundation.block.connected.HorizontalCTBehaviour;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
-import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
-import net.minecraft.block.Block;
-import net.minecraft.block.PillarBlock;
-import net.minecraft.client.render.RenderLayer;
-import net.minecraft.util.Identifier;
-
-import java.util.Optional;
-import java.util.function.Function;
-
-import static com.simibubi.create.content.palettes.PaletteBlockPartial.AllPartials;
-import static com.simibubi.create.content.palettes.PaletteBlockPartial.ForPolished;
-import static com.simibubi.create.content.palettes.PatternNameType.*;
 
 public class PaletteBlockPatterns {
 

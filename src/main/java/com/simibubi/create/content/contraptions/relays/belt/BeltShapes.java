@@ -1,7 +1,10 @@
 package com.simibubi.create.content.contraptions.relays.belt;
 
-import com.simibubi.create.AllShapes;
-import com.simibubi.create.foundation.utility.VoxelShaper;
+import static net.minecraft.block.Block.createCuboidShape;
+
+import java.util.HashMap;
+import java.util.Map;
+
 import net.minecraft.block.BlockState;
 import net.minecraft.util.function.BooleanBiFunction;
 import net.minecraft.util.math.Direction;
@@ -9,10 +12,8 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.util.shape.VoxelShapes;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import static net.minecraft.block.Block.createCuboidShape;
+import com.simibubi.create.AllShapes;
+import com.simibubi.create.foundation.utility.VoxelShaper;
 
 public class BeltShapes {
 

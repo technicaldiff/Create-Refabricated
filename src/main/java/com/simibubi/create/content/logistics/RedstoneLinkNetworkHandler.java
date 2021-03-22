@@ -1,16 +1,23 @@
 package com.simibubi.create.content.logistics;
 
-import com.simibubi.create.Create;
-import com.simibubi.create.foundation.block.entity.behaviour.linked.LinkBehaviour;
-import com.simibubi.create.foundation.utility.WorldHelper;
+import java.util.HashMap;
+import java.util.IdentityHashMap;
+import java.util.Iterator;
+import java.util.LinkedHashSet;
+import java.util.Map;
+import java.util.Set;
+
+import org.apache.commons.lang3.tuple.Pair;
+
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
-import org.apache.commons.lang3.tuple.Pair;
 
-import java.util.*;
+import com.simibubi.create.Create;
+import com.simibubi.create.foundation.block.entity.behaviour.linked.LinkBehaviour;
+import com.simibubi.create.foundation.utility.WorldHelper;
 
 public class RedstoneLinkNetworkHandler {
 

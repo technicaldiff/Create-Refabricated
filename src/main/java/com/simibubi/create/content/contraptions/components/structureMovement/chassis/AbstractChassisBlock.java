@@ -1,9 +1,5 @@
 package com.simibubi.create.content.contraptions.components.structureMovement.chassis;
 
-import com.simibubi.create.AllBlockEntities;
-import com.simibubi.create.AllItems;
-import com.simibubi.create.content.contraptions.wrench.Wrenchable;
-import com.simibubi.create.foundation.utility.Iterate;
 import net.minecraft.block.BlockEntityProvider;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.PillarBlock;
@@ -23,6 +19,11 @@ import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
+
+import com.simibubi.create.AllBlockEntities;
+import com.simibubi.create.AllItems;
+import com.simibubi.create.content.contraptions.wrench.Wrenchable;
+import com.simibubi.create.foundation.utility.Iterate;
 
 public abstract class AbstractChassisBlock extends PillarBlock implements BlockEntityProvider, Wrenchable {
 

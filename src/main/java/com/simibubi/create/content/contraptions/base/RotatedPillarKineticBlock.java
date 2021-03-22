@@ -1,6 +1,5 @@
 package com.simibubi.create.content.contraptions.base;
 
-import com.simibubi.create.foundation.utility.Iterate;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.item.ItemPlacementContext;
@@ -10,6 +9,8 @@ import net.minecraft.state.property.Properties;
 import net.minecraft.util.BlockRotation;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Direction.Axis;
+
+import com.simibubi.create.foundation.utility.Iterate;
 
 public abstract class RotatedPillarKineticBlock extends KineticBlock {
 	public static final EnumProperty<Direction.Axis> AXIS = Properties.AXIS;

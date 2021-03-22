@@ -10,20 +10,7 @@ import java.util.Map;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 
-import com.simibubi.create.content.contraptions.base.KineticRenderMaterials;
-import com.simibubi.create.content.contraptions.base.RotatingData;
-import com.simibubi.create.content.contraptions.relays.belt.BeltData;
-import com.simibubi.create.events.custom.ModelsBakedCallback;
-import com.simibubi.create.foundation.render.SuperByteBuffer;
-import com.simibubi.create.foundation.render.backend.instancing.InstancedBlockRenderer;
-import com.simibubi.create.foundation.render.backend.instancing.InstancedModel;
-import com.simibubi.create.foundation.utility.AngleHelper;
-import com.simibubi.create.foundation.utility.MatrixStacker;
-import com.simibubi.create.foundation.utility.extensions.BakedModelManagerExtensions;
-
-import net.fabricmc.fabric.api.client.model.ModelLoadingRegistry;
 import net.minecraft.block.BlockState;
-import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.model.BakedModel;
 import net.minecraft.client.render.model.BakedModelManager;
 import net.minecraft.client.render.model.ModelLoader;
@@ -31,6 +18,16 @@ import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.resource.ResourceManager;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.Direction;
+
+import com.simibubi.create.content.contraptions.base.KineticRenderMaterials;
+import com.simibubi.create.content.contraptions.base.RotatingData;
+import com.simibubi.create.content.contraptions.relays.belt.BeltData;
+import com.simibubi.create.foundation.render.SuperByteBuffer;
+import com.simibubi.create.foundation.render.backend.instancing.InstancedBlockRenderer;
+import com.simibubi.create.foundation.render.backend.instancing.InstancedModel;
+import com.simibubi.create.foundation.utility.AngleHelper;
+import com.simibubi.create.foundation.utility.MatrixStacker;
+import com.simibubi.create.foundation.utility.extensions.BakedModelManagerExtensions;
 
 public class AllBlockPartials {
 

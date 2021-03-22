@@ -1,8 +1,5 @@
 package com.simibubi.create.content.contraptions.components.motor;
 
-import com.simibubi.create.AllBlockEntities;
-import com.simibubi.create.AllShapes;
-import com.simibubi.create.content.contraptions.base.DirectionalKineticBlock;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.ShapeContext;
 import net.minecraft.block.entity.BlockEntity;
@@ -12,6 +9,10 @@ import net.minecraft.util.math.Direction;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.WorldView;
+
+import com.simibubi.create.AllBlockEntities;
+import com.simibubi.create.AllShapes;
+import com.simibubi.create.content.contraptions.base.DirectionalKineticBlock;
 
 public class CreativeMotorBlock extends DirectionalKineticBlock {
 

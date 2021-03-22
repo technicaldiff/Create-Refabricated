@@ -2,10 +2,11 @@ package com.simibubi.create;
 
 import org.lwjgl.glfw.GLFW;
 
-import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.options.KeyBinding;
+
+import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
 
 public enum AllKeys {
 	TOOL_MENU("toolmenu", GLFW.GLFW_KEY_LEFT_ALT), 

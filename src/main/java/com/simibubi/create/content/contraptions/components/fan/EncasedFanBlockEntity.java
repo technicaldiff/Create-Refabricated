@@ -1,11 +1,7 @@
 package com.simibubi.create.content.contraptions.components.fan;
 
-import com.simibubi.create.AllBlockEntities;
-import com.simibubi.create.AllBlocks;
-import com.simibubi.create.Create;
-import com.simibubi.create.content.contraptions.base.GeneratingKineticBlockEntity;
-import com.simibubi.create.foundation.utility.BlockHelper;
-import com.simibubi.create.registrate.util.nullness.MethodsReturnNonnullByDefault;
+import org.jetbrains.annotations.Nullable;
+
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.nbt.CompoundTag;
@@ -13,7 +9,13 @@ import net.minecraft.state.property.Properties;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.world.World;
-import org.jetbrains.annotations.Nullable;
+
+import com.simibubi.create.AllBlockEntities;
+import com.simibubi.create.AllBlocks;
+import com.simibubi.create.Create;
+import com.simibubi.create.content.contraptions.base.GeneratingKineticBlockEntity;
+import com.simibubi.create.foundation.utility.BlockHelper;
+import com.simibubi.create.registrate.util.nullness.MethodsReturnNonnullByDefault;
 
 @MethodsReturnNonnullByDefault
 public class EncasedFanBlockEntity extends GeneratingKineticBlockEntity implements AirCurrentSource {

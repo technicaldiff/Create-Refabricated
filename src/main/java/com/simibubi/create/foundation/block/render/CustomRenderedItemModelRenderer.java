@@ -1,12 +1,14 @@
 package com.simibubi.create.foundation.block.render;
 
-import com.simibubi.create.foundation.item.PartialItemModelRenderer;
-import net.fabricmc.fabric.api.client.rendering.v1.BuiltinItemRendererRegistry.DynamicItemRenderer;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.model.json.ModelTransformation;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.item.ItemStack;
+
+import net.fabricmc.fabric.api.client.rendering.v1.BuiltinItemRendererRegistry.DynamicItemRenderer;
+
+import com.simibubi.create.foundation.item.PartialItemModelRenderer;
 
 public class CustomRenderedItemModelRenderer<M extends CustomRenderedItemModel> implements DynamicItemRenderer {
 	@Override

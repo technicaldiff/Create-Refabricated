@@ -1,11 +1,5 @@
 package com.simibubi.create.content.contraptions.components.structureMovement.pulley;
 
-import com.simibubi.create.AllBlockPartials;
-import com.simibubi.create.content.contraptions.base.KineticBlockEntity;
-import com.simibubi.create.content.contraptions.base.KineticBlockEntityRenderer;
-import com.simibubi.create.content.contraptions.base.Rotating;
-import com.simibubi.create.foundation.render.SuperByteBuffer;
-import com.simibubi.create.foundation.utility.AngleHelper;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.VertexConsumer;
@@ -19,6 +13,13 @@ import net.minecraft.util.math.Direction.Axis;
 import net.minecraft.util.math.Direction.AxisDirection;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
+
+import com.simibubi.create.AllBlockPartials;
+import com.simibubi.create.content.contraptions.base.KineticBlockEntity;
+import com.simibubi.create.content.contraptions.base.KineticBlockEntityRenderer;
+import com.simibubi.create.content.contraptions.base.Rotating;
+import com.simibubi.create.foundation.render.SuperByteBuffer;
+import com.simibubi.create.foundation.utility.AngleHelper;
 
 public abstract class AbstractPulleyRenderer extends KineticBlockEntityRenderer {
 

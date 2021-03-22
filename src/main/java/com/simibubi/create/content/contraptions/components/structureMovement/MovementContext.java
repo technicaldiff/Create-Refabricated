@@ -1,7 +1,7 @@
 package com.simibubi.create.content.contraptions.components.structureMovement;
 
-import com.simibubi.create.foundation.utility.VecHelper;
-import net.fabricmc.fabric.api.util.NbtType;
+import java.util.function.UnaryOperator;
+
 import net.minecraft.block.BlockState;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.structure.Structure;
@@ -9,7 +9,9 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
-import java.util.function.UnaryOperator;
+import net.fabricmc.fabric.api.util.NbtType;
+
+import com.simibubi.create.foundation.utility.VecHelper;
 
 public class MovementContext {
 

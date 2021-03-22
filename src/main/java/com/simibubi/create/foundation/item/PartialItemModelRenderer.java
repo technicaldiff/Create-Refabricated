@@ -1,8 +1,5 @@
 package com.simibubi.create.foundation.item;
 
-import com.simibubi.create.foundation.mixin.accessor.ItemRendererAccessor;
-import com.simibubi.create.foundation.renderState.RenderTypes;
-import com.simibubi.create.foundation.utility.MixinHelper;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.VertexConsumer;
@@ -13,6 +10,10 @@ import net.minecraft.client.render.model.BakedModel;
 import net.minecraft.client.render.model.json.ModelTransformation;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.item.ItemStack;
+
+import com.simibubi.create.foundation.mixin.accessor.ItemRendererAccessor;
+import com.simibubi.create.foundation.renderState.RenderTypes;
+import com.simibubi.create.foundation.utility.MixinHelper;
 
 public class PartialItemModelRenderer {
 	private static PartialItemModelRenderer instance;

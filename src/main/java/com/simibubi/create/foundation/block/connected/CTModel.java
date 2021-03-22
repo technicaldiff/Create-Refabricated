@@ -1,10 +1,9 @@
 package com.simibubi.create.foundation.block.connected;
 
-import com.simibubi.create.foundation.block.connected.ConnectedTextureBehaviour.CTContext;
-import com.simibubi.create.foundation.utility.Iterate;
-import net.fabricmc.fabric.api.renderer.v1.model.ForwardingBakedModel;
-import net.fabricmc.fabric.api.renderer.v1.model.SpriteFinder;
-import net.fabricmc.fabric.api.renderer.v1.render.RenderContext;
+import java.util.Arrays;
+import java.util.Random;
+import java.util.function.Supplier;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.MinecraftClient;
@@ -14,9 +13,12 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.world.BlockRenderView;
 
-import java.util.Arrays;
-import java.util.Random;
-import java.util.function.Supplier;
+import net.fabricmc.fabric.api.renderer.v1.model.ForwardingBakedModel;
+import net.fabricmc.fabric.api.renderer.v1.model.SpriteFinder;
+import net.fabricmc.fabric.api.renderer.v1.render.RenderContext;
+
+import com.simibubi.create.foundation.block.connected.ConnectedTextureBehaviour.CTContext;
+import com.simibubi.create.foundation.utility.Iterate;
 
 public class CTModel extends ForwardingBakedModel {
 	private static final ThreadLocal<SpriteFinder> FINDER = ThreadLocal.withInitial(() -> SpriteFinder.get(MinecraftClient.getInstance().getBakedModelManager().method_24153(SpriteAtlasTexture.BLOCK_ATLAS_TEXTURE)));

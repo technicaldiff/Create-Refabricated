@@ -1,8 +1,5 @@
 package com.simibubi.create.foundation.utility.outliner;
 
-import com.simibubi.create.foundation.renderState.RenderTypes;
-import com.simibubi.create.foundation.renderState.SuperRenderTypeBuffer;
-
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.VertexConsumer;
@@ -11,6 +8,9 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Vec3d;
+
+import com.simibubi.create.foundation.renderState.RenderTypes;
+import com.simibubi.create.foundation.renderState.SuperRenderTypeBuffer;
 
 public class AABBOutline extends Outline {
 

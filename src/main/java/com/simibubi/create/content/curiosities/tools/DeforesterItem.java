@@ -1,10 +1,5 @@
 package com.simibubi.create.content.curiosities.tools;
 
-import com.simibubi.create.AllItems;
-import com.simibubi.create.foundation.utility.BlockHelper;
-import com.simibubi.create.foundation.utility.TreeCutter;
-import com.simibubi.create.foundation.utility.TreeCutter.Tree;
-import com.simibubi.create.foundation.utility.VecHelper;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.ItemEntity;
@@ -17,6 +12,12 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
+
+import com.simibubi.create.AllItems;
+import com.simibubi.create.foundation.utility.BlockHelper;
+import com.simibubi.create.foundation.utility.TreeCutter;
+import com.simibubi.create.foundation.utility.TreeCutter.Tree;
+import com.simibubi.create.foundation.utility.VecHelper;
 
 public class DeforesterItem extends AxeItem {
 

@@ -1,7 +1,8 @@
 package com.simibubi.create.content.logistics.block.diodes;
 
-import com.simibubi.create.content.contraptions.wrench.Wrenchable;
 import net.minecraft.block.AbstractRedstoneGateBlock;
+
+import com.simibubi.create.content.contraptions.wrench.Wrenchable;
 
 public abstract class AbstractDiodeBlock extends AbstractRedstoneGateBlock implements Wrenchable {
 

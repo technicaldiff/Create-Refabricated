@@ -1,17 +1,23 @@
 package com.simibubi.create.content.contraptions.particle;
 
-import com.simibubi.create.Create;
-import com.simibubi.create.content.contraptions.components.fan.AirCurrentSource;
-import com.simibubi.create.foundation.utility.VecHelper;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
 import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.client.particle.*;
+import net.minecraft.client.particle.AnimatedParticle;
+import net.minecraft.client.particle.Particle;
+import net.minecraft.client.particle.ParticleFactory;
+import net.minecraft.client.particle.ParticleTextureSheet;
+import net.minecraft.client.particle.SpriteProvider;
 import net.minecraft.client.render.WorldRenderer;
 import net.minecraft.client.world.ClientWorld;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+
+import com.simibubi.create.Create;
+import com.simibubi.create.content.contraptions.components.fan.AirCurrentSource;
+import com.simibubi.create.foundation.utility.VecHelper;
 
 public class AirFlowParticle extends AnimatedParticle {
 

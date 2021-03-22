@@ -1,12 +1,5 @@
 package com.simibubi.create.content.logistics.block.belts.tunnel;
 
-import com.simibubi.create.AllBlockPartials;
-import com.simibubi.create.foundation.block.entity.render.SmartBlockEntityRenderer;
-import com.simibubi.create.foundation.render.SuperByteBuffer;
-import com.simibubi.create.foundation.utility.AngleHelper;
-import com.simibubi.create.foundation.utility.Iterate;
-import com.simibubi.create.foundation.utility.MatrixStacker;
-import com.simibubi.create.foundation.utility.VecHelper;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.VertexConsumer;
 import net.minecraft.client.render.VertexConsumerProvider;
@@ -16,6 +9,14 @@ import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Direction.Axis;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
+
+import com.simibubi.create.AllBlockPartials;
+import com.simibubi.create.foundation.block.entity.render.SmartBlockEntityRenderer;
+import com.simibubi.create.foundation.render.SuperByteBuffer;
+import com.simibubi.create.foundation.utility.AngleHelper;
+import com.simibubi.create.foundation.utility.Iterate;
+import com.simibubi.create.foundation.utility.MatrixStacker;
+import com.simibubi.create.foundation.utility.VecHelper;
 
 public class BeltTunnelRenderer extends SmartBlockEntityRenderer<BeltTunnelTileEntity> {
 

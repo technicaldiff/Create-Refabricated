@@ -1,9 +1,5 @@
 package com.simibubi.create.content.logistics.block.belts.tunnel;
 
-import com.simibubi.create.AllBlocks;
-import com.simibubi.create.content.contraptions.relays.belt.BeltBlockEntity;
-import com.simibubi.create.content.contraptions.relays.belt.BeltHelper;
-import com.simibubi.create.foundation.advancement.AllTriggers;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.ShapeContext;
@@ -13,6 +9,11 @@ import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+
+import com.simibubi.create.AllBlocks;
+import com.simibubi.create.content.contraptions.relays.belt.BeltBlockEntity;
+import com.simibubi.create.content.contraptions.relays.belt.BeltHelper;
+import com.simibubi.create.foundation.advancement.AllTriggers;
 
 public class BeltTunnelItem extends BlockItem {
 

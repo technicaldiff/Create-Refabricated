@@ -1,13 +1,14 @@
 package com.simibubi.create.content.contraptions.relays.encased;
 
-import com.simibubi.create.foundation.block.connected.CTSpriteShiftEntry;
+import java.util.IdentityHashMap;
+import java.util.Map;
+import java.util.function.BiPredicate;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.util.math.Direction;
 
-import java.util.IdentityHashMap;
-import java.util.Map;
-import java.util.function.BiPredicate;
+import com.simibubi.create.foundation.block.connected.CTSpriteShiftEntry;
 
 public class CasingConnectivity {
 	private Map<Block, Entry> entries;

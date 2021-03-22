@@ -1,17 +1,19 @@
 package com.simibubi.create.content.curiosities.symmetry.mirror;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import com.google.common.collect.ImmutableList;
-import com.simibubi.create.AllBlockPartials;
-import com.simibubi.create.foundation.utility.Lang;
+
 import net.minecraft.block.BlockState;
 import net.minecraft.text.Text;
 import net.minecraft.util.StringIdentifiable;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import com.simibubi.create.AllBlockPartials;
+import com.simibubi.create.foundation.utility.Lang;
 
 public class TriplePlaneMirror extends SymmetryMirror {
 

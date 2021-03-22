@@ -1,9 +1,5 @@
 package com.simibubi.create.content.contraptions.components.structureMovement.chassis;
 
-import com.simibubi.create.AllBlocks;
-import com.simibubi.create.AllSpriteShifts;
-import com.simibubi.create.foundation.block.connected.CTSpriteShiftEntry;
-import com.simibubi.create.foundation.block.connected.ConnectedTextureBehaviour;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.item.ItemPlacementContext;
@@ -14,6 +10,11 @@ import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Direction.Axis;
 import net.minecraft.util.math.Direction.AxisDirection;
 import net.minecraft.world.BlockRenderView;
+
+import com.simibubi.create.AllBlocks;
+import com.simibubi.create.AllSpriteShifts;
+import com.simibubi.create.foundation.block.connected.CTSpriteShiftEntry;
+import com.simibubi.create.foundation.block.connected.ConnectedTextureBehaviour;
 
 public class LinearChassisBlock extends AbstractChassisBlock {
 	public static final BooleanProperty STICKY_TOP = BooleanProperty.of("sticky_top");

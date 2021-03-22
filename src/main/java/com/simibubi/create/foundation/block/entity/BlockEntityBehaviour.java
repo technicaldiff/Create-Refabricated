@@ -1,6 +1,5 @@
 package com.simibubi.create.foundation.block.entity;
 
-import com.simibubi.create.foundation.block.entity.behaviour.BehaviourType;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.nbt.CompoundTag;
@@ -8,6 +7,8 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
+
+import com.simibubi.create.foundation.block.entity.behaviour.BehaviourType;
 
 public abstract class BlockEntityBehaviour {
 	public SmartBlockEntity blockEntity;

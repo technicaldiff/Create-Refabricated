@@ -1,10 +1,16 @@
 package com.simibubi.create.content.contraptions.components.structureMovement.chassis;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
 import com.mojang.datafixers.util.Pair;
-import com.simibubi.create.AllItems;
-import com.simibubi.create.AllKeys;
-import com.simibubi.create.AllSpecialTextures;
-import com.simibubi.create.CreateClient;
+
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.entity.player.PlayerEntity;
@@ -13,7 +19,10 @@ import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-import java.util.*;
+import com.simibubi.create.AllItems;
+import com.simibubi.create.AllKeys;
+import com.simibubi.create.AllSpecialTextures;
+import com.simibubi.create.CreateClient;
 
 public class ChassisRangeDisplay {
 

@@ -1,16 +1,7 @@
 package com.simibubi.create.content.contraptions.relays.advanced;
 
-import com.simibubi.create.AllBlockEntities;
-import com.simibubi.create.AllBlocks;
-import com.simibubi.create.AllShapes;
-import com.simibubi.create.content.contraptions.base.HorizontalAxisKineticBlock;
-import com.simibubi.create.content.contraptions.relays.elementary.CogWheelBlock;
-import com.simibubi.create.content.contraptions.relays.elementary.CogwheelBlockItem;
-import com.simibubi.create.foundation.block.IBE;
-import com.simibubi.create.foundation.utility.placement.PlacementHelper;
-import com.simibubi.create.foundation.utility.placement.PlacementHelpers;
-import com.simibubi.create.foundation.utility.placement.PlacementOffset;
-import com.simibubi.create.registrate.util.nullness.MethodsReturnNonnullByDefault;
+import java.util.function.Predicate;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.ShapeContext;
@@ -28,7 +19,17 @@ import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 
-import java.util.function.Predicate;
+import com.simibubi.create.AllBlockEntities;
+import com.simibubi.create.AllBlocks;
+import com.simibubi.create.AllShapes;
+import com.simibubi.create.content.contraptions.base.HorizontalAxisKineticBlock;
+import com.simibubi.create.content.contraptions.relays.elementary.CogWheelBlock;
+import com.simibubi.create.content.contraptions.relays.elementary.CogwheelBlockItem;
+import com.simibubi.create.foundation.block.IBE;
+import com.simibubi.create.foundation.utility.placement.PlacementHelper;
+import com.simibubi.create.foundation.utility.placement.PlacementHelpers;
+import com.simibubi.create.foundation.utility.placement.PlacementOffset;
+import com.simibubi.create.registrate.util.nullness.MethodsReturnNonnullByDefault;
 
 public class SpeedControllerBlock extends HorizontalAxisKineticBlock implements IBE<SpeedControllerBlockEntity> {
 

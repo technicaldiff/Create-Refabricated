@@ -1,13 +1,26 @@
 package com.simibubi.create.foundation.item;
 
-import com.simibubi.create.AllItems;
-import com.simibubi.create.Create;
-import com.simibubi.create.content.contraptions.base.Rotating;
-import com.simibubi.create.content.contraptions.components.fan.EncasedFanBlock;
-import com.simibubi.create.content.contraptions.components.flywheel.engine.FurnaceEngineBlock;
-import com.simibubi.create.content.contraptions.components.waterwheel.WaterWheelBlock;
-import com.simibubi.create.foundation.config.CKinetics;
-import com.simibubi.create.foundation.utility.Lang;
+import static com.simibubi.create.foundation.item.TooltipHelper.cutStringTextComponent;
+import static com.simibubi.create.foundation.item.TooltipHelper.cutTextComponent;
+import static net.minecraft.util.Formatting.AQUA;
+import static net.minecraft.util.Formatting.BLUE;
+import static net.minecraft.util.Formatting.DARK_GRAY;
+import static net.minecraft.util.Formatting.DARK_GREEN;
+import static net.minecraft.util.Formatting.DARK_PURPLE;
+import static net.minecraft.util.Formatting.DARK_RED;
+import static net.minecraft.util.Formatting.GOLD;
+import static net.minecraft.util.Formatting.GRAY;
+import static net.minecraft.util.Formatting.GREEN;
+import static net.minecraft.util.Formatting.LIGHT_PURPLE;
+import static net.minecraft.util.Formatting.RED;
+import static net.minecraft.util.Formatting.STRIKETHROUGH;
+import static net.minecraft.util.Formatting.WHITE;
+import static net.minecraft.util.Formatting.YELLOW;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 import net.minecraft.block.Block;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.Screen;
@@ -17,13 +30,14 @@ import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
-import static com.simibubi.create.foundation.item.TooltipHelper.cutStringTextComponent;
-import static com.simibubi.create.foundation.item.TooltipHelper.cutTextComponent;
-import static net.minecraft.util.Formatting.*;
+import com.simibubi.create.AllItems;
+import com.simibubi.create.Create;
+import com.simibubi.create.content.contraptions.base.Rotating;
+import com.simibubi.create.content.contraptions.components.fan.EncasedFanBlock;
+import com.simibubi.create.content.contraptions.components.flywheel.engine.FurnaceEngineBlock;
+import com.simibubi.create.content.contraptions.components.waterwheel.WaterWheelBlock;
+import com.simibubi.create.foundation.config.CKinetics;
+import com.simibubi.create.foundation.utility.Lang;
 
 public class ItemDescription {
 

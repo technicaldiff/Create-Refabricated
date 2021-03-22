@@ -1,12 +1,13 @@
 package com.simibubi.create.content.curiosities.tools;
 
-import com.simibubi.create.AllBlockPartials;
-import com.simibubi.create.AllItems;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.MathHelper;
+
+import com.simibubi.create.AllBlockPartials;
+import com.simibubi.create.AllItems;
 
 //@EventBusSubscriber(value = Dist.CLIENT)
 public class ExtendoGripRenderHandler {

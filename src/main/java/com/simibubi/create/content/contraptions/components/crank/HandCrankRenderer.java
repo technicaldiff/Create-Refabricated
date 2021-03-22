@@ -1,9 +1,7 @@
 package com.simibubi.create.content.contraptions.components.crank;
 
-import com.simibubi.create.AllBlockPartials;
-import com.simibubi.create.content.contraptions.base.KineticBlockEntity;
-import com.simibubi.create.content.contraptions.base.KineticBlockEntityRenderer;
-import com.simibubi.create.foundation.render.SuperByteBuffer;
+import static net.minecraft.state.property.Properties.FACING;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.render.RenderLayer;
@@ -12,7 +10,10 @@ import net.minecraft.client.render.block.entity.BlockEntityRenderDispatcher;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.math.Direction;
 
-import static net.minecraft.state.property.Properties.FACING;
+import com.simibubi.create.AllBlockPartials;
+import com.simibubi.create.content.contraptions.base.KineticBlockEntity;
+import com.simibubi.create.content.contraptions.base.KineticBlockEntityRenderer;
+import com.simibubi.create.foundation.render.SuperByteBuffer;
 
 public class HandCrankRenderer extends KineticBlockEntityRenderer {
 

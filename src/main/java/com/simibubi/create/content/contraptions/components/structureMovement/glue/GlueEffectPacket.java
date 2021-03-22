@@ -1,12 +1,13 @@
 package com.simibubi.create.content.contraptions.components.structureMovement.glue;
 
-import me.pepperbell.simplenetworking.S2CPacket;
-import me.pepperbell.simplenetworking.SimpleChannel;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayNetworkHandler;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
+
+import me.pepperbell.simplenetworking.S2CPacket;
+import me.pepperbell.simplenetworking.SimpleChannel;
 
 public class GlueEffectPacket implements S2CPacket {
 

@@ -1,10 +1,5 @@
 package com.simibubi.create.content.contraptions.components.crank;
 
-import com.simibubi.create.AllBlockPartials;
-import com.simibubi.create.AllBlocks;
-import com.simibubi.create.registrate.util.nullness.ParametersAreNonnullByDefault;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.DyeItem;
@@ -17,6 +12,13 @@ import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
+
+import com.simibubi.create.AllBlockPartials;
+import com.simibubi.create.AllBlocks;
+import com.simibubi.create.registrate.util.nullness.ParametersAreNonnullByDefault;
 
 @ParametersAreNonnullByDefault
 public class ValveHandleBlock extends HandCrankBlock {

@@ -1,15 +1,15 @@
 package com.simibubi.create.foundation.renderState;
 
-import org.lwjgl.opengl.GL11;
-
 import com.mojang.blaze3d.systems.RenderSystem;
-import com.simibubi.create.AllSpecialTextures;
+import org.lwjgl.opengl.GL11;
 
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.RenderPhase;
 import net.minecraft.client.render.VertexFormats;
 import net.minecraft.screen.PlayerScreenHandler;
 import net.minecraft.util.Identifier;
+
+import com.simibubi.create.AllSpecialTextures;
 
 public class RenderTypes extends RenderPhase {
 

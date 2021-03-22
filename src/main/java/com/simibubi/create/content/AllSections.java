@@ -1,13 +1,14 @@
 package com.simibubi.create.content;
 
-import com.simibubi.create.foundation.item.ItemDescription.Palette;
+import java.util.IdentityHashMap;
+import java.util.Map;
+
 import net.minecraft.block.Block;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
-import java.util.IdentityHashMap;
-import java.util.Map;
+import com.simibubi.create.foundation.item.ItemDescription.Palette;
 
 public enum AllSections {
 

@@ -1,8 +1,7 @@
 package com.simibubi.create.content.logistics.block.mechanicalArm;
 
-import me.pepperbell.simplenetworking.C2SPacket;
-import me.pepperbell.simplenetworking.SimpleChannel;
-import net.fabricmc.fabric.api.util.NbtType;
+import java.util.Collection;
+
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
@@ -13,7 +12,10 @@ import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-import java.util.Collection;
+import net.fabricmc.fabric.api.util.NbtType;
+
+import me.pepperbell.simplenetworking.C2SPacket;
+import me.pepperbell.simplenetworking.SimpleChannel;
 
 public class ArmPlacementPacket implements C2SPacket {
 

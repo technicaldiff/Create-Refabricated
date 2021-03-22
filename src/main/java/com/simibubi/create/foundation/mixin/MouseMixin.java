@@ -1,15 +1,16 @@
 package com.simibubi.create.foundation.mixin;
 
+import net.minecraft.client.Mouse;
+import net.minecraft.entity.player.PlayerInventory;
+
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
+
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Redirect;
 
 import com.simibubi.create.foundation.block.entity.behaviour.scrollvalue.ScrollValueHandler;
-
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
-import net.minecraft.client.Mouse;
-import net.minecraft.entity.player.PlayerInventory;
 
 @Environment(EnvType.CLIENT)
 @Mixin(Mouse.class)

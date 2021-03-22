@@ -1,6 +1,5 @@
 package com.simibubi.create.content.logistics.block.belts.tunnel;
 
-import net.minecraft.item.ItemStack;
 // todo: IItemHandler, LazyOptional
 public class BrassTunnelItemHandler /*implements IItemHandler*/ {
 

@@ -1,15 +1,7 @@
 package com.simibubi.create.events;
 
-import com.simibubi.create.Create;
-import com.simibubi.create.content.contraptions.components.structureMovement.ContraptionHandler;
-import com.simibubi.create.content.contraptions.wrench.WrenchItem;
-import com.simibubi.create.foundation.command.AllCommands;
-import com.simibubi.create.foundation.utility.WorldAttached;
-import net.fabricmc.fabric.api.event.lifecycle.v1.ServerEntityEvents;
-import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
-import net.fabricmc.fabric.api.event.lifecycle.v1.ServerWorldEvents;
-import net.fabricmc.fabric.api.event.player.AttackEntityCallback;
-import net.fabricmc.fabric.api.event.world.WorldTickCallback;
+import org.jetbrains.annotations.Nullable;
+
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.server.MinecraftServer;
@@ -18,7 +10,18 @@ import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.hit.EntityHitResult;
 import net.minecraft.world.World;
-import org.jetbrains.annotations.Nullable;
+
+import net.fabricmc.fabric.api.event.lifecycle.v1.ServerEntityEvents;
+import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
+import net.fabricmc.fabric.api.event.lifecycle.v1.ServerWorldEvents;
+import net.fabricmc.fabric.api.event.player.AttackEntityCallback;
+import net.fabricmc.fabric.api.event.world.WorldTickCallback;
+
+import com.simibubi.create.Create;
+import com.simibubi.create.content.contraptions.components.structureMovement.ContraptionHandler;
+import com.simibubi.create.content.contraptions.wrench.WrenchItem;
+import com.simibubi.create.foundation.command.AllCommands;
+import com.simibubi.create.foundation.utility.WorldAttached;
 
 public class CommonEvents {
 	public static void register() {

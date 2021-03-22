@@ -1,5 +1,7 @@
 package com.simibubi.create.content.logistics.block.diodes;
 
+import java.util.Random;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.server.world.ServerWorld;
@@ -8,8 +10,6 @@ import net.minecraft.state.property.BooleanProperty;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.TickPriority;
-
-import java.util.Random;
 
 public class PulseRepeaterBlock extends AbstractDiodeBlock {
 

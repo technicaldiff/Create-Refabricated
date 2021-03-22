@@ -7,12 +7,8 @@ import java.util.Map;
 import java.util.Set;
 import java.util.function.Supplier;
 
-import org.jetbrains.annotations.Nullable;
-
 import com.google.common.collect.Maps;
-import com.simibubi.create.Create;
-import com.simibubi.create.registrate.util.nullness.MethodsReturnNonnullByDefault;
-import com.simibubi.create.registrate.util.nullness.ParametersAreNonnullByDefault;
+import org.jetbrains.annotations.Nullable;
 
 import net.minecraft.advancement.PlayerAdvancementTracker;
 import net.minecraft.advancement.criterion.AbstractCriterionConditions;
@@ -20,6 +16,10 @@ import net.minecraft.advancement.criterion.Criterion;
 import net.minecraft.predicate.entity.EntityPredicate;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.Identifier;
+
+import com.simibubi.create.Create;
+import com.simibubi.create.registrate.util.nullness.MethodsReturnNonnullByDefault;
+import com.simibubi.create.registrate.util.nullness.ParametersAreNonnullByDefault;
 
 @ParametersAreNonnullByDefault
 @MethodsReturnNonnullByDefault

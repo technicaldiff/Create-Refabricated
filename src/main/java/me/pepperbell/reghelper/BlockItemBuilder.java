@@ -1,15 +1,16 @@
 package me.pepperbell.reghelper;
 
-import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
+import java.util.ArrayDeque;
+import java.util.Deque;
+import java.util.function.BiFunction;
+import java.util.function.Consumer;
+
 import net.minecraft.block.Block;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.util.registry.Registry;
 
-import java.util.ArrayDeque;
-import java.util.Deque;
-import java.util.function.BiFunction;
-import java.util.function.Consumer;
+import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 
 public class BlockItemBuilder<T extends Block> {
 	private final BlockRegBuilder<T> parent;

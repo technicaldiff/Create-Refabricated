@@ -1,7 +1,8 @@
 package com.simibubi.create.content.schematics;
 
 import com.mojang.serialization.Codec;
-import com.simibubi.create.foundation.utility.NBTProcessors;
+import org.jetbrains.annotations.Nullable;
+
 import net.minecraft.block.BlockEntityProvider;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.nbt.CompoundTag;
@@ -11,7 +12,8 @@ import net.minecraft.structure.processor.StructureProcessor;
 import net.minecraft.structure.processor.StructureProcessorType;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.WorldView;
-import org.jetbrains.annotations.Nullable;
+
+import com.simibubi.create.foundation.utility.NBTProcessors;
 
 public class SchematicProcessor extends StructureProcessor {
 	

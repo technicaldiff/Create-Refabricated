@@ -1,7 +1,8 @@
 package com.simibubi.create.foundation.config;
 
-import com.simibubi.create.foundation.config.util.Validatable;
 import me.shedaniel.autoconfig.annotation.ConfigEntry;
+
+import com.simibubi.create.foundation.config.util.Validatable;
 
 public class CCuriosities implements Validatable {
 	@ConfigEntry.Gui.Tooltip

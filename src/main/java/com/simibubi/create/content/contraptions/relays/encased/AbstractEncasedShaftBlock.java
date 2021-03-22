@@ -1,7 +1,5 @@
 package com.simibubi.create.content.contraptions.relays.encased;
 
-import com.simibubi.create.content.contraptions.base.RotatedPillarKineticBlock;
-import com.simibubi.create.registrate.util.nullness.MethodsReturnNonnullByDefault;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.piston.PistonBehavior;
@@ -11,6 +9,9 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.WorldView;
+
+import com.simibubi.create.content.contraptions.base.RotatedPillarKineticBlock;
+import com.simibubi.create.registrate.util.nullness.MethodsReturnNonnullByDefault;
 
 @MethodsReturnNonnullByDefault
 public abstract class AbstractEncasedShaftBlock extends RotatedPillarKineticBlock {

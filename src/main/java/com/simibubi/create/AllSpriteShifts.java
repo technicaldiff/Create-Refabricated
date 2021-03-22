@@ -8,6 +8,9 @@ import static com.simibubi.create.foundation.block.connected.CTSpriteShifter.CTT
 import java.util.IdentityHashMap;
 import java.util.Map;
 
+import net.minecraft.util.DyeColor;
+import net.minecraft.util.SignType;
+
 import com.simibubi.create.content.palettes.PaletteBlockPatterns;
 import com.simibubi.create.content.palettes.PaletteBlockPatterns.CTs;
 import com.simibubi.create.content.palettes.PaletteStoneVariants;
@@ -17,9 +20,6 @@ import com.simibubi.create.foundation.block.render.SpriteShiftEntry;
 import com.simibubi.create.foundation.block.render.SpriteShifter;
 import com.simibubi.create.foundation.utility.Lang;
 import com.simibubi.create.foundation.utility.extensions.SignTypeExtensions;
-
-import net.minecraft.util.DyeColor;
-import net.minecraft.util.SignType;
 
 public class AllSpriteShifts {
 	private static final Map<SignType, CTSpriteShiftEntry> WOODEN_WINDOWS = new IdentityHashMap<>();

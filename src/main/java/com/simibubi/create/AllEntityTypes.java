@@ -2,6 +2,19 @@ package com.simibubi.create;
 
 import java.util.function.Consumer;
 
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityType;
+import net.minecraft.entity.EntityType.EntityFactory;
+import net.minecraft.entity.SpawnGroup;
+import net.minecraft.util.Identifier;
+
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
+import net.fabricmc.fabric.api.client.rendereregistry.v1.EntityRendererRegistry;
+import net.fabricmc.fabric.api.object.builder.v1.entity.FabricEntityTypeBuilder;
+
+import me.pepperbell.reghelper.EntityTypeRegBuilder;
+
 import com.simibubi.create.content.contraptions.components.structureMovement.AbstractContraptionEntity;
 import com.simibubi.create.content.contraptions.components.structureMovement.ContraptionEntityRenderer;
 import com.simibubi.create.content.contraptions.components.structureMovement.ControlledContraptionEntity;
@@ -11,17 +24,6 @@ import com.simibubi.create.content.contraptions.components.structureMovement.gan
 import com.simibubi.create.content.contraptions.components.structureMovement.glue.SuperGlueEntity;
 import com.simibubi.create.content.contraptions.components.structureMovement.glue.SuperGlueRenderer;
 import com.simibubi.create.foundation.utility.Lang;
-
-import me.pepperbell.reghelper.EntityTypeRegBuilder;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
-import net.fabricmc.fabric.api.client.rendereregistry.v1.EntityRendererRegistry;
-import net.fabricmc.fabric.api.object.builder.v1.entity.FabricEntityTypeBuilder;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.EntityType.EntityFactory;
-import net.minecraft.entity.SpawnGroup;
-import net.minecraft.util.Identifier;
 
 public class AllEntityTypes {
 	public static final EntityType<OrientedContraptionEntity> ORIENTED_CONTRAPTION =

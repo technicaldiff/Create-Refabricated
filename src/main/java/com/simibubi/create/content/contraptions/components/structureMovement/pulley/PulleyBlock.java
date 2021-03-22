@@ -1,10 +1,5 @@
 package com.simibubi.create.content.contraptions.components.structureMovement.pulley;
 
-import com.simibubi.create.AllBlockEntities;
-import com.simibubi.create.AllShapes;
-import com.simibubi.create.content.contraptions.base.HorizontalAxisKineticBlock;
-import com.simibubi.create.foundation.block.IBE;
-import com.simibubi.create.foundation.utility.BlockHelper;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.ShapeContext;
@@ -28,6 +23,12 @@ import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
+
+import com.simibubi.create.AllBlockEntities;
+import com.simibubi.create.AllShapes;
+import com.simibubi.create.content.contraptions.base.HorizontalAxisKineticBlock;
+import com.simibubi.create.foundation.block.IBE;
+import com.simibubi.create.foundation.utility.BlockHelper;
 
 public class PulleyBlock extends HorizontalAxisKineticBlock implements IBE<PulleyBlockEntity> {
 

@@ -1,17 +1,18 @@
 package com.simibubi.create.content.contraptions.components.waterwheel;
 
-import com.simibubi.create.AllBlockEntities;
-import com.simibubi.create.AllBlocks;
-import com.simibubi.create.Create;
-import com.simibubi.create.content.contraptions.base.GeneratingKineticBlockEntity;
-import com.simibubi.create.foundation.utility.Iterate;
+import java.util.HashMap;
+import java.util.Map;
+
 import net.minecraft.block.BlockState;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Direction;
 
-import java.util.HashMap;
-import java.util.Map;
+import com.simibubi.create.AllBlockEntities;
+import com.simibubi.create.AllBlocks;
+import com.simibubi.create.Create;
+import com.simibubi.create.content.contraptions.base.GeneratingKineticBlockEntity;
+import com.simibubi.create.foundation.utility.Iterate;
 
 public class WaterWheelBlockEntity extends GeneratingKineticBlockEntity {
 

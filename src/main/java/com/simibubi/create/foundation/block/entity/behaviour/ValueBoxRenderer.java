@@ -1,6 +1,5 @@
 package com.simibubi.create.foundation.block.entity.behaviour;
 
-import com.simibubi.create.content.contraptions.relays.elementary.AbstractShaftBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.FenceBlock;
@@ -14,6 +13,8 @@ import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tag.BlockTags;
+
+import com.simibubi.create.content.contraptions.relays.elementary.AbstractShaftBlock;
 
 public class ValueBoxRenderer {
 	public static void renderItemIntoValueBox(ItemStack filter, MatrixStack ms, VertexConsumerProvider buffer, int light, int overlay) {

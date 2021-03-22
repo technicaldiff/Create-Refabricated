@@ -1,11 +1,12 @@
 package com.simibubi.create.foundation.block.entity.behaviour.belt;
 
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.BlockView;
+
 import com.simibubi.create.content.contraptions.relays.belt.transport.TransportedItemStack;
 import com.simibubi.create.foundation.block.entity.BlockEntityBehaviour;
 import com.simibubi.create.foundation.block.entity.SmartBlockEntity;
 import com.simibubi.create.foundation.block.entity.behaviour.BehaviourType;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.BlockView;
 
 /**
  * Behaviour for TileEntities which can process items on belts or depots beneath

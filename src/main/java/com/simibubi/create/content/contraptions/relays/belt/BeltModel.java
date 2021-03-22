@@ -1,18 +1,22 @@
 package com.simibubi.create.content.contraptions.relays.belt;
 
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
+import java.util.Random;
+import java.util.Set;
+import java.util.function.Function;
+import java.util.function.Supplier;
+
 import com.mojang.datafixers.util.Pair;
-import com.simibubi.create.AllSpriteShifts;
-import com.simibubi.create.foundation.block.render.SpriteShiftEntry;
-import net.fabricmc.fabric.api.renderer.v1.Renderer;
-import net.fabricmc.fabric.api.renderer.v1.RendererAccess;
-import net.fabricmc.fabric.api.renderer.v1.mesh.Mesh;
-import net.fabricmc.fabric.api.renderer.v1.mesh.MeshBuilder;
-import net.fabricmc.fabric.api.renderer.v1.mesh.MutableQuadView;
-import net.fabricmc.fabric.api.renderer.v1.mesh.QuadEmitter;
-import net.fabricmc.fabric.api.renderer.v1.model.FabricBakedModel;
-import net.fabricmc.fabric.api.renderer.v1.render.RenderContext;
+import org.jetbrains.annotations.Nullable;
+
 import net.minecraft.block.BlockState;
-import net.minecraft.client.render.model.*;
+import net.minecraft.client.render.model.BakedModel;
+import net.minecraft.client.render.model.BakedQuad;
+import net.minecraft.client.render.model.ModelBakeSettings;
+import net.minecraft.client.render.model.ModelLoader;
+import net.minecraft.client.render.model.UnbakedModel;
 import net.minecraft.client.render.model.json.ModelOverrideList;
 import net.minecraft.client.render.model.json.ModelTransformation;
 import net.minecraft.client.texture.Sprite;
@@ -22,11 +26,18 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.world.BlockRenderView;
-import org.jetbrains.annotations.Nullable;
 
-import java.util.*;
-import java.util.function.Function;
-import java.util.function.Supplier;
+import net.fabricmc.fabric.api.renderer.v1.Renderer;
+import net.fabricmc.fabric.api.renderer.v1.RendererAccess;
+import net.fabricmc.fabric.api.renderer.v1.mesh.Mesh;
+import net.fabricmc.fabric.api.renderer.v1.mesh.MeshBuilder;
+import net.fabricmc.fabric.api.renderer.v1.mesh.MutableQuadView;
+import net.fabricmc.fabric.api.renderer.v1.mesh.QuadEmitter;
+import net.fabricmc.fabric.api.renderer.v1.model.FabricBakedModel;
+import net.fabricmc.fabric.api.renderer.v1.render.RenderContext;
+
+import com.simibubi.create.AllSpriteShifts;
+import com.simibubi.create.foundation.block.render.SpriteShiftEntry;
 
 public class BeltModel implements UnbakedModel, BakedModel, FabricBakedModel {
 

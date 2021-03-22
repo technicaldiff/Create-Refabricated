@@ -1,11 +1,5 @@
 package com.simibubi.create.content.contraptions.components.clock;
 
-import com.simibubi.create.AllBlockPartials;
-import com.simibubi.create.content.contraptions.base.KineticBlockEntity;
-import com.simibubi.create.content.contraptions.base.KineticBlockEntityRenderer;
-import com.simibubi.create.content.contraptions.components.clock.CuckooClockBlockEntity.Animation;
-import com.simibubi.create.foundation.render.SuperByteBuffer;
-import com.simibubi.create.foundation.utility.AngleHelper;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.VertexConsumer;
@@ -15,6 +9,13 @@ import net.minecraft.client.render.block.entity.BlockEntityRenderDispatcher;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.MathHelper;
+
+import com.simibubi.create.AllBlockPartials;
+import com.simibubi.create.content.contraptions.base.KineticBlockEntity;
+import com.simibubi.create.content.contraptions.base.KineticBlockEntityRenderer;
+import com.simibubi.create.content.contraptions.components.clock.CuckooClockBlockEntity.Animation;
+import com.simibubi.create.foundation.render.SuperByteBuffer;
+import com.simibubi.create.foundation.utility.AngleHelper;
 
 public class CuckooClockRenderer extends KineticBlockEntityRenderer {
 

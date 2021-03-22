@@ -1,8 +1,8 @@
 package com.simibubi.create.foundation.utility;
 
-import com.simibubi.create.foundation.mixin.accessor.MinecraftClientAccessor;
-
 import net.minecraft.client.MinecraftClient;
+
+import com.simibubi.create.foundation.mixin.accessor.MinecraftClientAccessor;
 
 public class AnimationTickHolder {
 	private static int ticks;

@@ -1,13 +1,19 @@
 package com.simibubi.create.content.contraptions.components.structureMovement;
 
-import com.simibubi.create.foundation.utility.WorldAttached;
+import java.lang.ref.WeakReference;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import it.unimi.dsi.fastutil.objects.ObjectLists;
+
 import net.minecraft.entity.Entity;
 import net.minecraft.world.World;
 
-import java.lang.ref.WeakReference;
-import java.util.*;
+import com.simibubi.create.foundation.utility.WorldAttached;
 
 public class ContraptionHandler {
 

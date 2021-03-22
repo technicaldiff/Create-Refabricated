@@ -5,15 +5,15 @@ import java.util.function.Consumer;
 
 import org.jetbrains.annotations.Nullable;
 
-import com.simibubi.create.content.contraptions.components.actors.BellMovementBehaviour;
-import com.simibubi.create.content.contraptions.components.actors.CampfireMovementBehaviour;
-import com.simibubi.create.content.contraptions.components.structureMovement.MovementBehaviour;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
+
+import com.simibubi.create.content.contraptions.components.actors.BellMovementBehaviour;
+import com.simibubi.create.content.contraptions.components.actors.CampfireMovementBehaviour;
+import com.simibubi.create.content.contraptions.components.structureMovement.MovementBehaviour;
 
 public class AllMovementBehaviours {
 	private static final HashMap<Identifier, MovementBehaviour> movementBehaviours = new HashMap<>();

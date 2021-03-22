@@ -2,12 +2,9 @@ package com.simibubi.create.foundation.utility.worldWrappers;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.function.BooleanSupplier;
 import java.util.stream.Stream;
 
 import org.jetbrains.annotations.Nullable;
-
-import com.simibubi.create.foundation.utility.worldWrappers.chunk.WrappedChunk;
 
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
@@ -16,6 +13,8 @@ import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.chunk.ChunkManager;
 import net.minecraft.world.chunk.ChunkStatus;
 import net.minecraft.world.chunk.light.LightingProvider;
+
+import com.simibubi.create.foundation.utility.worldWrappers.chunk.WrappedChunk;
 
 public class WrappedChunkProvider extends ChunkManager {
     private PlacementSimulationWorld world;

@@ -1,12 +1,5 @@
 package com.simibubi.create.content.contraptions.relays.gearbox;
 
-import com.simibubi.create.AllBlockPartials;
-import com.simibubi.create.content.contraptions.base.KineticBlockEntity;
-import com.simibubi.create.content.contraptions.base.KineticBlockEntityRenderer;
-import com.simibubi.create.foundation.render.SuperByteBuffer;
-import com.simibubi.create.foundation.render.backend.FastRenderDispatcher;
-import com.simibubi.create.foundation.utility.AnimationTickHolder;
-import com.simibubi.create.foundation.utility.Iterate;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.block.entity.BlockEntityRenderDispatcher;
@@ -15,6 +8,14 @@ import net.minecraft.state.property.Properties;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Direction.Axis;
+
+import com.simibubi.create.AllBlockPartials;
+import com.simibubi.create.content.contraptions.base.KineticBlockEntity;
+import com.simibubi.create.content.contraptions.base.KineticBlockEntityRenderer;
+import com.simibubi.create.foundation.render.SuperByteBuffer;
+import com.simibubi.create.foundation.render.backend.FastRenderDispatcher;
+import com.simibubi.create.foundation.utility.AnimationTickHolder;
+import com.simibubi.create.foundation.utility.Iterate;
 
 public class GearboxRenderer extends KineticBlockEntityRenderer {
 

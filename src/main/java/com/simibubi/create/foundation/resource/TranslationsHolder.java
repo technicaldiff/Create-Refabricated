@@ -1,15 +1,16 @@
 package com.simibubi.create.foundation.resource;
 
-import com.simibubi.create.foundation.resource.translation.CreateTranslation;
-import com.simibubi.create.foundation.resource.translation.EnUsTranslation;
-import net.devtech.arrp.api.RRPCallback;
-import net.devtech.arrp.api.RuntimeResourcePack;
+import static com.simibubi.create.Create.ID;
+import static com.simibubi.create.Create.id;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.simibubi.create.Create.ID;
-import static com.simibubi.create.Create.id;
+import net.devtech.arrp.api.RRPCallback;
+import net.devtech.arrp.api.RuntimeResourcePack;
+
+import com.simibubi.create.foundation.resource.translation.CreateTranslation;
+import com.simibubi.create.foundation.resource.translation.EnUsTranslation;
 
 /**
  * Handles translating Create to other languages.

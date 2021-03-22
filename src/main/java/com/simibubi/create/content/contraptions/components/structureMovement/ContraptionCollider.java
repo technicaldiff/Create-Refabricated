@@ -1,6 +1,44 @@
 package com.simibubi.create.content.contraptions.components.structureMovement;
 
+import static net.minecraft.entity.Entity.adjustMovementForCollisions;
+import static net.minecraft.entity.Entity.squaredHorizontalLength;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Stream;
+
 import com.google.common.base.Predicates;
+import org.apache.commons.lang3.mutable.MutableBoolean;
+import org.apache.commons.lang3.mutable.MutableFloat;
+import org.apache.commons.lang3.mutable.MutableInt;
+import org.apache.commons.lang3.mutable.MutableObject;
+
+import net.minecraft.block.BlockState;
+import net.minecraft.block.CocoaBlock;
+import net.minecraft.block.ShapeContext;
+import net.minecraft.client.network.ClientPlayerEntity;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.ItemEntity;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.structure.Structure.StructureBlockInfo;
+import net.minecraft.util.collection.ReusableStream;
+import net.minecraft.util.function.BooleanBiFunction;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Box;
+import net.minecraft.util.math.Direction;
+import net.minecraft.util.math.Direction.Axis;
+import net.minecraft.util.math.Direction.AxisDirection;
+import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.shape.VoxelShape;
+import net.minecraft.util.shape.VoxelShapes;
+import net.minecraft.world.World;
+
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
+import net.fabricmc.loader.api.FabricLoader;
+
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.AllMovementBehaviours;
 import com.simibubi.create.content.contraptions.components.actors.BlockBreakingMovementBehaviour;
@@ -13,37 +51,6 @@ import com.simibubi.create.foundation.mixin.accessor.ServerPlayNetworkHandlerAcc
 import com.simibubi.create.foundation.networking.AllPackets;
 import com.simibubi.create.foundation.utility.Iterate;
 import com.simibubi.create.foundation.utility.VecHelper;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
-import net.fabricmc.loader.api.FabricLoader;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.CocoaBlock;
-import net.minecraft.block.ShapeContext;
-import net.minecraft.client.network.ClientPlayerEntity;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.ItemEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.structure.Structure.StructureBlockInfo;
-import net.minecraft.util.collection.ReusableStream;
-import net.minecraft.util.function.BooleanBiFunction;
-import net.minecraft.util.math.*;
-import net.minecraft.util.math.Direction.Axis;
-import net.minecraft.util.math.Direction.AxisDirection;
-import net.minecraft.util.shape.VoxelShape;
-import net.minecraft.util.shape.VoxelShapes;
-import net.minecraft.world.World;
-import org.apache.commons.lang3.mutable.MutableBoolean;
-import org.apache.commons.lang3.mutable.MutableFloat;
-import org.apache.commons.lang3.mutable.MutableInt;
-import org.apache.commons.lang3.mutable.MutableObject;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Stream;
-
-import static net.minecraft.entity.Entity.adjustMovementForCollisions;
-import static net.minecraft.entity.Entity.squaredHorizontalLength;
 
 public class ContraptionCollider {
 

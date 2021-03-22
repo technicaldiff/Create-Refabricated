@@ -2,19 +2,18 @@ package com.simibubi.create.content.logistics.block.redstone;
 
 import java.util.Random;
 
-import com.simibubi.create.foundation.block.entity.render.SafeBlockEntityRenderer;
-import com.simibubi.create.foundation.utility.AngleHelper;
-import com.simibubi.create.foundation.utility.ColorHelper;
-import com.simibubi.create.foundation.utility.Couple;
-import com.simibubi.create.foundation.utility.MatrixStacker;
-
 import net.minecraft.block.BlockState;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.block.entity.BlockEntityRenderDispatcher;
 import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.text.Style;
+
+import com.simibubi.create.foundation.block.entity.render.SafeBlockEntityRenderer;
+import com.simibubi.create.foundation.utility.AngleHelper;
+import com.simibubi.create.foundation.utility.ColorHelper;
+import com.simibubi.create.foundation.utility.Couple;
+import com.simibubi.create.foundation.utility.MatrixStacker;
 
 public class NixieTubeRenderer extends SafeBlockEntityRenderer<NixieTubeBlockEntity> {
 

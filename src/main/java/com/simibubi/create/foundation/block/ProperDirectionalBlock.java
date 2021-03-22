@@ -1,7 +1,5 @@
 package com.simibubi.create.foundation.block;
 
-import com.simibubi.create.content.contraptions.wrench.Wrenchable;
-import com.simibubi.create.foundation.utility.DirectionHelper;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.FacingBlock;
@@ -10,6 +8,9 @@ import net.minecraft.state.StateManager.Builder;
 import net.minecraft.util.BlockMirror;
 import net.minecraft.util.BlockRotation;
 import net.minecraft.util.math.Direction;
+
+import com.simibubi.create.content.contraptions.wrench.Wrenchable;
+import com.simibubi.create.foundation.utility.DirectionHelper;
 
 public class ProperDirectionalBlock extends FacingBlock implements Wrenchable {
 

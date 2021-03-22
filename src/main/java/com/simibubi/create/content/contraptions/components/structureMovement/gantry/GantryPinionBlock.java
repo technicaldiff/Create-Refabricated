@@ -1,12 +1,5 @@
 package com.simibubi.create.content.contraptions.components.structureMovement.gantry;
 
-import com.simibubi.create.AllBlockEntities;
-import com.simibubi.create.AllBlocks;
-import com.simibubi.create.content.contraptions.base.DirectionalAxisKineticBlock;
-import com.simibubi.create.content.contraptions.base.Rotating;
-import com.simibubi.create.content.contraptions.relays.advanced.GantryShaftBlock;
-import com.simibubi.create.foundation.block.IBE;
-import com.simibubi.create.foundation.utility.Iterate;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockEntityProvider;
 import net.minecraft.block.BlockState;
@@ -23,6 +16,14 @@ import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
 import net.minecraft.world.WorldView;
+
+import com.simibubi.create.AllBlockEntities;
+import com.simibubi.create.AllBlocks;
+import com.simibubi.create.content.contraptions.base.DirectionalAxisKineticBlock;
+import com.simibubi.create.content.contraptions.base.Rotating;
+import com.simibubi.create.content.contraptions.relays.advanced.GantryShaftBlock;
+import com.simibubi.create.foundation.block.IBE;
+import com.simibubi.create.foundation.utility.Iterate;
 
 public class GantryPinionBlock extends DirectionalAxisKineticBlock implements IBE<GantryPinionBlockEntity>, BlockEntityProvider {
 

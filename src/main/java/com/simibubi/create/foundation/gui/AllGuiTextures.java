@@ -1,13 +1,15 @@
 package com.simibubi.create.foundation.gui;
 
-import com.simibubi.create.Create;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawableHelper;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.Identifier;
+
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
+
+import com.simibubi.create.Create;
 
 public enum AllGuiTextures {
 

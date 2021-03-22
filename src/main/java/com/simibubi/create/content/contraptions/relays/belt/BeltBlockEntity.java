@@ -1,11 +1,10 @@
 package com.simibubi.create.content.contraptions.relays.belt;
 
-import com.simibubi.create.AllBlockEntities;
-import com.simibubi.create.AllBlocks;
-import com.simibubi.create.content.contraptions.base.KineticBlockEntity;
-import com.simibubi.create.content.contraptions.base.Rotating;
-import com.simibubi.create.content.contraptions.relays.belt.transport.BeltInventory;
-import com.simibubi.create.foundation.utility.NBTHelper;
+import static net.minecraft.util.math.Direction.AxisDirection.NEGATIVE;
+import static net.minecraft.util.math.Direction.AxisDirection.POSITIVE;
+
+import java.util.Optional;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
@@ -18,10 +17,12 @@ import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Vec3i;
 import net.minecraft.world.LightType;
 
-import java.util.Optional;
-
-import static net.minecraft.util.math.Direction.AxisDirection.NEGATIVE;
-import static net.minecraft.util.math.Direction.AxisDirection.POSITIVE;
+import com.simibubi.create.AllBlockEntities;
+import com.simibubi.create.AllBlocks;
+import com.simibubi.create.content.contraptions.base.KineticBlockEntity;
+import com.simibubi.create.content.contraptions.base.Rotating;
+import com.simibubi.create.content.contraptions.relays.belt.transport.BeltInventory;
+import com.simibubi.create.foundation.utility.NBTHelper;
 
 public class BeltBlockEntity extends KineticBlockEntity {
 

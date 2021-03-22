@@ -1,8 +1,8 @@
 package com.simibubi.create.content.contraptions.relays.gearbox;
 
-import com.simibubi.create.AllBlockEntities;
-import com.simibubi.create.AllItems;
-import com.simibubi.create.content.contraptions.base.RotatedPillarKineticBlock;
+import java.util.Arrays;
+import java.util.List;
+
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.piston.PistonBehavior;
@@ -17,8 +17,9 @@ import net.minecraft.util.math.Direction.Axis;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.WorldView;
 
-import java.util.Arrays;
-import java.util.List;
+import com.simibubi.create.AllBlockEntities;
+import com.simibubi.create.AllItems;
+import com.simibubi.create.content.contraptions.base.RotatedPillarKineticBlock;
 
 public class GearboxBlock extends RotatedPillarKineticBlock {
 

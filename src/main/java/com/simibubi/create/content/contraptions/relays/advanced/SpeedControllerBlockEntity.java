@@ -1,5 +1,11 @@
 package com.simibubi.create.content.contraptions.relays.advanced;
 
+import java.util.List;
+
+import net.minecraft.block.BlockState;
+import net.minecraft.util.math.Direction;
+import net.minecraft.util.math.Vec3d;
+
 import com.simibubi.create.AllBlockEntities;
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.Create;
@@ -12,11 +18,6 @@ import com.simibubi.create.foundation.block.entity.behaviour.ValueBoxTransform;
 import com.simibubi.create.foundation.block.entity.behaviour.scrollvalue.ScrollValueBehaviour;
 import com.simibubi.create.foundation.utility.Lang;
 import com.simibubi.create.foundation.utility.VecHelper;
-import net.minecraft.block.BlockState;
-import net.minecraft.util.math.Direction;
-import net.minecraft.util.math.Vec3d;
-
-import java.util.List;
 
 public class SpeedControllerBlockEntity extends KineticBlockEntity {
 

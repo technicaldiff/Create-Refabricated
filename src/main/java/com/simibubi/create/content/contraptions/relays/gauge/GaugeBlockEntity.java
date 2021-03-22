@@ -1,14 +1,15 @@
 package com.simibubi.create.content.contraptions.relays.gauge;
 
-import com.simibubi.create.content.contraptions.base.KineticBlockEntity;
-import com.simibubi.create.content.contraptions.goggles.GoggleInformationProvider;
-import com.simibubi.create.foundation.utility.Lang;
+import java.util.List;
+
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.text.Text;
 
-import java.util.List;
+import com.simibubi.create.content.contraptions.base.KineticBlockEntity;
+import com.simibubi.create.content.contraptions.goggles.GoggleInformationProvider;
+import com.simibubi.create.foundation.utility.Lang;
 
 public class GaugeBlockEntity extends KineticBlockEntity implements GoggleInformationProvider {
 

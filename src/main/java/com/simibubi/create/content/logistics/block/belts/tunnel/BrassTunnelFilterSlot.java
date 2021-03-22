@@ -1,8 +1,9 @@
 package com.simibubi.create.content.logistics.block.belts.tunnel;
 
+import net.minecraft.util.math.Vec3d;
+
 import com.simibubi.create.foundation.block.entity.behaviour.ValueBoxTransform;
 import com.simibubi.create.foundation.utility.VecHelper;
-import net.minecraft.util.math.Vec3d;
 
 public class BrassTunnelFilterSlot extends ValueBoxTransform.Sided {
 

@@ -1,8 +1,10 @@
 package com.simibubi.create.content.curiosities.symmetry.client;
 
-import com.simibubi.create.foundation.block.render.CustomRenderedItemModel;
-import net.fabricmc.fabric.api.client.rendering.v1.BuiltinItemRendererRegistry.DynamicItemRenderer;
 import net.minecraft.client.render.model.BakedModel;
+
+import net.fabricmc.fabric.api.client.rendering.v1.BuiltinItemRendererRegistry.DynamicItemRenderer;
+
+import com.simibubi.create.foundation.block.render.CustomRenderedItemModel;
 
 public class SymmetryWandModel extends CustomRenderedItemModel {
 	public SymmetryWandModel(BakedModel template) {

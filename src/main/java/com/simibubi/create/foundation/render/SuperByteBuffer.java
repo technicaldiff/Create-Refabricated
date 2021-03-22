@@ -3,11 +3,9 @@ package com.simibubi.create.foundation.render;
 import java.nio.Buffer;
 import java.nio.ByteBuffer;
 
-import com.simibubi.create.content.contraptions.components.structureMovement.render.ContraptionRenderDispatcher;
-import com.simibubi.create.foundation.block.render.SpriteShiftEntry;
-
 import it.unimi.dsi.fastutil.longs.Long2DoubleMap;
 import it.unimi.dsi.fastutil.longs.Long2DoubleOpenHashMap;
+
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.BufferBuilder;
 import net.minecraft.client.render.VertexConsumer;
@@ -21,6 +19,9 @@ import net.minecraft.util.math.Matrix3f;
 import net.minecraft.util.math.Matrix4f;
 import net.minecraft.world.LightType;
 import net.minecraft.world.World;
+
+import com.simibubi.create.content.contraptions.components.structureMovement.render.ContraptionRenderDispatcher;
+import com.simibubi.create.foundation.block.render.SpriteShiftEntry;
 
 public class SuperByteBuffer extends TemplateBuffer {
 

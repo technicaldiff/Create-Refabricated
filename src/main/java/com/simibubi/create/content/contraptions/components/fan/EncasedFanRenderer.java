@@ -1,11 +1,7 @@
 package com.simibubi.create.content.contraptions.components.fan;
 
-import com.simibubi.create.AllBlockPartials;
-import com.simibubi.create.content.contraptions.base.KineticBlockEntity;
-import com.simibubi.create.content.contraptions.base.KineticBlockEntityRenderer;
-import com.simibubi.create.foundation.render.SuperByteBuffer;
-import com.simibubi.create.foundation.render.backend.FastRenderDispatcher;
-import com.simibubi.create.foundation.utility.AnimationTickHolder;
+import static net.minecraft.state.property.Properties.FACING;
+
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.VertexConsumer;
 import net.minecraft.client.render.VertexConsumerProvider;
@@ -15,7 +11,12 @@ import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.MathHelper;
 
-import static net.minecraft.state.property.Properties.FACING;
+import com.simibubi.create.AllBlockPartials;
+import com.simibubi.create.content.contraptions.base.KineticBlockEntity;
+import com.simibubi.create.content.contraptions.base.KineticBlockEntityRenderer;
+import com.simibubi.create.foundation.render.SuperByteBuffer;
+import com.simibubi.create.foundation.render.backend.FastRenderDispatcher;
+import com.simibubi.create.foundation.utility.AnimationTickHolder;
 
 public class EncasedFanRenderer extends KineticBlockEntityRenderer {
 

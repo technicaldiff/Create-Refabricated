@@ -1,10 +1,7 @@
 package com.simibubi.create.content.schematics.client;
 
-import com.simibubi.create.foundation.gui.widgets.InterpolatedChasingAngle;
-import com.simibubi.create.foundation.gui.widgets.InterpolatedChasingValue;
-import com.simibubi.create.foundation.utility.AnimationTickHolder;
-import com.simibubi.create.foundation.utility.MatrixStacker;
-import com.simibubi.create.foundation.utility.VecHelper;
+import static java.lang.Math.abs;
+
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.structure.StructurePlacementData;
 import net.minecraft.util.BlockMirror;
@@ -14,7 +11,11 @@ import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Direction.Axis;
 import net.minecraft.util.math.Vec3d;
 
-import static java.lang.Math.abs;
+import com.simibubi.create.foundation.gui.widgets.InterpolatedChasingAngle;
+import com.simibubi.create.foundation.gui.widgets.InterpolatedChasingValue;
+import com.simibubi.create.foundation.utility.AnimationTickHolder;
+import com.simibubi.create.foundation.utility.MatrixStacker;
+import com.simibubi.create.foundation.utility.VecHelper;
 
 public class SchematicTransformation {
 

@@ -1,19 +1,21 @@
 package com.simibubi.create.foundation.block.entity.behaviour.scrollvalue;
 
-import com.simibubi.create.AllItems;
-import com.simibubi.create.AllKeys;
-import com.simibubi.create.foundation.block.entity.BlockEntityBehaviour;
-import com.simibubi.create.foundation.block.entity.SmartBlockEntity;
-import com.simibubi.create.foundation.block.entity.behaviour.ValueBoxTransform.Sided;
-import com.simibubi.create.foundation.block.entity.behaviour.scrollvalue.ScrollValueBehaviour.StepContext;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.world.ClientWorld;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
+
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
+
+import com.simibubi.create.AllItems;
+import com.simibubi.create.AllKeys;
+import com.simibubi.create.foundation.block.entity.BlockEntityBehaviour;
+import com.simibubi.create.foundation.block.entity.SmartBlockEntity;
+import com.simibubi.create.foundation.block.entity.behaviour.ValueBoxTransform.Sided;
+import com.simibubi.create.foundation.block.entity.behaviour.scrollvalue.ScrollValueBehaviour.StepContext;
 
 public class ScrollValueHandler {
 	@Environment(EnvType.CLIENT)

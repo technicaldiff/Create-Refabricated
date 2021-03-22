@@ -1,6 +1,7 @@
 package com.simibubi.create.content.logistics.block.diodes;
 
-import com.simibubi.create.AllItems;
+import java.util.Random;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
@@ -15,7 +16,7 @@ import net.minecraft.util.math.Direction;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 
-import java.util.Random;
+import com.simibubi.create.AllItems;
 
 public class ToggleLatchBlock extends AbstractDiodeBlock {
 

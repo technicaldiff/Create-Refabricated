@@ -2,6 +2,16 @@ package com.simibubi.create.foundation.mixin;
 
 import java.util.Map;
 
+import net.minecraft.client.render.model.BakedModel;
+import net.minecraft.client.render.model.BakedModelManager;
+import net.minecraft.client.render.model.ModelLoader;
+import net.minecraft.resource.ResourceManager;
+import net.minecraft.util.Identifier;
+import net.minecraft.util.profiler.Profiler;
+
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
+
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -10,15 +20,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import com.simibubi.create.events.custom.ModelsBakedCallback;
 import com.simibubi.create.foundation.utility.extensions.BakedModelManagerExtensions;
-
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
-import net.minecraft.client.render.model.BakedModel;
-import net.minecraft.client.render.model.BakedModelManager;
-import net.minecraft.client.render.model.ModelLoader;
-import net.minecraft.resource.ResourceManager;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.profiler.Profiler;
 
 @Environment(EnvType.CLIENT)
 @Mixin(BakedModelManager.class)

@@ -1,12 +1,9 @@
 package com.simibubi.create.content.contraptions.components.structureMovement.mounted;
 
-import com.simibubi.create.AllBlocks;
-import com.simibubi.create.content.contraptions.components.structureMovement.*;
-import com.simibubi.create.content.contraptions.components.structureMovement.mounted.CartAssemblerBlockEntity.CartMovementMode;
-import com.simibubi.create.foundation.utility.BlockHelper;
-import com.simibubi.create.foundation.utility.Iterate;
-import com.simibubi.create.foundation.utility.NBTHelper;
-import com.simibubi.create.foundation.utility.VecHelper;
+import static com.simibubi.create.content.contraptions.components.structureMovement.mounted.CartAssemblerBlock.RAIL_SHAPE;
+
+import java.util.Queue;
+
 import net.minecraft.block.BlockState;
 import net.minecraft.block.enums.RailShape;
 import net.minecraft.entity.vehicle.AbstractMinecartEntity;
@@ -17,9 +14,17 @@ import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Direction.Axis;
 import net.minecraft.world.World;
 
-import java.util.Queue;
-
-import static com.simibubi.create.content.contraptions.components.structureMovement.mounted.CartAssemblerBlock.RAIL_SHAPE;
+import com.simibubi.create.AllBlocks;
+import com.simibubi.create.content.contraptions.components.structureMovement.AssemblyException;
+import com.simibubi.create.content.contraptions.components.structureMovement.Contraption;
+import com.simibubi.create.content.contraptions.components.structureMovement.ContraptionLighter;
+import com.simibubi.create.content.contraptions.components.structureMovement.ContraptionType;
+import com.simibubi.create.content.contraptions.components.structureMovement.NonStationaryLighter;
+import com.simibubi.create.content.contraptions.components.structureMovement.mounted.CartAssemblerBlockEntity.CartMovementMode;
+import com.simibubi.create.foundation.utility.BlockHelper;
+import com.simibubi.create.foundation.utility.Iterate;
+import com.simibubi.create.foundation.utility.NBTHelper;
+import com.simibubi.create.foundation.utility.VecHelper;
 
 public class MountedContraption extends Contraption {
 

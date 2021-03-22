@@ -1,5 +1,11 @@
 package com.simibubi.create;
 
+import net.minecraft.client.MinecraftClient;
+import net.minecraft.resource.ReloadableResourceManager;
+import net.minecraft.resource.ResourceManager;
+
+import net.fabricmc.api.ClientModInitializer;
+
 import com.simibubi.create.content.contraptions.base.KineticBlockEntityRenderer;
 import com.simibubi.create.content.contraptions.components.structureMovement.render.ContraptionRenderDispatcher;
 import com.simibubi.create.content.contraptions.relays.encased.CasingConnectivity;
@@ -16,11 +22,6 @@ import com.simibubi.create.foundation.render.SuperByteBufferCache;
 import com.simibubi.create.foundation.render.backend.Backend;
 import com.simibubi.create.foundation.utility.ghost.GhostBlocks;
 import com.simibubi.create.foundation.utility.outliner.Outliner;
-
-import net.fabricmc.api.ClientModInitializer;
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.resource.ReloadableResourceManager;
-import net.minecraft.resource.ResourceManager;
 
 public class CreateClient implements ClientModInitializer {
 	public static ClientSchematicLoader schematicSender;

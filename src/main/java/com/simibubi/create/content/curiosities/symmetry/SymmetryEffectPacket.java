@@ -1,15 +1,16 @@
 package com.simibubi.create.content.curiosities.symmetry;
 
-import me.pepperbell.simplenetworking.S2CPacket;
-import me.pepperbell.simplenetworking.SimpleChannel;
+import java.util.ArrayList;
+import java.util.List;
+
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayNetworkHandler;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 
-import java.util.ArrayList;
-import java.util.List;
+import me.pepperbell.simplenetworking.S2CPacket;
+import me.pepperbell.simplenetworking.SimpleChannel;
 
 public class SymmetryEffectPacket implements S2CPacket {
 

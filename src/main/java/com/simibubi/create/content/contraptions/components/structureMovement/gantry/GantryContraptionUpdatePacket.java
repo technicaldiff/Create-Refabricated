@@ -1,10 +1,11 @@
 package com.simibubi.create.content.contraptions.components.structureMovement.gantry;
 
-import me.pepperbell.simplenetworking.S2CPacket;
-import me.pepperbell.simplenetworking.SimpleChannel;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayNetworkHandler;
 import net.minecraft.network.PacketByteBuf;
+
+import me.pepperbell.simplenetworking.S2CPacket;
+import me.pepperbell.simplenetworking.SimpleChannel;
 
 public class GantryContraptionUpdatePacket implements S2CPacket {
 

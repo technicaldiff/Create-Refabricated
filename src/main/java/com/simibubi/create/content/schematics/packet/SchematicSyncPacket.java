@@ -1,9 +1,5 @@
 package com.simibubi.create.content.schematics.packet;
 
-import com.simibubi.create.AllItems;
-import com.simibubi.create.content.schematics.filtering.SchematicInstances;
-import me.pepperbell.simplenetworking.C2SPacket;
-import me.pepperbell.simplenetworking.SimpleChannel;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtHelper;
@@ -15,6 +11,12 @@ import net.minecraft.structure.StructurePlacementData;
 import net.minecraft.util.BlockMirror;
 import net.minecraft.util.BlockRotation;
 import net.minecraft.util.math.BlockPos;
+
+import me.pepperbell.simplenetworking.C2SPacket;
+import me.pepperbell.simplenetworking.SimpleChannel;
+
+import com.simibubi.create.AllItems;
+import com.simibubi.create.content.schematics.filtering.SchematicInstances;
 
 public class SchematicSyncPacket implements C2SPacket {
 

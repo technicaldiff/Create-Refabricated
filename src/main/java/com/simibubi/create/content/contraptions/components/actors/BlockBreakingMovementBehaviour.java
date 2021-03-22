@@ -1,9 +1,5 @@
 package com.simibubi.create.content.contraptions.components.actors;
 
-import com.simibubi.create.content.contraptions.components.structureMovement.AbstractContraptionEntity;
-import com.simibubi.create.content.contraptions.components.structureMovement.MovementBehaviour;
-import com.simibubi.create.content.contraptions.components.structureMovement.MovementContext;
-import com.simibubi.create.foundation.utility.BlockHelper;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.FallingBlock;
 import net.minecraft.entity.Entity;
@@ -18,6 +14,11 @@ import net.minecraft.util.math.Box;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
+
+import com.simibubi.create.content.contraptions.components.structureMovement.AbstractContraptionEntity;
+import com.simibubi.create.content.contraptions.components.structureMovement.MovementBehaviour;
+import com.simibubi.create.content.contraptions.components.structureMovement.MovementContext;
+import com.simibubi.create.foundation.utility.BlockHelper;
 
 public class BlockBreakingMovementBehaviour extends MovementBehaviour {
 

@@ -1,13 +1,14 @@
 package com.simibubi.create.content.contraptions.components.structureMovement.sync;
 
-import me.pepperbell.simplenetworking.S2CPacket;
-import me.pepperbell.simplenetworking.SimpleChannel;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayNetworkHandler;
 import net.minecraft.client.world.ClientWorld;
 import net.minecraft.entity.Entity;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.util.math.Vec3d;
+
+import me.pepperbell.simplenetworking.S2CPacket;
+import me.pepperbell.simplenetworking.SimpleChannel;
 
 public class LimbSwingUpdatePacket implements S2CPacket {
 

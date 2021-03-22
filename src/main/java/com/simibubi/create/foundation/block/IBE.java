@@ -1,6 +1,8 @@
 package com.simibubi.create.foundation.block;
 
-import com.simibubi.create.Create;
+import java.util.Optional;
+import java.util.function.Consumer;
+
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
@@ -8,8 +10,7 @@ import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 import net.minecraft.world.dimension.DimensionType;
 
-import java.util.Optional;
-import java.util.function.Consumer;
+import com.simibubi.create.Create;
 
 public interface IBE<T extends BlockEntity> {
 

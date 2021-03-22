@@ -1,11 +1,12 @@
 package com.simibubi.create.foundation.block.entity.behaviour;
 
-import com.simibubi.create.foundation.utility.VecHelper;
+import java.util.function.BiPredicate;
+
 import net.minecraft.block.BlockState;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Vec3d;
 
-import java.util.function.BiPredicate;
+import com.simibubi.create.foundation.utility.VecHelper;
 
 public class CenteredSideValueBoxTransform extends ValueBoxTransform.Sided {
 	private BiPredicate<BlockState, Direction> allowedDirections;

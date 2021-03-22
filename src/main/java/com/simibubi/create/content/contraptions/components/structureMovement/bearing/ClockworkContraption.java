@@ -1,18 +1,20 @@
 package com.simibubi.create.content.contraptions.components.structureMovement.bearing;
 
-import com.simibubi.create.content.contraptions.components.structureMovement.AssemblyException;
-import com.simibubi.create.content.contraptions.components.structureMovement.Contraption;
-import com.simibubi.create.content.contraptions.components.structureMovement.ContraptionType;
-import com.simibubi.create.foundation.utility.NBTHelper;
+import java.util.HashSet;
+import java.util.Queue;
+import java.util.Set;
+
+import org.apache.commons.lang3.tuple.Pair;
+
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.world.World;
-import org.apache.commons.lang3.tuple.Pair;
 
-import java.util.HashSet;
-import java.util.Queue;
-import java.util.Set;
+import com.simibubi.create.content.contraptions.components.structureMovement.AssemblyException;
+import com.simibubi.create.content.contraptions.components.structureMovement.Contraption;
+import com.simibubi.create.content.contraptions.components.structureMovement.ContraptionType;
+import com.simibubi.create.foundation.utility.NBTHelper;
 
 public class ClockworkContraption extends Contraption {
 

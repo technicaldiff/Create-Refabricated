@@ -1,16 +1,21 @@
 package com.simibubi.create.content.contraptions.components.flywheel.engine;
 
-import com.simibubi.create.AllBlockEntities;
-import com.simibubi.create.AllBlockPartials;
-import com.simibubi.create.AllShapes;
-import com.simibubi.create.foundation.block.IBE;
-import com.simibubi.create.foundation.utility.worldWrappers.WrappedWorld;
-import net.minecraft.block.*;
+import net.minecraft.block.AbstractFurnaceBlock;
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockEntityProvider;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.ShapeContext;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
+
+import com.simibubi.create.AllBlockEntities;
+import com.simibubi.create.AllBlockPartials;
+import com.simibubi.create.AllShapes;
+import com.simibubi.create.foundation.block.IBE;
+import com.simibubi.create.foundation.utility.worldWrappers.WrappedWorld;
 
 public class FurnaceEngineBlock extends EngineBlock implements IBE<FurnaceEngineBlockEntity>, BlockEntityProvider {
 

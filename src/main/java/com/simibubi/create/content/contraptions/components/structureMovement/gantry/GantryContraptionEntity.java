@@ -1,18 +1,5 @@
 package com.simibubi.create.content.contraptions.components.structureMovement.gantry;
 
-import com.simibubi.create.AllBlocks;
-import com.simibubi.create.AllEntityTypes;
-import com.simibubi.create.content.contraptions.components.structureMovement.AbstractContraptionEntity;
-import com.simibubi.create.content.contraptions.components.structureMovement.Contraption;
-import com.simibubi.create.content.contraptions.components.structureMovement.ContraptionCollider;
-import com.simibubi.create.content.contraptions.components.structureMovement.StructureTransform;
-import com.simibubi.create.content.contraptions.relays.advanced.GantryShaftBlock;
-import com.simibubi.create.content.contraptions.relays.advanced.GantryShaftBlockEntity;
-import com.simibubi.create.foundation.networking.AllPackets;
-import com.simibubi.create.foundation.utility.NBTHelper;
-import com.simibubi.create.foundation.utility.ServerSpeedProvider;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.client.MinecraftClient;
@@ -25,6 +12,21 @@ import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
+
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
+
+import com.simibubi.create.AllBlocks;
+import com.simibubi.create.AllEntityTypes;
+import com.simibubi.create.content.contraptions.components.structureMovement.AbstractContraptionEntity;
+import com.simibubi.create.content.contraptions.components.structureMovement.Contraption;
+import com.simibubi.create.content.contraptions.components.structureMovement.ContraptionCollider;
+import com.simibubi.create.content.contraptions.components.structureMovement.StructureTransform;
+import com.simibubi.create.content.contraptions.relays.advanced.GantryShaftBlock;
+import com.simibubi.create.content.contraptions.relays.advanced.GantryShaftBlockEntity;
+import com.simibubi.create.foundation.networking.AllPackets;
+import com.simibubi.create.foundation.utility.NBTHelper;
+import com.simibubi.create.foundation.utility.ServerSpeedProvider;
 
 public class GantryContraptionEntity extends AbstractContraptionEntity {
 	private Direction movementAxis;

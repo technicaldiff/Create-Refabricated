@@ -1,17 +1,19 @@
 package com.simibubi.create.foundation.utility;
 
-import com.simibubi.create.Create;
-import com.simibubi.create.foundation.gui.widgets.InterpolatedChasingValue;
-import com.simibubi.create.foundation.networking.AllPackets;
-
-import me.pepperbell.simplenetworking.S2CPacket;
-import me.pepperbell.simplenetworking.SimpleChannel.ResponseTarget;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayNetworkHandler;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.server.MinecraftServer;
+
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
+
+import me.pepperbell.simplenetworking.S2CPacket;
+import me.pepperbell.simplenetworking.SimpleChannel.ResponseTarget;
+
+import com.simibubi.create.Create;
+import com.simibubi.create.foundation.gui.widgets.InterpolatedChasingValue;
+import com.simibubi.create.foundation.networking.AllPackets;
 
 public class ServerSpeedProvider {
 	private static int clientTimer = 0;

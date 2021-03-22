@@ -1,21 +1,27 @@
 package com.simibubi.create.content.contraptions.components.fan;
 
-import com.simibubi.create.foundation.mixin.accessor.ServerPlayNetworkHandlerAccessor;
-import com.simibubi.create.foundation.utility.VecHelper;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
 import net.minecraft.block.BlockState;
 import net.minecraft.block.ShapeContext;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.hit.BlockHitResult;
-import net.minecraft.util.math.*;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Box;
+import net.minecraft.util.math.Direction;
+import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.Vec3i;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.util.shape.VoxelShapes;
 import net.minecraft.world.World;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
+import com.simibubi.create.foundation.mixin.accessor.ServerPlayNetworkHandlerAccessor;
+import com.simibubi.create.foundation.utility.VecHelper;
 
 public class AirCurrent {
 

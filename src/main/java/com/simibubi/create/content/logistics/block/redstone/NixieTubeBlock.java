@@ -1,11 +1,10 @@
 package com.simibubi.create.content.logistics.block.redstone;
 
-import com.simibubi.create.AllBlockEntities;
-import com.simibubi.create.AllShapes;
-import com.simibubi.create.foundation.block.IBE;
-import com.simibubi.create.foundation.utility.Iterate;
-
-import net.minecraft.block.*;
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockEntityProvider;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.HorizontalFacingBlock;
+import net.minecraft.block.ShapeContext;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemPlacementContext;
@@ -22,6 +21,11 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
+
+import com.simibubi.create.AllBlockEntities;
+import com.simibubi.create.AllShapes;
+import com.simibubi.create.foundation.block.IBE;
+import com.simibubi.create.foundation.utility.Iterate;
 
 public class NixieTubeBlock extends HorizontalFacingBlock implements IBE<NixieTubeBlockEntity>, BlockEntityProvider {
 

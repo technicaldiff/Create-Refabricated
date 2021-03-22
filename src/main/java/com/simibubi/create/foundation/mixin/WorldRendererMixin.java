@@ -1,6 +1,16 @@
 package com.simibubi.create.foundation.mixin;
 
 import org.lwjgl.opengl.GL20;
+
+import net.minecraft.client.render.RenderLayer;
+import net.minecraft.client.render.WorldRenderer;
+import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.client.world.ClientWorld;
+import net.minecraft.util.math.Matrix4f;
+
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
+
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -12,14 +22,6 @@ import com.simibubi.create.content.contraptions.components.structureMovement.ren
 import com.simibubi.create.foundation.render.backend.Backend;
 import com.simibubi.create.foundation.render.backend.FastRenderDispatcher;
 import com.simibubi.create.foundation.utility.extensions.Matrix4fUtils;
-
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
-import net.minecraft.client.render.RenderLayer;
-import net.minecraft.client.render.WorldRenderer;
-import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.client.world.ClientWorld;
-import net.minecraft.util.math.Matrix4f;
 
 @Environment(EnvType.CLIENT)
 @Mixin(WorldRenderer.class)

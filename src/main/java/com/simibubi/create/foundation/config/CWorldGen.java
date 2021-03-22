@@ -1,16 +1,18 @@
 package com.simibubi.create.foundation.config;
 
-import com.simibubi.create.foundation.config.util.Validatable;
-import me.shedaniel.autoconfig.ConfigData;
-import me.shedaniel.autoconfig.annotation.ConfigEntry.Gui.Tooltip;
-import net.minecraft.util.math.MathHelper;
-import org.jetbrains.annotations.ApiStatus;
-
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 import java.lang.reflect.Field;
+
+import me.shedaniel.autoconfig.ConfigData;
+import me.shedaniel.autoconfig.annotation.ConfigEntry.Gui.Tooltip;
+import org.jetbrains.annotations.ApiStatus;
+
+import net.minecraft.util.math.MathHelper;
+
+import com.simibubi.create.foundation.config.util.Validatable;
 
 public class CWorldGen implements Validatable {
 	@Tooltip

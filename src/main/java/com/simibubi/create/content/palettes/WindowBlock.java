@@ -1,11 +1,12 @@
 package com.simibubi.create.content.palettes;
 
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.RenderLayers;
 import net.minecraft.util.math.Direction;
+
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 
 public class WindowBlock extends ConnectedGlassBlock {
 	public WindowBlock(Settings p_i48392_1_) {

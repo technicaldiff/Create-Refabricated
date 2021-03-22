@@ -1,17 +1,5 @@
 package com.simibubi.create.content.contraptions.base;
 
-import com.simibubi.create.AllBlocks;
-import com.simibubi.create.CreateClient;
-import com.simibubi.create.content.contraptions.KineticDebugger;
-import com.simibubi.create.content.contraptions.relays.elementary.CogWheelBlock;
-import com.simibubi.create.foundation.block.entity.render.SafeBlockEntityRenderer;
-import com.simibubi.create.foundation.render.Compartment;
-import com.simibubi.create.foundation.render.SuperByteBuffer;
-import com.simibubi.create.foundation.render.backend.FastRenderDispatcher;
-import com.simibubi.create.foundation.utility.AnimationTickHolder;
-import com.simibubi.create.foundation.utility.ColorHelper;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.RenderLayers;
@@ -22,6 +10,20 @@ import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.state.property.Properties;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
+
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
+
+import com.simibubi.create.AllBlocks;
+import com.simibubi.create.CreateClient;
+import com.simibubi.create.content.contraptions.KineticDebugger;
+import com.simibubi.create.content.contraptions.relays.elementary.CogWheelBlock;
+import com.simibubi.create.foundation.block.entity.render.SafeBlockEntityRenderer;
+import com.simibubi.create.foundation.render.Compartment;
+import com.simibubi.create.foundation.render.SuperByteBuffer;
+import com.simibubi.create.foundation.render.backend.FastRenderDispatcher;
+import com.simibubi.create.foundation.utility.AnimationTickHolder;
+import com.simibubi.create.foundation.utility.ColorHelper;
 
 @Environment(EnvType.CLIENT)
 public class KineticBlockEntityRenderer extends SafeBlockEntityRenderer<KineticBlockEntity> {

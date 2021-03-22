@@ -1,14 +1,15 @@
 package com.simibubi.create.content.logistics.block.redstone;
 
-import com.simibubi.create.foundation.block.entity.behaviour.ValueBoxTransform;
-import com.simibubi.create.foundation.utility.AngleHelper;
-import com.simibubi.create.foundation.utility.MatrixStacker;
-import com.simibubi.create.foundation.utility.VecHelper;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Direction.Axis;
 import net.minecraft.util.math.Vec3d;
+
+import com.simibubi.create.foundation.block.entity.behaviour.ValueBoxTransform;
+import com.simibubi.create.foundation.utility.AngleHelper;
+import com.simibubi.create.foundation.utility.MatrixStacker;
+import com.simibubi.create.foundation.utility.VecHelper;
 
 public class RedstoneLinkFrequencySlot extends ValueBoxTransform.Dual {
 

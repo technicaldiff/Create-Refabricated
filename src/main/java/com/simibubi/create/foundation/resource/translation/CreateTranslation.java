@@ -1,14 +1,16 @@
 package com.simibubi.create.foundation.resource.translation;
 
-import com.simibubi.create.Create;
-import net.devtech.arrp.api.RuntimeResourcePack;
-import net.devtech.arrp.json.lang.JLang;
-import net.minecraft.util.Identifier;
+import static com.simibubi.create.Create.ID;
 
 import java.util.Arrays;
 import java.util.function.Consumer;
 
-import static com.simibubi.create.Create.ID;
+import net.devtech.arrp.api.RuntimeResourcePack;
+import net.devtech.arrp.json.lang.JLang;
+
+import net.minecraft.util.Identifier;
+
+import com.simibubi.create.Create;
 
 /**
  * A translation to a Minecraft-supported language that can

@@ -1,15 +1,17 @@
 package com.simibubi.create.content.contraptions.components.structureMovement;
 
-import com.simibubi.create.AllBlocks;
-import com.simibubi.create.content.contraptions.base.DirectionalAxisKineticBlock;
-import com.simibubi.create.content.contraptions.components.structureMovement.chassis.AbstractChassisBlock;
-import com.simibubi.create.content.contraptions.relays.belt.BeltBlock;
-import com.simibubi.create.content.contraptions.relays.belt.BeltSlope;
-import com.simibubi.create.foundation.utility.BlockHelper;
-import com.simibubi.create.foundation.utility.DirectionHelper;
-import com.simibubi.create.foundation.utility.Iterate;
-import com.simibubi.create.foundation.utility.VecHelper;
-import net.minecraft.block.*;
+import static net.minecraft.block.WallMountedBlock.FACE;
+import static net.minecraft.state.property.Properties.AXIS;
+import static net.minecraft.state.property.Properties.FACING;
+import static net.minecraft.state.property.Properties.HORIZONTAL_FACING;
+
+import net.minecraft.block.BellBlock;
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.HorizontalFacingBlock;
+import net.minecraft.block.SlabBlock;
+import net.minecraft.block.StairsBlock;
+import net.minecraft.block.WallMountedBlock;
 import net.minecraft.block.enums.Attachment;
 import net.minecraft.block.enums.BlockHalf;
 import net.minecraft.block.enums.SlabType;
@@ -22,8 +24,15 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Vec3d;
 
-import static net.minecraft.block.WallMountedBlock.FACE;
-import static net.minecraft.state.property.Properties.*;
+import com.simibubi.create.AllBlocks;
+import com.simibubi.create.content.contraptions.base.DirectionalAxisKineticBlock;
+import com.simibubi.create.content.contraptions.components.structureMovement.chassis.AbstractChassisBlock;
+import com.simibubi.create.content.contraptions.relays.belt.BeltBlock;
+import com.simibubi.create.content.contraptions.relays.belt.BeltSlope;
+import com.simibubi.create.foundation.utility.BlockHelper;
+import com.simibubi.create.foundation.utility.DirectionHelper;
+import com.simibubi.create.foundation.utility.Iterate;
+import com.simibubi.create.foundation.utility.VecHelper;
 
 public class StructureTransform {
 	// Assuming structures cannot be rotated around multiple axes at once

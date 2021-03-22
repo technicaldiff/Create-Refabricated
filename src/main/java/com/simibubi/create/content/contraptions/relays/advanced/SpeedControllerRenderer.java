@@ -1,11 +1,5 @@
 package com.simibubi.create.content.contraptions.relays.advanced;
 
-import com.simibubi.create.AllBlockPartials;
-import com.simibubi.create.CreateClient;
-import com.simibubi.create.content.contraptions.base.KineticBlockEntityRenderer;
-import com.simibubi.create.foundation.block.entity.render.SmartBlockEntityRenderer;
-import com.simibubi.create.foundation.render.SuperByteBuffer;
-import com.simibubi.create.foundation.render.backend.FastRenderDispatcher;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.VertexConsumer;
@@ -17,6 +11,13 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Direction.Axis;
 import net.minecraft.world.World;
+
+import com.simibubi.create.AllBlockPartials;
+import com.simibubi.create.CreateClient;
+import com.simibubi.create.content.contraptions.base.KineticBlockEntityRenderer;
+import com.simibubi.create.foundation.block.entity.render.SmartBlockEntityRenderer;
+import com.simibubi.create.foundation.render.SuperByteBuffer;
+import com.simibubi.create.foundation.render.backend.FastRenderDispatcher;
 
 public class SpeedControllerRenderer extends SmartBlockEntityRenderer<SpeedControllerBlockEntity> {
 

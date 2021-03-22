@@ -1,12 +1,13 @@
 package com.simibubi.create.content.contraptions.relays.encased;
 
-import com.simibubi.create.CreateClient;
-import com.simibubi.create.foundation.block.connected.CTSpriteShiftEntry;
-import com.simibubi.create.foundation.block.connected.ConnectedTextureBehaviour;
 import net.minecraft.block.BlockState;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.world.BlockRenderView;
+
+import com.simibubi.create.CreateClient;
+import com.simibubi.create.foundation.block.connected.CTSpriteShiftEntry;
+import com.simibubi.create.foundation.block.connected.ConnectedTextureBehaviour;
 
 public class EncasedCTBehaviour extends ConnectedTextureBehaviour {
 	private CTSpriteShiftEntry shift;

@@ -1,5 +1,14 @@
 package com.simibubi.create.foundation.mixin;
 
+import io.netty.buffer.Unpooled;
+
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityType;
+import net.minecraft.network.PacketByteBuf;
+import net.minecraft.network.listener.ClientPlayPacketListener;
+import net.minecraft.network.packet.s2c.play.EntitySpawnS2CPacket;
+import net.minecraft.util.math.BlockPos;
+
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -7,14 +16,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import com.simibubi.create.foundation.networking.entity.ExtraSpawnDataEntity;
 import com.simibubi.create.foundation.utility.extensions.EntitySpawnS2CPacketExtensions;
-
-import io.netty.buffer.Unpooled;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityType;
-import net.minecraft.network.PacketByteBuf;
-import net.minecraft.network.listener.ClientPlayPacketListener;
-import net.minecraft.network.packet.s2c.play.EntitySpawnS2CPacket;
-import net.minecraft.util.math.BlockPos;
 
 @Mixin(EntitySpawnS2CPacket.class)
 public class EntitySpawnS2CPacketMixin implements EntitySpawnS2CPacketExtensions {

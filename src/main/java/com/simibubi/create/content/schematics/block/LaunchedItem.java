@@ -1,13 +1,7 @@
 package com.simibubi.create.content.schematics.block;
 
-import com.simibubi.create.AllBlocks;
-import com.simibubi.create.content.contraptions.base.KineticBlockEntity;
-import com.simibubi.create.content.contraptions.relays.belt.BeltBlock;
-import com.simibubi.create.content.contraptions.relays.belt.BeltPart;
-import com.simibubi.create.content.contraptions.relays.belt.item.BeltConnectorItem;
-import com.simibubi.create.content.contraptions.relays.elementary.AbstractShaftBlock;
-import com.simibubi.create.foundation.utility.BlockHelper;
-import net.fabricmc.fabric.api.util.NbtType;
+import java.util.Optional;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -27,7 +21,15 @@ import net.minecraft.util.math.Direction.Axis;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 
-import java.util.Optional;
+import net.fabricmc.fabric.api.util.NbtType;
+
+import com.simibubi.create.AllBlocks;
+import com.simibubi.create.content.contraptions.base.KineticBlockEntity;
+import com.simibubi.create.content.contraptions.relays.belt.BeltBlock;
+import com.simibubi.create.content.contraptions.relays.belt.BeltPart;
+import com.simibubi.create.content.contraptions.relays.belt.item.BeltConnectorItem;
+import com.simibubi.create.content.contraptions.relays.elementary.AbstractShaftBlock;
+import com.simibubi.create.foundation.utility.BlockHelper;
 
 public abstract class LaunchedItem {
 

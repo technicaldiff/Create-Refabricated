@@ -2,8 +2,6 @@ package com.simibubi.create;
 
 import java.util.function.BiFunction;
 
-import com.simibubi.create.foundation.utility.VoxelShaper;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.FacingBlock;
@@ -12,6 +10,8 @@ import net.minecraft.util.function.BooleanBiFunction;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.util.shape.VoxelShapes;
+
+import com.simibubi.create.foundation.utility.VoxelShaper;
 
 public class AllShapes {
 

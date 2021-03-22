@@ -1,7 +1,5 @@
 package com.simibubi.create.content.contraptions.relays.encased;
 
-import com.simibubi.create.AllBlockEntities;
-import com.simibubi.create.foundation.block.IBE;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
@@ -12,6 +10,9 @@ import net.minecraft.state.property.Properties;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
+
+import com.simibubi.create.AllBlockEntities;
+import com.simibubi.create.foundation.block.IBE;
 
 public class AdjustablePulleyBlock extends EncasedBeltBlock implements IBE<AdjustablePulleyBlockEntity> {
 

@@ -1,10 +1,5 @@
 package com.simibubi.create.content.contraptions.base;
 
-import com.simibubi.create.Create;
-import com.simibubi.create.content.contraptions.goggles.GoggleInformationProvider;
-import com.simibubi.create.content.contraptions.wrench.Wrenchable;
-import com.simibubi.create.foundation.item.ItemDescription;
-import com.simibubi.create.foundation.utility.Lang;
 import net.minecraft.block.BlockState;
 import net.minecraft.text.LiteralText;
 import net.minecraft.text.MutableText;
@@ -14,6 +9,12 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Direction.Axis;
 import net.minecraft.world.WorldView;
+
+import com.simibubi.create.Create;
+import com.simibubi.create.content.contraptions.goggles.GoggleInformationProvider;
+import com.simibubi.create.content.contraptions.wrench.Wrenchable;
+import com.simibubi.create.foundation.item.ItemDescription;
+import com.simibubi.create.foundation.utility.Lang;
 
 public interface Rotating extends Wrenchable {
 	enum SpeedLevel {

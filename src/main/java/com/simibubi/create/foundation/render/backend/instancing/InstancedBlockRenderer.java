@@ -6,18 +6,18 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import org.jetbrains.annotations.Nullable;
 
-import com.simibubi.create.foundation.render.backend.Backend;
-import com.simibubi.create.foundation.render.backend.gl.BasicProgram;
-import com.simibubi.create.foundation.render.backend.gl.shader.ShaderCallback;
-import com.simibubi.create.foundation.utility.AnimationTickHolder;
-import com.simibubi.create.foundation.utility.WorldAttached;
-
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.world.ClientWorld;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Matrix4f;
+
+import com.simibubi.create.foundation.render.backend.Backend;
+import com.simibubi.create.foundation.render.backend.gl.BasicProgram;
+import com.simibubi.create.foundation.render.backend.gl.shader.ShaderCallback;
+import com.simibubi.create.foundation.utility.AnimationTickHolder;
+import com.simibubi.create.foundation.utility.WorldAttached;
 
 public abstract class InstancedBlockRenderer<P extends BasicProgram> {
     public static WorldAttached<ConcurrentHashMap<BlockEntity, Integer>> addedLastTick = new WorldAttached<>(ConcurrentHashMap::new);

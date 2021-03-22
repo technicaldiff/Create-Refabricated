@@ -1,8 +1,5 @@
 package com.simibubi.create.content.contraptions.components.flywheel.engine;
 
-import com.simibubi.create.AllBlockPartials;
-import com.simibubi.create.foundation.block.entity.render.SafeBlockEntityRenderer;
-import com.simibubi.create.foundation.utility.AngleHelper;
 import net.minecraft.block.Block;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.VertexConsumerProvider;
@@ -10,6 +7,10 @@ import net.minecraft.client.render.WorldRenderer;
 import net.minecraft.client.render.block.entity.BlockEntityRenderDispatcher;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.math.Direction;
+
+import com.simibubi.create.AllBlockPartials;
+import com.simibubi.create.foundation.block.entity.render.SafeBlockEntityRenderer;
+import com.simibubi.create.foundation.utility.AngleHelper;
 
 public class EngineRenderer<T extends EngineBlockEntity> extends SafeBlockEntityRenderer<T> {
 

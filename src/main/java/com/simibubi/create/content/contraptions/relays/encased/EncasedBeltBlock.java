@@ -1,11 +1,5 @@
 package com.simibubi.create.content.contraptions.relays.encased;
 
-import com.simibubi.create.AllBlockEntities;
-import com.simibubi.create.content.contraptions.base.DirectionalAxisKineticBlock;
-import com.simibubi.create.content.contraptions.base.KineticBlockEntity;
-import com.simibubi.create.content.contraptions.base.RotatedPillarKineticBlock;
-import com.simibubi.create.foundation.utility.Iterate;
-import com.simibubi.create.foundation.utility.Lang;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
@@ -25,6 +19,13 @@ import net.minecraft.util.math.Direction.AxisDirection;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.WorldAccess;
 import net.minecraft.world.WorldView;
+
+import com.simibubi.create.AllBlockEntities;
+import com.simibubi.create.content.contraptions.base.DirectionalAxisKineticBlock;
+import com.simibubi.create.content.contraptions.base.KineticBlockEntity;
+import com.simibubi.create.content.contraptions.base.RotatedPillarKineticBlock;
+import com.simibubi.create.foundation.utility.Iterate;
+import com.simibubi.create.foundation.utility.Lang;
 
 public class EncasedBeltBlock extends RotatedPillarKineticBlock {
 

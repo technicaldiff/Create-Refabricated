@@ -1,9 +1,5 @@
 package com.simibubi.create.content.contraptions.wrench;
 
-import com.simibubi.create.content.contraptions.base.*;
-import com.simibubi.create.foundation.utility.BlockHelper;
-import com.simibubi.create.foundation.utility.DirectionHelper;
-import com.simibubi.create.foundation.utility.VoxelShaper;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
@@ -15,6 +11,17 @@ import net.minecraft.util.ActionResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.world.World;
+
+import com.simibubi.create.content.contraptions.base.DirectionalAxisKineticBlock;
+import com.simibubi.create.content.contraptions.base.DirectionalKineticBlock;
+import com.simibubi.create.content.contraptions.base.GeneratingKineticBlockEntity;
+import com.simibubi.create.content.contraptions.base.HorizontalAxisKineticBlock;
+import com.simibubi.create.content.contraptions.base.HorizontalKineticBlock;
+import com.simibubi.create.content.contraptions.base.KineticBlockEntity;
+import com.simibubi.create.content.contraptions.base.RotatedPillarKineticBlock;
+import com.simibubi.create.foundation.utility.BlockHelper;
+import com.simibubi.create.foundation.utility.DirectionHelper;
+import com.simibubi.create.foundation.utility.VoxelShaper;
 
 public interface Wrenchable {
 	default ActionResult onWrenched(BlockState state, ItemUsageContext context) {

@@ -1,8 +1,5 @@
 package com.simibubi.create.content.contraptions.components.clock;
 
-import com.simibubi.create.AllBlockEntities;
-import com.simibubi.create.AllShapes;
-import com.simibubi.create.content.contraptions.base.HorizontalKineticBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.ShapeContext;
@@ -17,6 +14,10 @@ import net.minecraft.util.math.Direction.Axis;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.WorldView;
+
+import com.simibubi.create.AllBlockEntities;
+import com.simibubi.create.AllShapes;
+import com.simibubi.create.content.contraptions.base.HorizontalKineticBlock;
 
 public class CuckooClockBlock extends HorizontalKineticBlock {
 

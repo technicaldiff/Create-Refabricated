@@ -1,15 +1,17 @@
 package com.simibubi.create.foundation.block.render;
 
-import com.simibubi.create.foundation.block.BlockVertexColorProvider;
-import net.fabricmc.fabric.api.renderer.v1.model.ForwardingBakedModel;
-import net.fabricmc.fabric.api.renderer.v1.render.RenderContext;
+import java.util.Random;
+import java.util.function.Supplier;
+
 import net.minecraft.block.BlockState;
 import net.minecraft.client.render.model.BakedModel;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.BlockRenderView;
 
-import java.util.Random;
-import java.util.function.Supplier;
+import net.fabricmc.fabric.api.renderer.v1.model.ForwardingBakedModel;
+import net.fabricmc.fabric.api.renderer.v1.render.RenderContext;
+
+import com.simibubi.create.foundation.block.BlockVertexColorProvider;
 
 public class ColoredVertexModel extends ForwardingBakedModel {
 	private BlockVertexColorProvider colorProvider;

@@ -1,5 +1,7 @@
 package com.simibubi.create.content.contraptions.components.structureMovement.render;
 
+import net.minecraft.util.math.BlockPos;
+
 import com.simibubi.create.content.contraptions.base.KineticRenderMaterials;
 import com.simibubi.create.content.contraptions.base.RotatingInstancedModel;
 import com.simibubi.create.content.contraptions.components.actors.RotatingActorModel;
@@ -7,7 +9,6 @@ import com.simibubi.create.content.contraptions.relays.belt.BeltInstancedModel;
 import com.simibubi.create.foundation.render.AllProgramSpecs;
 import com.simibubi.create.foundation.render.backend.instancing.InstancedBlockRenderer;
 import com.simibubi.create.foundation.render.backend.instancing.RenderMaterial;
-import net.minecraft.util.math.BlockPos;
 
 public class ContraptionKineticRenderer extends InstancedBlockRenderer<ContraptionProgram> {
 

@@ -1,9 +1,11 @@
 package com.simibubi.create.foundation.gui.widgets;
 
 import com.google.common.collect.ImmutableList;
-import com.simibubi.create.foundation.gui.AllGuiTextures;
+
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.text.Text;
+
+import com.simibubi.create.foundation.gui.AllGuiTextures;
 
 public class Indicator extends AbstractSimiWidget {
 

@@ -1,14 +1,17 @@
 package com.simibubi.create.content.contraptions.particle;
 
 import com.mojang.serialization.Codec;
-import com.simibubi.create.foundation.utility.extensions.ParticleManagerUtils;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
+
 import net.minecraft.client.particle.ParticleFactory;
 import net.minecraft.client.particle.ParticleManager;
 import net.minecraft.particle.ParticleEffect;
 import net.minecraft.particle.ParticleEffect.Factory;
 import net.minecraft.particle.ParticleType;
+
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
+
+import com.simibubi.create.foundation.utility.extensions.ParticleManagerUtils;
 
 public interface CustomParticleData<T extends ParticleEffect> {
 	Factory<T> getDeserializer();

@@ -1,18 +1,17 @@
 package com.simibubi.create.content.curiosities.symmetry;
 
-import com.simibubi.create.AllItems;
-import com.simibubi.create.content.curiosities.symmetry.mirror.EmptyMirror;
-import com.simibubi.create.content.curiosities.symmetry.mirror.SymmetryMirror;
-import com.simibubi.create.foundation.utility.AnimationTickHolder;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
-import net.fabricmc.fabric.api.client.rendering.v1.WorldRenderContext;
+import java.util.Random;
+
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayerEntity;
-import net.minecraft.client.render.*;
+import net.minecraft.client.render.Camera;
+import net.minecraft.client.render.OverlayTexture;
+import net.minecraft.client.render.RenderLayer;
+import net.minecraft.client.render.VertexConsumer;
+import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.model.BakedModel;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.Entity;
@@ -28,7 +27,14 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
-import java.util.Random;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
+import net.fabricmc.fabric.api.client.rendering.v1.WorldRenderContext;
+
+import com.simibubi.create.AllItems;
+import com.simibubi.create.content.curiosities.symmetry.mirror.EmptyMirror;
+import com.simibubi.create.content.curiosities.symmetry.mirror.SymmetryMirror;
+import com.simibubi.create.foundation.utility.AnimationTickHolder;
 
 public class SymmetryHandler {
 

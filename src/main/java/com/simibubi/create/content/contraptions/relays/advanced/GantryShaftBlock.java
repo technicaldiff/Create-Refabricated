@@ -1,14 +1,9 @@
 package com.simibubi.create.content.contraptions.relays.advanced;
 
-import com.simibubi.create.AllBlockEntities;
-import com.simibubi.create.AllBlocks;
-import com.simibubi.create.AllShapes;
-import com.simibubi.create.content.contraptions.base.DirectionalKineticBlock;
-import com.simibubi.create.content.contraptions.base.KineticBlockEntity;
-import com.simibubi.create.foundation.utility.Iterate;
-import com.simibubi.create.foundation.utility.Lang;
-import com.simibubi.create.foundation.utility.placement.PlacementOffset;
-import com.simibubi.create.foundation.utility.placement.util.PoleHelper;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.function.Predicate;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
@@ -34,9 +29,15 @@ import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
 import net.minecraft.world.WorldView;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.function.Predicate;
+import com.simibubi.create.AllBlockEntities;
+import com.simibubi.create.AllBlocks;
+import com.simibubi.create.AllShapes;
+import com.simibubi.create.content.contraptions.base.DirectionalKineticBlock;
+import com.simibubi.create.content.contraptions.base.KineticBlockEntity;
+import com.simibubi.create.foundation.utility.Iterate;
+import com.simibubi.create.foundation.utility.Lang;
+import com.simibubi.create.foundation.utility.placement.PlacementOffset;
+import com.simibubi.create.foundation.utility.placement.util.PoleHelper;
 
 public class GantryShaftBlock extends DirectionalKineticBlock {
 

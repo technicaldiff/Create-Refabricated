@@ -3,11 +3,11 @@ package com.simibubi.create.foundation.utility.ghost;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.simibubi.create.foundation.renderState.SuperRenderTypeBuffer;
-
 import net.minecraft.block.BlockState;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.math.MathHelper;
+
+import com.simibubi.create.foundation.renderState.SuperRenderTypeBuffer;
 
 public class GhostBlocks {
 

@@ -1,5 +1,20 @@
 package com.simibubi.create.foundation.data;
 
+import static com.simibubi.create.AllBlocks.casingConnectivity;
+import static com.simibubi.create.AllBlocks.connectedTextures;
+
+import java.util.function.Consumer;
+
+import org.jetbrains.annotations.Nullable;
+
+import net.minecraft.block.Block;
+import net.minecraft.block.enums.PistonType;
+import net.minecraft.client.render.RenderLayer;
+import net.minecraft.util.DyeColor;
+import net.minecraft.util.Identifier;
+
+import me.pepperbell.reghelper.BlockRegBuilder;
+
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.content.contraptions.base.CasingBlock;
 import com.simibubi.create.content.contraptions.components.crank.ValveHandleBlock;
@@ -10,18 +25,6 @@ import com.simibubi.create.content.logistics.block.belts.tunnel.BeltTunnelItem;
 import com.simibubi.create.foundation.block.connected.CTSpriteShiftEntry;
 import com.simibubi.create.foundation.config.StressConfigDefaults;
 import com.simibubi.create.foundation.item.TooltipHelper;
-import me.pepperbell.reghelper.BlockRegBuilder;
-import net.minecraft.block.Block;
-import net.minecraft.block.enums.PistonType;
-import net.minecraft.client.render.RenderLayer;
-import net.minecraft.util.DyeColor;
-import net.minecraft.util.Identifier;
-import org.jetbrains.annotations.Nullable;
-
-import java.util.function.Consumer;
-
-import static com.simibubi.create.AllBlocks.casingConnectivity;
-import static com.simibubi.create.AllBlocks.connectedTextures;
 
 public class BuilderConsumers {
 	public static <B extends Block> Consumer<BlockRegBuilder<B>> cuckooClock() {

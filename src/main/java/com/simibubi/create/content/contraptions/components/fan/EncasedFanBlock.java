@@ -1,9 +1,5 @@
 package com.simibubi.create.content.contraptions.components.fan;
 
-import com.simibubi.create.AllBlockEntities;
-import com.simibubi.create.content.contraptions.base.DirectionalKineticBlock;
-import com.simibubi.create.foundation.block.IBE;
-import com.simibubi.create.foundation.utility.worldWrappers.WrappedWorld;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
@@ -16,6 +12,11 @@ import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
 import net.minecraft.world.WorldView;
+
+import com.simibubi.create.AllBlockEntities;
+import com.simibubi.create.content.contraptions.base.DirectionalKineticBlock;
+import com.simibubi.create.foundation.block.IBE;
+import com.simibubi.create.foundation.utility.worldWrappers.WrappedWorld;
 
 public class EncasedFanBlock extends DirectionalKineticBlock implements IBE<EncasedFanBlockEntity> {
 

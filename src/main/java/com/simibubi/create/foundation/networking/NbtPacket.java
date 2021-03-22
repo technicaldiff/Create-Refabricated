@@ -1,13 +1,14 @@
 package com.simibubi.create.foundation.networking;
 
-import me.pepperbell.simplenetworking.C2SPacket;
-import me.pepperbell.simplenetworking.SimpleChannel.ResponseTarget;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.network.ServerPlayNetworkHandler;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.Hand;
+
+import me.pepperbell.simplenetworking.C2SPacket;
+import me.pepperbell.simplenetworking.SimpleChannel.ResponseTarget;
 
 @Deprecated
 public class NbtPacket implements C2SPacket {

@@ -1,9 +1,5 @@
 package com.simibubi.create.content.schematics.packet;
 
-import com.simibubi.create.content.schematics.SchematicProcessor;
-import com.simibubi.create.content.schematics.item.SchematicItem;
-import me.pepperbell.simplenetworking.C2SPacket;
-import me.pepperbell.simplenetworking.SimpleChannel;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtHelper;
 import net.minecraft.network.PacketByteBuf;
@@ -12,6 +8,12 @@ import net.minecraft.server.network.ServerPlayNetworkHandler;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.structure.Structure;
 import net.minecraft.structure.StructurePlacementData;
+
+import me.pepperbell.simplenetworking.C2SPacket;
+import me.pepperbell.simplenetworking.SimpleChannel;
+
+import com.simibubi.create.content.schematics.SchematicProcessor;
+import com.simibubi.create.content.schematics.item.SchematicItem;
 
 public class SchematicPlacePacket implements C2SPacket {
 

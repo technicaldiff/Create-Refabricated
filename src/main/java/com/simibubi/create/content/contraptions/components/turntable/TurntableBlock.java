@@ -1,11 +1,5 @@
 package com.simibubi.create.content.contraptions.components.turntable;
 
-import com.simibubi.create.AllBlockEntities;
-import com.simibubi.create.AllShapes;
-import com.simibubi.create.content.contraptions.base.KineticBlock;
-import com.simibubi.create.content.contraptions.base.KineticBlockEntity;
-import com.simibubi.create.foundation.block.IBE;
-import com.simibubi.create.foundation.utility.VecHelper;
 import net.minecraft.block.BlockEntityProvider;
 import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
@@ -23,6 +17,13 @@ import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldView;
+
+import com.simibubi.create.AllBlockEntities;
+import com.simibubi.create.AllShapes;
+import com.simibubi.create.content.contraptions.base.KineticBlock;
+import com.simibubi.create.content.contraptions.base.KineticBlockEntity;
+import com.simibubi.create.foundation.block.IBE;
+import com.simibubi.create.foundation.utility.VecHelper;
 
 public class TurntableBlock extends KineticBlock implements IBE<TurntableBlockEntity>, BlockEntityProvider {
 

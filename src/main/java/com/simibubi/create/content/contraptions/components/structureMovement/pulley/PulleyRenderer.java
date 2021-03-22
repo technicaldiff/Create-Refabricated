@@ -1,14 +1,15 @@
 package com.simibubi.create.content.contraptions.components.structureMovement.pulley;
 
+import net.minecraft.client.render.block.entity.BlockEntityRenderDispatcher;
+import net.minecraft.util.math.Direction.Axis;
+import net.minecraft.util.math.MathHelper;
+
 import com.simibubi.create.AllBlockPartials;
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.CreateClient;
 import com.simibubi.create.content.contraptions.base.KineticBlockEntity;
 import com.simibubi.create.content.contraptions.components.structureMovement.AbstractContraptionEntity;
 import com.simibubi.create.foundation.render.SuperByteBuffer;
-import net.minecraft.client.render.block.entity.BlockEntityRenderDispatcher;
-import net.minecraft.util.math.Direction.Axis;
-import net.minecraft.util.math.MathHelper;
 
 public class PulleyRenderer extends AbstractPulleyRenderer {
 

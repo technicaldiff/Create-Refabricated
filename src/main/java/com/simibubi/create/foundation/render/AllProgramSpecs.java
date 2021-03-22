@@ -2,6 +2,8 @@ package com.simibubi.create.foundation.render;
 
 import static com.simibubi.create.foundation.render.backend.Backend.register;
 
+import net.minecraft.util.Identifier;
+
 import com.simibubi.create.Create;
 import com.simibubi.create.content.contraptions.base.KineticVertexAttributes;
 import com.simibubi.create.content.contraptions.base.RotatingVertexAttributes;
@@ -13,8 +15,6 @@ import com.simibubi.create.foundation.render.backend.gl.BasicProgram;
 import com.simibubi.create.foundation.render.backend.gl.attrib.ModelVertexAttributes;
 import com.simibubi.create.foundation.render.backend.gl.shader.ProgramSpec;
 import com.simibubi.create.foundation.render.backend.gl.shader.ShaderConstants;
-
-import net.minecraft.util.Identifier;
 
 public class AllProgramSpecs {
     public static final ProgramSpec<BasicProgram> ROTATING = register(ProgramSpec.builder("rotating", BasicProgram::new)

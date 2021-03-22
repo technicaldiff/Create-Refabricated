@@ -1,9 +1,5 @@
 package com.simibubi.create.content.contraptions.relays.elementary;
 
-import com.simibubi.create.AllBlocks;
-import com.simibubi.create.AllShapes;
-import com.simibubi.create.content.contraptions.base.Rotating;
-import com.simibubi.create.foundation.utility.Iterate;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.ShapeContext;
@@ -21,6 +17,11 @@ import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldView;
+
+import com.simibubi.create.AllBlocks;
+import com.simibubi.create.AllShapes;
+import com.simibubi.create.content.contraptions.base.Rotating;
+import com.simibubi.create.foundation.utility.Iterate;
 
 public class CogWheelBlock extends AbstractShaftBlock {
 

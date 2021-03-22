@@ -1,14 +1,8 @@
 package com.simibubi.create.content.contraptions.relays.belt;
 
-import com.simibubi.create.AllBlockEntities;
-import com.simibubi.create.AllBlocks;
-import com.simibubi.create.AllItems;
-import com.simibubi.create.content.contraptions.base.HorizontalKineticBlock;
-import com.simibubi.create.content.contraptions.base.KineticBlockEntity;
-import com.simibubi.create.content.logistics.block.belts.tunnel.BeltTunnelBlock;
-import com.simibubi.create.content.schematics.SpecialBlockItemRequirement;
-import com.simibubi.create.foundation.block.IBE;
-import com.simibubi.create.foundation.utility.Iterate;
+import java.util.LinkedList;
+import java.util.List;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
@@ -39,8 +33,15 @@ import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
 import net.minecraft.world.WorldView;
 
-import java.util.LinkedList;
-import java.util.List;
+import com.simibubi.create.AllBlockEntities;
+import com.simibubi.create.AllBlocks;
+import com.simibubi.create.AllItems;
+import com.simibubi.create.content.contraptions.base.HorizontalKineticBlock;
+import com.simibubi.create.content.contraptions.base.KineticBlockEntity;
+import com.simibubi.create.content.logistics.block.belts.tunnel.BeltTunnelBlock;
+import com.simibubi.create.content.schematics.SpecialBlockItemRequirement;
+import com.simibubi.create.foundation.block.IBE;
+import com.simibubi.create.foundation.utility.Iterate;
 
 public class BeltBlock extends HorizontalKineticBlock implements IBE<BeltBlockEntity>, SpecialBlockItemRequirement {
 	public static final Property<BeltSlope> SLOPE = EnumProperty.of("slope", BeltSlope.class);

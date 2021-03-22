@@ -1,11 +1,12 @@
 package com.simibubi.create.content.curiosities.tools;
 
-import com.simibubi.create.AllItems;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.util.Rarity;
+
+import com.simibubi.create.AllItems;
 
 //@EventBusSubscriber
 public class ExtendoGripItem extends Item {

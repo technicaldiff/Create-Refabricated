@@ -1,12 +1,5 @@
 package com.simibubi.create.foundation.collision;
 
-import com.simibubi.create.AllSpecialTextures;
-import com.simibubi.create.CreateClient;
-import com.simibubi.create.foundation.renderState.SuperRenderTypeBuffer;
-import com.simibubi.create.foundation.utility.AngleHelper;
-import com.simibubi.create.foundation.utility.MatrixStacker;
-import com.simibubi.create.foundation.utility.outliner.AABBOutline;
-
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.hit.BlockHitResult;
@@ -15,6 +8,13 @@ import net.minecraft.util.hit.HitResult.Type;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Vec3d;
+
+import com.simibubi.create.AllSpecialTextures;
+import com.simibubi.create.CreateClient;
+import com.simibubi.create.foundation.renderState.SuperRenderTypeBuffer;
+import com.simibubi.create.foundation.utility.AngleHelper;
+import com.simibubi.create.foundation.utility.MatrixStacker;
+import com.simibubi.create.foundation.utility.outliner.AABBOutline;
 
 public class CollisionDebugger {
 

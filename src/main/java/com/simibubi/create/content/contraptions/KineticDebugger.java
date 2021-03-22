@@ -1,12 +1,5 @@
 package com.simibubi.create.content.contraptions;
 
-import com.simibubi.create.Create;
-import com.simibubi.create.CreateClient;
-import com.simibubi.create.content.contraptions.base.KineticBlockEntity;
-import com.simibubi.create.content.contraptions.base.KineticBlockEntityRenderer;
-import com.simibubi.create.content.contraptions.base.Rotating;
-import com.simibubi.create.foundation.utility.ColorHelper;
-import com.simibubi.create.foundation.utility.VecHelper;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.client.MinecraftClient;
@@ -18,6 +11,14 @@ import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.world.World;
+
+import com.simibubi.create.Create;
+import com.simibubi.create.CreateClient;
+import com.simibubi.create.content.contraptions.base.KineticBlockEntity;
+import com.simibubi.create.content.contraptions.base.KineticBlockEntityRenderer;
+import com.simibubi.create.content.contraptions.base.Rotating;
+import com.simibubi.create.foundation.utility.ColorHelper;
+import com.simibubi.create.foundation.utility.VecHelper;
 
 public class KineticDebugger {
 

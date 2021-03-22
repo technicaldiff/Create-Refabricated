@@ -1,9 +1,5 @@
 package com.simibubi.create.foundation.networking;
 
-import com.simibubi.create.foundation.block.entity.SyncedBlockEntity;
-
-import me.pepperbell.simplenetworking.C2SPacket;
-import me.pepperbell.simplenetworking.SimpleChannel.ResponseTarget;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.server.MinecraftServer;
@@ -11,6 +7,11 @@ import net.minecraft.server.network.ServerPlayNetworkHandler;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+
+import me.pepperbell.simplenetworking.C2SPacket;
+import me.pepperbell.simplenetworking.SimpleChannel.ResponseTarget;
+
+import com.simibubi.create.foundation.block.entity.SyncedBlockEntity;
 
 public abstract class BlockEntityConfigurationPacket<BE extends SyncedBlockEntity> implements C2SPacket {
 	protected BlockPos pos;

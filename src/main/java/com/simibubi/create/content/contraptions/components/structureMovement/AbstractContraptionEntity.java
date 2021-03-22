@@ -1,15 +1,15 @@
 package com.simibubi.create.content.contraptions.components.structureMovement;
 
-import com.simibubi.create.AllMovementBehaviours;
-import com.simibubi.create.content.contraptions.components.structureMovement.glue.SuperGlueEntity;
-import com.simibubi.create.content.contraptions.components.structureMovement.mounted.MountedContraption;
-import com.simibubi.create.foundation.collision.Matrix3d;
-import com.simibubi.create.foundation.networking.entity.ExtraSpawnDataEntity;
-import com.simibubi.create.foundation.utility.AngleHelper;
-import com.simibubi.create.foundation.utility.VecHelper;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
-import net.fabricmc.fabric.api.object.builder.v1.entity.FabricEntityTypeBuilder;
+import java.util.IdentityHashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.UUID;
+
+import org.apache.commons.lang3.mutable.MutableInt;
+import org.apache.commons.lang3.tuple.MutablePair;
+
 import net.minecraft.block.piston.PistonBehavior;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.Entity;
@@ -34,11 +34,18 @@ import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
-import org.apache.commons.lang3.mutable.MutableInt;
-import org.apache.commons.lang3.tuple.MutablePair;
 
-import java.util.*;
-import java.util.Map.Entry;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
+import net.fabricmc.fabric.api.object.builder.v1.entity.FabricEntityTypeBuilder;
+
+import com.simibubi.create.AllMovementBehaviours;
+import com.simibubi.create.content.contraptions.components.structureMovement.glue.SuperGlueEntity;
+import com.simibubi.create.content.contraptions.components.structureMovement.mounted.MountedContraption;
+import com.simibubi.create.foundation.collision.Matrix3d;
+import com.simibubi.create.foundation.networking.entity.ExtraSpawnDataEntity;
+import com.simibubi.create.foundation.utility.AngleHelper;
+import com.simibubi.create.foundation.utility.VecHelper;
 
 public abstract class AbstractContraptionEntity extends Entity implements ExtraSpawnDataEntity {
 	private static final TrackedData<Boolean> STALLED =

@@ -7,7 +7,6 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import com.simibubi.create.foundation.utility.Lang;
 
 import net.minecraft.data.DataCache;
 import net.minecraft.data.DataGenerator;
@@ -16,6 +15,8 @@ import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
+
+import com.simibubi.create.foundation.utility.Lang;
 
 public enum AllSoundEvents implements DataProvider {
 

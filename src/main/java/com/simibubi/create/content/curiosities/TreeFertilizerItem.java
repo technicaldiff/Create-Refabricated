@@ -1,6 +1,5 @@
 package com.simibubi.create.content.curiosities;
 
-import com.simibubi.create.foundation.utility.worldWrappers.PlacementSimulationServerWorld;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -11,6 +10,8 @@ import net.minecraft.item.ItemUsageContext;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.math.BlockPos;
+
+import com.simibubi.create.foundation.utility.worldWrappers.PlacementSimulationServerWorld;
 
 public class TreeFertilizerItem extends Item {
 

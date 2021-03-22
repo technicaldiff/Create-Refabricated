@@ -1,5 +1,23 @@
 package com.simibubi.create.content.contraptions.components.structureMovement.chassis;
 
+import static net.minecraft.state.property.Properties.AXIS;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Queue;
+import java.util.Set;
+
+import net.minecraft.block.BlockState;
+import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.state.property.Properties;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Direction;
+import net.minecraft.util.math.Direction.Axis;
+import net.minecraft.util.math.Direction.AxisDirection;
+
 import com.simibubi.create.AllBlockEntities;
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.Create;
@@ -11,17 +29,6 @@ import com.simibubi.create.foundation.block.entity.behaviour.scrollvalue.BulkScr
 import com.simibubi.create.foundation.block.entity.behaviour.scrollvalue.ScrollValueBehaviour;
 import com.simibubi.create.foundation.utility.Iterate;
 import com.simibubi.create.foundation.utility.Lang;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.state.property.Properties;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Direction;
-import net.minecraft.util.math.Direction.Axis;
-import net.minecraft.util.math.Direction.AxisDirection;
-
-import java.util.*;
-
-import static net.minecraft.state.property.Properties.AXIS;
 
 public class ChassisBlockEntity extends SmartBlockEntity {
 

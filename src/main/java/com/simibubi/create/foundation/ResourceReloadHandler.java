@@ -1,12 +1,12 @@
 package com.simibubi.create.foundation;
 
-import com.simibubi.create.CreateClient;
-import com.simibubi.create.foundation.block.render.SpriteShifter;
-
 import net.minecraft.resource.ResourceManager;
 import net.minecraft.resource.SinglePreparationResourceReloadListener;
 import net.minecraft.util.Unit;
 import net.minecraft.util.profiler.Profiler;
+
+import com.simibubi.create.CreateClient;
+import com.simibubi.create.foundation.block.render.SpriteShifter;
 
 public class ResourceReloadHandler extends SinglePreparationResourceReloadListener<Unit> {
 	@Override

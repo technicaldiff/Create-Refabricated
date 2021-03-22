@@ -1,10 +1,7 @@
 package com.simibubi.create.content.contraptions.components.flywheel.engine;
 
-import com.simibubi.create.AllBlockPartials;
-import com.simibubi.create.content.contraptions.wrench.Wrenchable;
-import com.simibubi.create.foundation.utility.Iterate;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
+import org.jetbrains.annotations.Nullable;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockEntityProvider;
 import net.minecraft.block.BlockState;
@@ -19,7 +16,13 @@ import net.minecraft.util.math.Direction;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldView;
-import org.jetbrains.annotations.Nullable;
+
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
+
+import com.simibubi.create.AllBlockPartials;
+import com.simibubi.create.content.contraptions.wrench.Wrenchable;
+import com.simibubi.create.foundation.utility.Iterate;
 
 public abstract class EngineBlock extends HorizontalFacingBlock implements Wrenchable, BlockEntityProvider {
 

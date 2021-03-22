@@ -1,11 +1,12 @@
 package com.simibubi.create.content.contraptions.components.structureMovement.bearing;
 
-import com.simibubi.create.content.contraptions.base.DirectionalKineticBlock;
 import net.minecraft.block.BlockState;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Direction.Axis;
 import net.minecraft.world.WorldView;
+
+import com.simibubi.create.content.contraptions.base.DirectionalKineticBlock;
 
 public abstract class BearingBlock extends DirectionalKineticBlock {
 

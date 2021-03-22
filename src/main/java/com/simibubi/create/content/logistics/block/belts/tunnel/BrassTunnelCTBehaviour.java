@@ -1,13 +1,14 @@
 package com.simibubi.create.content.logistics.block.belts.tunnel;
 
-import com.simibubi.create.AllSpriteShifts;
-import com.simibubi.create.foundation.block.connected.CTSpriteShiftEntry;
-import com.simibubi.create.foundation.block.connected.ConnectedTextureBehaviour;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.world.BlockRenderView;
+
+import com.simibubi.create.AllSpriteShifts;
+import com.simibubi.create.foundation.block.connected.CTSpriteShiftEntry;
+import com.simibubi.create.foundation.block.connected.ConnectedTextureBehaviour;
 
 public class BrassTunnelCTBehaviour extends ConnectedTextureBehaviour {
 

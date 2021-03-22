@@ -1,15 +1,10 @@
 package com.simibubi.create.content.contraptions.relays.elementary;
 
-import com.simibubi.create.AllBlocks;
-import com.simibubi.create.AllShapes;
-import com.simibubi.create.content.contraptions.base.DirectionalKineticBlock;
-import com.simibubi.create.content.contraptions.base.HorizontalKineticBlock;
-import com.simibubi.create.content.contraptions.base.Rotating;
-import com.simibubi.create.foundation.utility.Iterate;
-import com.simibubi.create.foundation.utility.placement.PlacementHelper;
-import com.simibubi.create.foundation.utility.placement.PlacementHelpers;
-import com.simibubi.create.foundation.utility.placement.PlacementOffset;
-import com.simibubi.create.registrate.util.nullness.MethodsReturnNonnullByDefault;
+import static com.simibubi.create.content.contraptions.base.RotatedPillarKineticBlock.AXIS;
+
+import java.util.List;
+import java.util.function.Predicate;
+
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.BlockItem;
@@ -24,10 +19,16 @@ import net.minecraft.util.math.Direction.Axis;
 import net.minecraft.util.math.Direction.AxisDirection;
 import net.minecraft.world.World;
 
-import java.util.List;
-import java.util.function.Predicate;
-
-import static com.simibubi.create.content.contraptions.base.RotatedPillarKineticBlock.AXIS;
+import com.simibubi.create.AllBlocks;
+import com.simibubi.create.AllShapes;
+import com.simibubi.create.content.contraptions.base.DirectionalKineticBlock;
+import com.simibubi.create.content.contraptions.base.HorizontalKineticBlock;
+import com.simibubi.create.content.contraptions.base.Rotating;
+import com.simibubi.create.foundation.utility.Iterate;
+import com.simibubi.create.foundation.utility.placement.PlacementHelper;
+import com.simibubi.create.foundation.utility.placement.PlacementHelpers;
+import com.simibubi.create.foundation.utility.placement.PlacementOffset;
+import com.simibubi.create.registrate.util.nullness.MethodsReturnNonnullByDefault;
 
 public class CogwheelBlockItem extends BlockItem {
 

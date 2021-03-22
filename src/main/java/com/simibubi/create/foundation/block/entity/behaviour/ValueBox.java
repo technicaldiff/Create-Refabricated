@@ -1,12 +1,5 @@
 package com.simibubi.create.foundation.block.entity.behaviour;
 
-import com.simibubi.create.foundation.block.entity.behaviour.ValueBoxTransform.Sided;
-import com.simibubi.create.foundation.block.entity.behaviour.scrollvalue.NamedIconOptions;
-import com.simibubi.create.foundation.gui.AllIcons;
-import com.simibubi.create.foundation.renderState.SuperRenderTypeBuffer;
-import com.simibubi.create.foundation.utility.ColorHelper;
-import com.simibubi.create.foundation.utility.Lang;
-import com.simibubi.create.foundation.utility.outliner.ChasingAABBOutline;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.font.TextRenderer;
@@ -18,6 +11,14 @@ import net.minecraft.text.Text;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Vec3d;
+
+import com.simibubi.create.foundation.block.entity.behaviour.ValueBoxTransform.Sided;
+import com.simibubi.create.foundation.block.entity.behaviour.scrollvalue.NamedIconOptions;
+import com.simibubi.create.foundation.gui.AllIcons;
+import com.simibubi.create.foundation.renderState.SuperRenderTypeBuffer;
+import com.simibubi.create.foundation.utility.ColorHelper;
+import com.simibubi.create.foundation.utility.Lang;
+import com.simibubi.create.foundation.utility.outliner.ChasingAABBOutline;
 
 public class ValueBox extends ChasingAABBOutline {
 	protected Text label;

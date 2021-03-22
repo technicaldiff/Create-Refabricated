@@ -1,9 +1,9 @@
 package com.simibubi.create.foundation.block.entity.behaviour;
 
-import com.simibubi.create.foundation.utility.AngleHelper;
-import com.simibubi.create.foundation.utility.BlockHelper;
-import com.simibubi.create.foundation.utility.MatrixStacker;
-import com.simibubi.create.foundation.utility.VecHelper;
+import java.util.function.Function;
+
+import org.apache.commons.lang3.tuple.Pair;
+
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Material;
 import net.minecraft.client.util.math.MatrixStack;
@@ -11,9 +11,11 @@ import net.minecraft.state.property.Properties;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Direction.Axis;
 import net.minecraft.util.math.Vec3d;
-import org.apache.commons.lang3.tuple.Pair;
 
-import java.util.function.Function;
+import com.simibubi.create.foundation.utility.AngleHelper;
+import com.simibubi.create.foundation.utility.BlockHelper;
+import com.simibubi.create.foundation.utility.MatrixStacker;
+import com.simibubi.create.foundation.utility.VecHelper;
 
 public abstract class ValueBoxTransform {
 	protected float scale = getScale();

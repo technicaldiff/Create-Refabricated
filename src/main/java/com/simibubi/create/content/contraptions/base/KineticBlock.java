@@ -1,6 +1,5 @@
 package com.simibubi.create.content.contraptions.base;
 
-import com.simibubi.create.foundation.item.ItemDescription.Palette;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockEntityProvider;
 import net.minecraft.block.BlockState;
@@ -12,6 +11,8 @@ import net.minecraft.util.math.Direction;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
 import net.minecraft.world.WorldView;
+
+import com.simibubi.create.foundation.item.ItemDescription.Palette;
 
 public abstract class KineticBlock extends Block implements BlockEntityProvider, Rotating {
 	protected static final Palette color = Palette.Red;

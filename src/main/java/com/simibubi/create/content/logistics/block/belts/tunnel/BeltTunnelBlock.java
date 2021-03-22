@@ -1,15 +1,7 @@
 package com.simibubi.create.content.logistics.block.belts.tunnel;
 
-import com.simibubi.create.AllBlockEntities;
-import com.simibubi.create.AllBlocks;
-import com.simibubi.create.content.contraptions.relays.belt.BeltBlock;
-import com.simibubi.create.content.contraptions.relays.belt.BeltSlope;
-import com.simibubi.create.content.contraptions.wrench.Wrenchable;
-import com.simibubi.create.foundation.block.IBE;
-import com.simibubi.create.foundation.block.entity.BlockEntityBehaviour;
-import com.simibubi.create.foundation.block.entity.behaviour.belt.DirectBeltInputBehaviour;
-import com.simibubi.create.foundation.utility.Lang;
-import com.simibubi.create.foundation.utility.worldWrappers.WrappedWorld;
+import org.jetbrains.annotations.Nullable;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockEntityProvider;
 import net.minecraft.block.BlockState;
@@ -32,7 +24,17 @@ import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
 import net.minecraft.world.WorldView;
-import org.jetbrains.annotations.Nullable;
+
+import com.simibubi.create.AllBlockEntities;
+import com.simibubi.create.AllBlocks;
+import com.simibubi.create.content.contraptions.relays.belt.BeltBlock;
+import com.simibubi.create.content.contraptions.relays.belt.BeltSlope;
+import com.simibubi.create.content.contraptions.wrench.Wrenchable;
+import com.simibubi.create.foundation.block.IBE;
+import com.simibubi.create.foundation.block.entity.BlockEntityBehaviour;
+import com.simibubi.create.foundation.block.entity.behaviour.belt.DirectBeltInputBehaviour;
+import com.simibubi.create.foundation.utility.Lang;
+import com.simibubi.create.foundation.utility.worldWrappers.WrappedWorld;
 
 public class BeltTunnelBlock extends Block implements IBE<BeltTunnelTileEntity>, Wrenchable, BlockEntityProvider {
 

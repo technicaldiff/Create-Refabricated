@@ -6,10 +6,9 @@ import java.util.concurrent.ExecutionException;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
-import org.jetbrains.annotations.Nullable;
-
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
+import org.jetbrains.annotations.Nullable;
 
 import net.minecraft.recipe.Recipe;
 import net.minecraft.resource.ResourceManager;

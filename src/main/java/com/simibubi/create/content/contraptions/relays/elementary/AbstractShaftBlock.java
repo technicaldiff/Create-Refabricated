@@ -1,9 +1,7 @@
 package com.simibubi.create.content.contraptions.relays.elementary;
 
-import com.simibubi.create.AllBlockEntities;
-import com.simibubi.create.content.contraptions.base.RotatedPillarKineticBlock;
-import com.simibubi.create.content.contraptions.wrench.WrenchableWithBracket;
-import com.simibubi.create.foundation.block.entity.BlockEntityBehaviour;
+import java.util.Optional;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -26,7 +24,10 @@ import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
 import net.minecraft.world.WorldView;
 
-import java.util.Optional;
+import com.simibubi.create.AllBlockEntities;
+import com.simibubi.create.content.contraptions.base.RotatedPillarKineticBlock;
+import com.simibubi.create.content.contraptions.wrench.WrenchableWithBracket;
+import com.simibubi.create.foundation.block.entity.BlockEntityBehaviour;
 
 public abstract class AbstractShaftBlock extends RotatedPillarKineticBlock implements Waterloggable, WrenchableWithBracket {
 	public AbstractShaftBlock(Settings properties) {

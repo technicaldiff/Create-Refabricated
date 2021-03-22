@@ -1,10 +1,13 @@
 package com.simibubi.create.content.logistics.block.redstone;
 
-import com.simibubi.create.AllBlockEntities;
-import com.simibubi.create.foundation.block.IBE;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
-import net.minecraft.block.*;
+import java.util.Random;
+
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockEntityProvider;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
+import net.minecraft.block.ShapeContext;
+import net.minecraft.block.WallMountedBlock;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.particle.DustParticleEffect;
@@ -22,7 +25,11 @@ import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
 import net.minecraft.world.WorldView;
 
-import java.util.Random;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
+
+import com.simibubi.create.AllBlockEntities;
+import com.simibubi.create.foundation.block.IBE;
 
 public class AnalogLeverBlock extends WallMountedBlock implements IBE<AnalogLeverBlockEntity>, BlockEntityProvider {
 

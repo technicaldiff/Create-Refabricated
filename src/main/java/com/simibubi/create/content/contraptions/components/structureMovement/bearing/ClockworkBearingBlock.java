@@ -1,7 +1,5 @@
 package com.simibubi.create.content.contraptions.components.structureMovement.bearing;
 
-import com.simibubi.create.AllBlockEntities;
-import com.simibubi.create.foundation.block.IBE;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -11,6 +9,9 @@ import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
+
+import com.simibubi.create.AllBlockEntities;
+import com.simibubi.create.foundation.block.IBE;
 
 public class ClockworkBearingBlock extends BearingBlock implements IBE<ClockworkBearingBlockEntity> {
 

@@ -1,14 +1,5 @@
 package com.simibubi.create.foundation.block.entity.behaviour.scrollvalue;
 
-import com.simibubi.create.AllItems;
-import com.simibubi.create.AllKeys;
-import com.simibubi.create.CreateClient;
-import com.simibubi.create.foundation.block.entity.BlockEntityBehaviour;
-import com.simibubi.create.foundation.block.entity.SmartBlockEntity;
-import com.simibubi.create.foundation.block.entity.behaviour.ValueBox;
-import com.simibubi.create.foundation.block.entity.behaviour.ValueBox.IconValueBox;
-import com.simibubi.create.foundation.block.entity.behaviour.ValueBox.TextValueBox;
-import com.simibubi.create.foundation.utility.Lang;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.world.ClientWorld;
 import net.minecraft.text.LiteralText;
@@ -19,6 +10,16 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Vec3d;
+
+import com.simibubi.create.AllItems;
+import com.simibubi.create.AllKeys;
+import com.simibubi.create.CreateClient;
+import com.simibubi.create.foundation.block.entity.BlockEntityBehaviour;
+import com.simibubi.create.foundation.block.entity.SmartBlockEntity;
+import com.simibubi.create.foundation.block.entity.behaviour.ValueBox;
+import com.simibubi.create.foundation.block.entity.behaviour.ValueBox.IconValueBox;
+import com.simibubi.create.foundation.block.entity.behaviour.ValueBox.TextValueBox;
+import com.simibubi.create.foundation.utility.Lang;
 
 public class ScrollValueRenderer {
 

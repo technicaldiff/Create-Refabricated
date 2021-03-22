@@ -6,13 +6,10 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Supplier;
 
-import org.apache.commons.lang3.tuple.Pair;
-import org.lwjgl.opengl.GL11;
-
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
-import com.simibubi.create.AllBlockPartials;
-import com.simibubi.create.foundation.block.render.HiddenBakedModel;
+import org.apache.commons.lang3.tuple.Pair;
+import org.lwjgl.opengl.GL11;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.client.MinecraftClient;
@@ -25,6 +22,9 @@ import net.minecraft.client.render.model.BakedModel;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
+
+import com.simibubi.create.AllBlockPartials;
+import com.simibubi.create.foundation.block.render.HiddenBakedModel;
 
 public class SuperByteBufferCache {
 

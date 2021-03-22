@@ -1,6 +1,17 @@
 package com.simibubi.create.foundation.mixin;
 
 import org.objectweb.asm.Opcodes;
+
+import net.minecraft.client.network.ClientPlayNetworkHandler;
+import net.minecraft.client.world.ClientWorld;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityType;
+import net.minecraft.network.PacketByteBuf;
+import net.minecraft.network.packet.s2c.play.EntitySpawnS2CPacket;
+
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
+
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -13,15 +24,6 @@ import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 import com.simibubi.create.foundation.networking.entity.ClientSpawnHandlerEntity;
 import com.simibubi.create.foundation.networking.entity.ExtraSpawnDataEntity;
 import com.simibubi.create.foundation.utility.extensions.EntitySpawnS2CPacketExtensions;
-
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
-import net.minecraft.client.network.ClientPlayNetworkHandler;
-import net.minecraft.client.world.ClientWorld;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityType;
-import net.minecraft.network.PacketByteBuf;
-import net.minecraft.network.packet.s2c.play.EntitySpawnS2CPacket;
 
 @Environment(EnvType.CLIENT)
 @Mixin(ClientPlayNetworkHandler.class)

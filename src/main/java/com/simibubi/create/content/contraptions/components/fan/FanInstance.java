@@ -1,5 +1,16 @@
 package com.simibubi.create.content.contraptions.components.fan;
 
+import static net.minecraft.state.property.Properties.FACING;
+
+import net.minecraft.block.entity.BlockEntityType;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Direction;
+import net.minecraft.util.math.MathHelper;
+import net.minecraft.world.LightType;
+
+import net.fabricmc.api.EnvType;
+import net.fabricmc.loader.api.FabricLoader;
+
 import com.simibubi.create.AllBlockPartials;
 import com.simibubi.create.content.contraptions.base.KineticBlockInstance;
 import com.simibubi.create.content.contraptions.base.Rotating;
@@ -8,15 +19,6 @@ import com.simibubi.create.foundation.render.backend.instancing.InstanceKey;
 import com.simibubi.create.foundation.render.backend.instancing.InstancedBlockRenderer;
 import com.simibubi.create.foundation.render.backend.instancing.InstancedModel;
 import com.simibubi.create.foundation.render.backend.instancing.InstancedTileRenderRegistry;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.loader.api.FabricLoader;
-import net.minecraft.block.entity.BlockEntityType;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Direction;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.world.LightType;
-
-import static net.minecraft.state.property.Properties.FACING;
 
 public class FanInstance extends KineticBlockInstance<EncasedFanBlockEntity> {
     public static void register(BlockEntityType<? extends EncasedFanBlockEntity> type) {

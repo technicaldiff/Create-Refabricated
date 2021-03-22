@@ -8,13 +8,6 @@ import java.util.Set;
 
 import org.apache.commons.lang3.tuple.Pair;
 
-import com.simibubi.create.AllBlockEntities;
-import com.simibubi.create.content.logistics.block.belts.tunnel.BeltTunnelBlock.Shape;
-import com.simibubi.create.foundation.block.entity.BlockEntityBehaviour;
-import com.simibubi.create.foundation.block.entity.SmartBlockEntity;
-import com.simibubi.create.foundation.gui.widgets.InterpolatedChasingValue;
-import com.simibubi.create.foundation.utility.Iterate;
-
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.nbt.CompoundTag;
@@ -25,6 +18,13 @@ import net.minecraft.state.property.Properties;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Direction.Axis;
 import net.minecraft.util.math.Direction.AxisDirection;
+
+import com.simibubi.create.AllBlockEntities;
+import com.simibubi.create.content.logistics.block.belts.tunnel.BeltTunnelBlock.Shape;
+import com.simibubi.create.foundation.block.entity.BlockEntityBehaviour;
+import com.simibubi.create.foundation.block.entity.SmartBlockEntity;
+import com.simibubi.create.foundation.gui.widgets.InterpolatedChasingValue;
+import com.simibubi.create.foundation.utility.Iterate;
 
 public class BeltTunnelTileEntity extends SmartBlockEntity {
 

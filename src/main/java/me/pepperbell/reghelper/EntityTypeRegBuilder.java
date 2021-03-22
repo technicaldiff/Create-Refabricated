@@ -1,9 +1,10 @@
 package me.pepperbell.reghelper;
 
-import net.fabricmc.api.EnvType;
-import net.fabricmc.fabric.api.client.rendereregistry.v1.EntityRendererRegistry;
-import net.fabricmc.fabric.api.object.builder.v1.entity.FabricEntityTypeBuilder;
-import net.fabricmc.loader.api.FabricLoader;
+import java.util.ArrayDeque;
+import java.util.Deque;
+import java.util.function.Consumer;
+import java.util.function.Supplier;
+
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.EntityType.EntityFactory;
@@ -11,10 +12,10 @@ import net.minecraft.entity.SpawnGroup;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 
-import java.util.ArrayDeque;
-import java.util.Deque;
-import java.util.function.Consumer;
-import java.util.function.Supplier;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.fabric.api.client.rendereregistry.v1.EntityRendererRegistry;
+import net.fabricmc.fabric.api.object.builder.v1.entity.FabricEntityTypeBuilder;
+import net.fabricmc.loader.api.FabricLoader;
 
 public class EntityTypeRegBuilder<T extends Entity> {
 	private final Identifier identifier;

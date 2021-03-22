@@ -2,13 +2,6 @@ package com.simibubi.create.foundation.render;
 
 import java.util.Iterator;
 
-import com.simibubi.create.Create;
-import com.simibubi.create.content.contraptions.components.structureMovement.render.ContraptionRenderDispatcher;
-import com.simibubi.create.foundation.render.backend.instancing.InstanceRendered;
-import com.simibubi.create.foundation.utility.AnimationTickHolder;
-import com.simibubi.create.foundation.utility.MatrixStacker;
-import com.simibubi.create.foundation.utility.worldWrappers.PlacementSimulationWorld;
-
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.client.render.OverlayTexture;
@@ -20,6 +13,12 @@ import net.minecraft.client.util.math.Vector4f;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Matrix4f;
 import net.minecraft.world.World;
+
+import com.simibubi.create.Create;
+import com.simibubi.create.content.contraptions.components.structureMovement.render.ContraptionRenderDispatcher;
+import com.simibubi.create.foundation.utility.AnimationTickHolder;
+import com.simibubi.create.foundation.utility.MatrixStacker;
+import com.simibubi.create.foundation.utility.worldWrappers.PlacementSimulationWorld;
 
 public class BlockEntityRenderHelper {
 

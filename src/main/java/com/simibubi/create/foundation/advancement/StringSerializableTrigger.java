@@ -7,20 +7,20 @@ import java.util.function.Supplier;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
-import org.jetbrains.annotations.Nullable;
-
 import com.google.common.collect.Sets;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSyntaxException;
-import com.simibubi.create.registrate.util.nullness.MethodsReturnNonnullByDefault;
-import com.simibubi.create.registrate.util.nullness.ParametersAreNonnullByDefault;
+import org.jetbrains.annotations.Nullable;
 
 import net.minecraft.predicate.entity.AdvancementEntityPredicateDeserializer;
 import net.minecraft.predicate.entity.AdvancementEntityPredicateSerializer;
 import net.minecraft.predicate.entity.EntityPredicate;
 import net.minecraft.server.network.ServerPlayerEntity;
+
+import com.simibubi.create.registrate.util.nullness.MethodsReturnNonnullByDefault;
+import com.simibubi.create.registrate.util.nullness.ParametersAreNonnullByDefault;
 
 @MethodsReturnNonnullByDefault
 @ParametersAreNonnullByDefault

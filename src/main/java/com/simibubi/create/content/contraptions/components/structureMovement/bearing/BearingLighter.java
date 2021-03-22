@@ -1,12 +1,13 @@
 package com.simibubi.create.content.contraptions.components.structureMovement.bearing;
 
-import com.simibubi.create.content.contraptions.components.structureMovement.ContraptionLighter;
-import com.simibubi.create.foundation.render.backend.light.GridAlignedBB;
+import java.util.Set;
+
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Vec3d;
 
-import java.util.Set;
+import com.simibubi.create.content.contraptions.components.structureMovement.ContraptionLighter;
+import com.simibubi.create.foundation.render.backend.light.GridAlignedBB;
 
 public class BearingLighter extends ContraptionLighter<BearingContraption> {
 

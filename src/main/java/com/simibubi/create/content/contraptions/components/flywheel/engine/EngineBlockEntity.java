@@ -1,17 +1,18 @@
 package com.simibubi.create.content.contraptions.components.flywheel.engine;
 
-import com.simibubi.create.AllBlocks;
-import com.simibubi.create.content.contraptions.components.flywheel.FlywheelBlock;
-import com.simibubi.create.content.contraptions.components.flywheel.FlywheelBlockEntity;
-import com.simibubi.create.foundation.block.entity.BlockEntityBehaviour;
-import com.simibubi.create.foundation.block.entity.SmartBlockEntity;
+import java.util.List;
+
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 
-import java.util.List;
+import com.simibubi.create.AllBlocks;
+import com.simibubi.create.content.contraptions.components.flywheel.FlywheelBlock;
+import com.simibubi.create.content.contraptions.components.flywheel.FlywheelBlockEntity;
+import com.simibubi.create.foundation.block.entity.BlockEntityBehaviour;
+import com.simibubi.create.foundation.block.entity.SmartBlockEntity;
 
 public class EngineBlockEntity extends SmartBlockEntity {
 

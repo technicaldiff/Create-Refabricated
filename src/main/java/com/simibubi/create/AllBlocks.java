@@ -5,6 +5,26 @@ import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
+import net.minecraft.block.AbstractBlock;
+import net.minecraft.block.Block;
+import net.minecraft.block.Blocks;
+import net.minecraft.block.MaterialColor;
+import net.minecraft.client.color.block.BlockColorProvider;
+import net.minecraft.client.render.RenderLayer;
+import net.minecraft.client.render.model.BakedModel;
+import net.minecraft.item.ItemGroup;
+import net.minecraft.sound.BlockSoundGroup;
+import net.minecraft.util.DyeColor;
+import net.minecraft.util.Identifier;
+
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
+import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
+import net.fabricmc.fabric.api.tool.attribute.v1.FabricToolTags;
+import net.fabricmc.loader.api.FabricLoader;
+
+import me.pepperbell.reghelper.BlockRegBuilder;
+
 import com.simibubi.create.content.AllSections;
 import com.simibubi.create.content.contraptions.base.CasingBlock;
 import com.simibubi.create.content.contraptions.components.clock.CuckooClockBlock;
@@ -34,7 +54,13 @@ import com.simibubi.create.content.contraptions.relays.elementary.BracketedKinet
 import com.simibubi.create.content.contraptions.relays.elementary.CogWheelBlock;
 import com.simibubi.create.content.contraptions.relays.elementary.CogwheelBlockItem;
 import com.simibubi.create.content.contraptions.relays.elementary.ShaftBlock;
-import com.simibubi.create.content.contraptions.relays.encased.*;
+import com.simibubi.create.content.contraptions.relays.encased.AdjustablePulleyBlock;
+import com.simibubi.create.content.contraptions.relays.encased.CasingConnectivity;
+import com.simibubi.create.content.contraptions.relays.encased.ClutchBlock;
+import com.simibubi.create.content.contraptions.relays.encased.EncasedBeltBlock;
+import com.simibubi.create.content.contraptions.relays.encased.EncasedCTBehaviour;
+import com.simibubi.create.content.contraptions.relays.encased.EncasedShaftBlock;
+import com.simibubi.create.content.contraptions.relays.encased.GearshiftBlock;
 import com.simibubi.create.content.contraptions.relays.gauge.GaugeBlock;
 import com.simibubi.create.content.contraptions.relays.gearbox.GearboxBlock;
 import com.simibubi.create.content.logistics.block.belts.tunnel.BeltTunnelBlock;
@@ -56,24 +82,6 @@ import com.simibubi.create.foundation.config.StressConfigDefaults;
 import com.simibubi.create.foundation.data.BuilderConsumers;
 import com.simibubi.create.foundation.data.SharedProperties;
 import com.simibubi.create.foundation.item.TooltipHelper;
-
-import me.pepperbell.reghelper.BlockRegBuilder;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
-import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
-import net.fabricmc.fabric.api.tool.attribute.v1.FabricToolTags;
-import net.fabricmc.loader.api.FabricLoader;
-import net.minecraft.block.AbstractBlock;
-import net.minecraft.block.Block;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.MaterialColor;
-import net.minecraft.client.color.block.BlockColorProvider;
-import net.minecraft.client.render.RenderLayer;
-import net.minecraft.client.render.model.BakedModel;
-import net.minecraft.item.ItemGroup;
-import net.minecraft.sound.BlockSoundGroup;
-import net.minecraft.util.DyeColor;
-import net.minecraft.util.Identifier;
 
 public class AllBlocks {
 	private static AllSections currentSection;

@@ -1,5 +1,27 @@
 package com.simibubi.create.content.logistics.block.mechanicalArm;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.jetbrains.annotations.Nullable;
+
+import net.minecraft.block.BlockState;
+import net.minecraft.block.JukeboxBlock;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.ListTag;
+import net.minecraft.nbt.Tag;
+import net.minecraft.text.Text;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Box;
+import net.minecraft.util.math.Direction;
+import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.Vec3d;
+
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
+import net.fabricmc.fabric.api.util.NbtType;
+
 import com.simibubi.create.AllBlockEntities;
 import com.simibubi.create.Create;
 import com.simibubi.create.content.contraptions.base.KineticBlockEntity;
@@ -16,21 +38,6 @@ import com.simibubi.create.foundation.utility.AngleHelper;
 import com.simibubi.create.foundation.utility.Lang;
 import com.simibubi.create.foundation.utility.NBTHelper;
 import com.simibubi.create.foundation.utility.VecHelper;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
-import net.fabricmc.fabric.api.util.NbtType;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.JukeboxBlock;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.ListTag;
-import net.minecraft.nbt.Tag;
-import net.minecraft.text.Text;
-import net.minecraft.util.math.*;
-import org.jetbrains.annotations.Nullable;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class ArmBlockEntity extends KineticBlockEntity {
 

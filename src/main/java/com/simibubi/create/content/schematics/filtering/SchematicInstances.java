@@ -1,10 +1,12 @@
 package com.simibubi.create.content.schematics.filtering;
 
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.TimeUnit;
+
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
-import com.simibubi.create.content.schematics.SchematicWorld;
-import com.simibubi.create.content.schematics.item.SchematicItem;
-import com.simibubi.create.foundation.utility.WorldAttached;
+import org.jetbrains.annotations.Nullable;
+
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtHelper;
@@ -12,10 +14,10 @@ import net.minecraft.structure.Structure;
 import net.minecraft.structure.StructurePlacementData;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import org.jetbrains.annotations.Nullable;
 
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.TimeUnit;
+import com.simibubi.create.content.schematics.SchematicWorld;
+import com.simibubi.create.content.schematics.item.SchematicItem;
+import com.simibubi.create.foundation.utility.WorldAttached;
 
 public class SchematicInstances {
 

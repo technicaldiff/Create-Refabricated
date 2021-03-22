@@ -1,5 +1,10 @@
 package com.simibubi.create.content.logistics.block.mechanicalArm;
 
+import net.minecraft.block.entity.BlockEntityType;
+
+import net.fabricmc.api.EnvType;
+import net.fabricmc.loader.api.FabricLoader;
+
 import com.simibubi.create.AllBlockPartials;
 import com.simibubi.create.content.contraptions.base.KineticBlockEntity;
 import com.simibubi.create.content.contraptions.base.RotatingData;
@@ -7,9 +12,6 @@ import com.simibubi.create.content.contraptions.base.SingleRotatingInstance;
 import com.simibubi.create.foundation.render.backend.instancing.InstancedBlockRenderer;
 import com.simibubi.create.foundation.render.backend.instancing.InstancedModel;
 import com.simibubi.create.foundation.render.backend.instancing.InstancedTileRenderRegistry;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.loader.api.FabricLoader;
-import net.minecraft.block.entity.BlockEntityType;
 
 public class ArmInstance extends SingleRotatingInstance {
     public static void register(BlockEntityType<? extends KineticBlockEntity> type) {

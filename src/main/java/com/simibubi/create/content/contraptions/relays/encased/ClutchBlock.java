@@ -1,12 +1,13 @@
 package com.simibubi.create.content.contraptions.relays.encased;
 
-import com.simibubi.create.AllBlockEntities;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
+
+import com.simibubi.create.AllBlockEntities;
 
 public class ClutchBlock extends GearshiftBlock {
 

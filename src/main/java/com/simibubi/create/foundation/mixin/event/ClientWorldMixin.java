@@ -1,17 +1,20 @@
 package com.simibubi.create.foundation.mixin.event;
 
-import com.simibubi.create.events.custom.ClientWorldEvents;
-import com.simibubi.create.foundation.utility.MixinHelper;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.world.ClientWorld;
+
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
+
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+
+import com.simibubi.create.events.custom.ClientWorldEvents;
+import com.simibubi.create.foundation.utility.MixinHelper;
 
 @Mixin(ClientWorld.class)
 @Environment(EnvType.CLIENT)

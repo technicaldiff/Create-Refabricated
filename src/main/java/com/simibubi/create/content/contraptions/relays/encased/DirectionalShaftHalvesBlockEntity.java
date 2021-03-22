@@ -1,9 +1,10 @@
 package com.simibubi.create.content.contraptions.relays.encased;
 
-import com.simibubi.create.content.contraptions.base.KineticBlockEntity;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
+
+import com.simibubi.create.content.contraptions.base.KineticBlockEntity;
 
 public class DirectionalShaftHalvesBlockEntity extends KineticBlockEntity {
 

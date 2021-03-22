@@ -6,12 +6,7 @@ import java.util.Optional;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
-import com.simibubi.create.AllBlockEntities;
-import com.simibubi.create.foundation.block.entity.BlockEntityBehaviour;
-import com.simibubi.create.foundation.block.entity.SmartBlockEntity;
-import com.simibubi.create.foundation.item.TooltipHelper;
-import com.simibubi.create.foundation.utility.Couple;
-import com.simibubi.create.foundation.utility.Pair;
+import org.jetbrains.annotations.Nullable;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntityType;
@@ -27,7 +22,13 @@ import net.minecraft.text.Text;
 import net.minecraft.text.Texts;
 import net.minecraft.util.math.Vec2f;
 import net.minecraft.util.math.Vec3d;
-import org.jetbrains.annotations.Nullable;
+
+import com.simibubi.create.AllBlockEntities;
+import com.simibubi.create.foundation.block.entity.BlockEntityBehaviour;
+import com.simibubi.create.foundation.block.entity.SmartBlockEntity;
+import com.simibubi.create.foundation.item.TooltipHelper;
+import com.simibubi.create.foundation.utility.Couple;
+import com.simibubi.create.foundation.utility.Pair;
 
 public class NixieTubeBlockEntity extends SmartBlockEntity {
 

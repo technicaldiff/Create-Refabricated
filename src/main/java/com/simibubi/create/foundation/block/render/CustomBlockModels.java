@@ -1,9 +1,5 @@
 package com.simibubi.create.foundation.block.render;
 
-import net.minecraft.block.Block;
-import net.minecraft.client.render.model.BakedModel;
-import org.apache.commons.lang3.tuple.Pair;
-
 import java.util.ArrayList;
 import java.util.IdentityHashMap;
 import java.util.List;
@@ -11,6 +7,11 @@ import java.util.Map;
 import java.util.function.BiConsumer;
 import java.util.function.Function;
 import java.util.function.Supplier;
+
+import org.apache.commons.lang3.tuple.Pair;
+
+import net.minecraft.block.Block;
+import net.minecraft.client.render.model.BakedModel;
 
 public class CustomBlockModels {
 	private List<Pair<Supplier<? extends Block>, Function<BakedModel, ? extends BakedModel>>> registered;

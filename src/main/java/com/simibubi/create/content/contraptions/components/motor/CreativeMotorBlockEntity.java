@@ -1,5 +1,7 @@
 package com.simibubi.create.content.contraptions.components.motor;
 
+import java.util.List;
+
 import com.simibubi.create.AllBlockEntities;
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.Create;
@@ -8,8 +10,6 @@ import com.simibubi.create.foundation.block.entity.BlockEntityBehaviour;
 import com.simibubi.create.foundation.block.entity.behaviour.CenteredSideValueBoxTransform;
 import com.simibubi.create.foundation.block.entity.behaviour.scrollvalue.ScrollValueBehaviour;
 import com.simibubi.create.foundation.utility.Lang;
-
-import java.util.List;
 
 public class CreativeMotorBlockEntity extends GeneratingKineticBlockEntity {
 

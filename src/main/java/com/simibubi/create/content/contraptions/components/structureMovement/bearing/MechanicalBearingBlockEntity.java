@@ -1,14 +1,9 @@
 package com.simibubi.create.content.contraptions.components.structureMovement.bearing;
 
-import com.simibubi.create.AllBlockEntities;
-import com.simibubi.create.content.contraptions.base.GeneratingKineticBlockEntity;
-import com.simibubi.create.content.contraptions.components.structureMovement.*;
-import com.simibubi.create.foundation.block.entity.BlockEntityBehaviour;
-import com.simibubi.create.foundation.block.entity.behaviour.scrollvalue.ScrollOptionBehaviour;
-import com.simibubi.create.foundation.item.TooltipHelper;
-import com.simibubi.create.foundation.utility.AngleHelper;
-import com.simibubi.create.foundation.utility.BlockHelper;
-import com.simibubi.create.foundation.utility.Lang;
+import static net.minecraft.state.property.Properties.FACING;
+
+import java.util.List;
+
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.nbt.CompoundTag;
@@ -18,9 +13,19 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.MathHelper;
 
-import java.util.List;
-
-import static net.minecraft.state.property.Properties.FACING;
+import com.simibubi.create.AllBlockEntities;
+import com.simibubi.create.content.contraptions.base.GeneratingKineticBlockEntity;
+import com.simibubi.create.content.contraptions.components.structureMovement.AbstractContraptionEntity;
+import com.simibubi.create.content.contraptions.components.structureMovement.AssemblyException;
+import com.simibubi.create.content.contraptions.components.structureMovement.ControlContraption;
+import com.simibubi.create.content.contraptions.components.structureMovement.ControlledContraptionEntity;
+import com.simibubi.create.content.contraptions.components.structureMovement.DisplayAssemblyExceptionsProvider;
+import com.simibubi.create.foundation.block.entity.BlockEntityBehaviour;
+import com.simibubi.create.foundation.block.entity.behaviour.scrollvalue.ScrollOptionBehaviour;
+import com.simibubi.create.foundation.item.TooltipHelper;
+import com.simibubi.create.foundation.utility.AngleHelper;
+import com.simibubi.create.foundation.utility.BlockHelper;
+import com.simibubi.create.foundation.utility.Lang;
 
 public class MechanicalBearingBlockEntity extends GeneratingKineticBlockEntity implements BearingBlockEntity, DisplayAssemblyExceptionsProvider {
 

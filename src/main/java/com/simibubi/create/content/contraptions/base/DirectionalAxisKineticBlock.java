@@ -1,7 +1,5 @@
 package com.simibubi.create.content.contraptions.base;
 
-import com.simibubi.create.foundation.utility.DirectionHelper;
-import com.simibubi.create.foundation.utility.Iterate;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.item.ItemPlacementContext;
@@ -12,6 +10,9 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldView;
+
+import com.simibubi.create.foundation.utility.DirectionHelper;
+import com.simibubi.create.foundation.utility.Iterate;
 
 public abstract class DirectionalAxisKineticBlock extends DirectionalKineticBlock {
 

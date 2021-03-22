@@ -1,15 +1,17 @@
 package com.simibubi.create.foundation.gui;
 
-import com.simibubi.create.foundation.gui.widgets.AbstractSimiWidget;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
+import java.util.ArrayList;
+import java.util.List;
+
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.widget.AbstractButtonWidget;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.text.LiteralText;
 
-import java.util.ArrayList;
-import java.util.List;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
+
+import com.simibubi.create.foundation.gui.widgets.AbstractSimiWidget;
 
 @Environment(EnvType.CLIENT)
 public abstract class AbstractSimiScreen extends Screen {

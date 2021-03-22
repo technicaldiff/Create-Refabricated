@@ -10,6 +10,23 @@ import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
+import net.minecraft.client.color.item.ItemColorProvider;
+import net.minecraft.client.render.model.BakedModel;
+import net.minecraft.entity.EquipmentSlot;
+import net.minecraft.item.FoodComponent;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemGroup;
+import net.minecraft.tag.Tag;
+import net.minecraft.util.Identifier;
+import net.minecraft.util.Rarity;
+
+import net.fabricmc.api.EnvType;
+import net.fabricmc.fabric.api.client.rendering.v1.BuiltinItemRendererRegistry;
+import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
+import net.fabricmc.loader.api.FabricLoader;
+
+import me.pepperbell.reghelper.ItemRegBuilder;
+
 import com.simibubi.create.content.AllSections;
 import com.simibubi.create.content.contraptions.components.structureMovement.glue.SuperGlueItem;
 import com.simibubi.create.content.contraptions.components.structureMovement.mounted.MinecartContraptionItem;
@@ -18,7 +35,13 @@ import com.simibubi.create.content.contraptions.relays.belt.item.BeltConnectorIt
 import com.simibubi.create.content.contraptions.relays.gearbox.VerticalGearboxItem;
 import com.simibubi.create.content.contraptions.wrench.WrenchItem;
 import com.simibubi.create.content.contraptions.wrench.WrenchModel;
-import com.simibubi.create.content.curiosities.*;
+import com.simibubi.create.content.curiosities.BuildersTeaItem;
+import com.simibubi.create.content.curiosities.ChromaticCompoundColor;
+import com.simibubi.create.content.curiosities.ChromaticCompoundItem;
+import com.simibubi.create.content.curiosities.CombustibleItem;
+import com.simibubi.create.content.curiosities.RefinedRadianceItem;
+import com.simibubi.create.content.curiosities.ShadowSteelItem;
+import com.simibubi.create.content.curiosities.TreeFertilizerItem;
 import com.simibubi.create.content.curiosities.symmetry.SymmetryWandItem;
 import com.simibubi.create.content.curiosities.symmetry.client.SymmetryWandModel;
 import com.simibubi.create.content.curiosities.tools.DeforesterItem;
@@ -31,21 +54,6 @@ import com.simibubi.create.foundation.block.render.CustomRenderedItemModel;
 import com.simibubi.create.foundation.item.HiddenIngredientItem;
 import com.simibubi.create.foundation.item.TagDependentIngredientItem;
 import com.simibubi.create.foundation.item.TooltipHelper;
-
-import me.pepperbell.reghelper.ItemRegBuilder;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.fabric.api.client.rendering.v1.BuiltinItemRendererRegistry;
-import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
-import net.fabricmc.loader.api.FabricLoader;
-import net.minecraft.client.color.item.ItemColorProvider;
-import net.minecraft.client.render.model.BakedModel;
-import net.minecraft.entity.EquipmentSlot;
-import net.minecraft.item.FoodComponent;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemGroup;
-import net.minecraft.tag.Tag;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.Rarity;
 
 public class AllItems {
 	private static AllSections currentSection;

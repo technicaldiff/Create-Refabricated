@@ -1,12 +1,13 @@
 package com.simibubi.create.content.contraptions.components.structureMovement.pulley;
 
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
+
 import com.simibubi.create.content.contraptions.components.structureMovement.AssemblyException;
 import com.simibubi.create.content.contraptions.components.structureMovement.ContraptionLighter;
 import com.simibubi.create.content.contraptions.components.structureMovement.ContraptionType;
 import com.simibubi.create.content.contraptions.components.structureMovement.TranslatingContraption;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
 
 public class PulleyContraption extends TranslatingContraption {
 

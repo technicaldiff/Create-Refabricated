@@ -1,11 +1,10 @@
 package com.simibubi.create.content.logistics.block.mechanicalArm;
 
+import java.util.function.Supplier;
+
 import com.google.common.collect.ImmutableMap;
-import com.simibubi.create.AllBlockPartials;
-import com.simibubi.create.foundation.utility.NBTHelper;
-import com.simibubi.create.foundation.utility.VecHelper;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
+import org.jetbrains.annotations.Nullable;
+
 import net.minecraft.block.BlockState;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.nbt.CompoundTag;
@@ -14,9 +13,13 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.BlockView;
-import org.jetbrains.annotations.Nullable;
 
-import java.util.function.Supplier;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
+
+import com.simibubi.create.AllBlockPartials;
+import com.simibubi.create.foundation.utility.NBTHelper;
+import com.simibubi.create.foundation.utility.VecHelper;
 
 public abstract class ArmInteractionPoint {
 

@@ -1,13 +1,15 @@
 package com.simibubi.create.content.contraptions.components.structureMovement;
 
-import com.simibubi.create.content.contraptions.components.structureMovement.render.RenderedContraption;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
+
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
+
+import com.simibubi.create.content.contraptions.components.structureMovement.render.RenderedContraption;
 
 public abstract class MovementBehaviour {
 

@@ -1,11 +1,7 @@
 package com.simibubi.create.content.contraptions.components.structureMovement.piston;
 
-import com.simibubi.create.content.contraptions.base.KineticBlockEntity;
-import com.simibubi.create.content.contraptions.components.structureMovement.*;
-import com.simibubi.create.foundation.block.entity.BlockEntityBehaviour;
-import com.simibubi.create.foundation.block.entity.behaviour.ValueBoxTransform;
-import com.simibubi.create.foundation.block.entity.behaviour.scrollvalue.ScrollOptionBehaviour;
-import com.simibubi.create.foundation.utility.Lang;
+import java.util.List;
+
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.nbt.CompoundTag;
@@ -13,7 +9,16 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 
-import java.util.List;
+import com.simibubi.create.content.contraptions.base.KineticBlockEntity;
+import com.simibubi.create.content.contraptions.components.structureMovement.AbstractContraptionEntity;
+import com.simibubi.create.content.contraptions.components.structureMovement.AssemblyException;
+import com.simibubi.create.content.contraptions.components.structureMovement.ControlContraption;
+import com.simibubi.create.content.contraptions.components.structureMovement.ControlledContraptionEntity;
+import com.simibubi.create.content.contraptions.components.structureMovement.DisplayAssemblyExceptionsProvider;
+import com.simibubi.create.foundation.block.entity.BlockEntityBehaviour;
+import com.simibubi.create.foundation.block.entity.behaviour.ValueBoxTransform;
+import com.simibubi.create.foundation.block.entity.behaviour.scrollvalue.ScrollOptionBehaviour;
+import com.simibubi.create.foundation.utility.Lang;
 
 public abstract class LinearActuatorBlockEntity extends KineticBlockEntity implements ControlContraption, DisplayAssemblyExceptionsProvider {
 

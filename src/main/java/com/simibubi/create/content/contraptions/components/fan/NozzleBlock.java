@@ -1,10 +1,5 @@
 package com.simibubi.create.content.contraptions.components.fan;
 
-import com.simibubi.create.AllBlockEntities;
-import com.simibubi.create.AllShapes;
-import com.simibubi.create.foundation.block.ProperDirectionalBlock;
-import com.simibubi.create.registrate.util.nullness.MethodsReturnNonnullByDefault;
-import com.simibubi.create.registrate.util.nullness.ParametersAreNonnullByDefault;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockEntityProvider;
 import net.minecraft.block.BlockState;
@@ -19,6 +14,12 @@ import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldView;
+
+import com.simibubi.create.AllBlockEntities;
+import com.simibubi.create.AllShapes;
+import com.simibubi.create.foundation.block.ProperDirectionalBlock;
+import com.simibubi.create.registrate.util.nullness.MethodsReturnNonnullByDefault;
+import com.simibubi.create.registrate.util.nullness.ParametersAreNonnullByDefault;
 
 @MethodsReturnNonnullByDefault
 @ParametersAreNonnullByDefault

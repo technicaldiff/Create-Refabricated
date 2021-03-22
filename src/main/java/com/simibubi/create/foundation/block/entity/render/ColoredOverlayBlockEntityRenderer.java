@@ -1,6 +1,5 @@
 package com.simibubi.create.foundation.block.entity.render;
 
-import com.simibubi.create.foundation.render.SuperByteBuffer;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.client.render.RenderLayer;
@@ -10,6 +9,8 @@ import net.minecraft.client.render.block.entity.BlockEntityRenderDispatcher;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+
+import com.simibubi.create.foundation.render.SuperByteBuffer;
 
 public abstract class ColoredOverlayBlockEntityRenderer<T extends BlockEntity> extends SafeBlockEntityRenderer<T> {
 

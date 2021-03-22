@@ -1,15 +1,18 @@
 package com.simibubi.create.content.palettes;
 
+import java.util.function.Supplier;
+
 import com.google.common.collect.ImmutableList;
+
+import net.minecraft.block.Block;
+import net.minecraft.client.render.RenderLayer;
+
+import me.pepperbell.reghelper.BlockRegBuilder;
+
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.AllColorHandlers;
 import com.simibubi.create.AllItems;
 import com.simibubi.create.foundation.utility.Lang;
-import me.pepperbell.reghelper.BlockRegBuilder;
-import net.minecraft.block.Block;
-import net.minecraft.client.render.RenderLayer;
-
-import java.util.function.Supplier;
 
 public class PalettesVariantEntry {
 	public ImmutableList<? extends Block> registeredBlocks;

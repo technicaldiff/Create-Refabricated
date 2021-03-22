@@ -4,9 +4,10 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Consumer;
 
-import me.pepperbell.reghelper.BlockRegBuilder;
 import net.minecraft.block.Block;
 import net.minecraft.util.Identifier;
+
+import me.pepperbell.reghelper.BlockRegBuilder;
 
 public class StressConfigDefaults {
 	/**

@@ -1,7 +1,5 @@
 package com.simibubi.create.content.logistics.block.diodes;
 
-import com.simibubi.create.AllBlockEntities;
-import com.simibubi.create.AllBlocks;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockEntityProvider;
 import net.minecraft.block.BlockState;
@@ -11,6 +9,9 @@ import net.minecraft.state.property.BooleanProperty;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.world.BlockView;
+
+import com.simibubi.create.AllBlockEntities;
+import com.simibubi.create.AllBlocks;
 
 public class AdjustableRepeaterBlock extends AbstractDiodeBlock implements BlockEntityProvider {
 

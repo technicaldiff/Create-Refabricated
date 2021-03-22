@@ -1,7 +1,7 @@
 package com.simibubi.create.content.contraptions.components.actors;
 
-import com.simibubi.create.content.contraptions.base.KineticBlockEntity;
-import com.simibubi.create.foundation.utility.VecHelper;
+import java.util.concurrent.atomic.AtomicInteger;
+
 import net.minecraft.block.AirBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -18,7 +18,8 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.GameRules;
 
-import java.util.concurrent.atomic.AtomicInteger;
+import com.simibubi.create.content.contraptions.base.KineticBlockEntity;
+import com.simibubi.create.foundation.utility.VecHelper;
 
 public abstract class BlockBreakingKineticBlockEntity extends KineticBlockEntity {
 

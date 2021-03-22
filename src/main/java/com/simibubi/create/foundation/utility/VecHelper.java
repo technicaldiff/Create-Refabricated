@@ -4,9 +4,6 @@ import java.util.Random;
 
 import org.jetbrains.annotations.Nullable;
 
-import com.simibubi.create.foundation.mixin.accessor.GameRendererAccessor;
-import com.simibubi.create.foundation.mixin.accessor.Vector3fAccessor;
-
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.Camera;
 import net.minecraft.client.util.math.Vector3f;
@@ -21,6 +18,9 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Quaternion;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.math.Vec3i;
+
+import com.simibubi.create.foundation.mixin.accessor.GameRendererAccessor;
+import com.simibubi.create.foundation.mixin.accessor.Vector3fAccessor;
 
 public class VecHelper {
 	public static final Vec3d CENTER_OF_ORIGIN = new Vec3d(.5, .5, .5);

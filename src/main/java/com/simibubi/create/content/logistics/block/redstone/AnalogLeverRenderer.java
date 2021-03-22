@@ -1,10 +1,5 @@
 package com.simibubi.create.content.logistics.block.redstone;
 
-import com.simibubi.create.AllBlockPartials;
-import com.simibubi.create.foundation.block.entity.render.SafeBlockEntityRenderer;
-import com.simibubi.create.foundation.render.SuperByteBuffer;
-import com.simibubi.create.foundation.utility.AngleHelper;
-import com.simibubi.create.foundation.utility.ColorHelper;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.enums.WallMountLocation;
 import net.minecraft.client.render.RenderLayer;
@@ -14,6 +9,12 @@ import net.minecraft.client.render.WorldRenderer;
 import net.minecraft.client.render.block.entity.BlockEntityRenderDispatcher;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.math.Direction;
+
+import com.simibubi.create.AllBlockPartials;
+import com.simibubi.create.foundation.block.entity.render.SafeBlockEntityRenderer;
+import com.simibubi.create.foundation.render.SuperByteBuffer;
+import com.simibubi.create.foundation.utility.AngleHelper;
+import com.simibubi.create.foundation.utility.ColorHelper;
 
 public class AnalogLeverRenderer extends SafeBlockEntityRenderer<AnalogLeverBlockEntity> {
 

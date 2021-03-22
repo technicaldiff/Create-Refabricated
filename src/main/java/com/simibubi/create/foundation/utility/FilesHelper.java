@@ -13,9 +13,10 @@ import com.google.gson.JsonParser;
 import com.google.gson.internal.Streams;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
-import com.simibubi.create.Create;
 
 import net.minecraft.nbt.CompoundTag;
+
+import com.simibubi.create.Create;
 
 public class FilesHelper {
 

@@ -1,7 +1,5 @@
 package com.simibubi.create.content.logistics.block.belts.tunnel;
 
-import com.simibubi.create.AllBlockEntities;
-import com.simibubi.create.foundation.block.entity.BlockEntityBehaviour;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockEntityProvider;
 import net.minecraft.block.BlockState;
@@ -11,6 +9,8 @@ import net.minecraft.util.math.Direction;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
+
+import com.simibubi.create.AllBlockEntities;
 
 public class BrassTunnelBlock extends BeltTunnelBlock implements BlockEntityProvider {
 

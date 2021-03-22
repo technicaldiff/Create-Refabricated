@@ -1,5 +1,18 @@
 package com.simibubi.create.content.contraptions.components.structureMovement.pulley;
 
+import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
+import net.minecraft.block.Waterloggable;
+import net.minecraft.fluid.FluidState;
+import net.minecraft.fluid.Fluids;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.state.property.Properties;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Box;
+import net.minecraft.util.math.Direction;
+import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.Vec3d;
+
 import com.simibubi.create.AllBlockEntities;
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.Create;
@@ -10,14 +23,6 @@ import com.simibubi.create.content.contraptions.components.structureMovement.Con
 import com.simibubi.create.content.contraptions.components.structureMovement.piston.LinearActuatorBlockEntity;
 import com.simibubi.create.foundation.block.entity.behaviour.CenteredSideValueBoxTransform;
 import com.simibubi.create.foundation.block.entity.behaviour.ValueBoxTransform;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.Waterloggable;
-import net.minecraft.fluid.FluidState;
-import net.minecraft.fluid.Fluids;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.state.property.Properties;
-import net.minecraft.util.math.*;
 
 public class PulleyBlockEntity extends LinearActuatorBlockEntity {
 

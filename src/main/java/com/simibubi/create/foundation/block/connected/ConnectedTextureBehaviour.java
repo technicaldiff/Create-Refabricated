@@ -1,12 +1,13 @@
 package com.simibubi.create.foundation.block.connected;
 
-import com.simibubi.create.foundation.block.connected.CTSpriteShifter.CTType;
 import net.minecraft.block.BlockState;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Direction.Axis;
 import net.minecraft.util.math.Direction.AxisDirection;
 import net.minecraft.world.BlockRenderView;
+
+import com.simibubi.create.foundation.block.connected.CTSpriteShifter.CTType;
 
 public abstract class ConnectedTextureBehaviour {
 

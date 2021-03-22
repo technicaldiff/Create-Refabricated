@@ -2,10 +2,10 @@ package com.simibubi.create.foundation.render.backend.gl.shader;
 
 import org.lwjgl.opengl.GL20;
 
+import net.minecraft.util.Identifier;
+
 import com.simibubi.create.foundation.render.backend.Backend;
 import com.simibubi.create.foundation.render.backend.gl.GlObject;
-
-import net.minecraft.util.Identifier;
 
 public class GlShader extends GlObject {
 

@@ -1,8 +1,9 @@
 package com.simibubi.create.foundation.config;
 
-import com.simibubi.create.foundation.config.util.Validatable;
 import me.shedaniel.autoconfig.ConfigData;
 import me.shedaniel.autoconfig.annotation.ConfigEntry.Gui.Tooltip;
+
+import com.simibubi.create.foundation.config.util.Validatable;
 
 public class CFluids implements Validatable {
 	@Tooltip

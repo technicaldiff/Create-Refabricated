@@ -1,10 +1,11 @@
 package com.simibubi.create.foundation.block.entity;
 
-import net.fabricmc.fabric.api.block.entity.BlockEntityClientSerializable;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.nbt.CompoundTag;
+
+import net.fabricmc.fabric.api.block.entity.BlockEntityClientSerializable;
 
 public abstract class SyncedBlockEntity extends BlockEntity implements BlockEntityClientSerializable {
 

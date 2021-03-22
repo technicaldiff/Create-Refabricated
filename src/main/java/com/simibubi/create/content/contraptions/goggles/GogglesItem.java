@@ -1,6 +1,5 @@
 package com.simibubi.create.content.contraptions.goggles;
 
-import com.simibubi.create.AllItems;
 import net.minecraft.block.DispenserBlock;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.mob.MobEntity;
@@ -12,6 +11,8 @@ import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
 import net.minecraft.world.World;
+
+import com.simibubi.create.AllItems;
 
 public class GogglesItem extends Item {
 	public GogglesItem(Settings properties) {

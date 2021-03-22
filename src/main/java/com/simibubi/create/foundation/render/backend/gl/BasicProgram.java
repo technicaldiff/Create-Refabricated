@@ -2,13 +2,13 @@ package com.simibubi.create.foundation.render.backend.gl;
 
 import org.lwjgl.opengl.GL20;
 
+import net.minecraft.util.Identifier;
+import net.minecraft.util.math.Matrix4f;
+
 import com.simibubi.create.foundation.render.backend.Backend;
 import com.simibubi.create.foundation.render.backend.gl.shader.GlProgram;
 import com.simibubi.create.foundation.render.backend.gl.shader.ProgramFogMode;
 import com.simibubi.create.foundation.utility.AnimationTickHolder;
-
-import net.minecraft.util.Identifier;
-import net.minecraft.util.math.Matrix4f;
 
 public class BasicProgram extends GlProgram {
 	protected final int uTime;

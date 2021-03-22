@@ -1,8 +1,7 @@
 package com.simibubi.create.content.contraptions.base;
 
-import com.simibubi.create.content.contraptions.KineticNetwork;
-import com.simibubi.create.content.contraptions.goggles.GoggleInformationProvider;
-import com.simibubi.create.foundation.utility.Lang;
+import java.util.List;
+
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.text.LiteralText;
@@ -10,7 +9,9 @@ import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.math.BlockPos;
 
-import java.util.List;
+import com.simibubi.create.content.contraptions.KineticNetwork;
+import com.simibubi.create.content.contraptions.goggles.GoggleInformationProvider;
+import com.simibubi.create.foundation.utility.Lang;
 
 public abstract class GeneratingKineticBlockEntity extends KineticBlockEntity {
 	public boolean reActivateSource;

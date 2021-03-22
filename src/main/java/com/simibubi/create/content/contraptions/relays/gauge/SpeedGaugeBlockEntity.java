@@ -1,5 +1,11 @@
 package com.simibubi.create.content.contraptions.relays.gauge;
 
+import java.util.List;
+
+import net.minecraft.text.Text;
+import net.minecraft.util.Formatting;
+import net.minecraft.util.math.MathHelper;
+
 import com.simibubi.create.AllBlockEntities;
 import com.simibubi.create.Create;
 import com.simibubi.create.content.contraptions.base.Rotating;
@@ -7,11 +13,6 @@ import com.simibubi.create.content.contraptions.goggles.GogglesItem;
 import com.simibubi.create.foundation.advancement.AllTriggers;
 import com.simibubi.create.foundation.utility.ColorHelper;
 import com.simibubi.create.foundation.utility.Lang;
-import net.minecraft.text.Text;
-import net.minecraft.util.Formatting;
-import net.minecraft.util.math.MathHelper;
-
-import java.util.List;
 
 public class SpeedGaugeBlockEntity extends GaugeBlockEntity {
 

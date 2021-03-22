@@ -1,8 +1,5 @@
 package com.simibubi.create.content.contraptions.components.structureMovement.glue;
 
-import com.simibubi.create.foundation.utility.VecHelper;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
@@ -18,6 +15,11 @@ import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
+
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
+
+import com.simibubi.create.foundation.utility.VecHelper;
 
 public class SuperGlueItem extends Item {
 

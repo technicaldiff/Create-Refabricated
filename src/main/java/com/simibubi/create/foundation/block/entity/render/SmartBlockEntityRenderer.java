@@ -1,10 +1,11 @@
 package com.simibubi.create.foundation.block.entity.render;
 
-import com.simibubi.create.foundation.block.entity.SmartBlockEntity;
-import com.simibubi.create.foundation.block.entity.behaviour.linked.LinkRenderer;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.block.entity.BlockEntityRenderDispatcher;
 import net.minecraft.client.util.math.MatrixStack;
+
+import com.simibubi.create.foundation.block.entity.SmartBlockEntity;
+import com.simibubi.create.foundation.block.entity.behaviour.linked.LinkRenderer;
 
 public class SmartBlockEntityRenderer<T extends SmartBlockEntity> extends SafeBlockEntityRenderer<T> {
 	

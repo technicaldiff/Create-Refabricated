@@ -2,6 +2,12 @@ package com.simibubi.create;
 
 import java.util.function.Supplier;
 
+import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.block.entity.BlockEntityType;
+import net.minecraft.util.Identifier;
+
+import me.pepperbell.reghelper.BlockEntityTypeRegBuilder;
+
 import com.simibubi.create.content.contraptions.base.BackHalfShaftInstance;
 import com.simibubi.create.content.contraptions.base.HalfShaftInstance;
 import com.simibubi.create.content.contraptions.base.HorizontalHalfShaftInstance;
@@ -64,13 +70,12 @@ import com.simibubi.create.content.logistics.block.diodes.AdjustableRepeaterRend
 import com.simibubi.create.content.logistics.block.mechanicalArm.ArmBlockEntity;
 import com.simibubi.create.content.logistics.block.mechanicalArm.ArmInstance;
 import com.simibubi.create.content.logistics.block.mechanicalArm.ArmRenderer;
-import com.simibubi.create.content.logistics.block.redstone.*;
+import com.simibubi.create.content.logistics.block.redstone.AnalogLeverBlockEntity;
+import com.simibubi.create.content.logistics.block.redstone.AnalogLeverRenderer;
+import com.simibubi.create.content.logistics.block.redstone.NixieTubeBlockEntity;
+import com.simibubi.create.content.logistics.block.redstone.NixieTubeRenderer;
+import com.simibubi.create.content.logistics.block.redstone.RedstoneLinkBlockEntity;
 import com.simibubi.create.foundation.block.entity.render.SmartBlockEntityRenderer;
-
-import me.pepperbell.reghelper.BlockEntityTypeRegBuilder;
-import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.block.entity.BlockEntityType;
-import net.minecraft.util.Identifier;
 
 public class AllBlockEntities {
 	// Schematics

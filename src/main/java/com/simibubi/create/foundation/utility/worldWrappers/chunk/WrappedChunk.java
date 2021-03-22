@@ -5,12 +5,10 @@ import java.util.Map;
 import java.util.Set;
 import java.util.stream.Stream;
 
-import org.jetbrains.annotations.Nullable;
-
-import com.simibubi.create.foundation.utility.worldWrappers.PlacementSimulationWorld;
-
 import it.unimi.dsi.fastutil.longs.LongSet;
 import it.unimi.dsi.fastutil.shorts.ShortList;
+import org.jetbrains.annotations.Nullable;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
@@ -29,6 +27,8 @@ import net.minecraft.world.chunk.ChunkSection;
 import net.minecraft.world.chunk.ChunkStatus;
 import net.minecraft.world.chunk.UpgradeData;
 import net.minecraft.world.gen.feature.StructureFeature;
+
+import com.simibubi.create.foundation.utility.worldWrappers.PlacementSimulationWorld;
 
 public class WrappedChunk implements Chunk {
 

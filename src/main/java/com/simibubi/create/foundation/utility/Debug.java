@@ -1,10 +1,11 @@
 package com.simibubi.create.foundation.utility;
 
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.text.LiteralText;
 import net.minecraft.util.Formatting;
+
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 
 /** Deprecated so simi doensn't forget to remove debug calls **/
 @Environment(value = EnvType.CLIENT)

@@ -1,13 +1,14 @@
 package com.simibubi.create.content.contraptions.components.turntable;
 
-import com.simibubi.create.AllBlocks;
-import com.simibubi.create.foundation.utility.AnimationTickHolder;
-import com.simibubi.create.foundation.utility.VecHelper;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
+
+import com.simibubi.create.AllBlocks;
+import com.simibubi.create.foundation.utility.AnimationTickHolder;
+import com.simibubi.create.foundation.utility.VecHelper;
 
 public class TurntableHandler {
 

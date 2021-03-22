@@ -1,11 +1,12 @@
 package com.simibubi.create.content.curiosities.tools;
 
-import com.simibubi.create.AllItems;
+import java.util.function.Supplier;
+
 import net.minecraft.item.ToolMaterial;
 import net.minecraft.recipe.Ingredient;
 import net.minecraft.util.Lazy;
 
-import java.util.function.Supplier;
+import com.simibubi.create.AllItems;
 
 public enum AllToolTiers implements ToolMaterial {
 

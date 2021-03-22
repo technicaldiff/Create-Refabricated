@@ -1,21 +1,12 @@
 package com.simibubi.create.content.contraptions.base;
 
-import com.simibubi.create.Create;
-import com.simibubi.create.CreateClient;
-import com.simibubi.create.content.contraptions.KineticNetwork;
-import com.simibubi.create.content.contraptions.RotationPropagator;
-import com.simibubi.create.content.contraptions.base.Rotating.SpeedLevel;
-import com.simibubi.create.content.contraptions.base.Rotating.StressImpact;
-import com.simibubi.create.content.contraptions.goggles.GoggleInformationProvider;
-import com.simibubi.create.content.contraptions.goggles.HoveringInformationProvider;
-import com.simibubi.create.foundation.block.entity.BlockEntityBehaviour;
-import com.simibubi.create.foundation.block.entity.SmartBlockEntity;
-import com.simibubi.create.foundation.item.TooltipHelper;
-import com.simibubi.create.foundation.render.backend.FastRenderDispatcher;
-import com.simibubi.create.foundation.render.backend.instancing.InstanceRendered;
-import com.simibubi.create.foundation.utility.Lang;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
+import static net.minecraft.util.Formatting.GOLD;
+import static net.minecraft.util.Formatting.GRAY;
+
+import java.util.List;
+
+import org.jetbrains.annotations.Nullable;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
@@ -32,12 +23,24 @@ import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Direction.Axis;
 import net.minecraft.util.math.Direction.AxisDirection;
 import net.minecraft.world.World;
-import org.jetbrains.annotations.Nullable;
 
-import java.util.List;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 
-import static net.minecraft.util.Formatting.GOLD;
-import static net.minecraft.util.Formatting.GRAY;
+import com.simibubi.create.Create;
+import com.simibubi.create.CreateClient;
+import com.simibubi.create.content.contraptions.KineticNetwork;
+import com.simibubi.create.content.contraptions.RotationPropagator;
+import com.simibubi.create.content.contraptions.base.Rotating.SpeedLevel;
+import com.simibubi.create.content.contraptions.base.Rotating.StressImpact;
+import com.simibubi.create.content.contraptions.goggles.GoggleInformationProvider;
+import com.simibubi.create.content.contraptions.goggles.HoveringInformationProvider;
+import com.simibubi.create.foundation.block.entity.BlockEntityBehaviour;
+import com.simibubi.create.foundation.block.entity.SmartBlockEntity;
+import com.simibubi.create.foundation.item.TooltipHelper;
+import com.simibubi.create.foundation.render.backend.FastRenderDispatcher;
+import com.simibubi.create.foundation.render.backend.instancing.InstanceRendered;
+import com.simibubi.create.foundation.utility.Lang;
 
 public abstract class KineticBlockEntity extends SmartBlockEntity
 	implements GoggleInformationProvider, HoveringInformationProvider, InstanceRendered {

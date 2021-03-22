@@ -1,8 +1,14 @@
 package com.simibubi.create.content.schematics;
 
-import com.simibubi.create.Create;
-import com.simibubi.create.foundation.utility.BlockHelper;
-import com.simibubi.create.foundation.utility.worldWrappers.WrappedWorld;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.function.Predicate;
+import java.util.stream.Stream;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockEntityProvider;
 import net.minecraft.block.BlockState;
@@ -27,9 +33,9 @@ import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.biome.BuiltinBiomes;
 
-import java.util.*;
-import java.util.function.Predicate;
-import java.util.stream.Stream;
+import com.simibubi.create.Create;
+import com.simibubi.create.foundation.utility.BlockHelper;
+import com.simibubi.create.foundation.utility.worldWrappers.WrappedWorld;
 
 public class SchematicWorld extends WrappedWorld implements ServerWorldAccess {
 

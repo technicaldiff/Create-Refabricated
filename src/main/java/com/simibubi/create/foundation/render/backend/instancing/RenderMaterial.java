@@ -7,19 +7,9 @@ import java.util.function.Consumer;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
 
-import org.apache.commons.lang3.tuple.Pair;
-
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
-import com.simibubi.create.AllBlockPartials;
-import com.simibubi.create.content.contraptions.base.KineticBlockEntityRenderer;
-import com.simibubi.create.foundation.render.Compartment;
-import com.simibubi.create.foundation.render.SuperByteBufferCache;
-import com.simibubi.create.foundation.render.backend.Backend;
-import com.simibubi.create.foundation.render.backend.FastRenderDispatcher;
-import com.simibubi.create.foundation.render.backend.gl.BasicProgram;
-import com.simibubi.create.foundation.render.backend.gl.shader.ProgramSpec;
-import com.simibubi.create.foundation.render.backend.gl.shader.ShaderCallback;
+import org.apache.commons.lang3.tuple.Pair;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.client.MinecraftClient;
@@ -30,6 +20,16 @@ import net.minecraft.client.render.model.BakedModel;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Matrix4f;
+
+import com.simibubi.create.AllBlockPartials;
+import com.simibubi.create.content.contraptions.base.KineticBlockEntityRenderer;
+import com.simibubi.create.foundation.render.Compartment;
+import com.simibubi.create.foundation.render.SuperByteBufferCache;
+import com.simibubi.create.foundation.render.backend.Backend;
+import com.simibubi.create.foundation.render.backend.FastRenderDispatcher;
+import com.simibubi.create.foundation.render.backend.gl.BasicProgram;
+import com.simibubi.create.foundation.render.backend.gl.shader.ProgramSpec;
+import com.simibubi.create.foundation.render.backend.gl.shader.ShaderCallback;
 
 public class RenderMaterial<P extends BasicProgram, MODEL extends InstancedModel<?>> {
 

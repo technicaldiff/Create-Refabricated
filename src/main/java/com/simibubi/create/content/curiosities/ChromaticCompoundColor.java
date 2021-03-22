@@ -1,11 +1,12 @@
 package com.simibubi.create.content.curiosities;
 
-import com.simibubi.create.foundation.utility.AnimationTickHolder;
-import com.simibubi.create.foundation.utility.ColorHelper;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.color.item.ItemColorProvider;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.MathHelper;
+
+import com.simibubi.create.foundation.utility.AnimationTickHolder;
+import com.simibubi.create.foundation.utility.ColorHelper;
 
 public class ChromaticCompoundColor implements ItemColorProvider {
 	

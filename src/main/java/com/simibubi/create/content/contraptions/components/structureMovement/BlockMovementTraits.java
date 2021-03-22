@@ -1,5 +1,32 @@
 package com.simibubi.create.content.contraptions.components.structureMovement;
 
+import net.minecraft.block.AbstractPressurePlateBlock;
+import net.minecraft.block.AbstractRailBlock;
+import net.minecraft.block.AbstractRedstoneGateBlock;
+import net.minecraft.block.BellBlock;
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.CarpetBlock;
+import net.minecraft.block.DoorBlock;
+import net.minecraft.block.FenceGateBlock;
+import net.minecraft.block.FlowerPotBlock;
+import net.minecraft.block.GrindstoneBlock;
+import net.minecraft.block.HorizontalFacingBlock;
+import net.minecraft.block.LadderBlock;
+import net.minecraft.block.RedstoneWireBlock;
+import net.minecraft.block.TorchBlock;
+import net.minecraft.block.WallMountedBlock;
+import net.minecraft.block.WallRedstoneTorchBlock;
+import net.minecraft.block.WallTorchBlock;
+import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.block.enums.Attachment;
+import net.minecraft.block.enums.WallMountLocation;
+import net.minecraft.block.piston.PistonBehavior;
+import net.minecraft.state.property.Properties;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Direction;
+import net.minecraft.world.World;
+
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.content.contraptions.components.crank.HandCrankBlock;
 import com.simibubi.create.content.contraptions.components.fan.NozzleBlock;
@@ -12,15 +39,6 @@ import com.simibubi.create.content.contraptions.components.structureMovement.mou
 import com.simibubi.create.content.contraptions.components.structureMovement.pulley.PulleyBlock;
 import com.simibubi.create.content.contraptions.components.structureMovement.pulley.PulleyBlockEntity;
 import com.simibubi.create.content.logistics.block.redstone.RedstoneLinkBlock;
-import net.minecraft.block.*;
-import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.block.enums.Attachment;
-import net.minecraft.block.enums.WallMountLocation;
-import net.minecraft.block.piston.PistonBehavior;
-import net.minecraft.state.property.Properties;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Direction;
-import net.minecraft.world.World;
 
 // TODO FIX WHOLE CLASS WITH CHECKS
 public class BlockMovementTraits {

@@ -1,10 +1,11 @@
 package com.simibubi.create.content.contraptions.components.structureMovement;
 
-import com.simibubi.create.Create;
 import net.minecraft.block.BlockState;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.text.TranslatableText;
 import net.minecraft.util.math.BlockPos;
+
+import com.simibubi.create.Create;
 
 public class AssemblyException extends Exception {
 

@@ -1,5 +1,7 @@
 package com.simibubi.create.content.contraptions.particle;
 
+import java.util.Locale;
+
 import com.mojang.brigadier.StringReader;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.serialization.Codec;
@@ -7,16 +9,17 @@ import com.mojang.serialization.DataResult;
 import com.mojang.serialization.DynamicOps;
 import com.mojang.serialization.codecs.PrimitiveCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import com.simibubi.create.AllParticleTypes;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
+
 import net.minecraft.client.particle.ParticleManager;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.particle.ParticleEffect;
 import net.minecraft.particle.ParticleType;
 import net.minecraft.util.math.Direction.Axis;
 
-import java.util.Locale;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
+
+import com.simibubi.create.AllParticleTypes;
 
 public class RotationIndicatorParticleData
 	implements ParticleEffect, CustomParticleDataWithSprite<RotationIndicatorParticleData> {

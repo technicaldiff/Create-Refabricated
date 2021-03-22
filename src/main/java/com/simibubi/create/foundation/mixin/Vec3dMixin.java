@@ -1,11 +1,12 @@
 package com.simibubi.create.foundation.mixin;
 
-import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Shadow;
+import net.minecraft.util.math.Vec3d;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.util.math.Vec3d;
+
+import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Shadow;
 
 @Environment(EnvType.SERVER)
 @Mixin(Vec3d.class)

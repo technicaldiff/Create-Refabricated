@@ -1,8 +1,9 @@
 package com.simibubi.create.foundation.block.connected;
 
+import net.minecraft.util.Identifier;
+
 import com.simibubi.create.Create;
 import com.simibubi.create.foundation.block.render.SpriteShifter;
-import net.minecraft.util.Identifier;
 
 public class CTSpriteShifter extends SpriteShifter {
 

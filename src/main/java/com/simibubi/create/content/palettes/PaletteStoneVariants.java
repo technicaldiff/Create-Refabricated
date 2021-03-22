@@ -1,9 +1,9 @@
 package com.simibubi.create.content.palettes;
 
+import java.util.function.Supplier;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
-
-import java.util.function.Supplier;
 
 public enum PaletteStoneVariants {
 

@@ -1,14 +1,5 @@
 package com.simibubi.create.content.contraptions.components.waterwheel;
 
-import com.simibubi.create.AllBlockEntities;
-import com.simibubi.create.AllBlocks;
-import com.simibubi.create.Create;
-import com.simibubi.create.content.contraptions.base.HorizontalKineticBlock;
-import com.simibubi.create.foundation.block.IBE;
-import com.simibubi.create.foundation.utility.Iterate;
-import com.simibubi.create.foundation.utility.worldWrappers.WrappedWorld;
-import com.simibubi.create.registrate.util.nullness.MethodsReturnNonnullByDefault;
-import com.simibubi.create.registrate.util.nullness.ParametersAreNonnullByDefault;
 import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -25,6 +16,16 @@ import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
 import net.minecraft.world.WorldView;
+
+import com.simibubi.create.AllBlockEntities;
+import com.simibubi.create.AllBlocks;
+import com.simibubi.create.Create;
+import com.simibubi.create.content.contraptions.base.HorizontalKineticBlock;
+import com.simibubi.create.foundation.block.IBE;
+import com.simibubi.create.foundation.utility.Iterate;
+import com.simibubi.create.foundation.utility.worldWrappers.WrappedWorld;
+import com.simibubi.create.registrate.util.nullness.MethodsReturnNonnullByDefault;
+import com.simibubi.create.registrate.util.nullness.ParametersAreNonnullByDefault;
 
 @ParametersAreNonnullByDefault
 @MethodsReturnNonnullByDefault

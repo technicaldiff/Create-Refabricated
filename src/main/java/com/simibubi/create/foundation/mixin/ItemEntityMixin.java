@@ -1,14 +1,7 @@
 package com.simibubi.create.foundation.mixin;
 
-import com.simibubi.create.AllItems;
-import com.simibubi.create.content.curiosities.ChromaticCompoundItem;
-import com.simibubi.create.content.curiosities.RefinedRadianceItem;
-import com.simibubi.create.content.curiosities.ShadowSteelItem;
-import com.simibubi.create.foundation.utility.MixinHelper;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.ItemEntity;
-import net.minecraft.item.ItemStack;
-import org.lwjgl.system.CallbackI;
+
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;

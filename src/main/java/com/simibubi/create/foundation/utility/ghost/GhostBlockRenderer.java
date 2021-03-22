@@ -8,9 +8,6 @@ import java.util.Random;
 import org.jetbrains.annotations.Nullable;
 import org.lwjgl.system.MemoryStack;
 
-import com.simibubi.create.foundation.block.render.HiddenBakedModel;
-import com.simibubi.create.foundation.renderState.SuperRenderTypeBuffer;
-
 import net.minecraft.block.BlockState;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.OverlayTexture;
@@ -29,6 +26,9 @@ import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Matrix4f;
 import net.minecraft.util.math.Vec3i;
+
+import com.simibubi.create.foundation.block.render.HiddenBakedModel;
+import com.simibubi.create.foundation.renderState.SuperRenderTypeBuffer;
 
 public abstract class GhostBlockRenderer {
 

@@ -1,6 +1,7 @@
 package com.simibubi.create.foundation.block.entity.behaviour.linked;
 
-import com.simibubi.create.foundation.block.entity.BlockEntityBehaviour;
+import java.util.Arrays;
+
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
@@ -9,7 +10,7 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.world.World;
 
-import java.util.Arrays;
+import com.simibubi.create.foundation.block.entity.BlockEntityBehaviour;
 
 public class LinkHandler {
 

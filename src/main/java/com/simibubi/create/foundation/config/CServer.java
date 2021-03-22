@@ -1,8 +1,9 @@
 package com.simibubi.create.foundation.config;
 
-import com.simibubi.create.foundation.config.util.Validatable;
 import me.shedaniel.autoconfig.ConfigData;
 import me.shedaniel.autoconfig.annotation.ConfigEntry;
+
+import com.simibubi.create.foundation.config.util.Validatable;
 
 public class CServer implements Validatable {
 	// infrastructure           public ConfigGroup infrastructure = group(0, "infrastructure", Comments.infrastructure);

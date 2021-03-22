@@ -1,7 +1,8 @@
 package com.simibubi.create.content.contraptions.relays.belt;
 
-import com.simibubi.create.foundation.utility.Lang;
 import net.minecraft.util.StringIdentifiable;
+
+import com.simibubi.create.foundation.utility.Lang;
 
 public enum BeltPart implements StringIdentifiable {
 	START, MIDDLE, END, PULLEY;

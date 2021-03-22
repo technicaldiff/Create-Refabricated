@@ -1,12 +1,14 @@
 package com.simibubi.create.content.contraptions.base;
 
-import com.simibubi.create.foundation.render.backend.instancing.InstancedBlockRenderer;
-import com.simibubi.create.foundation.render.backend.instancing.InstancedTileRenderRegistry;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.state.property.Properties;
 import net.minecraft.util.math.Direction;
+
+import net.fabricmc.api.EnvType;
+import net.fabricmc.loader.api.FabricLoader;
+
+import com.simibubi.create.foundation.render.backend.instancing.InstancedBlockRenderer;
+import com.simibubi.create.foundation.render.backend.instancing.InstancedTileRenderRegistry;
 
 public class BackHalfShaftInstance extends HalfShaftInstance {
     public static void register(BlockEntityType<? extends KineticBlockEntity> type) {

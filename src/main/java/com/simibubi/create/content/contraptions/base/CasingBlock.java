@@ -1,10 +1,11 @@
 package com.simibubi.create.content.contraptions.base;
 
-import com.simibubi.create.content.contraptions.wrench.Wrenchable;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.item.ItemUsageContext;
 import net.minecraft.util.ActionResult;
+
+import com.simibubi.create.content.contraptions.wrench.Wrenchable;
 
 public class CasingBlock extends Block implements Wrenchable {
 

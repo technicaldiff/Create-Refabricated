@@ -1,17 +1,18 @@
 package com.simibubi.create.content.contraptions.components.structureMovement.mounted;
 
-import com.simibubi.create.AllBlockEntities;
-import com.simibubi.create.AllShapes;
-import com.simibubi.create.content.contraptions.components.structureMovement.AssemblyException;
-import com.simibubi.create.content.contraptions.components.structureMovement.OrientedContraptionEntity;
-import com.simibubi.create.content.contraptions.components.structureMovement.mounted.CartAssemblerBlockEntity.CartMovementMode;
-import com.simibubi.create.content.contraptions.wrench.Wrenchable;
-import com.simibubi.create.content.schematics.ItemRequirement;
-import com.simibubi.create.content.schematics.ItemRequirement.ItemUseType;
-import com.simibubi.create.content.schematics.SpecialBlockItemRequirement;
-import com.simibubi.create.foundation.block.IBE;
-import com.simibubi.create.foundation.utility.VecHelper;
-import net.minecraft.block.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
+
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
+import net.minecraft.block.AbstractRailBlock;
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockEntityProvider;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.ShapeContext;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.enums.RailShape;
 import net.minecraft.block.piston.PistonBehavior;
@@ -46,13 +47,18 @@ import net.minecraft.util.shape.VoxelShapes;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldView;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import com.simibubi.create.AllBlockEntities;
+import com.simibubi.create.AllShapes;
+import com.simibubi.create.content.contraptions.components.structureMovement.AssemblyException;
+import com.simibubi.create.content.contraptions.components.structureMovement.OrientedContraptionEntity;
+import com.simibubi.create.content.contraptions.components.structureMovement.mounted.CartAssemblerBlockEntity.CartMovementMode;
+import com.simibubi.create.content.contraptions.wrench.Wrenchable;
+import com.simibubi.create.content.schematics.ItemRequirement;
+import com.simibubi.create.content.schematics.ItemRequirement.ItemUseType;
+import com.simibubi.create.content.schematics.SpecialBlockItemRequirement;
+import com.simibubi.create.foundation.block.IBE;
+import com.simibubi.create.foundation.utility.VecHelper;
 
 public class CartAssemblerBlock extends AbstractRailBlock
 	implements IBE<CartAssemblerBlockEntity>, Wrenchable, SpecialBlockItemRequirement, BlockEntityProvider {

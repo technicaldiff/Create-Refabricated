@@ -1,8 +1,8 @@
 package com.simibubi.create.content.logistics.block.diodes;
 
-import com.simibubi.create.AllBlockEntities;
-
 import static com.simibubi.create.content.logistics.block.diodes.AdjustableRepeaterBlock.POWERING;
+
+import com.simibubi.create.AllBlockEntities;
 
 public class AdjustablePulseRepeaterBlockEntity extends AdjustableRepeaterBlockEntity {
 

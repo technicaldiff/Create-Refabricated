@@ -1,9 +1,5 @@
 package com.simibubi.create.foundation.gui;
 
-import com.simibubi.create.Create;
-import com.simibubi.create.foundation.utility.ColorHelper;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawableHelper;
 import net.minecraft.client.render.RenderLayer;
@@ -13,6 +9,12 @@ import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.client.util.math.Vector3f;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.Vec3d;
+
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
+
+import com.simibubi.create.Create;
+import com.simibubi.create.foundation.utility.ColorHelper;
 
 public class AllIcons {
 

@@ -1,20 +1,21 @@
 package com.simibubi.create.content.logistics.block.diodes;
 
-import com.simibubi.create.AllBlockEntities;
-import com.simibubi.create.foundation.block.entity.BlockEntityBehaviour;
-import com.simibubi.create.foundation.block.entity.SmartBlockEntity;
-import com.simibubi.create.foundation.block.entity.behaviour.scrollvalue.ScrollValueBehaviour;
-import com.simibubi.create.foundation.utility.Lang;
+import static com.simibubi.create.content.logistics.block.diodes.AdjustableRepeaterBlock.POWERING;
+import static net.minecraft.block.AbstractRedstoneGateBlock.POWERED;
+
+import java.util.List;
+
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.text.Text;
 import net.minecraft.util.math.MathHelper;
 
-import java.util.List;
-
-import static com.simibubi.create.content.logistics.block.diodes.AdjustableRepeaterBlock.POWERING;
-import static net.minecraft.block.AbstractRedstoneGateBlock.POWERED;
+import com.simibubi.create.AllBlockEntities;
+import com.simibubi.create.foundation.block.entity.BlockEntityBehaviour;
+import com.simibubi.create.foundation.block.entity.SmartBlockEntity;
+import com.simibubi.create.foundation.block.entity.behaviour.scrollvalue.ScrollValueBehaviour;
+import com.simibubi.create.foundation.utility.Lang;
 
 public class AdjustableRepeaterBlockEntity extends SmartBlockEntity {
 

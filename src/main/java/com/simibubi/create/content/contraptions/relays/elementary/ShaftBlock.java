@@ -1,11 +1,7 @@
 package com.simibubi.create.content.contraptions.relays.elementary;
 
-import com.simibubi.create.AllBlocks;
-import com.simibubi.create.AllShapes;
-import com.simibubi.create.foundation.utility.placement.PlacementHelper;
-import com.simibubi.create.foundation.utility.placement.PlacementHelpers;
-import com.simibubi.create.foundation.utility.placement.util.PoleHelper;
-import com.simibubi.create.registrate.util.nullness.MethodsReturnNonnullByDefault;
+import java.util.function.Predicate;
+
 import net.minecraft.block.BlockState;
 import net.minecraft.block.ShapeContext;
 import net.minecraft.entity.player.PlayerEntity;
@@ -20,7 +16,12 @@ import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 
-import java.util.function.Predicate;
+import com.simibubi.create.AllBlocks;
+import com.simibubi.create.AllShapes;
+import com.simibubi.create.foundation.utility.placement.PlacementHelper;
+import com.simibubi.create.foundation.utility.placement.PlacementHelpers;
+import com.simibubi.create.foundation.utility.placement.util.PoleHelper;
+import com.simibubi.create.registrate.util.nullness.MethodsReturnNonnullByDefault;
 
 public class ShaftBlock extends AbstractShaftBlock {
 	private static final int placementHelperId = PlacementHelpers.register(new ShaftPlacementHelper());

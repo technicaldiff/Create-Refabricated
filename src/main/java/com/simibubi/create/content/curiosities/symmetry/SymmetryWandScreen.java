@@ -1,6 +1,19 @@
 package com.simibubi.create.content.curiosities.symmetry;
 
-import com.simibubi.create.content.curiosities.symmetry.mirror.*;
+import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.client.util.math.Vector3f;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.text.LiteralText;
+import net.minecraft.text.Text;
+import net.minecraft.util.Hand;
+import net.minecraft.util.math.Vec3d;
+
+import com.simibubi.create.content.curiosities.symmetry.mirror.CrossPlaneMirror;
+import com.simibubi.create.content.curiosities.symmetry.mirror.EmptyMirror;
+import com.simibubi.create.content.curiosities.symmetry.mirror.PlaneMirror;
+import com.simibubi.create.content.curiosities.symmetry.mirror.SymmetryMirror;
+import com.simibubi.create.content.curiosities.symmetry.mirror.TriplePlaneMirror;
 import com.simibubi.create.foundation.gui.AbstractSimiScreen;
 import com.simibubi.create.foundation.gui.AllGuiTextures;
 import com.simibubi.create.foundation.gui.AllIcons;
@@ -12,14 +25,6 @@ import com.simibubi.create.foundation.gui.widgets.SelectionScrollInput;
 import com.simibubi.create.foundation.networking.AllPackets;
 import com.simibubi.create.foundation.networking.NbtPacket;
 import com.simibubi.create.foundation.utility.Lang;
-import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.client.util.math.Vector3f;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.text.LiteralText;
-import net.minecraft.text.Text;
-import net.minecraft.util.Hand;
-import net.minecraft.util.math.Vec3d;
 
 public class SymmetryWandScreen extends AbstractSimiScreen {
 

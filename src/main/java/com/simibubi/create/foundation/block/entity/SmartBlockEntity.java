@@ -1,16 +1,17 @@
 package com.simibubi.create.foundation.block.entity;
 
-import com.simibubi.create.foundation.block.entity.behaviour.BehaviourType;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.entity.BlockEntityType;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.util.Tickable;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
+
+import net.minecraft.block.BlockState;
+import net.minecraft.block.entity.BlockEntityType;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.util.Tickable;
+
+import com.simibubi.create.foundation.block.entity.behaviour.BehaviourType;
 
 public abstract class SmartBlockEntity extends SyncedBlockEntity implements Tickable {
 

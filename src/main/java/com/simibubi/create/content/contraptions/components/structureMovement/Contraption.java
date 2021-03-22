@@ -1,27 +1,30 @@
 package com.simibubi.create.content.contraptions.components.structureMovement;
 
-import com.simibubi.create.AllBlocks;
-import com.simibubi.create.AllMovementBehaviours;
-import com.simibubi.create.Create;
-import com.simibubi.create.content.contraptions.base.KineticBlockEntity;
-import com.simibubi.create.content.contraptions.base.Rotating;
-import com.simibubi.create.content.contraptions.components.structureMovement.bearing.MechanicalBearingBlock;
-import com.simibubi.create.content.contraptions.components.structureMovement.bearing.StabilizedContraption;
-import com.simibubi.create.content.contraptions.components.structureMovement.chassis.AbstractChassisBlock;
-import com.simibubi.create.content.contraptions.components.structureMovement.chassis.ChassisBlockEntity;
-import com.simibubi.create.content.contraptions.components.structureMovement.gantry.GantryPinionBlock;
-import com.simibubi.create.content.contraptions.components.structureMovement.glue.SuperGlueEntity;
-import com.simibubi.create.content.contraptions.components.structureMovement.glue.SuperGlueHandler;
-import com.simibubi.create.content.contraptions.components.structureMovement.pulley.PulleyBlock;
-import com.simibubi.create.content.contraptions.components.structureMovement.pulley.PulleyBlockEntity;
-import com.simibubi.create.content.contraptions.relays.advanced.GantryShaftBlock;
-import com.simibubi.create.foundation.render.backend.light.EmptyLighter;
-import com.simibubi.create.foundation.utility.*;
-import com.simibubi.create.foundation.utility.worldWrappers.WrappedWorld;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
-import net.fabricmc.fabric.api.util.NbtType;
-import net.minecraft.block.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Optional;
+import java.util.Queue;
+import java.util.Set;
+import java.util.UUID;
+import java.util.function.BiConsumer;
+
+import org.apache.commons.lang3.tuple.MutablePair;
+import org.apache.commons.lang3.tuple.Pair;
+import org.jetbrains.annotations.Nullable;
+
+import net.minecraft.block.AbstractButtonBlock;
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
+import net.minecraft.block.ChestBlock;
+import net.minecraft.block.DoorBlock;
+import net.minecraft.block.PressurePlateBlock;
+import net.minecraft.block.Waterloggable;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.enums.ChestType;
 import net.minecraft.block.enums.DoubleBlockHalf;
@@ -40,12 +43,34 @@ import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraft.world.chunk.BiMapPalette;
-import org.apache.commons.lang3.tuple.MutablePair;
-import org.apache.commons.lang3.tuple.Pair;
-import org.jetbrains.annotations.Nullable;
 
-import java.util.*;
-import java.util.function.BiConsumer;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
+import net.fabricmc.fabric.api.util.NbtType;
+
+import com.simibubi.create.AllBlocks;
+import com.simibubi.create.AllMovementBehaviours;
+import com.simibubi.create.Create;
+import com.simibubi.create.content.contraptions.base.KineticBlockEntity;
+import com.simibubi.create.content.contraptions.base.Rotating;
+import com.simibubi.create.content.contraptions.components.structureMovement.bearing.MechanicalBearingBlock;
+import com.simibubi.create.content.contraptions.components.structureMovement.bearing.StabilizedContraption;
+import com.simibubi.create.content.contraptions.components.structureMovement.chassis.AbstractChassisBlock;
+import com.simibubi.create.content.contraptions.components.structureMovement.chassis.ChassisBlockEntity;
+import com.simibubi.create.content.contraptions.components.structureMovement.gantry.GantryPinionBlock;
+import com.simibubi.create.content.contraptions.components.structureMovement.glue.SuperGlueEntity;
+import com.simibubi.create.content.contraptions.components.structureMovement.glue.SuperGlueHandler;
+import com.simibubi.create.content.contraptions.components.structureMovement.pulley.PulleyBlock;
+import com.simibubi.create.content.contraptions.components.structureMovement.pulley.PulleyBlockEntity;
+import com.simibubi.create.content.contraptions.relays.advanced.GantryShaftBlock;
+import com.simibubi.create.foundation.render.backend.light.EmptyLighter;
+import com.simibubi.create.foundation.utility.BlockFace;
+import com.simibubi.create.foundation.utility.Iterate;
+import com.simibubi.create.foundation.utility.NBTHelper;
+import com.simibubi.create.foundation.utility.NBTProcessors;
+import com.simibubi.create.foundation.utility.UniqueLinkedList;
+import com.simibubi.create.foundation.utility.VecHelper;
+import com.simibubi.create.foundation.utility.worldWrappers.WrappedWorld;
 
 public abstract class Contraption {
 
