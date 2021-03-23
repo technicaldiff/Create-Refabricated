@@ -10,13 +10,14 @@ import com.simibubi.create.content.contraptions.components.structureMovement.bea
 import com.simibubi.create.content.contraptions.components.structureMovement.bearing.StabilizedContraption;
 import com.simibubi.create.content.contraptions.components.structureMovement.gantry.GantryContraption;
 import com.simibubi.create.content.contraptions.components.structureMovement.mounted.MountedContraption;
+import com.simibubi.create.content.contraptions.components.structureMovement.piston.PistonContraption;
 import com.simibubi.create.content.contraptions.components.structureMovement.pulley.PulleyContraption;
 
 public class ContraptionType {
 
 	public static Map<String, ContraptionType> entries = new HashMap<>();
 	public static ContraptionType
-		//PISTON = register("piston", PistonContraption::new),
+		PISTON = register("piston", PistonContraption::new),
 		BEARING = register("bearing", BearingContraption::new),
 		PULLEY = register("pulley", PulleyContraption::new),
 		CLOCKWORK = register("clockwork", ClockworkContraption::new),

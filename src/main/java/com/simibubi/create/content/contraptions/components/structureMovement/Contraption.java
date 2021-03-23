@@ -13,6 +13,8 @@ import java.util.Set;
 import java.util.UUID;
 import java.util.function.BiConsumer;
 
+import net.minecraft.world.WorldAccess;
+
 import org.apache.commons.lang3.tuple.MutablePair;
 import org.apache.commons.lang3.tuple.Pair;
 import org.jetbrains.annotations.Nullable;
@@ -147,11 +149,11 @@ public abstract class Contraption {
 
 	protected abstract ContraptionType getType();
 
-	protected boolean customBlockPlacement(World world, BlockPos pos, BlockState state) {
+	protected boolean customBlockPlacement(WorldAccess world, BlockPos pos, BlockState state) {
 		return false;
 	}
 
-	protected boolean customBlockRemoval(World world, BlockPos pos, BlockState state) {
+	protected boolean customBlockRemoval(WorldAccess world, BlockPos pos, BlockState state) {
 		return false;
 	}
 

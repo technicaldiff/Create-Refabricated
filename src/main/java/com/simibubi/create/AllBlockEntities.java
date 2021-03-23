@@ -2,6 +2,9 @@ package com.simibubi.create;
 
 import java.util.function.Supplier;
 
+import com.simibubi.create.content.contraptions.components.structureMovement.piston.MechanicalPistonRenderer;
+import com.simibubi.create.content.contraptions.components.structureMovement.piston.MechanicalPistonTileEntity;
+
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.util.Identifier;
@@ -261,11 +264,11 @@ public class AllBlockEntities {
 		.onRegister(ArmInstance::register)
 		.register();
 
-	/*public static final BlockEntityType<MechanicalPistonBlockEntity> MECHANICAL_PISTON = createBuilder("mechanical_piston", MechanicalPistonBlockEntity::new)
+	public static final BlockEntityType<MechanicalPistonTileEntity> MECHANICAL_PISTON = createBuilder("mechanical_piston", MechanicalPistonTileEntity::create)
 		.validBlocks(AllBlocks.MECHANICAL_PISTON, AllBlocks.STICKY_MECHANICAL_PISTON)
 		.renderer(() -> MechanicalPistonRenderer::new)
 		.onRegister(ShaftInstance::register)
-		.register();*/
+		.register();
 
 	public static final BlockEntityType<WindmillBearingBlockEntity> WINDMILL_BEARING = createBuilder("windmill_bearing", WindmillBearingBlockEntity::new)
 		.validBlocks(AllBlocks.WINDMILL_BEARING)

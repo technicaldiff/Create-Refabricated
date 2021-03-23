@@ -5,10 +5,16 @@ import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
+import com.simibubi.create.content.contraptions.components.structureMovement.piston.MechanicalPistonBlock;
+
+import com.simibubi.create.content.contraptions.components.structureMovement.piston.MechanicalPistonHeadBlock;
+import com.simibubi.create.content.contraptions.components.structureMovement.piston.PistonExtensionPoleBlock;
+
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.MaterialColor;
+import net.minecraft.block.enums.PistonType;
 import net.minecraft.client.color.block.BlockColorProvider;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.model.BakedModel;
@@ -550,29 +556,29 @@ public class AllBlocks {
 
 	// Contraptions
 
-	/*public static final MechanicalPistonBlock MECHANICAL_PISTON = createBuilder("mechanical_piston", MechanicalPistonBlock::normal)
-		.transform(BuilderTransformers.mechanicalPiston(PistonType.DEFAULT))
-		.tag(AllBlockTags.SAFE_NBT.tag)
+	public static final MechanicalPistonBlock MECHANICAL_PISTON = createBuilder("mechanical_piston", MechanicalPistonBlock::normal)
+		.consume(BuilderConsumers.mechanicalPiston(PistonType.DEFAULT))
+		//.tag(AllTags.AllBlockTags.SAFE_NBT.tag)
 		.register();
 
 	public static final MechanicalPistonBlock STICKY_MECHANICAL_PISTON = createBuilder("sticky_mechanical_piston", MechanicalPistonBlock::sticky)
-		.transform(BuilderTransformers.mechanicalPiston(PistonType.STICKY))
-		.tag(AllBlockTags.SAFE_NBT.tag)
+		.consume(BuilderConsumers.mechanicalPiston(PistonType.STICKY))
+		//.tag(AllTags.AllBlockTags.SAFE_NBT.tag)
 		.register();
 
 	public static final PistonExtensionPoleBlock PISTON_EXTENSION_POLE = createBuilder("piston_extension_pole", PistonExtensionPoleBlock::new)
 		.initialProperties(() -> Blocks.PISTON_HEAD)
-		.blockstate(BlockStateGen.directionalBlockProviderIgnoresWaterlogged(false))
+		//.blockstate(BlockStateGen.directionalBlockProviderIgnoresWaterlogged(false))
 		.simpleItem()
 		.register();
 
 	public static final MechanicalPistonHeadBlock MECHANICAL_PISTON_HEAD = createBuilder("mechanical_piston_head", MechanicalPistonHeadBlock::new)
 		.initialProperties(() -> Blocks.PISTON_HEAD)
-		.loot((p, b) -> p.addDrop(b, PISTON_EXTENSION_POLE.get()))
-		.blockstate((c, p) -> BlockStateGen.directionalBlockIgnoresWaterlogged(c, p, state -> p.models()
-			.getExistingFile(p.modLoc("block/mechanical_piston/" + state.get(MechanicalPistonHeadBlock.TYPE)
-				.asString() + "/head"))))
-		.register();*/
+		//.loot((p, b) -> p.addDrop(b, PISTON_EXTENSION_POLE.get()))
+		//.blockstate((c, p) -> BlockStateGen.directionalBlockIgnoresWaterlogged(c, p, state -> p.models()
+			//.getExistingFile(p.modLoc("block/mechanical_piston/" + state.get(MechanicalPistonHeadBlock.TYPE)
+				//.asString() + "/head"))))
+		.register();
 
 	public static final GantryPinionBlock GANTRY_PINION = createBuilder("gantry_pinion", GantryPinionBlock::new)
 		.initialProperties(SharedProperties::stone)
