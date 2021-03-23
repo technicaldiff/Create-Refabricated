@@ -3,11 +3,15 @@ package com.simibubi.create.content.contraptions.relays.belt;
 import static net.minecraft.util.math.Direction.AxisDirection.NEGATIVE;
 import static net.minecraft.util.math.Direction.AxisDirection.POSITIVE;
 
+import java.util.Map;
 import java.util.Optional;
+
+import com.simibubi.create.content.contraptions.relays.belt.transport.BeltMovementHandler;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.entity.Entity;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtHelper;
 import net.minecraft.state.property.Properties;
@@ -26,9 +30,9 @@ import com.simibubi.create.foundation.utility.NBTHelper;
 
 public class BeltBlockEntity extends KineticBlockEntity {
 
-	/**
-	 * public Map<Entity, TransportedEntityInfo> passengers;
-	 */
+
+	public Map<Entity, BeltMovementHandler.TransportedEntityInfo> passengers;
+
 	public Optional<DyeColor> color;
 	public int beltLength;
 	public int index;

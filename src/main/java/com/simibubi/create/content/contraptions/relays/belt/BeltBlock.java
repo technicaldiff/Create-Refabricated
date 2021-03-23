@@ -7,6 +7,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
+import net.minecraft.block.ShapeContext;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.ItemEntity;
@@ -28,6 +29,8 @@ import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
+import net.minecraft.util.shape.VoxelShape;
+import net.minecraft.util.shape.VoxelShapes;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
@@ -155,28 +158,30 @@ public class BeltBlock extends HorizontalKineticBlock implements IBE<BeltBlockEn
 	}
 
 	public static boolean canAccessFromSide(Direction facing, BlockState belt) {
-//		if (facing == null)
-//			return true;
-//		if (!belt.get(BeltBlock.CASING))
-//			return false;
-//		BeltPart part = belt.get(BeltBlock.PART);
-//		if (part != BeltPart.MIDDLE && facing.getAxis() == belt.get(HORIZONTAL_FACING)
-//			.rotateY()
-//			.getAxis())
-//			return false;
-//
-//		BeltSlope slope = belt.get(BeltBlock.SLOPE);
-//		if (slope != BeltSlope.HORIZONTAL) {
-//			if (slope == BeltSlope.DOWNWARD && part == BeltPart.END)
-//				return true;
-//			if (slope == BeltSlope.UPWARD && part == BeltPart.START)
-//				return true;
-//			Direction beltSide = belt.get(HORIZONTAL_FACING);
-//			if (slope == BeltSlope.DOWNWARD)
-//				beltSide = beltSide.getOpposite();
-//			if (beltSide == facing)
-//				return false;
-//		}
+/*
+		if (facing == null)
+			return true;
+		if (!belt.get(BeltBlock.CASING))
+			return false;
+		BeltPart part = belt.get(BeltBlock.PART);
+		if (part != BeltPart.MIDDLE && facing.getAxis() == belt.get(HORIZONTAL_FACING)
+			.rotateY()
+			.getAxis())
+			return false;
+
+		BeltSlope slope = belt.get(BeltBlock.SLOPE);
+		if (slope != BeltSlope.HORIZONTAL) {
+			if (slope == BeltSlope.DOWNWARD && part == BeltPart.END)
+				return true;
+			if (slope == BeltSlope.UPWARD && part == BeltPart.START)
+				return true;
+			Direction beltSide = belt.get(HORIZONTAL_FACING);
+			if (slope == BeltSlope.DOWNWARD)
+				beltSide = beltSide.getOpposite();
+			if (beltSide == facing)
+				return false;
+		}
+*/
 
 		return true;
 	}
@@ -279,34 +284,34 @@ public class BeltBlock extends HorizontalKineticBlock implements IBE<BeltBlockEn
 		return true;
 	}*/
 
-	/*@Override
+	@Override
 	public VoxelShape getVisualShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
 		return BeltShapes.getShape(state);
-	}*/
+	}
 
-	/*@Override
+	@Override
 	public VoxelShape getCollisionShape(BlockState state, BlockView worldIn, BlockPos pos, ShapeContext context) {
 		if (state.getBlock() != this)
 			return VoxelShapes.empty();
 
 		VoxelShape shape = getVisualShape(state, worldIn, pos, context);
 		try {
-			if (context.getEntity() == null)
-				return shape;
+			//if (context.getEntity() == null)
+			//	return shape;
 
-			BeltTileEntity belt = getTileEntity((World) worldIn, pos);
-			BeltTileEntity controller = belt.getControllerTE();
+			BeltBlockEntity belt = getBlockEntity(worldIn, pos);
+			BeltBlockEntity controller = belt.getControllerTE();
 
 			if (controller == null)
 				return shape;
-			if (controller.passengers == null || !controller.passengers.containsKey(context.getEntity())) {
-				return BeltShapes.getCollisionShape(state);
-			}
+			//if (controller.passengers == null || !controller.passengers.containsKey(context.getEntity())) {
+			//	return BeltShapes.getCollisionShape(state);
+			//}
 
-		} catch (TileEntityException e) {
+		} catch (BlockEntityException e) {
 		}
 		return shape;
-	}*/
+	}
 
 	@Override
 	public void onEntityLand(BlockView worldIn, Entity entityIn) {
@@ -349,7 +354,7 @@ public class BeltBlock extends HorizontalKineticBlock implements IBE<BeltBlockEn
 			if (!entityIn.isAlive())
 				return;
 			withBlockEntityDo(worldIn, pos, te -> {
-				/**ItemEntity itemEntity = (ItemEntity) entityIn;
+				/*ItemEntity itemEntity = (ItemEntity) entityIn;
 				 IItemHandler handler = te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY)
 				 .orElse(null);
 				 if (handler == null)

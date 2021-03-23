@@ -214,6 +214,7 @@ public class AllBlocks {
 		.initialProperties(SharedProperties.beltMaterial, MaterialColor.GRAY)
 		.properties(p -> p.sounds(BlockSoundGroup.WOOL))
 		.properties(p -> p.strength(0.8F))
+		.properties(p -> p.nonOpaque())
 //		.blockstate(new BeltGenerator()::generate)
 		.consume(StressConfigDefaults.impactConsumer(1.0))
 //		.onRegister(CreateRegistrate.blockModel(() -> BeltModel::new))
