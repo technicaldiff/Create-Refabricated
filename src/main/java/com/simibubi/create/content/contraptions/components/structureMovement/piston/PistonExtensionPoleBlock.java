@@ -11,6 +11,7 @@ import com.simibubi.create.AllShapes;
 import com.simibubi.create.content.contraptions.components.structureMovement.piston.MechanicalPistonBlock.PistonState;
 import com.simibubi.create.content.contraptions.wrench.Wrenchable;
 import com.simibubi.create.foundation.block.ProperDirectionalBlock;
+import com.simibubi.create.foundation.utility.placement.PlacementHelper;
 import com.simibubi.create.foundation.utility.placement.PlacementHelpers;
 import com.simibubi.create.foundation.utility.placement.util.PoleHelper;
 
@@ -43,7 +44,7 @@ import net.minecraft.world.WorldAccess;
 
 public class PistonExtensionPoleBlock extends ProperDirectionalBlock implements Wrenchable, Waterloggable {
 
-    //private static final int placementHelperId = PlacementHelpers.register(PlacementHelper.get());
+    //private static final int placementHelperId = PlacementHelpers.register(PolePlacementHelper.get());
 
     public PistonExtensionPoleBlock(Settings properties) {
         super(properties);
@@ -120,9 +121,9 @@ public class PistonExtensionPoleBlock extends ProperDirectionalBlock implements 
 		BlockHitResult ray) {
 		ItemStack heldItem = player.getStackInHand(hand);
 
-        //PlacementHelper placementHelper = PlacementHelpers.get(placementHelperId);
-        //if (placementHelper.matchesItem(heldItem) && !player.isSneaking())
-        //    return placementHelper.getOffset(world, state, pos, ray).placeInWorld(world, (BlockItem) heldItem.getItem(), player, hand, ray);
+        /*PolePlacementHelper placementHelper = (PolePlacementHelper) PlacementHelpers.get(placementHelperId);
+        if (placementHelper.matchesItem(heldItem) && !player.isSneaking())
+	   		return placementHelper.getOffset(world, state, pos, ray).placeInWorld(world, (BlockItem) heldItem.getItem(), player, hand, ray);*/
 
 		return ActionResult.PASS;
 	}
@@ -146,19 +147,19 @@ public class PistonExtensionPoleBlock extends ProperDirectionalBlock implements 
         }
         return state;
     }
-/*
+
     @MethodsReturnNonnullByDefault
-    public static class PlacementHelper extends PoleHelper<Direction> {
+    public static class PolePlacementHelper extends PoleHelper<Direction> {
 
-        private static final PlacementHelper instance = new PlacementHelper();
+        private static final PolePlacementHelper instance = new PolePlacementHelper();
 
-        public static PlacementHelper get() {
+        public static PolePlacementHelper get() {
             return instance;
         }
 
-        private PlacementHelper(){
+        private PolePlacementHelper() {
             super(
-                    AllBlocks.PISTON_EXTENSION_POLE::has,
+                    AllBlocks.PISTON_EXTENSION_POLE.stateManager.getStates()::contains,
                     state -> state.get(FACING).getAxis(),
                     FACING
             );
@@ -166,7 +167,7 @@ public class PistonExtensionPoleBlock extends ProperDirectionalBlock implements 
 
         @Override
         public Predicate<ItemStack> getItemPredicate() {
-            return AllBlocks.PISTON_EXTENSION_POLE::isIn;
+            return s -> s.isItemEqualIgnoreDamage(AllBlocks.PISTON_EXTENSION_POLE.asItem().getDefaultStack());
         }
-    }*/
+    }
 }
