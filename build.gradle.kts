@@ -171,6 +171,16 @@ tasks {
 			rename { "${it}_${base.archivesBaseName}" }
 		}
 	}
+
+	// Prevents build from running check. This is unnecessary as we can just run assemble.
+	/*
+	 *  build {
+	 *		val newDependsOn = dependsOn.filter {
+	 *			it.toString() != "check" && it.toString() != "checkstyleMain"
+	 *		}
+	 *		setDependsOn(newDependsOn)
+	 * }
+	 */
 }
 
 publishing {

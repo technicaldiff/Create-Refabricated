@@ -10,14 +10,14 @@ jobs:
                 java_version: [ 1.8, 11, 15 ]
         steps:
             - uses: actions/checkout@v2
-            - name: Set up Java
+            - name: Set up Java ${{ matrix.java_version }}
               uses: actions/setup-java@v1
               with:
                   java-version: ${{ matrix.java_version }}
             - name: Grant execute permission for the Gradle wrapper
               run: chmod +x gradlew
             - name: Build with Gradle
-              run: ./gradlew --stacktrace build
+              run: ./gradlew --stacktrace assemble
             - name: Upload artifacts
               uses: actions/upload-artifact@v1
               with:
