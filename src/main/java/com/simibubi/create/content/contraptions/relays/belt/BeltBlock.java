@@ -3,6 +3,8 @@ package com.simibubi.create.content.contraptions.relays.belt;
 import java.util.LinkedList;
 import java.util.List;
 
+import com.simibubi.create.foundation.EntityShapeContextMixinAccessor;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
@@ -110,7 +112,7 @@ public class BeltBlock extends HorizontalKineticBlock implements IBE<BeltBlockEn
 				be.markDirty();
 				be.sendData();
 
-				// if (be.isController() && !canTransportObjects(currentState)) be.getInventory().ejectAll();
+				 if (be.isController() && !canTransportObjects(currentState)) be.getInventory().ejectAll();
 			} else {
 				world.removeBlock(currentPos, true);
 				return;
@@ -241,7 +243,7 @@ public class BeltBlock extends HorizontalKineticBlock implements IBE<BeltBlockEn
 		if (state.get(CASING)) {
 			if (world.isClient)
 				return ActionResult.SUCCESS;
-			//withBlockEntityDo(world, pos, te -> te.setCasingType(BeltBlockEntity.CasingType.NONE));
+			withBlockEntityDo(world, pos, te -> te.setCasingType(BeltBlockEntity.CasingType.NONE));
 			return ActionResult.SUCCESS;
 		}
 
@@ -267,7 +269,7 @@ public class BeltBlock extends HorizontalKineticBlock implements IBE<BeltBlockEn
 		return drops;
 	}
 
-	/*@Override TODO MIGHT NEED FIXING BELT BLOCK IMPORTANT
+	/*@Override
 	public boolean hasTileEntity(BlockState state) {
 		return true;
 	}*/
@@ -296,17 +298,17 @@ public class BeltBlock extends HorizontalKineticBlock implements IBE<BeltBlockEn
 
 		VoxelShape shape = getVisualShape(state, worldIn, pos, context);
 		try {
-			//if (context.getEntity() == null)
-			//	return shape;
+			if (((EntityShapeContextMixinAccessor)context).getEntity() == null)
+				return shape;
 
 			BeltBlockEntity belt = getBlockEntity(worldIn, pos);
 			BeltBlockEntity controller = belt.getControllerTE();
 
 			if (controller == null)
 				return shape;
-			//if (controller.passengers == null || !controller.passengers.containsKey(context.getEntity())) {
-			//	return BeltShapes.getCollisionShape(state);
-			//}
+			if (controller.passengers == null || !controller.passengers.containsKey(((EntityShapeContextMixinAccessor)context).getEntity())) {
+				return BeltShapes.getCollisionShape(state);
+			}
 
 		} catch (BlockEntityException e) {
 		}

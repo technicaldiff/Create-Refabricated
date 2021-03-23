@@ -138,7 +138,7 @@ public class BeltModel implements UnbakedModel, BakedModel, FabricBakedModel {
 		return this;
 	}
 
-	/**@Override public List<BakedQuad> getQuads(BlockState state, Direction side, Random rand, ModelData extraData) {
+	/*@Override public List<BakedQuad> getQuads(BlockState state, Direction side, Random rand, ModelData extraData) {
 	List<BakedQuad> quads = new ArrayList<>(super.getQuads(state, side, rand, extraData));
 	if (!extraData.hasProperty(CASING_PROPERTY))
 	return quads;

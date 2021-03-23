@@ -177,7 +177,7 @@ public class BeltRenderer extends SafeBlockEntityRenderer<BeltBlockEntity> {
 		boolean slopeAlongX = beltFacing
 			.getAxis() == Direction.Axis.X;
 
-		/**for (TransportedItemStack transported : te.getInventory()
+		/*for (TransportedItemStack transported : te.getInventory()
 		 .getTransportedItems()) {
 		 ms.push();
 		 MatrixStacker.of(ms)

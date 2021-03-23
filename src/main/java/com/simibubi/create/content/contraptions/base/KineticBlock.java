@@ -21,25 +21,27 @@ public abstract class KineticBlock extends Block implements BlockEntityProvider,
 		super(properties);
 	}
 
-//	@Override
-//	public ToolType getHarvestTool(BlockState state) {
-//		return null;
-//	}
-//
-//	@Override
-//	public boolean canHarvestBlock(BlockState state, BlockView world, BlockPos pos, PlayerEntity player) {
-//		for (ToolType toolType : player.getMainHandStack()
-//			.getToolTypes()) {
-//			if (isToolEffective(state, toolType))
-//				return true;
-//		}
-//		return super.canHarvestBlock(state, world, pos, player);
-//	}
-//
-//	@Override
-//	public boolean isToolEffective(BlockState state, ToolType tool) {
-//		return tool == ToolType.AXE || tool == ToolType.PICKAXE;
-//	}
+/*
+	@Override
+	public ToolType getHarvestTool(BlockState state) {
+		return null;
+	}
+
+	@Override
+	public boolean canHarvestBlock(BlockState state, BlockView world, BlockPos pos, PlayerEntity player) {
+		for (ToolType toolType : player.getMainHandStack()
+			.getToolTypes()) {
+			if (isToolEffective(state, toolType))
+				return true;
+		}
+		return super.canHarvestBlock(state, world, pos, player);
+	}
+
+	@Override
+	public boolean isToolEffective(BlockState state, ToolType tool) {
+		return tool == ToolType.AXE || tool == ToolType.PICKAXE;
+	}
+*/
 
 	@Override
 	public void onBlockAdded(BlockState state, World worldIn, BlockPos pos, BlockState oldState, boolean isMoving) {

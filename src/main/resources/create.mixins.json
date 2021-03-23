@@ -1,48 +1,49 @@
 {
-  "required": true,
-  "minVersion": "0.8",
-  "package": "com.simibubi.create.foundation.mixin",
-  "compatibilityLevel": "JAVA_8",
-  "mixins": [
-    "EntitySpawnS2CPacketMixin",
-    "ItemEntityMixin",
-    "Matrix4fMixin",
-    "WorldMixin",
-    "accessor.BeaconBlockEntityAccessor",
-    "accessor.BiomeAccessAccessor",
-    "accessor.CriteriaAccessor",
-    "accessor.ItemAccessor",
-    "accessor.ItemEntityAccessor",
-    "accessor.MinecraftServerAccessor",
-    "accessor.ServerPlayNetworkHandlerAccessor",
-    "accessor.SignTypeAccessor",
-    "accessor.StairsBlockAccessor",
-    "accessor.Vector3fAccessor"
-  ],
-  "client": [
-    "BakedModelManagerMixin",
-    "ChunkBuilder$ChunkDataMixin",
-    "ClientPlayNetworkHandlerMixin",
-    "GlStateManagerMixin",
-    "LightUpdateMixin",
-    "MinecraftClientMixin",
-    "MouseMixin",
-    "NetworkLightUpdateMixin",
-    "ParticleManagerMixin",
-    "WorldRendererMixin",
-    "accessor.BufferBuilderAccessor",
-    "accessor.GameRendererAccessor",
-    "accessor.GlStateManagerAccessor",
-    "accessor.ItemRendererAccessor",
-    "accessor.MinecraftClientAccessor",
-    "event.ClientWorldMixin",
-    "event.MinecraftClientMixin"
-  ],
-  "server": [
-    "SignTypeMixin",
-    "Vec3dMixin"
-  ],
-  "injectors": {
-    "defaultRequire": 1
-  }
+	"required": true,
+	"minVersion": "0.8",
+	"package": "com.simibubi.create.foundation.mixin",
+	"compatibilityLevel": "JAVA_8",
+	"mixins": [
+		"EntityShapeContextMixin",
+		"EntitySpawnS2CPacketMixin",
+		"ItemEntityMixin",
+		"Matrix4fMixin",
+		"WorldMixin",
+		"accessor.BeaconBlockEntityAccessor",
+		"accessor.BiomeAccessAccessor",
+		"accessor.CriteriaAccessor",
+		"accessor.ItemAccessor",
+		"accessor.ItemEntityAccessor",
+		"accessor.MinecraftServerAccessor",
+		"accessor.ServerPlayNetworkHandlerAccessor",
+		"accessor.SignTypeAccessor",
+		"accessor.StairsBlockAccessor",
+		"accessor.Vector3fAccessor"
+	],
+	"client": [
+		"BakedModelManagerMixin",
+		"ChunkBuilder$ChunkDataMixin",
+		"ClientPlayNetworkHandlerMixin",
+		"GlStateManagerMixin",
+		"LightUpdateMixin",
+		"MinecraftClientMixin",
+		"MouseMixin",
+		"NetworkLightUpdateMixin",
+		"ParticleManagerMixin",
+		"WorldRendererMixin",
+		"accessor.BufferBuilderAccessor",
+		"accessor.GameRendererAccessor",
+		"accessor.GlStateManagerAccessor",
+		"accessor.ItemRendererAccessor",
+		"accessor.MinecraftClientAccessor",
+		"event.ClientWorldMixin",
+		"event.MinecraftClientMixin"
+	],
+	"server": [
+		"SignTypeMixin",
+		"Vec3dMixin"
+	],
+	"injectors": {
+		"defaultRequire": 1
+	}
 }
