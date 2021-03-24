@@ -25,7 +25,10 @@
     ],
     "modmenu": [
       "com.simibubi.create.foundation.config.ModMenuIntegration"
-    ]
+    ],
+		"rei_plugins": [
+			"com.simibubi.create.compat.rei.CreateREI"
+		]
   },
   "mixins": [
     "create.mixins.json"
