@@ -3,17 +3,18 @@
   "id": "create",
   "version": "${version}",
 
-  "name": "Create Fabric",
-  "description": "Create for Fabric",
+  "name": "Create: Refabricated",
+  "description": "A Fabric port of Create.",
   "authors": [
-    "Create Fabric Porting Team"
+    "Create: Refabricated Porting Team",
+    "Create Team"
   ],
   "contact": {
-    "sources": "https://github.com/Create-Fabric/Create-Fabric"
+    "sources": "https://github.com/Create-Fabric/Create-Refabricated"
   },
 
   "license": "MIT",
-  "icon": "assets/create/icon.png",
+  "icon": "assets/create/icon.gif",
 
   "environment": "*",
   "entrypoints": {
@@ -26,10 +27,11 @@
     "modmenu": [
       "com.simibubi.create.foundation.config.ModMenuIntegration"
     ],
-		"rei_plugins": [
-			"com.simibubi.create.compat.rei.CreateREI"
-		]
+    "rei_plugins": [
+      "com.simibubi.create.compat.rei.CreateREI"
+    ]
   },
+
   "mixins": [
     "create.mixins.json"
   ],
