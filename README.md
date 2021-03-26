@@ -1,5 +1,10 @@
-<h1 align="center">Important Info<br></h1>
-This repo is for Create: Refabricated, a Fabric port of Create. <h4>This project is not complete, and we do not recommend using it yet. You've been warned!</h4>
+<h1 align="center">Important Information</h1>
+<p align="center">This repo is for Create: Refabricated, a Fabric port of Create.</p>
+<p align="center"><b>This project is not complete, and we do not recommend using it yet. You've been warned!</b></p>
+<h3 align="center"><b>Important News:</b></h3>
+<p align="center">We have decided to halt porting until the main project has dropped support for 1.15. Meanwhile, we will be working on separating some of the new Fabric-only code into its own library mod. When we resume porting, we will restart on a new branch using upstream's mappings (currently MCP) and port all files at once, changing as little as possible in those files. All of these decisions were made to maximize compatibility with upstream so that porting new commits is easier.</p>
+<br>
+
 <p align="center"><img src="https://i.imgur.com/35JmqWB.gif" alt="Logo" width="100"></p>
 <h1 align="center">Create<br>
 	<a href="https://www.patreon.com/simibubi"><img src="https://img.shields.io/badge/Supporters-60-ff5733" alt="Patreon"></a>
