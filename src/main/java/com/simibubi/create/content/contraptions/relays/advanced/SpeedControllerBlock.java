@@ -29,7 +29,6 @@ import com.simibubi.create.foundation.block.IBE;
 import com.simibubi.create.foundation.utility.placement.PlacementHelper;
 import com.simibubi.create.foundation.utility.placement.PlacementHelpers;
 import com.simibubi.create.foundation.utility.placement.PlacementOffset;
-import com.simibubi.create.registrate.util.nullness.MethodsReturnNonnullByDefault;
 
 public class SpeedControllerBlock extends HorizontalAxisKineticBlock implements IBE<SpeedControllerBlockEntity> {
 
@@ -79,7 +78,6 @@ public class SpeedControllerBlock extends HorizontalAxisKineticBlock implements 
 		return AllShapes.SPEED_CONTROLLER;
 	}
 
-	@MethodsReturnNonnullByDefault
 	private static class SpeedControllerPlacementHelper implements PlacementHelper {
 		@Override
 		public Predicate<ItemStack> getItemPredicate() {

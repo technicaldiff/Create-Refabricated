@@ -9,9 +9,7 @@ import net.minecraft.world.World;
 
 import com.simibubi.create.Create;
 import com.simibubi.create.foundation.config.CKinetics;
-import com.simibubi.create.registrate.util.nullness.MethodsReturnNonnullByDefault;
 
-@MethodsReturnNonnullByDefault
 public interface AirCurrentSource {
 	@Nullable
 	AirCurrent getAirCurrent();

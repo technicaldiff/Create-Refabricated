@@ -11,9 +11,7 @@ import net.minecraft.world.BlockView;
 import net.minecraft.world.WorldView;
 
 import com.simibubi.create.content.contraptions.base.RotatedPillarKineticBlock;
-import com.simibubi.create.registrate.util.nullness.MethodsReturnNonnullByDefault;
 
-@MethodsReturnNonnullByDefault
 public abstract class AbstractEncasedShaftBlock extends RotatedPillarKineticBlock {
     public AbstractEncasedShaftBlock(Settings properties) {
         super(properties);

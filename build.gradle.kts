@@ -54,6 +54,7 @@ repositories {
 
 		content {
 			includeGroup("com.github.SuperCoder7979") // So Gradle doesn't spend time searching JitPack for other deps
+			includeGroup("com.github.PepperCode1")
 		}
 	}
 }
@@ -69,6 +70,7 @@ dependencies {
 	val modmenu_version: String by project
 	val rei_version: String by project
 	val cloth_config_version: String by project
+	val registrate_version: String by project
 
 	minecraft("com.mojang", "minecraft", minecraft_version)
 
@@ -103,6 +105,9 @@ dependencies {
 	modApi("me.shedaniel.cloth", "cloth-config-fabric", cloth_config_version) {
 		exclude(group = "net.fabricmc.fabric-api")
 	}
+
+	// Registrate-Fabric
+	modImplementation("com.github.PepperCode1", "Registrate-Fabric", registrate_version)
 
 	// Checkstyle stuff
 	checkstyle(project(":checkstyleChecks"))

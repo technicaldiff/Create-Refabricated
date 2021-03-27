@@ -65,7 +65,7 @@ public class SuperGlueEntity extends Entity implements ExtraSpawnDataEntity, Spe
 	}
 
 	public SuperGlueEntity(World world, BlockPos pos, Direction direction) {
-		this(AllEntityTypes.SUPER_GLUE, world);
+		this(AllEntityTypes.SUPER_GLUE.get(), world);
 		hangingPosition = pos;
 		facingDirection = direction;
 		updateFacingWithBoundingBox();

@@ -25,12 +25,8 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 
 import com.simibubi.create.foundation.gui.widgets.AbstractSimiWidget;
-import com.simibubi.create.registrate.util.nullness.MethodsReturnNonnullByDefault;
-import com.simibubi.create.registrate.util.nullness.ParametersAreNonnullByDefault;
 
 @Environment(EnvType.CLIENT)
-@ParametersAreNonnullByDefault
-@MethodsReturnNonnullByDefault
 public abstract class AbstractSimiContainerScreen<T extends ScreenHandler> extends HandledScreen<T> {
 
 	protected List<AbstractButtonWidget> widgets;

@@ -2,11 +2,6 @@ package com.simibubi.create.foundation.advancement;
 
 import org.jetbrains.annotations.Nullable;
 
-import com.simibubi.create.registrate.util.nullness.MethodsReturnNonnullByDefault;
-import com.simibubi.create.registrate.util.nullness.ParametersAreNonnullByDefault;
-
-@ParametersAreNonnullByDefault
-@MethodsReturnNonnullByDefault
 public class EnumTrigger<T extends Enum<T>> extends StringSerializableTrigger<T> {
 	private final Class<T> reference;
 

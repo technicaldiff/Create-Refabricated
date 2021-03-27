@@ -2,11 +2,6 @@ package com.simibubi.create.content.contraptions.components.structureMovement.pi
 
 import static com.simibubi.create.content.contraptions.components.structureMovement.piston.MechanicalPistonBlock.isExtensionPole;
 
-import com.simibubi.create.AllBlocks;
-import com.simibubi.create.AllShapes;
-import com.simibubi.create.content.contraptions.components.structureMovement.piston.MechanicalPistonBlock.PistonState;
-import com.simibubi.create.foundation.block.ProperDirectionalBlock;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.ShapeContext;
@@ -28,6 +23,11 @@ import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
+
+import com.simibubi.create.AllBlocks;
+import com.simibubi.create.AllShapes;
+import com.simibubi.create.content.contraptions.components.structureMovement.piston.MechanicalPistonBlock.PistonState;
+import com.simibubi.create.foundation.block.ProperDirectionalBlock;
 
 public class MechanicalPistonHeadBlock extends ProperDirectionalBlock implements Waterloggable {
 

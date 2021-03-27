@@ -9,8 +9,6 @@ import net.minecraft.util.math.Vec3d;
 import com.simibubi.create.content.contraptions.components.structureMovement.ContraptionLighter;
 import com.simibubi.create.foundation.render.backend.light.GridAlignedBB;
 
-import net.minecraft.util.math.Vec3i;
-
 public class BearingLighter extends ContraptionLighter<BearingContraption> {
 
     public BearingLighter(BearingContraption contraption) {

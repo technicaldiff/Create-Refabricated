@@ -38,7 +38,7 @@ public class GantryContraptionEntity extends AbstractContraptionEntity {
 	}
 
 	public static GantryContraptionEntity create(World world, Contraption contraption, Direction movementAxis) {
-		GantryContraptionEntity entity = new GantryContraptionEntity(AllEntityTypes.GANTRY_CONTRAPTION, world);
+		GantryContraptionEntity entity = new GantryContraptionEntity(AllEntityTypes.GANTRY_CONTRAPTION.get(), world);
 		entity.setContraption(contraption);
 		entity.movementAxis = movementAxis;
 		return entity;

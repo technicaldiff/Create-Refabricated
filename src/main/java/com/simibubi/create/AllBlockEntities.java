@@ -2,9 +2,6 @@ package com.simibubi.create;
 
 import java.util.function.Supplier;
 
-import com.simibubi.create.content.contraptions.components.structureMovement.piston.MechanicalPistonRenderer;
-import com.simibubi.create.content.contraptions.components.structureMovement.piston.MechanicalPistonTileEntity;
-
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.util.Identifier;
@@ -39,6 +36,8 @@ import com.simibubi.create.content.contraptions.components.structureMovement.cha
 import com.simibubi.create.content.contraptions.components.structureMovement.gantry.GantryPinionBlockEntity;
 import com.simibubi.create.content.contraptions.components.structureMovement.gantry.GantryPinionRenderer;
 import com.simibubi.create.content.contraptions.components.structureMovement.mounted.CartAssemblerBlockEntity;
+import com.simibubi.create.content.contraptions.components.structureMovement.piston.MechanicalPistonRenderer;
+import com.simibubi.create.content.contraptions.components.structureMovement.piston.MechanicalPistonTileEntity;
 import com.simibubi.create.content.contraptions.components.structureMovement.pulley.PulleyBlockEntity;
 import com.simibubi.create.content.contraptions.components.structureMovement.pulley.PulleyRenderer;
 import com.simibubi.create.content.contraptions.components.turntable.TurntableBlockEntity;

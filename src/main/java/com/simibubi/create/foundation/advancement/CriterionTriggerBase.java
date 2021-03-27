@@ -18,11 +18,7 @@ import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.Identifier;
 
 import com.simibubi.create.Create;
-import com.simibubi.create.registrate.util.nullness.MethodsReturnNonnullByDefault;
-import com.simibubi.create.registrate.util.nullness.ParametersAreNonnullByDefault;
 
-@ParametersAreNonnullByDefault
-@MethodsReturnNonnullByDefault
 public abstract class CriterionTriggerBase<T extends CriterionTriggerBase.Instance> implements Criterion<T> {
 
 	public CriterionTriggerBase(String id) {

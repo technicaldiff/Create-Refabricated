@@ -5,11 +5,6 @@ import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
-import com.simibubi.create.content.contraptions.components.structureMovement.piston.MechanicalPistonBlock;
-
-import com.simibubi.create.content.contraptions.components.structureMovement.piston.MechanicalPistonHeadBlock;
-import com.simibubi.create.content.contraptions.components.structureMovement.piston.PistonExtensionPoleBlock;
-
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
@@ -50,6 +45,9 @@ import com.simibubi.create.content.contraptions.components.structureMovement.cha
 import com.simibubi.create.content.contraptions.components.structureMovement.gantry.GantryPinionBlock;
 import com.simibubi.create.content.contraptions.components.structureMovement.mounted.CartAssemblerBlock;
 import com.simibubi.create.content.contraptions.components.structureMovement.mounted.CartAssemblerBlockItem;
+import com.simibubi.create.content.contraptions.components.structureMovement.piston.MechanicalPistonBlock;
+import com.simibubi.create.content.contraptions.components.structureMovement.piston.MechanicalPistonHeadBlock;
+import com.simibubi.create.content.contraptions.components.structureMovement.piston.PistonExtensionPoleBlock;
 import com.simibubi.create.content.contraptions.components.structureMovement.pulley.PulleyBlock;
 import com.simibubi.create.content.contraptions.components.turntable.TurntableBlock;
 import com.simibubi.create.content.contraptions.components.waterwheel.WaterWheelBlock;

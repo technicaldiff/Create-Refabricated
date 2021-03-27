@@ -2,6 +2,7 @@ package com.simibubi.create;
 
 import java.util.Random;
 
+import com.tterrag.registrate.util.NonNullLazyValue;
 import me.shedaniel.autoconfig.AutoConfig;
 import me.shedaniel.autoconfig.ConfigData;
 import org.apache.logging.log4j.LogManager;
@@ -23,6 +24,7 @@ import com.simibubi.create.content.palettes.AllPaletteBlocks;
 import com.simibubi.create.events.CommonEvents;
 import com.simibubi.create.foundation.advancement.AllTriggers;
 import com.simibubi.create.foundation.config.AllConfigs;
+import com.simibubi.create.foundation.data.CreateRegistrate;
 import com.simibubi.create.foundation.networking.AllPackets;
 import com.simibubi.create.foundation.resource.TranslationsHolder;
 import com.simibubi.create.foundation.worldgen.AllWorldFeatures;
@@ -38,6 +40,8 @@ public class Create implements ModInitializer  {
 	public static RedstoneLinkNetworkHandler redstoneLinkNetworkHandler;
 	public static TorquePropagator torquePropagator;
 	public static Random random;
+
+	private static final NonNullLazyValue<CreateRegistrate> registrate = CreateRegistrate.lazy(ID);
 
 	@Override
 	public void onInitialize() {
@@ -69,6 +73,12 @@ public class Create implements ModInitializer  {
 		if (SharedConstants.isDevelopment) MixinEnvironment.getCurrentEnvironment().audit();
 
 		AllTriggers.register();
+
+		registrate().register();
+	}
+
+	public static CreateRegistrate registrate() {
+		return registrate.get();
 	}
 
 	public static Identifier id(String path) {

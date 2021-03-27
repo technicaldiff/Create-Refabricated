@@ -24,11 +24,7 @@ import com.simibubi.create.content.contraptions.base.HorizontalKineticBlock;
 import com.simibubi.create.foundation.block.IBE;
 import com.simibubi.create.foundation.utility.Iterate;
 import com.simibubi.create.foundation.utility.worldWrappers.WrappedWorld;
-import com.simibubi.create.registrate.util.nullness.MethodsReturnNonnullByDefault;
-import com.simibubi.create.registrate.util.nullness.ParametersAreNonnullByDefault;
 
-@ParametersAreNonnullByDefault
-@MethodsReturnNonnullByDefault
 public class WaterWheelBlock extends HorizontalKineticBlock implements IBE<WaterWheelBlockEntity> {
 
 	public WaterWheelBlock(Settings properties) {

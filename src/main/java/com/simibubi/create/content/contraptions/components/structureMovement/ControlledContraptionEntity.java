@@ -42,7 +42,7 @@ public class ControlledContraptionEntity extends AbstractContraptionEntity {
 	public static ControlledContraptionEntity create(World world, ControlContraption controller,
 													 Contraption contraption) {
 		ControlledContraptionEntity entity =
-			new ControlledContraptionEntity(AllEntityTypes.CONTROLLED_CONTRAPTION, world);
+			new ControlledContraptionEntity(AllEntityTypes.CONTROLLED_CONTRAPTION.get(), world);
 		entity.controllerPos = controller.getBlockPosition();
 		entity.setContraption(contraption);
 		return entity;

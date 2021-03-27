@@ -3,8 +3,6 @@ package com.simibubi.create.content.contraptions.relays.belt;
 import java.util.LinkedList;
 import java.util.List;
 
-import com.simibubi.create.foundation.EntityShapeContextMixinAccessor;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
@@ -45,6 +43,7 @@ import com.simibubi.create.content.contraptions.base.HorizontalKineticBlock;
 import com.simibubi.create.content.contraptions.base.KineticBlockEntity;
 import com.simibubi.create.content.logistics.block.belts.tunnel.BeltTunnelBlock;
 import com.simibubi.create.content.schematics.SpecialBlockItemRequirement;
+import com.simibubi.create.foundation.EntityShapeContextMixinAccessor;
 import com.simibubi.create.foundation.block.IBE;
 import com.simibubi.create.foundation.utility.Iterate;
 

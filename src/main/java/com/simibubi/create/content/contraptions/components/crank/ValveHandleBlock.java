@@ -18,9 +18,7 @@ import net.fabricmc.api.Environment;
 
 import com.simibubi.create.AllBlockPartials;
 import com.simibubi.create.AllBlocks;
-import com.simibubi.create.registrate.util.nullness.ParametersAreNonnullByDefault;
 
-@ParametersAreNonnullByDefault
 public class ValveHandleBlock extends HandCrankBlock {
 	private final boolean inCreativeTab;
 

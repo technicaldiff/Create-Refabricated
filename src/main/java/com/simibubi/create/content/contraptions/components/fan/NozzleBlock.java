@@ -18,11 +18,7 @@ import net.minecraft.world.WorldView;
 import com.simibubi.create.AllBlockEntities;
 import com.simibubi.create.AllShapes;
 import com.simibubi.create.foundation.block.ProperDirectionalBlock;
-import com.simibubi.create.registrate.util.nullness.MethodsReturnNonnullByDefault;
-import com.simibubi.create.registrate.util.nullness.ParametersAreNonnullByDefault;
 
-@MethodsReturnNonnullByDefault
-@ParametersAreNonnullByDefault
 public class NozzleBlock extends ProperDirectionalBlock implements BlockEntityProvider {
 
 	public NozzleBlock(Settings p_i48415_1_) {

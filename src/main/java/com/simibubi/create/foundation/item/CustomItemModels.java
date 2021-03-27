@@ -6,13 +6,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Supplier;
 
+import com.tterrag.registrate.util.nullness.NonNullBiConsumer;
+import com.tterrag.registrate.util.nullness.NonNullFunction;
 import org.apache.commons.lang3.tuple.Pair;
 
 import net.minecraft.client.render.model.BakedModel;
 import net.minecraft.item.Item;
-
-import com.simibubi.create.registrate.util.nullness.NonNullBiConsumer;
-import com.simibubi.create.registrate.util.nullness.NonNullFunction;
 
 public class CustomItemModels {
 

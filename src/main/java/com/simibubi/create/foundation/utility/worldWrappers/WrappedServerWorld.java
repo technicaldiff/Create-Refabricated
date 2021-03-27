@@ -27,11 +27,7 @@ import net.minecraft.world.level.storage.LevelStorage;
 
 import com.simibubi.create.foundation.mixin.accessor.BiomeAccessAccessor;
 import com.simibubi.create.foundation.mixin.accessor.MinecraftServerAccessor;
-import com.simibubi.create.registrate.util.nullness.MethodsReturnNonnullByDefault;
-import com.simibubi.create.registrate.util.nullness.ParametersAreNonnullByDefault;
 
-@ParametersAreNonnullByDefault
-@MethodsReturnNonnullByDefault
 public class WrappedServerWorld extends ServerWorld {
 
 	protected World world;

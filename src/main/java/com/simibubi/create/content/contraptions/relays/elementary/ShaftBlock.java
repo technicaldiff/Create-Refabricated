@@ -21,7 +21,6 @@ import com.simibubi.create.AllShapes;
 import com.simibubi.create.foundation.utility.placement.PlacementHelper;
 import com.simibubi.create.foundation.utility.placement.PlacementHelpers;
 import com.simibubi.create.foundation.utility.placement.util.PoleHelper;
-import com.simibubi.create.registrate.util.nullness.MethodsReturnNonnullByDefault;
 
 public class ShaftBlock extends AbstractShaftBlock {
 	private static final int placementHelperId = PlacementHelpers.register(new ShaftPlacementHelper());
@@ -78,7 +77,6 @@ public class ShaftBlock extends AbstractShaftBlock {
 		return ActionResult.PASS;
 	}
 
-	@MethodsReturnNonnullByDefault
 	private static class ShaftPlacementHelper extends PoleHelper<Direction.Axis> {
 		//used for extending a shaft in its axis, like the piston poles. works with shafts and cogs
 

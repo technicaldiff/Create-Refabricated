@@ -28,7 +28,6 @@ import com.simibubi.create.foundation.utility.Iterate;
 import com.simibubi.create.foundation.utility.placement.PlacementHelper;
 import com.simibubi.create.foundation.utility.placement.PlacementHelpers;
 import com.simibubi.create.foundation.utility.placement.PlacementOffset;
-import com.simibubi.create.registrate.util.nullness.MethodsReturnNonnullByDefault;
 
 public class CogwheelBlockItem extends BlockItem {
 
@@ -109,7 +108,6 @@ public class CogwheelBlockItem extends BlockItem {
 		}
 	}
 
-	@MethodsReturnNonnullByDefault
 	private static class SmallCogHelper extends DiagonalCogHelper {
 
 		@Override
@@ -157,7 +155,6 @@ public class CogwheelBlockItem extends BlockItem {
 		}
 	}
 
-	@MethodsReturnNonnullByDefault
 	private static class LargeCogHelper extends DiagonalCogHelper {
 
 		@Override
@@ -193,7 +190,6 @@ public class CogwheelBlockItem extends BlockItem {
 		}
 	}
 
-	@MethodsReturnNonnullByDefault
 	public abstract static class DiagonalCogHelper implements PlacementHelper {
 
 		@Override
@@ -268,7 +264,6 @@ public class CogwheelBlockItem extends BlockItem {
 		}
 	}
 
-	@MethodsReturnNonnullByDefault
 	public static class IntegratedCogHelper implements PlacementHelper {
 
 		@Override

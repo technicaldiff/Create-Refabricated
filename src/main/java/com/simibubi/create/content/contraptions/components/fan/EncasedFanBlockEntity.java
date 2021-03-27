@@ -15,9 +15,7 @@ import com.simibubi.create.AllBlocks;
 import com.simibubi.create.Create;
 import com.simibubi.create.content.contraptions.base.GeneratingKineticBlockEntity;
 import com.simibubi.create.foundation.utility.BlockHelper;
-import com.simibubi.create.registrate.util.nullness.MethodsReturnNonnullByDefault;
 
-@MethodsReturnNonnullByDefault
 public class EncasedFanBlockEntity extends GeneratingKineticBlockEntity implements AirCurrentSource {
 
 	public AirCurrent airCurrent;

@@ -42,6 +42,7 @@
     "fabric": "*",
     "minecraft": "1.16.x",
     "cloth-config2": "*",
-    "advanced_runtime_resource_pack": "*"
+    "advanced_runtime_resource_pack": "*",
+    "registrate": "*"
   }
 }

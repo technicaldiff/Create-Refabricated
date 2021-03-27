@@ -1,10 +1,10 @@
 package com.simibubi.create.content.contraptions.components.structureMovement.piston;
 
-import com.simibubi.create.content.contraptions.components.structureMovement.ContraptionLighter;
-import com.simibubi.create.foundation.render.backend.light.GridAlignedBB;
-
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.math.Vec3i;
+
+import com.simibubi.create.content.contraptions.components.structureMovement.ContraptionLighter;
+import com.simibubi.create.foundation.render.backend.light.GridAlignedBB;
 
 public class PistonLighter extends ContraptionLighter<PistonContraption> {
     public PistonLighter(PistonContraption contraption) {

@@ -80,7 +80,7 @@ public class OrientedContraptionEntity extends AbstractContraptionEntity {
 	public static OrientedContraptionEntity create(World world, Contraption contraption,
 		Optional<Direction> initialOrientation) {
 		OrientedContraptionEntity entity =
-			new OrientedContraptionEntity(AllEntityTypes.ORIENTED_CONTRAPTION, world);
+			new OrientedContraptionEntity(AllEntityTypes.ORIENTED_CONTRAPTION.get(), world);
 		entity.setContraption(contraption);
 		initialOrientation.ifPresent(entity::setInitialOrientation);
 		entity.startAtInitialYaw();
