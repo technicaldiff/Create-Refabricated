@@ -23,7 +23,7 @@
 
     <module name="RegexpMultiline">
         <property name="message" value="Blank line at start of some block" />
-        <property name="format" value="[({[]\s+$^$" />
+        <property name="format" value="[({\[]\s+$^$" />
     </module>
     <module name="RegexpMultiline">
         <property name="message" value="Blank line at end of some block" />
