@@ -27,7 +27,7 @@ import com.simibubi.create.foundation.networking.AllPackets;
 import com.simibubi.create.foundation.resource.TranslationsHolder;
 import com.simibubi.create.foundation.worldgen.AllWorldFeatures;
 
-public class Create implements ModInitializer  {
+public class Create implements ModInitializer {
 	public static final String ID = "create";
 	public static final String NAME = "Create";
 

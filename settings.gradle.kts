@@ -7,5 +7,5 @@ pluginManagement {
     }
 }
 
-rootProject.name = "create"
+rootProject.name = "Create-Refabricated"
 include("checkstyleChecks")
