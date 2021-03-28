@@ -17,6 +17,7 @@ group = properties["maven_group"]!!
 
 allprojects {
 	apply(plugin = "java")
+
 	java {
 		sourceCompatibility = JavaVersion.VERSION_1_8
 		targetCompatibility = JavaVersion.VERSION_1_8
@@ -27,7 +28,7 @@ allprojects {
 	tasks.withType<JavaCompile> {
 		options.encoding = "UTF-8"
 		if (JavaVersion.current().isJava9Compatible) {
-			options.compilerArgs.addAll(listOf("--release", "8"))
+			options.release.set(8)
 		}
 	}
 }
@@ -58,38 +59,80 @@ repositories {
 	}
 }
 
+val setupBasicFabric: Project.() -> Unit = {
+	apply(plugin = "fabric-loom")
+
+	dependencies {
+		// We could also use properties["..."] here but this looks cleaner
+		val minecraft_version: String by rootProject
+		val yarn_mappings: String by rootProject
+		val loader_version: String by rootProject
+		val fabric_version: String by rootProject
+
+		minecraft("com.mojang", "minecraft", minecraft_version)
+
+		/*
+		 * TODO Mojmap
+		 * mappings(minecraft.officialMojangMappings())
+		 */
+		mappings("net.fabricmc", "yarn", yarn_mappings, classifier = "v2")
+		modImplementation("net.fabricmc", "fabric-loader", loader_version)
+
+		// Fabric API
+		modImplementation("net.fabricmc.fabric-api", "fabric-api", fabric_version)
+	}
+
+	val version = this.version
+	tasks {
+		processResources {
+			inputs.property("version", version)
+
+			filesMatching("fabric.mod.json") {
+				expand("version" to version)
+			}
+		}
+	}
+
+}
+
+val setupCheckstyle: Project.() -> Unit = {
+	apply(plugin = "checkstyle")
+
+	dependencies {
+		// Checkstyle
+		checkstyle(project(":checkstyleChecks"))
+	}
+
+	checkstyle {
+		toolVersion = rootProject.properties["checkstyle_version"] as String
+		configFile = rootProject.file("checkstyle/checkstyle.xml")
+	}
+}
+
+project.setupBasicFabric()
+project(":Create-Refabricated-Lib").setupBasicFabric()
+
+project.setupCheckstyle()
+project(":Create-Refabricated-Lib").setupCheckstyle()
+
 dependencies {
-	// We could also use properties["..."] here but this looks cleaner
-	val minecraft_version: String by project
-	val yarn_mappings: String by project
-	val loader_version: String by project
-	val fabric_version: String by project
 	val arrp_version: String by project
-	val databreaker_version: String by project
+	val cloth_config_version: String by project
 	val modmenu_version: String by project
 	val rei_version: String by project
-	val cloth_config_version: String by project
 
-	minecraft("com.mojang", "minecraft", minecraft_version)
+	val databreaker_version: String by project
 
-	/*
-	 * TODO Mojmap
-	 * mappings(minecraft.officialMojangMappings())
-	 */
-	mappings("net.fabricmc", "yarn", yarn_mappings, classifier = "v2")
-	modImplementation("net.fabricmc", "fabric-loader", loader_version)
-
-	// Fabric API
-	modImplementation("net.fabricmc.fabric-api", "fabric-api", fabric_version)
-
+	implementation(project(":Create-Refabricated-Lib"))
+	include(project(":Create-Refabricated-Lib"))
 
 	// Runtime resource generation
 	modImplementation("net.devtech", "arrp", arrp_version)
 	include("net.devtech", "arrp", arrp_version)
 
-	// DataBreaker
-	modRuntime("com.github.SuperCoder7979", "databreaker", databreaker_version) {
-		exclude(module = "fabric-loader")
+	// Cloth Config
+	modApi("me.shedaniel.cloth", "cloth-config-fabric", cloth_config_version) {
+		exclude(group = "net.fabricmc.fabric-api")
 	}
 
 	// ModMenu
@@ -99,13 +142,10 @@ dependencies {
 	modCompileOnly("me.shedaniel", "RoughlyEnoughItems-api", rei_version)
 	modRuntime("me.shedaniel", "RoughlyEnoughItems", rei_version)
 
-	// Cloth Config
-	modApi("me.shedaniel.cloth", "cloth-config-fabric", cloth_config_version) {
-		exclude(group = "net.fabricmc.fabric-api")
+	// DataBreaker
+	modRuntime("com.github.SuperCoder7979", "databreaker", databreaker_version) {
+		exclude(module = "fabric-loader")
 	}
-
-	// Checkstyle stuff
-	checkstyle(project(":checkstyleChecks"))
 }
 
 loom.accessWidener("src/main/resources/create.accesswidener")
@@ -147,20 +187,7 @@ val lambda: () -> Unit = {
 	}
 }; lambda()
 
-checkstyle {
-	toolVersion = properties["checkstyle_version"] as String
-	configFile = file("checkstyle/checkstyle.xml")
-}
-
 tasks {
-	processResources {
-		inputs.property("version", project.version)
-
-		filesMatching("fabric.mod.json") {
-			expand("version" to project.version)
-		}
-	}
-
 	withType<Wrapper> {
 		gradleVersion = "6.8.3"
 		distributionType = Wrapper.DistributionType.BIN

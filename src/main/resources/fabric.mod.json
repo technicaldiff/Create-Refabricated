@@ -6,7 +6,7 @@
   "name": "Create: Refabricated",
   "description": "A Fabric port of Create.",
   "authors": [
-    "Create: Refabricated Porting Team",
+    "Create: Refabricated Team",
     "Create Team"
   ],
   "contact": {
@@ -41,6 +41,7 @@
     "fabricloader": ">=0.7.4",
     "fabric": "*",
     "minecraft": "1.16.x",
+    "create_lib": "*",
     "cloth-config2": "*",
     "advanced_runtime_resource_pack": "*"
   }

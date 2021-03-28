@@ -8,4 +8,5 @@ pluginManagement {
 }
 
 rootProject.name = "Create-Refabricated"
+include("Create-Refabricated-Lib")
 include("checkstyleChecks")
