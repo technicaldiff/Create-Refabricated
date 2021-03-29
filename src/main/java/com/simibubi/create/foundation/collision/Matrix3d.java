@@ -7,7 +7,7 @@ import net.minecraft.util.math.Vec3d;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 
-import com.simibubi.create.foundation.utility.extensions.Matrix4fUtils;
+import com.simibubi.create.lib.extensions.Matrix4fUtils;
 
 public class Matrix3d {
     double m00, m01, m02;

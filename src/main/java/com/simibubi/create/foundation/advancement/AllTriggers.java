@@ -10,7 +10,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
 import net.minecraft.world.WorldAccess;
 
-import com.simibubi.create.foundation.mixin.accessor.CriteriaAccessor;
+import com.simibubi.create.lib.mixin.accessor.CriteriaAccessor;
 
 public class AllTriggers {
 

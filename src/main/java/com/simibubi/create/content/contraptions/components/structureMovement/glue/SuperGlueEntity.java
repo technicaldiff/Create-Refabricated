@@ -51,9 +51,9 @@ import com.simibubi.create.content.schematics.ItemRequirement;
 import com.simibubi.create.content.schematics.ItemRequirement.ItemUseType;
 import com.simibubi.create.content.schematics.SpecialEntityItemRequirement;
 import com.simibubi.create.foundation.networking.AllPackets;
-import com.simibubi.create.foundation.networking.entity.ExtraSpawnDataEntity;
 import com.simibubi.create.foundation.utility.AnimationTickHolder;
 import com.simibubi.create.foundation.utility.BlockFace;
+import com.simibubi.create.lib.networking.entity.ExtraSpawnDataEntity;
 
 public class SuperGlueEntity extends Entity implements ExtraSpawnDataEntity, SpecialEntityItemRequirement {
 	private int validationTimer;

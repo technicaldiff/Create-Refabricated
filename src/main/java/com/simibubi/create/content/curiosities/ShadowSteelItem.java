@@ -8,8 +8,8 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
-import com.simibubi.create.foundation.mixin.accessor.ItemEntityAccessor;
 import com.simibubi.create.foundation.utility.VecHelper;
+import com.simibubi.create.lib.mixin.accessor.ItemEntityAccessor;
 
 public class ShadowSteelItem extends Item {
 static boolean animationPlayed = false;

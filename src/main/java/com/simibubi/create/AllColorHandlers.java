@@ -19,9 +19,11 @@ import net.minecraft.state.property.Properties;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.BlockRenderView;
 
+import net.fabricmc.fabric.api.client.rendering.v1.ColorProviderRegistry;
+
 import com.simibubi.create.foundation.block.BlockVertexColorProvider;
 import com.simibubi.create.foundation.block.render.ColoredVertexModel;
-import com.simibubi.create.foundation.mixin.accessor.MinecraftClientAccessor;
+import com.simibubi.create.lib.mixin.accessor.MinecraftClientAccessor;
 
 public class AllColorHandlers {
 
@@ -62,13 +64,8 @@ public class AllColorHandlers {
 	}
 
 	public void init() {
-		BlockColors blockColors = MinecraftClient.getInstance()
-			.getBlockColors();
-		ItemColors itemColors = ((MinecraftClientAccessor) MinecraftClient.getInstance())
-			.getItemColors();
-
-		coloredBlocks.forEach((block, color) -> blockColors.registerColorProvider(color, block));
-		coloredItems.forEach((item, color) -> itemColors.register(color, item));
+		coloredBlocks.forEach((block, color) -> ColorProviderRegistry.BLOCK.register(color, block));
+		coloredItems.forEach((item, color) -> ColorProviderRegistry.ITEM.register(color, item));
 		coloredVertexBlocks.forEach((block, color) -> CreateClient.getCustomBlockModels()
 			.register(() -> block, model -> new ColoredVertexModel(model, color)));
 	}

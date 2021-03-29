@@ -17,10 +17,10 @@ import net.minecraft.world.World;
 
 import com.simibubi.create.CreateClient;
 import com.simibubi.create.content.contraptions.KineticDebugger;
-import com.simibubi.create.foundation.mixin.accessor.GameRendererAccessor;
 import com.simibubi.create.foundation.utility.AnimationTickHolder;
-import com.simibubi.create.foundation.utility.MixinHelper;
 import com.simibubi.create.foundation.utility.WorldAttached;
+import com.simibubi.create.lib.mixin.accessor.GameRendererAccessor;
+import com.simibubi.create.lib.utility.MixinHelper;
 
 public class FastRenderDispatcher {
 	public static WorldAttached<ConcurrentHashMap.KeySetView<BlockEntity, Boolean>> queuedUpdates = new WorldAttached<>(ConcurrentHashMap::newKeySet);

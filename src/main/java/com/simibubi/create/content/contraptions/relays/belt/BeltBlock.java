@@ -3,8 +3,6 @@ package com.simibubi.create.content.contraptions.relays.belt;
 import java.util.LinkedList;
 import java.util.List;
 
-import com.simibubi.create.foundation.EntityShapeContextMixinAccessor;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
@@ -47,6 +45,7 @@ import com.simibubi.create.content.logistics.block.belts.tunnel.BeltTunnelBlock;
 import com.simibubi.create.content.schematics.SpecialBlockItemRequirement;
 import com.simibubi.create.foundation.block.IBE;
 import com.simibubi.create.foundation.utility.Iterate;
+import com.simibubi.create.lib.extensions.EntityShapeContextExtensions;
 
 public class BeltBlock extends HorizontalKineticBlock implements IBE<BeltBlockEntity>, SpecialBlockItemRequirement {
 	public static final Property<BeltSlope> SLOPE = EnumProperty.of("slope", BeltSlope.class);
@@ -298,7 +297,7 @@ public class BeltBlock extends HorizontalKineticBlock implements IBE<BeltBlockEn
 
 		VoxelShape shape = getVisualShape(state, worldIn, pos, context);
 		try {
-			if (((EntityShapeContextMixinAccessor)context).getEntity() == null)
+			if (((EntityShapeContextExtensions)context).getCachedEntity() == null)
 				return shape;
 
 			BeltBlockEntity belt = getBlockEntity(worldIn, pos);
@@ -306,7 +305,7 @@ public class BeltBlock extends HorizontalKineticBlock implements IBE<BeltBlockEn
 
 			if (controller == null)
 				return shape;
-			if (controller.passengers == null || !controller.passengers.containsKey(((EntityShapeContextMixinAccessor)context).getEntity())) {
+			if (controller.passengers == null || !controller.passengers.containsKey(((EntityShapeContextExtensions)context).getCachedEntity())) {
 				return BeltShapes.getCollisionShape(state);
 			}
 

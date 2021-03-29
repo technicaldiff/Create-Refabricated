@@ -16,7 +16,7 @@ import net.minecraft.util.Identifier;
 
 import me.pepperbell.reghelper.BlockRegBuilder;
 
-import com.simibubi.create.foundation.mixin.accessor.StairsBlockAccessor;
+import com.simibubi.create.lib.mixin.accessor.StairsBlockAccessor;
 
 public abstract class PaletteBlockPartial<B extends Block> {
 

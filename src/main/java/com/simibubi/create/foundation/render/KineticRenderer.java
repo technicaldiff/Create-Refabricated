@@ -16,7 +16,7 @@ import com.simibubi.create.foundation.render.backend.gl.BasicProgram;
 import com.simibubi.create.foundation.render.backend.gl.shader.ShaderCallback;
 import com.simibubi.create.foundation.render.backend.instancing.InstancedBlockRenderer;
 import com.simibubi.create.foundation.render.backend.instancing.RenderMaterial;
-import com.simibubi.create.foundation.utility.extensions.Matrix4fUtils;
+import com.simibubi.create.lib.extensions.Matrix4fUtils;
 
 public class KineticRenderer extends InstancedBlockRenderer<BasicProgram> {
     public static int MAX_ORIGIN_DISTANCE = 100;

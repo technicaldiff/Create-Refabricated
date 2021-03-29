@@ -23,10 +23,10 @@ import net.minecraft.world.World;
 
 import com.simibubi.create.AllItems;
 import com.simibubi.create.Create;
-import com.simibubi.create.foundation.mixin.accessor.BeaconBlockEntityAccessor;
-import com.simibubi.create.foundation.mixin.accessor.ItemEntityAccessor;
 import com.simibubi.create.foundation.utility.ColorHelper;
 import com.simibubi.create.foundation.utility.VecHelper;
+import com.simibubi.create.lib.mixin.accessor.BeaconBlockEntityAccessor;
+import com.simibubi.create.lib.mixin.accessor.ItemEntityAccessor;
 
 public class ChromaticCompoundItem extends Item {
 

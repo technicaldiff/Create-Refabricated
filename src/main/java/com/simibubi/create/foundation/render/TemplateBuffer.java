@@ -7,7 +7,7 @@ import com.mojang.datafixers.util.Pair;
 
 import net.minecraft.client.render.BufferBuilder;
 
-import com.simibubi.create.foundation.mixin.accessor.BufferBuilderAccessor;
+import com.simibubi.create.lib.mixin.accessor.BufferBuilderAccessor;
 
 public class TemplateBuffer {
     protected ByteBuffer template;

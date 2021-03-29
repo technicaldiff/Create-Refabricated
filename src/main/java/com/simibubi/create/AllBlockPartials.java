@@ -27,7 +27,7 @@ import com.simibubi.create.foundation.render.backend.instancing.InstancedBlockRe
 import com.simibubi.create.foundation.render.backend.instancing.InstancedModel;
 import com.simibubi.create.foundation.utility.AngleHelper;
 import com.simibubi.create.foundation.utility.MatrixStacker;
-import com.simibubi.create.foundation.utility.extensions.BakedModelManagerExtensions;
+import com.simibubi.create.lib.extensions.BakedModelManagerExtensions;
 
 public class AllBlockPartials {
 

@@ -19,7 +19,7 @@ import com.simibubi.create.foundation.block.connected.CTSpriteShifter.CTType;
 import com.simibubi.create.foundation.block.render.SpriteShiftEntry;
 import com.simibubi.create.foundation.block.render.SpriteShifter;
 import com.simibubi.create.foundation.utility.Lang;
-import com.simibubi.create.foundation.utility.extensions.SignTypeExtensions;
+import com.simibubi.create.lib.extensions.SignTypeExtensions;
 
 public class AllSpriteShifts {
 	private static final Map<SignType, CTSpriteShiftEntry> WOODEN_WINDOWS = new IdentityHashMap<>();

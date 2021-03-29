@@ -50,8 +50,6 @@ import com.simibubi.create.content.contraptions.goggles.GoggleOverlayRenderer;
 import com.simibubi.create.content.contraptions.relays.belt.item.BeltConnectorHandler;
 import com.simibubi.create.content.curiosities.symmetry.SymmetryHandler;
 import com.simibubi.create.content.curiosities.tools.DeforesterItem;
-import com.simibubi.create.events.custom.ClientWorldEvents;
-import com.simibubi.create.events.custom.ModelsBakedCallback;
 import com.simibubi.create.foundation.block.entity.behaviour.linked.LinkHandler;
 import com.simibubi.create.foundation.block.entity.behaviour.linked.LinkRenderer;
 import com.simibubi.create.foundation.block.entity.behaviour.scrollvalue.ScrollValueRenderer;
@@ -63,6 +61,8 @@ import com.simibubi.create.foundation.render.backend.RenderWork;
 import com.simibubi.create.foundation.renderState.SuperRenderTypeBuffer;
 import com.simibubi.create.foundation.utility.AnimationTickHolder;
 import com.simibubi.create.foundation.utility.placement.PlacementHelpers;
+import com.simibubi.create.lib.event.ClientWorldEvents;
+import com.simibubi.create.lib.event.ModelsBakedCallback;
 
 public class ClientEvents {
 	private static final String itemPrefix = "item." + Create.ID;
@@ -77,6 +77,8 @@ public class ClientEvents {
 		
 		ModelLoadingRegistry.INSTANCE.registerModelProvider(ClientEvents::provideExtraModels);
 		ModelsBakedCallback.EVENT.register(ClientEvents::onModelsBaked);
+
+		InputEvents.register();
 
 		ClientTickEvents.END_CLIENT_TICK.register(SymmetryHandler::onClientTick);
 		WorldRenderEvents.END.register(SymmetryHandler::render);

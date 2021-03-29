@@ -12,7 +12,7 @@ import net.minecraft.particle.ParticleType;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 
-import com.simibubi.create.foundation.utility.extensions.ParticleManagerUtils;
+import com.simibubi.create.lib.extensions.ParticleManagerUtils;
 
 public interface CustomParticleDataWithSprite<T extends ParticleEffect> extends CustomParticleData<T> {
 	Factory<T> getDeserializer();

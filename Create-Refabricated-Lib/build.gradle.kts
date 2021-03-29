@@ -4,3 +4,5 @@ group = "${rootProject.properties["maven_group"]}.${rootProject.properties["arch
 base {
     archivesBaseName = properties["archives_base_name"] as String
 }
+
+loom.accessWidener("src/main/resources/create_lib.accesswidener")

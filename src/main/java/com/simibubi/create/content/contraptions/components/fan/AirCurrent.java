@@ -20,8 +20,8 @@ import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.util.shape.VoxelShapes;
 import net.minecraft.world.World;
 
-import com.simibubi.create.foundation.mixin.accessor.ServerPlayNetworkHandlerAccessor;
 import com.simibubi.create.foundation.utility.VecHelper;
+import com.simibubi.create.lib.mixin.accessor.ServerPlayNetworkHandlerAccessor;
 
 public class AirCurrent {
 

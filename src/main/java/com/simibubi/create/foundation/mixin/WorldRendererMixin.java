@@ -21,7 +21,7 @@ import com.simibubi.create.CreateClient;
 import com.simibubi.create.content.contraptions.components.structureMovement.render.ContraptionRenderDispatcher;
 import com.simibubi.create.foundation.render.backend.Backend;
 import com.simibubi.create.foundation.render.backend.FastRenderDispatcher;
-import com.simibubi.create.foundation.utility.extensions.Matrix4fUtils;
+import com.simibubi.create.lib.extensions.Matrix4fUtils;
 
 @Environment(EnvType.CLIENT)
 @Mixin(WorldRenderer.class)

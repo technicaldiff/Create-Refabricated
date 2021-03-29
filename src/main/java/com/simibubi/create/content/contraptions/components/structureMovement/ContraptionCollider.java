@@ -47,10 +47,10 @@ import com.simibubi.create.content.contraptions.components.structureMovement.syn
 import com.simibubi.create.foundation.collision.ContinuousOBBCollider.ContinuousSeparationManifold;
 import com.simibubi.create.foundation.collision.Matrix3d;
 import com.simibubi.create.foundation.collision.OrientedBB;
-import com.simibubi.create.foundation.mixin.accessor.ServerPlayNetworkHandlerAccessor;
 import com.simibubi.create.foundation.networking.AllPackets;
 import com.simibubi.create.foundation.utility.Iterate;
 import com.simibubi.create.foundation.utility.VecHelper;
+import com.simibubi.create.lib.mixin.accessor.ServerPlayNetworkHandlerAccessor;
 
 public class ContraptionCollider {
 

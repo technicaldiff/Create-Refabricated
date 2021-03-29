@@ -25,8 +25,8 @@ import net.minecraft.world.biome.Biome;
 import net.minecraft.world.level.ServerWorldProperties;
 import net.minecraft.world.level.storage.LevelStorage;
 
-import com.simibubi.create.foundation.mixin.accessor.BiomeAccessAccessor;
-import com.simibubi.create.foundation.mixin.accessor.MinecraftServerAccessor;
+import com.simibubi.create.lib.mixin.accessor.BiomeAccessAccessor;
+import com.simibubi.create.lib.mixin.accessor.MinecraftServerAccessor;
 import com.simibubi.create.registrate.util.nullness.MethodsReturnNonnullByDefault;
 import com.simibubi.create.registrate.util.nullness.ParametersAreNonnullByDefault;
 

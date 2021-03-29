@@ -32,7 +32,7 @@ import com.simibubi.create.foundation.resource.translation.EnUsTranslation;
  */
 @SuppressWarnings("SameParameterValue")
 public final class TranslationsHolder {
-	public static final RuntimeResourcePack RESOURCE_PACK = RuntimeResourcePack.create(id(ID).toString());
+	public static final RuntimeResourcePack RESOURCE_PACK = RuntimeResourcePack.create(ID + ":lang");
 
 	private static final List<CreateTranslation> TRANSLATIONS = new ArrayList<>();
 

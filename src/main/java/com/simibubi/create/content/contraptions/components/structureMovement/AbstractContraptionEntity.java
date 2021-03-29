@@ -43,9 +43,9 @@ import com.simibubi.create.AllMovementBehaviours;
 import com.simibubi.create.content.contraptions.components.structureMovement.glue.SuperGlueEntity;
 import com.simibubi.create.content.contraptions.components.structureMovement.mounted.MountedContraption;
 import com.simibubi.create.foundation.collision.Matrix3d;
-import com.simibubi.create.foundation.networking.entity.ExtraSpawnDataEntity;
 import com.simibubi.create.foundation.utility.AngleHelper;
 import com.simibubi.create.foundation.utility.VecHelper;
+import com.simibubi.create.lib.networking.entity.ExtraSpawnDataEntity;
 
 public abstract class AbstractContraptionEntity extends Entity implements ExtraSpawnDataEntity {
 	private static final TrackedData<Boolean> STALLED =

@@ -9,8 +9,8 @@ import net.minecraft.util.math.Vec3d;
 import me.pepperbell.simplenetworking.C2SPacket;
 import me.pepperbell.simplenetworking.SimpleChannel;
 
-import com.simibubi.create.foundation.mixin.accessor.ServerPlayNetworkHandlerAccessor;
 import com.simibubi.create.foundation.networking.AllPackets;
+import com.simibubi.create.lib.mixin.accessor.ServerPlayNetworkHandlerAccessor;
 
 public class ClientMotionPacket implements C2SPacket {
 

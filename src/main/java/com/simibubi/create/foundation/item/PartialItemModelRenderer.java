@@ -11,9 +11,9 @@ import net.minecraft.client.render.model.json.ModelTransformation;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.item.ItemStack;
 
-import com.simibubi.create.foundation.mixin.accessor.ItemRendererAccessor;
 import com.simibubi.create.foundation.renderState.RenderTypes;
-import com.simibubi.create.foundation.utility.MixinHelper;
+import com.simibubi.create.lib.mixin.accessor.ItemRendererAccessor;
+import com.simibubi.create.lib.utility.MixinHelper;
 
 public class PartialItemModelRenderer {
 	private static PartialItemModelRenderer instance;

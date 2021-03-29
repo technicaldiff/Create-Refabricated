@@ -2,7 +2,7 @@ package com.simibubi.create.foundation.render.backend.gl;
 
 import org.lwjgl.opengl.GL11;
 
-import com.simibubi.create.foundation.mixin.accessor.GlStateManagerAccessor;
+import com.simibubi.create.lib.mixin.accessor.GlStateManagerAccessor;
 
 public class GlFog {
 	public static float[] FOG_COLOR = new float[]{0, 0, 0, 0};
