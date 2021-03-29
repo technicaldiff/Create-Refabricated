@@ -18,17 +18,15 @@ public class EntityMixin implements EntityExtensions {
 	@Unique
 	private CompoundTag extraCustomData;
 
-	@Inject(at = @At(value = "INVOKE", target = "writeCustomDataToTag(Lnet/minecraft/nbt/CompoundTag;)V"), method = "toTag(Lnet/minecraft/nbt/CompoundTag;)V")
+	@Inject(at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/Entity;writeCustomDataToTag(Lnet/minecraft/nbt/CompoundTag;)V"), method = "toTag(Lnet/minecraft/nbt/CompoundTag;)Lnet/minecraft/nbt/CompoundTag;")
 	public void beforeWriteCustomData(CompoundTag tag, CallbackInfoReturnable<CompoundTag> cir) {
-		System.out.println("before check if writing custom data");
-		System.out.println(extraCustomData);
 		if (extraCustomData != null && !extraCustomData.isEmpty()) {
 			System.out.println("writing custom data");
 			tag.put(EntityHelper.EXTRA_DATA_KEY, extraCustomData);
 		}
 	}
 
-	@Inject(at = @At(value = "INVOKE", target = "readCustomDataFromTag(Lnet/minecraft/nbt/CompoundTag;)V"), method = "fromTag(Lnet/minecraft/nbt/CompoundTag;)V")
+	@Inject(at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/Entity;readCustomDataFromTag(Lnet/minecraft/nbt/CompoundTag;)V"), method = "fromTag(Lnet/minecraft/nbt/CompoundTag;)V")
 	public void beforeReadCustomData(CompoundTag tag, CallbackInfo ci) {
 		if (tag.contains(EntityHelper.EXTRA_DATA_KEY)) {
 			extraCustomData = tag.getCompound(EntityHelper.EXTRA_DATA_KEY);
