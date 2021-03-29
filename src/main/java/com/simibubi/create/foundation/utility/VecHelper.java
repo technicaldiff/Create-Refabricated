@@ -14,14 +14,13 @@ import net.minecraft.nbt.ListTag;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Direction.Axis;
-
-import com.simibubi.create.lib.mixin.accessor.GameRendererAccessor;
-import com.simibubi.create.lib.mixin.accessor.Vector3fAccessor;
-
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Quaternion;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.math.Vec3i;
+
+import com.simibubi.create.lib.mixin.accessor.GameRendererAccessor;
+import com.simibubi.create.lib.mixin.accessor.Vector3fAccessor;
 
 public class VecHelper {
 	public static final Vec3d CENTER_OF_ORIGIN = new Vec3d(.5, .5, .5);

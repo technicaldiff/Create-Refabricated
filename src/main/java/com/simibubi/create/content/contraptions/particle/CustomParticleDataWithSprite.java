@@ -12,7 +12,7 @@ import net.minecraft.particle.ParticleType;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 
-import com.simibubi.create.lib.extensions.ParticleManagerUtils;
+import com.simibubi.create.lib.extensions.helper.ParticleManagerHelper;
 
 public interface CustomParticleDataWithSprite<T extends ParticleEffect> extends CustomParticleData<T> {
 	Factory<T> getDeserializer();
@@ -39,6 +39,6 @@ public interface CustomParticleDataWithSprite<T extends ParticleEffect> extends 
 	@Override
 	@Environment(EnvType.CLIENT)
 	default void register(ParticleType<T> type, ParticleManager particles) {
-		ParticleManagerUtils.registerFactory(particles, type, getMetaFactory());
+		ParticleManagerHelper.registerFactory(particles, type, getMetaFactory());
 	}
 }

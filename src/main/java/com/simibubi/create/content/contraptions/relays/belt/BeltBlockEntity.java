@@ -6,8 +6,6 @@ import static net.minecraft.util.math.Direction.AxisDirection.POSITIVE;
 import java.util.Map;
 import java.util.Optional;
 
-import com.simibubi.create.content.contraptions.relays.belt.transport.BeltMovementHandler;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
@@ -26,6 +24,7 @@ import com.simibubi.create.AllBlocks;
 import com.simibubi.create.content.contraptions.base.KineticBlockEntity;
 import com.simibubi.create.content.contraptions.base.Rotating;
 import com.simibubi.create.content.contraptions.relays.belt.transport.BeltInventory;
+import com.simibubi.create.content.contraptions.relays.belt.transport.BeltMovementHandler;
 import com.simibubi.create.foundation.utility.NBTHelper;
 
 public class BeltBlockEntity extends KineticBlockEntity {

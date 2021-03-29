@@ -1,4 +1,4 @@
-package com.simibubi.create.lib.networking.entity;
+package com.simibubi.create.lib.entity;
 
 import net.minecraft.network.PacketByteBuf;
 

@@ -21,9 +21,9 @@ import org.spongepowered.asm.mixin.injection.ModifyVariable;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
+import com.simibubi.create.lib.entity.ClientSpawnHandlerEntity;
+import com.simibubi.create.lib.entity.ExtraSpawnDataEntity;
 import com.simibubi.create.lib.extensions.EntitySpawnS2CPacketExtensions;
-import com.simibubi.create.lib.networking.entity.ClientSpawnHandlerEntity;
-import com.simibubi.create.lib.networking.entity.ExtraSpawnDataEntity;
 
 @Environment(EnvType.CLIENT)
 @Mixin(ClientPlayNetworkHandler.class)

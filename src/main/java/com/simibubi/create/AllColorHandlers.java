@@ -6,11 +6,8 @@ import java.util.Map;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.RedstoneWireBlock;
-import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.color.block.BlockColorProvider;
-import net.minecraft.client.color.block.BlockColors;
 import net.minecraft.client.color.item.ItemColorProvider;
-import net.minecraft.client.color.item.ItemColors;
 import net.minecraft.client.color.world.BiomeColors;
 import net.minecraft.client.color.world.GrassColors;
 import net.minecraft.item.ItemConvertible;
@@ -23,7 +20,6 @@ import net.fabricmc.fabric.api.client.rendering.v1.ColorProviderRegistry;
 
 import com.simibubi.create.foundation.block.BlockVertexColorProvider;
 import com.simibubi.create.foundation.block.render.ColoredVertexModel;
-import com.simibubi.create.lib.mixin.accessor.MinecraftClientAccessor;
 
 public class AllColorHandlers {
 

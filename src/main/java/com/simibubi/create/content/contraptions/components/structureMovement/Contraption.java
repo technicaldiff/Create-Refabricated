@@ -13,8 +13,6 @@ import java.util.Set;
 import java.util.UUID;
 import java.util.function.BiConsumer;
 
-import net.minecraft.world.WorldAccess;
-
 import org.apache.commons.lang3.tuple.MutablePair;
 import org.apache.commons.lang3.tuple.Pair;
 import org.jetbrains.annotations.Nullable;
@@ -44,6 +42,7 @@ import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
+import net.minecraft.world.WorldAccess;
 import net.minecraft.world.chunk.BiMapPalette;
 
 import net.fabricmc.api.EnvType;

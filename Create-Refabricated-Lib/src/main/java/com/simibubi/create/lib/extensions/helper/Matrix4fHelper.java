@@ -1,12 +1,13 @@
-package com.simibubi.create.lib.extensions;
+package com.simibubi.create.lib.extensions.helper;
 
 import org.jetbrains.annotations.Contract;
 
-import com.simibubi.create.lib.utility.MixinHelper;
-
 import net.minecraft.util.math.Matrix4f;
 
-public final class Matrix4fUtils {
+import com.simibubi.create.lib.extensions.Matrix4fExtensions;
+import com.simibubi.create.lib.utility.MixinHelper;
+
+public final class Matrix4fHelper {
     @Contract(mutates = "param1")
     public static void multiplyBackward(Matrix4f $this, Matrix4f other) {
         Matrix4f copy = other.copy();
@@ -27,5 +28,5 @@ public final class Matrix4fUtils {
         return MixinHelper.cast(m);
     }
 
-    private Matrix4fUtils() {}
+    private Matrix4fHelper() {}
 }

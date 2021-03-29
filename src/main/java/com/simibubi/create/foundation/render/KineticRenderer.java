@@ -16,7 +16,7 @@ import com.simibubi.create.foundation.render.backend.gl.BasicProgram;
 import com.simibubi.create.foundation.render.backend.gl.shader.ShaderCallback;
 import com.simibubi.create.foundation.render.backend.instancing.InstancedBlockRenderer;
 import com.simibubi.create.foundation.render.backend.instancing.RenderMaterial;
-import com.simibubi.create.lib.extensions.Matrix4fUtils;
+import com.simibubi.create.lib.extensions.helper.Matrix4fHelper;
 
 public class KineticRenderer extends InstancedBlockRenderer<BasicProgram> {
     public static int MAX_ORIGIN_DISTANCE = 100;
@@ -71,7 +71,7 @@ public class KineticRenderer extends InstancedBlockRenderer<BasicProgram> {
 
         Matrix4f translate = Matrix4f.translate((float) -camX, (float) -camY, (float) -camZ);
 
-        Matrix4fUtils.multiplyBackward(translate, viewProjection);
+        Matrix4fHelper.multiplyBackward(translate, viewProjection);
         super.render(layer, translate, camX, camY, camZ, callback);
     }
 }

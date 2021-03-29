@@ -1,14 +1,15 @@
-package com.simibubi.create.lib.extensions;
-
-import com.simibubi.create.lib.utility.MixinHelper;
+package com.simibubi.create.lib.extensions.helper;
 
 import net.minecraft.client.particle.ParticleFactory;
 import net.minecraft.client.particle.ParticleManager;
 import net.minecraft.particle.ParticleEffect;
 import net.minecraft.particle.ParticleType;
 
-public final class ParticleManagerUtils {
-	private ParticleManagerUtils() {}
+import com.simibubi.create.lib.extensions.ParticleManagerExtensions;
+import com.simibubi.create.lib.utility.MixinHelper;
+
+public final class ParticleManagerHelper {
+	private ParticleManagerHelper() {}
 
 	public static <T extends ParticleEffect> void registerFactory(ParticleManager $this, ParticleType<T> type, ParticleManager.SpriteAwareFactory<T> factory) {
 		get($this).create$registerFactory0(type, factory);

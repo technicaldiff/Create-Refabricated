@@ -23,12 +23,13 @@ import net.minecraft.world.World;
 
 import com.simibubi.create.AllItems;
 import com.simibubi.create.Create;
+import com.simibubi.create.foundation.config.CRecipes;
 import com.simibubi.create.foundation.utility.ColorHelper;
 import com.simibubi.create.foundation.utility.VecHelper;
-import com.simibubi.create.lib.mixin.accessor.BeaconBlockEntityAccessor;
-import com.simibubi.create.lib.mixin.accessor.ItemEntityAccessor;
+import com.simibubi.create.lib.extensions.helper.EntityHelper;
+import com.simibubi.create.lib.item.EntityTickListenerItem;
 
-public class ChromaticCompoundItem extends Item {
+public class ChromaticCompoundItem extends Item implements EntityTickListenerItem {
 
 	public ChromaticCompoundItem(Settings properties) {
 		super(properties);
@@ -39,158 +40,153 @@ public class ChromaticCompoundItem extends Item {
 		return true;
 	}
 
+//	@Override
 	public double getDurabilityForDisplay(ItemStack stack) {
 		int light = stack.getOrCreateTag()
 			.getInt("CollectingLight");
 		return 1 - light / (float) Create.getConfig().recipes.lightSourceCountForRefinedRadiance;
 	}
-	// these are forge things
-	//@Override
+
+//	@Override
 	public boolean showDurabilityBar(ItemStack stack) {
 		int light = stack.getOrCreateTag()
 			.getInt("CollectingLight");
 		return light > 0;
 	}
 
-	//@Override
+//	@Override
 	public int getRGBDurabilityForDisplay(ItemStack stack) {
 		return ColorHelper.mixColors(0x413c69, 0xFFFFFF, (float) (1 - getDurabilityForDisplay(stack)));
 	}
 
-	/*@Override
+//	@Override
 	public int getItemStackLimit(ItemStack stack) {
 		return showDurabilityBar(stack) ? 1 : 16;
 	}
-	*/
 
-	//@Override
-	public static boolean onEntityItemUpdate(ItemStack stack, ItemEntity entity) {
-		if (stack.getItem() instanceof ChromaticCompoundItem) {
-			//stack = MixinHelper.cast(this);
-			double y = entity.getY();
-			double yMotion = entity.getVelocity().y;
-			World world = entity.world;
-			//CompoundTag data = entity.getPersistentData(); todo: getPersistentData
-			CompoundTag itemData = entity.getStack()
-				.getOrCreateTag();
+	@Override
+	public boolean onEntityItemUpdate(ItemStack stack, ItemEntity entity) {
+		double y = entity.getY();
+		double yMotion = entity.getVelocity().y;
+		World world = entity.world;
+		CompoundTag data = EntityHelper.getExtraCustomData(entity);
+		CompoundTag itemData = entity.getStack()
+			.getOrCreateTag();
 
-			Vec3d positionVec = entity.getPos();
-			if (world.isClient) {
-				int light = itemData.getInt("CollectingLight");
-				if (RANDOM.nextInt(Create.getConfig().recipes.lightSourceCountForRefinedRadiance + 20) < light) {
-					Vec3d start = VecHelper.offsetRandomly(positionVec, RANDOM, 3);
-					Vec3d motion = positionVec.subtract(start)
-						.normalize()
-						.multiply(.2f);
-					world.addParticle(ParticleTypes.END_ROD, start.x, start.y, start.z, motion.x, motion.y, motion.z);
-				}
-				return false;
+		Vec3d positionVec = entity.getPos();
+		CRecipes config = Create.getConfig().recipes;
+		if (world.isClient) {
+			int light = itemData.getInt("CollectingLight");
+			if (RANDOM.nextInt(config.lightSourceCountForRefinedRadiance + 20) < light) {
+				Vec3d start = VecHelper.offsetRandomly(positionVec, RANDOM, 3);
+				Vec3d motion = positionVec.subtract(start)
+					.normalize()
+					.multiply(.2f);
+				world.addParticle(ParticleTypes.END_ROD, start.x, start.y, start.z, motion.x, motion.y, motion.z);
 			}
+			return false;
+		}
 
-			// Convert to Shadow steel if in void
-			if (y < 0 && y - yMotion < -10 && Create.getConfig().recipes.enableShadowSteelRecipe) {
-				ItemStack newStack = new ItemStack(AllItems.SHADOW_STEEL);
-				newStack.setCount(stack.getCount());
-				//data.putBoolean("FromVoid", true); see to-do above
-				entity.setStack(newStack);
-			}
+		// Convert to Shadow steel if in void
+		if (y < 0 && y - yMotion < -10 && config.enableShadowSteelRecipe) {
+			ItemStack newStack = new ItemStack(AllItems.SHADOW_STEEL);
+			newStack.setCount(stack.getCount());
+			data.putBoolean("FromVoid", true);
+			entity.setStack(newStack);
+		}
 
-			if (!Create.getConfig().recipes.enableRefinedRadianceRecipe)
-				return false;
+		if (!config.enableRefinedRadianceRecipe)
+			return false;
 
-			// Convert to Refined Radiance if eaten enough light sources
-			if (itemData.getInt("CollectingLight") >= Create.getConfig().recipes.lightSourceCountForRefinedRadiance) {
-				ItemStack newStack = new ItemStack(AllItems.REFINED_RADIANCE);
-				ItemEntity newEntity = new ItemEntity(world, entity.getX(), entity.getY(), entity.getZ(), newStack);
-				newEntity.setVelocity(entity.getVelocity());
-				//newEntity.getPersistentData() see to-do above
-				//	.putBoolean("FromLight", true);
-				itemData.remove("CollectingLight");
-				world.spawnEntity(newEntity);
+		// Convert to Refined Radiance if eaten enough light sources
+		if (itemData.getInt("CollectingLight") >= config.lightSourceCountForRefinedRadiance) {
+			ItemStack newStack = new ItemStack(AllItems.REFINED_RADIANCE);
+			ItemEntity newEntity = new ItemEntity(world, entity.getX(), entity.getY(), entity.getZ(), newStack);
+			newEntity.setVelocity(entity.getVelocity());
+			EntityHelper.getExtraCustomData(newEntity)
+				.putBoolean("FromLight", true);
+			itemData.remove("CollectingLight");
+			world.spawnEntity(newEntity);
 
-				stack.split(1);
-				entity.setStack(stack);
-				if (stack.isEmpty())
-					entity.remove();
-				return false;
-			}
+			stack.split(1);
+			entity.setStack(stack);
+			if (stack.isEmpty())
+				entity.remove();
+			return false;
+		}
 
-			// Is inside beacon beam?
-			boolean isOverBeacon = false;
-			int entityX = MathHelper.floor(entity.getX());
-			int entityZ = MathHelper.floor(entity.getZ());
-			int localWorldHeight = world.getTopY(Heightmap.Type.WORLD_SURFACE, entityX, entityZ);
+		// Is inside beacon beam?
+		boolean isOverBeacon = false;
+		int entityX = MathHelper.floor(entity.getX());
+		int entityZ = MathHelper.floor(entity.getZ());
+		int localWorldHeight = world.getTopY(Heightmap.Type.WORLD_SURFACE, entityX, entityZ);
 
-			BlockPos.Mutable testPos = new BlockPos.Mutable(
+		BlockPos.Mutable testPos = new BlockPos.Mutable(
 				entityX,
 				Math.min(MathHelper.floor(entity.getY()), localWorldHeight),
 				entityZ);
 
-			while (testPos.getY() > 0) {
-				testPos.move(Direction.DOWN);
-				BlockState state = world.getBlockState(testPos);
-				if (state.getOpacity(world, testPos) >= 15 && state.getBlock() != Blocks.BEDROCK)
-					break;
-				if (state.getBlock() == Blocks.BEACON) {
-					BlockEntity te = world.getBlockEntity(testPos);
+		while (testPos.getY() > 0) {
+			testPos.move(Direction.DOWN);
+			BlockState state = world.getBlockState(testPos);
+			if (state.getOpacity(world, testPos) >= 15 && state.getBlock() != Blocks.BEDROCK)
+				break;
+			if (state.getBlock() == Blocks.BEACON) {
+				BlockEntity te = world.getBlockEntity(testPos);
 
-					if (!(te instanceof BeaconBlockEntity)) break;
+				if (!(te instanceof BeaconBlockEntity)) break;
 
-					BeaconBlockEntity bte = (BeaconBlockEntity) te;
+				BeaconBlockEntity bte = (BeaconBlockEntity) te;
 
-					if (bte.getLevel() != 0 && !((BeaconBlockEntityAccessor) bte).getBeamSegments().isEmpty())
-						isOverBeacon = true;
+				if (bte.getLevel() != 0 && !bte.getBeamSegments().isEmpty()) isOverBeacon = true;
 
-					break;
-				}
+				break;
 			}
+		}
 
-			if (isOverBeacon) {
-				ItemStack newStack = new ItemStack(AllItems.REFINED_RADIANCE);
-				newStack.setCount(stack.getCount());
-				//data.putBoolean("FromLight", true); see to-do above
-				entity.setStack(newStack);
-				return false;
-			}
-
-			// Find a light source and eat it.
-			Random r = world.random;
-			int range = 3;
-			float rate = 1 / 2f;
-			if (r.nextFloat() > rate)
-				return false;
-
-			BlockPos randomOffset = new BlockPos(VecHelper.offsetRandomly(positionVec, r, range));
-			BlockState state = world.getBlockState(randomOffset);
-			if (state.getLuminance() == 0) // if stuff doesn't work, look here first
-				return false;
-			if (state.getHardness(world, randomOffset) == -1)
-				return false;
-			if (state.getBlock() == Blocks.BEACON)
-				return false;
-
-			RaycastContext context = new RaycastContext(positionVec, VecHelper.getCenterOf(randomOffset),
-				ShapeType.COLLIDER, FluidHandling.NONE, entity);
-			if (!randomOffset.equals(world.raycast(context)
-				.getBlockPos()))
-				return false;
-
-			world.breakBlock(randomOffset, false);
-
-			ItemStack newStack = stack.split(1);
-			newStack.getOrCreateTag()
-				.putInt("CollectingLight", itemData.getInt("CollectingLight") + 1);
-			ItemEntity newEntity = new ItemEntity(world, entity.getX(), entity.getY(), entity.getZ(), newStack);
-			newEntity.setVelocity(entity.getVelocity());
-			newEntity.setToDefaultPickupDelay();
-			world.spawnEntity(newEntity);
-			//entity.lifespan = 6000;
-			((ItemEntityAccessor) entity).setAge(0); // if stuff doesn't work, look here too
-			if (stack.isEmpty())
-				entity.remove();
-
+		if (isOverBeacon) {
+			ItemStack newStack = new ItemStack(AllItems.REFINED_RADIANCE);
+			newStack.setCount(stack.getCount());
+			data.putBoolean("FromLight", true);
+			entity.setStack(newStack);
 			return false;
 		}
+
+		// Find a light source and eat it.
+		Random r = world.random;
+		int range = 3;
+		float rate = 1 / 2f;
+		if (r.nextFloat() > rate)
+			return false;
+
+		BlockPos randomOffset = new BlockPos(VecHelper.offsetRandomly(positionVec, r, range));
+		BlockState state = world.getBlockState(randomOffset);
+		if (state.getLuminance() == 0)
+			return false;
+		if (state.getHardness(world, randomOffset) == -1)
+			return false;
+		if (state.getBlock() == Blocks.BEACON)
+			return false;
+
+		RaycastContext context = new RaycastContext(positionVec, VecHelper.getCenterOf(randomOffset),
+			ShapeType.COLLIDER, FluidHandling.NONE, entity);
+		if (!randomOffset.equals(world.raycast(context)
+			.getBlockPos()))
+			return false;
+
+		world.breakBlock(randomOffset, false);
+
+		ItemStack newStack = stack.split(1);
+		newStack.getOrCreateTag()
+			.putInt("CollectingLight", itemData.getInt("CollectingLight") + 1);
+		ItemEntity newEntity = new ItemEntity(world, entity.getX(), entity.getY(), entity.getZ(), newStack);
+		newEntity.setVelocity(entity.getVelocity());
+		newEntity.setToDefaultPickupDelay();
+		world.spawnEntity(newEntity);
+//		entity.lifespan = 6000;
+		if (stack.isEmpty())
+			entity.remove();
+
 		return false;
 	}
 

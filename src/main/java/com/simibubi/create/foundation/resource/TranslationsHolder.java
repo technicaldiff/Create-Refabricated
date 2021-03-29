@@ -1,7 +1,6 @@
 package com.simibubi.create.foundation.resource;
 
 import static com.simibubi.create.Create.ID;
-import static com.simibubi.create.Create.id;
 
 import java.util.ArrayList;
 import java.util.List;

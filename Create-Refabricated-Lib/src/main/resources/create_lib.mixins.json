@@ -4,10 +4,11 @@
   "package": "com.simibubi.create.lib.mixin",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
+  	"EntityMixin",
     "EntityShapeContextMixin",
     "EntitySpawnS2CPacketMixin",
+    "ItemEntityMixin",
     "Matrix4fMixin",
-    "accessor.BeaconBlockEntityAccessor",
     "accessor.BiomeAccessAccessor",
     "accessor.CriteriaAccessor",
     "accessor.ItemEntityAccessor",
@@ -31,6 +32,7 @@
     "accessor.MinecraftClientAccessor"
   ],
   "server": [
+    "BeaconBlockEntityMixin",
     "SignTypeMixin",
     "Vec3dMixin"
   ],

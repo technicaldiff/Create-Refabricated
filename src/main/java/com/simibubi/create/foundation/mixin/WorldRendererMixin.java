@@ -21,7 +21,7 @@ import com.simibubi.create.CreateClient;
 import com.simibubi.create.content.contraptions.components.structureMovement.render.ContraptionRenderDispatcher;
 import com.simibubi.create.foundation.render.backend.Backend;
 import com.simibubi.create.foundation.render.backend.FastRenderDispatcher;
-import com.simibubi.create.lib.extensions.Matrix4fUtils;
+import com.simibubi.create.lib.extensions.helper.Matrix4fHelper;
 
 @Environment(EnvType.CLIENT)
 @Mixin(WorldRenderer.class)
@@ -39,7 +39,7 @@ public class WorldRendererMixin {
 		if (!Backend.available()) return;
 
 		Matrix4f viewProjection = stack.peek().getModel().copy();
-		Matrix4fUtils.multiplyBackward(viewProjection, FastRenderDispatcher.getProjectionMatrix());
+		Matrix4fHelper.multiplyBackward(viewProjection, FastRenderDispatcher.getProjectionMatrix());
 
 		FastRenderDispatcher.renderLayer(type, viewProjection, camX, camY, camZ);
 

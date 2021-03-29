@@ -7,7 +7,7 @@ import net.minecraft.util.math.Vec3d;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 
-import com.simibubi.create.lib.extensions.Matrix4fUtils;
+import com.simibubi.create.lib.extensions.helper.Matrix4fHelper;
 
 public class Matrix3d {
     double m00, m01, m02;
@@ -143,6 +143,6 @@ public class Matrix3d {
         conversionBuffer[9] = (float) m21;
         conversionBuffer[10] = (float) m22;
 
-        return Matrix4fUtils.fromFloatArray(conversionBuffer);
+        return Matrix4fHelper.fromFloatArray(conversionBuffer);
     }
 }

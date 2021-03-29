@@ -9,33 +9,32 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
 import com.simibubi.create.foundation.utility.VecHelper;
-import com.simibubi.create.lib.mixin.accessor.ItemEntityAccessor;
+import com.simibubi.create.lib.extensions.helper.EntityHelper;
+import com.simibubi.create.lib.item.EntityTickListenerItem;
 
-public class RefinedRadianceItem extends Item {
+public class RefinedRadianceItem extends Item implements EntityTickListenerItem {
 
 	public RefinedRadianceItem(Settings properties) {
 		super(properties);
 	}
-	static boolean animationPlayed = false;
+	
 	@Override
 	public boolean hasGlint(ItemStack stack) {
 		return true;
 	}
 
-	//@Override
-	public static boolean onEntityItemUpdate(ItemStack stack, ItemEntity entity) {
-		if (stack.getItem() instanceof RefinedRadianceItem) {
-			World world = entity.world;
-			Vec3d pos = entity.getPos();
+	@Override
+	public boolean onEntityItemUpdate(ItemStack stack, ItemEntity entity) {
+		World world = entity.world;
+		Vec3d pos = entity.getPos();
 
-			if (world.isClient && entity.hasNoGravity()) {
-				if (world.random.nextFloat() < MathHelper.clamp(entity.getStack().getCount() - 10, 1, 100) / 64f) {
-					Vec3d ppos = VecHelper.offsetRandomly(pos, world.random, .5f);
-					world.addParticle(ParticleTypes.END_ROD, ppos.x, pos.y, ppos.z, 0, -.1f, 0);
-				}
+		if (world.isClient && entity.hasNoGravity()) {
+			if (world.random.nextFloat() < MathHelper.clamp(entity.getStack().getCount() - 10, 1, 100) / 64f) {
+				Vec3d ppos = VecHelper.offsetRandomly(pos, world.random, .5f);
+				world.addParticle(ParticleTypes.END_ROD, ppos.x, pos.y, ppos.z, 0, -.1f, 0);
+			}
 
-				if (animationPlayed == false) {
-			//if (!entity.getPersistentData().contains("ClientAnimationPlayed")) {
+			if (!EntityHelper.getExtraCustomData(entity).contains("ClientAnimationPlayed")) {
 				Vec3d basemotion = new Vec3d(0, 1, 0);
 				world.addParticle(ParticleTypes.FLASH, pos.x, pos.y, pos.z, 0, 0, 0);
 				for (int i = 0; i < 20; i++) {
@@ -43,22 +42,20 @@ public class RefinedRadianceItem extends Item {
 					world.addParticle(ParticleTypes.WITCH, pos.x, pos.y, pos.z, motion.x, motion.y, motion.z);
 					world.addParticle(ParticleTypes.END_ROD, pos.x, pos.y, pos.z, motion.x, motion.y, motion.z);
 				}
-				//entity.getPersistentData().putBoolean("ClientAnimationPlayed", true);
-					animationPlayed = true;
-				}
-
-				return false;
+				EntityHelper.getExtraCustomData(entity).putBoolean("ClientAnimationPlayed", true);
 			}
 
-			//if (!entity.getPersistentData().contains("FromLight"))
-			//return false;
-
-			((ItemEntityAccessor) entity).setAge(0);
-			entity.setNoGravity(true);
-			//entity.setVelocity(entity.getVelocity().add(0, .15f, 0)); todo
-			//entity.getPersistentData().remove("FromLight");
 			return false;
 		}
+
+		if (!EntityHelper.getExtraCustomData(entity).contains("FromLight"))
+			return false;
+
+//		entity.lifespan = 6000;
+		entity.setNoGravity(true);
+		entity.setVelocity(entity.getVelocity().add(0, .15f, 0));
+		EntityHelper.getExtraCustomData(entity).remove("FromLight");
 		return false;
 	}
+
 }

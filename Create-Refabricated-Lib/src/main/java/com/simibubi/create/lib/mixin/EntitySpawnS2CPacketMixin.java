@@ -14,8 +14,8 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
+import com.simibubi.create.lib.entity.ExtraSpawnDataEntity;
 import com.simibubi.create.lib.extensions.EntitySpawnS2CPacketExtensions;
-import com.simibubi.create.lib.networking.entity.ExtraSpawnDataEntity;
 
 @Mixin(EntitySpawnS2CPacket.class)
 public class EntitySpawnS2CPacketMixin implements EntitySpawnS2CPacketExtensions {
