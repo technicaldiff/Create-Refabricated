@@ -27,9 +27,11 @@ import com.simibubi.create.foundation.config.CRecipes;
 import com.simibubi.create.foundation.utility.ColorHelper;
 import com.simibubi.create.foundation.utility.VecHelper;
 import com.simibubi.create.lib.extensions.helper.EntityHelper;
+import com.simibubi.create.lib.item.CustomDurabilityBarItem;
+import com.simibubi.create.lib.item.CustomMaxCountItem;
 import com.simibubi.create.lib.item.EntityTickListenerItem;
 
-public class ChromaticCompoundItem extends Item implements EntityTickListenerItem {
+public class ChromaticCompoundItem extends Item implements CustomDurabilityBarItem, CustomMaxCountItem, EntityTickListenerItem {
 
 	public ChromaticCompoundItem(Settings properties) {
 		super(properties);
@@ -40,26 +42,26 @@ public class ChromaticCompoundItem extends Item implements EntityTickListenerIte
 		return true;
 	}
 
-//	@Override
+	@Override
 	public double getDurabilityForDisplay(ItemStack stack) {
 		int light = stack.getOrCreateTag()
 			.getInt("CollectingLight");
 		return 1 - light / (float) Create.getConfig().recipes.lightSourceCountForRefinedRadiance;
 	}
 
-//	@Override
+	@Override
 	public boolean showDurabilityBar(ItemStack stack) {
 		int light = stack.getOrCreateTag()
 			.getInt("CollectingLight");
 		return light > 0;
 	}
 
-//	@Override
+	@Override
 	public int getRGBDurabilityForDisplay(ItemStack stack) {
 		return ColorHelper.mixColors(0x413c69, 0xFFFFFF, (float) (1 - getDurabilityForDisplay(stack)));
 	}
 
-//	@Override
+	@Override
 	public int getItemStackLimit(ItemStack stack) {
 		return showDurabilityBar(stack) ? 1 : 16;
 	}
