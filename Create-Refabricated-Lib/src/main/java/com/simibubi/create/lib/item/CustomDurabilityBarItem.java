@@ -31,6 +31,8 @@ public interface CustomDurabilityBarItem extends CustomGuiOverlayItem {
 			RenderSystem.enableAlphaTest();
 			RenderSystem.enableTexture();
 			RenderSystem.enableDepthTest();
+
+			return true;
 		}
 		return false;
 	}
