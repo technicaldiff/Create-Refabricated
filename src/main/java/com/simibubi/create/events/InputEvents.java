@@ -3,23 +3,26 @@ package com.simibubi.create.events;
 import net.minecraft.client.MinecraftClient;
 
 import com.simibubi.create.foundation.block.entity.behaviour.scrollvalue.ScrollValueHandler;
+import com.simibubi.create.lib.event.KeyInputCallback;
+import com.simibubi.create.lib.event.MouseButtonCallback;
 import com.simibubi.create.lib.event.MouseScrolledCallback;
 
 public class InputEvents {
 
 	public static void register() {
+		KeyInputCallback.EVENT.register(InputEvents::onKeyInput);
 		MouseScrolledCallback.EVENT.register(InputEvents::onMouseScrolled);
+		MouseButtonCallback.EVENT.register(InputEvents::onMouseInput);
 	}
 
-//	public static void onKeyInput(KeyInputEvent event) {
-//		int key = event.getKey();
-//		boolean pressed = !(event.getAction() == 0);
-//
-//		if (MinecraftClient.getInstance().currentScreen != null)
-//			return;
-//
+	public static void onKeyInput(int key, int scancode, int action, int mods) {
+		boolean pressed = action != 0;
+
+		if (MinecraftClient.getInstance().currentScreen != null)
+			return;
+
 //		CreateClient.schematicHandler.onKeyInput(key, pressed);
-//	}
+	}
 
 	public static boolean onMouseScrolled(double delta) {
 		if (MinecraftClient.getInstance().currentScreen != null)
@@ -32,16 +35,14 @@ public class InputEvents {
 		return cancelled;
 	}
 
-//	@SubscribeEvent
-//	public static void onMouseInput(MouseInputEvent event) {
-//		if (MinecraftClient.getInstance().currentScreen != null)
-//			return;
-//
-//		int button = event.getButton();
-//		boolean pressed = !(event.getAction() == 0);
-//
+	public static void onMouseInput(int button, int action, int mods) {
+		if (MinecraftClient.getInstance().currentScreen != null)
+			return;
+
+		boolean pressed = action != 0;
+
 //		CreateClient.schematicHandler.onMouseInput(button, pressed);
 //		CreateClient.schematicAndQuillHandler.onMouseInput(button, pressed);
-//	}
+	}
 
 }
