@@ -98,7 +98,6 @@ val setupBasicFabric: Project.() -> Unit = {
 			}
 		}
 	}
-
 }
 
 val setupCheckstyle: Project.() -> Unit = {

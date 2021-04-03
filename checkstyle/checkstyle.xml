@@ -127,6 +127,20 @@
         <property name="format" value="[({\[]\s+$^$"/>
     </module>
 
+    <module name="SuppressWithPlainTextCommentFilter">
+        <!--
+        Should be at the start (either before or after imports & package) of any file that is ported from Create. That is,
+        files that we do not enforce Checkstyle on.
+         -->
+        <property name="offCommentFormat" value="// PORTED CREATE SOURCE"/>
+
+        <!-- If we need this for whatever reason, it's here. -->
+        <property name="onCommentFormat" value="// ORIGINAL FABRIC SOURCE"/>
+
+        <!-- We want to only suppress RegexpMultiline -->
+        <property name="checkFormat" value="RegexpMultiline"/>
+    </module>
+
     <!-- Tabs not allowed in Json -->
     <module name="FileTabCharacterCheck">
         <property name="fileExtensions" value="json"/>
