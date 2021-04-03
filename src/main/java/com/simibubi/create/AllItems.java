@@ -1,7 +1,5 @@
 // PORTED CREATE SOURCE
 
-// PORTED CREATE SOURCE
-
 package com.simibubi.create;
 
 import static com.simibubi.create.content.AllSections.CURIOSITIES;
