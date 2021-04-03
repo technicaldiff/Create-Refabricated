@@ -107,7 +107,9 @@ public class AllFluids {
 		}
 
 		@Override
-		public int getTickRate(WorldView worldview) { return 25; }
+		public int getTickRate(WorldView worldview) {
+			return 25;
+		}
 
 		@Override
 		protected BlockState toBlockState(FluidState fluidState) {

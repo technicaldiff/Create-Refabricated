@@ -8,14 +8,6 @@ import static net.minecraft.state.property.Properties.AXIS;
 import java.util.LinkedList;
 import java.util.List;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Direction;
-import net.minecraft.util.math.Vec3i;
-import net.minecraft.world.World;
-
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.Create;
 import com.simibubi.create.content.contraptions.base.KineticBlockEntity;
@@ -27,6 +19,14 @@ import com.simibubi.create.content.contraptions.relays.encased.DirectionalShaftH
 import com.simibubi.create.content.contraptions.relays.encased.SplitShaftBlockEntity;
 import com.simibubi.create.content.contraptions.relays.gearbox.GearboxBlockEntity;
 import com.simibubi.create.foundation.utility.Iterate;
+
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Direction;
+import net.minecraft.util.math.Vec3i;
+import net.minecraft.world.World;
 
 public class RotationPropagator {
 
@@ -76,11 +76,11 @@ public class RotationPropagator {
 
 		// Axis <-> Axis
 		if (connectedByAxis) {
-	 		float axisModifier = getAxisModifier(to, direction.getOpposite());
-	 		if (axisModifier != 0)
-		 	axisModifier = 1 / axisModifier;
-			 return getAxisModifier(from, direction) * axisModifier;
-	 	}
+			float axisModifier = getAxisModifier(to, direction.getOpposite());
+			if (axisModifier != 0)
+				axisModifier = 1 / axisModifier;
+			return getAxisModifier(from, direction) * axisModifier;
+		}
 
 		// Attached Encased Belts
 		/**if (fromBlock instanceof EncasedBeltBlock && toBlock instanceof EncasedBeltBlock) { TODO ENCASED BELT BLOCK
@@ -100,18 +100,18 @@ public class RotationPropagator {
 
 		// Gear <-> Large Gear
 		if (isLargeCog(stateFrom) && definitionTo.hasIntegratedCogwheel(world, to.getPos(), stateTo))
-		 if (isLargeToSmallCog(stateFrom, stateTo, definitionTo, diff))
-		 return -2f;
-		 if (isLargeCog(stateTo) && definitionFrom.hasIntegratedCogwheel(world, from.getPos(), stateFrom))
-		 if (isLargeToSmallCog(stateTo, stateFrom, definitionFrom, diff))
-		 return -.5f;
+			if (isLargeToSmallCog(stateFrom, stateTo, definitionTo, diff))
+				return -2f;
+		if (isLargeCog(stateTo) && definitionFrom.hasIntegratedCogwheel(world, from.getPos(), stateFrom))
+			if (isLargeToSmallCog(stateTo, stateFrom, definitionFrom, diff))
+				return -.5f;
 
 		// Gear <-> Gear
 		if (connectedByGears) {
 			if (diff.getManhattanDistance(BlockPos.ZERO) != 1)
 				return 0;
 			if (isLargeCog(stateTo))
-			 return 0;
+				return 0;
 			if (direction.getAxis() == definitionFrom.getRotationAxis(stateFrom))
 				return 0;
 			if (definitionFrom.getRotationAxis(stateFrom) == definitionTo.getRotationAxis(stateTo))
@@ -127,9 +127,9 @@ public class RotationPropagator {
 
 		// Rotation Speed Controller <-> Large Gear
 		if (isLargeCogToSpeedController(stateFrom, stateTo, to.getPos().subtract(from.getPos())))
-	 		return SpeedControllerBlockEntity.getConveyedSpeed(from, to, true);
+			return SpeedControllerBlockEntity.getConveyedSpeed(from, to, true);
 		if (isLargeCogToSpeedController(stateTo, stateFrom, from.getPos().subtract(to.getPos())))
-		 	return SpeedControllerBlockEntity.getConveyedSpeed(to, from, false);
+			return SpeedControllerBlockEntity.getConveyedSpeed(to, from, false);
 
 		float rotationSpeedModifier = getRotationSpeedModifier(from, to);
 		return from.getTheoreticalSpeed() * rotationSpeedModifier;
@@ -137,7 +137,7 @@ public class RotationPropagator {
 
 	private static boolean isLargeToLargeGear(BlockState from, BlockState to, BlockPos diff) {
 		if (!isLargeCog(from) || !isLargeCog(to))
-		 return false;
+			return false;
 		Direction.Axis fromAxis = from.get(AXIS);
 		Direction.Axis toAxis = to.get(AXIS);
 		if (fromAxis == toAxis)

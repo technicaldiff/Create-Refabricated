@@ -15,10 +15,10 @@ import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Identifier;
 
+import org.spongepowered.asm.mixin.MixinEnvironment;
+
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder;
-
-import org.spongepowered.asm.mixin.MixinEnvironment;
 
 import com.simibubi.create.content.contraptions.TorquePropagator;
 import com.simibubi.create.content.logistics.RedstoneLinkNetworkHandler;

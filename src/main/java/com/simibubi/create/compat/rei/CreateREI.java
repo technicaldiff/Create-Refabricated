@@ -13,12 +13,10 @@ import com.simibubi.create.Create;
 
 @Environment(EnvType.CLIENT)
 public class CreateREI implements REIPluginV0 {
-
 	private static final Identifier ID = new Identifier(Create.ID, "jei_plugin");
 
 	@Override
 	public Identifier getPluginIdentifier() {
 		return ID;
 	}
-
 }
