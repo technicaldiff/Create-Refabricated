@@ -40,7 +40,7 @@ import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
 import net.fabricmc.fabric.api.resource.SimpleSynchronousResourceReloadListener;
 
-abstract class CreateFluid extends FlowableFluid  {
+abstract class CreateFluid extends FlowableFluid {
 	@Override
 	public boolean matchesType(Fluid fluid) {
 		return fluid == getStill() || fluid == getFlowing();
@@ -167,7 +167,9 @@ public class AllFluids {
 		}
 
 		@Override
-		public int getTickRate(WorldView worldview) { return 25; }
+		public int getTickRate(WorldView worldview) {
+			return 25;
+		}
 
 		@Override
 		protected BlockState toBlockState(FluidState fluidState) {
@@ -223,14 +225,16 @@ public class AllFluids {
 		STILL_CHOCOLATE = Registry.register(Registry.FLUID, new Identifier(Create.ID, "chocolate"), new ChocolateFluid.Still());
 		FLOWING_CHOCOLATE = Registry.register(Registry.FLUID, new Identifier(Create.ID, "flowing_chocolate"), new ChocolateFluid.Flowing());
 
-		CHOCOLATE = Registry.register(Registry.BLOCK, new Identifier(Create.ID, "chocolate"), new FluidBlock(STILL_CHOCOLATE, FabricBlockSettings.copy(Blocks.WATER)){});
+		CHOCOLATE = Registry.register(Registry.BLOCK, new Identifier(Create.ID, "chocolate"), new FluidBlock(STILL_CHOCOLATE, FabricBlockSettings.copy(Blocks.WATER)) {
+		});
 
 		CHOCOLATE_BUCKET = Registry.register(Registry.ITEM, new Identifier(Create.ID, "chocolate_bucket"), new BucketItem(STILL_CHOCOLATE, new Item.Settings().recipeRemainder(Items.BUCKET).maxCount(1).group(Create.baseCreativeTab)));
 
 		STILL_HONEY = Registry.register(Registry.FLUID, new Identifier(Create.ID, "honey"), new HoneyFluid.Still());
 		FLOWING_HONEY = Registry.register(Registry.FLUID, new Identifier(Create.ID, "flowing_honey"), new HoneyFluid.Flowing());
 
-		HONEY = Registry.register(Registry.BLOCK, new Identifier(Create.ID, "honey"), new FluidBlock(STILL_HONEY, FabricBlockSettings.copy(Blocks.WATER)){});
+		HONEY = Registry.register(Registry.BLOCK, new Identifier(Create.ID, "honey"), new FluidBlock(STILL_HONEY, FabricBlockSettings.copy(Blocks.WATER)) {
+		});
 
 		HONEY_BUCKET = Registry.register(Registry.ITEM, new Identifier(Create.ID, "honey_bucket"), new BucketItem(STILL_HONEY, new Item.Settings().recipeRemainder(Items.BUCKET).maxCount(1).group(Create.baseCreativeTab)));
 	}
@@ -256,7 +260,7 @@ public class AllFluids {
 		final Identifier fluidId = Registry.FLUID.getId(still);
 		final Identifier listenerId = new Identifier(fluidId.getNamespace(), fluidId.getPath() + "_reload_listener");
 
-		final Sprite[] fluidSprites = { null, null };
+		final Sprite[] fluidSprites = {null, null};
 
 		ResourceManagerHelper.get(ResourceType.CLIENT_RESOURCES).registerReloadListener(new SimpleSynchronousResourceReloadListener() {
 			@Override

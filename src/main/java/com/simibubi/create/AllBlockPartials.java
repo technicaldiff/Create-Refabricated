@@ -246,10 +246,10 @@ public class AllBlockPartials {
 		Supplier<MatrixStack> ms = () -> {
 			MatrixStack stack = new MatrixStack();
 			MatrixStacker.of(stack)
-						 .centre()
-						 .rotateY(AngleHelper.horizontalAngle(facing))
-						 .rotateX(AngleHelper.verticalAngle(facing))
-						 .unCentre();
+						.centre()
+						.rotateY(AngleHelper.horizontalAngle(facing))
+						.rotateX(AngleHelper.verticalAngle(facing))
+						.unCentre();
 			return stack;
 		};
 		return dispatcher.getMaterial(KineticRenderMaterials.ROTATING).getModel(this, referenceState, facing, ms);
