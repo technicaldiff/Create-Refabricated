@@ -1,3 +1,5 @@
+// PORTED CREATE SOURCE
+
 package com.simibubi.create.content.logistics.block.diodes;
 
 import static com.simibubi.create.content.logistics.block.diodes.AdjustableRepeaterBlock.POWERING;

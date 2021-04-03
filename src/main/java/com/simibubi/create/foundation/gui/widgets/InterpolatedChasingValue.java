@@ -1,3 +1,5 @@
+// PORTED CREATE SOURCE
+
 package com.simibubi.create.foundation.gui.widgets;
 
 public class InterpolatedChasingValue extends InterpolatedValue {

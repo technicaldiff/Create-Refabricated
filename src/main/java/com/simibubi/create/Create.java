@@ -1,3 +1,8 @@
+// ORIGINAL FABRIC SOURCE
+// ...kind of. This just has lots of Fabric-specific stuff in it
+
+// PORTED CREATE SOURCE
+
 package com.simibubi.create;
 
 import java.util.Random;

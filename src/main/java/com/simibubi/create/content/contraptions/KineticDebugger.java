@@ -1,3 +1,5 @@
+// PORTED CREATE SOURCE
+
 package com.simibubi.create.content.contraptions;
 
 import net.minecraft.block.BlockState;
@@ -31,27 +33,27 @@ public class KineticDebugger {
 			return;
 		}
 
-		KineticBlockEntity te = getSelectedTE();
-		if (te == null)
+		KineticBlockEntity be = getSelectedTE();
+		if (be == null)
 			return;
 
 		World world = MinecraftClient.getInstance().world;
-		BlockPos toOutline = te.hasSource() ? te.source : te.getPos();
-		BlockState state = te.getCachedState();
+		BlockPos toOutline = be.hasSource() ? be.source : be.getPos();
+		BlockState state = be.getCachedState();
 		VoxelShape shape = world.getBlockState(toOutline)
 			.getSidesShape(world, toOutline); // TODO EITHER THIS OR .getCullingShape
 
-		if (te.getTheoreticalSpeed() != 0 && !shape.isEmpty())
+		if (be.getTheoreticalSpeed() != 0 && !shape.isEmpty())
 			CreateClient.outliner.chaseAABB("kineticSource", shape.getBoundingBox()
 				.offset(toOutline))
 				.lineWidth(1 / 16f)
-				.colored(te.hasSource() ? ColorHelper.colorFromLong(te.network) : 0xffcc00);
+				.colored(be.hasSource() ? ColorHelper.colorFromLong(be.network) : 0xffcc00);
 
 		if (state.getBlock() instanceof Rotating) {
 			Direction.Axis axis = ((Rotating) state.getBlock()).getRotationAxis(state);
 			Vec3d vec = new Vec3d(Direction.get(Direction.AxisDirection.POSITIVE, axis)
 				.getUnitVector());
-			Vec3d center = VecHelper.getCenterOf(te.getPos());
+			Vec3d center = VecHelper.getCenterOf(be.getPos());
 			CreateClient.outliner.showLine("rotationAxis", center.add(vec), center.subtract(vec))
 				.lineWidth(1 / 16f);
 		}

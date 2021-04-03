@@ -1,3 +1,5 @@
+// PORTED CREATE SOURCE
+
 package com.simibubi.create.foundation.resource.translation;
 
 import net.devtech.arrp.json.lang.JLang;

@@ -1,3 +1,5 @@
+// PORTED CREATE SOURCE
+
 package com.simibubi.create.foundation.config.util;
 
 import me.shedaniel.autoconfig.ConfigData;
