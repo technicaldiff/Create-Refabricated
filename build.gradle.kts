@@ -38,6 +38,10 @@ repositories {
 		name = "Fabric"
 	}
 
+	maven("https://mod-buildcraft.com/maven/") {
+		name = "BuildCraft"
+	}
+
 	maven("https://raw.githubusercontent.com/Devan-Kerman/Devan-Repo/master/") {
 		name = "HalfOf2"
 	}
@@ -54,7 +58,9 @@ repositories {
 		name = "Jitpack"
 
 		content {
-			includeGroup("com.github.SuperCoder7979") // So Gradle doesn't spend time searching JitPack for other deps
+			// So Gradle doesn't spend time searching JitPack for other deps
+			includeGroup("com.github.PepperCode1")
+			includeGroup("com.github.SuperCoder7979")
 		}
 	}
 }
@@ -116,6 +122,8 @@ project.setupCheckstyle()
 project(":Create-Refabricated-Lib").setupCheckstyle()
 
 dependencies {
+	val registrate_version: String by project
+	val lba_version: String by project
 	val arrp_version: String by project
 	val cloth_config_version: String by project
 	val modmenu_version: String by project
@@ -125,6 +133,15 @@ dependencies {
 
 	implementation(project(":Create-Refabricated-Lib"))
 	include(project(":Create-Refabricated-Lib"))
+
+	// Registrate
+	modImplementation("com.github.PepperCode1", "Registrate-Fabric", registrate_version)
+	include("com.github.PepperCode1", "Registrate-Fabric", registrate_version)
+
+	// LibBlockAttributes
+	modImplementation("alexiil.mc.lib", "libblockattributes-all", lba_version)
+	//modImplementation("alexiil.mc.lib", "libblockattributes-items", lba_version)
+	//modImplementation("alexiil.mc.lib", "libblockattributes-fluids", lba_version)
 
 	// Runtime resource generation
 	modImplementation("net.devtech", "arrp", arrp_version)
