@@ -84,9 +84,9 @@ public class RotationPropagator {
 
 		// Attached Encased Belts
 		/**if (fromBlock instanceof EncasedBeltBlock && toBlock instanceof EncasedBeltBlock) { TODO ENCASED BELT BLOCK
-		 boolean connected = EncasedBeltBlock.areBlocksConnected(stateFrom, stateTo, direction);
-		 return connected ? EncasedBeltBlock.getRotationSpeedModifier(from, to) : 0;
-		 }*/
+		boolean connected = EncasedBeltBlock.areBlocksConnected(stateFrom, stateTo, direction);
+		return connected ? EncasedBeltBlock.getRotationSpeedModifier(from, to) : 0;
+		}*/
 
 		// Large Gear <-> Large Gear
 		if (isLargeToLargeGear(stateFrom, stateTo, diff)) {

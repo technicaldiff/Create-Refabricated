@@ -27,8 +27,10 @@ public class EncasedFanRenderer extends KineticBlockEntityRenderer {
 	}
 
 	@Override
-	protected void renderSafe(KineticBlockEntity te, float partialTicks, MatrixStack ms, VertexConsumerProvider buffer,
-							  int light, int overlay) {
+	protected void renderSafe(
+		KineticBlockEntity te, float partialTicks, MatrixStack ms, VertexConsumerProvider buffer,
+		int light, int overlay
+	) {
 		if (FastRenderDispatcher.available(te.getWorld())) return;
 
 		Direction direction = te.getCachedState()

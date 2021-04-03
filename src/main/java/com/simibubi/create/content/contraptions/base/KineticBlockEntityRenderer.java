@@ -37,8 +37,10 @@ public class KineticBlockEntityRenderer extends SafeBlockEntityRenderer<KineticB
 		super(dispatcher);
 	}
 
-	public static void renderRotatingKineticBlock(KineticBlockEntity te, BlockState renderedState, MatrixStack ms,
-												  VertexConsumer buffer, int light) {
+	public static void renderRotatingKineticBlock(
+		KineticBlockEntity te, BlockState renderedState, MatrixStack ms,
+		VertexConsumer buffer, int light
+	) {
 		SuperByteBuffer superByteBuffer = CreateClient.bufferCache.renderBlockIn(KINETIC_TILE, renderedState);
 		renderRotatingBuffer(te, superByteBuffer, ms, buffer, light);
 	}

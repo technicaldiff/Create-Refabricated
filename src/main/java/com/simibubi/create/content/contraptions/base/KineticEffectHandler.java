@@ -102,9 +102,9 @@ public class KineticEffectHandler {
 
 		if (world instanceof ServerWorld) {
 			/**AllTriggers.triggerForNearbyPlayers(AllTriggers.ROTATION, world, pos, 5); TODO FIX TRIGGER FOR ADVANCEMENT
-			 RotationIndicatorParticleData particleData = // TODO ROTATION INDICATOR PARTICLE
-			 new RotationIndicatorParticleData(color, particleSpeed, radius1, radius2, 10, axisChar);
-			 ((ServerWorld) world).spawnParticles(particleData, vec.x, vec.y, vec.z, 20, 0, 0, 0, 1);*/
+			RotationIndicatorParticleData particleData = // TODO ROTATION INDICATOR PARTICLE
+			new RotationIndicatorParticleData(color, particleSpeed, radius1, radius2, 10, axisChar);
+			((ServerWorld) world).spawnParticles(particleData, vec.x, vec.y, vec.z, 20, 0, 0, 0, 1);*/
 		}
 	}
 

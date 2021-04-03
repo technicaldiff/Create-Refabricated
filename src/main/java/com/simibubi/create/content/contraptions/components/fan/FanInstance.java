@@ -2,8 +2,6 @@
 
 package com.simibubi.create.content.contraptions.components.fan;
 
-import static net.minecraft.state.property.Properties.FACING;
-
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
@@ -21,6 +19,8 @@ import com.simibubi.create.foundation.render.backend.instancing.InstanceKey;
 import com.simibubi.create.foundation.render.backend.instancing.InstancedBlockRenderer;
 import com.simibubi.create.foundation.render.backend.instancing.InstancedModel;
 import com.simibubi.create.foundation.render.backend.instancing.InstancedTileRenderRegistry;
+
+import static net.minecraft.state.property.Properties.FACING;
 
 public class FanInstance extends KineticBlockInstance<EncasedFanBlockEntity> {
 	public static void register(BlockEntityType<? extends EncasedFanBlockEntity> type) {
@@ -41,9 +41,9 @@ public class FanInstance extends KineticBlockInstance<EncasedFanBlockEntity> {
 		final Direction.Axis axis = ((Rotating) lastState.getBlock()).getRotationAxis(lastState);
 
 		InstancedModel<RotatingData> shaftHalf =
-				AllBlockPartials.SHAFT_HALF.renderOnDirectionalSouthRotating(modelManager, lastState, direction.getOpposite());
+			AllBlockPartials.SHAFT_HALF.renderOnDirectionalSouthRotating(modelManager, lastState, direction.getOpposite());
 		InstancedModel<RotatingData> fanInner =
-				AllBlockPartials.ENCASED_FAN_INNER.renderOnDirectionalSouthRotating(modelManager, lastState, direction.getOpposite());
+			AllBlockPartials.ENCASED_FAN_INNER.renderOnDirectionalSouthRotating(modelManager, lastState, direction.getOpposite());
 
 		shaft = shaftHalf.setupInstance(data -> {
 			BlockPos behind = pos.offset(direction.getOpposite());

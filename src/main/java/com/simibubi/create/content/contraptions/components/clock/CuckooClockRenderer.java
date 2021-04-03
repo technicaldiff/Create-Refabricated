@@ -26,8 +26,10 @@ public class CuckooClockRenderer extends KineticBlockEntityRenderer {
 	}
 
 	@Override
-	protected void renderSafe(KineticBlockEntity te, float partialTicks, MatrixStack ms, VertexConsumerProvider buffer,
-							  int light, int overlay) {
+	protected void renderSafe(
+		KineticBlockEntity te, float partialTicks, MatrixStack ms, VertexConsumerProvider buffer,
+		int light, int overlay
+	) {
 		super.renderSafe(te, partialTicks, ms, buffer, light, overlay);
 		if (!(te instanceof CuckooClockBlockEntity))
 			return;
