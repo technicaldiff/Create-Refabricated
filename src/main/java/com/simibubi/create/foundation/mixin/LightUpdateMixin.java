@@ -26,31 +26,31 @@ import com.simibubi.create.foundation.render.backend.light.LightListener;
 @Mixin(ClientChunkManager.class)
 public abstract class LightUpdateMixin extends ChunkManager {
 
-    /**
-     * JUSTIFICATION: This method is called after a lighting tick once per subchunk where a
-     * lighting change occurred that tick. On the client, Minecraft uses this method to inform
-     * the rendering system that it needs to redraw a chunk. It does all that work asynchronously,
-     * and we should too.
-     */
-    @Inject(at = @At("HEAD"), method = "onLightUpdate")
-    private void onLightUpdate(LightType type, ChunkSectionPos pos, CallbackInfo ci) {
-        ClientChunkManager thi = ((ClientChunkManager) (Object) this);
+	/**
+	 * JUSTIFICATION: This method is called after a lighting tick once per subchunk where a
+	 * lighting change occurred that tick. On the client, Minecraft uses this method to inform
+	 * the rendering system that it needs to redraw a chunk. It does all that work asynchronously,
+	 * and we should too.
+	 */
+	@Inject(at = @At("HEAD"), method = "onLightUpdate")
+	private void onLightUpdate(LightType type, ChunkSectionPos pos, CallbackInfo ci) {
+		ClientChunkManager thi = ((ClientChunkManager) (Object) this);
 
-        WorldChunk chunk = thi.getWorldChunk(pos.getSectionX(), pos.getSectionZ(), false);
+		WorldChunk chunk = thi.getWorldChunk(pos.getSectionX(), pos.getSectionZ(), false);
 
-        int sectionY = pos.getSectionY();
+		int sectionY = pos.getSectionY();
 
-        if (chunk != null) {
-            chunk.getBlockEntities()
-                 .entrySet()
-                 .stream()
-                 .filter(entry -> ChunkSectionPos.getSectionCoord(entry.getKey().getY()) == sectionY)
-                 .map(Map.Entry::getValue)
-                 .filter(tile -> tile instanceof LightListener)
-                 .map(tile -> (LightListener) tile)
-                 .forEach(LightListener::onChunkLightUpdate);
-        }
+		if (chunk != null) {
+			chunk.getBlockEntities()
+				 .entrySet()
+				 .stream()
+				 .filter(entry -> ChunkSectionPos.getSectionCoord(entry.getKey().getY()) == sectionY)
+				 .map(Map.Entry::getValue)
+				 .filter(tile -> tile instanceof LightListener)
+				 .map(tile -> (LightListener) tile)
+				 .forEach(LightListener::onChunkLightUpdate);
+		}
 
-        ContraptionRenderDispatcher.notifyLightUpdate((World) thi.getWorld(), type, pos);
-    }
+		ContraptionRenderDispatcher.notifyLightUpdate((World) thi.getWorld(), type, pos);
+	}
 }

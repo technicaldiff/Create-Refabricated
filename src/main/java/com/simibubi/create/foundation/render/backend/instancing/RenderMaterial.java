@@ -35,118 +35,118 @@ import com.simibubi.create.foundation.render.backend.gl.shader.ShaderCallback;
 
 public class RenderMaterial<P extends BasicProgram, MODEL extends InstancedModel<?>> {
 
-    protected final InstancedBlockRenderer<?> renderer;
-    protected final Map<Compartment<?>, Cache<Object, MODEL>> models;
-    protected final ModelFactory<MODEL> factory;
-    protected final ProgramSpec<P> programSpec;
-    protected final Predicate<RenderLayer> layerPredicate;
+	protected final InstancedBlockRenderer<?> renderer;
+	protected final Map<Compartment<?>, Cache<Object, MODEL>> models;
+	protected final ModelFactory<MODEL> factory;
+	protected final ProgramSpec<P> programSpec;
+	protected final Predicate<RenderLayer> layerPredicate;
 
-    /**
-     * Creates a material that renders in the default layer (CUTOUT_MIPPED)
-     */
-    public RenderMaterial(InstancedBlockRenderer<?> renderer, ProgramSpec<P> programSpec, ModelFactory<MODEL> factory) {
-        this(renderer, programSpec, factory, type -> type == RenderLayer.getCutoutMipped());
-    }
+	/**
+	 * Creates a material that renders in the default layer (CUTOUT_MIPPED)
+	 */
+	public RenderMaterial(InstancedBlockRenderer<?> renderer, ProgramSpec<P> programSpec, ModelFactory<MODEL> factory) {
+		this(renderer, programSpec, factory, type -> type == RenderLayer.getCutoutMipped());
+	}
 
-    public RenderMaterial(InstancedBlockRenderer<?> renderer, ProgramSpec<P> programSpec, ModelFactory<MODEL> factory, Predicate<RenderLayer> layerPredicate) {
-        this.renderer = renderer;
-        this.models = new HashMap<>();
-        this.factory = factory;
-        this.programSpec = programSpec;
-        this.layerPredicate = layerPredicate;
-        registerCompartment(Compartment.PARTIAL);
-        registerCompartment(Compartment.DIRECTIONAL_PARTIAL);
-        registerCompartment(KineticBlockEntityRenderer.KINETIC_TILE);
-    }
+	public RenderMaterial(InstancedBlockRenderer<?> renderer, ProgramSpec<P> programSpec, ModelFactory<MODEL> factory, Predicate<RenderLayer> layerPredicate) {
+		this.renderer = renderer;
+		this.models = new HashMap<>();
+		this.factory = factory;
+		this.programSpec = programSpec;
+		this.layerPredicate = layerPredicate;
+		registerCompartment(Compartment.PARTIAL);
+		registerCompartment(Compartment.DIRECTIONAL_PARTIAL);
+		registerCompartment(KineticBlockEntityRenderer.KINETIC_TILE);
+	}
 
-    public boolean canRenderInLayer(RenderLayer layer) {
-        return layerPredicate.test(layer);
-    }
+	public boolean canRenderInLayer(RenderLayer layer) {
+		return layerPredicate.test(layer);
+	}
 
-    public void render(RenderLayer layer, Matrix4f projection, double camX, double camY, double camZ) {
-        render(layer, projection, camX, camY, camZ, null);
-    }
+	public void render(RenderLayer layer, Matrix4f projection, double camX, double camY, double camZ) {
+		render(layer, projection, camX, camY, camZ, null);
+	}
 
-    public void render(RenderLayer layer, Matrix4f viewProjection, double camX, double camY, double camZ, ShaderCallback<P> setup) {
-        P program = Backend.getProgram(programSpec);
-        program.bind(viewProjection, camX, camY, camZ, FastRenderDispatcher.getDebugMode());
+	public void render(RenderLayer layer, Matrix4f viewProjection, double camX, double camY, double camZ, ShaderCallback<P> setup) {
+		P program = Backend.getProgram(programSpec);
+		program.bind(viewProjection, camX, camY, camZ, FastRenderDispatcher.getDebugMode());
 
-        if (setup != null) setup.call(program);
+		if (setup != null) setup.call(program);
 
-        makeRenderCalls();
-        teardown();
-    }
+		makeRenderCalls();
+		teardown();
+	}
 
-    public void teardown() {}
+	public void teardown() {}
 
-    public void delete() {
-        runOnAll(InstancedModel::delete);
-        models.values().forEach(Cache::invalidateAll);
-    }
+	public void delete() {
+		runOnAll(InstancedModel::delete);
+		models.values().forEach(Cache::invalidateAll);
+	}
 
-    protected void makeRenderCalls() {
-        for (Cache<Object, MODEL> cache : models.values()) {
-            for (MODEL model : cache.asMap().values()) {
-                if (!model.isEmpty()) {
-                    model.render();
-                }
-            }
-        }
-    }
+	protected void makeRenderCalls() {
+		for (Cache<Object, MODEL> cache : models.values()) {
+			for (MODEL model : cache.asMap().values()) {
+				if (!model.isEmpty()) {
+					model.render();
+				}
+			}
+		}
+	}
 
-    public void runOnAll(Consumer<MODEL> f) {
-        for (Cache<Object, MODEL> cache : models.values()) {
-            for (MODEL model : cache.asMap().values()) {
-                f.accept(model);
-            }
-        }
-    }
+	public void runOnAll(Consumer<MODEL> f) {
+		for (Cache<Object, MODEL> cache : models.values()) {
+			for (MODEL model : cache.asMap().values()) {
+				f.accept(model);
+			}
+		}
+	}
 
-    public void registerCompartment(Compartment<?> instance) {
-        models.put(instance, CacheBuilder.newBuilder().build());
-    }
+	public void registerCompartment(Compartment<?> instance) {
+		models.put(instance, CacheBuilder.newBuilder().build());
+	}
 
-    public MODEL getModel(AllBlockPartials partial, BlockState referenceState) {
-        return get(Compartment.PARTIAL, partial, () -> buildModel(partial.get(), referenceState));
-    }
+	public MODEL getModel(AllBlockPartials partial, BlockState referenceState) {
+		return get(Compartment.PARTIAL, partial, () -> buildModel(partial.get(), referenceState));
+	}
 
-    public MODEL getModel(AllBlockPartials partial, BlockState referenceState, Direction dir) {
-        return get(Compartment.DIRECTIONAL_PARTIAL, Pair.of(dir, partial),
-                   () -> buildModel(partial.get(), referenceState));
-    }
+	public MODEL getModel(AllBlockPartials partial, BlockState referenceState, Direction dir) {
+		return get(Compartment.DIRECTIONAL_PARTIAL, Pair.of(dir, partial),
+				   () -> buildModel(partial.get(), referenceState));
+	}
 
-    public MODEL getModel(AllBlockPartials partial, BlockState referenceState, Direction dir, Supplier<MatrixStack> modelTransform) {
-        return get(Compartment.DIRECTIONAL_PARTIAL, Pair.of(dir, partial),
-                   () -> buildModel(partial.get(), referenceState, modelTransform.get()));
-    }
+	public MODEL getModel(AllBlockPartials partial, BlockState referenceState, Direction dir, Supplier<MatrixStack> modelTransform) {
+		return get(Compartment.DIRECTIONAL_PARTIAL, Pair.of(dir, partial),
+				   () -> buildModel(partial.get(), referenceState, modelTransform.get()));
+	}
 
-    public MODEL getModel(Compartment<BlockState> compartment, BlockState toRender) {
-        return get(compartment, toRender, () -> buildModel(toRender));
-    }
+	public MODEL getModel(Compartment<BlockState> compartment, BlockState toRender) {
+		return get(compartment, toRender, () -> buildModel(toRender));
+	}
 
-    public <T> MODEL get(Compartment<T> compartment, T key, Supplier<MODEL> supplier) {
-        Cache<Object, MODEL> compartmentCache = models.get(compartment);
-        try {
-            return compartmentCache.get(key, supplier::get);
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
+	public <T> MODEL get(Compartment<T> compartment, T key, Supplier<MODEL> supplier) {
+		Cache<Object, MODEL> compartmentCache = models.get(compartment);
+		try {
+			return compartmentCache.get(key, supplier::get);
+		} catch (ExecutionException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
 
-    private MODEL buildModel(BlockState renderedState) {
-        BlockRenderManager dispatcher = MinecraftClient.getInstance().getBlockRenderManager();
-        return buildModel(dispatcher.getModel(renderedState), renderedState);
-    }
+	private MODEL buildModel(BlockState renderedState) {
+		BlockRenderManager dispatcher = MinecraftClient.getInstance().getBlockRenderManager();
+		return buildModel(dispatcher.getModel(renderedState), renderedState);
+	}
 
-    private MODEL buildModel(BakedModel model, BlockState renderedState) {
-        return buildModel(model, renderedState, new MatrixStack());
-    }
+	private MODEL buildModel(BakedModel model, BlockState renderedState) {
+		return buildModel(model, renderedState, new MatrixStack());
+	}
 
-    private MODEL buildModel(BakedModel model, BlockState referenceState, MatrixStack ms) {
-        BufferBuilder builder = SuperByteBufferCache.getBufferBuilder(model, referenceState, ms);
+	private MODEL buildModel(BakedModel model, BlockState referenceState, MatrixStack ms) {
+		BufferBuilder builder = SuperByteBufferCache.getBufferBuilder(model, referenceState, ms);
 
-        return factory.makeModel(renderer, builder);
-    }
+		return factory.makeModel(renderer, builder);
+	}
 
 }

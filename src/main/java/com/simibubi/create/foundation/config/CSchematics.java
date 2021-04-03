@@ -18,7 +18,7 @@ public class CSchematics implements Validatable {
 	public int maxSchematicPacketSize = 1024; // min 256, max 32767
 	@Tooltip
 	public int schematicIdleTimeout = 600; // min 100
-	// schematicannon group         public ConfigGroup schematicannon = group(0, "schematicannon", "Schematicannon");
+	// schematicannon group		 public ConfigGroup schematicannon = group(0, "schematicannon", "Schematicannon");
 	@Tooltip(count = 2)
 	public int schematicannonDelay = 10; // min 1
 	@Tooltip(count = 2)

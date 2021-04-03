@@ -13,46 +13,46 @@ import com.simibubi.create.foundation.render.backend.light.GridAlignedBB;
 
 public class BearingLighter extends ContraptionLighter<BearingContraption> {
 
-    public BearingLighter(BearingContraption contraption) {
-        super(contraption);
-    }
+	public BearingLighter(BearingContraption contraption) {
+		super(contraption);
+	}
 
-    @Override
-    public GridAlignedBB getContraptionBounds() {
-        Set<BlockPos> blocks = contraption.getBlocks().keySet();
+	@Override
+	public GridAlignedBB getContraptionBounds() {
+		Set<BlockPos> blocks = contraption.getBlocks().keySet();
 
-        Direction orientation = contraption.facing;
+		Direction orientation = contraption.facing;
 
-        float maxDistanceSq = -1;
-        for (BlockPos pos : blocks) {
-            float x = pos.getX();
-            float y = pos.getY();
-            float z = pos.getZ();
+		float maxDistanceSq = -1;
+		for (BlockPos pos : blocks) {
+			float x = pos.getX();
+			float y = pos.getY();
+			float z = pos.getZ();
 
-            float distSq = x * x + y * y + z * z;
+			float distSq = x * x + y * y + z * z;
 
-            if (distSq > maxDistanceSq) maxDistanceSq = distSq;
-        }
+			if (distSq > maxDistanceSq) maxDistanceSq = distSq;
+		}
 
-        int radius = (int) (Math.ceil(Math.sqrt(maxDistanceSq)));
+		int radius = (int) (Math.ceil(Math.sqrt(maxDistanceSq)));
 
-        GridAlignedBB betterBounds = GridAlignedBB.ofRadius(radius);
-        GridAlignedBB contraptionBounds = GridAlignedBB.fromAABB(contraption.bounds);
+		GridAlignedBB betterBounds = GridAlignedBB.ofRadius(radius);
+		GridAlignedBB contraptionBounds = GridAlignedBB.fromAABB(contraption.bounds);
 
-        Direction.Axis axis = orientation.getAxis();
+		Direction.Axis axis = orientation.getAxis();
 
-        if (axis == Direction.Axis.X) {
-            betterBounds.maxX = contraptionBounds.maxX;
-            betterBounds.minX = contraptionBounds.minX;
-        } else if (axis == Direction.Axis.Y) {
-            betterBounds.maxY = contraptionBounds.maxY;
-            betterBounds.minY = contraptionBounds.minY;
-        } else if (axis == Direction.Axis.Z) {
-            betterBounds.maxZ = contraptionBounds.maxZ;
-            betterBounds.minZ = contraptionBounds.minZ;
-        }
+		if (axis == Direction.Axis.X) {
+			betterBounds.maxX = contraptionBounds.maxX;
+			betterBounds.minX = contraptionBounds.minX;
+		} else if (axis == Direction.Axis.Y) {
+			betterBounds.maxY = contraptionBounds.maxY;
+			betterBounds.minY = contraptionBounds.minY;
+		} else if (axis == Direction.Axis.Z) {
+			betterBounds.maxZ = contraptionBounds.maxZ;
+			betterBounds.minZ = contraptionBounds.minZ;
+		}
 
-        betterBounds.translate(new Vec3d(contraption.anchor.getX(), contraption.anchor.getY(), contraption.anchor.getZ()));
-        return betterBounds;
-    }
+		betterBounds.translate(new Vec3d(contraption.anchor.getX(), contraption.anchor.getY(), contraption.anchor.getZ()));
+		return betterBounds;
+	}
 }

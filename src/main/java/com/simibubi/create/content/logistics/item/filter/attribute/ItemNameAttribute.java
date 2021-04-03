@@ -14,59 +14,59 @@ import net.minecraft.text.Text;
 import com.simibubi.create.content.logistics.item.filter.ItemAttribute;
 
 public class ItemNameAttribute implements ItemAttribute {
-    String itemName;
+	String itemName;
 
-    public ItemNameAttribute(String itemName) {
-        this.itemName = itemName;
-    }
+	public ItemNameAttribute(String itemName) {
+		this.itemName = itemName;
+	}
 
-    @Override
-    public boolean appliesTo(ItemStack itemStack) {
-        return extractCustomName(itemStack).equals(itemName);
-    }
+	@Override
+	public boolean appliesTo(ItemStack itemStack) {
+		return extractCustomName(itemStack).equals(itemName);
+	}
 
-    @Override
-    public List<ItemAttribute> listAttributesOf(ItemStack itemStack) {
-        String name = extractCustomName(itemStack);
+	@Override
+	public List<ItemAttribute> listAttributesOf(ItemStack itemStack) {
+		String name = extractCustomName(itemStack);
 
-        List<ItemAttribute> atts = new ArrayList<>();
-        if(name.length() > 0) {
-            atts.add(new ItemNameAttribute(name));
-        }
-        return atts;
-    }
+		List<ItemAttribute> atts = new ArrayList<>();
+		if(name.length() > 0) {
+			atts.add(new ItemNameAttribute(name));
+		}
+		return atts;
+	}
 
-    @Override
-    public String getTranslationKey() {
-        return "has_name";
-    }
+	@Override
+	public String getTranslationKey() {
+		return "has_name";
+	}
 
-    @Override
-    public Object[] getTranslationParameters() {
-        return new Object[] { itemName };
-    }
+	@Override
+	public Object[] getTranslationParameters() {
+		return new Object[] { itemName };
+	}
 
-    @Override
-    public void writeNBT(CompoundTag nbt) {
-        nbt.putString("name", this.itemName);
-    }
+	@Override
+	public void writeNBT(CompoundTag nbt) {
+		nbt.putString("name", this.itemName);
+	}
 
-    @Override
-    public ItemAttribute readNBT(CompoundTag nbt) {
-        return new ItemNameAttribute(nbt.getString("name"));
-    }
+	@Override
+	public ItemAttribute readNBT(CompoundTag nbt) {
+		return new ItemNameAttribute(nbt.getString("name"));
+	}
 
-    private String extractCustomName(ItemStack stack) {
+	private String extractCustomName(ItemStack stack) {
 		CompoundTag compoundnbt = stack.getSubTag("display");
-        if (compoundnbt != null && compoundnbt.contains("Name", 8)) {
-            try {
+		if (compoundnbt != null && compoundnbt.contains("Name", 8)) {
+			try {
 				Text itextcomponent = Text.Serializer.fromJson(compoundnbt.getString("Name"));
-                if (itextcomponent != null) {
-                    return itextcomponent.getString();
-                }
-            } catch (JsonParseException ignored) {
-            }
-        }
-        return "";
-    }
+				if (itextcomponent != null) {
+					return itextcomponent.getString();
+				}
+			} catch (JsonParseException ignored) {
+			}
+		}
+		return "";
+	}
 }

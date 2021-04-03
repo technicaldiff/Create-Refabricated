@@ -13,17 +13,17 @@ import com.simibubi.create.foundation.render.backend.instancing.InstancedBlockRe
 import com.simibubi.create.foundation.render.backend.instancing.InstancedTileRenderRegistry;
 
 public class BackHalfShaftInstance extends HalfShaftInstance {
-    public static void register(BlockEntityType<? extends KineticBlockEntity> type) {
+	public static void register(BlockEntityType<? extends KineticBlockEntity> type) {
 		if (FabricLoader.getInstance().getEnvironmentType() == EnvType.CLIENT)
 			InstancedTileRenderRegistry.instance.register(type, BackHalfShaftInstance::new);
-    }
+	}
 
-    public BackHalfShaftInstance(InstancedBlockRenderer<?> modelManager, KineticBlockEntity tile) {
-        super(modelManager, tile);
-    }
+	public BackHalfShaftInstance(InstancedBlockRenderer<?> modelManager, KineticBlockEntity tile) {
+		super(modelManager, tile);
+	}
 
-    @Override
-    protected Direction getShaftDirection() {
-        return tile.getCachedState().get(Properties.FACING).getOpposite();
-    }
+	@Override
+	protected Direction getShaftDirection() {
+		return tile.getCachedState().get(Properties.FACING).getOpposite();
+	}
 }

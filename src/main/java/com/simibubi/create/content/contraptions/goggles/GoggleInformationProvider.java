@@ -14,7 +14,7 @@ import net.minecraft.text.Text;
 public interface GoggleInformationProvider {
 
 	DecimalFormat decimalFormat = new DecimalFormat("#.##");
-	String spacing = "    ";
+	String spacing = "	";
 	public static Text componentSpacing = new LiteralText(spacing);
 
 	static String format(double d) {

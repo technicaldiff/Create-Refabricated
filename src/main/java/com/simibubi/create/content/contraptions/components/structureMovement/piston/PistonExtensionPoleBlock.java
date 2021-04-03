@@ -42,12 +42,12 @@ import com.simibubi.create.registrate.util.nullness.MethodsReturnNonnullByDefaul
 
 public class PistonExtensionPoleBlock extends ProperDirectionalBlock implements Wrenchable, Waterloggable {
 
-    //private static final int placementHelperId = PlacementHelpers.register(PolePlacementHelper.get());
+	//private static final int placementHelperId = PlacementHelpers.register(PolePlacementHelper.get());
 
-    public PistonExtensionPoleBlock(Settings properties) {
-        super(properties);
-        setDefaultState(getDefaultState().with(FACING, Direction.UP).with(Properties.WATERLOGGED, false));
-    }
+	public PistonExtensionPoleBlock(Settings properties) {
+		super(properties);
+		setDefaultState(getDefaultState().with(FACING, Direction.UP).with(Properties.WATERLOGGED, false));
+	}
 
 	@Override
 	public PistonBehavior getPistonBehavior(BlockState state) {
@@ -119,8 +119,8 @@ public class PistonExtensionPoleBlock extends ProperDirectionalBlock implements 
 		BlockHitResult ray) {
 		ItemStack heldItem = player.getStackInHand(hand);
 
-        /*PolePlacementHelper placementHelper = (PolePlacementHelper) PlacementHelpers.get(placementHelperId);
-        if (placementHelper.matchesItem(heldItem) && !player.isSneaking())
+		/*PolePlacementHelper placementHelper = (PolePlacementHelper) PlacementHelpers.get(placementHelperId);
+		if (placementHelper.matchesItem(heldItem) && !player.isSneaking())
 	   		return placementHelper.getOffset(world, state, pos, ray).placeInWorld(world, (BlockItem) heldItem.getItem(), player, hand, ray);*/
 
 		return ActionResult.PASS;
@@ -138,34 +138,34 @@ public class PistonExtensionPoleBlock extends ProperDirectionalBlock implements 
 		super.appendProperties(builder);
 	}
 
-    @Override
-    public BlockState getStateForNeighborUpdate(BlockState state, Direction direction, BlockState neighbourState, WorldAccess world, BlockPos pos, BlockPos neighbourPos) {
-        if (state.get(Properties.WATERLOGGED)) {
-            world.getFluidTickScheduler().schedule(pos, Fluids.WATER, Fluids.WATER.getTickRate(world));
-        }
-        return state;
-    }
+	@Override
+	public BlockState getStateForNeighborUpdate(BlockState state, Direction direction, BlockState neighbourState, WorldAccess world, BlockPos pos, BlockPos neighbourPos) {
+		if (state.get(Properties.WATERLOGGED)) {
+			world.getFluidTickScheduler().schedule(pos, Fluids.WATER, Fluids.WATER.getTickRate(world));
+		}
+		return state;
+	}
 
-    @MethodsReturnNonnullByDefault
-    public static class PolePlacementHelper extends PoleHelper<Direction> {
+	@MethodsReturnNonnullByDefault
+	public static class PolePlacementHelper extends PoleHelper<Direction> {
 
-        private static final PolePlacementHelper instance = new PolePlacementHelper();
+		private static final PolePlacementHelper instance = new PolePlacementHelper();
 
-        public static PolePlacementHelper get() {
-            return instance;
-        }
+		public static PolePlacementHelper get() {
+			return instance;
+		}
 
-        private PolePlacementHelper() {
-            super(
-                    AllBlocks.PISTON_EXTENSION_POLE.stateManager.getStates()::contains,
-                    state -> state.get(FACING).getAxis(),
-                    FACING
-            );
-        }
+		private PolePlacementHelper() {
+			super(
+					AllBlocks.PISTON_EXTENSION_POLE.stateManager.getStates()::contains,
+					state -> state.get(FACING).getAxis(),
+					FACING
+			);
+		}
 
-        @Override
-        public Predicate<ItemStack> getItemPredicate() {
-            return s -> s.isItemEqualIgnoreDamage(AllBlocks.PISTON_EXTENSION_POLE.asItem().getDefaultStack());
-        }
-    }
+		@Override
+		public Predicate<ItemStack> getItemPredicate() {
+			return s -> s.isItemEqualIgnoreDamage(AllBlocks.PISTON_EXTENSION_POLE.asItem().getDefaultStack());
+		}
+	}
 }

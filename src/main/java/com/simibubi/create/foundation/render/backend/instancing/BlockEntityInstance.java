@@ -9,50 +9,50 @@ import net.minecraft.world.World;
 
 public abstract class BlockEntityInstance<T extends BlockEntity> {
 
-    protected final InstancedBlockRenderer<?> modelManager;
-    protected final T tile;
-    protected final World world;
-    protected final BlockPos pos;
-    protected BlockState lastState;
+	protected final InstancedBlockRenderer<?> modelManager;
+	protected final T tile;
+	protected final World world;
+	protected final BlockPos pos;
+	protected BlockState lastState;
 
-    public BlockEntityInstance(InstancedBlockRenderer<?> modelManager, T tile) {
-        this.modelManager = modelManager;
-        this.tile = tile;
-        this.world = tile.getWorld();
-        this.pos = tile.getPos();
-        this.lastState = tile.getCachedState();
-        init();
-    }
+	public BlockEntityInstance(InstancedBlockRenderer<?> modelManager, T tile) {
+		this.modelManager = modelManager;
+		this.tile = tile;
+		this.world = tile.getWorld();
+		this.pos = tile.getPos();
+		this.lastState = tile.getCachedState();
+		init();
+	}
 
-    public final void update() {
-        BlockState currentState = tile.getCachedState();
-        if (lastState == currentState) {
-            onUpdate();
-        } else {
-            remove();
-            lastState = currentState;
-            init();
-        }
-    }
+	public final void update() {
+		BlockState currentState = tile.getCachedState();
+		if (lastState == currentState) {
+			onUpdate();
+		} else {
+			remove();
+			lastState = currentState;
+			init();
+		}
+	}
 
-    /**
-     * Acquire all {@link InstanceKey}s and initialize any data you may need to calculate the instance properties.
-     */
-    protected abstract void init();
+	/**
+	 * Acquire all {@link InstanceKey}s and initialize any data you may need to calculate the instance properties.
+	 */
+	protected abstract void init();
 
-    /**
-     * Update changed instance data using the {@link InstanceKey}s you got in {@link #init()}.
-     * You don't have to update light data. That should be done in {@link #updateLight()}
-     */
-    protected abstract void onUpdate();
+	/**
+	 * Update changed instance data using the {@link InstanceKey}s you got in {@link #init()}.
+	 * You don't have to update light data. That should be done in {@link #updateLight()}
+	 */
+	protected abstract void onUpdate();
 
-    /**
-     * Called when a light update occurs in the world. If your model needs it, update light here.
-     */
-    public void updateLight() { }
+	/**
+	 * Called when a light update occurs in the world. If your model needs it, update light here.
+	 */
+	public void updateLight() { }
 
-    /**
-     * Call {@link InstanceKey#delete()} on all acquired keys.
-     */
-    public abstract void remove();
+	/**
+	 * Call {@link InstanceKey#delete()} on all acquired keys.
+	 */
+	public abstract void remove();
 }

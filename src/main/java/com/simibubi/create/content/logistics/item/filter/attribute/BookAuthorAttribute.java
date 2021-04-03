@@ -11,53 +11,53 @@ import net.minecraft.nbt.CompoundTag;
 import com.simibubi.create.content.logistics.item.filter.ItemAttribute;
 
 public class BookAuthorAttribute implements ItemAttribute {
-    String author;
+	String author;
 
-    public BookAuthorAttribute(String author) {
-        this.author = author;
-    }
+	public BookAuthorAttribute(String author) {
+		this.author = author;
+	}
 
-    @Override
-    public boolean appliesTo(ItemStack itemStack) {
-        return extractAuthor(itemStack).equals(author);
-    }
+	@Override
+	public boolean appliesTo(ItemStack itemStack) {
+		return extractAuthor(itemStack).equals(author);
+	}
 
-    @Override
-    public List<ItemAttribute> listAttributesOf(ItemStack itemStack) {
-        String name = extractAuthor(itemStack);
+	@Override
+	public List<ItemAttribute> listAttributesOf(ItemStack itemStack) {
+		String name = extractAuthor(itemStack);
 
-        List<ItemAttribute> atts = new ArrayList<>();
-        if(name.length() > 0) {
-            atts.add(new BookAuthorAttribute(name));
-        }
-        return atts;
-    }
+		List<ItemAttribute> atts = new ArrayList<>();
+		if(name.length() > 0) {
+			atts.add(new BookAuthorAttribute(name));
+		}
+		return atts;
+	}
 
-    @Override
-    public String getTranslationKey() {
-        return "book_author";
-    }
+	@Override
+	public String getTranslationKey() {
+		return "book_author";
+	}
 
-    @Override
-    public Object[] getTranslationParameters() {
-        return new Object[] {author};
-    }
+	@Override
+	public Object[] getTranslationParameters() {
+		return new Object[] {author};
+	}
 
-    @Override
-    public void writeNBT(CompoundTag nbt) {
-        nbt.putString("author", this.author);
-    }
+	@Override
+	public void writeNBT(CompoundTag nbt) {
+		nbt.putString("author", this.author);
+	}
 
-    @Override
-    public ItemAttribute readNBT(CompoundTag nbt) {
-        return new BookAuthorAttribute(nbt.getString("author"));
-    }
+	@Override
+	public ItemAttribute readNBT(CompoundTag nbt) {
+		return new BookAuthorAttribute(nbt.getString("author"));
+	}
 
-    private String extractAuthor(ItemStack stack) {
+	private String extractAuthor(ItemStack stack) {
 		CompoundTag nbt = stack.getTag();
-        if (nbt != null && nbt.contains("author")) {
-            return nbt.getString("author");
-        }
-        return "";
-    }
+		if (nbt != null && nbt.contains("author")) {
+			return nbt.getString("author");
+		}
+		return "";
+	}
 }

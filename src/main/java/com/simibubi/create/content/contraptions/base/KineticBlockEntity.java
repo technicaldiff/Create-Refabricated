@@ -467,16 +467,16 @@ public abstract class KineticBlockEntity extends SmartBlockEntity
 	 * Specify ratio of transferred rotation from this kinetic component to a
 	 * specific other.
 	 *
-	 * @param target           other Kinetic TE to transfer to
-	 * @param stateFrom        this TE's blockstate
-	 * @param stateTo          other TE's blockstate
-	 * @param diff             difference in position (to.pos - from.pos)
+	 * @param target		   other Kinetic TE to transfer to
+	 * @param stateFrom		this TE's blockstate
+	 * @param stateTo		  other TE's blockstate
+	 * @param diff			 difference in position (to.pos - from.pos)
 	 * @param connectedViaAxes whether these kinetic blocks are connected via mutual
-	 *                         IRotate.hasShaftTowards()
+	 *						 IRotate.hasShaftTowards()
 	 * @param connectedViaCogs whether these kinetic blocks are connected via mutual
-	 *                         IRotate.hasIntegratedCogwheel()
+	 *						 IRotate.hasIntegratedCogwheel()
 	 * @return factor of rotation speed from this TE to other. 0 if no rotation is
-	 *         transferred, or the standard rules apply (integrated shafts/cogs)
+	 *		 transferred, or the standard rules apply (integrated shafts/cogs)
 	 */
 	public float propagateRotationTo(KineticBlockEntity target, BlockState stateFrom, BlockState stateTo, BlockPos diff,
 		boolean connectedViaAxes, boolean connectedViaCogs) {
@@ -519,7 +519,7 @@ public abstract class KineticBlockEntity extends SmartBlockEntity
 	 * @param state
 	 * @param otherState
 	 * @return true if this and the other component should check their propagation
-	 *         factor and are not already connected via integrated cogs or shafts
+	 *		 factor and are not already connected via integrated cogs or shafts
 	 */
 	public boolean isCustomConnection(KineticBlockEntity other, BlockState state, BlockState otherState) {
 		return false;

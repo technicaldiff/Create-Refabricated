@@ -51,7 +51,7 @@ public abstract class GlProgram extends GlObject {
 	/**
 	 * Binds a sampler uniform to the given texture unit.
 	 *
-	 * @param name    The name of the sampler uniform.
+	 * @param name	The name of the sampler uniform.
 	 * @param binding The index of the texture unit.
 	 * @return The sampler uniform's index.
 	 * @throws NullPointerException If no uniform exists with the given name.
@@ -107,7 +107,7 @@ public abstract class GlProgram extends GlObject {
 		 * set.
 		 *
 		 * @param factory The factory which will create the shader program's container
-		 * @param <P>     The type which should be instantiated with the new program's handle
+		 * @param <P>	 The type which should be instantiated with the new program's handle
 		 * @return An instantiated shader container as provided by the factory
 		 */
 		public <P extends GlProgram> P build(ProgramFactory<P> factory) {

@@ -45,7 +45,7 @@ public class ItemDescription {
 
 	public static final ItemDescription MISSING = new ItemDescription(null);
 	public static Text trim =
-		new LiteralText("                          ").formatted(WHITE, STRIKETHROUGH);
+		new LiteralText("						  ").formatted(WHITE, STRIKETHROUGH);
 
 	public enum Palette {
 

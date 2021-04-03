@@ -16,17 +16,17 @@ import com.simibubi.create.foundation.render.backend.instancing.InstancedModel;
 import com.simibubi.create.foundation.render.backend.instancing.InstancedTileRenderRegistry;
 
 public class ArmInstance extends SingleRotatingInstance {
-    public static void register(BlockEntityType<? extends KineticBlockEntity> type) {
+	public static void register(BlockEntityType<? extends KineticBlockEntity> type) {
 		if (FabricLoader.getInstance().getEnvironmentType() == EnvType.CLIENT)
 			InstancedTileRenderRegistry.instance.register(type, ArmInstance::new);
-    }
+	}
 
-    public ArmInstance(InstancedBlockRenderer modelManager, KineticBlockEntity tile) {
-        super(modelManager, tile);
-    }
+	public ArmInstance(InstancedBlockRenderer modelManager, KineticBlockEntity tile) {
+		super(modelManager, tile);
+	}
 
-    @Override
-    protected InstancedModel<RotatingData> getModel() {
-        return AllBlockPartials.ARM_COG.renderOnRotating(modelManager, tile.getCachedState());
-    }
+	@Override
+	protected InstancedModel<RotatingData> getModel() {
+		return AllBlockPartials.ARM_COG.renderOnRotating(modelManager, tile.getCachedState());
+	}
 }

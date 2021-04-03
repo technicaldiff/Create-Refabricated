@@ -11,25 +11,25 @@ import com.simibubi.create.content.contraptions.components.structureMovement.Con
 import com.simibubi.create.foundation.render.backend.light.GridAlignedBB;
 
 public class PulleyLighter extends ContraptionLighter<PulleyContraption> {
-    public PulleyLighter(PulleyContraption contraption) {
-        super(contraption);
-    }
+	public PulleyLighter(PulleyContraption contraption) {
+		super(contraption);
+	}
 
-    @Override
-    public GridAlignedBB getContraptionBounds() {
+	@Override
+	public GridAlignedBB getContraptionBounds() {
 
-        GridAlignedBB bounds = GridAlignedBB.fromAABB(contraption.bounds);
+		GridAlignedBB bounds = GridAlignedBB.fromAABB(contraption.bounds);
 
-        World world = contraption.entity.world;
+		World world = contraption.entity.world;
 
-        BlockPos.Mutable pos = contraption.anchor.mutableCopy();
-        while (!AllBlocks.ROPE_PULLEY.getStateManager().getStates().contains(world.getBlockState(pos)) && pos.getY() < 256) {
-            pos.move(0, 1, 0);
-        }
+		BlockPos.Mutable pos = contraption.anchor.mutableCopy();
+		while (!AllBlocks.ROPE_PULLEY.getStateManager().getStates().contains(world.getBlockState(pos)) && pos.getY() < 256) {
+			pos.move(0, 1, 0);
+		}
 
-        bounds.translate(new Vec3d(pos.getX(), pos.getY(), pos.getZ()));
-        bounds.minY = 1; // the super constructor will take care of making this 0
+		bounds.translate(new Vec3d(pos.getX(), pos.getY(), pos.getZ()));
+		bounds.minY = 1; // the super constructor will take care of making this 0
 
-        return bounds;
-    }
+		return bounds;
+	}
 }

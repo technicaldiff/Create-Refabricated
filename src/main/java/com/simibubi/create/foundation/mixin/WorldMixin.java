@@ -28,8 +28,8 @@ public class WorldMixin {
 	 * we gain easy access to the information while having no impact on performance.
 	 */
 	@Inject(at = @At(value = "INVOKE_ASSIGN", target = "Lnet/minecraft/world/World;getBlockEntity(Lnet/minecraft/util/math/BlockPos;)Lnet/minecraft/block/entity/BlockEntity;"), method = "removeBlockEntity", locals = LocalCapture.CAPTURE_FAILHARD)
-    public void onRemoveBlockEntity(BlockPos pos, CallbackInfo ci, BlockEntity be) {
-        if (isClient)
-        	CreateClient.kineticRenderer.remove(be);
-    }
+	public void onRemoveBlockEntity(BlockPos pos, CallbackInfo ci, BlockEntity be) {
+		if (isClient)
+			CreateClient.kineticRenderer.remove(be);
+	}
 }

@@ -7,9 +7,9 @@ import org.jetbrains.annotations.NotNull;
 import net.minecraft.util.math.Matrix4f;
 
 public interface Matrix4fExtensions {
-    void create$set(@NotNull Matrix4f other);
+	void create$set(@NotNull Matrix4f other);
 
-    @ApiStatus.Internal
+	@ApiStatus.Internal
 	@Contract(mutates = "this")
-    void create$fromFloatArray(float[] floats);
+	void create$fromFloatArray(float[] floats);
 }

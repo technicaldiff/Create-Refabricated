@@ -26,7 +26,7 @@ public class AllCommands {
 						.then(FixLightingCommand.register())
 						.then(ReplaceInCommandBlocksCommand.register())
 						.then(HighlightCommand.register())
-					    .then(ToggleExperimentalRenderingCommand.register())*/
+						.then(ToggleExperimentalRenderingCommand.register())*/
 
 						//dev-util
 						//Comment out for release

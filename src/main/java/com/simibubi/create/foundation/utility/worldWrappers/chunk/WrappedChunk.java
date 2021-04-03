@@ -34,185 +34,185 @@ import com.simibubi.create.foundation.utility.worldWrappers.PlacementSimulationW
 
 public class WrappedChunk implements Chunk {
 
-    final PlacementSimulationWorld world;
-    boolean needsLight;
-    final int x;
-    final int z;
-    final ChunkPos pos;
+	final PlacementSimulationWorld world;
+	boolean needsLight;
+	final int x;
+	final int z;
+	final ChunkPos pos;
 
-    private final ChunkSection[] sections;
+	private final ChunkSection[] sections;
 
-    public WrappedChunk(PlacementSimulationWorld world, int x, int z) {
-        this.world = world;
-        this.needsLight = true;
-        this.x = x;
-        this.z = z;
-        this.pos = new ChunkPos(x, z);
+	public WrappedChunk(PlacementSimulationWorld world, int x, int z) {
+		this.world = world;
+		this.needsLight = true;
+		this.x = x;
+		this.z = z;
+		this.pos = new ChunkPos(x, z);
 
-        this.sections = new ChunkSection[16];
+		this.sections = new ChunkSection[16];
 
-        for (int i = 0; i < 16; i++) {
-            sections[i] = new WrappedChunkSection(this, i << 4);
-        }
-    }
+		for (int i = 0; i < 16; i++) {
+			sections[i] = new WrappedChunkSection(this, i << 4);
+		}
+	}
 
-    @Override
-    public Stream<BlockPos> getLightSourcesStream() {
-        return world.blocksAdded
-                .entrySet()
-                .stream()
-                .filter(it -> {
-                    BlockPos blockPos = it.getKey();
-                    boolean chunkContains = blockPos.getX() >> 4 == x && blockPos.getZ() >> 4 == z;
-                    return chunkContains && it.getValue().getLuminance() != 0;
-                })
-                .map(Map.Entry::getKey);
-    }
+	@Override
+	public Stream<BlockPos> getLightSourcesStream() {
+		return world.blocksAdded
+				.entrySet()
+				.stream()
+				.filter(it -> {
+					BlockPos blockPos = it.getKey();
+					boolean chunkContains = blockPos.getX() >> 4 == x && blockPos.getZ() >> 4 == z;
+					return chunkContains && it.getValue().getLuminance() != 0;
+				})
+				.map(Map.Entry::getKey);
+	}
 
-    @Override
-    public ChunkSection[] getSectionArray() {
-        return sections;
-    }
+	@Override
+	public ChunkSection[] getSectionArray() {
+		return sections;
+	}
 
-    @Nullable
-    @Override
-    public BlockState setBlockState(BlockPos p_177436_1_, BlockState p_177436_2_, boolean p_177436_3_) {
-        return null;
-    }
+	@Nullable
+	@Override
+	public BlockState setBlockState(BlockPos p_177436_1_, BlockState p_177436_2_, boolean p_177436_3_) {
+		return null;
+	}
 
-    @Override
-    public void setBlockEntity(BlockPos p_177426_1_, BlockEntity p_177426_2_) {
+	@Override
+	public void setBlockEntity(BlockPos p_177426_1_, BlockEntity p_177426_2_) {
 
-    }
+	}
 
-    @Override
-    public void addEntity(Entity p_76612_1_) {
+	@Override
+	public void addEntity(Entity p_76612_1_) {
 
-    }
+	}
 
-    @Override
-    public Set<BlockPos> getBlockEntityPositions() {
-        return null;
-    }
+	@Override
+	public Set<BlockPos> getBlockEntityPositions() {
+		return null;
+	}
 
-    @Override
-    public Collection<Map.Entry<Heightmap.Type, Heightmap>> getHeightmaps() {
-        return null;
-    }
+	@Override
+	public Collection<Map.Entry<Heightmap.Type, Heightmap>> getHeightmaps() {
+		return null;
+	}
 
-    @Override
-    public void setHeightmap(Heightmap.Type p_201607_1_, long[] p_201607_2_) {
+	@Override
+	public void setHeightmap(Heightmap.Type p_201607_1_, long[] p_201607_2_) {
 
-    }
+	}
 
-    @Override
-    public Heightmap getHeightmap(Heightmap.Type p_217303_1_) {
-        return null;
-    }
+	@Override
+	public Heightmap getHeightmap(Heightmap.Type p_217303_1_) {
+		return null;
+	}
 
-    @Override
-    public int sampleHeightmap(Heightmap.Type p_201576_1_, int p_201576_2_, int p_201576_3_) {
-        return 0;
-    }
+	@Override
+	public int sampleHeightmap(Heightmap.Type p_201576_1_, int p_201576_2_, int p_201576_3_) {
+		return 0;
+	}
 
-    @Override
-    public ChunkPos getPos() {
-        return null;
-    }
+	@Override
+	public ChunkPos getPos() {
+		return null;
+	}
 
-    @Override
-    public void setLastSaveTime(long p_177432_1_) {
+	@Override
+	public void setLastSaveTime(long p_177432_1_) {
 
-    }
+	}
 
-    @Nullable
-    @Override
-    public BiomeArray getBiomeArray() {
-        return null;
-    }
+	@Nullable
+	@Override
+	public BiomeArray getBiomeArray() {
+		return null;
+	}
 
-    @Override
-    public void setShouldSave(boolean p_177427_1_) {
+	@Override
+	public void setShouldSave(boolean p_177427_1_) {
 
-    }
+	}
 
-    @Override
-    public boolean needsSaving() {
-        return false;
-    }
+	@Override
+	public boolean needsSaving() {
+		return false;
+	}
 
-    @Override
-    public ChunkStatus getStatus() {
-        return null;
-    }
+	@Override
+	public ChunkStatus getStatus() {
+		return null;
+	}
 
-    @Override
-    public void removeBlockEntity(BlockPos p_177425_1_) {
+	@Override
+	public void removeBlockEntity(BlockPos p_177425_1_) {
 
-    }
+	}
 
-    @Override
-    public ShortList[] getPostProcessingLists() {
-        return new ShortList[0];
-    }
+	@Override
+	public ShortList[] getPostProcessingLists() {
+		return new ShortList[0];
+	}
 
-    @Nullable
-    @Override
-    public CompoundTag getBlockEntityTag(BlockPos p_201579_1_) {
-        return null;
-    }
+	@Nullable
+	@Override
+	public CompoundTag getBlockEntityTag(BlockPos p_201579_1_) {
+		return null;
+	}
 
-    @Nullable
-    @Override
-    public CompoundTag getPackedBlockEntityTag(BlockPos p_223134_1_) {
-        return null;
-    }
+	@Nullable
+	@Override
+	public CompoundTag getPackedBlockEntityTag(BlockPos p_223134_1_) {
+		return null;
+	}
 
-    @Override
-    public TickScheduler<Block> getBlockTickScheduler() {
-        return null;
-    }
+	@Override
+	public TickScheduler<Block> getBlockTickScheduler() {
+		return null;
+	}
 
-    @Override
-    public TickScheduler<Fluid> getFluidTickScheduler() {
-        return null;
-    }
+	@Override
+	public TickScheduler<Fluid> getFluidTickScheduler() {
+		return null;
+	}
 
-    @Override
-    public UpgradeData getUpgradeData() {
-        return null;
-    }
+	@Override
+	public UpgradeData getUpgradeData() {
+		return null;
+	}
 
-    @Override
-    public void setInhabitedTime(long p_177415_1_) {
+	@Override
+	public void setInhabitedTime(long p_177415_1_) {
 
-    }
+	}
 
-    @Override
-    public long getInhabitedTime() {
-        return 0;
-    }
+	@Override
+	public long getInhabitedTime() {
+		return 0;
+	}
 
-    @Override
-    public boolean isLightOn() {
-        return needsLight;
-    }
+	@Override
+	public boolean isLightOn() {
+		return needsLight;
+	}
 
-    @Override
-    public void setLightOn(boolean needsLight) {
-        this.needsLight = needsLight;
-    }
+	@Override
+	public void setLightOn(boolean needsLight) {
+		this.needsLight = needsLight;
+	}
 
-    @Nullable
-    @Override
-    public BlockEntity getBlockEntity(BlockPos pos) {
-        return null;
-    }
+	@Nullable
+	@Override
+	public BlockEntity getBlockEntity(BlockPos pos) {
+		return null;
+	}
 
-    @Override
-    public BlockState getBlockState(BlockPos pos) {
-        return world.getBlockState(pos);
-    }
+	@Override
+	public BlockState getBlockState(BlockPos pos) {
+		return world.getBlockState(pos);
+	}
 
 	@Override
 	public FluidState getFluidState(BlockPos p_204610_1_) {

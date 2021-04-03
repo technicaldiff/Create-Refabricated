@@ -26,7 +26,7 @@ public class GoggleConfigScreen extends AbstractSimiScreen {
 	private int offsetY;
 
 	public GoggleConfigScreen() {
-		String spacing = "    ";
+		String spacing = "	";
 		tooltip = new ArrayList<>();
 		tooltip.add(spacing + Lang.translate("gui.config.overlay1"));
 		tooltip.add(spacing + Formatting.GRAY + Lang.translate("gui.config.overlay2"));

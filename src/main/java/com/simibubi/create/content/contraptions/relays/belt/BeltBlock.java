@@ -533,14 +533,14 @@ public class BeltBlock extends HorizontalKineticBlock implements IBE<BeltBlockEn
 	/*
 	 * @Override
 	 * public ItemRequirement getRequiredItems(BlockState state) {
-	 *     List<ItemStack> required = new ArrayList<>();
-	 *     if (state.get(PART) != BeltPart.MIDDLE)
-	 *        required.add(AllBlocks.SHAFT.asStack());
-	 *    if (state.get(PART) == BeltPart.START)
-	 *        required.add(AllItems.BELT_CONNECTOR.asStack());
-	 *    if (required.isEmpty())
-	 *        return ItemRequirement.NONE;
-	 *    return new ItemRequirement(ItemRequirement.ItemUseType.CONSUME, required);
+	 *	 List<ItemStack> required = new ArrayList<>();
+	 *	 if (state.get(PART) != BeltPart.MIDDLE)
+	 *		required.add(AllBlocks.SHAFT.asStack());
+	 *	if (state.get(PART) == BeltPart.START)
+	 *		required.add(AllItems.BELT_CONNECTOR.asStack());
+	 *	if (required.isEmpty())
+	 *		return ItemRequirement.NONE;
+	 *	return new ItemRequirement(ItemRequirement.ItemUseType.CONSUME, required);
 	 * }
 	 */
 

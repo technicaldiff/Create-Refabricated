@@ -17,9 +17,9 @@ import com.simibubi.create.registrate.util.nullness.MethodsReturnNonnullByDefaul
 
 @MethodsReturnNonnullByDefault
 public abstract class AbstractEncasedShaftBlock extends RotatedPillarKineticBlock {
-    public AbstractEncasedShaftBlock(Settings properties) {
-        super(properties);
-    }
+	public AbstractEncasedShaftBlock(Settings properties) {
+		super(properties);
+	}
 
 	@Override
 	protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
@@ -32,9 +32,9 @@ public abstract class AbstractEncasedShaftBlock extends RotatedPillarKineticBloc
 	}
 
 	/*@Override
-    public boolean shouldCheckWeakPower(BlockState state, IWorldReader world, BlockPos pos, Direction side) {
-        return false;
-    }*/
+	public boolean shouldCheckWeakPower(BlockState state, IWorldReader world, BlockPos pos, Direction side) {
+		return false;
+	}*/
 
 	@Override
 	public PistonBehavior getPistonBehavior(BlockState state) {
@@ -57,8 +57,8 @@ public abstract class AbstractEncasedShaftBlock extends RotatedPillarKineticBloc
 		return face.getAxis() == state.get(AXIS);
 	}
 
-    @Override
-    public Direction.Axis getRotationAxis(BlockState state) {
-        return state.get(AXIS);
-    }
+	@Override
+	public Direction.Axis getRotationAxis(BlockState state) {
+		return state.get(AXIS);
+	}
 }

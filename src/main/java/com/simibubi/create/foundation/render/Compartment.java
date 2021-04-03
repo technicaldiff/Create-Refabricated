@@ -10,7 +10,7 @@ import net.minecraft.util.math.Direction;
 import com.simibubi.create.AllBlockPartials;
 
 public class Compartment<T> {
-    public static final Compartment<BlockState> GENERIC_TILE = new Compartment<>();
-    public static final Compartment<AllBlockPartials> PARTIAL = new Compartment<>();
-    public static final Compartment<Pair<Direction, AllBlockPartials>> DIRECTIONAL_PARTIAL = new Compartment<>();
+	public static final Compartment<BlockState> GENERIC_TILE = new Compartment<>();
+	public static final Compartment<AllBlockPartials> PARTIAL = new Compartment<>();
+	public static final Compartment<Pair<Direction, AllBlockPartials>> DIRECTIONAL_PARTIAL = new Compartment<>();
 }

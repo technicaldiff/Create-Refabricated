@@ -54,10 +54,10 @@ public class WorldRendererMixin {
 	private void refresh(CallbackInfo ci) {
 		CreateClient.kineticRenderer.invalidate();
 		ContraptionRenderDispatcher.invalidateAll();
-        //OptifineHandler.refresh();
-        Backend.refresh();
+		//OptifineHandler.refresh();
+		Backend.refresh();
 
-        if (Backend.canUseInstancing() && world != null)
-        	world.blockEntities.forEach(CreateClient.kineticRenderer::add);
+		if (Backend.canUseInstancing() && world != null)
+			world.blockEntities.forEach(CreateClient.kineticRenderer::add);
 	}
 }

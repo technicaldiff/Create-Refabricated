@@ -34,151 +34,151 @@ import com.simibubi.create.foundation.utility.BlockHelper;
 
 public class PulleyBlock extends HorizontalAxisKineticBlock implements IBE<PulleyBlockEntity> {
 
-    public static EnumProperty<Axis> HORIZONTAL_AXIS = Properties.HORIZONTAL_AXIS;
+	public static EnumProperty<Axis> HORIZONTAL_AXIS = Properties.HORIZONTAL_AXIS;
 
-    public PulleyBlock(Settings properties) {
-        super(properties);
-    }
+	public PulleyBlock(Settings properties) {
+		super(properties);
+	}
 
-    private static void onRopeBroken(World world, BlockPos pulleyPos) {
-        BlockEntity te = world.getBlockEntity(pulleyPos);
-        if (!(te instanceof PulleyBlockEntity))
-            return;
-        PulleyBlockEntity pulley = (PulleyBlockEntity) te;
-        pulley.offset = 0;
-        pulley.sendData();
-    }
+	private static void onRopeBroken(World world, BlockPos pulleyPos) {
+		BlockEntity te = world.getBlockEntity(pulleyPos);
+		if (!(te instanceof PulleyBlockEntity))
+			return;
+		PulleyBlockEntity pulley = (PulleyBlockEntity) te;
+		pulley.offset = 0;
+		pulley.sendData();
+	}
 
-    @Override
-    public BlockEntity createBlockEntity(BlockView world) {
-        return AllBlockEntities.ROPE_PULLEY.instantiate();
-    }
+	@Override
+	public BlockEntity createBlockEntity(BlockView world) {
+		return AllBlockEntities.ROPE_PULLEY.instantiate();
+	}
 
-    @Override
-    public void onStateReplaced(BlockState state, World worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
-        if (state.getBlock() != newState.getBlock()) {
-            if (!worldIn.isClient) {
-                BlockState below = worldIn.getBlockState(pos.down());
-                if (below.getBlock() instanceof RopeBlockBase)
-                    worldIn.breakBlock(pos.down(), true);
-            }
-            if (state.getBlock().hasBlockEntity())
-                worldIn.removeBlockEntity(pos);
-        }
-    }
+	@Override
+	public void onStateReplaced(BlockState state, World worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
+		if (state.getBlock() != newState.getBlock()) {
+			if (!worldIn.isClient) {
+				BlockState below = worldIn.getBlockState(pos.down());
+				if (below.getBlock() instanceof RopeBlockBase)
+					worldIn.breakBlock(pos.down(), true);
+			}
+			if (state.getBlock().hasBlockEntity())
+				worldIn.removeBlockEntity(pos);
+		}
+	}
 
-    public ActionResult onUse(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn,
-                                  BlockHitResult hit) {
-        if (!player.canModifyBlocks())
-            return ActionResult.PASS;
-        if (player.isSneaking())
-            return ActionResult.PASS;
-        if (player.getStackInHand(handIn)
-                .isEmpty()) {
-            withBlockEntityDo(worldIn, pos, te -> te.assembleNextTick = true);
-            return ActionResult.SUCCESS;
-        }
-        return ActionResult.PASS;
-    }
+	public ActionResult onUse(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn,
+								  BlockHitResult hit) {
+		if (!player.canModifyBlocks())
+			return ActionResult.PASS;
+		if (player.isSneaking())
+			return ActionResult.PASS;
+		if (player.getStackInHand(handIn)
+				.isEmpty()) {
+			withBlockEntityDo(worldIn, pos, te -> te.assembleNextTick = true);
+			return ActionResult.SUCCESS;
+		}
+		return ActionResult.PASS;
+	}
 
-    @Override
-    public VoxelShape getOutlineShape(BlockState state, BlockView worldIn, BlockPos pos, ShapeContext context) {
-        return AllShapes.PULLEY.get(state.get(HORIZONTAL_AXIS));
-    }
+	@Override
+	public VoxelShape getOutlineShape(BlockState state, BlockView worldIn, BlockPos pos, ShapeContext context) {
+		return AllShapes.PULLEY.get(state.get(HORIZONTAL_AXIS));
+	}
 
-    @Override
-    public Class<PulleyBlockEntity> getBlockEntityClass() {
-        return PulleyBlockEntity.class;
-    }
+	@Override
+	public Class<PulleyBlockEntity> getBlockEntityClass() {
+		return PulleyBlockEntity.class;
+	}
 
-    private static class RopeBlockBase extends Block implements Waterloggable {
+	private static class RopeBlockBase extends Block implements Waterloggable {
 
-        public RopeBlockBase(Settings properties) {
-            super(properties);
-            setDefaultState(super.getDefaultState().with(Properties.WATERLOGGED, false));
-        }
+		public RopeBlockBase(Settings properties) {
+			super(properties);
+			setDefaultState(super.getDefaultState().with(Properties.WATERLOGGED, false));
+		}
 
-        @Override
-        public PistonBehavior getPistonBehavior(BlockState state) {
-            return PistonBehavior.BLOCK;
-        }
+		@Override
+		public PistonBehavior getPistonBehavior(BlockState state) {
+			return PistonBehavior.BLOCK;
+		}
 
-        /*@Override
-        public ItemStack getPickBlock(BlockState state, HitResult target, BlockView world, BlockPos pos,
-                                      PlayerEntity player) {
-            return AllBlocks.ROPE_PULLEY.asStack();
-        }*/
+		/*@Override
+		public ItemStack getPickBlock(BlockState state, HitResult target, BlockView world, BlockPos pos,
+									  PlayerEntity player) {
+			return AllBlocks.ROPE_PULLEY.asStack();
+		}*/
 
-        @Override
-        public void onStateReplaced(BlockState state, World worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
-            if (!isMoving && (!BlockHelper.hasBlockStateProperty(state, Properties.WATERLOGGED) || !BlockHelper.hasBlockStateProperty(newState, Properties.WATERLOGGED) || state.get(Properties.WATERLOGGED) == newState.get(Properties.WATERLOGGED))) {
-                onRopeBroken(worldIn, pos.up());
-                if (!worldIn.isClient) {
-                    BlockState above = worldIn.getBlockState(pos.up());
-                    BlockState below = worldIn.getBlockState(pos.down());
-                    if (above.getBlock() instanceof RopeBlockBase)
-                        worldIn.breakBlock(pos.up(), true);
-                    if (below.getBlock() instanceof RopeBlockBase)
-                        worldIn.breakBlock(pos.down(), true);
-                }
-            }
-            if (state.getBlock().hasBlockEntity() && state.getBlock() != newState.getBlock()) {
-                worldIn.removeBlockEntity(pos);
-            }
-        }
+		@Override
+		public void onStateReplaced(BlockState state, World worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
+			if (!isMoving && (!BlockHelper.hasBlockStateProperty(state, Properties.WATERLOGGED) || !BlockHelper.hasBlockStateProperty(newState, Properties.WATERLOGGED) || state.get(Properties.WATERLOGGED) == newState.get(Properties.WATERLOGGED))) {
+				onRopeBroken(worldIn, pos.up());
+				if (!worldIn.isClient) {
+					BlockState above = worldIn.getBlockState(pos.up());
+					BlockState below = worldIn.getBlockState(pos.down());
+					if (above.getBlock() instanceof RopeBlockBase)
+						worldIn.breakBlock(pos.up(), true);
+					if (below.getBlock() instanceof RopeBlockBase)
+						worldIn.breakBlock(pos.down(), true);
+				}
+			}
+			if (state.getBlock().hasBlockEntity() && state.getBlock() != newState.getBlock()) {
+				worldIn.removeBlockEntity(pos);
+			}
+		}
 
 
-        @Override
-        public FluidState getFluidState(BlockState state) {
-            return state.get(Properties.WATERLOGGED) ? Fluids.WATER.getStill(false) : Fluids.EMPTY.getDefaultState();
-        }
+		@Override
+		public FluidState getFluidState(BlockState state) {
+			return state.get(Properties.WATERLOGGED) ? Fluids.WATER.getStill(false) : Fluids.EMPTY.getDefaultState();
+		}
 
-        @Override
-        protected void appendProperties(Builder<Block, BlockState> builder) {
-            builder.add(Properties.WATERLOGGED);
-            super.appendProperties(builder);
-        }
+		@Override
+		protected void appendProperties(Builder<Block, BlockState> builder) {
+			builder.add(Properties.WATERLOGGED);
+			super.appendProperties(builder);
+		}
 
-        @Override
-        public BlockState getStateForNeighborUpdate(BlockState state, Direction direction, BlockState neighbourState,
-                                              WorldAccess world, BlockPos pos, BlockPos neighbourPos) {
-            if (state.get(Properties.WATERLOGGED)) {
-                world.getFluidTickScheduler().schedule(pos, Fluids.WATER, Fluids.WATER.getTickRate(world));
-            }
-            return state;
-        }
+		@Override
+		public BlockState getStateForNeighborUpdate(BlockState state, Direction direction, BlockState neighbourState,
+											  WorldAccess world, BlockPos pos, BlockPos neighbourPos) {
+			if (state.get(Properties.WATERLOGGED)) {
+				world.getFluidTickScheduler().schedule(pos, Fluids.WATER, Fluids.WATER.getTickRate(world));
+			}
+			return state;
+		}
 
-        @Override
-        public BlockState getPlacementState(ItemPlacementContext context) {
-            FluidState FluidState = context.getWorld().getFluidState(context.getBlockPos());
-            return super.getPlacementState(context).with(Properties.WATERLOGGED, Boolean.valueOf(FluidState.getFluid() == Fluids.WATER));
-        }
+		@Override
+		public BlockState getPlacementState(ItemPlacementContext context) {
+			FluidState FluidState = context.getWorld().getFluidState(context.getBlockPos());
+			return super.getPlacementState(context).with(Properties.WATERLOGGED, Boolean.valueOf(FluidState.getFluid() == Fluids.WATER));
+		}
 
-    }
+	}
 
-    public static class MagnetBlock extends RopeBlockBase {
+	public static class MagnetBlock extends RopeBlockBase {
 
-        public MagnetBlock(Settings properties) {
-            super(properties);
-        }
+		public MagnetBlock(Settings properties) {
+			super(properties);
+		}
 
-        @Override
-        public VoxelShape getOutlineShape(BlockState state, BlockView worldIn, BlockPos pos, ShapeContext context) {
-            return AllShapes.PULLEY_MAGNET;
-        }
+		@Override
+		public VoxelShape getOutlineShape(BlockState state, BlockView worldIn, BlockPos pos, ShapeContext context) {
+			return AllShapes.PULLEY_MAGNET;
+		}
 
-    }
+	}
 
-    public static class RopeBlock extends RopeBlockBase {
+	public static class RopeBlock extends RopeBlockBase {
 
-        public RopeBlock(Settings properties) {
-            super(properties);
-        }
+		public RopeBlock(Settings properties) {
+			super(properties);
+		}
 
-        @Override
-        public VoxelShape getOutlineShape(BlockState state, BlockView worldIn, BlockPos pos, ShapeContext context) {
-            return AllShapes.FOUR_VOXEL_POLE.get(Direction.UP);
-        }
-    }
+		@Override
+		public VoxelShape getOutlineShape(BlockState state, BlockView worldIn, BlockPos pos, ShapeContext context) {
+			return AllShapes.FOUR_VOXEL_POLE.get(Direction.UP);
+		}
+	}
 
 }

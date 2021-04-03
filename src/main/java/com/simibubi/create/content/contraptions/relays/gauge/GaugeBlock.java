@@ -70,7 +70,7 @@ public class GaugeBlock extends DirectionalAxisKineticBlock {
 		}
 	}
 
-	/* FIXME: Is there a new way of doing this in 1.16? Or cn we just delete it?                   from upstream
+	/* FIXME: Is there a new way of doing this in 1.16? Or cn we just delete it?				   from upstream
 	@SuppressWarnings("deprecation")
 	@Override
 	public MaterialColor getMaterialColor(BlockState state, IBlockReader worldIn, BlockPos pos) {
