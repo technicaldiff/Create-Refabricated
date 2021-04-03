@@ -100,7 +100,7 @@ val setupCheckstyle: Project.() -> Unit = {
 
 	dependencies {
 		// Checkstyle
-		checkstyle(project(":checkstyleChecks"))
+		checkstyle(project(":Style-Checks"))
 	}
 
 	checkstyle {
