@@ -5,6 +5,8 @@
 <p align="center">We have decided to halt porting until the main project has dropped support for 1.15. Meanwhile, we will be working on separating some of the new Fabric-only code into its own library mod. When we resume porting, we will restart on a new branch using upstream's mappings (currently MCP) and port all files at once, changing as little as possible in those files. All of these decisions were made to maximize compatibility with upstream so that porting new commits is easier.</p>
 <br>
 
+[<h1 align="center">Contributing</h1>](CONTRIBUTING.md)
+
 <p align="center"><img src="https://i.imgur.com/35JmqWB.gif" alt="Logo" width="100"></p>
 <h1 align="center">Create<br>
 	<a href="https://www.patreon.com/simibubi"><img src="https://img.shields.io/badge/Supporters-60-ff5733" alt="Patreon"></a>
@@ -28,5 +30,5 @@ Check out the wiki and in-game Tool-tips for further info on how to use these fe
 - Support for Minecraft 1.12: Not planned
 - Support for Fabric: You realize what repo you're on, right?
 - Support for Forge: Main/Forge repo can be found here: https://github.com/Creators-of-Create/Create
-<hr>
+<hr/>
 <h4 align="center">Find out more about Create on our <a href="https://www.curseforge.com/minecraft/mc-mods/create">Project Page</a></h4>

@@ -3,7 +3,7 @@
 1. <span id="mindiff">**"Min-Diff"**</span>  
    As little as possible code should be changed to maximize compatibility with future upstream commits. This includes file names, java names, and code formatting. There are a few exceptions to this rule:
     - **Import Order**  
-      Because upstream's import order is currently inconsistent, it is better to make our import order consistent, even if it does not match with upstream's. Use the import order defined in [`checkstyle.xml`](../checkstyle/checkstyle.xml) or the editor config.
+      Because upstream's import order is currently inconsistent, it is better to make our import order consistent, even if it does not match with upstream's. Use the import order defined in [`checkstyle.xml`](checkstyle/checkstyle.xml) or the editor config.
     - **Space Indentation**  
       If a **Java** file uses spaces for indentation, replace all space indentation with tab indentation. Upstream is also currently inconsistent with this, but for the most part uses tabs.  
       **Json** files should use *two spaces* for indentation.
