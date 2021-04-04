@@ -135,10 +135,9 @@ val setupBasicFabric: Project.() -> Unit = {
 		minecraft("com.mojang", "minecraft", minecraft_version)
 
 		/*
-		 * TODO Mojmap
+		 * TODO Remove this mess and switch to Mojmap
 		 * mappings(minecraft.officialMojangMappings())
 		 */
-		// mappings("net.fabricmc", "yarn", yarn_mappings, classifier = "v2")
 
 		fun setupMappings(p: Project = rootProject) {
 			if (p.file(".gradle/mappings/.marker.${mcp_minecraft_version}__$mcp_mappings").exists() &&
