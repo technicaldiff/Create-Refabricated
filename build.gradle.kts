@@ -75,23 +75,42 @@ repositories {
 	}
 }
 
+interface HasAnt { // Intersection and union types when
+	val ant: AntBuilder
+
+	companion object {
+		fun from(it: Project) = object : HasAnt {
+			override val ant get() = it.ant
+		}
+
+		fun from(it: Task) = object : HasAnt {
+			override val ant get() = it.ant
+		}
+	}
+}
+
+val convertAndMoveMappings: HasAnt.(String, String) -> Unit = { mcpVer, mcpMcVer ->
+	if (file(".gradle/mappings").listFiles() == null) mkdir(file(".gradle/mappings"))
+	file(".gradle/mappings").listFiles().forEach {
+		if (it.name.startsWith(".marker.")) project.delete(it)
+	}
+
+	me.shedaniel.mcptiny.main(arrayOf(mcpMcVer, mcpVer))
+	ant.withGroovyBuilder {
+		"move"("file" to "output.jar", "todir" to "$projectDir/.gradle/mappings")
+	}
+	file(".gradle/mappings/.marker.${mcpMcVer}__$mcpVer").createNewFile()
+}
+
 val createMappings by tasks.registering(Task::class) {
 	inputs.property("mcpver", properties["mcp_mappings"])
 	inputs.property("mcpmcver", properties["mcp_minecraft_version"])
 
-	outputs.file(file("$projectDir/.gradle/mappings/output.jar"))
-	outputs.file(file("$projectDir/.gradle/mappings/.marker.${inputs.properties["mcpmcver"] as String}__${inputs.properties["mcpver"] as String}"))
+	outputs.file(file(".gradle/mappings/output.jar"))
+	outputs.file(file(".gradle/mappings/.marker.${inputs.properties["mcpmcver"] as String}__${inputs.properties["mcpver"] as String}"))
 
 	doFirst {
-		file("$projectDir/.gradle/mappings").listFiles().forEach {
-			if (it.name.startsWith(".marker.")) project.delete(it)
-		}
-
-		me.shedaniel.mcptiny.main(arrayOf(properties["mcp_minecraft_version"] as String, properties["mcp_mappings"] as String))
-		ant.withGroovyBuilder {
-			"move"("file" to "output.jar", "todir" to "$projectDir/.gradle/mappings")
-		}
-		file("$projectDir/.gradle/mappings/.marker.${inputs.properties["mcpmcver"] as String}__${inputs.properties["mcpver"] as String}").createNewFile()
+		HasAnt.from(this).convertAndMoveMappings(inputs.properties["mcpver"] as String, inputs.properties["mcpmcver"] as String)
 	}
 }
 
@@ -108,6 +127,8 @@ val setupBasicFabric: Project.() -> Unit = {
 		// We could also use properties["..."] here but this looks cleaner
 		val minecraft_version: String by rootProject
 		val yarn_mappings: String by rootProject
+		val mcp_mappings: String by rootProject
+		val mcp_minecraft_version: String by rootProject
 		val loader_version: String by rootProject
 		val fabric_version: String by rootProject
 
@@ -117,8 +138,18 @@ val setupBasicFabric: Project.() -> Unit = {
 		 * TODO Mojmap
 		 * mappings(minecraft.officialMojangMappings())
 		 */
-		mappings("net.fabricmc", "yarn", yarn_mappings, classifier = "v2")
-		// mappings(fileTree("dir" to "${rootProject.buildDir}/mappings", "include" to "output.jar"))
+		// mappings("net.fabricmc", "yarn", yarn_mappings, classifier = "v2")
+
+		fun setupMappings(p: Project = rootProject) {
+			if (p.file(".gradle/mappings/.marker.${mcp_minecraft_version}__$mcp_mappings").exists() &&
+				p.file(".gradle/mappings/output.jar").exists()) {
+				return
+			}
+
+			HasAnt.from(p).convertAndMoveMappings(mcp_mappings, mcp_minecraft_version)
+		}
+		setupMappings()
+		mappings(fileTree("dir" to "${rootProject.projectDir}/.gradle/mappings", "include" to "output.jar"))
 		modImplementation("net.fabricmc", "fabric-loader", loader_version)
 
 		// Fabric API
