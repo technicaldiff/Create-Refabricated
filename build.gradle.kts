@@ -1,3 +1,13 @@
+buildscript {
+	repositories {
+		maven("https://jitpack.io/")
+	}
+
+	dependencies {
+		classpath("com.github.PepperCode1", "mcp-tiny", "fca1a43007b0ed3772610165843b2b76414e8b01")
+	}
+}
+
 plugins {
 	id("fabric-loom") version "0.6-SNAPSHOT"
 	checkstyle
@@ -65,6 +75,32 @@ repositories {
 	}
 }
 
+val createMappings by tasks.registering(Task::class) {
+	inputs.property("mcpver", properties["mcp_mappings"])
+	inputs.property("mcpmcver", properties["mcp_minecraft_version"])
+
+	outputs.file(file("$projectDir/.gradle/mappings/output.jar"))
+	outputs.file(file("$projectDir/.gradle/mappings/.marker.${inputs.properties["mcpmcver"] as String}__${inputs.properties["mcpver"] as String}"))
+
+	doFirst {
+		file("$projectDir/.gradle/mappings").listFiles().forEach {
+			if (it.name.startsWith(".marker.")) project.delete(it)
+		}
+
+		me.shedaniel.mcptiny.main(arrayOf(properties["mcp_minecraft_version"] as String, properties["mcp_mappings"] as String))
+		ant.withGroovyBuilder {
+			"move"("file" to "output.jar", "todir" to "$projectDir/.gradle/mappings")
+		}
+		file("$projectDir/.gradle/mappings/.marker.${inputs.properties["mcpmcver"] as String}__${inputs.properties["mcpver"] as String}").createNewFile()
+	}
+}
+
+val cleanMappings by tasks.creating(Delete::class) {
+	delete(project.file("linkie-cache"))
+	delete(project.file(".gradle/mappings"))
+}
+tasks["clean"].dependsOn(cleanMappings)
+
 val setupBasicFabric: Project.() -> Unit = {
 	apply(plugin = "fabric-loom")
 
@@ -82,6 +118,7 @@ val setupBasicFabric: Project.() -> Unit = {
 		 * mappings(minecraft.officialMojangMappings())
 		 */
 		mappings("net.fabricmc", "yarn", yarn_mappings, classifier = "v2")
+		// mappings(fileTree("dir" to "${rootProject.buildDir}/mappings", "include" to "output.jar"))
 		modImplementation("net.fabricmc", "fabric-loader", loader_version)
 
 		// Fabric API
