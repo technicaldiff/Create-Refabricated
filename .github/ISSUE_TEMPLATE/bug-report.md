@@ -34,6 +34,7 @@ If applicable, add additional screenshots to help explain your problem.
 - LibBlockAttributes version [eg. `0.8.4`]
  - Cloth Config 2 version [e.g. `4.11.14`]
  - Commit hash [e.g. `c8b7bd4d7a065f29b02cb06b9a68f5a841c664a9`]
+- List of all other installed mods, including versions
 
 ## Additional context
 Add any other context about the problem here.
