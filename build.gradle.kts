@@ -126,7 +126,6 @@ val setupBasicFabric: Project.() -> Unit = {
 	dependencies {
 		// We could also use properties["..."] here but this looks cleaner
 		val minecraft_version: String by rootProject
-		val yarn_mappings: String by rootProject
 		val mcp_mappings: String by rootProject
 		val mcp_minecraft_version: String by rootProject
 		val loader_version: String by rootProject
