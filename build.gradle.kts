@@ -169,6 +169,9 @@ dependencies {
 	implementation(project(":Create-Refabricated-Lib"))
 	include(project(":Create-Refabricated-Lib"))
 
+	// Javax Annotations
+	implementation("com.google.code.findbugs", "jsr305", "3.0.2")
+
 	// Registrate
 	modImplementation("com.github.PepperCode1", "Registrate-Fabric", registrate_version)
 	include("com.github.PepperCode1", "Registrate-Fabric", registrate_version)
