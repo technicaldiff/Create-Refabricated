@@ -1,13 +1,3 @@
-buildscript {
-	repositories {
-		maven("https://jitpack.io/")
-	}
-
-	dependencies {
-		classpath("com.github.PepperCode1", "mcp-tiny", "fca1a43007b0ed3772610165843b2b76414e8b01")
-	}
-}
-
 plugins {
 	id("fabric-loom") version "0.6-SNAPSHOT"
 	checkstyle
@@ -43,54 +33,10 @@ allprojects {
 	}
 }
 
-//
+tasks.register("createMappings", com.simibubi.create.grdl.task.CreateMappingsTask::class)
 
-interface HasAnt { // Intersection and union types when
-	val ant: AntBuilder
-
-	companion object {
-		fun from(it: Project) = object : HasAnt {
-			override val ant get() = it.ant
-		}
-
-		fun from(it: Task) = object : HasAnt {
-			override val ant get() = it.ant
-		}
-	}
-}
-
-val convertAndMoveMappings: HasAnt.(String, String) -> Unit = { mcpVer, mcpMcVer ->
-	if (file(".gradle/mappings").listFiles() == null) mkdir(file(".gradle/mappings"))
-	file(".gradle/mappings").listFiles().forEach {
-		if (it.name.startsWith(".marker.")) project.delete(it)
-	}
-
-	me.shedaniel.mcptiny.main(arrayOf(mcpMcVer, mcpVer))
-	ant.withGroovyBuilder {
-		"move"("file" to "output.jar", "todir" to "$projectDir/.gradle/mappings")
-	}
-	file(".gradle/mappings/.marker.${mcpMcVer}__$mcpVer").createNewFile()
-}
-
-val createMappings by tasks.registering(Task::class) {
-	inputs.property("mcpver", properties["mcp_mappings"])
-	inputs.property("mcpmcver", properties["mcp_minecraft_version"])
-
-	outputs.file(file(".gradle/mappings/output.jar"))
-	outputs.file(file(".gradle/mappings/.marker.${inputs.properties["mcpmcver"] as String}__${inputs.properties["mcpver"] as String}"))
-
-	doFirst {
-		HasAnt.from(this).convertAndMoveMappings(inputs.properties["mcpver"] as String, inputs.properties["mcpmcver"] as String)
-	}
-}
-
-val cleanMappings by tasks.creating(Delete::class) {
-	delete(project.file("linkie-cache"))
-	delete(project.file(".gradle/mappings"))
-}
+val cleanMappings by tasks.creating(com.simibubi.create.grdl.task.CleanMappingsTask::class);
 tasks["clean"].dependsOn(cleanMappings)
-
-//
 
 val setupBasicFabric: Project.() -> Unit = {
 	apply(plugin = "fabric-loom")
@@ -131,8 +77,7 @@ val setupMCP: Project.() -> Unit = {
 				p.file(".gradle/mappings/output.jar").exists()) {
 				return
 			}
-
-			HasAnt.from(p).convertAndMoveMappings(mcp_mappings, mcp_minecraft_version)
+			com.simibubi.create.grdl.MappingsUtil(p).convertAndMoveMappings(com.simibubi.create.grdl.HasAnt.from(p), mcp_mappings, mcp_minecraft_version)
 		}
 		setupMappings()
 		mappings(fileTree("dir" to "${rootProject.projectDir}/.gradle/mappings", "include" to "output.jar"))
