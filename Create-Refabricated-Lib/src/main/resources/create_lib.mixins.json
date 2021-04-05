@@ -1,0 +1,45 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "com.simibubi.create.lib.mixin",
+  "compatibilityLevel": "JAVA_8",
+  "mixins": [
+  	"EntityMixin",
+    "EntityShapeContextMixin",
+    "EntitySpawnS2CPacketMixin",
+    "ItemEntityMixin",
+    "ItemStackMixin",
+    "Matrix4fMixin",
+    "accessor.BiomeAccessAccessor",
+    "accessor.CriteriaAccessor",
+    "accessor.ItemEntityAccessor",
+    "accessor.MinecraftServerAccessor",
+    "accessor.ServerPlayNetworkHandlerAccessor",
+    "accessor.SignTypeAccessor",
+    "accessor.StairsBlockAccessor",
+    "accessor.Vector3fAccessor"
+  ],
+  "client": [
+    "BakedModelManagerMixin",
+    "ClientPlayNetworkHandlerMixin",
+    "ClientWorldMixin",
+    "ItemRendererMixin",
+    "KeyboardMixin",
+    "MinecraftClientMixin",
+    "MouseMixin",
+    "ParticleManagerMixin",
+    "accessor.BufferBuilderAccessor",
+    "accessor.GameRendererAccessor",
+    "accessor.GlStateManagerAccessor",
+    "accessor.ItemRendererAccessor",
+    "accessor.MinecraftClientAccessor"
+  ],
+  "server": [
+    "BeaconBlockEntityMixin",
+    "SignTypeMixin",
+    "Vec3dMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}
