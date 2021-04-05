@@ -1,3 +1,13 @@
+buildscript {
+	repositories {
+		maven("https://jitpack.io/")
+	}
+
+	dependencies {
+		classpath("com.github.PepperCode1", "mcp-tiny", "fca1a43007b0ed3772610165843b2b76414e8b01")
+	}
+}
+
 plugins {
 	id("fabric-loom") version "0.6-SNAPSHOT"
 	checkstyle
@@ -33,6 +43,142 @@ allprojects {
 	}
 }
 
+//
+
+interface HasAnt { // Intersection and union types when
+	val ant: AntBuilder
+
+	companion object {
+		fun from(it: Project) = object : HasAnt {
+			override val ant get() = it.ant
+		}
+
+		fun from(it: Task) = object : HasAnt {
+			override val ant get() = it.ant
+		}
+	}
+}
+
+val convertAndMoveMappings: HasAnt.(String, String) -> Unit = { mcpVer, mcpMcVer ->
+	if (file(".gradle/mappings").listFiles() == null) mkdir(file(".gradle/mappings"))
+	file(".gradle/mappings").listFiles().forEach {
+		if (it.name.startsWith(".marker.")) project.delete(it)
+	}
+
+	me.shedaniel.mcptiny.main(arrayOf(mcpMcVer, mcpVer))
+	ant.withGroovyBuilder {
+		"move"("file" to "output.jar", "todir" to "$projectDir/.gradle/mappings")
+	}
+	file(".gradle/mappings/.marker.${mcpMcVer}__$mcpVer").createNewFile()
+}
+
+val createMappings by tasks.registering(Task::class) {
+	inputs.property("mcpver", properties["mcp_mappings"])
+	inputs.property("mcpmcver", properties["mcp_minecraft_version"])
+
+	outputs.file(file(".gradle/mappings/output.jar"))
+	outputs.file(file(".gradle/mappings/.marker.${inputs.properties["mcpmcver"] as String}__${inputs.properties["mcpver"] as String}"))
+
+	doFirst {
+		HasAnt.from(this).convertAndMoveMappings(inputs.properties["mcpver"] as String, inputs.properties["mcpmcver"] as String)
+	}
+}
+
+val cleanMappings by tasks.creating(Delete::class) {
+	delete(project.file("linkie-cache"))
+	delete(project.file(".gradle/mappings"))
+}
+tasks["clean"].dependsOn(cleanMappings)
+
+//
+
+val setupBasicFabric: Project.() -> Unit = {
+	apply(plugin = "fabric-loom")
+
+	dependencies {
+		// We could also use properties["..."] here but this looks cleaner
+		val minecraft_version: String by rootProject
+		val loader_version: String by rootProject
+		val fabric_version: String by rootProject
+
+		minecraft("com.mojang", "minecraft", minecraft_version)
+
+		modImplementation("net.fabricmc", "fabric-loader", loader_version)
+
+		// Fabric API
+		modImplementation("net.fabricmc.fabric-api", "fabric-api", fabric_version)
+	}
+
+	val version = this.version
+	tasks {
+		processResources {
+			inputs.property("version", version)
+
+			filesMatching("fabric.mod.json") {
+				expand("version" to version)
+			}
+		}
+	}
+}
+
+val setupMCP: Project.() -> Unit = {
+	dependencies {
+		val mcp_mappings: String by rootProject
+		val mcp_minecraft_version: String by rootProject
+
+		fun setupMappings(p: Project = rootProject) {
+			if (p.file(".gradle/mappings/.marker.${mcp_minecraft_version}__$mcp_mappings").exists() &&
+				p.file(".gradle/mappings/output.jar").exists()) {
+				return
+			}
+
+			HasAnt.from(p).convertAndMoveMappings(mcp_mappings, mcp_minecraft_version)
+		}
+		setupMappings()
+		mappings(fileTree("dir" to "${rootProject.projectDir}/.gradle/mappings", "include" to "output.jar"))
+	}
+}
+
+val setupYarn: Project.() -> Unit = {
+	dependencies {
+		val yarn_mappings: String by rootProject
+
+		mappings("net.fabricmc", "yarn", yarn_mappings, classifier = "v2")
+	}
+}
+
+val setupMojmap: Project.() -> Unit = {
+	dependencies {
+		mappings(minecraft.officialMojangMappings())
+	}
+}
+
+val setupCheckstyle: Project.() -> Unit = {
+	apply(plugin = "checkstyle")
+
+	dependencies {
+		// Checkstyle
+		checkstyle(project(":Style-Checks"))
+	}
+
+	checkstyle {
+		toolVersion = rootProject.properties["checkstyle_version"] as String
+		configFile = rootProject.file("checkstyle/checkstyle.xml")
+	}
+}
+
+//
+
+project.setupBasicFabric()
+project.setupMCP()
+project.setupCheckstyle()
+
+project(":Create-Refabricated-Lib").setupBasicFabric()
+project(":Create-Refabricated-Lib").setupYarn()
+project(":Create-Refabricated-Lib").setupCheckstyle()
+
+//
+
 repositories {
 	maven("https://maven.fabricmc.net/") {
 		name = "Fabric"
@@ -64,61 +210,6 @@ repositories {
 		}
 	}
 }
-
-val setupBasicFabric: Project.() -> Unit = {
-	apply(plugin = "fabric-loom")
-
-	dependencies {
-		// We could also use properties["..."] here but this looks cleaner
-		val minecraft_version: String by rootProject
-		val yarn_mappings: String by rootProject
-		val loader_version: String by rootProject
-		val fabric_version: String by rootProject
-
-		minecraft("com.mojang", "minecraft", minecraft_version)
-
-		/*
-		 * TODO Mojmap
-		 * mappings(minecraft.officialMojangMappings())
-		 */
-		mappings("net.fabricmc", "yarn", yarn_mappings, classifier = "v2")
-		modImplementation("net.fabricmc", "fabric-loader", loader_version)
-
-		// Fabric API
-		modImplementation("net.fabricmc.fabric-api", "fabric-api", fabric_version)
-	}
-
-	val version = this.version
-	tasks {
-		processResources {
-			inputs.property("version", version)
-
-			filesMatching("fabric.mod.json") {
-				expand("version" to version)
-			}
-		}
-	}
-}
-
-val setupCheckstyle: Project.() -> Unit = {
-	apply(plugin = "checkstyle")
-
-	dependencies {
-		// Checkstyle
-		checkstyle(project(":Style-Checks"))
-	}
-
-	checkstyle {
-		toolVersion = rootProject.properties["checkstyle_version"] as String
-		configFile = rootProject.file("checkstyle/checkstyle.xml")
-	}
-}
-
-project.setupBasicFabric()
-project(":Create-Refabricated-Lib").setupBasicFabric()
-
-project.setupCheckstyle()
-project(":Create-Refabricated-Lib").setupCheckstyle()
 
 dependencies {
 	val registrate_version: String by project
