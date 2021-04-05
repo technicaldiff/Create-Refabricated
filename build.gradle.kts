@@ -1,5 +1,5 @@
 plugins {
-	id("fabric-loom") version "0.6-SNAPSHOT"
+	id("fabric-loom") // Don't ask
 	checkstyle
 	`maven-publish`
 }
@@ -202,42 +202,7 @@ dependencies {
 
 loom.accessWidener("src/main/resources/create.accesswidener")
 
-//////////// Gradle Properties ////////////
-/**
- * Should be configured in `gradle.properties` like so:
- *
- * ```properties
- *     create.debug_logs=true
- *     create.mixin_export=true
- * ```
- */
-@Suppress("UnstableApiUsage")
-val lambda: () -> Unit = {
-	val createPrefix = "create."
-	val map = mutableMapOf<String, Project.() -> Unit>()
-
-	map["debug_logs"] = {
-		loom.runConfigs.configureEach {
-			property("fabric.log.level", "debug")
-		}
-	}
-
-	map["mixin_export"] = {
-		loom.runConfigs.configureEach {
-			property("mixin.debug.export", "true")
-		}
-	}
-
-	map.forEach { (str, func) ->
-		if (project.hasProperty(createPrefix + str) && (
-						project.property(createPrefix + str) != null &&
-								project.property(createPrefix + str) != false &&
-								project.property(createPrefix + str) != "false"
-						)) {
-			project.func()
-		}
-	}
-}; lambda()
+com.simibubi.create.grdl.PropertiesHandler(project).setupProperties()
 
 tasks {
 	withType<Wrapper> {
