@@ -2,7 +2,22 @@
 <p align="center">This repo is for Create: Refabricated, a Fabric port of Create.</p>
 <p align="center"><b>This project is not complete, and we do not recommend using it yet. You've been warned!</b></p>
 
-[<h3 align="center">Contributing</h3>](CONTRIBUTING.md)
+[<h3 align="center">Contributing</h3>](README/CONTRIBUTING.md)
+
+<h1 align="center">Download</h1>
+
+<p align="center">
+
+![Download](README/download.jpg)
+
+The Fabric port is currently incomplete and lacking in many features. Don't expect it to be finished
+soon. If you want to contribute and help with the porting, then by all means go for it! However don't expect
+to be able to play with this mod or have a compiled Jar anytime soon.
+
+While you wait for the port, you can listen to [Tchaikovsky's violin concerto in D major](https://youtu.be/cbJZeNlrYKg).  
+<sup>Seriously, it's an awesome piece of music</sup>
+
+</p>
 
 <br>
 
