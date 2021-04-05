@@ -5,8 +5,8 @@ import com.simibubi.create.Create;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.AbstractGui;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 
 public enum AllGuiTextures implements IScreenRenderable {
 
@@ -109,7 +109,7 @@ public enum AllGuiTextures implements IScreenRenderable {
 		this.startY = startY;
 	}
 
-	@OnlyIn(Dist.CLIENT)
+	@Environment(EnvType.CLIENT)
 	public void bind() {
 		Minecraft.getInstance()
 			.getTextureManager()
@@ -117,7 +117,7 @@ public enum AllGuiTextures implements IScreenRenderable {
 	}
 
 	@Override
-	@OnlyIn(Dist.CLIENT)
+	@Environment(EnvType.CLIENT)
 	public void draw(MatrixStack ms, AbstractGui screen, int x, int y) {
 		bind();
 		screen.drawTexture(ms, x, y, startX, startY, width, height);

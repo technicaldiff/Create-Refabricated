@@ -12,8 +12,8 @@ import net.minecraft.client.particle.ParticleManager.IParticleMetaFactory;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.particles.IParticleData;
 import net.minecraft.particles.ParticleType;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 
 public class AirParticleData implements IParticleData, ICustomParticleDataWithSprite<AirParticleData> {
 
@@ -78,7 +78,7 @@ public class AirParticleData implements IParticleData, ICustomParticleDataWithSp
 	}
 
 	@Override
-	@OnlyIn(Dist.CLIENT)
+	@Environment(EnvType.CLIENT)
 	public IParticleMetaFactory<AirParticleData> getMetaFactory() {
 		return AirParticle.Factory::new;
 	}

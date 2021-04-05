@@ -18,7 +18,7 @@ import net.minecraft.util.Direction;
 import net.minecraft.util.Direction.Axis;
 import net.minecraft.util.Direction.AxisDirection;
 import net.minecraft.util.math.BlockPos;
-import net.minecraftforge.api.distmarker.Dist;
+import net.fabricmc.api.EnvType;
 import net.minecraftforge.fml.DistExecutor;
 
 import java.util.*;
@@ -42,7 +42,7 @@ public class ChassisTileEntity extends SmartTileEntity {
 		range.between(1, max);
 		range
 				.withClientCallback(
-						i -> DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> ChassisRangeDisplay.display(this)));
+						i -> DistExecutor.unsafeRunWhenOn(EnvType.CLIENT, () -> () -> ChassisRangeDisplay.display(this)));
 		range.value = max / 2;
 		behaviours.add(range);
 	}

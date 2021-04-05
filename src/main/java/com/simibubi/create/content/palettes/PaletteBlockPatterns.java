@@ -30,8 +30,8 @@ import net.minecraft.block.RotatedPillarBlock;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.data.ShapedRecipeBuilder;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraftforge.client.model.generators.ModelFile;
 
 public class PaletteBlockPatterns {
@@ -108,7 +108,7 @@ public class PaletteBlockPatterns {
 	private NonNullFunction<PaletteStoneVariants, NonNullBiConsumer<DataGenContext<Block, ? extends Block>, RegistrateRecipeProvider>> additionalRecipes;
 	private PaletteBlockPartial<? extends Block>[] partials;
 
-	@OnlyIn(Dist.CLIENT)
+	@Environment(EnvType.CLIENT)
 	private RenderType renderType;
 
 	private static PaletteBlockPatterns create(String name, PatternNameType nameType,

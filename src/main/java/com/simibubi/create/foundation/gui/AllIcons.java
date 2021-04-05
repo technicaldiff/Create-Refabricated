@@ -11,8 +11,8 @@ import net.minecraft.client.renderer.IRenderTypeBuffer;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.vector.Vector3d;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 
 public class AllIcons implements IScreenRenderable {
 
@@ -139,7 +139,7 @@ public class AllIcons implements IScreenRenderable {
 		return new AllIcons(x = 0, ++y);
 	}
 
-	@OnlyIn(Dist.CLIENT)
+	@Environment(EnvType.CLIENT)
 	public void bind() {
 		Minecraft.getInstance()
 			.getTextureManager()
@@ -147,13 +147,13 @@ public class AllIcons implements IScreenRenderable {
 	}
 
 	@Override
-	@OnlyIn(Dist.CLIENT)
+	@Environment(EnvType.CLIENT)
 	public void draw(MatrixStack matrixStack, AbstractGui screen, int x, int y) {
 		bind();
 		screen.drawTexture(matrixStack, x, y, iconX, iconY, 16, 16);
 	}
 
-	@OnlyIn(Dist.CLIENT)
+	@Environment(EnvType.CLIENT)
 	public void draw(MatrixStack ms, IRenderTypeBuffer buffer, int color) {
 		IVertexBuilder builder = buffer.getBuffer(RenderType.getTextSeeThrough(ICON_ATLAS));
 		float sheetSize = 256;
@@ -179,7 +179,7 @@ public class AllIcons implements IScreenRenderable {
 		vertex(peek, builder, j, k, rgb, vec4, u1, v2);
 	}
 
-	@OnlyIn(Dist.CLIENT)
+	@Environment(EnvType.CLIENT)
 	private void vertex(Entry peek, IVertexBuilder builder, int j, int k, Vector3d rgb, Vector3d vec, float u, float v) {
 		builder.vertex(peek.getModel(), (float) vec.x, (float) vec.y, (float) vec.z)
 			.color((float) rgb.x, (float) rgb.y, (float) rgb.z, 1)

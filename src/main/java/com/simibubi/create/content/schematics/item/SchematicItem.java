@@ -45,8 +45,8 @@ import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraft.world.gen.feature.template.PlacementSettings;
 import net.minecraft.world.gen.feature.template.Template;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.common.thread.SidedThreadGroups;
 
@@ -78,7 +78,7 @@ public class SchematicItem extends Item {
 	public void fillItemGroup(ItemGroup group, NonNullList<ItemStack> items) {}
 
 	@Override
-	@OnlyIn(value = Dist.CLIENT)
+	@Environment(value = EnvType.CLIENT)
 	public void addInformation(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
 		if (stack.hasTag()) {
 			if (stack.getTag()
@@ -165,11 +165,11 @@ public class SchematicItem extends Item {
 		if (!player.getHeldItem(hand)
 			.hasTag())
 			return false;
-		DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> this::displayBlueprintScreen);
+		DistExecutor.unsafeRunWhenOn(EnvType.CLIENT, () -> this::displayBlueprintScreen);
 		return true;
 	}
 
-	@OnlyIn(value = Dist.CLIENT)
+	@Environment(value = EnvType.CLIENT)
 	protected void displayBlueprintScreen() {
 		ScreenOpener.open(new SchematicEditScreen());
 	}

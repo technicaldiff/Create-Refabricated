@@ -27,8 +27,8 @@ import net.minecraft.item.Item;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.IItemProvider;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraftforge.fluids.FluidAttributes;
 import net.minecraftforge.fluids.ForgeFlowingFluid;
 import net.minecraftforge.fml.DistExecutor;
@@ -200,56 +200,56 @@ public class CreateRegistrate extends AbstractRegistrate<CreateRegistrate> {
 	}
 
 	protected static void onClient(Supplier<Runnable> toRun) {
-		DistExecutor.unsafeRunWhenOn(Dist.CLIENT, toRun);
+		DistExecutor.unsafeRunWhenOn(EnvType.CLIENT, toRun);
 	}
 
-	@OnlyIn(Dist.CLIENT)
+	@Environment(EnvType.CLIENT)
 	private static void registerCTBehviour(Block entry, ConnectedTextureBehaviour behavior) {
 		CreateClient.getCustomBlockModels()
 			.register(entry.delegate, model -> new CTModel(model, behavior));
 	}
 
-	@OnlyIn(Dist.CLIENT)
+	@Environment(EnvType.CLIENT)
 	private static <T extends Block> void registerCasingConnectivity(T entry,
 		BiConsumer<T, CasingConnectivity> consumer) {
 		consumer.accept(entry, CreateClient.getCasingConnectivity());
 	}
 
-	@OnlyIn(Dist.CLIENT)
+	@Environment(EnvType.CLIENT)
 	private static void registerBlockModel(Block entry,
 		Supplier<NonNullFunction<IBakedModel, ? extends IBakedModel>> func) {
 		CreateClient.getCustomBlockModels()
 			.register(entry.delegate, func.get());
 	}
 
-	@OnlyIn(Dist.CLIENT)
+	@Environment(EnvType.CLIENT)
 	private static void registerItemModel(Item entry,
 		Supplier<NonNullFunction<IBakedModel, ? extends IBakedModel>> func) {
 		CreateClient.getCustomItemModels()
 			.register(entry.delegate, func.get());
 	}
 
-	@OnlyIn(Dist.CLIENT)
+	@Environment(EnvType.CLIENT)
 	private static void registerCustomRenderedItem(Item entry,
 		Supplier<NonNullFunction<IBakedModel, ? extends CustomRenderedItemModel>> func) {
 		CreateClient.getCustomRenderedItems()
 			.register(entry.delegate, func.get());
 	}
 
-	@OnlyIn(Dist.CLIENT)
+	@Environment(EnvType.CLIENT)
 	private static void registerBlockColor(Block entry, Supplier<Supplier<IBlockColor>> colorFunc) {
 		CreateClient.getColorHandler()
 			.register(entry, colorFunc.get()
 				.get());
 	}
 
-	@OnlyIn(Dist.CLIENT)
+	@Environment(EnvType.CLIENT)
 	private static void registerBlockVertexColor(Block entry, IBlockVertexColor colorFunc) {
 		CreateClient.getColorHandler()
 			.register(entry, colorFunc);
 	}
 
-	@OnlyIn(Dist.CLIENT)
+	@Environment(EnvType.CLIENT)
 	private static void registerItemColor(IItemProvider entry, Supplier<Supplier<IItemColor>> colorFunc) {
 		CreateClient.getColorHandler()
 			.register(entry, colorFunc.get()

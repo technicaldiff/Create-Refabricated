@@ -19,8 +19,8 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
 import net.minecraft.world.gen.feature.template.Template.BlockInfo;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 
 /**
  * Ex: Pistons, bearings <br>
@@ -126,7 +126,7 @@ public class ControlledContraptionEntity extends AbstractContraptionEntity {
 	public void setPositionAndUpdate(double p_70634_1_, double p_70634_3_, double p_70634_5_) {}
 
 	@Override
-	@OnlyIn(Dist.CLIENT)
+	@Environment(EnvType.CLIENT)
 	public void setPositionAndRotationDirect(double x, double y, double z, float yw, float pt, int inc, boolean t) {}
 
 	protected void tickContraption() {
@@ -223,7 +223,7 @@ public class ControlledContraptionEntity extends AbstractContraptionEntity {
 	}
 
 	@Override
-	@OnlyIn(Dist.CLIENT)
+	@Environment(EnvType.CLIENT)
 	public void doLocalTransforms(float partialTicks, MatrixStack[] matrixStacks) {
 		float angle = getAngle(partialTicks);
 		Axis axis = getRotationAxis();

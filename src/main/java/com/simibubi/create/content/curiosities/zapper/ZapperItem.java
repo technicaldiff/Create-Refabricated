@@ -41,8 +41,8 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraftforge.common.util.Constants.NBT;
 import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.network.PacketDistributor;
@@ -55,7 +55,7 @@ public abstract class ZapperItem extends Item {
 	}
 
 	@Override
-	@OnlyIn(Dist.CLIENT)
+	@Environment(EnvType.CLIENT)
 	public void addInformation(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
 		if (stack.hasTag() && stack.getTag()
 			.contains("BlockUsed")) {
@@ -95,7 +95,7 @@ public abstract class ZapperItem extends Item {
 		if (context.getPlayer() != null && context.getPlayer()
 			.isSneaking()) {
 			if (context.getWorld().isRemote) {
-				DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> {
+				DistExecutor.unsafeRunWhenOn(EnvType.CLIENT, () -> () -> {
 					openHandgunGUI(context.getItem(), context.getHand() == Hand.OFF_HAND);
 				});
 				applyCooldown(context.getPlayer(), context.getItem(), false);
@@ -113,7 +113,7 @@ public abstract class ZapperItem extends Item {
 		// Shift -> Open GUI
 		if (player.isSneaking()) {
 			if (world.isRemote) {
-				DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> {
+				DistExecutor.unsafeRunWhenOn(EnvType.CLIENT, () -> () -> {
 					openHandgunGUI(item, hand == Hand.OFF_HAND);
 				});
 				applyCooldown(player, item, false);
@@ -211,7 +211,7 @@ public abstract class ZapperItem extends Item {
 	protected abstract boolean activate(World world, PlayerEntity player, ItemStack item, BlockState stateToUse,
 		BlockRayTraceResult raytrace, CompoundNBT data);
 
-	@OnlyIn(Dist.CLIENT)
+	@Environment(EnvType.CLIENT)
 	protected abstract void openHandgunGUI(ItemStack item, boolean b);
 
 	protected abstract int getCooldownDelay(ItemStack item);

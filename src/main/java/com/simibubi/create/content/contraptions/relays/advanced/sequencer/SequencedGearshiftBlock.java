@@ -29,8 +29,8 @@ import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorldReader;
 import net.minecraft.world.World;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraftforge.fml.DistExecutor;
 
 public class SequencedGearshiftBlock extends HorizontalAxisKineticBlock implements ITE<SequencedGearshiftTileEntity> {
@@ -93,12 +93,12 @@ public class SequencedGearshiftBlock extends HorizontalAxisKineticBlock implemen
 				return ActionResultType.PASS;
 		}
 
-		DistExecutor.unsafeRunWhenOn(Dist.CLIENT,
+		DistExecutor.unsafeRunWhenOn(EnvType.CLIENT,
 			() -> () -> withTileEntityDo(worldIn, pos, te -> this.displayScreen(te, player)));
 		return ActionResultType.SUCCESS;
 	}
 
-	@OnlyIn(value = Dist.CLIENT)
+	@Environment(value = EnvType.CLIENT)
 	protected void displayScreen(SequencedGearshiftTileEntity te, PlayerEntity player) {
 		if (player instanceof ClientPlayerEntity)
 			ScreenOpener.open(new SequencedGearshiftScreen(te));

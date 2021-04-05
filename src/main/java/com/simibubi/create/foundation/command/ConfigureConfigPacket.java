@@ -19,8 +19,8 @@ import net.minecraft.util.text.IFormattableTextComponent;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraftforge.common.ForgeConfig;
 import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.network.NetworkEvent;
@@ -53,7 +53,7 @@ public class ConfigureConfigPacket extends SimplePacketBase {
 	@Override
 	public void handle(Supplier<NetworkEvent.Context> ctx) {
 		ctx.get()
-			.enqueueWork(() -> DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> {
+			.enqueueWork(() -> DistExecutor.unsafeRunWhenOn(EnvType.CLIENT, () -> () -> {
 				try {
 					Actions.valueOf(option)
 						.performAction(value);
@@ -89,7 +89,7 @@ public class ConfigureConfigPacket extends SimplePacketBase {
 				.accept(value);
 		}
 
-		@OnlyIn(Dist.CLIENT)
+		@Environment(EnvType.CLIENT)
 		private static void rainbowDebug(String value) {
 			ClientPlayerEntity player = Minecraft.getInstance().player;
 			if (player == null || "".equals(value)) return;
@@ -105,7 +105,7 @@ public class ConfigureConfigPacket extends SimplePacketBase {
 			player.sendStatusMessage(text, false);
 		}
 
-		@OnlyIn(Dist.CLIENT)
+		@Environment(EnvType.CLIENT)
 		private static void experimentalRendering(String value) {
 			ClientPlayerEntity player = Minecraft.getInstance().player;
 			if (player == null || "".equals(value)) return;
@@ -129,24 +129,24 @@ public class ConfigureConfigPacket extends SimplePacketBase {
 			FastRenderDispatcher.refresh();
 		}
 
-		@OnlyIn(Dist.CLIENT)
+		@Environment(EnvType.CLIENT)
 		private static void overlayReset(String value) {
 			AllConfigs.CLIENT.overlayOffsetX.set(0);
 			AllConfigs.CLIENT.overlayOffsetY.set(0);
 		}
 
-		@OnlyIn(Dist.CLIENT)
+		@Environment(EnvType.CLIENT)
 		private static void overlayScreen(String value) {
 			ScreenOpener.open(new GoggleConfigScreen());
 		}
 
-		@OnlyIn(Dist.CLIENT)
+		@Environment(EnvType.CLIENT)
 		private static void experimentalLighting(String value) {
 			ForgeConfig.CLIENT.experimentalForgeLightPipelineEnabled.set(true);
 			Minecraft.getInstance().worldRenderer.loadRenderers();
 		}
 
-		@OnlyIn(Dist.CLIENT)
+		@Environment(EnvType.CLIENT)
 		private static void openPonder(String value) {
 			if (value.equals("index")) {
 				ScreenOpener.transitionTo(new PonderIndexScreen());
@@ -163,7 +163,7 @@ public class ConfigureConfigPacket extends SimplePacketBase {
 
 		}
 
-		@OnlyIn(Dist.CLIENT)
+		@Environment(EnvType.CLIENT)
 		private static void fabulousWarning(String value) {
 			AllConfigs.CLIENT.ignoreFabulousWarning.set(true);
 			Minecraft.getInstance().ingameGUI.addChatMessage(ChatType.CHAT, new StringTextComponent("Disabled Fabulous graphics warning"), Minecraft.getInstance().player.getUniqueID());

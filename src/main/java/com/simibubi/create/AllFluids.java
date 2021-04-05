@@ -16,8 +16,8 @@ import net.minecraft.fluid.Fluid;
 import net.minecraft.fluid.FluidState;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockDisplayReader;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraftforge.fluids.FluidAttributes;
 import net.minecraftforge.fluids.ForgeFlowingFluid;
 
@@ -74,10 +74,10 @@ public class AllFluids {
 
 	public static void register() {}
 
-	@OnlyIn(Dist.CLIENT)
+	@Environment(EnvType.CLIENT)
 	public static void assignRenderLayers() {}
 
-	@OnlyIn(Dist.CLIENT)
+	@Environment(EnvType.CLIENT)
 	private static void makeTranslucent(RegistryEntry<? extends ForgeFlowingFluid> entry) {
 		ForgeFlowingFluid fluid = entry.get();
 		RenderTypeLookup.setRenderLayer(fluid, RenderType.getTranslucent());

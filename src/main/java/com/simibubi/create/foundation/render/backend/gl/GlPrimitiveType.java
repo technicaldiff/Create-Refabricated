@@ -1,11 +1,11 @@
 package com.simibubi.create.foundation.render.backend.gl;
 
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL20;
 
-@OnlyIn(Dist.CLIENT)
+@Environment(EnvType.CLIENT)
 public enum GlPrimitiveType {
     FLOAT(4, "float", GL11.GL_FLOAT),
     UBYTE(1, "ubyte", GL11.GL_UNSIGNED_BYTE),

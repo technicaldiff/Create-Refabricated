@@ -12,8 +12,8 @@ import net.minecraft.client.particle.IParticleFactory;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.particles.IParticleData;
 import net.minecraft.particles.ParticleType;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 
 public class CubeParticleData implements IParticleData, ICustomParticleData<CubeParticleData> {
 
@@ -82,7 +82,7 @@ public class CubeParticleData implements IParticleData, ICustomParticleData<Cube
 	}
 
 	@Override
-	@OnlyIn(Dist.CLIENT)
+	@Environment(EnvType.CLIENT)
 	public IParticleFactory<CubeParticleData> getFactory() {
 		return new CubeParticle.Factory();
 	}

@@ -19,8 +19,8 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorldReader;
 import net.minecraft.world.World;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 
 public abstract class EngineBlock extends HorizontalBlock implements IWrenchable {
 
@@ -94,7 +94,7 @@ public abstract class EngineBlock extends HorizontalBlock implements IWrenchable
 	}
 
 	@Nullable
-	@OnlyIn(Dist.CLIENT)
+	@Environment(EnvType.CLIENT)
 	public abstract AllBlockPartials getFrameModel();
 
 	protected abstract boolean isValidBaseBlock(BlockState baseBlock, IBlockReader world, BlockPos pos);

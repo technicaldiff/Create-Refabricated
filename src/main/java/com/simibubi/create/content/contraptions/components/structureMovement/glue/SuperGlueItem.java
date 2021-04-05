@@ -17,8 +17,8 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 
 public class SuperGlueItem extends Item {
 
@@ -78,7 +78,7 @@ public class SuperGlueItem extends Item {
 		return !World.isOutsideBuildHeight(pos) && entity.canPlayerEdit(pos, facing, stack);
 	}
 
-	@OnlyIn(Dist.CLIENT)
+	@Environment(EnvType.CLIENT)
 	public static void spawnParticles(World world, BlockPos pos, Direction direction, boolean fullBlock) {
 		Vector3d vec = Vector3d.of(direction.getDirectionVec());
 		Vector3d plane = VecHelper.axisAlingedPlaneOf(vec);

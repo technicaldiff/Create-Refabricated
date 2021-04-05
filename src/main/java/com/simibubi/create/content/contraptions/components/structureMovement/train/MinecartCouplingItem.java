@@ -11,8 +11,8 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.world.World;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent.EntityInteract;
@@ -66,7 +66,7 @@ public class MinecartCouplingItem extends Item {
 			return true;
 		}
 		if (world != null && world.isRemote)
-			DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> cartClicked(player, minecart));
+			DistExecutor.unsafeRunWhenOn(EnvType.CLIENT, () -> () -> cartClicked(player, minecart));
 		return true;
 	}
 
@@ -86,7 +86,7 @@ public class MinecartCouplingItem extends Item {
 		return true;
 	}
 
-	@OnlyIn(Dist.CLIENT)
+	@Environment(EnvType.CLIENT)
 	private static void cartClicked(PlayerEntity player, AbstractMinecartEntity interacted) {
 		CouplingHandlerClient.onCartClicked(player, (AbstractMinecartEntity) interacted);
 	}

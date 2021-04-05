@@ -14,8 +14,8 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.RayTraceResult;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 
 @EventBusSubscriber
@@ -26,7 +26,7 @@ public class ScrollValueHandler {
 	private static float passiveScrollDirection = 1f;
 	private static final PhysicalFloat wrenchCog = PhysicalFloat.create().withDrag(0.3);
 
-	@OnlyIn(Dist.CLIENT)
+	@Environment(EnvType.CLIENT)
 	public static boolean onScroll(double delta) {
 		RayTraceResult objectMouseOver = Minecraft.getInstance().objectMouseOver;
 		if (!(objectMouseOver instanceof BlockRayTraceResult))
@@ -73,7 +73,7 @@ public class ScrollValueHandler {
 		return wrenchCog.getValue(partialTicks) + MathHelper.lerp(partialTicks, lastPassiveScroll, passiveScroll);
 	}
 
-	@OnlyIn(Dist.CLIENT)
+	@Environment(EnvType.CLIENT)
 	public static void tick() {
 		lastPassiveScroll = passiveScroll;
 		wrenchCog.tick();

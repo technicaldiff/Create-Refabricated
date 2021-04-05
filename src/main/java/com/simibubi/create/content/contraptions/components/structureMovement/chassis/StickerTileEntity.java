@@ -16,8 +16,8 @@ import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.Direction;
 import net.minecraft.util.SoundCategory;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraftforge.fml.DistExecutor;
 
 import java.util.List;
@@ -59,7 +59,7 @@ public class StickerTileEntity extends SmartTileEntity implements IInstanceRende
 
 		if (isAttachedToBlock() && piston.getValue(0) != piston.getValue() && piston.getValue() == 1) {
 			SuperGlueItem.spawnParticles(world, pos, getBlockState().get(StickerBlock.FACING), true);
-			DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> playSound(true));
+			DistExecutor.unsafeRunWhenOn(EnvType.CLIENT, () -> () -> playSound(true));
 		}
 
 		if (!update)
@@ -67,10 +67,10 @@ public class StickerTileEntity extends SmartTileEntity implements IInstanceRende
 		update = false;
 		int target = isBlockStateExtended() ? 1 : 0;
 		if (isAttachedToBlock() && target == 0 && piston.getChaseTarget() == 1)
-			DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> playSound(false));
+			DistExecutor.unsafeRunWhenOn(EnvType.CLIENT, () -> () -> playSound(false));
 		piston.chase(target, .4f, Chaser.LINEAR);
 
-		DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> FastRenderDispatcher.enqueueUpdate(this));
+		DistExecutor.unsafeRunWhenOn(EnvType.CLIENT, () -> () -> FastRenderDispatcher.enqueueUpdate(this));
 	}
 
 	public boolean isAttachedToBlock() {
@@ -88,7 +88,7 @@ public class StickerTileEntity extends SmartTileEntity implements IInstanceRende
 			update = true;
 	}
 
-	@OnlyIn(Dist.CLIENT)
+	@Environment(EnvType.CLIENT)
 	public void playSound(boolean attach) {
 		world.playSound(Minecraft.getInstance().player, pos, AllSoundEvents.SLIME_ADDED.get(), SoundCategory.BLOCKS,
 			0.35F, attach ? 0.75F : 0.2f);

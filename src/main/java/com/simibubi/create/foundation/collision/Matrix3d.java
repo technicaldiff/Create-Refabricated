@@ -3,8 +3,8 @@ package com.simibubi.create.foundation.collision;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.vector.Matrix4f;
 import net.minecraft.util.math.vector.Vector3d;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 
 public class Matrix3d {
 
@@ -125,7 +125,7 @@ public class Matrix3d {
 	
 	float[] conversionBuffer = new float[16];
 	
-	@OnlyIn(Dist.CLIENT)
+	@Environment(EnvType.CLIENT)
 	public Matrix4f getAsMatrix4f() {
 		for (int i = 0; i < 4; i++)
 			for (int j = 0; j < 4; j++)

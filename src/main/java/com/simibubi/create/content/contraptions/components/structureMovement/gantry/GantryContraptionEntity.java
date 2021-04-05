@@ -24,8 +24,8 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraftforge.fml.network.PacketDistributor;
 
 public class GantryContraptionEntity extends AbstractContraptionEntity {
@@ -161,7 +161,7 @@ public class GantryContraptionEntity extends AbstractContraptionEntity {
 	public void setPositionAndUpdate(double p_70634_1_, double p_70634_3_, double p_70634_5_) {}
 
 	@Override
-	@OnlyIn(Dist.CLIENT)
+	@Environment(EnvType.CLIENT)
 	public void setPositionAndRotationDirect(double x, double y, double z, float yw, float pt, int inc, boolean t) {}
 
 	@Override
@@ -196,7 +196,7 @@ public class GantryContraptionEntity extends AbstractContraptionEntity {
 			new GantryContraptionUpdatePacket(getEntityId(), getAxisCoord(), axisMotion));
 	}
 
-	@OnlyIn(Dist.CLIENT)
+	@Environment(EnvType.CLIENT)
 	public static void handlePacket(GantryContraptionUpdatePacket packet) {
 		Entity entity = Minecraft.getInstance().world.getEntityByID(packet.entityID);
 		if (!(entity instanceof GantryContraptionEntity))

@@ -29,8 +29,8 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraftforge.common.util.LazyOptional;
 
 import javax.annotation.Nullable;
@@ -505,7 +505,7 @@ public class OrientedContraptionEntity extends AbstractContraptionEntity {
 	}
 
 	@Override
-	@OnlyIn(Dist.CLIENT)
+	@Environment(EnvType.CLIENT)
 	public void doLocalTransforms(float partialTicks, MatrixStack[] matrixStacks) {
 		float angleInitialYaw = getInitialYaw();
 		float angleYaw = getYaw(partialTicks);
@@ -534,7 +534,7 @@ public class OrientedContraptionEntity extends AbstractContraptionEntity {
 				.unCentre();
 	}
 
-	@OnlyIn(Dist.CLIENT)
+	@Environment(EnvType.CLIENT)
 	private void repositionOnContraption(float partialTicks, MatrixStack[] matrixStacks, Entity ridingEntity) {
 		Vector3d pos = getContraptionOffset(partialTicks, ridingEntity);
 		for (MatrixStack stack : matrixStacks)
@@ -543,7 +543,7 @@ public class OrientedContraptionEntity extends AbstractContraptionEntity {
 
 	// Minecarts do not always render at their exact location, so the contraption
 	// has to adjust aswell
-	@OnlyIn(Dist.CLIENT)
+	@Environment(EnvType.CLIENT)
 	private void repositionOnCart(float partialTicks, MatrixStack[] matrixStacks, Entity ridingEntity) {
 		Vector3d cartPos = getCartOffset(partialTicks, ridingEntity);
 
@@ -553,7 +553,7 @@ public class OrientedContraptionEntity extends AbstractContraptionEntity {
 			stack.translate(cartPos.x, cartPos.y, cartPos.z);
 	}
 
-	@OnlyIn(Dist.CLIENT)
+	@Environment(EnvType.CLIENT)
 	private Vector3d getContraptionOffset(float partialTicks, Entity ridingEntity) {
 		AbstractContraptionEntity parent = (AbstractContraptionEntity) ridingEntity;
 		Vector3d passengerPosition = parent.getPassengerPosition(this, partialTicks);
@@ -564,7 +564,7 @@ public class OrientedContraptionEntity extends AbstractContraptionEntity {
 		return new Vector3d(x, y, z);
 	}
 
-	@OnlyIn(Dist.CLIENT)
+	@Environment(EnvType.CLIENT)
 	private Vector3d getCartOffset(float partialTicks, Entity ridingEntity) {
 		AbstractMinecartEntity cart = (AbstractMinecartEntity) ridingEntity;
 		double cartX = MathHelper.lerp(partialTicks, cart.lastTickPosX, cart.getX());

@@ -21,8 +21,8 @@ import net.minecraft.tileentity.AbstractFurnaceTileEntity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fml.ModContainer;
 import net.minecraftforge.fml.ModList;
@@ -105,7 +105,7 @@ public interface ItemAttribute {
 		return getTranslationKey();
 	}
 
-	@OnlyIn(value = Dist.CLIENT)
+	@Environment(value = EnvType.CLIENT)
 	default TranslationTextComponent format(boolean inverted) {
 		return Lang.translate("item_attributes." + getTranslationKey() + (inverted ? ".inverted" : ""),
 			getTranslationParameters());
@@ -283,7 +283,7 @@ public interface ItemAttribute {
 		}
 
 		@Override
-		@OnlyIn(value = Dist.CLIENT)
+		@Environment(value = EnvType.CLIENT)
 		public TranslationTextComponent format(boolean inverted) {
 			return Lang.translate("item_attributes." + getTranslationKey() + (inverted ? ".inverted" : ""),
 				group.getTranslationKey());

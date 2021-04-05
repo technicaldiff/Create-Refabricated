@@ -27,8 +27,8 @@ import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorldReader;
 import net.minecraft.world.World;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.items.CapabilityItemHandler;
 
@@ -100,12 +100,12 @@ public class StockpileSwitchBlock extends HorizontalBlock implements ITE<Stockpi
 		BlockRayTraceResult hit) {
 		if (player != null && AllItems.WRENCH.isIn(player.getHeldItem(handIn)))
 			return ActionResultType.PASS;
-		DistExecutor.unsafeRunWhenOn(Dist.CLIENT,
+		DistExecutor.unsafeRunWhenOn(EnvType.CLIENT,
 			() -> () -> withTileEntityDo(worldIn, pos, te -> this.displayScreen(te, player)));
 		return ActionResultType.SUCCESS;
 	}
 
-	@OnlyIn(value = Dist.CLIENT)
+	@Environment(value = EnvType.CLIENT)
 	protected void displayScreen(StockpileSwitchTileEntity te, PlayerEntity player) {
 		if (player instanceof ClientPlayerEntity)
 			ScreenOpener.open(new StockpileSwitchScreen(te));

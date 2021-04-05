@@ -10,7 +10,7 @@ import com.tterrag.registrate.util.nullness.NonNullFunction;
 import com.tterrag.registrate.util.nullness.NonNullSupplier;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityType;
-import net.minecraftforge.api.distmarker.Dist;
+import net.fabricmc.api.EnvType;
 import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 
@@ -31,7 +31,7 @@ public class CreateTileEntityBuilder<T extends TileEntity, P> extends TileEntity
 
     public CreateTileEntityBuilder<T, P> instance(NonNullSupplier<IRendererFactory<? super T>> instanceFactory) {
         if (this.instanceFactory == null) {
-            DistExecutor.runWhenOn(Dist.CLIENT, () -> this::registerInstance);
+            DistExecutor.runWhenOn(EnvType.CLIENT, () -> this::registerInstance);
         }
 
         this.instanceFactory = instanceFactory;

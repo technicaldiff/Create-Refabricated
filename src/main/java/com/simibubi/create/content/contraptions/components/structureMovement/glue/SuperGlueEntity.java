@@ -37,8 +37,8 @@ import net.minecraft.util.math.RayTraceResult.Type;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.common.registry.IEntityAdditionalSpawnData;
 import net.minecraftforge.fml.network.NetworkHooks;
@@ -281,13 +281,13 @@ public class SuperGlueEntity extends Entity implements IEntityAdditionalSpawnDat
 
 	@Override
 	public ActionResultType processInitialInteract(PlayerEntity player, Hand hand) {
-		DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> {
+		DistExecutor.unsafeRunWhenOn(EnvType.CLIENT, () -> () -> {
 			triggerPlaceBlock(player, hand);
 		});
 		return ActionResultType.CONSUME;
 	}
 
-	@OnlyIn(Dist.CLIENT)
+	@Environment(EnvType.CLIENT)
 	private void triggerPlaceBlock(PlayerEntity player, Hand hand) {
 		if (!(player instanceof ClientPlayerEntity))
 			return;

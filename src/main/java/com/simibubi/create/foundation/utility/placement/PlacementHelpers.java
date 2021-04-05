@@ -24,8 +24,8 @@ import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.vector.Matrix4f;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.util.math.vector.Vector3f;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -64,7 +64,7 @@ public class PlacementHelpers {
 		return helpers.get(id);
 	}
 
-	@OnlyIn(Dist.CLIENT)
+	@Environment(EnvType.CLIENT)
 	public static void tick() {
 		setTarget(null);
 		checkHelpers();
@@ -81,7 +81,7 @@ public class PlacementHelpers {
 
 	}
 
-	@OnlyIn(Dist.CLIENT)
+	@Environment(EnvType.CLIENT)
 	private static void checkHelpers() {
 		Minecraft mc = Minecraft.getInstance();
 		ClientWorld world = mc.world;
@@ -150,7 +150,7 @@ public class PlacementHelpers {
 	}
 
 	@SubscribeEvent
-	@OnlyIn(Dist.CLIENT)
+	@Environment(EnvType.CLIENT)
 	public static void onRender(RenderGameOverlayEvent.Pre event) {
 		if (event.getType() != RenderGameOverlayEvent.ElementType.CROSSHAIRS)
 			return;
@@ -169,7 +169,7 @@ public class PlacementHelpers {
 		}
 	}
 
-	@OnlyIn(Dist.CLIENT)
+	@Environment(EnvType.CLIENT)
 	private static void drawDirectionIndicator(MatrixStack ms, float partialTicks, float centerX, float centerY, float progress) {
 		float r = .8f;
 		float g = .8f;

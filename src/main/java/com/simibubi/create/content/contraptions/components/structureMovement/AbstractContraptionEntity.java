@@ -32,8 +32,8 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
 import net.minecraft.world.gen.feature.template.Template.BlockInfo;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraftforge.fml.common.registry.IEntityAdditionalSpawnData;
 import net.minecraftforge.fml.network.NetworkHooks;
 import net.minecraftforge.fml.network.PacketDistributor;
@@ -493,7 +493,7 @@ public abstract class AbstractContraptionEntity extends Entity implements IEntit
 		return dataManager.get(STALLED);
 	}
 
-	@OnlyIn(Dist.CLIENT)
+	@Environment(EnvType.CLIENT)
 	static void handleStallPacket(ContraptionStallPacket packet) {
 		Entity entity = Minecraft.getInstance().world.getEntityByID(packet.entityID);
 		if (!(entity instanceof AbstractContraptionEntity))
@@ -502,7 +502,7 @@ public abstract class AbstractContraptionEntity extends Entity implements IEntit
 		ce.handleStallInformation(packet.x, packet.y, packet.z, packet.angle);
 	}
 
-	@OnlyIn(Dist.CLIENT)
+	@Environment(EnvType.CLIENT)
 	static void handleDisassemblyPacket(ContraptionDisassemblyPacket packet) {
   		Entity entity = Minecraft.getInstance().world.getEntityByID(packet.entityID);
 		if (!(entity instanceof AbstractContraptionEntity))
@@ -608,7 +608,7 @@ public abstract class AbstractContraptionEntity extends Entity implements IEntit
 		return false;
 	}
 
-	@OnlyIn(Dist.CLIENT)
+	@Environment(EnvType.CLIENT)
 	public abstract void doLocalTransforms(float partialTicks, MatrixStack[] matrixStacks);
 
 	public static class ContraptionRotationState {

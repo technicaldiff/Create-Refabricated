@@ -20,8 +20,8 @@ import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.ContainerType;
 import net.minecraft.inventory.container.ContainerType.IFactory;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.network.IContainerFactory;
 
@@ -50,7 +50,7 @@ public enum AllContainerTypes {
 		}
 	}
 
-	@OnlyIn(Dist.CLIENT)
+	@Environment(EnvType.CLIENT)
 	public static void registerScreenFactories() {
 		bind(SCHEMATIC_TABLE, SchematicTableScreen::new);
 		bind(SCHEMATICANNON, SchematicannonScreen::new);
@@ -59,7 +59,7 @@ public enum AllContainerTypes {
 		bind(ATTRIBUTE_FILTER, AttributeFilterScreen::new);
 	}
 
-	@OnlyIn(Dist.CLIENT)
+	@Environment(EnvType.CLIENT)
 	@SuppressWarnings("unchecked")
 	private static <C extends Container, S extends Screen & IHasContainer<C>> void bind(AllContainerTypes c,
 			IScreenFactory<C, S> factory) {

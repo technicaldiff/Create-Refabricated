@@ -9,7 +9,7 @@ import net.minecraft.item.ItemUseContext;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraftforge.api.distmarker.Dist;
+import net.fabricmc.api.EnvType;
 import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 
@@ -33,7 +33,7 @@ public class ArmItem extends BlockItem {
 	protected boolean onBlockPlaced(BlockPos pos, World world, PlayerEntity p_195943_3_, ItemStack p_195943_4_,
 		BlockState p_195943_5_) {
 		if (world.isRemote)
-			DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> ArmInteractionPointHandler.flushSettings(pos));
+			DistExecutor.unsafeRunWhenOn(EnvType.CLIENT, () -> () -> ArmInteractionPointHandler.flushSettings(pos));
 		return super.onBlockPlaced(pos, world, p_195943_3_, p_195943_4_, p_195943_5_);
 	}
 

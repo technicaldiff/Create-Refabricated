@@ -25,8 +25,8 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraftforge.common.util.BlockSnapshot;
 import net.minecraftforge.common.util.Constants.BlockFlags;
 import net.minecraftforge.event.ForgeEventFactory;
@@ -64,7 +64,7 @@ public class SymmetryWandItem extends Item {
 		// Shift -> open GUI
 		if (player.isSneaking()) {
 			if (player.world.isRemote) {
-				DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> {
+				DistExecutor.unsafeRunWhenOn(EnvType.CLIENT, () -> () -> {
 					openWandGUI(wand, context.getHand());
 				});
 				player.getCooldownTracker()
@@ -133,7 +133,7 @@ public class SymmetryWandItem extends Item {
 		// Shift -> Open GUI
 		if (playerIn.isSneaking()) {
 			if (worldIn.isRemote) {
-				DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> {
+				DistExecutor.unsafeRunWhenOn(EnvType.CLIENT, () -> () -> {
 					openWandGUI(playerIn.getHeldItem(handIn), handIn);
 				});
 				playerIn.getCooldownTracker()
@@ -148,7 +148,7 @@ public class SymmetryWandItem extends Item {
 		return new ActionResult<ItemStack>(ActionResultType.SUCCESS, wand);
 	}
 
-	@OnlyIn(Dist.CLIENT)
+	@Environment(EnvType.CLIENT)
 	private void openWandGUI(ItemStack wand, Hand hand) {
 		ScreenOpener.open(new SymmetryWandScreen(wand, hand));
 	}

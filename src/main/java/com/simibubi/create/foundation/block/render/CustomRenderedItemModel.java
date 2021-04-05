@@ -6,14 +6,16 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
-import com.simibubi.create.Create;
+import net.minecraftforge.client.event.ModelBakeEvent;
 
 import net.minecraft.client.renderer.model.IBakedModel;
 import net.minecraft.client.renderer.model.ItemCameraTransforms.TransformType;
 import net.minecraft.client.renderer.model.ModelRotation;
-import net.minecraft.client.renderer.tileentity.ItemStackTileEntityRenderer;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.client.event.ModelBakeEvent;
+
+import net.fabricmc.fabric.api.client.rendering.v1.BuiltinItemRendererRegistry.DynamicItemRenderer;
+
+import com.simibubi.create.Create;
 
 @SuppressWarnings("deprecation")
 public abstract class CustomRenderedItemModel extends WrappedBakedModel {
@@ -21,7 +23,7 @@ public abstract class CustomRenderedItemModel extends WrappedBakedModel {
 	protected String basePath;
 	protected Map<String, IBakedModel> partials = new HashMap<>();
 	protected TransformType currentPerspective;
-	protected ItemStackTileEntityRenderer renderer;
+	protected DynamicItemRenderer renderer;
 
 	public CustomRenderedItemModel(IBakedModel template, String basePath) {
 		super(template);
@@ -33,11 +35,11 @@ public abstract class CustomRenderedItemModel extends WrappedBakedModel {
 		return partials.keySet().stream().map(this::getPartialModelLocation).collect(Collectors.toList());
 	}
 	
-	public ItemStackTileEntityRenderer getRenderer() {
+	public DynamicItemRenderer getRenderer() {
 		return renderer;
 	}
 
-	public abstract ItemStackTileEntityRenderer createRenderer();
+	public abstract DynamicItemRenderer createRenderer();
 
 	@Override
 	public boolean isBuiltInRenderer() {

@@ -5,12 +5,12 @@ import net.minecraft.util.text.IFormattableTextComponent;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraftforge.fml.common.thread.EffectiveSide;
 
 /** Deprecated so simi doensn't forget to remove debug calls **/
-@OnlyIn(value = Dist.CLIENT)
+@Environment(value = EnvType.CLIENT)
 public class Debug {
 
 	@Deprecated

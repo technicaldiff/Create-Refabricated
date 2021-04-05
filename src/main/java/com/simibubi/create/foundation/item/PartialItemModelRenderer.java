@@ -4,8 +4,6 @@ import java.util.Random;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
-import com.simibubi.create.foundation.renderState.RenderTypes;
-import com.simibubi.create.foundation.utility.Iterate;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.IRenderTypeBuffer;
@@ -13,10 +11,12 @@ import net.minecraft.client.renderer.ItemRenderer;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.model.IBakedModel;
 import net.minecraft.client.renderer.model.ItemCameraTransforms;
+import net.minecraft.client.renderer.tileentity.ItemStackTileEntityRenderer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Direction;
-import net.minecraftforge.client.model.data.EmptyModelData;
-import net.minecraftforge.client.model.data.IModelData;
+
+import com.simibubi.create.foundation.renderState.RenderTypes;
+import com.simibubi.create.foundation.utility.Iterate;
 
 public class PartialItemModelRenderer {
 
@@ -71,8 +71,7 @@ public class PartialItemModelRenderer {
 			renderBakedItemModel(model, light, ms,
 				ItemRenderer.getArmorVertexConsumer(buffer, type, true, stack.hasEffect()));
 		else
-			stack.getItem()
-				.getItemStackTileEntityRenderer()
+			ItemStackTileEntityRenderer.instance
 				.render(stack, transformType, ms, buffer, light, overlay);
 
 		ms.pop();
@@ -82,16 +81,15 @@ public class PartialItemModelRenderer {
 		ItemRenderer ir = Minecraft.getInstance()
 			.getItemRenderer();
 		Random random = new Random();
-		IModelData data = EmptyModelData.INSTANCE;
 
 		for (Direction direction : Iterate.directions) {
 			random.setSeed(42L);
-			ir.renderBakedItemQuads(ms, p_229114_6_, model.getQuads(null, direction, random, data), stack,
+			ir.renderBakedItemQuads(ms, p_229114_6_, model.getQuads(null, direction, random), stack,
 				light, overlay);
 		}
 
 		random.setSeed(42L);
-		ir.renderBakedItemQuads(ms, p_229114_6_, model.getQuads(null, null, random, data),
+		ir.renderBakedItemQuads(ms, p_229114_6_, model.getQuads(null, null, random),
 			stack, light, overlay);
 	}
 

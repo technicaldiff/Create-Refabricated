@@ -17,8 +17,8 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityClassification;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.EntityType.IFactory;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
 
 public class AllEntityTypes {
@@ -62,7 +62,7 @@ public class AllEntityTypes {
 			.register();
 	}
 
-	@OnlyIn(value = Dist.CLIENT)
+	@Environment(value = EnvType.CLIENT)
 	public static void registerRenderers() {
 		RenderingRegistry.registerEntityRenderingHandler(CONTROLLED_CONTRAPTION.get(),
 			ContraptionEntityRenderer::new);

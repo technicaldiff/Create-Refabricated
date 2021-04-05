@@ -15,8 +15,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.util.IItemProvider;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 
 public class PonderTag implements IScreenRenderable {
 
@@ -137,7 +137,7 @@ public class PonderTag implements IScreenRenderable {
 	}
 
 	@Override
-	@OnlyIn(Dist.CLIENT)
+	@Environment(EnvType.CLIENT)
 	public void draw(MatrixStack ms, AbstractGui screen, int x, int y) {
 		ms.push();
 		ms.translate(x, y, 0);

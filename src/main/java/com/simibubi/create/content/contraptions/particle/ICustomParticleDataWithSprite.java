@@ -8,8 +8,8 @@ import net.minecraft.client.particle.ParticleManager.IParticleMetaFactory;
 import net.minecraft.particles.IParticleData;
 import net.minecraft.particles.IParticleData.IDeserializer;
 import net.minecraft.particles.ParticleType;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 
 public interface ICustomParticleDataWithSprite<T extends IParticleData> extends ICustomParticleData<T> {
 
@@ -26,16 +26,16 @@ public interface ICustomParticleDataWithSprite<T extends IParticleData> extends 
 	}
 	
 	@Override
-	@OnlyIn(Dist.CLIENT)
+	@Environment(EnvType.CLIENT)
 	default IParticleFactory<T> getFactory() {
 		throw new IllegalAccessError("This particle type uses a metaFactory!");
 	}
 	
-	@OnlyIn(Dist.CLIENT)
+	@Environment(EnvType.CLIENT)
 	public IParticleMetaFactory<T> getMetaFactory();
 	
 	@Override
-	@OnlyIn(Dist.CLIENT)
+	@Environment(EnvType.CLIENT)
 	public default void register(ParticleType<T> type, ParticleManager particles) {
 		particles.registerFactory(type, getMetaFactory());
 	}

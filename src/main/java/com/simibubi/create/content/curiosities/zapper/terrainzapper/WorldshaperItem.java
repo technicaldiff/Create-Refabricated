@@ -18,8 +18,8 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 
 public class WorldshaperItem extends ZapperItem {
 
@@ -28,7 +28,7 @@ public class WorldshaperItem extends ZapperItem {
 	}
 
 	@Override
-	@OnlyIn(value = Dist.CLIENT)
+	@Environment(value = EnvType.CLIENT)
 	protected void openHandgunGUI(ItemStack item, boolean b) {
 		ScreenOpener.open(new WorldshaperScreen(item, b));
 	}

@@ -19,8 +19,8 @@ import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.util.NonNullList;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 
 public abstract class CreateItemGroupBase extends ItemGroup {
 
@@ -29,14 +29,14 @@ public abstract class CreateItemGroupBase extends ItemGroup {
 	}
 
 	@Override
-	@OnlyIn(Dist.CLIENT)
+	@Environment(EnvType.CLIENT)
 	public void fill(NonNullList<ItemStack> items) {
 		addItems(items, true);
 		addBlocks(items);
 		addItems(items, false);
 	}
 
-	@OnlyIn(Dist.CLIENT)
+	@Environment(EnvType.CLIENT)
 	public void addBlocks(NonNullList<ItemStack> items) {
 		for (RegistryEntry<? extends Block> entry : getBlocks()) {
 			Block def = entry.get();
@@ -46,7 +46,7 @@ public abstract class CreateItemGroupBase extends ItemGroup {
 		}
 	}
 	
-	@OnlyIn(Dist.CLIENT)
+	@Environment(EnvType.CLIENT)
 	public void addItems(NonNullList<ItemStack> items, boolean specialItems) {
 		Minecraft mc = Minecraft.getInstance();
 		ItemRenderer itemRenderer = mc.getItemRenderer();

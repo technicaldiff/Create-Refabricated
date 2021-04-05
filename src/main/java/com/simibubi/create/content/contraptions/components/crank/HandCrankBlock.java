@@ -23,8 +23,8 @@ import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorldReader;
 import net.minecraft.world.World;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 
 public class HandCrankBlock extends DirectionalKineticBlock implements ITE<HandCrankTileEntity> {
 
@@ -37,7 +37,7 @@ public class HandCrankBlock extends DirectionalKineticBlock implements ITE<HandC
 		return AllShapes.CRANK.get(state.get(FACING));
 	}
 	
-	@OnlyIn(Dist.CLIENT)
+	@Environment(EnvType.CLIENT)
 	public AllBlockPartials getRenderedHandle() {
 		return AllBlockPartials.HAND_CRANK_HANDLE;
 	}

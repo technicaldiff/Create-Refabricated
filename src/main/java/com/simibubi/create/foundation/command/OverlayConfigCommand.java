@@ -7,7 +7,7 @@ import net.minecraft.command.CommandSource;
 import net.minecraft.command.Commands;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.util.text.StringTextComponent;
-import net.minecraftforge.api.distmarker.Dist;
+import net.fabricmc.api.EnvType;
 import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.network.PacketDistributor;
 
@@ -18,9 +18,9 @@ public class OverlayConfigCommand {
 				.requires(cs -> cs.hasPermissionLevel(0))
 				.then(Commands.literal("reset")
 					.executes(ctx -> {
-						DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> ConfigureConfigPacket.Actions.overlayReset.performAction(""));
+						DistExecutor.unsafeRunWhenOn(EnvType.CLIENT, () -> () -> ConfigureConfigPacket.Actions.overlayReset.performAction(""));
 
-						DistExecutor.unsafeRunWhenOn(Dist.DEDICATED_SERVER, () -> () ->
+						DistExecutor.unsafeRunWhenOn(EnvType.SERVER, () -> () ->
 								AllPackets.channel.send(
 										PacketDistributor.PLAYER.with(() -> (ServerPlayerEntity) ctx.getSource().getEntity()),
 										new ConfigureConfigPacket(ConfigureConfigPacket.Actions.overlayReset.name(), "")));
@@ -31,9 +31,9 @@ public class OverlayConfigCommand {
 					})
 				)
 				.executes(ctx -> {
-					DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> ConfigureConfigPacket.Actions.overlayScreen.performAction(""));
+					DistExecutor.unsafeRunWhenOn(EnvType.CLIENT, () -> () -> ConfigureConfigPacket.Actions.overlayScreen.performAction(""));
 
-					DistExecutor.unsafeRunWhenOn(Dist.DEDICATED_SERVER, () -> () ->
+					DistExecutor.unsafeRunWhenOn(EnvType.SERVER, () -> () ->
 							AllPackets.channel.send(
 									PacketDistributor.PLAYER.with(() -> (ServerPlayerEntity) ctx.getSource().getEntity()),
 									new ConfigureConfigPacket(ConfigureConfigPacket.Actions.overlayScreen.name(), "")));
