@@ -1,5 +1,5 @@
 plugins {
-	id("fabric-loom") // Don't ask
+	id("fabric-loom") // Change the version in buildSrc/build.gradle.kts
 	checkstyle
 	`maven-publish`
 }
@@ -14,6 +14,11 @@ base {
 
 version = properties["mod_version"]!!
 group = properties["maven_group"]!!
+
+sourceSets["main"].resources {
+	srcDir("src/generated/resources")
+	exclude("src/generated/resources/.cache/")
+}
 
 allprojects {
 	apply(plugin = "java")
@@ -112,8 +117,6 @@ val setupCheckstyle: Project.() -> Unit = {
 	}
 }
 
-//
-
 project.setupBasicFabric()
 project.setupMCP()
 project.setupCheckstyle()
@@ -121,8 +124,6 @@ project.setupCheckstyle()
 project(":Create-Refabricated-Lib").setupBasicFabric()
 project(":Create-Refabricated-Lib").setupYarn()
 project(":Create-Refabricated-Lib").setupCheckstyle()
-
-//
 
 repositories {
 	maven("https://maven.fabricmc.net/") {
@@ -163,7 +164,6 @@ dependencies {
 	val cloth_config_version: String by project
 	val modmenu_version: String by project
 	val rei_version: String by project
-
 	val databreaker_version: String by project
 
 	implementation(project(":Create-Refabricated-Lib"))
