@@ -4,6 +4,9 @@ plugins {
 	`maven-publish`
 }
 
+// Sometimes when running Gradle from Eclipse user.dir is set to the desktop.
+System.setProperty("user.dir", "${rootProject.projectDir}")
+
 java {
 	withSourcesJar()
 }
