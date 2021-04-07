@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/sh
 
 for file in $(find src/main/java -type f -name "*.java"); do
 	rm -v "$file.bak"
