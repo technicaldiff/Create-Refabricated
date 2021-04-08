@@ -24,8 +24,8 @@ public interface CustomDurabilityBarItem extends CustomGuiOverlayItem {
 			int width = (int) Math.round(13.0D - MathHelper.clamp(getDurabilityForDisplay(stack), 0, 1) * 13.0D);
 			int color = getRGBDurabilityForDisplay(stack);
 
-			((ItemRendererAccessor) itemRenderer).callRenderGuiQuad(bufferBuilder, x + 2, y + 13, 13, 2, 0, 0, 0, 255);
-			((ItemRendererAccessor) itemRenderer).callRenderGuiQuad(bufferBuilder, x + 2, y + 13, width, 1, color >> 16 & 255, color >> 8 & 255, color & 255, 255);
+			((ItemRendererAccessor) itemRenderer).create$renderGuiQuad(bufferBuilder, x + 2, y + 13, 13, 2, 0, 0, 0, 255);
+			((ItemRendererAccessor) itemRenderer).create$renderGuiQuad(bufferBuilder, x + 2, y + 13, width, 1, color >> 16 & 255, color >> 8 & 255, color & 255, 255);
 
 			RenderSystem.enableBlend();
 			RenderSystem.enableAlphaTest();

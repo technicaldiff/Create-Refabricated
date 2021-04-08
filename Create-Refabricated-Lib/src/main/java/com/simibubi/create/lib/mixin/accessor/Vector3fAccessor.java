@@ -8,11 +8,11 @@ import org.spongepowered.asm.mixin.gen.Accessor;
 @Mixin(Vector3f.class)
 public interface Vector3fAccessor {
 	@Accessor("x")
-	void setX(float x);
+	void create$x(float x);
 
 	@Accessor("y")
-	void setY(float y);
+	void create$y(float y);
 
 	@Accessor("z")
-	void setZ(float z);
+	void create$z(float z);
 }

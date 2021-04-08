@@ -1,4 +1,4 @@
-package com.simibubi.create.lib.extensions.helper;
+package com.simibubi.create.lib.helper;
 
 import org.jetbrains.annotations.Contract;
 

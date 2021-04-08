@@ -5,14 +5,15 @@ import net.minecraft.client.particle.ParticleManager;
 import net.minecraft.particle.ParticleEffect;
 import net.minecraft.particle.ParticleType;
 
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
-
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
+
 import com.simibubi.create.lib.extensions.ParticleManagerExtensions;
 
+@Deprecated
 @Environment(EnvType.CLIENT)
 @Mixin(ParticleManager.class)
 public abstract class ParticleManagerMixin implements ParticleManagerExtensions {

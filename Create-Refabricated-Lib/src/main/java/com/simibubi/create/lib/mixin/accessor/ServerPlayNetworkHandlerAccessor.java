@@ -8,8 +8,8 @@ import org.spongepowered.asm.mixin.gen.Accessor;
 @Mixin(ServerPlayNetworkHandler.class)
 public interface ServerPlayNetworkHandlerAccessor {
 	@Accessor("floatingTicks")
-	int getFloatingTicks();
+	int create$floatingTicks();
 
 	@Accessor("floatingTicks")
-	void setFloatingTicks(int floatingTicks);
+	void create$floatingTicks(int floatingTicks);
 }

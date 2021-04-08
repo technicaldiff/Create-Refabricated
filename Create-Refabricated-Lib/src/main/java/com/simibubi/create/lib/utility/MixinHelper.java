@@ -19,6 +19,5 @@ public final class MixinHelper {
 		return (T) in;
 	}
 
-	private MixinHelper() {
-	}
+	private MixinHelper() {}
 }

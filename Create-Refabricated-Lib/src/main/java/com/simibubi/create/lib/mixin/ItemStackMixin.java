@@ -11,9 +11,9 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import com.simibubi.create.lib.item.CustomMaxCountItem;
 
 @Mixin(ItemStack.class)
-public class ItemStackMixin {
+public abstract class ItemStackMixin {
 	@Inject(at = @At("HEAD"), method = "getMaxCount()I", cancellable = true)
-	public void getMaxCount(CallbackInfoReturnable<Integer> cir) {
+	public void create$onGetMaxCount(CallbackInfoReturnable<Integer> cir) {
 		ItemStack self = (ItemStack) (Object) this;
 		Item item = self.getItem();
 		if (item instanceof CustomMaxCountItem) {

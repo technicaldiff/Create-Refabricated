@@ -11,33 +11,33 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import com.simibubi.create.lib.extensions.EntityExtensions;
-import com.simibubi.create.lib.extensions.helper.EntityHelper;
+import com.simibubi.create.lib.helper.EntityHelper;
 
 @Mixin(Entity.class)
-public class EntityMixin implements EntityExtensions {
+public abstract class EntityMixin implements EntityExtensions {
 	@Unique
-	private CompoundTag extraCustomData;
+	private CompoundTag create$extraCustomData;
 
 	@Inject(at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/Entity;writeCustomDataToTag(Lnet/minecraft/nbt/CompoundTag;)V"), method = "toTag(Lnet/minecraft/nbt/CompoundTag;)Lnet/minecraft/nbt/CompoundTag;")
-	public void beforeWriteCustomData(CompoundTag tag, CallbackInfoReturnable<CompoundTag> cir) {
-		if (extraCustomData != null && !extraCustomData.isEmpty()) {
+	public void create$beforeWriteCustomData(CompoundTag tag, CallbackInfoReturnable<CompoundTag> cir) {
+		if (create$extraCustomData != null && !create$extraCustomData.isEmpty()) {
 			System.out.println("writing custom data");
-			tag.put(EntityHelper.EXTRA_DATA_KEY, extraCustomData);
+			tag.put(EntityHelper.EXTRA_DATA_KEY, create$extraCustomData);
 		}
 	}
 
 	@Inject(at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/Entity;readCustomDataFromTag(Lnet/minecraft/nbt/CompoundTag;)V"), method = "fromTag(Lnet/minecraft/nbt/CompoundTag;)V")
-	public void beforeReadCustomData(CompoundTag tag, CallbackInfo ci) {
+	public void create$beforeReadCustomData(CompoundTag tag, CallbackInfo ci) {
 		if (tag.contains(EntityHelper.EXTRA_DATA_KEY)) {
-			extraCustomData = tag.getCompound(EntityHelper.EXTRA_DATA_KEY);
+			create$extraCustomData = tag.getCompound(EntityHelper.EXTRA_DATA_KEY);
 		}
 	}
 
 	@Override
-	public CompoundTag getExtraCustomData() {
-		if (extraCustomData == null) {
-			extraCustomData = new CompoundTag();
+	public CompoundTag create$getExtraCustomData() {
+		if (create$extraCustomData == null) {
+			create$extraCustomData = new CompoundTag();
 		}
-		return extraCustomData;
+		return create$extraCustomData;
 	}
 }

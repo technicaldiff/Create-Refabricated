@@ -8,8 +8,8 @@ import org.spongepowered.asm.mixin.gen.Accessor;
 @Mixin(ItemEntity.class)
 public interface ItemEntityAccessor {
 	@Accessor("age")
-	int getAge();
+	int create$age();
 
 	@Accessor("age")
-	void setAge(int age);
+	void create$age(int age);
 }

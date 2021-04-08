@@ -22,6 +22,8 @@ public final class ClientWorldEvents {
 		}
 	});
 
+	private ClientWorldEvents() {}
+
 	@FunctionalInterface
 	public interface Load {
 		void onWorldLoad(MinecraftClient client, ClientWorld world);
@@ -30,8 +32,5 @@ public final class ClientWorldEvents {
 	@FunctionalInterface
 	public interface Unload {
 		void onWorldUnload(MinecraftClient client, ClientWorld world);
-	}
-
-	private ClientWorldEvents() {
 	}
 }

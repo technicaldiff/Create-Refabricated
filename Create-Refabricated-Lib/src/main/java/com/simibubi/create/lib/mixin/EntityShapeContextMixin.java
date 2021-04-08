@@ -14,17 +14,18 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import com.simibubi.create.lib.extensions.EntityShapeContextExtensions;
 
 @Mixin(EntityShapeContext.class)
-public class EntityShapeContextMixin implements EntityShapeContextExtensions {
+public abstract class EntityShapeContextMixin implements EntityShapeContextExtensions {
 	@Unique
-	private @Nullable Entity cachedEntity;
+	private Entity create$cachedEntity;
 
 	@Inject(at = @At("TAIL"), method = "<init>(Lnet/minecraft/entity/Entity;)V")
-	private void onTailEntityInit(Entity entity, CallbackInfo ci) {
-		cachedEntity = entity;
+	private void create$onTailEntityInit(Entity entity, CallbackInfo ci) {
+		create$cachedEntity = entity;
 	}
 
 	@Override
-	public @Nullable Entity getCachedEntity() {
-		return cachedEntity;
+	@Nullable
+	public Entity create$getCachedEntity() {
+		return create$cachedEntity;
 	}
 }

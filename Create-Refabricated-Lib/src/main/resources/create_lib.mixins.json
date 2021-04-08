@@ -10,6 +10,7 @@
     "ItemEntityMixin",
     "ItemStackMixin",
     "Matrix4fMixin",
+    "accessor.BeaconBlockEntityAccessor",
     "accessor.BiomeAccessAccessor",
     "accessor.CriteriaAccessor",
     "accessor.ItemEntityAccessor",
@@ -35,7 +36,6 @@
     "accessor.MinecraftClientAccessor"
   ],
   "server": [
-    "BeaconBlockEntityMixin",
     "SignTypeMixin",
     "Vec3dMixin"
   ],

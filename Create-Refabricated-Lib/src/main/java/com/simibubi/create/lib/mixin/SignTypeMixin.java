@@ -2,18 +2,16 @@ package com.simibubi.create.lib.mixin;
 
 import net.minecraft.util.SignType;
 
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
-
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 
-import com.simibubi.create.lib.extensions.SignTypeExtensions;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 
 @Environment(EnvType.SERVER)
 @Mixin(SignType.class)
-public class SignTypeMixin implements SignTypeExtensions {
+public abstract class SignTypeMixin {
 	@Final
 	@Shadow
 	private String name;

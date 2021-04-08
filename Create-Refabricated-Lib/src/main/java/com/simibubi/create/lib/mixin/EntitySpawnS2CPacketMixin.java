@@ -18,50 +18,50 @@ import com.simibubi.create.lib.entity.ExtraSpawnDataEntity;
 import com.simibubi.create.lib.extensions.EntitySpawnS2CPacketExtensions;
 
 @Mixin(EntitySpawnS2CPacket.class)
-public class EntitySpawnS2CPacketMixin implements EntitySpawnS2CPacketExtensions {
-	private PacketByteBuf extraDataBuf;
+public abstract class EntitySpawnS2CPacketMixin implements EntitySpawnS2CPacketExtensions {
+	private PacketByteBuf create$extraDataBuf;
 
 	@Inject(at = @At("TAIL"), method = "<init>(Lnet/minecraft/entity/Entity;I)V")
-	public void onEntityCtor(Entity entity, int entityData, CallbackInfo ci) {
-		setExtraData(entity);
+	public void create$onEntityCtor(Entity entity, int entityData, CallbackInfo ci) {
+		create$setExtraData(entity);
 	}
 
 	@Inject(at = @At("TAIL"), method = "<init>(Lnet/minecraft/entity/Entity;Lnet/minecraft/entity/EntityType;ILnet/minecraft/util/math/BlockPos;)V")
-	public void onEntityCtor(Entity entity, EntityType<?> entityType, int data, BlockPos pos, CallbackInfo ci) {
-		setExtraData(entity);
+	public void create$onEntityCtor(Entity entity, EntityType<?> entityType, int data, BlockPos pos, CallbackInfo ci) {
+		create$setExtraData(entity);
 	}
 
-	private void setExtraData(Entity entity) {
+	private void create$setExtraData(Entity entity) {
 		if (entity instanceof ExtraSpawnDataEntity) {
-			extraDataBuf = new PacketByteBuf(Unpooled.buffer());
-			((ExtraSpawnDataEntity) entity).writeSpawnData(extraDataBuf);
+			create$extraDataBuf = new PacketByteBuf(Unpooled.buffer());
+			((ExtraSpawnDataEntity) entity).writeSpawnData(create$extraDataBuf);
 		}
 	}
 
 	@Inject(at = @At("TAIL"), method = "write(Lnet/minecraft/network/PacketByteBuf;)V")
-	public void onTailWrite(PacketByteBuf buf, CallbackInfo ci) {
-		if (extraDataBuf != null) {
-			buf.writeBytes(extraDataBuf);
+	public void create$onTailWrite(PacketByteBuf buf, CallbackInfo ci) {
+		if (create$extraDataBuf != null) {
+			buf.writeBytes(create$extraDataBuf);
 		}
 	}
 
 	@Inject(at = @At("TAIL"), method = "read(Lnet/minecraft/network/PacketByteBuf;)V")
-	public void onTailRead(PacketByteBuf buf, CallbackInfo ci) {
+	public void create$onTailRead(PacketByteBuf buf, CallbackInfo ci) {
 		int readable = buf.readableBytes();
 		if (readable != 0) {
-			this.extraDataBuf = new PacketByteBuf(buf.readBytes(readable));
+			this.create$extraDataBuf = new PacketByteBuf(buf.readBytes(readable));
 		}
 	}
 
 	@Inject(at = @At("TAIL"), method = "apply(Lnet/minecraft/network/listener/ClientPlayPacketListener;)V")
-	public void onTailApply(ClientPlayPacketListener listener, CallbackInfo ci) {
-		if (extraDataBuf != null) {
-			extraDataBuf.release();
+	public void create$onTailApply(ClientPlayPacketListener listener, CallbackInfo ci) {
+		if (create$extraDataBuf != null) {
+			create$extraDataBuf.release();
 		}
 	}
 
 	@Override
-	public PacketByteBuf getExtraDataBuf() {
-		return extraDataBuf;
+	public PacketByteBuf create$getExtraDataBuf() {
+		return create$extraDataBuf;
 	}
 }
