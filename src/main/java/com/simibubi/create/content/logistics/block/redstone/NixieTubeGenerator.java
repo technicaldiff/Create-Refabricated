@@ -1,3 +1,4 @@
+/*
 package com.simibubi.create.content.logistics.block.redstone;
 
 import com.simibubi.create.foundation.data.AssetLookup;
@@ -28,3 +29,4 @@ public class NixieTubeGenerator extends SpecialBlockStateGen {
 	}
 
 }
+*/

@@ -1,3 +1,4 @@
+/*
 package com.simibubi.create.content.logistics.block.chute;
 
 import com.simibubi.create.content.logistics.block.chute.ChuteBlock.Shape;
@@ -38,3 +39,4 @@ public class ChuteGenerator extends SpecialBlockStateGen {
 	}
 
 }
+*/

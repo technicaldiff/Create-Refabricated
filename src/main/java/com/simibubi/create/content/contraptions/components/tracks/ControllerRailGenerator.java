@@ -1,3 +1,4 @@
+/*
 package com.simibubi.create.content.contraptions.components.tracks;
 
 import com.simibubi.create.foundation.data.AssetLookup;
@@ -53,3 +54,4 @@ public class ControllerRailGenerator extends SpecialBlockStateGen {
 	}
 
 }
+*/

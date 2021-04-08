@@ -1,3 +1,4 @@
+/*
 package com.simibubi.create.content.contraptions.relays.belt;
 
 import com.simibubi.create.foundation.data.SpecialBlockStateGen;
@@ -75,3 +76,4 @@ public class BeltGenerator extends SpecialBlockStateGen {
 	}
 
 }
+*/

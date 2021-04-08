@@ -1,3 +1,4 @@
+/*
 package com.simibubi.create.content.contraptions.fluids.tank;
 
 import com.simibubi.create.content.contraptions.fluids.tank.FluidTankBlock.Shape;
@@ -62,3 +63,4 @@ public class FluidTankGenerator extends SpecialBlockStateGen {
 	}
 
 }
+*/

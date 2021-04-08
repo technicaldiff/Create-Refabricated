@@ -1,3 +1,4 @@
+/*
 package com.simibubi.create.content.contraptions.components.motor;
 
 import com.simibubi.create.foundation.data.AssetLookup;
@@ -34,3 +35,4 @@ public class CreativeMotorGenerator extends SpecialBlockStateGen {
 	}
 
 }
+*/

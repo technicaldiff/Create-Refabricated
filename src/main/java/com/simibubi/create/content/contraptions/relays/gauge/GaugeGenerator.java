@@ -1,3 +1,4 @@
+/*
 package com.simibubi.create.content.contraptions.relays.gauge;
 
 import com.simibubi.create.foundation.data.DirectionalAxisBlockStateGen;
@@ -16,3 +17,4 @@ public class GaugeGenerator extends DirectionalAxisBlockStateGen {
 	}
 
 }
+*/

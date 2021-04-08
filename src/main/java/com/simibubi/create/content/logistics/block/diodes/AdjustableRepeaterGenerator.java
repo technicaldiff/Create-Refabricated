@@ -1,3 +1,4 @@
+/*
 package com.simibubi.create.content.logistics.block.diodes;
 
 import java.util.Vector;
@@ -37,3 +38,4 @@ public class AdjustableRepeaterGenerator extends AbstractDiodeGenerator {
 	}
 
 }
+*/

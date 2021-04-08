@@ -1,3 +1,4 @@
+/*
 package com.simibubi.create.content.contraptions.components.flywheel;
 
 import com.simibubi.create.foundation.data.SpecialBlockStateGen;
@@ -28,3 +29,4 @@ public class FlywheelGenerator extends SpecialBlockStateGen {
 				.getString()));
 	}
 }
+*/

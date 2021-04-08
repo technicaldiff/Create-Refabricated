@@ -1,3 +1,4 @@
+/*
 package com.simibubi.create.content.contraptions.fluids.pipes;
 
 import com.simibubi.create.foundation.data.AssetLookup;
@@ -32,3 +33,4 @@ public class SmartFluidPipeGenerator extends SpecialBlockStateGen {
 	}
 
 }
+*/

@@ -1,3 +1,4 @@
+/*
 package com.simibubi.create.content.contraptions.fluids.pipes;
 
 import com.simibubi.create.foundation.data.DirectionalAxisBlockStateGen;
@@ -50,3 +51,4 @@ public class BracketGenerator extends DirectionalAxisBlockStateGen {
 	}
 
 }
+*/

@@ -1,3 +1,4 @@
+/*
 package com.simibubi.create.content.contraptions.relays.advanced.sequencer;
 
 import com.simibubi.create.foundation.data.SpecialBlockStateGen;
@@ -33,3 +34,4 @@ public class SequencedGearshiftGenerator extends SpecialBlockStateGen {
 	}
 
 }
+*/

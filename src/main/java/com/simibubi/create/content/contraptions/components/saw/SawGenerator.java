@@ -1,3 +1,4 @@
+/*
 package com.simibubi.create.content.contraptions.components.saw;
 
 import com.simibubi.create.foundation.data.SpecialBlockStateGen;
@@ -39,3 +40,4 @@ public class SawGenerator extends SpecialBlockStateGen {
 	}
 
 }
+*/

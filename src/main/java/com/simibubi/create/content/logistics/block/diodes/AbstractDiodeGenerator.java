@@ -1,3 +1,4 @@
+/*
 package com.simibubi.create.content.logistics.block.diodes;
 
 import java.util.Vector;
@@ -78,3 +79,4 @@ public abstract class AbstractDiodeGenerator extends SpecialBlockStateGen {
 	}
 
 }
+*/

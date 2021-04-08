@@ -1,3 +1,4 @@
+/*
 package com.simibubi.create.content.contraptions.relays.encased;
 
 import java.util.function.BiFunction;
@@ -70,3 +71,4 @@ public class EncasedBeltGenerator extends SpecialBlockStateGen {
 	}
 
 }
+*/

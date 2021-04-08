@@ -1,3 +1,4 @@
+/*
 package com.simibubi.create.content.contraptions.components.structureMovement.piston;
 
 import com.simibubi.create.content.contraptions.components.structureMovement.piston.MechanicalPistonBlock.PistonState;
@@ -51,3 +52,4 @@ public class MechanicalPistonGenerator extends SpecialBlockStateGen {
 	}
 
 }
+*/

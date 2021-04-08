@@ -1,3 +1,4 @@
+/*
 package com.simibubi.create.content.logistics.block.funnel;
 
 import com.simibubi.create.Create;
@@ -79,3 +80,4 @@ public class FunnelGenerator extends SpecialBlockStateGen {
 	}
 
 }
+*/

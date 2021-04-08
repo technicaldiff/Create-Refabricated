@@ -1,3 +1,4 @@
+/*
 package com.simibubi.create.content.logistics.block.redstone;
 
 import com.simibubi.create.foundation.data.SpecialBlockStateGen;
@@ -37,3 +38,4 @@ public class RedstoneLinkGenerator extends SpecialBlockStateGen {
 	}
 
 }
+*/

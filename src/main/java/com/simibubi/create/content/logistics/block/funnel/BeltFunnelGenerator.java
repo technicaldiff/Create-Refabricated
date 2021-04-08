@@ -1,3 +1,4 @@
+/*
 package com.simibubi.create.content.logistics.block.funnel;
 
 import com.simibubi.create.foundation.data.SpecialBlockStateGen;
@@ -53,3 +54,4 @@ public class BeltFunnelGenerator extends SpecialBlockStateGen {
 	}
 
 }
+*/
