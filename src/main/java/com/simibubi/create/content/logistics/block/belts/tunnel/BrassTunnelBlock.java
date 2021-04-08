@@ -34,8 +34,8 @@ public class BrassTunnelBlock extends BeltTunnelBlock {
 	@Override
 	public void onReplaced(BlockState p_196243_1_, World p_196243_2_, BlockPos p_196243_3_, BlockState p_196243_4_,
 		boolean p_196243_5_) {
-		if (p_196243_1_.hasTileEntity()
-			&& (p_196243_1_.getBlock() != p_196243_4_.getBlock() || !p_196243_4_.hasTileEntity())) {
+		if (p_196243_1_.getBlock().hasBlockEntity()
+			&& (p_196243_1_.getBlock() != p_196243_4_.getBlock() || !p_196243_4_.getBlock().hasBlockEntity())) {
 			TileEntityBehaviour.destroy(p_196243_2_, p_196243_3_, FilteringBehaviour.TYPE);
 			withTileEntityDo(p_196243_2_, p_196243_3_, te -> {
 				if (te instanceof BrassTunnelTileEntity)

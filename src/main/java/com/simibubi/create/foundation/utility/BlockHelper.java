@@ -189,7 +189,7 @@ public class BlockHelper {
 		BlockState state = world.getBlockState(pos);
 		if (world.rand.nextFloat() < effectChance)
 			world.playEvent(2001, pos, Block.getStateId(state));
-		TileEntity tileentity = state.hasTileEntity() ? world.getTileEntity(pos) : null;
+		TileEntity tileentity = state.getBlock().hasBlockEntity() ? world.getTileEntity(pos) : null;
 
 		if (world instanceof ServerWorld && world.getGameRules()
 			.getBoolean(GameRules.DO_TILE_DROPS) && !world.restoringBlockSnapshots) {

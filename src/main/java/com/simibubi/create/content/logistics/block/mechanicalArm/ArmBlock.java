@@ -85,8 +85,8 @@ public class ArmBlock extends KineticBlock implements ITE<ArmTileEntity>, ICogWh
 	@Override
 	public void onReplaced(BlockState p_196243_1_, World world, BlockPos pos, BlockState p_196243_4_,
 		boolean p_196243_5_) {
-		if (p_196243_1_.hasTileEntity()
-			&& (p_196243_1_.getBlock() != p_196243_4_.getBlock() || !p_196243_4_.hasTileEntity())) {
+		if (p_196243_1_.getBlock().hasBlockEntity()
+			&& (p_196243_1_.getBlock() != p_196243_4_.getBlock() || !p_196243_4_.getBlock().hasBlockEntity())) {
 			withTileEntityDo(world, pos, te -> {
 				if (!te.heldItem.isEmpty())
 					InventoryHelper.spawnItemStack(world, pos.getX(), pos.getY(), pos.getZ(), te.heldItem);

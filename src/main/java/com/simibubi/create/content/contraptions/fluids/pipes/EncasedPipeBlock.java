@@ -67,7 +67,7 @@ public class EncasedPipeBlock extends Block implements IWrenchable, ISpecialBloc
 		boolean blockTypeChanged = state.getBlock() != newState.getBlock();
 		if (blockTypeChanged && !world.isRemote)
 			FluidPropagator.propagateChangedPipe(world, pos, state);
-		if (state.hasTileEntity() && (blockTypeChanged || !newState.hasTileEntity()))
+		if (state.getBlock().hasBlockEntity() && (blockTypeChanged || !newState.getBlock().hasBlockEntity()))
 			world.removeTileEntity(pos);
 	}
 

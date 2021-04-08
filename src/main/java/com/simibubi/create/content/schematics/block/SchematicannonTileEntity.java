@@ -736,7 +736,7 @@ public class SchematicannonTileEntity extends SmartTileEntity implements INamedC
 		if (pos.withinDistance(getPos(), 2f))
 			return false;
 		if (!replaceTileEntities
-			&& (toReplace.hasTileEntity() || (toReplaceOther != null && toReplaceOther.hasTileEntity())))
+			&& (toReplace.getBlock().hasBlockEntity() || (toReplaceOther != null && toReplaceOther.getBlock().hasBlockEntity())))
 			return false;
 
 		if (shouldIgnoreBlockState(state))

@@ -84,8 +84,8 @@ public class HosePulleyBlock extends HorizontalKineticBlock implements ITE<HoseP
 	@Override
 	public void onReplaced(BlockState p_196243_1_, World world, BlockPos pos, BlockState p_196243_4_,
 		boolean p_196243_5_) {
-		if (p_196243_1_.hasTileEntity()
-			&& (p_196243_1_.getBlock() != p_196243_4_.getBlock() || !p_196243_4_.hasTileEntity())) {
+		if (p_196243_1_.getBlock().hasBlockEntity()
+			&& (p_196243_1_.getBlock() != p_196243_4_.getBlock() || !p_196243_4_.getBlock().hasBlockEntity())) {
 			TileEntityBehaviour.destroy(world, pos, FluidDrainingBehaviour.TYPE);
 			TileEntityBehaviour.destroy(world, pos, FluidFillingBehaviour.TYPE);
 			world.removeTileEntity(pos);

@@ -353,7 +353,7 @@ public class BlockzapperItem extends ZapperItem {
 	protected static void dropBlocks(World worldIn, PlayerEntity playerIn, ItemStack item, Direction face,
 		BlockPos placed) {
 		TileEntity tileentity = worldIn.getBlockState(placed)
-			.hasTileEntity() ? worldIn.getTileEntity(placed) : null;
+			.getBlock().hasBlockEntity() ? worldIn.getTileEntity(placed) : null;
 
 		if (getTier(Components.Retriever, item) == ComponentTier.None) {
 			Block.spawnDrops(worldIn.getBlockState(placed), worldIn, placed.offset(face), tileentity);

@@ -293,7 +293,7 @@ public class SymmetryWandItem extends Item {
 						.isEmpty())
 						player.getHeldItemMainhand()
 							.onBlockDestroyed(world, blockstate, position, player);
-					TileEntity tileentity = blockstate.hasTileEntity() ? world.getTileEntity(position) : null;
+					TileEntity tileentity = blockstate.getBlock().hasBlockEntity() ? world.getTileEntity(position) : null;
 					Block.spawnDrops(blockstate, world, pos, tileentity, player, player.getHeldItemMainhand()); // Add fortune, silk touch and other loot modifiers
 				}
 			}

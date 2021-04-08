@@ -84,7 +84,7 @@ public class PonderWorldParticles {
 				RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
 				Tessellator tessellator = Tessellator.getInstance();
 				BufferBuilder bufferbuilder = tessellator.getBuffer();
-				iparticlerendertype.beginRender(bufferbuilder, mc.textureManager);
+				iparticlerendertype.beginRender(bufferbuilder, mc.getTextureManager());
 
 				for (Particle particle : iterable)
 					particle.buildGeometry(bufferbuilder, renderInfo, pt);

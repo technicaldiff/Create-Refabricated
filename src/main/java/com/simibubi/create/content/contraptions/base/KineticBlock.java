@@ -58,7 +58,7 @@ public abstract class KineticBlock extends Block implements IRotate {
 
 			if (oldState.getBlock() != state.getBlock())
 				return;
-			if (state.hasTileEntity() != oldState.hasTileEntity())
+			if (state.getBlock().hasBlockEntity() != oldState.getBlock().hasBlockEntity())
 				return;
 			if (!areStatesKineticallyEquivalent(oldState, state))
 				return;

@@ -84,7 +84,7 @@ public class SchematicWorld extends WrappedWorld implements IServerWorld {
 			return null;
 
 		BlockState blockState = getBlockState(pos);
-		if (blockState.hasTileEntity()) {
+		if (blockState.getBlock().hasBlockEntity()) {
 			try {
 				TileEntity tileEntity = blockState.createTileEntity(this);
 				if (tileEntity != null) {

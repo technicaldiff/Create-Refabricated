@@ -385,7 +385,7 @@ public class RotationPropagator {
 			.getBlockState(neighbourPos);
 		if (!(neighbourState.getBlock() instanceof IRotate))
 			return null;
-		if (!neighbourState.hasTileEntity())
+		if (!neighbourState.getBlock().hasBlockEntity())
 			return null;
 		TileEntity neighbourTE = currentTE.getWorld()
 			.getTileEntity(neighbourPos);
