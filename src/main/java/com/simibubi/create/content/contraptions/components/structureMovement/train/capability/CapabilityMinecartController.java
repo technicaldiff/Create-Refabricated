@@ -29,6 +29,8 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.ChunkPos;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
+import net.minecraft.world.chunk.Chunk;
+
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.CapabilityInject;
 import net.minecraftforge.common.capabilities.CapabilityManager;
@@ -142,10 +144,10 @@ public class CapabilityMinecartController implements ICapabilitySerializable<Com
 		keySet.removeAll(toRemove);
 	}
 
-	public static void onChunkUnloaded(ChunkEvent.Unload event) {
-		ChunkPos chunkPos = event.getChunk()
+	public static void onChunkUnloaded(World world, Chunk chunk) {
+		ChunkPos chunkPos = chunk
 			.getPos();
-		Map<UUID, MinecartController> carts = loadedMinecartsByUUID.get(event.getWorld());
+		Map<UUID, MinecartController> carts = loadedMinecartsByUUID.get(world);
 		for (MinecartController minecartController : carts.values()) {
 			if (minecartController == null)
 				continue;
@@ -153,7 +155,7 @@ public class CapabilityMinecartController implements ICapabilitySerializable<Com
 				continue;
 			AbstractMinecartEntity cart = minecartController.cart();
 			if (cart.chunkCoordX == chunkPos.x && cart.chunkCoordZ == chunkPos.z)
-				queuedUnloads.get(event.getWorld())
+				queuedUnloads.get(world)
 					.add(cart.getUniqueID());
 		}
 	}

@@ -1,5 +1,34 @@
 package com.simibubi.create.events;
 
+import com.mojang.brigadier.CommandDispatcher;
+import org.jetbrains.annotations.Nullable;
+
+import net.minecraft.block.BlockState;
+import net.minecraft.command.CommandSource;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.fluid.FluidState;
+import net.minecraft.item.ItemStack;
+import net.minecraft.server.MinecraftServer;
+import net.minecraft.tags.FluidTags;
+import net.minecraft.util.ActionResultType;
+import net.minecraft.util.Direction;
+import net.minecraft.util.Hand;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.EntityRayTraceResult;
+import net.minecraft.world.IWorld;
+import net.minecraft.world.World;
+import net.minecraft.world.chunk.Chunk;
+
+import net.fabricmc.fabric.api.command.v1.CommandRegistrationCallback;
+import net.fabricmc.fabric.api.event.lifecycle.v1.ServerChunkEvents;
+import net.fabricmc.fabric.api.event.lifecycle.v1.ServerEntityEvents;
+import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
+import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
+import net.fabricmc.fabric.api.event.lifecycle.v1.ServerWorldEvents;
+import net.fabricmc.fabric.api.event.player.AttackEntityCallback;
+
 import com.simibubi.create.AllFluids;
 import com.simibubi.create.Create;
 import com.simibubi.create.content.contraptions.components.structureMovement.ContraptionHandler;
@@ -18,50 +47,9 @@ import com.simibubi.create.foundation.utility.ServerSpeedProvider;
 import com.simibubi.create.foundation.utility.WorldAttached;
 import com.simibubi.create.foundation.utility.recipe.RecipeFinder;
 
-import net.fabricmc.fabric.api.event.lifecycle.v1.ServerEntityEvents;
-import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
-import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
-
-import net.fabricmc.fabric.api.event.lifecycle.v1.ServerWorldEvents;
-
-import net.fabricmc.fabric.api.event.player.AttackEntityCallback;
-
-import net.fabricmc.fabric.api.event.world.WorldTickCallback;
-
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.fluid.FluidState;
-import net.minecraft.item.ItemStack;
-import net.minecraft.server.MinecraftServer;
-import net.minecraft.tags.FluidTags;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Direction;
-import net.minecraft.util.Hand;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.EntityRayTraceResult;
-import net.minecraft.world.IWorld;
-import net.minecraft.world.World;
-import net.minecraft.world.server.ServerWorld;
-
-import org.jetbrains.annotations.Nullable;
-
 public class CommonEvents {
 
-	public static void register() {
-		ServerTickEvents.END_SERVER_TICK.register(CommonEvents::onServerTick);
-		ServerWorldEvents.LOAD.register(CommonEvents::onLoadWorld);
-		ServerWorldEvents.UNLOAD.register(CommonEvents::onUnloadWorld);
-		ServerLifecycleEvents.SERVER_STOPPED.register(CommonEvents::serverStopped);
-		AttackEntityCallback.EVENT.register(CommonEvents::onEntityAttackedByPlayer);
-		ServerEntityEvents.ENTITY_LOAD.register(CommonEvents::onEntityAdded);
-
-		WorldTickCallback.EVENT.register(CommonEvents::onWorldTick);
-	}
-
-	public static void onServerTick(MinecraftServer minecraftServer) {
+	public static void onServerTick(MinecraftServer server) {
 		if (Create.schematicReceiver == null)
 			Create.schematicReceiver = new ServerSchematicLoader();
 		Create.schematicReceiver.tick();
@@ -69,8 +57,8 @@ public class CommonEvents {
 		ServerSpeedProvider.serverTick();
 	}
 
-	public static void onChunkUnloaded(ChunkEvent.Unload event) {
-		CapabilityMinecartController.onChunkUnloaded(event);
+	public static void onChunkUnloaded(World world, Chunk chunk) {
+		CapabilityMinecartController.onChunkUnloaded(world, chunk);
 	}
 
 	public static void whenFluidsMeet(FluidPlaceBlockEvent event) {
@@ -108,7 +96,7 @@ public class CommonEvents {
 		ContraptionHandler.entitiesWhoJustDismountedGetSentToTheRightLocation(entityLiving, world);
 	}
 
-	public static void onEntityAdded(Entity entity, ServerWorld world) {
+	public static void onEntityAdded(Entity entity, World world) {
 		ContraptionHandler.addSpawnedContraptionsToCollisionList(entity, world);
 	}
 
@@ -117,8 +105,8 @@ public class CommonEvents {
 		return ActionResultType.PASS;
 	}
 
-	public static void registerCommands(RegisterCommandsEvent event) {
-		AllCommands.register(event.getDispatcher());
+	public static void registerCommands(CommandDispatcher<CommandSource> dispatcher, boolean dedicated) {
+		AllCommands.register(dispatcher);
 	}
 
 	public static void registerReloadListeners(AddReloadListenerEvent event) {
@@ -127,36 +115,46 @@ public class CommonEvents {
 		event.addListener(FluidTransferRecipes.LISTENER);
 	}
 
-	public static void serverStopped(MinecraftServer minecraftServer) {
+	public static void serverStopped(MinecraftServer server) {
 		Create.schematicReceiver.shutdown();
 	}
 
-	public static void onLoadWorld(MinecraftServer minecraftServer, ServerWorld world) {
+	public static void onLoadWorld(World world) {
 		Create.redstoneLinkNetworkHandler.onLoadWorld(world);
 		Create.torquePropagator.onLoadWorld(world);
 	}
 
-	public static void onUnloadWorld(MinecraftServer minecraftServer, ServerWorld world) {
+	public static void onUnloadWorld(World world) {
 		Create.redstoneLinkNetworkHandler.onUnloadWorld(world);
 		Create.torquePropagator.onUnloadWorld(world);
 		WorldAttached.invalidateWorld(world);
 	}
 
-	@SubscribeEvent
 	public static void attachCapabilities(AttachCapabilitiesEvent<Entity> event) {
 		CapabilityMinecartController.attach(event);
 	}
 
-	@SubscribeEvent
 	public static void startTracking(PlayerEvent.StartTracking event) {
 		CapabilityMinecartController.startTracking(event);
 	}
 
-	public static void leftClickEmpty(ServerPlayerEntity player) {
+	public static void leftClickEmpty(PlayerEntity player) {
 		ItemStack stack = player.getHeldItemMainhand();
 		if (stack.getItem() instanceof ZapperItem) {
 			ZapperInteractionHandler.trySelect(stack, player);
 		}
+	}
+
+	public static void register() {
+		ServerTickEvents.END_SERVER_TICK.register(CommonEvents::onServerTick);
+		ServerChunkEvents.CHUNK_UNLOAD.register(CommonEvents::onChunkUnloaded);
+		ServerTickEvents.END_WORLD_TICK.register(CommonEvents::onWorldTick);
+		ServerEntityEvents.ENTITY_LOAD.register(CommonEvents::onEntityAdded);
+		AttackEntityCallback.EVENT.register(CommonEvents::onEntityAttackedByPlayer);
+		CommandRegistrationCallback.EVENT.register(CommonEvents::registerCommands);
+		ServerLifecycleEvents.SERVER_STOPPED.register(CommonEvents::serverStopped);
+		ServerWorldEvents.LOAD.register((server, world) -> CommonEvents.onLoadWorld(world));
+		ServerWorldEvents.UNLOAD.register((server, world) -> CommonEvents.onUnloadWorld(world));
 	}
 
 }

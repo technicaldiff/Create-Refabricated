@@ -1,23 +1,15 @@
 package com.simibubi.create.events;
 
+import net.minecraft.client.Minecraft;
+
 import com.simibubi.create.CreateClient;
 import com.simibubi.create.foundation.tileEntity.behaviour.filtering.FilteringHandler;
 import com.simibubi.create.foundation.tileEntity.behaviour.scrollvalue.ScrollValueHandler;
-
 import com.simibubi.create.lib.event.KeyInputCallback;
-
 import com.simibubi.create.lib.event.MouseButtonCallback;
 import com.simibubi.create.lib.event.MouseScrolledCallback;
 
-import net.minecraft.client.Minecraft;
-
 public class InputEvents {
-
-	public static void register() {
-		KeyInputCallback.EVENT.register(InputEvents::onKeyInput);
-		MouseScrolledCallback.EVENT.register(InputEvents::onMouseScrolled);
-		MouseButtonCallback.EVENT.register(InputEvents::onMouseInput);
-	}
 
 	public static void onKeyInput(int key, int scancode, int action, int mods) {
 		boolean pressed = action != 0;
@@ -32,7 +24,8 @@ public class InputEvents {
 		if (Minecraft.getInstance().currentScreen != null)
 			return false;
 
-//		CollisionDebugger.onScroll(delta); from upstream
+		// upstream comment
+//		CollisionDebugger.onScroll(delta);
 		boolean cancelled = CreateClient.schematicHandler.mouseScrolled(delta)
 			|| CreateClient.schematicAndQuillHandler.mouseScrolled(delta) || FilteringHandler.onScroll(delta)
 			|| ScrollValueHandler.onScroll(delta);
@@ -47,6 +40,12 @@ public class InputEvents {
 
 		CreateClient.schematicHandler.onMouseInput(button, pressed);
 		CreateClient.schematicAndQuillHandler.onMouseInput(button, pressed);
+	}
+
+	public static void register() {
+		KeyInputCallback.EVENT.register(InputEvents::onKeyInput);
+		MouseScrolledCallback.EVENT.register(InputEvents::onMouseScrolled);
+		MouseButtonCallback.EVENT.register(InputEvents::onMouseInput);
 	}
 
 }

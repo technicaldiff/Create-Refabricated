@@ -5,6 +5,32 @@ import java.util.List;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
+
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.network.play.ClientPlayNetHandler;
+import net.minecraft.client.renderer.ActiveRenderInfo;
+import net.minecraft.client.renderer.IRenderTypeBuffer;
+import net.minecraft.client.renderer.texture.OverlayTexture;
+import net.minecraft.client.util.ITooltipFlag;
+import net.minecraft.client.world.ClientWorld;
+import net.minecraft.fluid.Fluid;
+import net.minecraft.fluid.FluidState;
+import net.minecraft.item.BlockItem;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.math.vector.Vector3d;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.world.World;
+
+import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientChunkEvents;
+import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientEntityEvents;
+import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
+import net.fabricmc.fabric.api.client.item.v1.ItemTooltipCallback;
+import net.fabricmc.fabric.api.client.networking.v1.ClientPlayConnectionEvents;
+import net.fabricmc.fabric.api.client.rendering.v1.WorldRenderContext;
+import net.fabricmc.fabric.api.client.rendering.v1.WorldRenderEvents;
+import net.fabricmc.fabric.api.networking.v1.PacketSender;
+
 import com.simibubi.create.AllFluids;
 import com.simibubi.create.Create;
 import com.simibubi.create.CreateClient;
@@ -47,51 +73,18 @@ import com.simibubi.create.foundation.utility.AnimationTickHolder;
 import com.simibubi.create.foundation.utility.ServerSpeedProvider;
 import com.simibubi.create.foundation.utility.placement.PlacementHelpers;
 import com.simibubi.create.foundation.utility.worldWrappers.WrappedClientWorld;
-
 import com.simibubi.create.lib.event.ClientWorldEvents;
-
-import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
-
-import net.fabricmc.fabric.api.client.item.v1.ItemTooltipCallback;
-import net.fabricmc.fabric.api.client.rendering.v1.WorldRenderContext;
-
-import net.fabricmc.fabric.api.client.rendering.v1.WorldRenderEvents;
-
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.ActiveRenderInfo;
-import net.minecraft.client.renderer.IRenderTypeBuffer;
-import net.minecraft.client.renderer.texture.OverlayTexture;
-import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.client.world.ClientWorld;
-import net.minecraft.fluid.Fluid;
-import net.minecraft.fluid.FluidState;
-import net.minecraft.item.BlockItem;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.world.World;
 
 public class ClientEvents {
 
 	private static final String itemPrefix = "item." + Create.ID;
 	private static final String blockPrefix = "block." + Create.ID;
 
-	public static void register() {
-		ClientTickEvents.END_CLIENT_TICK.register(ClientEvents::onTick);
-		ClientWorldEvents.LOAD.register(ClientEvents::onLoadWorld);
-		ClientWorldEvents.UNLOAD.register(ClientEvents::onUnloadWorld);
-		WorldRenderEvents.END.register(ClientEvents::onRenderWorld);
-		ItemTooltipCallback.EVENT.register(ClientEvents::addToItemTooltip);
-
-		ClientTickEvents.END_WORLD_TICK.register(ClientEvents::onRenderTick);
-	}
-
 	public static void onTick(Minecraft client) {
+		World world = client.world;
+
 		if (!isGameActive())
 			return;
-
-		World world = client.world;
 
 		AnimationTickHolder.tick();
 		FastRenderDispatcher.tick();
@@ -130,8 +123,7 @@ public class ClientEvents {
 		ContraptionRenderDispatcher.tick();
 	}
 
-	@SubscribeEvent
-	public static void onJoin(ClientPlayerNetworkEvent.LoggedInEvent event) {
+	public static void onJoin(ClientPlayNetHandler handler, PacketSender sender, Minecraft client) {
 		CreateClient.checkGraphicsFanciness();
 	}
 
@@ -202,7 +194,7 @@ public class ClientEvents {
 		PonderTooltipHandler.handleTooltipColor(event);
 	}
 
-	public static void addToItemTooltip(ItemStack stack, ITooltipFlag iTooltipFlag, List<ITextComponent> iTextComponents) {
+	public static void addToItemTooltip(ItemStack stack, ITooltipFlag iTooltipFlag, List<ITextComponent> itemTooltip) {
 		if (!AllConfigs.CLIENT.tooltips.get())
 			return;
 		if (Minecraft.getInstance().player == null)
@@ -214,7 +206,6 @@ public class ClientEvents {
 			return;
 
 		if (TooltipHelper.hasTooltip(stack, Minecraft.getInstance().player)) {
-			List<ITextComponent> itemTooltip = event.getToolTip();
 			List<ITextComponent> toolTip = new ArrayList<>();
 			toolTip.add(itemTooltip.remove(0));
 			TooltipHelper.getTooltip(stack)
@@ -227,18 +218,18 @@ public class ClientEvents {
 			if (item.getBlock() instanceof IRotate || item.getBlock() instanceof EngineBlock) {
 				List<ITextComponent> kineticStats = ItemDescription.getKineticStats(item.getBlock());
 				if (!kineticStats.isEmpty()) {
-					event.getToolTip()
+					itemTooltip
 						.add(new StringTextComponent(""));
-					event.getToolTip()
+					itemTooltip
 						.addAll(kineticStats);
 				}
 			}
 		}
 
-		PonderTooltipHandler.addToTooltip(event.getToolTip(), stack);
+		PonderTooltipHandler.addToTooltip(itemTooltip, stack);
 	}
 
-	public static void onRenderTick(ClientWorld clientWorld) {
+	public static void onRenderTick(RenderTickEvent event) {
 		if (!isGameActive())
 			return;
 		TurntableHandler.gameRenderTick();
@@ -291,6 +282,21 @@ public class ClientEvents {
 		if (stack.getItem() instanceof ZapperItem) {
 			AllPackets.channel.sendToServer(new LeftClickPacket());
 		}
+	}
+
+	public static void register() {
+		ClientTickEvents.END_CLIENT_TICK.register(ClientEvents::onTick);
+		ClientPlayConnectionEvents.JOIN.register(ClientEvents::onJoin);
+		ClientWorldEvents.LOAD.register(ClientEvents::onLoadWorld);
+		ClientWorldEvents.UNLOAD.register(ClientEvents::onUnloadWorld);
+		WorldRenderEvents.END.register(ClientEvents::onRenderWorld);
+		ItemTooltipCallback.EVENT.register(ClientEvents::addToItemTooltip);
+
+		ClientChunkEvents.CHUNK_UNLOAD.register(CommonEvents::onChunkUnloaded);
+		ClientTickEvents.END_WORLD_TICK.register(CommonEvents::onWorldTick);
+		ClientEntityEvents.ENTITY_LOAD.register(CommonEvents::onEntityAdded);
+		ClientWorldEvents.LOAD.register((client, world) -> CommonEvents.onLoadWorld(world));
+		ClientWorldEvents.UNLOAD.register((client, world) -> CommonEvents.onUnloadWorld(world));
 	}
 
 }
