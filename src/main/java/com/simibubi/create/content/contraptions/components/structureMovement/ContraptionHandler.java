@@ -7,17 +7,18 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import com.simibubi.create.foundation.utility.VecHelper;
-import com.simibubi.create.foundation.utility.WorldAttached;
-
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import it.unimi.dsi.fastutil.objects.ObjectLists;
+
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
-import net.minecraftforge.common.util.Constants.NBT;
+
+import com.simibubi.create.foundation.utility.VecHelper;
+import com.simibubi.create.foundation.utility.WorldAttached;
+import com.simibubi.create.lib.utility.Constants.NBT;
 
 public class ContraptionHandler {
 

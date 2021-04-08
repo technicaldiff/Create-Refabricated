@@ -1,13 +1,14 @@
 package com.simibubi.create.content.contraptions.relays.advanced.sequencer;
 
-import com.simibubi.create.content.contraptions.relays.encased.SplitShaftTileEntity;
+import java.util.Vector;
+
 import net.minecraft.block.BlockState;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.Direction;
-import net.minecraftforge.common.util.Constants.NBT;
 
-import java.util.Vector;
+import com.simibubi.create.content.contraptions.relays.encased.SplitShaftTileEntity;
+import com.simibubi.create.lib.utility.Constants.NBT;
 
 public class SequencedGearshiftTileEntity extends SplitShaftTileEntity {
 

@@ -1,12 +1,12 @@
 package com.simibubi.create.content.contraptions.relays.advanced.sequencer;
 
-import com.simibubi.create.foundation.networking.TileEntityConfigurationPacket;
-
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.ListNBT;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.math.BlockPos;
-import net.minecraftforge.common.util.Constants.NBT;
+
+import com.simibubi.create.foundation.networking.TileEntityConfigurationPacket;
+import com.simibubi.create.lib.utility.Constants.NBT;
 
 public class ConfigureSequencedGearshiftPacket extends TileEntityConfigurationPacket<SequencedGearshiftTileEntity> {
 

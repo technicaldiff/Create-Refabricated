@@ -20,9 +20,11 @@ import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
+
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraftforge.common.util.Constants;
+
+import com.simibubi.create.lib.utility.Constants.NBT;
 
 public class CardboardBoxItem extends Item {
 
@@ -99,12 +101,12 @@ public class CardboardBoxItem extends Item {
 		super.addInformation(stack, worldIn, tooltip, flagIn);
 		CompoundNBT compoundnbt = stack.getOrCreateTag();
 
-		if (compoundnbt.contains("Address", Constants.NBT.TAG_STRING)) {
+		if (compoundnbt.contains("Address", NBT.TAG_STRING)) {
 			tooltip.add(new StringTextComponent("-> " + compoundnbt.getString("Address"))
 					.formatted(TextFormatting.GOLD));
 		}
 
-		if (!compoundnbt.contains("Items", Constants.NBT.TAG_LIST))
+		if (!compoundnbt.contains("Items", NBT.TAG_LIST))
 			return;
 
 		int i = 0;

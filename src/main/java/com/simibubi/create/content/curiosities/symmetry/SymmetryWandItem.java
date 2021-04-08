@@ -1,14 +1,5 @@
 package com.simibubi.create.content.curiosities.symmetry;
 
-import com.simibubi.create.content.curiosities.symmetry.mirror.CrossPlaneMirror;
-import com.simibubi.create.content.curiosities.symmetry.mirror.EmptyMirror;
-import com.simibubi.create.content.curiosities.symmetry.mirror.PlaneMirror;
-import com.simibubi.create.content.curiosities.symmetry.mirror.SymmetryMirror;
-import com.simibubi.create.foundation.config.AllConfigs;
-import com.simibubi.create.foundation.gui.ScreenOpener;
-import com.simibubi.create.foundation.networking.AllPackets;
-import com.simibubi.create.foundation.utility.BlockHelper;
-import com.simibubi.create.foundation.utility.Iterate;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -25,10 +16,22 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
+
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
+
+import com.simibubi.create.content.curiosities.symmetry.mirror.CrossPlaneMirror;
+import com.simibubi.create.content.curiosities.symmetry.mirror.EmptyMirror;
+import com.simibubi.create.content.curiosities.symmetry.mirror.PlaneMirror;
+import com.simibubi.create.content.curiosities.symmetry.mirror.SymmetryMirror;
+import com.simibubi.create.foundation.config.AllConfigs;
+import com.simibubi.create.foundation.gui.ScreenOpener;
+import com.simibubi.create.foundation.networking.AllPackets;
+import com.simibubi.create.foundation.utility.BlockHelper;
+import com.simibubi.create.foundation.utility.Iterate;
+import com.simibubi.create.lib.utility.Constants.BlockFlags;
+
 import net.minecraftforge.common.util.BlockSnapshot;
-import net.minecraftforge.common.util.Constants.BlockFlags;
 import net.minecraftforge.event.ForgeEventFactory;
 import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.network.PacketDistributor;

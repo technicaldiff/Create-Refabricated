@@ -3,8 +3,6 @@ package com.simibubi.create.content.logistics.block.mechanicalArm;
 import java.util.Collection;
 import java.util.function.Supplier;
 
-import com.simibubi.create.foundation.networking.SimplePacketBase;
-
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.ListNBT;
@@ -12,7 +10,10 @@ import net.minecraft.network.PacketBuffer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraftforge.common.util.Constants.NBT;
+
+import com.simibubi.create.foundation.networking.SimplePacketBase;
+import com.simibubi.create.lib.utility.Constants.NBT;
+
 import net.minecraftforge.fml.network.NetworkEvent.Context;
 
 public class ArmPlacementPacket extends SimplePacketBase {
