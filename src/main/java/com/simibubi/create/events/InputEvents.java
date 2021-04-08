@@ -4,21 +4,23 @@ import com.simibubi.create.CreateClient;
 import com.simibubi.create.foundation.tileEntity.behaviour.filtering.FilteringHandler;
 import com.simibubi.create.foundation.tileEntity.behaviour.scrollvalue.ScrollValueHandler;
 
-import net.minecraft.client.Minecraft;
-import net.fabricmc.api.EnvType;
-import net.minecraftforge.client.event.InputEvent.KeyInputEvent;
-import net.minecraftforge.client.event.InputEvent.MouseInputEvent;
-import net.minecraftforge.client.event.InputEvent.MouseScrollEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
+import com.simibubi.create.lib.event.KeyInputCallback;
 
-@EventBusSubscriber(value = EnvType.CLIENT)
+import com.simibubi.create.lib.event.MouseButtonCallback;
+import com.simibubi.create.lib.event.MouseScrolledCallback;
+
+import net.minecraft.client.Minecraft;
+
 public class InputEvents {
-	
-	@SubscribeEvent
-	public static void onKeyInput(KeyInputEvent event) {
-		int key = event.getKey();
-		boolean pressed = !(event.getAction() == 0);
+
+	public static void register() {
+		KeyInputCallback.EVENT.register(InputEvents::onKeyInput);
+		MouseScrolledCallback.EVENT.register(InputEvents::onMouseScrolled);
+		MouseButtonCallback.EVENT.register(InputEvents::onMouseInput);
+	}
+
+	public static void onKeyInput(int key, int scancode, int action, int mods) {
+		boolean pressed = action != 0;
 
 		if (Minecraft.getInstance().currentScreen != null)
 			return;
@@ -26,26 +28,22 @@ public class InputEvents {
 		CreateClient.schematicHandler.onKeyInput(key, pressed);
 	}
 
-	@SubscribeEvent
-	public static void onMouseScrolled(MouseScrollEvent event) {
+	public static boolean onMouseScrolled(double delta) {
 		if (Minecraft.getInstance().currentScreen != null)
-			return;
+			return false;
 
-		double delta = event.getScrollDelta();
-//		CollisionDebugger.onScroll(delta);
+//		CollisionDebugger.onScroll(delta); from upstream
 		boolean cancelled = CreateClient.schematicHandler.mouseScrolled(delta)
 			|| CreateClient.schematicAndQuillHandler.mouseScrolled(delta) || FilteringHandler.onScroll(delta)
 			|| ScrollValueHandler.onScroll(delta);
-		event.setCanceled(cancelled);
+		return cancelled;
 	}
 
-	@SubscribeEvent
-	public static void onMouseInput(MouseInputEvent event) {
+	public static void onMouseInput(int button, int action, int mods) {
 		if (Minecraft.getInstance().currentScreen != null)
 			return;
 
-		int button = event.getButton();
-		boolean pressed = !(event.getAction() == 0);
+		boolean pressed = action != 0;
 
 		CreateClient.schematicHandler.onMouseInput(button, pressed);
 		CreateClient.schematicAndQuillHandler.onMouseInput(button, pressed);

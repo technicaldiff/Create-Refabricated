@@ -13,7 +13,11 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUseContext;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.DamageSource;
-import net.minecraftforge.event.entity.player.AttackEntityEvent;
+import net.minecraft.util.Hand;
+import net.minecraft.util.math.EntityRayTraceResult;
+import net.minecraft.world.World;
+
+import org.jetbrains.annotations.Nullable;
 
 public class WrenchItem extends Item {
 
@@ -39,11 +43,9 @@ public class WrenchItem extends Item {
 		return actor.onWrenched(state, context);
 	}
 	
-	public static void wrenchInstaKillsMinecarts(AttackEntityEvent event) {
-		Entity target = event.getTarget();
+	public static void wrenchInstaKillsMinecarts(PlayerEntity player, World world, Hand hand, Entity target, @Nullable EntityRayTraceResult entityRayTraceResult) {
 		if (!(target instanceof AbstractMinecartEntity))
 			return;
-		PlayerEntity player = event.getPlayer();
 		ItemStack heldItem = player.getHeldItemMainhand();
 		if (!AllItems.WRENCH.isIn(heldItem))
 			return;

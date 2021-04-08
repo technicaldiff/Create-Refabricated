@@ -17,42 +17,51 @@ import com.simibubi.create.foundation.utility.Iterate;
 import com.simibubi.create.foundation.utility.ServerSpeedProvider;
 import com.simibubi.create.foundation.utility.WorldAttached;
 import com.simibubi.create.foundation.utility.recipe.RecipeFinder;
+
+import net.fabricmc.fabric.api.event.lifecycle.v1.ServerEntityEvents;
+import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
+import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
+
+import net.fabricmc.fabric.api.event.lifecycle.v1.ServerWorldEvents;
+
+import net.fabricmc.fabric.api.event.player.AttackEntityCallback;
+
+import net.fabricmc.fabric.api.event.world.WorldTickCallback;
+
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.fluid.FluidState;
 import net.minecraft.item.ItemStack;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.tags.FluidTags;
+import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Direction;
+import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.EntityRayTraceResult;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
-import net.minecraftforge.event.AddReloadListenerEvent;
-import net.minecraftforge.event.AttachCapabilitiesEvent;
-import net.minecraftforge.event.RegisterCommandsEvent;
-import net.minecraftforge.event.TickEvent.Phase;
-import net.minecraftforge.event.TickEvent.ServerTickEvent;
-import net.minecraftforge.event.TickEvent.WorldTickEvent;
-import net.minecraftforge.event.entity.EntityJoinWorldEvent;
-import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
-import net.minecraftforge.event.entity.player.AttackEntityEvent;
-import net.minecraftforge.event.entity.player.PlayerEvent;
-import net.minecraftforge.event.world.BlockEvent.FluidPlaceBlockEvent;
-import net.minecraftforge.event.world.ChunkEvent;
-import net.minecraftforge.event.world.WorldEvent;
-import net.minecraftforge.eventbus.api.EventPriority;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
-import net.minecraftforge.fml.event.server.FMLServerStoppingEvent;
+import net.minecraft.world.server.ServerWorld;
 
-@EventBusSubscriber
+import org.jetbrains.annotations.Nullable;
+
 public class CommonEvents {
 
-	@SubscribeEvent
-	public static void onServerTick(ServerTickEvent event) {
-		if (event.phase == Phase.START)
-			return;
+	public static void register() {
+		ServerTickEvents.END_SERVER_TICK.register(CommonEvents::onServerTick);
+		ServerWorldEvents.LOAD.register(CommonEvents::onLoadWorld);
+		ServerWorldEvents.UNLOAD.register(CommonEvents::onUnloadWorld);
+		ServerLifecycleEvents.SERVER_STOPPED.register(CommonEvents::serverStopped);
+		AttackEntityCallback.EVENT.register(CommonEvents::onEntityAttackedByPlayer);
+		ServerEntityEvents.ENTITY_LOAD.register(CommonEvents::onEntityAdded);
+
+		WorldTickCallback.EVENT.register(CommonEvents::onWorldTick);
+	}
+
+	public static void onServerTick(MinecraftServer minecraftServer) {
 		if (Create.schematicReceiver == null)
 			Create.schematicReceiver = new ServerSchematicLoader();
 		Create.schematicReceiver.tick();
@@ -60,12 +69,10 @@ public class CommonEvents {
 		ServerSpeedProvider.serverTick();
 	}
 
-	@SubscribeEvent
 	public static void onChunkUnloaded(ChunkEvent.Unload event) {
 		CapabilityMinecartController.onChunkUnloaded(event);
 	}
 
-	@SubscribeEvent
 	public static void whenFluidsMeet(FluidPlaceBlockEvent event) {
 		BlockState blockState = event.getOriginalState();
 		FluidState fluidState = blockState.getFluidState();
@@ -87,17 +94,12 @@ public class CommonEvents {
 		}
 	}
 
-	@SubscribeEvent
-	public static void onWorldTick(WorldTickEvent event) {
-		if (event.phase == Phase.START)
-			return;
-		World world = event.world;
+	public static void onWorldTick(World world) {
 		ContraptionHandler.tick(world);
 		CapabilityMinecartController.tick(world);
 		CouplingPhysics.tick(world);
 	}
 
-	@SubscribeEvent
 	public static void onUpdateLivingEntity(LivingUpdateEvent event) {
 		LivingEntity entityLiving = event.getEntityLiving();
 		World world = entityLiving.world;
@@ -106,45 +108,35 @@ public class CommonEvents {
 		ContraptionHandler.entitiesWhoJustDismountedGetSentToTheRightLocation(entityLiving, world);
 	}
 
-	@SubscribeEvent
-	public static void onEntityAdded(EntityJoinWorldEvent event) {
-		Entity entity = event.getEntity();
-		World world = event.getWorld();
+	public static void onEntityAdded(Entity entity, ServerWorld world) {
 		ContraptionHandler.addSpawnedContraptionsToCollisionList(entity, world);
 	}
 
-	@SubscribeEvent
-	public static void onEntityAttackedByPlayer(AttackEntityEvent event) {
-		WrenchItem.wrenchInstaKillsMinecarts(event);
+	public static ActionResultType onEntityAttackedByPlayer(PlayerEntity playerEntity, World world, Hand hand, Entity entity, @Nullable EntityRayTraceResult entityRayTraceResult) {
+		WrenchItem.wrenchInstaKillsMinecarts(playerEntity, world, hand, entity, entityRayTraceResult);
+		return ActionResultType.PASS;
 	}
 
-	@SubscribeEvent(priority = EventPriority.NORMAL)
 	public static void registerCommands(RegisterCommandsEvent event) {
 		AllCommands.register(event.getDispatcher());
 	}
 
-	@SubscribeEvent
 	public static void registerReloadListeners(AddReloadListenerEvent event) {
 		event.addListener(RecipeFinder.LISTENER);
 		event.addListener(PotionMixingRecipeManager.LISTENER);
 		event.addListener(FluidTransferRecipes.LISTENER);
 	}
 
-	@SubscribeEvent
-	public static void serverStopped(FMLServerStoppingEvent event) {
+	public static void serverStopped(MinecraftServer minecraftServer) {
 		Create.schematicReceiver.shutdown();
 	}
 
-	@SubscribeEvent
-	public static void onLoadWorld(WorldEvent.Load event) {
-		IWorld world = event.getWorld();
+	public static void onLoadWorld(MinecraftServer minecraftServer, ServerWorld world) {
 		Create.redstoneLinkNetworkHandler.onLoadWorld(world);
 		Create.torquePropagator.onLoadWorld(world);
 	}
 
-	@SubscribeEvent
-	public static void onUnloadWorld(WorldEvent.Unload event) {
-		IWorld world = event.getWorld();
+	public static void onUnloadWorld(MinecraftServer minecraftServer, ServerWorld world) {
 		Create.redstoneLinkNetworkHandler.onUnloadWorld(world);
 		Create.torquePropagator.onUnloadWorld(world);
 		WorldAttached.invalidateWorld(world);

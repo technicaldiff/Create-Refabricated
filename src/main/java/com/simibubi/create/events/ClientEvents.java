@@ -48,10 +48,20 @@ import com.simibubi.create.foundation.utility.ServerSpeedProvider;
 import com.simibubi.create.foundation.utility.placement.PlacementHelpers;
 import com.simibubi.create.foundation.utility.worldWrappers.WrappedClientWorld;
 
+import com.simibubi.create.lib.event.ClientWorldEvents;
+
+import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
+
+import net.fabricmc.fabric.api.client.item.v1.ItemTooltipCallback;
+import net.fabricmc.fabric.api.client.rendering.v1.WorldRenderContext;
+
+import net.fabricmc.fabric.api.client.rendering.v1.WorldRenderEvents;
+
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.ActiveRenderInfo;
 import net.minecraft.client.renderer.IRenderTypeBuffer;
 import net.minecraft.client.renderer.texture.OverlayTexture;
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.client.world.ClientWorld;
 import net.minecraft.fluid.Fluid;
 import net.minecraft.fluid.FluidState;
@@ -60,38 +70,28 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
-import net.fabricmc.api.EnvType;
-import net.minecraftforge.client.event.ClientPlayerNetworkEvent;
-import net.minecraftforge.client.event.EntityViewRenderEvent;
-import net.minecraftforge.client.event.RenderGameOverlayEvent;
-import net.minecraftforge.client.event.RenderGameOverlayEvent.ElementType;
-import net.minecraftforge.client.event.RenderTooltipEvent;
-import net.minecraftforge.client.event.RenderWorldLastEvent;
-import net.minecraftforge.event.TickEvent.ClientTickEvent;
-import net.minecraftforge.event.TickEvent.Phase;
-import net.minecraftforge.event.TickEvent.RenderTickEvent;
-import net.minecraftforge.event.entity.player.ItemTooltipEvent;
-import net.minecraftforge.event.entity.player.PlayerInteractEvent;
-import net.minecraftforge.event.world.WorldEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 
-@EventBusSubscriber(value = EnvType.CLIENT)
 public class ClientEvents {
 
 	private static final String itemPrefix = "item." + Create.ID;
 	private static final String blockPrefix = "block." + Create.ID;
 
-	@SubscribeEvent
-	public static void onTick(ClientTickEvent event) {
-		World world = Minecraft.getInstance().world;
-		if (event.phase == Phase.START)
-			return;
+	public static void register() {
+		ClientTickEvents.END_CLIENT_TICK.register(ClientEvents::onTick);
+		ClientWorldEvents.LOAD.register(ClientEvents::onLoadWorld);
+		ClientWorldEvents.UNLOAD.register(ClientEvents::onUnloadWorld);
+		WorldRenderEvents.END.register(ClientEvents::onRenderWorld);
+		ItemTooltipCallback.EVENT.register(ClientEvents::addToItemTooltip);
 
+		ClientTickEvents.END_WORLD_TICK.register(ClientEvents::onRenderTick);
+	}
+
+	public static void onTick(Minecraft client) {
 		if (!isGameActive())
 			return;
+
+		World world = client.world;
 
 		AnimationTickHolder.tick();
 		FastRenderDispatcher.tick();
@@ -135,10 +135,8 @@ public class ClientEvents {
 		CreateClient.checkGraphicsFanciness();
 	}
 
-	@SubscribeEvent
-	public static void onLoadWorld(WorldEvent.Load event) {
-		IWorld world = event.getWorld();
-		if (world.isRemote() && world instanceof ClientWorld && !(world instanceof WrappedClientWorld)) {
+	public static void onLoadWorld(Minecraft client, ClientWorld world) {
+		if (world.isRemote() && !(world instanceof WrappedClientWorld)) {
 			CreateClient.invalidateRenderers(world);
 			AnimationTickHolder.reset();
 			KineticRenderer renderer = CreateClient.kineticRenderer.get(world);
@@ -154,22 +152,20 @@ public class ClientEvents {
 		IHaveGoggleInformation.numberFormat.update();
 	}
 
-	@SubscribeEvent
-	public static void onUnloadWorld(WorldEvent.Unload event) {
-		if (event.getWorld()
+	public static void onUnloadWorld(Minecraft client, ClientWorld world) {
+		if (world
 			.isRemote()) {
-			CreateClient.invalidateRenderers(event.getWorld());
+			CreateClient.invalidateRenderers(world);
 			AnimationTickHolder.reset();
 		}
 	}
 
-	@SubscribeEvent
-	public static void onRenderWorld(RenderWorldLastEvent event) {
+	public static void onRenderWorld(WorldRenderContext event) {
 		Vector3d cameraPos = Minecraft.getInstance().gameRenderer.getActiveRenderInfo()
 			.getProjectedView();
 		float pt = AnimationTickHolder.getPartialTicks();
 
-		MatrixStack ms = event.getMatrixStack();
+		MatrixStack ms = event.matrixStack();
 		ms.push();
 		ms.translate(-cameraPos.getX(), -cameraPos.getY(), -cameraPos.getZ());
 		SuperRenderTypeBuffer buffer = SuperRenderTypeBuffer.getInstance();
@@ -189,7 +185,6 @@ public class ClientEvents {
 		FastRenderDispatcher.endFrame();
 	}
 
-	@SubscribeEvent
 	public static void onRenderOverlay(RenderGameOverlayEvent.Post event) {
 		if (event.getType() != ElementType.HOTBAR)
 			return;
@@ -203,25 +198,22 @@ public class ClientEvents {
 		CreateClient.schematicHandler.renderOverlay(ms, buffer, light, overlay, partialTicks);
 	}
 
-	@SubscribeEvent
 	public static void getItemTooltipColor(RenderTooltipEvent.Color event) {
 		PonderTooltipHandler.handleTooltipColor(event);
 	}
 
-	@SubscribeEvent
-	public static void addToItemTooltip(ItemTooltipEvent event) {
+	public static void addToItemTooltip(ItemStack stack, ITooltipFlag iTooltipFlag, List<ITextComponent> iTextComponents) {
 		if (!AllConfigs.CLIENT.tooltips.get())
 			return;
-		if (event.getPlayer() == null)
+		if (Minecraft.getInstance().player == null)
 			return;
 
-		ItemStack stack = event.getItemStack();
 		String translationKey = stack.getItem()
 			.getTranslationKey(stack);
 		if (!translationKey.startsWith(itemPrefix) && !translationKey.startsWith(blockPrefix))
 			return;
 
-		if (TooltipHelper.hasTooltip(stack, event.getPlayer())) {
+		if (TooltipHelper.hasTooltip(stack, Minecraft.getInstance().player)) {
 			List<ITextComponent> itemTooltip = event.getToolTip();
 			List<ITextComponent> toolTip = new ArrayList<>();
 			toolTip.add(itemTooltip.remove(0));
@@ -246,8 +238,7 @@ public class ClientEvents {
 		PonderTooltipHandler.addToTooltip(event.getToolTip(), stack);
 	}
 
-	@SubscribeEvent
-	public static void onRenderTick(RenderTickEvent event) {
+	public static void onRenderTick(ClientWorld clientWorld) {
 		if (!isGameActive())
 			return;
 		TurntableHandler.gameRenderTick();
@@ -257,7 +248,6 @@ public class ClientEvents {
 		return !(Minecraft.getInstance().world == null || Minecraft.getInstance().player == null);
 	}
 
-	@SubscribeEvent
 	public static void getFogDensity(EntityViewRenderEvent.FogDensity event) {
 		ActiveRenderInfo info = event.getInfo();
 		FluidState fluidState = info.getFluidState();
@@ -276,7 +266,6 @@ public class ClientEvents {
 		}
 	}
 
-	@SubscribeEvent
 	public static void getFogColor(EntityViewRenderEvent.FogColors event) {
 		ActiveRenderInfo info = event.getInfo();
 		FluidState fluidState = info.getFluidState();
@@ -297,7 +286,6 @@ public class ClientEvents {
 		}
 	}
 
-	@SubscribeEvent
 	public static void leftClickEmpty(PlayerInteractEvent.LeftClickEmpty event) {
 		ItemStack stack = event.getItemStack();
 		if (stack.getItem() instanceof ZapperItem) {
