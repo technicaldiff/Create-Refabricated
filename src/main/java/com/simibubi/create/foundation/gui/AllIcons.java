@@ -5,6 +5,7 @@ import com.mojang.blaze3d.matrix.MatrixStack.Entry;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
 import com.simibubi.create.Create;
 import com.simibubi.create.foundation.utility.ColorHelper;
+
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.AbstractGui;
 import net.minecraft.client.renderer.IRenderTypeBuffer;
@@ -180,7 +181,8 @@ public class AllIcons implements IScreenRenderable {
 	}
 
 	@Environment(EnvType.CLIENT)
-	private void vertex(Entry peek, IVertexBuilder builder, int j, int k, Vector3d rgb, Vector3d vec, float u, float v) {
+	private void vertex(Entry peek, IVertexBuilder builder, int j, int k, Vector3d rgb, Vector3d vec, float u,
+		float v) {
 		builder.vertex(peek.getModel(), (float) vec.x, (float) vec.y, (float) vec.z)
 			.color((float) rgb.x, (float) rgb.y, (float) rgb.z, 1)
 			.texture(u, v)

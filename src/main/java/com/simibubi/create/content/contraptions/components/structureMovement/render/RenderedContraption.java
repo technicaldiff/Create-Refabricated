@@ -16,10 +16,17 @@ import com.simibubi.create.foundation.render.backend.instancing.IInstanceRendere
 import com.simibubi.create.foundation.render.backend.light.GridAlignedBB;
 import com.simibubi.create.foundation.utility.AnimationTickHolder;
 import com.simibubi.create.foundation.utility.worldWrappers.PlacementSimulationWorld;
+import com.simibubi.create.foundation.utility.worldWrappers.PlacementSimulationWorldStarlight;
+
 import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.*;
+import net.minecraft.client.renderer.ActiveRenderInfo;
+import net.minecraft.client.renderer.BlockModelRenderer;
+import net.minecraft.client.renderer.BlockRendererDispatcher;
+import net.minecraft.client.renderer.BufferBuilder;
+import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.RenderTypeLookup;
 import net.minecraft.client.renderer.model.IBakedModel;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
@@ -33,12 +40,7 @@ import net.minecraft.world.gen.feature.template.Template;
 import net.minecraft.world.lighting.WorldLightManager;
 import net.minecraftforge.client.ForgeHooksClient;
 import net.minecraftforge.client.model.data.EmptyModelData;
-import org.lwjgl.opengl.GL11;
-
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Random;
+import net.minecraftforge.fml.ModList;
 
 public class RenderedContraption {
     private final HashMap<RenderType, ContraptionModel> renderLayers = new HashMap<>();
@@ -170,6 +172,14 @@ public class RenderedContraption {
     }
 
     private static PlacementSimulationWorld setupRenderWorld(World world, Contraption c) {
+        if (ModList.get().isLoaded("starlight")) {
+            return PlacementSimulationWorldStarlight.setupRenderWorldStarlight(world, c);
+        } else {
+            return setupRenderWorldVanilla(world, c);
+        }
+    }
+
+    private static PlacementSimulationWorld setupRenderWorldVanilla(World world, Contraption c) {
         PlacementSimulationWorld renderWorld = new PlacementSimulationWorld(world);
 
         renderWorld.setTileEntities(c.presentTileEntities.values());

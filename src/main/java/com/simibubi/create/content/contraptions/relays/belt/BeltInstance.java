@@ -1,8 +1,12 @@
 package com.simibubi.create.content.contraptions.relays.belt;
 
+import java.util.ArrayList;
+import java.util.function.Supplier;
+
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.simibubi.create.AllBlockPartials;
 import com.simibubi.create.AllBlocks;
+import com.simibubi.create.content.contraptions.base.KineticRenderMaterials;
 import com.simibubi.create.content.contraptions.base.KineticTileInstance;
 import com.simibubi.create.content.contraptions.base.RotatingData;
 import com.simibubi.create.foundation.block.render.SpriteShiftEntry;
@@ -11,13 +15,11 @@ import com.simibubi.create.foundation.render.backend.instancing.InstancedModel;
 import com.simibubi.create.foundation.render.backend.instancing.InstancedTileRenderer;
 import com.simibubi.create.foundation.utility.Iterate;
 import com.simibubi.create.foundation.utility.MatrixStacker;
+
 import net.minecraft.item.DyeColor;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.vector.Quaternion;
 import net.minecraft.world.LightType;
-
-import java.util.ArrayList;
-import java.util.function.Supplier;
 
 public class BeltInstance extends KineticTileInstance<BeltTileEntity> {
 
@@ -58,7 +60,7 @@ public class BeltInstance extends KineticTileInstance<BeltTileEntity> {
             AllBlockPartials beltPartial = BeltRenderer.getBeltPartial(diagonal, start, end, bottom);
             SpriteShiftEntry spriteShift = BeltRenderer.getSpriteShiftEntry(color, diagonal, bottom);
 
-            InstancedModel<BeltData> beltModel = beltPartial.renderOnBelt(modelManager, blockState);
+            InstancedModel<BeltData> beltModel = modelManager.getMaterial(KineticRenderMaterials.BELTS).getModel(beltPartial, blockState);
 
             keys.add(setup(beltModel.createInstance(), bottom, spriteShift));
 

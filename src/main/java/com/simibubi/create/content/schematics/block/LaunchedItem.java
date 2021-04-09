@@ -2,6 +2,13 @@ package com.simibubi.create.content.schematics.block;
 
 import java.util.Optional;
 
+import com.simibubi.create.AllBlocks;
+import com.simibubi.create.content.contraptions.relays.belt.BeltBlock;
+import com.simibubi.create.content.contraptions.relays.belt.BeltPart;
+import com.simibubi.create.content.contraptions.relays.belt.item.BeltConnectorItem;
+import com.simibubi.create.content.contraptions.relays.elementary.AbstractShaftBlock;
+import com.simibubi.create.foundation.utility.BlockHelper;
+
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
@@ -12,15 +19,7 @@ import net.minecraft.util.Direction.Axis;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
-
-import com.simibubi.create.AllBlocks;
-import com.simibubi.create.content.contraptions.relays.belt.BeltBlock;
-import com.simibubi.create.content.contraptions.relays.belt.BeltPart;
-import com.simibubi.create.content.contraptions.relays.belt.item.BeltConnectorItem;
-import com.simibubi.create.foundation.utility.BlockHelper;
-import com.simibubi.create.content.contraptions.relays.elementary.AbstractShaftBlock;
-import com.simibubi.create.foundation.utility.BlockHelper;
-import com.simibubi.create.lib.utility.Constants.NBT;
+import com.simibubi.create.lib.utility.Constants;
 
 public abstract class LaunchedItem {
 
@@ -113,7 +112,7 @@ public abstract class LaunchedItem {
 		void readNBT(CompoundNBT nbt) {
 			super.readNBT(nbt);
 			state = NBTUtil.readBlockState(nbt.getCompound("BlockState"));
-			if (nbt.contains("Data", NBT.TAG_COMPOUND)) {
+			if (nbt.contains("Data", Constants.NBT.TAG_COMPOUND)) {
 				data = nbt.getCompound("Data");
 			}
 		}

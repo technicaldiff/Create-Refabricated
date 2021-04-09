@@ -4,6 +4,8 @@ import java.util.Random;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
+import com.simibubi.create.foundation.renderState.RenderTypes;
+import com.simibubi.create.foundation.utility.Iterate;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.IRenderTypeBuffer;
@@ -14,9 +16,6 @@ import net.minecraft.client.renderer.model.ItemCameraTransforms;
 import net.minecraft.client.renderer.tileentity.ItemStackTileEntityRenderer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Direction;
-
-import com.simibubi.create.foundation.renderState.RenderTypes;
-import com.simibubi.create.foundation.utility.Iterate;
 
 public class PartialItemModelRenderer {
 
@@ -34,7 +33,8 @@ public class PartialItemModelRenderer {
 		return instance;
 	}
 
-	public static PartialItemModelRenderer of(ItemStack stack, ItemCameraTransforms.TransformType transformType, MatrixStack ms, IRenderTypeBuffer buffer, int overlay) {
+	public static PartialItemModelRenderer of(ItemStack stack, ItemCameraTransforms.TransformType transformType,
+		MatrixStack ms, IRenderTypeBuffer buffer, int overlay) {
 		PartialItemModelRenderer instance = get();
 		instance.stack = stack;
 		instance.buffer = buffer;
@@ -47,15 +47,15 @@ public class PartialItemModelRenderer {
 	public void render(IBakedModel model, int light) {
 		render(model, RenderTypes.getItemPartialTranslucent(), light);
 	}
-	
+
 	public void renderSolid(IBakedModel model, int light) {
 		render(model, RenderTypes.getItemPartialSolid(), light);
 	}
-	
+
 	public void renderSolidGlowing(IBakedModel model, int light) {
 		render(model, RenderTypes.getGlowingSolid(), light);
 	}
-	
+
 	public void renderGlowing(IBakedModel model, int light) {
 		render(model, RenderTypes.getGlowingTranslucent(), light);
 	}
@@ -84,13 +84,12 @@ public class PartialItemModelRenderer {
 
 		for (Direction direction : Iterate.directions) {
 			random.setSeed(42L);
-			ir.renderBakedItemQuads(ms, p_229114_6_, model.getQuads(null, direction, random), stack,
-				light, overlay);
+			ir.renderBakedItemQuads(ms, p_229114_6_, model.getQuads(null, direction, random), stack, light,
+				overlay);
 		}
 
 		random.setSeed(42L);
-		ir.renderBakedItemQuads(ms, p_229114_6_, model.getQuads(null, null, random),
-			stack, light, overlay);
+		ir.renderBakedItemQuads(ms, p_229114_6_, model.getQuads(null, null, random), stack, light, overlay);
 	}
 
 }

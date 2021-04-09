@@ -1,13 +1,13 @@
 package com.simibubi.create.events;
 
-import net.minecraft.client.Minecraft;
-
 import com.simibubi.create.CreateClient;
 import com.simibubi.create.foundation.tileEntity.behaviour.filtering.FilteringHandler;
 import com.simibubi.create.foundation.tileEntity.behaviour.scrollvalue.ScrollValueHandler;
 import com.simibubi.create.lib.event.KeyInputCallback;
 import com.simibubi.create.lib.event.MouseButtonCallback;
 import com.simibubi.create.lib.event.MouseScrolledCallback;
+
+import net.minecraft.client.Minecraft;
 
 public class InputEvents {
 

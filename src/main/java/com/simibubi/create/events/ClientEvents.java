@@ -99,7 +99,7 @@ public class ClientEvents {
 		CouplingPhysics.tick(world);
 
 		PonderTooltipHandler.tick();
-		//ScreenOpener.tick();
+		// ScreenOpener.tick();
 		ServerSpeedProvider.clientTick();
 		BeltConnectorHandler.tick();
 		FilteringRenderer.tick();
@@ -114,7 +114,7 @@ public class ClientEvents {
 		KineticDebugger.tick();
 		ZapperRenderHandler.tick();
 		ExtendoGripRenderHandler.tick();
-		//		CollisionDebugger.tick();
+		// CollisionDebugger.tick();
 		ArmInteractionPointHandler.tick();
 		EjectorTargetHandler.tick();
 		PlacementHelpers.tick();
@@ -137,10 +137,10 @@ public class ClientEvents {
 		}
 
 		/*
-		i was getting nullPointers when trying to call this during client setup,
-		so i assume minecraft's language manager isn't yet fully loaded at that time.
-		not sure where else to call this tho :S
-		*/
+		 * i was getting nullPointers when trying to call this during client setup,
+		 * so i assume minecraft's language manager isn't yet fully loaded at that time.
+		 * not sure where else to call this tho :S
+		 */
 		IHaveGoggleInformation.numberFormat.update();
 	}
 
@@ -167,7 +167,7 @@ public class ClientEvents {
 		CreateClient.ghostBlocks.renderAll(ms, buffer);
 
 		CreateClient.outliner.renderOutlines(ms, buffer, pt);
-		//		LightVolumeDebugger.render(ms, buffer);
+		// LightVolumeDebugger.render(ms, buffer);
 		buffer.draw();
 		RenderSystem.enableCull();
 
@@ -186,7 +186,8 @@ public class ClientEvents {
 			.getEntityVertexConsumers(), 0xF000F0, OverlayTexture.DEFAULT_UV, event.getPartialTicks());
 	}
 
-	public static void onRenderHotbar(MatrixStack ms, IRenderTypeBuffer buffer, int light, int overlay, float partialTicks) {
+	public static void onRenderHotbar(MatrixStack ms, IRenderTypeBuffer buffer, int light, int overlay,
+		float partialTicks) {
 		CreateClient.schematicHandler.renderOverlay(ms, buffer, light, overlay, partialTicks);
 	}
 
@@ -212,7 +213,7 @@ public class ClientEvents {
 				.addInformation(toolTip);
 			itemTooltip.addAll(0, toolTip);
 		}
-		
+
 		if (stack.getItem() instanceof BlockItem) {
 			BlockItem item = (BlockItem) stack.getItem();
 			if (item.getBlock() instanceof IRotate || item.getBlock() instanceof EngineBlock) {

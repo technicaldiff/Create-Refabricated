@@ -5,6 +5,19 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
+import com.simibubi.create.AllItems;
+import com.simibubi.create.Create;
+import com.simibubi.create.content.curiosities.zapper.PlacementPatterns;
+import com.simibubi.create.content.curiosities.zapper.ZapperInteractionHandler;
+import com.simibubi.create.content.curiosities.zapper.ZapperItem;
+import com.simibubi.create.foundation.advancement.AllTriggers;
+import com.simibubi.create.foundation.gui.ScreenOpener;
+import com.simibubi.create.foundation.item.ItemDescription;
+import com.simibubi.create.foundation.utility.BlockHelper;
+import com.simibubi.create.foundation.utility.Iterate;
+import com.simibubi.create.foundation.utility.Lang;
+import com.simibubi.create.foundation.utility.NBTHelper;
+
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -31,26 +44,10 @@ import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
-
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-
-import com.simibubi.create.AllItems;
-import com.simibubi.create.Create;
-import com.simibubi.create.content.curiosities.zapper.PlacementPatterns;
-import com.simibubi.create.content.curiosities.zapper.ZapperInteractionHandler;
-import com.simibubi.create.content.curiosities.zapper.ZapperItem;
-import com.simibubi.create.foundation.advancement.AllTriggers;
-import com.simibubi.create.foundation.gui.ScreenOpener;
-import com.simibubi.create.foundation.item.ItemDescription;
-import com.simibubi.create.foundation.item.ItemDescription.Palette;
-import com.simibubi.create.foundation.utility.BlockHelper;
-import com.simibubi.create.foundation.utility.Iterate;
-import com.simibubi.create.foundation.utility.Lang;
-import com.simibubi.create.foundation.utility.NBTHelper;
-import com.simibubi.create.lib.utility.Constants.BlockFlags;
-
 import net.minecraftforge.common.util.BlockSnapshot;
+import com.simibubi.create.lib.utility.Constants.BlockFlags;
 import net.minecraftforge.event.ForgeEventFactory;
 
 public class BlockzapperItem extends ZapperItem {
