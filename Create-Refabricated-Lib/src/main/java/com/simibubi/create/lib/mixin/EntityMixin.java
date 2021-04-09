@@ -1,8 +1,5 @@
 package com.simibubi.create.lib.mixin;
 
-import net.minecraft.entity.Entity;
-import net.minecraft.nbt.CompoundTag;
-
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
@@ -12,6 +9,9 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import com.simibubi.create.lib.extensions.EntityExtensions;
 import com.simibubi.create.lib.helper.EntityHelper;
+
+import net.minecraft.entity.Entity;
+import net.minecraft.nbt.CompoundTag;
 
 @Mixin(Entity.class)
 public abstract class EntityMixin implements EntityExtensions {

@@ -1,14 +1,14 @@
 package com.simibubi.create.lib.mixin;
 
-import net.minecraft.entity.ItemEntity;
-import net.minecraft.item.ItemStack;
-
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import com.simibubi.create.lib.item.EntityTickListenerItem;
+
+import net.minecraft.entity.ItemEntity;
+import net.minecraft.item.ItemStack;
 
 @Mixin(ItemEntity.class)
 public abstract class ItemEntityMixin {

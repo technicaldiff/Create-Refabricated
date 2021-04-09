@@ -1,6 +1,7 @@
 package com.simibubi.create.lib.item;
 
 import com.mojang.blaze3d.systems.RenderSystem;
+import com.simibubi.create.lib.mixin.accessor.ItemRendererAccessor;
 
 import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.render.BufferBuilder;
@@ -8,8 +9,6 @@ import net.minecraft.client.render.Tessellator;
 import net.minecraft.client.render.item.ItemRenderer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.MathHelper;
-
-import com.simibubi.create.lib.mixin.accessor.ItemRendererAccessor;
 
 public interface CustomDurabilityBarItem extends CustomGuiOverlayItem {
 	default boolean renderOverlay(ItemStack stack, int x, int y, TextRenderer textRenderer, ItemRenderer itemRenderer) {

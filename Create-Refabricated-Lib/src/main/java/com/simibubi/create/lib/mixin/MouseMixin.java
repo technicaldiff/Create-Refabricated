@@ -1,7 +1,5 @@
 package com.simibubi.create.lib.mixin;
 
-import net.minecraft.client.Mouse;
-
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.At.Shift;
@@ -10,11 +8,12 @@ import org.spongepowered.asm.mixin.injection.Slice;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
-
 import com.simibubi.create.lib.event.MouseButtonCallback;
 import com.simibubi.create.lib.event.MouseScrolledCallback;
+
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
+import net.minecraft.client.Mouse;
 
 @Environment(EnvType.CLIENT)
 @Mixin(Mouse.class)

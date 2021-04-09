@@ -3,14 +3,13 @@ package com.simibubi.create.lib.mixin;
 import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
-
-import net.minecraft.util.math.Matrix4f;
-
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 
 import com.simibubi.create.lib.extensions.Matrix4fExtensions;
 import com.simibubi.create.lib.utility.MixinHelper;
+
+import net.minecraft.util.math.Matrix4f;
 
 @Mixin(Matrix4f.class)
 public abstract class Matrix4fMixin implements Matrix4fExtensions {

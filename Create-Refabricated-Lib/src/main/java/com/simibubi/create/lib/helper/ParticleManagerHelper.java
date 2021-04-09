@@ -1,12 +1,12 @@
 package com.simibubi.create.lib.helper;
 
+import com.simibubi.create.lib.extensions.ParticleManagerExtensions;
+import com.simibubi.create.lib.utility.MixinHelper;
+
 import net.minecraft.client.particle.ParticleFactory;
 import net.minecraft.client.particle.ParticleManager;
 import net.minecraft.particle.ParticleEffect;
 import net.minecraft.particle.ParticleType;
-
-import com.simibubi.create.lib.extensions.ParticleManagerExtensions;
-import com.simibubi.create.lib.utility.MixinHelper;
 
 /**
  * Removal of this class should be considered because Fabric API provides almost an exact replacement.

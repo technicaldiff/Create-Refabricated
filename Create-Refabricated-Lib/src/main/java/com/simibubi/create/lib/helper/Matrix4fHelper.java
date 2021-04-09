@@ -2,10 +2,10 @@ package com.simibubi.create.lib.helper;
 
 import org.jetbrains.annotations.Contract;
 
-import net.minecraft.util.math.Matrix4f;
-
 import com.simibubi.create.lib.extensions.Matrix4fExtensions;
 import com.simibubi.create.lib.utility.MixinHelper;
+
+import net.minecraft.util.math.Matrix4f;
 
 public final class Matrix4fHelper {
 	@Contract(mutates = "param1")

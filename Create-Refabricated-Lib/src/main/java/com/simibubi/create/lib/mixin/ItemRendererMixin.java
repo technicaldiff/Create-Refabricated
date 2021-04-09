@@ -1,18 +1,17 @@
 package com.simibubi.create.lib.mixin;
 
-import net.minecraft.client.font.TextRenderer;
-import net.minecraft.client.render.item.ItemRenderer;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Redirect;
 
+import com.simibubi.create.lib.item.CustomGuiOverlayItem;
+
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-
-import com.simibubi.create.lib.item.CustomGuiOverlayItem;
+import net.minecraft.client.font.TextRenderer;
+import net.minecraft.client.render.item.ItemRenderer;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 
 @Environment(EnvType.CLIENT)
 @Mixin(ItemRenderer.class)

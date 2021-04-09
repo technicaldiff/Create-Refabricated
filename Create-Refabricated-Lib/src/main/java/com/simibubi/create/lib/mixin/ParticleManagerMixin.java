@@ -1,17 +1,16 @@
 package com.simibubi.create.lib.mixin;
 
+import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Shadow;
+
+import com.simibubi.create.lib.extensions.ParticleManagerExtensions;
+
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.client.particle.ParticleFactory;
 import net.minecraft.client.particle.ParticleManager;
 import net.minecraft.particle.ParticleEffect;
 import net.minecraft.particle.ParticleType;
-
-import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Shadow;
-
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
-
-import com.simibubi.create.lib.extensions.ParticleManagerExtensions;
 
 @Deprecated
 @Environment(EnvType.CLIENT)

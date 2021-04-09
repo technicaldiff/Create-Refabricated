@@ -1,7 +1,5 @@
 package com.simibubi.create.lib.mixin;
 
-import net.minecraft.client.Keyboard;
-
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.At.Shift;
@@ -9,10 +7,11 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.Slice;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
+import com.simibubi.create.lib.event.KeyInputCallback;
+
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-
-import com.simibubi.create.lib.event.KeyInputCallback;
+import net.minecraft.client.Keyboard;
 
 @Environment(EnvType.CLIENT)
 @Mixin(Keyboard.class)

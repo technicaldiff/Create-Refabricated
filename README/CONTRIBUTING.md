@@ -1,12 +1,7 @@
-# The Rules of Porting
+# Porting Guidelines
 
 1. <span id="mindiff">**"Min-Diff"**</span>  
-   As little as possible code should be changed to maximize compatibility with future upstream commits. This includes file names, java names, and code formatting. There are a few exceptions to this rule:
-    - **Import Order**  
-      Because upstream's import order is currently inconsistent, it is better to make our import order consistent, even if it does not match with upstream's. Use the import order defined in [`checkstyle.xml`](../checkstyle/checkstyle.xml) or the editor config.
-    - **Space Indentation**  
-      If a **Java** file uses spaces for indentation, replace all space indentation with tab indentation. Upstream is also currently inconsistent with this, but for the most part uses tabs.  
-      **Json** files should use *two spaces* for indentation.
+   As little as possible code should be changed to maximize compatibility with future upstream commits. This includes file names, java names, and code formatting. The only exception to this rule is that adding imports is allowed.
 
 
 2. **Replacing Code**  
@@ -20,5 +15,9 @@
    Most code style rules are listed under [rule 1](#mindiff), so refer there for more information. Additionally, all new code that is added to the project must follow the checkstyle. This includes the library mod and replacement code in the main mod.
 
 
-4. **Uncertainty**  
+4. **Library Mod**  
+   The Contribution guidelines for the library mod can be found [here](../Create-Refabricated-Lib/CONTRIBUTING.md).
+
+
+5. **Uncertainty**  
    If you are unsure of what to do with a certain section of code, discuss with the rest of the porting team before making changes.
