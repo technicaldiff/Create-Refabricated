@@ -120,8 +120,8 @@ public class SuperByteBufferCache {
 		BufferBuilder builder = new BufferBuilder(512);
 
 		builder.begin(GL11.GL_QUADS, DefaultVertexFormats.BLOCK);
-		blockRenderer.renderModel(mc.world, model, referenceState, BlockPos.ZERO.up(255), ms, builder, true,
-			mc.world.rand, 42, OverlayTexture.DEFAULT_UV, VirtualEmptyModelData.INSTANCE);
+		blockRenderer.render(mc.world, model, referenceState, BlockPos.ZERO.up(255), ms, builder, true,
+			mc.world.rand, 42, OverlayTexture.DEFAULT_UV);
 		builder.finishDrawing();
 		return builder;
 	}

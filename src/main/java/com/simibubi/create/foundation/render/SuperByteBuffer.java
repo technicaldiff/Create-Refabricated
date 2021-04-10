@@ -24,7 +24,6 @@ import net.minecraft.util.math.vector.Vector3f;
 import net.minecraft.util.math.vector.Vector4f;
 import net.minecraft.world.LightType;
 import net.minecraft.world.World;
-import net.minecraftforge.client.model.pipeline.LightUtil;
 
 public class SuperByteBuffer extends TemplateBuffer {
 
@@ -107,13 +106,13 @@ public class SuperByteBuffer extends TemplateBuffer {
 			float normalY = getNY(buffer, i) / 127f;
 			float normalZ = getNZ(buffer, i) / 127f;
 
-			float staticDiffuse = LightUtil.diffuseLight(normalX, normalY, normalZ);
+			float staticDiffuse = diffuseLight(normalX, normalY, normalZ);
 			normal.set(normalX, normalY, normalZ);
 			normal.transform(normalMat);
 			float nx = normal.getX();
 			float ny = normal.getY();
 			float nz = normal.getZ();
-			float instanceDiffuse = LightUtil.diffuseLight(nx, ny, nz);
+			float instanceDiffuse = diffuseLight(nx, ny, nz);
 
 			pos.set(x, y, z, 1F);
 			pos.transform(modelMat);
@@ -303,6 +302,10 @@ public class SuperByteBuffer extends TemplateBuffer {
 	@FunctionalInterface
 	public interface SpriteShiftFunc {
 		void shift(IVertexBuilder builder, float u, float v);
+	}
+
+	float diffuseLight(float x, float y, float z) {
+		return Math.min(x * x * 0.6f + y * y * ((3f + y) / 4f) + z * z * 0.8f, 1f);
 	}
 
 }

@@ -16,7 +16,6 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.RayTraceResult;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 
 public class ScrollValueHandler {
 

@@ -24,14 +24,13 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.util.math.vector.Vector3f;
-import net.minecraftforge.client.model.data.EmptyModelData;
 
 public class SchematicannonRenderer extends SafeTileEntityRenderer<SchematicannonTileEntity> {
 
 	public SchematicannonRenderer(TileEntityRendererDispatcher dispatcher) {
 		super(dispatcher);
 	}
-	
+
 	@Override
 	public boolean isGlobalRenderer(SchematicannonTileEntity p_188185_1_) {
 		return true;
@@ -159,7 +158,7 @@ public class SchematicannonRenderer extends SafeTileEntityRenderer<Schematicanno
 			if (launched instanceof ForBlockState) {
 				float scale = .3f;
 				ms.scale(scale, scale, scale);
-				Minecraft.getInstance().getBlockRendererDispatcher().renderBlock(((ForBlockState) launched).state, ms, buffer, light, overlay, EmptyModelData.INSTANCE);
+				Minecraft.getInstance().getBlockRendererDispatcher().renderBlockAsEntity(((ForBlockState) launched).state, ms, buffer, light, overlay);
 			}
 
 			// Render the item
