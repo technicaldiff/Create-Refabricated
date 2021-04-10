@@ -1,22 +1,24 @@
 package com.simibubi.create.content.contraptions.components.structureMovement.sync;
 
-import java.util.function.Supplier;
+import com.simibubi.create.lib.helper.EntityHelper;
 
-import com.simibubi.create.foundation.networking.SimplePacketBase;
-
+import me.pepperbell.simplenetworking.S2CPacket;
+import me.pepperbell.simplenetworking.SimpleChannel.ResponseTarget;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.network.play.ClientPlayNetHandler;
 import net.minecraft.client.world.ClientWorld;
 import net.minecraft.entity.Entity;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.math.vector.Vector3d;
-import net.minecraftforge.fml.network.NetworkEvent.Context;
 
-public class LimbSwingUpdatePacket extends SimplePacketBase {
+public class LimbSwingUpdatePacket implements S2CPacket {
 
 	private int entityId;
 	private Vector3d position;
 	private float limbSwing;
+
+	protected LimbSwingUpdatePacket() {}
 
 	public LimbSwingUpdatePacket(int entityId, Vector3d position, float limbSwing) {
 		this.entityId = entityId;
@@ -24,7 +26,7 @@ public class LimbSwingUpdatePacket extends SimplePacketBase {
 		this.limbSwing = limbSwing;
 	}
 
-	public LimbSwingUpdatePacket(PacketBuffer buffer) {
+	public void read(PacketBuffer buffer) {
 		entityId = buffer.readInt();
 		position = new Vector3d(buffer.readFloat(), buffer.readFloat(), buffer.readFloat());
 		limbSwing = buffer.readFloat();
@@ -40,23 +42,21 @@ public class LimbSwingUpdatePacket extends SimplePacketBase {
 	}
 
 	@Override
-	public void handle(Supplier<Context> context) {
-		context.get()
-			.enqueueWork(() -> {
+	public void handle(Minecraft client, ClientPlayNetHandler handler, ResponseTarget responseTarget) {
+		client
+			.execute(() -> {
 				ClientWorld world = Minecraft.getInstance().world;
 				if (world == null)
 					return;
 				Entity entity = world.getEntityByID(entityId);
 				if (entity == null)
 					return;
-				CompoundNBT data = entity.getPersistentData();
+				CompoundNBT data = EntityHelper.getExtraCustomData(entity);
 				data.putInt("LastOverrideLimbSwingUpdate", 0);
 				data.putFloat("OverrideLimbSwing", limbSwing);
 				entity.setPositionAndRotationDirect(position.x, position.y, position.z, entity.rotationYaw,
 					entity.rotationPitch, 2, false);
 			});
-		context.get()
-			.setPacketHandled(true);
 	}
 
 }

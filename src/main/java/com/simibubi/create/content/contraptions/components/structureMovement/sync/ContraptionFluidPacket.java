@@ -1,22 +1,23 @@
 package com.simibubi.create.content.contraptions.components.structureMovement.sync;
 
-import java.util.function.Supplier;
-
 import com.simibubi.create.content.contraptions.components.structureMovement.AbstractContraptionEntity;
-import com.simibubi.create.foundation.networking.SimplePacketBase;
 
+import me.pepperbell.simplenetworking.S2CPacket;
+import me.pepperbell.simplenetworking.SimpleChannel.ResponseTarget;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.network.play.ClientPlayNetHandler;
 import net.minecraft.entity.Entity;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fml.network.NetworkEvent.Context;
 
-public class ContraptionFluidPacket extends SimplePacketBase {
+public class ContraptionFluidPacket implements S2CPacket {
 
 	private int entityId;
 	private BlockPos localPos;
 	private FluidStack containedFluid;
+
+	protected ContraptionFluidPacket() {}
 
 	public ContraptionFluidPacket(int entityId, BlockPos localPos, FluidStack containedFluid) {
 		this.entityId = entityId;
@@ -38,16 +39,14 @@ public class ContraptionFluidPacket extends SimplePacketBase {
 	}
 
 	@Override
-	public void handle(Supplier<Context> context) {
-		context.get()
-			.enqueueWork(() -> {
+	public void handle(Minecraft client, ClientPlayNetHandler handler, ResponseTarget responseTarget) {
+		client
+			.execute(() -> {
 				Entity entityByID = Minecraft.getInstance().world.getEntityByID(entityId);
 				if (!(entityByID instanceof AbstractContraptionEntity))
 					return;
 				AbstractContraptionEntity contraptionEntity = (AbstractContraptionEntity) entityByID;
 				contraptionEntity.getContraption().updateContainedFluid(localPos, containedFluid);
 			});
-		context.get()
-			.setPacketHandled(true);
 	}
 }

@@ -1,16 +1,16 @@
 package com.simibubi.create.content.logistics.item.filter;
 
-import java.util.function.Supplier;
-
 import com.simibubi.create.content.logistics.item.filter.AttributeFilterContainer.WhitelistMode;
-import com.simibubi.create.foundation.networking.SimplePacketBase;
 
+import me.pepperbell.simplenetworking.C2SPacket;
+import me.pepperbell.simplenetworking.SimpleChannel.ResponseTarget;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.PacketBuffer;
-import net.minecraftforge.fml.network.NetworkEvent.Context;
+import net.minecraft.network.play.ServerPlayNetHandler;
+import net.minecraft.server.MinecraftServer;
 
-public class FilterScreenPacket extends SimplePacketBase {
+public class FilterScreenPacket implements C2SPacket {
 
 	public enum Option {
 		CLEAR, WHITELIST, WHITELIST2, BLACKLIST, RESPECT_DATA, IGNORE_DATA, UPDATE_FILTER_ITEM, ADD_TAG, ADD_INVERTED_TAG;
@@ -18,6 +18,8 @@ public class FilterScreenPacket extends SimplePacketBase {
 
 	private final Option option;
 	private final CompoundNBT data;
+
+	protected FilterScreenPacket() {}
 
 	public FilterScreenPacket(Option option) {
 		this(option, new CompoundNBT());
@@ -28,7 +30,7 @@ public class FilterScreenPacket extends SimplePacketBase {
 		this.data = data;
 	}
 
-	public FilterScreenPacket(PacketBuffer buffer) {
+	public void read(PacketBuffer buffer) {
 		option = Option.values()[buffer.readInt()];
 		data = buffer.readCompoundTag();
 	}
@@ -40,9 +42,8 @@ public class FilterScreenPacket extends SimplePacketBase {
 	}
 
 	@Override
-	public void handle(Supplier<Context> context) {
-		context.get().enqueueWork(() -> {
-			ServerPlayerEntity player = context.get().getSender();
+	public void handle(MinecraftServer server, ServerPlayerEntity player, ServerPlayNetHandler handler, ResponseTarget responseTarget) {
+		server.execute(() -> {
 			if (player == null)
 				return;
 
@@ -85,7 +86,6 @@ public class FilterScreenPacket extends SimplePacketBase {
 			}
 
 		});
-		context.get().setPacketHandled(true);
 	}
 
 }

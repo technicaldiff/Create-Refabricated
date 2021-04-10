@@ -1,33 +1,35 @@
 package com.simibubi.create.content.logistics.block.mechanicalArm;
 
 import java.util.Collection;
-import java.util.function.Supplier;
 
+import com.simibubi.create.lib.utility.Constants.NBT;
+
+import me.pepperbell.simplenetworking.C2SPacket;
+import me.pepperbell.simplenetworking.SimpleChannel.ResponseTarget;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.ListNBT;
 import net.minecraft.network.PacketBuffer;
+import net.minecraft.network.play.ServerPlayNetHandler;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-import com.simibubi.create.foundation.networking.SimplePacketBase;
-import com.simibubi.create.lib.utility.Constants.NBT;
-
-import net.minecraftforge.fml.network.NetworkEvent.Context;
-
-public class ArmPlacementPacket extends SimplePacketBase {
+public class ArmPlacementPacket implements C2SPacket {
 
 	private Collection<ArmInteractionPoint> points;
 	private ListNBT receivedTag;
 	private BlockPos pos;
+
+	protected ArmPlacementPacket() {}
 
 	public ArmPlacementPacket(Collection<ArmInteractionPoint> points, BlockPos pos) {
 		this.points = points;
 		this.pos = pos;
 	}
 
-	public ArmPlacementPacket(PacketBuffer buffer) {
+	public void read(PacketBuffer buffer) {
 		CompoundNBT nbt = buffer.readCompoundTag();
 		receivedTag = nbt.getList("Points", NBT.TAG_COMPOUND);
 		pos = buffer.readBlockPos();
@@ -46,11 +48,9 @@ public class ArmPlacementPacket extends SimplePacketBase {
 	}
 
 	@Override
-	public void handle(Supplier<Context> context) {
-		context.get()
-			.enqueueWork(() -> {
-				ServerPlayerEntity player = context.get()
-					.getSender();
+	public void handle(MinecraftServer server, ServerPlayerEntity player, ServerPlayNetHandler handler, ResponseTarget responseTarget) {
+		server
+			.execute(() -> {
 				if (player == null)
 					return;
 				World world = player.world;
@@ -63,8 +63,6 @@ public class ArmPlacementPacket extends SimplePacketBase {
 				ArmTileEntity arm = (ArmTileEntity) tileEntity;
 				arm.interactionPointTag = receivedTag;
 			});
-		context.get()
-			.setPacketHandled(true);
 
 	}
 

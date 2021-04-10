@@ -3,27 +3,29 @@ package com.simibubi.create.content.contraptions.components.structureMovement.sy
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
-import java.util.function.Supplier;
 
 import com.simibubi.create.content.contraptions.components.structureMovement.AbstractContraptionEntity;
-import com.simibubi.create.foundation.networking.SimplePacketBase;
 
+import me.pepperbell.simplenetworking.S2CPacket;
+import me.pepperbell.simplenetworking.SimpleChannel.ResponseTarget;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.network.play.ClientPlayNetHandler;
 import net.minecraft.entity.Entity;
 import net.minecraft.network.PacketBuffer;
-import net.minecraftforge.fml.network.NetworkEvent.Context;
 
-public class ContraptionSeatMappingPacket extends SimplePacketBase {
+public class ContraptionSeatMappingPacket implements S2CPacket {
 
 	private Map<UUID, Integer> mapping;
 	private int entityID;
+
+	protected ContraptionSeatMappingPacket() {}
 
 	public ContraptionSeatMappingPacket(int entityID, Map<UUID, Integer> mapping) {
 		this.entityID = entityID;
 		this.mapping = mapping;
 	}
 
-	public ContraptionSeatMappingPacket(PacketBuffer buffer) {
+	public void read(PacketBuffer buffer) {
 		entityID = buffer.readInt();
 		mapping = new HashMap<>();
 		short size = buffer.readShort();
@@ -42,9 +44,9 @@ public class ContraptionSeatMappingPacket extends SimplePacketBase {
 	}
 
 	@Override
-	public void handle(Supplier<Context> context) {
-		context.get()
-			.enqueueWork(() -> {
+	public void handle(Minecraft client, ClientPlayNetHandler handler, ResponseTarget responseTarget) {
+		client
+			.execute(() -> {
 				Entity entityByID = Minecraft.getInstance().world.getEntityByID(entityID);
 				if (!(entityByID instanceof AbstractContraptionEntity))
 					return;
@@ -52,8 +54,6 @@ public class ContraptionSeatMappingPacket extends SimplePacketBase {
 				contraptionEntity.getContraption()
 					.setSeatMapping(mapping);
 			});
-		context.get()
-			.setPacketHandled(true);
 	}
 
 }

@@ -1,23 +1,22 @@
 package com.simibubi.create.content.contraptions.components.structureMovement.train.capability;
 
-import java.util.function.Supplier;
-
-import com.simibubi.create.foundation.networking.SimplePacketBase;
-
+import me.pepperbell.simplenetworking.S2CPacket;
+import me.pepperbell.simplenetworking.SimpleChannel.ResponseTarget;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.network.play.ClientPlayNetHandler;
 import net.minecraft.client.world.ClientWorld;
 import net.minecraft.entity.Entity;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.PacketBuffer;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
-import net.minecraftforge.fml.DistExecutor;
-import net.minecraftforge.fml.network.NetworkEvent.Context;
 
-public class MinecartControllerUpdatePacket extends SimplePacketBase {
+public class MinecartControllerUpdatePacket implements S2CPacket {
 
 	int entityID;
 	CompoundNBT nbt;
+
+	protected MinecartControllerUpdatePacket() {}
 
 	public MinecartControllerUpdatePacket(MinecartController controller) {
 		entityID = controller.cart()
@@ -25,7 +24,7 @@ public class MinecartControllerUpdatePacket extends SimplePacketBase {
 		nbt = controller.serializeNBT();
 	}
 
-	public MinecartControllerUpdatePacket(PacketBuffer buffer) {
+	public void read(PacketBuffer buffer) {
 		entityID = buffer.readInt();
 		nbt = buffer.readCompoundTag();
 	}
@@ -37,11 +36,9 @@ public class MinecartControllerUpdatePacket extends SimplePacketBase {
 	}
 
 	@Override
-	public void handle(Supplier<Context> context) {
-		context.get()
-			.enqueueWork(() -> DistExecutor.unsafeRunWhenOn(EnvType.CLIENT, () -> this::handleCL));
-		context.get()
-			.setPacketHandled(true);
+	public void handle(Minecraft client, ClientPlayNetHandler handler, ResponseTarget responseTarget) {
+		client
+			.execute(this::handleCL);
 	}
 
 	@Environment(EnvType.CLIENT)

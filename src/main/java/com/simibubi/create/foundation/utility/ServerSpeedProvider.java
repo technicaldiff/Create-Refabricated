@@ -1,18 +1,17 @@
 package com.simibubi.create.foundation.utility;
 
-import java.util.function.Supplier;
-
 import com.simibubi.create.foundation.config.AllConfigs;
 import com.simibubi.create.foundation.gui.widgets.InterpolatedChasingValue;
 import com.simibubi.create.foundation.networking.AllPackets;
-import com.simibubi.create.foundation.networking.SimplePacketBase;
 
-import net.minecraft.client.Minecraft;
-import net.minecraft.network.PacketBuffer;
+import me.pepperbell.simplenetworking.S2CPacket;
+import me.pepperbell.simplenetworking.SimpleChannel.ResponseTarget;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraftforge.fml.network.NetworkEvent.Context;
-import net.minecraftforge.fml.network.PacketDistributor;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.network.play.ClientPlayNetHandler;
+import net.minecraft.network.PacketBuffer;
+import net.minecraft.server.MinecraftServer;
 
 public class ServerSpeedProvider {
 
@@ -21,10 +20,10 @@ public class ServerSpeedProvider {
 	static boolean initialized = false;
 	static InterpolatedChasingValue modifier = new InterpolatedChasingValue().withSpeed(.25f);
 
-	public static void serverTick() {
+	public static void serverTick(MinecraftServer server) {
 		serverTimer++;
 		if (serverTimer > getSyncInterval()) {
-			AllPackets.channel.send(PacketDistributor.ALL.noArg(), new Packet());
+			AllPackets.channel.sendToClientsInServer(new Packet(), server);
 			serverTimer = 0;
 		}
 	}
@@ -48,19 +47,19 @@ public class ServerSpeedProvider {
 		return modifier.value;
 	}
 
-	public static class Packet extends SimplePacketBase {
+	public static class Packet implements S2CPacket {
 
 		public Packet() {}
 
-		public Packet(PacketBuffer buffer) {}
+		public void read(PacketBuffer buffer) {}
 
 		@Override
 		public void write(PacketBuffer buffer) {}
 
 		@Override
-		public void handle(Supplier<Context> context) {
-			context.get()
-				.enqueueWork(() -> {
+		public void handle(Minecraft client, ClientPlayNetHandler handler, ResponseTarget responseTarget) {
+			client
+				.execute(() -> {
 					if (!initialized) {
 						initialized = true;
 						clientTimer = 0;
@@ -71,8 +70,6 @@ public class ServerSpeedProvider {
 					clientTimer = 0;
 
 				});
-			context.get()
-				.setPacketHandled(true);
 		}
 
 	}

@@ -1,26 +1,28 @@
 package com.simibubi.create.foundation.networking;
 
-import java.util.function.Supplier;
-
 import com.simibubi.create.foundation.tileEntity.SyncedTileEntity;
 
+import me.pepperbell.simplenetworking.S2CPacket;
+import me.pepperbell.simplenetworking.SimpleChannel.ResponseTarget;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.network.play.ClientPlayNetHandler;
 import net.minecraft.client.world.ClientWorld;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
-import net.minecraftforge.fml.network.NetworkEvent;
 
 /**
  * A server to client version of {@link TileEntityConfigurationPacket}
  * 
  * @param <TE>
  */
-public abstract class TileEntityDataPacket<TE extends SyncedTileEntity> extends SimplePacketBase {
+public abstract class TileEntityDataPacket<TE extends SyncedTileEntity> implements S2CPacket {
 
 	protected BlockPos tilePos;
 
-	public TileEntityDataPacket(PacketBuffer buffer) {
+	protected TileEntityDataPacket() {}
+
+	public void read(PacketBuffer buffer) {
 		tilePos = buffer.readBlockPos();
 	}
 
@@ -35,9 +37,8 @@ public abstract class TileEntityDataPacket<TE extends SyncedTileEntity> extends 
 	}
 
 	@Override
-	public void handle(Supplier<NetworkEvent.Context> context) {
-		NetworkEvent.Context ctx = context.get();
-		ctx.enqueueWork(() -> {
+	public void handle(Minecraft client, ClientPlayNetHandler handler, ResponseTarget responseTarget) {
+		client.execute(() -> {
 			ClientWorld world = Minecraft.getInstance().world;
 
 			if (world == null)
@@ -49,7 +50,6 @@ public abstract class TileEntityDataPacket<TE extends SyncedTileEntity> extends 
 				handlePacket((TE) tile);
 			}
 		});
-		ctx.setPacketHandled(true);
 	}
 
 	protected abstract void writeData(PacketBuffer buffer);

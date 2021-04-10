@@ -1,25 +1,24 @@
 package com.simibubi.create.content.contraptions.components.structureMovement;
 
-import java.util.function.Supplier;
-
-import com.simibubi.create.foundation.networking.SimplePacketBase;
-
+import me.pepperbell.simplenetworking.S2CPacket;
+import me.pepperbell.simplenetworking.SimpleChannel.ResponseTarget;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.network.play.ClientPlayNetHandler;
 import net.minecraft.network.PacketBuffer;
-import net.fabricmc.api.EnvType;
-import net.minecraftforge.fml.DistExecutor;
-import net.minecraftforge.fml.network.NetworkEvent.Context;
 
-public class ContraptionDisassemblyPacket extends SimplePacketBase {
+public class ContraptionDisassemblyPacket implements S2CPacket {
 
 	int entityID;
 	StructureTransform transform;
+
+	protected ContraptionDisassemblyPacket() {}
 
 	public ContraptionDisassemblyPacket(int entityID, StructureTransform transform) {
 		this.entityID = entityID;
 		this.transform = transform;
 	}
 
-	public ContraptionDisassemblyPacket(PacketBuffer buffer) {
+	public void read(PacketBuffer buffer) {
 		entityID = buffer.readInt();
 		transform = StructureTransform.fromBuffer(buffer);
 	}
@@ -31,12 +30,10 @@ public class ContraptionDisassemblyPacket extends SimplePacketBase {
 	}
 
 	@Override
-	public void handle(Supplier<Context> context) {
-		context.get()
-			.enqueueWork(() -> DistExecutor.unsafeRunWhenOn(EnvType.CLIENT,
-				() -> () -> AbstractContraptionEntity.handleDisassemblyPacket(this)));
-		context.get()
-			.setPacketHandled(true);
+	public void handle(Minecraft client, ClientPlayNetHandler handler, ResponseTarget responseTarget) {
+		client
+			.execute(() ->
+				AbstractContraptionEntity.handleDisassemblyPacket(this));
 	}
 
 }

@@ -1,28 +1,30 @@
 package com.simibubi.create.content.schematics.packet;
 
-import java.util.function.Supplier;
-
 import com.simibubi.create.content.schematics.SchematicProcessor;
 import com.simibubi.create.content.schematics.item.SchematicItem;
-import com.simibubi.create.foundation.networking.SimplePacketBase;
 
+import me.pepperbell.simplenetworking.C2SPacket;
+import me.pepperbell.simplenetworking.SimpleChannel.ResponseTarget;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTUtil;
 import net.minecraft.network.PacketBuffer;
+import net.minecraft.network.play.ServerPlayNetHandler;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.gen.feature.template.PlacementSettings;
 import net.minecraft.world.gen.feature.template.Template;
-import net.minecraftforge.fml.network.NetworkEvent.Context;
 
-public class SchematicPlacePacket extends SimplePacketBase {
+public class SchematicPlacePacket implements C2SPacket {
 
 	public ItemStack stack;
+
+	protected SchematicPlacePacket() {}
 
 	public SchematicPlacePacket(ItemStack stack) {
 		this.stack = stack;
 	}
 
-	public SchematicPlacePacket(PacketBuffer buffer) {
+	public void read(PacketBuffer buffer) {
 		stack = buffer.readItemStack();
 	}
 
@@ -30,9 +32,8 @@ public class SchematicPlacePacket extends SimplePacketBase {
 		buffer.writeItemStack(stack);
 	}
 
-	public void handle(Supplier<Context> context) {
-		context.get().enqueueWork(() -> {
-			ServerPlayerEntity player = context.get().getSender();
+	public void handle(MinecraftServer server, ServerPlayerEntity player, ServerPlayNetHandler handler, ResponseTarget responseTarget) {
+		server.execute(() -> {
 			if (player == null)
 				return;
 			Template t = SchematicItem.loadSchematic(stack);
@@ -43,7 +44,6 @@ public class SchematicPlacePacket extends SimplePacketBase {
 			t.place(player.getServerWorld(), NBTUtil.readBlockPos(stack.getTag().getCompound("Anchor")),
 					settings, player.getRNG());
 		});
-		context.get().setPacketHandled(true);
 	}
 
 }

@@ -1,20 +1,22 @@
 package com.simibubi.create.content.schematics.packet;
 
-import java.util.function.Supplier;
-
 import com.simibubi.create.Create;
-import com.simibubi.create.foundation.networking.SimplePacketBase;
 
+import me.pepperbell.simplenetworking.C2SPacket;
+import me.pepperbell.simplenetworking.SimpleChannel.ResponseTarget;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.network.PacketBuffer;
+import net.minecraft.network.play.ServerPlayNetHandler;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.math.BlockPos;
-import net.minecraftforge.fml.network.NetworkEvent.Context;
 
-public class InstantSchematicPacket extends SimplePacketBase {
+public class InstantSchematicPacket implements C2SPacket {
 
 	private String name;
 	private BlockPos origin;
 	private BlockPos bounds;
+
+	protected InstantSchematicPacket() {}
 
 	public InstantSchematicPacket(String name, BlockPos origin, BlockPos bounds) {
 		this.name = name;
@@ -22,7 +24,7 @@ public class InstantSchematicPacket extends SimplePacketBase {
 		this.bounds = bounds;
 	}
 
-	public InstantSchematicPacket(PacketBuffer buffer) {
+	public void read(PacketBuffer buffer) {
 		name = buffer.readString(32767);
 		origin = buffer.readBlockPos();
 		bounds = buffer.readBlockPos();
@@ -36,17 +38,13 @@ public class InstantSchematicPacket extends SimplePacketBase {
 	}
 
 	@Override
-	public void handle(Supplier<Context> context) {
-		context.get()
-			.enqueueWork(() -> {
-				ServerPlayerEntity player = context.get()
-					.getSender();
+	public void handle(MinecraftServer server, ServerPlayerEntity player, ServerPlayNetHandler handler, ResponseTarget responseTarget) {
+		server
+			.execute(() -> {
 				if (player == null)
 					return;
 				Create.schematicReceiver.handleInstantSchematic(player, name, player.world, origin, bounds);
 			});
-		context.get()
-			.setPacketHandled(true);
 	}
 
 }

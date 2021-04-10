@@ -1,24 +1,26 @@
 package com.simibubi.create.content.logistics.block.depot;
 
-import java.util.function.Supplier;
-
 import com.simibubi.create.AllBlocks;
-import com.simibubi.create.foundation.networking.SimplePacketBase;
 
+import me.pepperbell.simplenetworking.C2SPacket;
+import me.pepperbell.simplenetworking.SimpleChannel.ResponseTarget;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.network.PacketBuffer;
+import net.minecraft.network.play.ServerPlayNetHandler;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.network.NetworkEvent.Context;
 
-public class EjectorPlacementPacket extends SimplePacketBase {
+public class EjectorPlacementPacket implements C2SPacket {
 
 	private int h, v;
 	private BlockPos pos;
 	private Direction facing;
+
+	protected EjectorPlacementPacket() {}
 
 	public EjectorPlacementPacket(int h, int v, BlockPos pos, Direction facing) {
 		this.h = h;
@@ -27,7 +29,7 @@ public class EjectorPlacementPacket extends SimplePacketBase {
 		this.facing = facing;
 	}
 
-	public EjectorPlacementPacket(PacketBuffer buffer) {
+	public void read(PacketBuffer buffer) {
 		h = buffer.readInt();
 		v = buffer.readInt();
 		pos = buffer.readBlockPos();
@@ -43,11 +45,9 @@ public class EjectorPlacementPacket extends SimplePacketBase {
 	}
 
 	@Override
-	public void handle(Supplier<Context> context) {
-		context.get()
-			.enqueueWork(() -> {
-				ServerPlayerEntity player = context.get()
-					.getSender();
+	public void handle(MinecraftServer server, ServerPlayerEntity player, ServerPlayNetHandler handler, ResponseTarget responseTarget) {
+		server
+			.execute(() -> {
 				if (player == null)
 					return;
 				World world = player.world;
@@ -60,8 +60,6 @@ public class EjectorPlacementPacket extends SimplePacketBase {
 				if (AllBlocks.WEIGHTED_EJECTOR.has(state))
 					world.setBlockState(pos, state.with(EjectorBlock.HORIZONTAL_FACING, facing));
 			});
-		context.get()
-			.setPacketHandled(true);
 
 	}
 
