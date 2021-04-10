@@ -30,7 +30,7 @@ public class SchematicannonRenderer extends SafeTileEntityRenderer<Schematicanno
 	public SchematicannonRenderer(TileEntityRendererDispatcher dispatcher) {
 		super(dispatcher);
 	}
-
+	
 	@Override
 	public boolean isGlobalRenderer(SchematicannonTileEntity p_188185_1_) {
 		return true;
