@@ -6,10 +6,10 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.event.Event;
 import net.fabricmc.fabric.api.event.EventFactory;
-import net.minecraft.client.render.model.BakedModel;
-import net.minecraft.client.render.model.BakedModelManager;
-import net.minecraft.client.render.model.ModelLoader;
-import net.minecraft.util.Identifier;
+import net.minecraft.client.renderer.model.IBakedModel;
+import net.minecraft.client.renderer.model.ModelBakery;
+import net.minecraft.client.renderer.model.ModelManager;
+import net.minecraft.util.ResourceLocation;
 
 @Environment(EnvType.CLIENT)
 public interface ModelsBakedCallback {
@@ -19,5 +19,5 @@ public interface ModelsBakedCallback {
 		}
 	});
 
-	void onModelsBaked(BakedModelManager manager, Map<Identifier, BakedModel> models, ModelLoader loader);
+	void onModelsBaked(ModelManager manager, Map<ResourceLocation, IBakedModel> models, ModelBakery loader);
 }

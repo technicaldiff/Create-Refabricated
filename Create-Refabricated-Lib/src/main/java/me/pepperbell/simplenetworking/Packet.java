@@ -1,9 +1,9 @@
 package me.pepperbell.simplenetworking;
 
-import net.minecraft.network.PacketByteBuf;
+import net.minecraft.network.PacketBuffer;
 
 public interface Packet {
-	void read(PacketByteBuf buf);
+	void read(PacketBuffer buf);
 
-	void write(PacketByteBuf buf);
+	void write(PacketBuffer buf);
 }

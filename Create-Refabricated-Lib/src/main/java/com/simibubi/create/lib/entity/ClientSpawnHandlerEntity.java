@@ -1,7 +1,7 @@
 package com.simibubi.create.lib.entity;
 
-import net.minecraft.network.packet.s2c.play.EntitySpawnS2CPacket;
+import net.minecraft.network.play.server.SSpawnObjectPacket;
 
 public interface ClientSpawnHandlerEntity {
-	public void onClientSpawn(EntitySpawnS2CPacket packet);
+	public void onClientSpawn(SSpawnObjectPacket packet);
 }

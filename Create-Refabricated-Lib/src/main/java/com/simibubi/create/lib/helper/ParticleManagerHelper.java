@@ -2,11 +2,10 @@ package com.simibubi.create.lib.helper;
 
 import com.simibubi.create.lib.extensions.ParticleManagerExtensions;
 import com.simibubi.create.lib.utility.MixinHelper;
-
-import net.minecraft.client.particle.ParticleFactory;
+import net.minecraft.client.particle.IParticleFactory;
 import net.minecraft.client.particle.ParticleManager;
-import net.minecraft.particle.ParticleEffect;
-import net.minecraft.particle.ParticleType;
+import net.minecraft.particles.IParticleData;
+import net.minecraft.particles.ParticleType;
 
 /**
  * Removal of this class should be considered because Fabric API provides almost an exact replacement.
@@ -15,11 +14,11 @@ import net.minecraft.particle.ParticleType;
  */
 @Deprecated
 public final class ParticleManagerHelper {
-	public static <T extends ParticleEffect> void registerFactory(ParticleManager $this, ParticleType<T> type, ParticleManager.SpriteAwareFactory<T> factory) {
+	public static <T extends IParticleData> void registerFactory(ParticleManager $this, ParticleType<T> type, ParticleManager.IParticleMetaFactory<T> factory) {
 		get($this).create$registerFactory0(type, factory);
 	}
 
-	public static <T extends ParticleEffect> void registerFactory(ParticleManager $this, ParticleType<T> type, ParticleFactory<T> factory) {
+	public static <T extends IParticleData> void registerFactory(ParticleManager $this, ParticleType<T> type, IParticleFactory<T> factory) {
 		get($this).create$registerFactory1(type, factory);
 	}
 

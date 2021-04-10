@@ -3,18 +3,17 @@ package com.simibubi.create.lib.mixin.accessor;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.gen.Accessor;
 import org.spongepowered.asm.mixin.gen.Invoker;
-
+import com.mojang.blaze3d.matrix.MatrixStack;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.client.render.Camera;
-import net.minecraft.client.render.GameRenderer;
-import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.client.renderer.ActiveRenderInfo;
+import net.minecraft.client.renderer.GameRenderer;
 
 @Environment(EnvType.CLIENT)
 @Mixin(GameRenderer.class)
 public interface GameRendererAccessor {
-	@Accessor("ticks")
-	int create$ticks();
+	@Accessor("rendererUpdateCount")
+	int create$rendererUpdateCount();
 
 	@Invoker("bobView")
 	void create$bobView(MatrixStack matrixStack, float f);
@@ -22,6 +21,6 @@ public interface GameRendererAccessor {
 	@Invoker("bobViewWhenHurt")
 	void create$bobViewWhenHurt(MatrixStack matrixStack, float f);
 
-	@Invoker("getFov")
-	double create$getFov(Camera camera, float tickDelta, boolean changingFov);
+	@Invoker("getFOVModifier")
+	double create$getFOVModifier(ActiveRenderInfo camera, float tickDelta, boolean changingFov);
 }

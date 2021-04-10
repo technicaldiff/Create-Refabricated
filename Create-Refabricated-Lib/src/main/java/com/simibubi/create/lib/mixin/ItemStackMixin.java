@@ -12,7 +12,7 @@ import net.minecraft.item.ItemStack;
 
 @Mixin(ItemStack.class)
 public abstract class ItemStackMixin {
-	@Inject(at = @At("HEAD"), method = "getMaxCount()I", cancellable = true)
+	@Inject(at = @At("HEAD"), method = "getMaxStackSize()I", cancellable = true)
 	public void create$onGetMaxCount(CallbackInfoReturnable<Integer> cir) {
 		ItemStack self = (ItemStack) (Object) this;
 		Item item = self.getItem();

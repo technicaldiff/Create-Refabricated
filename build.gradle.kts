@@ -125,7 +125,7 @@ project.setupMCP()
 project.setupCheckstyle()
 
 project(":Create-Refabricated-Lib").setupBasicFabric()
-project(":Create-Refabricated-Lib").setupYarn()
+project(":Create-Refabricated-Lib").setupMCP()
 project(":Create-Refabricated-Lib").setupCheckstyle()
 
 repositories {

@@ -5,39 +5,39 @@
   "compatibilityLevel": "JAVA_8",
   "mixins": [
   	"EntityMixin",
-    "EntityShapeContextMixin",
-    "EntitySpawnS2CPacketMixin",
+    "EntitySelectionContextMixin",
     "ItemEntityMixin",
     "ItemStackMixin",
     "Matrix4fMixin",
-    "accessor.BeaconBlockEntityAccessor",
-    "accessor.BiomeAccessAccessor",
-    "accessor.CriteriaAccessor",
+    "SSpawnObjectPacketMixin",
+    "accessor.BeaconTileEntityAccessor",
+    "accessor.BiomeManagerAccessor",
+    "accessor.CriteriaTriggersAccessor",
     "accessor.ItemEntityAccessor",
     "accessor.MinecraftServerAccessor",
-    "accessor.ServerPlayNetworkHandlerAccessor",
-    "accessor.SignTypeAccessor",
+    "accessor.ServerPlayNetHandlerAccessor",
     "accessor.StairsBlockAccessor",
-    "accessor.Vector3fAccessor"
+    "accessor.Vector3fAccessor",
+    "accessor.WoodTypeAccessor"
   ],
   "client": [
-    "BakedModelManagerMixin",
-    "ClientPlayNetworkHandlerMixin",
+    "ClientPlayNetHandlerMixin",
     "ClientWorldMixin",
     "ItemRendererMixin",
-    "KeyboardMixin",
-    "MinecraftClientMixin",
-    "MouseMixin",
+    "KeyboardListenerMixin",
+    "MinecraftMixin",
+    "ModelManagerMixin",
+    "MouseHelperMixin",
     "ParticleManagerMixin",
     "accessor.BufferBuilderAccessor",
     "accessor.GameRendererAccessor",
     "accessor.GlStateManagerAccessor",
     "accessor.ItemRendererAccessor",
-    "accessor.MinecraftClientAccessor"
+    "accessor.MinecraftAccessor"
   ],
   "server": [
-    "SignTypeMixin",
-    "Vec3dMixin"
+    "Vec3dMixin",
+    "WoodTypeMixin"
   ],
   "injectors": {
     "defaultRequire": 1

@@ -4,7 +4,7 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.event.Event;
 import net.fabricmc.fabric.api.event.EventFactory;
-import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.Minecraft;
 
 @Environment(EnvType.CLIENT)
 public interface BeforeFirstReloadCallback {
@@ -14,5 +14,5 @@ public interface BeforeFirstReloadCallback {
 		}
 	});
 
-	void beforeFirstReload(MinecraftClient client);
+	void beforeFirstReload(Minecraft client);
 }

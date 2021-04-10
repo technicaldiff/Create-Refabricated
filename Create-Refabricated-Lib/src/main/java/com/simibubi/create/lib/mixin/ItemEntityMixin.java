@@ -6,16 +6,15 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import com.simibubi.create.lib.item.EntityTickListenerItem;
-
-import net.minecraft.entity.ItemEntity;
+import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.item.ItemStack;
 
 @Mixin(ItemEntity.class)
 public abstract class ItemEntityMixin {
-	@Inject(at = @At("HEAD"), method = "Lnet/minecraft/entity/ItemEntity;tick()V", cancellable = true)
+	@Inject(at = @At("HEAD"), method = "tick()V", cancellable = true)
 	public void create$onHeadTick(CallbackInfo ci) {
 		ItemEntity self = (ItemEntity) (Object) this;
-		ItemStack stack = self.getStack();
+		ItemStack stack = self.getItem();
 		if (stack.getItem() instanceof EntityTickListenerItem && ((EntityTickListenerItem) stack.getItem()).onEntityItemUpdate(stack, self)) {
 			ci.cancel();
 		}

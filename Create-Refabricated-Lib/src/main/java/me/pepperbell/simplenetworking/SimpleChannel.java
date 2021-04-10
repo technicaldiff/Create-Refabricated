@@ -16,31 +16,31 @@ import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
 import net.fabricmc.fabric.api.networking.v1.PacketSender;
 import net.fabricmc.fabric.api.networking.v1.PlayerLookup;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
-import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.network.ClientPlayNetworkHandler;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.network.play.ClientPlayNetHandler;
 import net.minecraft.entity.Entity;
-import net.minecraft.network.PacketByteBuf;
+import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.network.PacketBuffer;
+import net.minecraft.network.play.ServerPlayNetHandler;
 import net.minecraft.server.MinecraftServer;
-import net.minecraft.server.network.ServerPlayNetworkHandler;
-import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.util.Identifier;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
-import net.minecraft.util.math.Vec3d;
-import net.minecraft.util.math.Vec3i;
+import net.minecraft.util.math.vector.Vector3d;
+import net.minecraft.util.math.vector.Vector3i;
+import net.minecraft.world.server.ServerWorld;
 
 public class SimpleChannel {
 	private static final Logger LOGGER = LogManager.getLogger("Simple Networking API");
 
-	private final Identifier channelName;
+	private final ResourceLocation channelName;
 	private final BiMap<Integer, Class<?>> c2sIdMap = HashBiMap.create();
 	private final BiMap<Integer, Class<?>> s2cIdMap = HashBiMap.create();
 	private C2SHandler c2sHandler;
 	private S2CHandler s2cHandler;
 
-	public SimpleChannel(Identifier channelName) {
+	public SimpleChannel(ResourceLocation channelName) {
 		this.channelName = channelName;
 	}
 
@@ -77,25 +77,25 @@ public class SimpleChannel {
 		s2cIdMap.put(id, clazz);
 	}
 
-	private PacketByteBuf createBuf(C2SPacket packet) {
+	private PacketBuffer createBuf(C2SPacket packet) {
 		Integer id = c2sIdMap.inverse().get(packet.getClass());
 		if (id == null) {
 			LOGGER.error("Could not get id for c2s packet " + packet.toString() + " in channel " + channelName);
 			return null;
 		}
-		PacketByteBuf buf = PacketByteBufs.create();
+		PacketBuffer buf = PacketByteBufs.create();
 		buf.writeVarInt(id);
 		packet.write(buf);
 		return buf;
 	}
 
-	private PacketByteBuf createBuf(S2CPacket packet) {
+	private PacketBuffer createBuf(S2CPacket packet) {
 		Integer id = s2cIdMap.inverse().get(packet.getClass());
 		if (id == null) {
 			LOGGER.error("Could not get id for s2c packet " + packet.toString() + " in channel " + channelName);
 			return null;
 		}
-		PacketByteBuf buf = PacketByteBufs.create();
+		PacketBuffer buf = PacketByteBufs.create();
 		buf.writeVarInt(id);
 		packet.write(buf);
 		return buf;
@@ -103,19 +103,19 @@ public class SimpleChannel {
 
 	@Environment(EnvType.CLIENT)
 	public void sendToServer(C2SPacket packet) {
-		PacketByteBuf buf = createBuf(packet);
+		PacketBuffer buf = createBuf(packet);
 		if (buf == null) return;
 		ClientPlayNetworking.send(channelName, buf);
 	}
 
 	public void sendToClient(S2CPacket packet, ServerPlayerEntity player) {
-		PacketByteBuf buf = createBuf(packet);
+		PacketBuffer buf = createBuf(packet);
 		if (buf == null) return;
 		ServerPlayNetworking.send(player, channelName, buf);
 	}
 
 	public void sendToClients(S2CPacket packet, Collection<ServerPlayerEntity> players) {
-		PacketByteBuf buf = createBuf(packet);
+		PacketBuffer buf = createBuf(packet);
 		if (buf == null) return;
 		for (ServerPlayerEntity player : players) {
 			ServerPlayNetworking.send(player, channelName, buf);
@@ -142,27 +142,27 @@ public class SimpleChannel {
 		sendToClients(packet, PlayerLookup.tracking(entity));
 	}
 
-	public void sendToClientsTracking(S2CPacket packet, BlockEntity blockEntity) {
+	public void sendToClientsTracking(S2CPacket packet, TileEntity blockEntity) {
 		sendToClients(packet, PlayerLookup.tracking(blockEntity));
 	}
 
-	public void sendToClientsAround(S2CPacket packet, ServerWorld world, Vec3d pos, double radius) {
+	public void sendToClientsAround(S2CPacket packet, ServerWorld world, Vector3d pos, double radius) {
 		sendToClients(packet, PlayerLookup.around(world, pos, radius));
 	}
 
-	public void sendToClientsAround(S2CPacket packet, ServerWorld world, Vec3i pos, double radius) {
+	public void sendToClientsAround(S2CPacket packet, ServerWorld world, Vector3i pos, double radius) {
 		sendToClients(packet, PlayerLookup.around(world, pos, radius));
 	}
 
 	@Environment(EnvType.CLIENT)
 	public void sendResponseToServer(ResponseTarget target, C2SPacket packet) {
-		PacketByteBuf buf = createBuf(packet);
+		PacketBuffer buf = createBuf(packet);
 		if (buf == null) return;
 		target.sender.sendPacket(channelName, buf);
 	}
 
 	public void sendResponseToClient(ResponseTarget target, S2CPacket packet) {
-		PacketByteBuf buf = createBuf(packet);
+		PacketBuffer buf = createBuf(packet);
 		if (buf == null) return;
 		target.sender.sendPacket(channelName, buf);
 	}
@@ -177,7 +177,7 @@ public class SimpleChannel {
 
 	private class C2SHandler implements ServerPlayNetworking.PlayChannelHandler {
 		@Override
-		public void receive(MinecraftServer server, ServerPlayerEntity player, ServerPlayNetworkHandler handler, PacketByteBuf buf, PacketSender responseSender) {
+		public void receive(MinecraftServer server, ServerPlayerEntity player, ServerPlayNetHandler handler, PacketBuffer buf, PacketSender responseSender) {
 			int id = buf.readVarInt();
 			C2SPacket packet = null;
 			try {
@@ -198,7 +198,7 @@ public class SimpleChannel {
 	@Environment(EnvType.CLIENT)
 	private class S2CHandler implements ClientPlayNetworking.PlayChannelHandler {
 		@Override
-		public void receive(MinecraftClient client, ClientPlayNetworkHandler handler, PacketByteBuf buf, PacketSender responseSender) {
+		public void receive(Minecraft client, ClientPlayNetHandler handler, PacketBuffer buf, PacketSender responseSender) {
 			int id = buf.readVarInt();
 			S2CPacket packet = null;
 			try {

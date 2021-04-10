@@ -3,12 +3,12 @@ package com.simibubi.create.lib.helper;
 import com.simibubi.create.lib.extensions.EntityExtensions;
 
 import net.minecraft.entity.Entity;
-import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.CompoundNBT;
 
 public final class EntityHelper {
 	public static final String EXTRA_DATA_KEY = "create_ExtraData";
 
-	public static CompoundTag getExtraCustomData(Entity entity) {
+	public static CompoundNBT getExtraCustomData(Entity entity) {
 		return ((EntityExtensions) entity).create$getExtraCustomData();
 	}
 

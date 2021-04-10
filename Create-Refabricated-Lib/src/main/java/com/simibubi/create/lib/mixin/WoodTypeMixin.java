@@ -6,11 +6,11 @@ import org.spongepowered.asm.mixin.Shadow;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.util.SignType;
+import net.minecraft.block.WoodType;
 
 @Environment(EnvType.SERVER)
-@Mixin(SignType.class)
-public abstract class SignTypeMixin {
+@Mixin(WoodType.class)
+public abstract class WoodTypeMixin {
 	@Final
 	@Shadow
 	private String name;

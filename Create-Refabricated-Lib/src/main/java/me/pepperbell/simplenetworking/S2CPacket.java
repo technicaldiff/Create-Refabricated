@@ -1,8 +1,8 @@
 package me.pepperbell.simplenetworking;
 
 import me.pepperbell.simplenetworking.SimpleChannel.ResponseTarget;
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.network.ClientPlayNetworkHandler;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.network.play.ClientPlayNetHandler;
 
 public interface S2CPacket extends Packet {
 	/**
@@ -12,5 +12,5 @@ public interface S2CPacket extends Packet {
 	 * 	// code here
 	 * }</code></pre>
 	 */
-	void handle(MinecraftClient client, ClientPlayNetworkHandler handler, ResponseTarget responseTarget);
+	void handle(Minecraft client, ClientPlayNetHandler handler, ResponseTarget responseTarget);
 }

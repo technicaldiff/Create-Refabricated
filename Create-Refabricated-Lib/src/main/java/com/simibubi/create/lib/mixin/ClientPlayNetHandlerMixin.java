@@ -12,27 +12,27 @@ import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
 import com.simibubi.create.lib.entity.ClientSpawnHandlerEntity;
 import com.simibubi.create.lib.entity.ExtraSpawnDataEntity;
-import com.simibubi.create.lib.extensions.EntitySpawnS2CPacketExtensions;
+import com.simibubi.create.lib.extensions.SSpawnObjectPacketExtensions;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.client.network.ClientPlayNetworkHandler;
+import net.minecraft.client.network.play.ClientPlayNetHandler;
 import net.minecraft.client.world.ClientWorld;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
-import net.minecraft.network.PacketByteBuf;
-import net.minecraft.network.packet.s2c.play.EntitySpawnS2CPacket;
+import net.minecraft.network.PacketBuffer;
+import net.minecraft.network.play.server.SSpawnObjectPacket;
 
 @Environment(EnvType.CLIENT)
-@Mixin(ClientPlayNetworkHandler.class)
-public abstract class ClientPlayNetworkHandlerMixin {
+@Mixin(ClientPlayNetHandler.class)
+public abstract class ClientPlayNetHandlerMixin {
 	@Shadow
 	private ClientWorld world;
 
-	@ModifyVariable(at = @At(value = "JUMP", opcode = Opcodes.IFNULL, ordinal = 3, shift = Shift.BEFORE), method = "onEntitySpawn(Lnet/minecraft/network/packet/s2c/play/EntitySpawnS2CPacket;)V")
-	public Entity create$replaceNullEntity(Entity entity, EntitySpawnS2CPacket packet) {
+	@ModifyVariable(at = @At(value = "JUMP", opcode = Opcodes.IFNULL, ordinal = 3, shift = Shift.BEFORE), method = "handleSpawnObject(Lnet/minecraft/network/play/server/SSpawnObjectPacket;)V")
+	public Entity create$replaceNullEntity(Entity entity, SSpawnObjectPacket packet) {
 		if (entity == null) {
-			EntityType<?> type = packet.getEntityTypeId();
+			EntityType<?> type = packet.getType();
 			if (type != null) {
 				entity = type.create(world);
 				if (entity instanceof ClientSpawnHandlerEntity) {
@@ -43,10 +43,10 @@ public abstract class ClientPlayNetworkHandlerMixin {
 		return entity;
 	}
 
-	@Inject(at = @At(value = "INVOKE", target = "Lnet/minecraft/client/world/ClientWorld;addEntity(ILnet/minecraft/entity/Entity;)V", shift = Shift.AFTER), method = "onEntitySpawn(Lnet/minecraft/network/packet/s2c/play/EntitySpawnS2CPacket;)V", locals = LocalCapture.CAPTURE_FAILHARD)
-	public void create$afterAddEntity(EntitySpawnS2CPacket packet, CallbackInfo ci, double x, double y, double z, Entity entity) {
+	@Inject(at = @At(value = "INVOKE", target = "Lnet/minecraft/client/world/ClientWorld;addEntity(ILnet/minecraft/entity/Entity;)V", shift = Shift.AFTER), method = "handleSpawnObject(Lnet/minecraft/network/play/server/SSpawnObjectPacket;)V", locals = LocalCapture.CAPTURE_FAILHARD)
+	public void create$afterAddEntity(SSpawnObjectPacket packet, CallbackInfo ci, double x, double y, double z, Entity entity) {
 		if (entity instanceof ExtraSpawnDataEntity) {
-			PacketByteBuf extraData = ((EntitySpawnS2CPacketExtensions) packet).create$getExtraDataBuf();
+			PacketBuffer extraData = ((SSpawnObjectPacketExtensions) packet).create$getExtraDataBuf();
 			if (extraData != null) {
 				((ExtraSpawnDataEntity) entity).readSpawnData(extraData);
 			}

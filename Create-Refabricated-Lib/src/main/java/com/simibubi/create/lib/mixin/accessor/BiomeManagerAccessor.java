@@ -1,12 +1,11 @@
 package com.simibubi.create.lib.mixin.accessor;
 
+import net.minecraft.world.biome.BiomeManager;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.gen.Accessor;
 
-import net.minecraft.world.biome.source.BiomeAccess;
-
-@Mixin(BiomeAccess.class)
-public interface BiomeAccessAccessor {
+@Mixin(BiomeManager.class)
+public interface BiomeManagerAccessor {
 	@Accessor("seed")
 	long create$seed();
 }

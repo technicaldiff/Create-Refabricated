@@ -1,7 +1,7 @@
 package com.simibubi.create.lib.extensions;
 
-import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.CompoundNBT;
 
 public interface EntityExtensions {
-	CompoundTag create$getExtraCustomData();
+	CompoundNBT create$getExtraCustomData();
 }

@@ -4,8 +4,7 @@ import org.jetbrains.annotations.Contract;
 
 import com.simibubi.create.lib.extensions.Matrix4fExtensions;
 import com.simibubi.create.lib.utility.MixinHelper;
-
-import net.minecraft.util.math.Matrix4f;
+import net.minecraft.util.math.vector.Matrix4f;
 
 public final class Matrix4fHelper {
 	@Contract(mutates = "param1")

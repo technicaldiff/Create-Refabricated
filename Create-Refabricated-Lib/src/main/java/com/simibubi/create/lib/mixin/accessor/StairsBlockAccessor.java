@@ -10,7 +10,7 @@ import net.minecraft.block.StairsBlock;
 @Mixin(StairsBlock.class)
 public interface StairsBlockAccessor {
 	@Invoker("<init>")
-	static StairsBlock create$init(BlockState baseBlockState, AbstractBlock.Settings settings) {
+	static StairsBlock create$init(BlockState baseBlockState, AbstractBlock.Properties properties) {
 		throw new AssertionError();
 	}
 }

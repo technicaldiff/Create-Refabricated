@@ -5,11 +5,11 @@ import org.spongepowered.asm.mixin.gen.Accessor;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.Minecraft;
 
 @Environment(EnvType.CLIENT)
-@Mixin(MinecraftClient.class)
-public interface MinecraftClientAccessor {
-	@Accessor("pausedTickDelta")
-	float create$pausedTickDelta();
+@Mixin(Minecraft.class)
+public interface MinecraftAccessor {
+	@Accessor("renderPartialTicksPaused")
+	float create$renderPartialTicksPaused();
 }
