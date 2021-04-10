@@ -174,7 +174,6 @@ public class ClientEvents {
 		ms.pop();
 
 		RenderWork.runAll();
-		FastRenderDispatcher.endFrame();
 	}
 
 	public static void onRenderOverlay(RenderGameOverlayEvent.Post event) {
