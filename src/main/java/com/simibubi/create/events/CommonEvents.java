@@ -58,7 +58,7 @@ public class CommonEvents {
 			Create.schematicReceiver = new ServerSchematicLoader();
 		Create.schematicReceiver.tick();
 		Create.lagger.tick();
-		ServerSpeedProvider.serverTick();
+		ServerSpeedProvider.serverTick(server);
 	}
 
 	public static void onChunkUnloaded(World world, Chunk chunk) {

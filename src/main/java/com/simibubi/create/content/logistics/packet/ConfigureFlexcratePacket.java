@@ -10,10 +10,6 @@ public class ConfigureFlexcratePacket extends TileEntityConfigurationPacket<Adju
 
 	private int maxItems;
 	
-	public ConfigureFlexcratePacket(PacketBuffer buffer) {
-		super(buffer);
-	}
-	
 	public ConfigureFlexcratePacket(BlockPos pos, int newMaxItems) {
 		super(pos);
 		this.maxItems = newMaxItems;

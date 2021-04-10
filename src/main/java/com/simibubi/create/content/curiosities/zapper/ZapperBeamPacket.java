@@ -1,25 +1,24 @@
 package com.simibubi.create.content.curiosities.zapper;
 
-import java.util.function.Supplier;
-
 import com.simibubi.create.content.curiosities.zapper.ZapperRenderHandler.LaserBeam;
-import com.simibubi.create.foundation.networking.SimplePacketBase;
 
+import me.pepperbell.simplenetworking.S2CPacket;
+import me.pepperbell.simplenetworking.SimpleChannel.ResponseTarget;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.network.play.ClientPlayNetHandler;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.vector.Vector3d;
-import net.fabricmc.api.EnvType;
-import net.minecraftforge.fml.DistExecutor;
-import net.minecraftforge.fml.network.NetworkEvent.Context;
 
-public class ZapperBeamPacket extends SimplePacketBase {
+public class ZapperBeamPacket implements S2CPacket {
 
 	public Vector3d start;
 	public Vector3d target;
 	public Hand hand;
 	public boolean self;
+
+	protected ZapperBeamPacket() {}
 
 	public ZapperBeamPacket(Vector3d start, Vector3d target, Hand hand, boolean self) {
 		this.start = start;
@@ -28,7 +27,7 @@ public class ZapperBeamPacket extends SimplePacketBase {
 		this.self = self;
 	}
 	
-	public ZapperBeamPacket(PacketBuffer buffer) {
+	public void read(PacketBuffer buffer) {
 		start = new Vector3d(buffer.readDouble(), buffer.readDouble(), buffer.readDouble());
 		target = new Vector3d(buffer.readDouble(), buffer.readDouble(), buffer.readDouble());
 		hand = buffer.readBoolean()? Hand.MAIN_HAND : Hand.OFF_HAND;
@@ -47,8 +46,8 @@ public class ZapperBeamPacket extends SimplePacketBase {
 		buffer.writeBoolean(self);
 	}
 
-	public void handle(Supplier<Context> context) {
-		context.get().enqueueWork(() -> DistExecutor.unsafeRunWhenOn(EnvType.CLIENT, () -> () -> {
+	public void handle(Minecraft client, ClientPlayNetHandler handler, ResponseTarget responseTarget) {
+		client.execute(() -> {
 			if (Minecraft.getInstance().player.getPositionVec().distanceTo(start) > 100)
 				return;
 			ZapperRenderHandler.addBeam(new LaserBeam(start, target).followPlayer(self, hand == Hand.MAIN_HAND));
@@ -57,8 +56,7 @@ public class ZapperBeamPacket extends SimplePacketBase {
 				ZapperRenderHandler.shoot(hand);
 			else
 				ZapperRenderHandler.playSound(hand, new BlockPos(start));
-		}));
-		context.get().setPacketHandled(true);
+		});
 	}
 
 }

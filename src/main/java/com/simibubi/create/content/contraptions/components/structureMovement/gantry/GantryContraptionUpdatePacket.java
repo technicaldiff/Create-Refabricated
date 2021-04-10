@@ -1,19 +1,18 @@
 package com.simibubi.create.content.contraptions.components.structureMovement.gantry;
 
-import java.util.function.Supplier;
-
-import com.simibubi.create.foundation.networking.SimplePacketBase;
-
+import me.pepperbell.simplenetworking.S2CPacket;
+import me.pepperbell.simplenetworking.SimpleChannel.ResponseTarget;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.network.play.ClientPlayNetHandler;
 import net.minecraft.network.PacketBuffer;
-import net.fabricmc.api.EnvType;
-import net.minecraftforge.fml.DistExecutor;
-import net.minecraftforge.fml.network.NetworkEvent.Context;
 
-public class GantryContraptionUpdatePacket extends SimplePacketBase {
+public class GantryContraptionUpdatePacket implements S2CPacket {
 
 	int entityID;
 	double coord;
 	double motion;
+
+	protected GantryContraptionUpdatePacket() {}
 
 	public GantryContraptionUpdatePacket(int entityID, double coord, double motion) {
 		this.entityID = entityID;
@@ -21,7 +20,7 @@ public class GantryContraptionUpdatePacket extends SimplePacketBase {
 		this.motion = motion;
 	}
 
-	public GantryContraptionUpdatePacket(PacketBuffer buffer) {
+	public void read(PacketBuffer buffer) {
 		entityID = buffer.readInt();
 		coord = buffer.readFloat();
 		motion = buffer.readFloat();
@@ -35,12 +34,10 @@ public class GantryContraptionUpdatePacket extends SimplePacketBase {
 	}
 
 	@Override
-	public void handle(Supplier<Context> context) {
-		context.get()
-			.enqueueWork(
-				() -> DistExecutor.unsafeRunWhenOn(EnvType.CLIENT, () -> () -> GantryContraptionEntity.handlePacket(this)));
-		context.get()
-			.setPacketHandled(true);
+	public void handle(Minecraft client, ClientPlayNetHandler handler, ResponseTarget responseTarget) {
+		client
+			.execute(
+				() -> GantryContraptionEntity.handlePacket(this));
 	}
 
 }

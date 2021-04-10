@@ -11,10 +11,6 @@ public class EjectorTriggerPacket extends TileEntityConfigurationPacket<EjectorT
 		super(pos);
 	}
 	
-	public EjectorTriggerPacket(PacketBuffer buffer) {
-		super(buffer);
-	}
-
 	@Override
 	protected void writeSettings(PacketBuffer buffer) {}
 

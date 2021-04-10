@@ -7,10 +7,12 @@ import net.minecraft.network.PacketBuffer;
 
 public class FunnelFlapPacket extends TileEntityDataPacket<FunnelTileEntity> {
 
-    private final boolean inwards;
+    private boolean inwards;
 
-    public FunnelFlapPacket(PacketBuffer buffer) {
-        super(buffer);
+    protected FunnelFlapPacket() {}
+
+    public void read(PacketBuffer buffer) {
+        super.read(buffer);
 
         inwards = buffer.readBoolean();
     }

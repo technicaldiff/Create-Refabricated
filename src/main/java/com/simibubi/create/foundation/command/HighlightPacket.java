@@ -1,29 +1,29 @@
 package com.simibubi.create.foundation.command;
 
-import java.util.function.Supplier;
-
 import com.simibubi.create.AllSpecialTextures;
 import com.simibubi.create.CreateClient;
-import com.simibubi.create.foundation.networking.SimplePacketBase;
 
+import me.pepperbell.simplenetworking.S2CPacket;
+import me.pepperbell.simplenetworking.SimpleChannel.ResponseTarget;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.network.play.ClientPlayNetHandler;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.shapes.VoxelShapes;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
-import net.minecraftforge.fml.DistExecutor;
-import net.minecraftforge.fml.network.NetworkEvent;
 
-public class HighlightPacket extends SimplePacketBase {
+public class HighlightPacket implements S2CPacket {
 
-	private final BlockPos pos;
+	private BlockPos pos;
+
+	protected HighlightPacket() {}
 
 	public HighlightPacket(BlockPos pos) {
 		this.pos = pos;
 	}
 
-	public HighlightPacket(PacketBuffer buffer) {
+	public void read(PacketBuffer buffer) {
 		this.pos = BlockPos.fromLong(buffer.readLong());
 	}
 
@@ -33,14 +33,12 @@ public class HighlightPacket extends SimplePacketBase {
 	}
 
 	@Override
-	public void handle(Supplier<NetworkEvent.Context> ctx) {
-		ctx.get()
-			.enqueueWork(() -> DistExecutor.unsafeRunWhenOn(EnvType.CLIENT, () -> () -> {
+	public void handle(Minecraft client, ClientPlayNetHandler handler, ResponseTarget responseTarget) {
+		client
+			.execute(() -> {
 				performHighlight(pos);
-			}));
+			});
 
-		ctx.get()
-			.setPacketHandled(true);
 	}
 
 	@Environment(EnvType.CLIENT)

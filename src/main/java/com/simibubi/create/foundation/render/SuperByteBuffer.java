@@ -8,6 +8,7 @@ import com.mojang.blaze3d.vertex.IVertexBuilder;
 import com.simibubi.create.content.contraptions.components.structureMovement.render.ContraptionRenderDispatcher;
 import com.simibubi.create.foundation.block.render.SpriteShiftEntry;
 import com.simibubi.create.foundation.utility.MatrixStacker;
+import com.simibubi.create.lib.utility.LightUtil;
 
 import it.unimi.dsi.fastutil.longs.Long2DoubleMap;
 import it.unimi.dsi.fastutil.longs.Long2DoubleOpenHashMap;
@@ -106,13 +107,13 @@ public class SuperByteBuffer extends TemplateBuffer {
 			float normalY = getNY(buffer, i) / 127f;
 			float normalZ = getNZ(buffer, i) / 127f;
 
-			float staticDiffuse = diffuseLight(normalX, normalY, normalZ);
+			float staticDiffuse = LightUtil.diffuseLight(normalX, normalY, normalZ);
 			normal.set(normalX, normalY, normalZ);
 			normal.transform(normalMat);
 			float nx = normal.getX();
 			float ny = normal.getY();
 			float nz = normal.getZ();
-			float instanceDiffuse = diffuseLight(nx, ny, nz);
+			float instanceDiffuse = LightUtil.diffuseLight(nx, ny, nz);
 
 			pos.set(x, y, z, 1F);
 			pos.transform(modelMat);
@@ -302,10 +303,6 @@ public class SuperByteBuffer extends TemplateBuffer {
 	@FunctionalInterface
 	public interface SpriteShiftFunc {
 		void shift(IVertexBuilder builder, float u, float v);
-	}
-
-	float diffuseLight(float x, float y, float z) {
-		return Math.min(x * x * 0.6f + y * y * ((3f + y) / 4f) + z * z * 0.8f, 1f);
 	}
 
 }

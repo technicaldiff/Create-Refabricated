@@ -9,15 +9,19 @@ import com.simibubi.create.Create;
 import com.simibubi.create.content.contraptions.goggles.GoggleConfigScreen;
 import com.simibubi.create.foundation.config.AllConfigs;
 import com.simibubi.create.foundation.gui.ScreenOpener;
-import com.simibubi.create.foundation.networking.SimplePacketBase;
 import com.simibubi.create.foundation.ponder.PonderRegistry;
 import com.simibubi.create.foundation.ponder.PonderUI;
 import com.simibubi.create.foundation.ponder.content.PonderIndexScreen;
 import com.simibubi.create.foundation.render.backend.FastRenderDispatcher;
 import com.simibubi.create.foundation.render.backend.OptifineHandler;
 
+import me.pepperbell.simplenetworking.S2CPacket;
+import me.pepperbell.simplenetworking.SimpleChannel.ResponseTarget;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.player.ClientPlayerEntity;
+import net.minecraft.client.network.play.ClientPlayNetHandler;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ChatType;
@@ -25,23 +29,21 @@ import net.minecraft.util.text.IFormattableTextComponent;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
 import net.minecraftforge.common.ForgeConfig;
-import net.minecraftforge.fml.DistExecutor;
-import net.minecraftforge.fml.network.NetworkEvent;
 
-public class ConfigureConfigPacket extends SimplePacketBase {
+public class ConfigureConfigPacket implements S2CPacket {
 
-	private final String option;
-	private final String value;
+	private String option;
+	private String value;
+
+	protected ConfigureConfigPacket() {}
 
 	public ConfigureConfigPacket(String option, String value) {
 		this.option = option;
 		this.value = value;
 	}
 
-	public ConfigureConfigPacket(PacketBuffer buffer) {
+	public void read(PacketBuffer buffer) {
 		this.option = buffer.readString(32767);
 		this.value = buffer.readString(32767);
 	}
@@ -53,9 +55,9 @@ public class ConfigureConfigPacket extends SimplePacketBase {
 	}
 
 	@Override
-	public void handle(Supplier<NetworkEvent.Context> ctx) {
-		ctx.get()
-			.enqueueWork(() -> DistExecutor.unsafeRunWhenOn(EnvType.CLIENT, () -> () -> {
+	public void handle(Minecraft client, ClientPlayNetHandler handler, ResponseTarget responseTarget) {
+		client
+			.execute(() -> {
 				try {
 					Actions.valueOf(option)
 						.performAction(value);
@@ -63,10 +65,8 @@ public class ConfigureConfigPacket extends SimplePacketBase {
 					LogManager.getLogger()
 						.warn("Received ConfigureConfigPacket with invalid Option: " + option);
 				}
-			}));
+			});
 
-		ctx.get()
-			.setPacketHandled(true);
 	}
 
 	enum Actions {

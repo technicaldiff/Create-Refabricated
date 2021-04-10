@@ -1,17 +1,17 @@
 package com.simibubi.create.content.schematics.packet;
 
-import java.util.function.Supplier;
-
 import com.simibubi.create.Create;
 import com.simibubi.create.content.schematics.block.SchematicTableContainer;
-import com.simibubi.create.foundation.networking.SimplePacketBase;
 
+import me.pepperbell.simplenetworking.C2SPacket;
+import me.pepperbell.simplenetworking.SimpleChannel.ResponseTarget;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.network.PacketBuffer;
+import net.minecraft.network.play.ServerPlayNetHandler;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.math.BlockPos;
-import net.minecraftforge.fml.network.NetworkEvent.Context;
 
-public class SchematicUploadPacket extends SimplePacketBase {
+public class SchematicUploadPacket implements C2SPacket {
 
 	public static final int BEGIN = 0;
 	public static final int WRITE = 1;
@@ -21,6 +21,8 @@ public class SchematicUploadPacket extends SimplePacketBase {
 	private long size;
 	private String schematic;
 	private byte[] data;
+
+	protected SchematicUploadPacket() {}
 
 	public SchematicUploadPacket(int code, String schematic) {
 		this.code = code;
@@ -43,7 +45,7 @@ public class SchematicUploadPacket extends SimplePacketBase {
 		return new SchematicUploadPacket(FINISH, schematic);
 	}
 
-	public SchematicUploadPacket(PacketBuffer buffer) {
+	public void read(PacketBuffer buffer) {
 		code = buffer.readInt();
 		schematic = buffer.readString(256);
 
@@ -63,11 +65,9 @@ public class SchematicUploadPacket extends SimplePacketBase {
 			buffer.writeByteArray(data);
 	}
 
-	public void handle(Supplier<Context> context) {
-		context.get()
-			.enqueueWork(() -> {
-				ServerPlayerEntity player = context.get()
-					.getSender();
+	public void handle(MinecraftServer server, ServerPlayerEntity player, ServerPlayNetHandler handler, ResponseTarget responseTarget) {
+		server
+			.execute(() -> {
 				if (player == null)
 					return;
 				if (code == BEGIN) {
@@ -80,8 +80,6 @@ public class SchematicUploadPacket extends SimplePacketBase {
 				if (code == FINISH) 
 					Create.schematicReceiver.handleFinishedUpload(player, schematic);
 			});
-		context.get()
-			.setPacketHandled(true);
 	}
 
 }

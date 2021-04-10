@@ -19,10 +19,6 @@ public class ConfigureStockswitchPacket extends TileEntityConfigurationPacket<St
 		this.invert = invert;
 	}
 	
-	public ConfigureStockswitchPacket(PacketBuffer buffer) {
-		super(buffer);
-	}
-	
 	@Override
 	protected void readSettings(PacketBuffer buffer) {
 		offBelow = buffer.readFloat();

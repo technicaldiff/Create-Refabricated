@@ -1,22 +1,25 @@
 package com.simibubi.create.foundation.networking;
 
-import java.util.function.Supplier;
-
 import com.simibubi.create.content.curiosities.symmetry.SymmetryWandItem;
 import com.simibubi.create.content.curiosities.zapper.ZapperItem;
 
+import me.pepperbell.simplenetworking.C2SPacket;
+import me.pepperbell.simplenetworking.SimpleChannel.ResponseTarget;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketBuffer;
+import net.minecraft.network.play.ServerPlayNetHandler;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.Hand;
-import net.minecraftforge.fml.network.NetworkEvent.Context;
 
 @Deprecated
-public class NbtPacket extends SimplePacketBase {
+public class NbtPacket implements C2SPacket {
 
 	public ItemStack stack;
 	public int slot;
 	public Hand hand;
+
+	public NbtPacket() {}
 
 	public NbtPacket(ItemStack stack, Hand hand) {
 		this(stack, -1);
@@ -29,7 +32,7 @@ public class NbtPacket extends SimplePacketBase {
 		this.hand = Hand.MAIN_HAND;
 	}
 
-	public NbtPacket(PacketBuffer buffer) {
+	public void read(PacketBuffer buffer) {
 		stack = buffer.readItemStack();
 		slot = buffer.readInt();
 		hand = Hand.values()[buffer.readInt()];
@@ -41,11 +44,9 @@ public class NbtPacket extends SimplePacketBase {
 		buffer.writeInt(hand.ordinal());
 	}
 
-	public void handle(Supplier<Context> context) {
-		context.get()
-			.enqueueWork(() -> {
-				ServerPlayerEntity player = context.get()
-					.getSender();
+	public void handle(MinecraftServer server, ServerPlayerEntity player, ServerPlayNetHandler handler, ResponseTarget responseTarget) {
+		server
+			.execute(() -> {
 				if (player == null)
 					return;
 				if (!(stack.getItem() instanceof SymmetryWandItem || stack.getItem() instanceof ZapperItem)) {
@@ -66,8 +67,6 @@ public class NbtPacket extends SimplePacketBase {
 				}
 
 			});
-		context.get()
-			.setPacketHandled(true);
 	}
 
 }

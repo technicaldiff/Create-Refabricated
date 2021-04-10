@@ -1,23 +1,22 @@
 package com.simibubi.create.content.contraptions.components.structureMovement.glue;
 
-import java.util.function.Supplier;
-
-import com.simibubi.create.foundation.networking.SimplePacketBase;
-
+import me.pepperbell.simplenetworking.S2CPacket;
+import me.pepperbell.simplenetworking.SimpleChannel.ResponseTarget;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.network.play.ClientPlayNetHandler;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
-import net.minecraftforge.fml.DistExecutor;
-import net.minecraftforge.fml.network.NetworkEvent.Context;
 
-public class GlueEffectPacket extends SimplePacketBase {
+public class GlueEffectPacket implements S2CPacket {
 
 	private BlockPos pos;
 	private Direction direction;
 	private boolean fullBlock;
+
+	protected GlueEffectPacket() {}
 
 	public GlueEffectPacket(BlockPos pos, Direction direction, boolean fullBlock) {
 		this.pos = pos;
@@ -25,7 +24,7 @@ public class GlueEffectPacket extends SimplePacketBase {
 		this.fullBlock = fullBlock;
 	}
 
-	public GlueEffectPacket(PacketBuffer buffer) {
+	public void read(PacketBuffer buffer) {
 		pos = buffer.readBlockPos();
 		direction = Direction.byIndex(buffer.readByte());
 		fullBlock = buffer.readBoolean();
@@ -38,14 +37,13 @@ public class GlueEffectPacket extends SimplePacketBase {
 	}
 
 	@Environment(EnvType.CLIENT)
-	public void handle(Supplier<Context> context) {
-		context.get().enqueueWork(() -> DistExecutor.unsafeRunWhenOn(EnvType.CLIENT, () -> () -> {
+	public void handle(Minecraft client, ClientPlayNetHandler handler, ResponseTarget responseTarget) {
+		client.execute(() -> {
 			Minecraft mc = Minecraft.getInstance();
 			if (!mc.player.getBlockPos().withinDistance(pos, 100))
 				return;
 			SuperGlueItem.spawnParticles(mc.world, pos, direction, fullBlock);
-		}));
-		context.get().setPacketHandled(true);
+		});
 	}
 
 }

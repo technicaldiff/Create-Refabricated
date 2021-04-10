@@ -17,10 +17,6 @@ public class ConfigureSequencedGearshiftPacket extends TileEntityConfigurationPa
 		this.instructions = instructions;
 	}
 
-	public ConfigureSequencedGearshiftPacket(PacketBuffer buffer) {
-		super(buffer);
-	}
-
 	@Override
 	protected void readSettings(PacketBuffer buffer) {
 		instructions = buffer.readCompoundTag().getList("data", NBT.TAG_COMPOUND);

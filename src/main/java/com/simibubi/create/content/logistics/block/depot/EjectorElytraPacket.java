@@ -1,25 +1,26 @@
 package com.simibubi.create.content.logistics.block.depot;
 
-import java.util.function.Supplier;
-
-import com.simibubi.create.foundation.networking.SimplePacketBase;
-
+import me.pepperbell.simplenetworking.C2SPacket;
+import me.pepperbell.simplenetworking.SimpleChannel.ResponseTarget;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.network.PacketBuffer;
+import net.minecraft.network.play.ServerPlayNetHandler;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.network.NetworkEvent.Context;
 
-public class EjectorElytraPacket extends SimplePacketBase {
+public class EjectorElytraPacket implements C2SPacket {
 
 	private BlockPos pos;
+
+	protected EjectorElytraPacket() {}
 
 	public EjectorElytraPacket(BlockPos pos) {
 		this.pos = pos;
 	}
 
-	public EjectorElytraPacket(PacketBuffer buffer) {
+	public void read(PacketBuffer buffer) {
 		pos = buffer.readBlockPos();
 	}
 
@@ -29,11 +30,9 @@ public class EjectorElytraPacket extends SimplePacketBase {
 	}
 
 	@Override
-	public void handle(Supplier<Context> context) {
-		context.get()
-			.enqueueWork(() -> {
-				ServerPlayerEntity player = context.get()
-					.getSender();
+	public void handle(MinecraftServer server, ServerPlayerEntity player, ServerPlayNetHandler handler, ResponseTarget responseTarget) {
+		server
+			.execute(() -> {
 				if (player == null)
 					return;
 				World world = player.world;
@@ -43,8 +42,6 @@ public class EjectorElytraPacket extends SimplePacketBase {
 				if (tileEntity instanceof EjectorTileEntity)
 					((EjectorTileEntity) tileEntity).deployElytra(player);
 			});
-		context.get()
-			.setPacketHandled(true);
 
 	}
 

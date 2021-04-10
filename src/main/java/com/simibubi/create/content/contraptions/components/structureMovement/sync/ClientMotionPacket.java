@@ -1,21 +1,23 @@
 package com.simibubi.create.content.contraptions.components.structureMovement.sync;
 
-import java.util.function.Supplier;
-
 import com.simibubi.create.foundation.networking.AllPackets;
-import com.simibubi.create.foundation.networking.SimplePacketBase;
+import com.simibubi.create.lib.helper.ServerPlayNetHandlerHelper;
 
+import me.pepperbell.simplenetworking.C2SPacket;
+import me.pepperbell.simplenetworking.SimpleChannel.ResponseTarget;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.network.PacketBuffer;
+import net.minecraft.network.play.ServerPlayNetHandler;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.math.vector.Vector3d;
-import net.minecraftforge.fml.network.NetworkEvent.Context;
-import net.minecraftforge.fml.network.PacketDistributor;
 
-public class ClientMotionPacket extends SimplePacketBase {
+public class ClientMotionPacket implements C2SPacket {
 
 	private Vector3d motion;
 	private boolean onGround;
 	private float limbSwing;
+
+	protected ClientMotionPacket() {}
 
 	public ClientMotionPacket(Vector3d motion, boolean onGround, float limbSwing) {
 		this.motion = motion;
@@ -23,7 +25,7 @@ public class ClientMotionPacket extends SimplePacketBase {
 		this.limbSwing = limbSwing;
 	}
 
-	public ClientMotionPacket(PacketBuffer buffer) {
+	public void read(PacketBuffer buffer) {
 		motion = new Vector3d(buffer.readFloat(), buffer.readFloat(), buffer.readFloat());
 		onGround = buffer.readBoolean();
 		limbSwing = buffer.readFloat();
@@ -39,11 +41,9 @@ public class ClientMotionPacket extends SimplePacketBase {
 	}
 
 	@Override
-	public void handle(Supplier<Context> context) {
-		context.get()
-			.enqueueWork(() -> {
-				ServerPlayerEntity sender = context.get()
-					.getSender();
+	public void handle(MinecraftServer server, ServerPlayerEntity sender, ServerPlayNetHandler handler, ResponseTarget responseTarget) {
+		server
+			.execute(() -> {
 				if (sender == null)
 					return;
 				sender.setMotion(motion);
@@ -51,13 +51,10 @@ public class ClientMotionPacket extends SimplePacketBase {
 				if (onGround) {
 					sender.handleFallDamage(sender.fallDistance, 1);
 					sender.fallDistance = 0;
-					sender.connection.floatingTickCount = 0;
+					ServerPlayNetHandlerHelper.setFloatingTickCount(sender.connection, 0);
 				}
-				AllPackets.channel.send(PacketDistributor.TRACKING_ENTITY.with(() -> sender),
-					new LimbSwingUpdatePacket(sender.getEntityId(), sender.getPositionVec(), limbSwing));
+				AllPackets.channel.sendToClientsTracking(new LimbSwingUpdatePacket(sender.getEntityId(), sender.getPositionVec(), limbSwing), sender);
 			});
-		context.get()
-			.setPacketHandled(true);
 	}
 
 }

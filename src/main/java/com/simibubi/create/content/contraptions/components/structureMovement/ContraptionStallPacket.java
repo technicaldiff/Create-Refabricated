@@ -1,21 +1,20 @@
 package com.simibubi.create.content.contraptions.components.structureMovement;
 
-import java.util.function.Supplier;
-
-import com.simibubi.create.foundation.networking.SimplePacketBase;
-
+import me.pepperbell.simplenetworking.S2CPacket;
+import me.pepperbell.simplenetworking.SimpleChannel.ResponseTarget;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.network.play.ClientPlayNetHandler;
 import net.minecraft.network.PacketBuffer;
-import net.fabricmc.api.EnvType;
-import net.minecraftforge.fml.DistExecutor;
-import net.minecraftforge.fml.network.NetworkEvent.Context;
 
-public class ContraptionStallPacket extends SimplePacketBase {
+public class ContraptionStallPacket implements S2CPacket {
 
 	int entityID;
 	float x;
 	float y;
 	float z;
 	float angle;
+
+	protected ContraptionStallPacket() {}
 
 	public ContraptionStallPacket(int entityID, double posX, double posY, double posZ, float angle) {
 		this.entityID = entityID;
@@ -25,7 +24,7 @@ public class ContraptionStallPacket extends SimplePacketBase {
 		this.angle = angle;
 	}
 
-	public ContraptionStallPacket(PacketBuffer buffer) {
+	public void read(PacketBuffer buffer) {
 		entityID = buffer.readInt();
 		x = buffer.readFloat();
 		y = buffer.readFloat();
@@ -40,10 +39,9 @@ public class ContraptionStallPacket extends SimplePacketBase {
 	}
 
 	@Override
-	public void handle(Supplier<Context> context) {
-		context.get().enqueueWork(
-				() -> DistExecutor.unsafeRunWhenOn(EnvType.CLIENT, () -> () -> AbstractContraptionEntity.handleStallPacket(this)));
-		context.get().setPacketHandled(true);
+	public void handle(Minecraft client, ClientPlayNetHandler handler, ResponseTarget responseTarget) {
+		client.execute(
+				() -> AbstractContraptionEntity.handleStallPacket(this));
 	}
 
 	private void writeAll(PacketBuffer buffer, float... floats) {

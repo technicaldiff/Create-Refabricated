@@ -10,10 +10,6 @@ public class ScrollValueUpdatePacket extends TileEntityConfigurationPacket<Smart
 
 	int value;
 	
-	public ScrollValueUpdatePacket(PacketBuffer buffer) {
-		super(buffer);
-	}
-	
 	public ScrollValueUpdatePacket(BlockPos pos, int amount) {
 		super(pos);
 		this.value = amount;

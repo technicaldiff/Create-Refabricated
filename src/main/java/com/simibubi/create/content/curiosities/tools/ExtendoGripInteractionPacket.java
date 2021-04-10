@@ -1,22 +1,23 @@
 package com.simibubi.create.content.curiosities.tools;
 
-import java.util.function.Supplier;
-
-import com.simibubi.create.foundation.networking.SimplePacketBase;
-
+import me.pepperbell.simplenetworking.C2SPacket;
+import me.pepperbell.simplenetworking.SimpleChannel.ResponseTarget;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.network.PacketBuffer;
+import net.minecraft.network.play.ServerPlayNetHandler;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraftforge.common.ForgeMod;
-import net.minecraftforge.fml.network.NetworkEvent.Context;
 
-public class ExtendoGripInteractionPacket extends SimplePacketBase {
+public class ExtendoGripInteractionPacket implements C2SPacket {
 
 	private Hand interactionHand;
 	private int target;
 	private Vector3d specificPoint;
+
+	protected ExtendoGripInteractionPacket() {}
 
 	public ExtendoGripInteractionPacket(Entity target) {
 		this(target, null);
@@ -32,7 +33,7 @@ public class ExtendoGripInteractionPacket extends SimplePacketBase {
 		this.target = target.getEntityId();
 	}
 
-	public ExtendoGripInteractionPacket(PacketBuffer buffer) {
+	public void read(PacketBuffer buffer) {
 		target = buffer.readInt();
 		int handId = buffer.readInt();
 		interactionHand = handId == -1 ? null : Hand.values()[handId];
@@ -53,9 +54,8 @@ public class ExtendoGripInteractionPacket extends SimplePacketBase {
 	}
 
 	@Override
-	public void handle(Supplier<Context> context) {
-		context.get().enqueueWork(() -> {
-			ServerPlayerEntity sender = context.get().getSender();
+	public void handle(MinecraftServer server, ServerPlayerEntity sender, ServerPlayNetHandler handler, ResponseTarget responseTarget) {
+		server.execute(() -> {
 			if (sender == null)
 				return;
 			Entity entityByID = sender.getServerWorld().getEntityByID(target);
@@ -76,7 +76,6 @@ public class ExtendoGripInteractionPacket extends SimplePacketBase {
 					entityByID.applyPlayerInteraction(sender, specificPoint, interactionHand);
 			}
 		});
-		context.get().setPacketHandled(true);
 	}
 
 }

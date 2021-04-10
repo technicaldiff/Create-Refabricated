@@ -10,10 +10,6 @@ public class FilteringCountUpdatePacket extends TileEntityConfigurationPacket<Sm
 
 	int amount;
 	
-	public FilteringCountUpdatePacket(PacketBuffer buffer) {
-		super(buffer);
-	}
-	
 	public FilteringCountUpdatePacket(BlockPos pos, int amount) {
 		super(pos);
 		this.amount = amount;

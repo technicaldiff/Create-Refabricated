@@ -15,8 +15,10 @@ public class TunnelFlapPacket extends TileEntityDataPacket<BeltTunnelTileEntity>
 
     private List<Pair<Direction, Boolean>> flaps;
 
-    public TunnelFlapPacket(PacketBuffer buffer) {
-        super(buffer);
+    protected TunnelFlapPacket() {}
+
+    public void read(PacketBuffer buffer) {
+        super.read(buffer);
 
         byte size = buffer.readByte();
 

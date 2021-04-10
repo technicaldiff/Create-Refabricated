@@ -1,30 +1,29 @@
 package com.simibubi.create.content.contraptions.fluids.actors;
 
-import java.util.function.Supplier;
-
 import com.simibubi.create.content.contraptions.fluids.FluidFX;
-import com.simibubi.create.foundation.networking.SimplePacketBase;
 
+import me.pepperbell.simplenetworking.S2CPacket;
+import me.pepperbell.simplenetworking.SimpleChannel.ResponseTarget;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.network.play.ClientPlayNetHandler;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.vector.Vector3d;
-import net.fabricmc.api.EnvType;
 import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fml.DistExecutor;
-import net.minecraftforge.fml.network.NetworkEvent.Context;
 
-public class FluidSplashPacket extends SimplePacketBase {
+public class FluidSplashPacket implements S2CPacket {
 
 	private BlockPos pos;
 	private FluidStack fluid;
+
+	protected FluidSplashPacket() {}
 
 	public FluidSplashPacket(BlockPos pos, FluidStack fluid) {
 		this.pos = pos;
 		this.fluid = fluid;
 	}
 
-	public FluidSplashPacket(PacketBuffer buffer) {
+	public void read(PacketBuffer buffer) {
 		pos = buffer.readBlockPos();
 		fluid = buffer.readFluidStack();
 	}
@@ -34,16 +33,14 @@ public class FluidSplashPacket extends SimplePacketBase {
 		buffer.writeFluidStack(fluid);
 	}
 
-	public void handle(Supplier<Context> ctx) {
-		ctx.get()
-			.enqueueWork(() -> DistExecutor.unsafeRunWhenOn(EnvType.CLIENT, () -> () -> {
+	public void handle(Minecraft client, ClientPlayNetHandler handler, ResponseTarget responseTarget) {
+		client
+			.execute(() -> {
 				if (Minecraft.getInstance().player.getPositionVec()
 					.distanceTo(new Vector3d(pos.getX(), pos.getY(), pos.getZ())) > 100)
 					return;
 				FluidFX.splash(pos, fluid);
-			}));
-		ctx.get()
-			.setPacketHandled(true);
+			});
 	}
 
 }
