@@ -1,8 +1,10 @@
 package com.simibubi.create.lib.helper;
 
 import java.util.stream.Stream;
-import net.minecraft.block.WoodType;
+
 import com.simibubi.create.lib.mixin.accessor.WoodTypeAccessor;
+
+import net.minecraft.block.WoodType;
 
 public final class WoodTypeHelper {
 	// WoodType.stream is client-side only, but this method is not

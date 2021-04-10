@@ -1,6 +1,7 @@
 package com.simibubi.create.lib.extensions;
 
 import org.jetbrains.annotations.ApiStatus;
+
 import net.minecraft.client.particle.IParticleFactory;
 import net.minecraft.client.particle.ParticleManager;
 import net.minecraft.particles.IParticleData;

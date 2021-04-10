@@ -2,6 +2,7 @@ package com.simibubi.create.lib.item;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.simibubi.create.lib.mixin.accessor.ItemRendererAccessor;
+
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.ItemRenderer;

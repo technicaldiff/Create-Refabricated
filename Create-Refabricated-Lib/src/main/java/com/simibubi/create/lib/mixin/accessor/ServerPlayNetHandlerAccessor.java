@@ -1,8 +1,9 @@
 package com.simibubi.create.lib.mixin.accessor;
 
-import net.minecraft.network.play.ServerPlayNetHandler;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.gen.Accessor;
+
+import net.minecraft.network.play.ServerPlayNetHandler;
 
 @Mixin(ServerPlayNetHandler.class)
 public interface ServerPlayNetHandlerAccessor {
