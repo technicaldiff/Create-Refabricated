@@ -20,6 +20,9 @@ import com.simibubi.create.foundation.utility.AnimationTickHolder;
 import com.simibubi.create.foundation.utility.BlockFace;
 import com.simibubi.create.foundation.utility.worldWrappers.WrappedWorld;
 
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
+import net.fabricmc.fabric.api.object.builder.v1.entity.FabricEntityTypeBuilder;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.DirectionalBlock;
@@ -56,8 +59,6 @@ import net.minecraft.util.math.RayTraceResult.Type;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
 import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.common.registry.IEntityAdditionalSpawnData;
 import net.minecraftforge.fml.network.NetworkHooks;
@@ -433,9 +434,9 @@ public class SuperGlueEntity extends Entity implements IEntityAdditionalSpawnDat
 	@Override
 	public void recalculateSize() {}
 
-	public static EntityType.Builder<?> build(EntityType.Builder<?> builder) {
+	public static FabricEntityTypeBuilder<?> build(FabricEntityTypeBuilder<?> builder) {
 		@SuppressWarnings("unchecked")
-		EntityType.Builder<SuperGlueEntity> entityBuilder = (EntityType.Builder<SuperGlueEntity>) builder;
+		FabricEntityTypeBuilder<SuperGlueEntity> entityBuilder = (FabricEntityTypeBuilder<SuperGlueEntity>) builder;
 		return entityBuilder;
 	}
 

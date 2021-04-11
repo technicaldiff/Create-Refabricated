@@ -6,6 +6,7 @@ import java.util.Map;
 import com.simibubi.create.foundation.block.IBlockVertexColor;
 import com.simibubi.create.foundation.block.render.ColoredVertexModel;
 
+import net.fabricmc.fabric.api.client.rendering.v1.ColorProviderRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.RedstoneWireBlock;
@@ -60,13 +61,8 @@ public class AllColorHandlers {
 	}
 
 	public void init() {
-		BlockColors blockColors = Minecraft.getInstance()
-			.getBlockColors();
-		ItemColors itemColors = Minecraft.getInstance()
-			.getItemColors();
-
-		coloredBlocks.forEach((block, color) -> blockColors.register(color, block));
-		coloredItems.forEach((item, color) -> itemColors.register(color, item));
+		coloredBlocks.forEach((block, color) -> ColorProviderRegistry.BLOCK.register(color, block));
+		coloredItems.forEach((item, color) -> ColorProviderRegistry.ITEM.register(color, item));
 		coloredVertexBlocks.forEach((block, color) -> CreateClient.getCustomBlockModels()
 			.register(() -> block, model -> new ColoredVertexModel(model, color)));
 	}

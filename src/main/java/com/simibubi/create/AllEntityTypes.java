@@ -13,13 +13,14 @@ import com.simibubi.create.foundation.utility.Lang;
 import com.tterrag.registrate.util.entry.RegistryEntry;
 import com.tterrag.registrate.util.nullness.NonNullConsumer;
 
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
+import net.fabricmc.fabric.api.client.rendereregistry.v1.EntityRendererRegistry;
+import net.fabricmc.fabric.api.object.builder.v1.entity.FabricEntityTypeBuilder;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityClassification;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.EntityType.IFactory;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
-import net.minecraftforge.fml.client.registry.RenderingRegistry;
 
 public class AllEntityTypes {
 
@@ -47,28 +48,28 @@ public class AllEntityTypes {
 
 	private static <T extends Entity> RegistryEntry<EntityType<T>> register(String name, IFactory<T> factory,
 		EntityClassification group, int range, int updateFrequency, boolean sendVelocity, boolean immuneToFire,
-		NonNullConsumer<EntityType.Builder<T>> propertyBuilder) {
+		NonNullConsumer<FabricEntityTypeBuilder<T>> propertyBuilder) {
 		String id = Lang.asId(name);
 		return Create.registrate()
 			.entity(id, factory, group)
-			.properties(b -> b.setTrackingRange(range)
-				.setUpdateInterval(updateFrequency)
-				.setShouldReceiveVelocityUpdates(sendVelocity))
+			.properties(b -> b.trackRangeChunks(range)
+				.trackedUpdateRate(updateFrequency)
+				.forceTrackedVelocityUpdates(sendVelocity))
 			.properties(propertyBuilder)
 			.properties(b -> {
 				if (immuneToFire)
-					b.immuneToFire();
+					b.fireImmune();
 			})
 			.register();
 	}
 
 	@Environment(value = EnvType.CLIENT)
 	public static void registerRenderers() {
-		RenderingRegistry.registerEntityRenderingHandler(CONTROLLED_CONTRAPTION.get(), ContraptionEntityRenderer::new);
-		RenderingRegistry.registerEntityRenderingHandler(ORIENTED_CONTRAPTION.get(),
-			OrientedContraptionEntityRenderer::new);
-		RenderingRegistry.registerEntityRenderingHandler(GANTRY_CONTRAPTION.get(), ContraptionEntityRenderer::new);
-		RenderingRegistry.registerEntityRenderingHandler(SUPER_GLUE.get(), SuperGlueRenderer::new);
-		RenderingRegistry.registerEntityRenderingHandler(SEAT.get(), SeatEntity.Render::new);
+		EntityRendererRegistry.INSTANCE.register(CONTROLLED_CONTRAPTION.get(), (type, context) -> new ContraptionEntityRenderer(type));
+		EntityRendererRegistry.INSTANCE.register(ORIENTED_CONTRAPTION.get(),
+				(type, context) -> new OrientedContraptionEntityRenderer(type));
+		EntityRendererRegistry.INSTANCE.register(GANTRY_CONTRAPTION.get(), (type, context) -> new ContraptionEntityRenderer(type));
+		EntityRendererRegistry.INSTANCE.register(SUPER_GLUE.get(), (type, context) -> new SuperGlueRenderer(type));
+		EntityRendererRegistry.INSTANCE.register(SEAT.get(), (type, context) -> new SeatEntity.Render(type));
 	}
 }

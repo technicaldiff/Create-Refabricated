@@ -2,10 +2,12 @@ package com.simibubi.create.content.contraptions.components.actors;
 
 import com.simibubi.create.AllEntityTypes;
 
+import net.fabricmc.fabric.api.object.builder.v1.entity.FabricEntityTypeBuilder;
 import net.minecraft.client.renderer.culling.ClippingHelper;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererManager;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntitySize;
 import net.minecraft.entity.EntityType;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.IPacket;
@@ -30,10 +32,10 @@ public class SeatEntity extends Entity implements IEntityAdditionalSpawnData {
 		noClip = true;
 	}
 
-	public static EntityType.Builder<?> build(EntityType.Builder<?> builder) {
+	public static FabricEntityTypeBuilder<?> build(FabricEntityTypeBuilder<?> builder) {
 		@SuppressWarnings("unchecked")
-		EntityType.Builder<SeatEntity> entityBuilder = (EntityType.Builder<SeatEntity>) builder;
-		return entityBuilder.size(0.25f, 0.35f);
+		FabricEntityTypeBuilder<SeatEntity> entityBuilder = (FabricEntityTypeBuilder<SeatEntity>) builder;
+		return entityBuilder.dimensions(EntitySize.flexible(0.25f, 0.35f));
 	}
 
 	@Override

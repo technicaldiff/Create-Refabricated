@@ -7,11 +7,9 @@ import static com.simibubi.create.AllTags.NameSpace.TIC;
 import java.util.function.Function;
 
 import com.simibubi.create.foundation.data.CreateRegistrate;
-import com.simibubi.create.foundation.utility.EmptyNamedTag;
 import com.simibubi.create.foundation.utility.Lang;
 import com.tterrag.registrate.builders.BlockBuilder;
 import com.tterrag.registrate.builders.ItemBuilder;
-import com.tterrag.registrate.providers.ProviderType;
 import com.tterrag.registrate.util.nullness.NonNullFunction;
 
 import net.minecraft.block.Block;
@@ -23,11 +21,8 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.tags.BlockTags;
-import net.minecraft.tags.FluidTags;
 import net.minecraft.tags.ITag;
-import net.minecraft.tags.ItemTags;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.fml.ModList;
 
 public class AllTags {
 	private static final CreateRegistrate REGISTRATE = Create.registrate()
@@ -35,21 +30,21 @@ public class AllTags {
 
 	public static <T extends Block, P> NonNullFunction<BlockBuilder<T, P>, ItemBuilder<BlockItem, BlockBuilder<T, P>>> tagBlockAndItem(
 		String tagName) {
-		return b -> b.tag(forgeBlockTag(tagName))
+		return b -> b//.tag(forgeBlockTag(tagName))
 			.item()
-			.tag(forgeItemTag(tagName));
+			/*.tag(forgeItemTag(tagName))*/;
 	}
 
 	public static ITag.INamedTag<Block> forgeBlockTag(String name) {
-		return forgeTag(BlockTags::makeWrapperTag, name);
+		return null/*forgeTag(BlockTags::makeWrapperTag, name)*/;
 	}
 
 	public static ITag.INamedTag<Item> forgeItemTag(String name) {
-		return forgeTag(ItemTags::makeWrapperTag, name);
+		return null/*forgeTag(ItemTags::makeWrapperTag, name)*/;
 	}
 
 	public static ITag.INamedTag<Fluid> forgeFluidTag(String name) {
-		return forgeTag(FluidTags::makeWrapperTag, name);
+		return null/*forgeTag(FluidTags::makeWrapperTag, name)*/;
 	}
 
 	public static <T> ITag.INamedTag<T> forgeTag(Function<String, ITag.INamedTag<T>> wrapperFactory, String name) {
@@ -95,9 +90,9 @@ public class AllTags {
 		}
 
 		private AllItemTags(NameSpace namespace, String path) {
-			tag = ItemTags.makeWrapperTag(
-				new ResourceLocation(namespace.id, (path.isEmpty() ? "" : path + "/") + Lang.asId(name())).toString());
-			REGISTRATE.addDataGenerator(ProviderType.ITEM_TAGS, prov -> prov.getOrCreateTagBuilder(tag));
+//			tag = ItemTags.makeWrapperTag(
+//				new ResourceLocation(namespace.id, (path.isEmpty() ? "" : path + "/") + Lang.asId(name())).toString());
+//			REGISTRATE.addDataGenerator(ProviderType.ITEM_TAGS, prov -> prov.getOrCreateTagBuilder(tag));
 		}
 
 		public boolean matches(ItemStack stack) {
@@ -105,13 +100,13 @@ public class AllTags {
 		}
 
 		public void add(Item... values) {
-			REGISTRATE.addDataGenerator(ProviderType.ITEM_TAGS, prov -> prov.getOrCreateTagBuilder(tag)
-				.add(values));
+//			REGISTRATE.addDataGenerator(ProviderType.ITEM_TAGS, prov -> prov.getOrCreateTagBuilder(tag)
+//				.add(values));
 		}
 
 		public void includeIn(AllItemTags parent) {
-			REGISTRATE.addDataGenerator(ProviderType.ITEM_TAGS, prov -> prov.getOrCreateTagBuilder(parent.tag)
-				.addTag(tag));
+//			REGISTRATE.addDataGenerator(ProviderType.ITEM_TAGS, prov -> prov.getOrCreateTagBuilder(parent.tag)
+//				.addTag(tag));
 		}
 	}
 
@@ -131,8 +126,8 @@ public class AllTags {
 		}
 
 		private AllFluidTags(NameSpace namespace, String path) {
-			tag = FluidTags.createOptional(
-				new ResourceLocation(namespace.id, (path.isEmpty() ? "" : path + "/") + Lang.asId(name())));
+//			tag = FluidTags.createOptional(
+//				new ResourceLocation(namespace.id, (path.isEmpty() ? "" : path + "/") + Lang.asId(name())));
 		}
 
 		public boolean matches(Fluid fluid) {
@@ -170,13 +165,13 @@ public class AllTags {
 		private AllBlockTags(NameSpace namespace, String path) {
 			ResourceLocation id =
 				new ResourceLocation(namespace.id, (path.isEmpty() ? "" : path + "/") + Lang.asId(name()));
-			if (ModList.get()
-				.isLoaded(namespace.id)) {
-				tag = BlockTags.makeWrapperTag(id.toString());
-				REGISTRATE.addDataGenerator(ProviderType.BLOCK_TAGS, prov -> prov.getOrCreateTagBuilder(tag));
-			} else {
-				tag = new EmptyNamedTag<>(id);
-			}
+//			if (ModList.get()
+//				.isLoaded(namespace.id)) {
+//				tag = BlockTags.makeWrapperTag(id.toString());
+//				REGISTRATE.addDataGenerator(ProviderType.BLOCK_TAGS, prov -> prov.getOrCreateTagBuilder(tag));
+//			} else {
+//				tag = new EmptyNamedTag<>(id);
+//			}
 		}
 
 		public boolean matches(BlockState block) {
@@ -184,18 +179,18 @@ public class AllTags {
 		}
 
 		public void includeIn(AllBlockTags parent) {
-			REGISTRATE.addDataGenerator(ProviderType.BLOCK_TAGS, prov -> prov.getOrCreateTagBuilder(parent.tag)
-				.addTag(tag));
+//			REGISTRATE.addDataGenerator(ProviderType.BLOCK_TAGS, prov -> prov.getOrCreateTagBuilder(parent.tag)
+//				.addTag(tag));
 		}
 
 		public void includeAll(ITag.INamedTag<Block> child) {
-			REGISTRATE.addDataGenerator(ProviderType.BLOCK_TAGS, prov -> prov.getOrCreateTagBuilder(tag)
-				.addTag(child));
+//			REGISTRATE.addDataGenerator(ProviderType.BLOCK_TAGS, prov -> prov.getOrCreateTagBuilder(tag)
+//				.addTag(child));
 		}
 
 		public void add(Block... values) {
-			REGISTRATE.addDataGenerator(ProviderType.BLOCK_TAGS, prov -> prov.getOrCreateTagBuilder(tag)
-				.add(values));
+//			REGISTRATE.addDataGenerator(ProviderType.BLOCK_TAGS, prov -> prov.getOrCreateTagBuilder(tag)
+//				.add(values));
 		}
 	}
 

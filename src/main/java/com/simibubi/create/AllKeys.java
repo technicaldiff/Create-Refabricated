@@ -2,10 +2,10 @@ package com.simibubi.create;
 
 import org.lwjgl.glfw.GLFW;
 
+import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.settings.KeyBinding;
-import net.minecraftforge.fml.client.registry.ClientRegistry;
 
 public enum AllKeys {
 
@@ -30,7 +30,7 @@ public enum AllKeys {
 			if (!key.modifiable)
 				continue;
 
-			ClientRegistry.registerKeyBinding(key.keybind);
+			KeyBindingHelper.registerKeyBinding(key.keybind);
 		}
 	}
 
@@ -51,7 +51,7 @@ public enum AllKeys {
 	}
 
 	public int getBoundCode() {
-		return keybind.getKey()
+		return KeyBindingHelper.getBoundKeyOf(keybind)
 			.getKeyCode();
 	}
 

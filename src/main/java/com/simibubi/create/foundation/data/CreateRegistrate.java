@@ -23,6 +23,7 @@ import com.tterrag.registrate.builders.BlockBuilder;
 import com.tterrag.registrate.builders.Builder;
 import com.tterrag.registrate.builders.FluidBuilder;
 import com.tterrag.registrate.builders.ItemBuilder;
+import com.tterrag.registrate.fabric.RegistryObject;
 import com.tterrag.registrate.util.NonNullLazyValue;
 import com.tterrag.registrate.util.entry.RegistryEntry;
 import com.tterrag.registrate.util.nullness.NonNullBiFunction;
@@ -31,7 +32,10 @@ import com.tterrag.registrate.util.nullness.NonNullFunction;
 import com.tterrag.registrate.util.nullness.NonNullSupplier;
 import com.tterrag.registrate.util.nullness.NonNullUnaryOperator;
 
-import net.minecraft.block.AbstractBlock.Properties;
+import alexiil.mc.lib.attributes.fluid.FluidAttributes;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
+import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.color.IBlockColor;
 import net.minecraft.client.renderer.color.IItemColor;
@@ -41,14 +45,8 @@ import net.minecraft.item.Item;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.IItemProvider;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
-import net.minecraftforge.fluids.FluidAttributes;
 import net.minecraftforge.fluids.ForgeFlowingFluid;
 import net.minecraftforge.fml.DistExecutor;
-import net.minecraftforge.fml.RegistryObject;
-import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
-import net.minecraftforge.registries.IForgeRegistryEntry;
 
 public class CreateRegistrate extends AbstractRegistrate<CreateRegistrate> {
 
@@ -58,8 +56,8 @@ public class CreateRegistrate extends AbstractRegistrate<CreateRegistrate> {
 
 	public static NonNullLazyValue<CreateRegistrate> lazy(String modid) {
 		return new NonNullLazyValue<>(
-			() -> new CreateRegistrate(modid).registerEventListeners(FMLJavaModLoadingContext.get()
-				.getModEventBus()));
+			() -> new CreateRegistrate(modid)
+				);
 	}
 
 	/* Section Tracking */
@@ -77,7 +75,7 @@ public class CreateRegistrate extends AbstractRegistrate<CreateRegistrate> {
 	}
 
 	@Override
-	protected <R extends IForgeRegistryEntry<R>, T extends R> RegistryEntry<T> accept(String name,
+	protected <R, T extends R> RegistryEntry<T> accept(String name,
 		Class<? super R> type, Builder<R, T, ?, ?> builder, NonNullSupplier<? extends T> creator,
 		NonNullFunction<RegistryObject<T>, ? extends RegistryEntry<T>> entryFactory) {
 		RegistryEntry<T> ret = super.accept(name, type, builder, creator, entryFactory);
@@ -93,7 +91,7 @@ public class CreateRegistrate extends AbstractRegistrate<CreateRegistrate> {
 		return sectionLookup.getOrDefault(entry, AllSections.UNASSIGNED);
 	}
 
-	public AllSections getSection(IForgeRegistryEntry<?> entry) {
+	public AllSections getSection(Object entry) {
 		return sectionLookup.entrySet()
 			.stream()
 			.filter(e -> e.getKey()
@@ -103,7 +101,7 @@ public class CreateRegistrate extends AbstractRegistrate<CreateRegistrate> {
 			.orElse(AllSections.UNASSIGNED);
 	}
 
-	public <R extends IForgeRegistryEntry<R>> Collection<RegistryEntry<R>> getAll(AllSections section,
+	public <R> Collection<RegistryEntry<R>> getAll(AllSections section,
 		Class<? super R> registryType) {
 		return this.<R>getAll(registryType)
 			.stream()
@@ -127,15 +125,15 @@ public class CreateRegistrate extends AbstractRegistrate<CreateRegistrate> {
 	/* Palettes */
 
 	public <T extends Block> BlockBuilder<T, CreateRegistrate> baseBlock(String name,
-		NonNullFunction<Properties, T> factory, NonNullSupplier<Block> propertiesFrom, boolean TFworldGen) {
+		NonNullFunction<FabricBlockSettings, T> factory, NonNullSupplier<Block> propertiesFrom, boolean TFworldGen) {
 		return super.block(name, factory).initialProperties(propertiesFrom)
-			.blockstate((c, p) -> {
-				final String location = "block/palettes/" + c.getName() + "/plain";
-				p.simpleBlock(c.get(), p.models()
-					.cubeAll(c.getName(), p.modLoc(location)));
-				// TODO tag with forge:stone; if TFWorldGen == true tag with forge:wg_stone
-				// aswell
-			})
+//			.blockstate((c, p) -> {
+//				final String location = "block/palettes/" + c.getName() + "/plain";
+//				p.simpleBlock(c.get(), p.models()
+//					.cubeAll(c.getName(), p.modLoc(location)));
+//				// TODO tag with forge:stone; if TFWorldGen == true tag with forge:wg_stone
+//				// aswell
+//			})
 			.simpleItem();
 	}
 
@@ -213,7 +211,7 @@ public class CreateRegistrate extends AbstractRegistrate<CreateRegistrate> {
 	@Environment(EnvType.CLIENT)
 	private static void registerCTBehviour(Block entry, ConnectedTextureBehaviour behavior) {
 		CreateClient.getCustomBlockModels()
-			.register(entry.delegate, model -> new CTModel(model, behavior));
+			.register(() -> entry, model -> new CTModel(model, behavior));
 	}
 
 	@Environment(EnvType.CLIENT)
@@ -226,21 +224,21 @@ public class CreateRegistrate extends AbstractRegistrate<CreateRegistrate> {
 	private static void registerBlockModel(Block entry,
 		Supplier<NonNullFunction<IBakedModel, ? extends IBakedModel>> func) {
 		CreateClient.getCustomBlockModels()
-			.register(entry.delegate, func.get());
+			.register(() -> entry, func.get());
 	}
 
 	@Environment(EnvType.CLIENT)
 	private static void registerItemModel(Item entry,
 		Supplier<NonNullFunction<IBakedModel, ? extends IBakedModel>> func) {
 		CreateClient.getCustomItemModels()
-			.register(entry.delegate, func.get());
+			.register(() -> entry, func.get());
 	}
 
 	@Environment(EnvType.CLIENT)
 	private static void registerCustomRenderedItem(Item entry,
 		Supplier<NonNullFunction<IBakedModel, ? extends CustomRenderedItemModel>> func) {
 		CreateClient.getCustomRenderedItems()
-			.register(entry.delegate, func.get());
+			.register(() -> entry, func.get());
 	}
 
 	@Environment(EnvType.CLIENT)

@@ -44,7 +44,6 @@ import com.simibubi.create.content.curiosities.zapper.terrainzapper.WorldshaperM
 import com.simibubi.create.content.logistics.item.filter.FilterItem;
 import com.simibubi.create.content.schematics.item.SchematicAndQuillItem;
 import com.simibubi.create.content.schematics.item.SchematicItem;
-import com.simibubi.create.foundation.data.AssetLookup;
 import com.simibubi.create.foundation.data.CreateRegistrate;
 import com.simibubi.create.foundation.item.HiddenIngredientItem;
 import com.simibubi.create.foundation.item.TagDependentIngredientItem;
@@ -111,7 +110,7 @@ public class AllItems {
 
 	public static final ItemEntry<BuildersTeaItem> BUILDERS_TEA = REGISTRATE.item("builders_tea", BuildersTeaItem::new)
 		.tag(AllItemTags.UPRIGHT_ON_BELT.tag)
-		.properties(p -> p.maxStackSize(16))
+		.properties(p -> p.maxCount(16))
 		.lang("Builder's Tea")
 		.register();
 
@@ -123,7 +122,7 @@ public class AllItems {
 	public static final ItemEntry<ChromaticCompoundItem> CHROMATIC_COMPOUND =
 		REGISTRATE.item("chromatic_compound", ChromaticCompoundItem::new)
 			.properties(p -> p.rarity(Rarity.UNCOMMON))
-			.model(AssetLookup.existingItemModel())
+//			.model(AssetLookup.existingItemModel())
 			.onRegister(CreateRegistrate.itemColors(() -> ChromaticCompoundColor::new))
 			.register();
 
@@ -172,16 +171,16 @@ public class AllItems {
 
 	public static final ItemEntry<VerticalGearboxItem> VERTICAL_GEARBOX =
 		REGISTRATE.item("vertical_gearbox", VerticalGearboxItem::new)
-			.model(AssetLookup.<VerticalGearboxItem>customItemModel("gearbox", "item_vertical"))
+//			.model(AssetLookup.<VerticalGearboxItem>customItemModel("gearbox", "item_vertical"))
 			.register();
 
 	public static final ItemEntry<BlazeBurnerBlockItem> EMPTY_BLAZE_BURNER =
 		REGISTRATE.item("empty_blaze_burner", BlazeBurnerBlockItem::empty)
-			.model(AssetLookup.<BlazeBurnerBlockItem>customItemModel("blaze_burner", "block"))
+//			.model(AssetLookup.<BlazeBurnerBlockItem>customItemModel("blaze_burner", "block"))
 			.register();
 
 	public static final ItemEntry<GogglesItem> GOGGLES = REGISTRATE.item("goggles", GogglesItem::new)
-		.properties(p -> p.maxStackSize(1))
+		.properties(p -> p.maxCount(1))
 		.onRegister(CreateRegistrate.itemModel(() -> GogglesModel::new))
 		.lang("Engineer's Goggles")
 		.register();
@@ -203,9 +202,9 @@ public class AllItems {
 		.register();
 
 	public static final ItemEntry<WrenchItem> WRENCH = REGISTRATE.item("wrench", WrenchItem::new)
-		.properties(p -> p.maxStackSize(1))
+		.properties(p -> p.maxCount(1))
 		.transform(CreateRegistrate.customRenderedItem(() -> WrenchModel::new))
-		.model(AssetLookup.itemModelWithPartials())
+//		.model(AssetLookup.itemModelWithPartials())
 		.register();
 
 	public static final ItemEntry<MinecartContraptionItem> MINECART_CONTRAPTION =
@@ -227,12 +226,12 @@ public class AllItems {
 	}
 
 	public static final ItemEntry<FilterItem> FILTER = REGISTRATE.item("filter", FilterItem::regular)
-		.model(AssetLookup.existingItemModel())
+//		.model(AssetLookup.existingItemModel())
 		.register();
 
 	public static final ItemEntry<FilterItem> ATTRIBUTE_FILTER =
 		REGISTRATE.item("attribute_filter", FilterItem::attribute)
-			.model(AssetLookup.existingItemModel())
+//			.model(AssetLookup.existingItemModel())
 			.register();
 
 	// Curiosities
@@ -248,29 +247,29 @@ public class AllItems {
 	public static final ItemEntry<BlockzapperItem> BLOCKZAPPER =
 		REGISTRATE.item("handheld_blockzapper", BlockzapperItem::new)
 			.transform(CreateRegistrate.customRenderedItem(() -> BlockzapperModel::new))
-			.model(AssetLookup.itemModelWithPartials())
+//			.model(AssetLookup.itemModelWithPartials())
 			.register();
 
 	public static final ItemEntry<WorldshaperItem> WORLDSHAPER =
 		REGISTRATE.item("handheld_worldshaper", WorldshaperItem::new)
 			.transform(CreateRegistrate.customRenderedItem(() -> WorldshaperModel::new))
-			.model(AssetLookup.itemModelWithPartials())
+//			.model(AssetLookup.itemModelWithPartials())
 			.register();
 
 	public static final ItemEntry<DeforesterItem> DEFORESTER = REGISTRATE.item("deforester", DeforesterItem::new)
 		.transform(CreateRegistrate.customRenderedItem(() -> DeforesterModel::new))
-		.model(AssetLookup.itemModelWithPartials())
+//		.model(AssetLookup.itemModelWithPartials())
 		.register();
 
 	public static final ItemEntry<SymmetryWandItem> WAND_OF_SYMMETRY =
 		REGISTRATE.item("wand_of_symmetry", SymmetryWandItem::new)
 			.transform(CreateRegistrate.customRenderedItem(() -> SymmetryWandModel::new))
-			.model(AssetLookup.itemModelWithPartials())
+//			.model(AssetLookup.itemModelWithPartials())
 			.register();
 
 	public static final ItemEntry<ExtendoGripItem> EXTENDO_GRIP = REGISTRATE.item("extendo_grip", ExtendoGripItem::new)
 		.transform(CreateRegistrate.customRenderedItem(() -> ExtendoGripModel::new))
-		.model(AssetLookup.itemModelWithPartials())
+//		.model(AssetLookup.itemModelWithPartials())
 		.register();
 
 	// Schematics
@@ -280,16 +279,16 @@ public class AllItems {
 	}
 
 	public static final ItemEntry<Item> EMPTY_SCHEMATIC = REGISTRATE.item("empty_schematic", Item::new)
-		.properties(p -> p.maxStackSize(1))
+		.properties(p -> p.maxCount(1))
 		.register();
 
 	public static final ItemEntry<SchematicAndQuillItem> SCHEMATIC_AND_QUILL =
 		REGISTRATE.item("schematic_and_quill", SchematicAndQuillItem::new)
-			.properties(p -> p.maxStackSize(1))
+			.properties(p -> p.maxCount(1))
 			.register();
 
 	public static final ItemEntry<SchematicItem> SCHEMATIC = REGISTRATE.item("schematic", SchematicItem::new)
-		.properties(p -> p.maxStackSize(1))
+		.properties(p -> p.maxCount(1))
 		.register();
 
 	// Shortcuts

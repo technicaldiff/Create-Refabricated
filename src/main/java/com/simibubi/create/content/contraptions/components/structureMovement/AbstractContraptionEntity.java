@@ -21,9 +21,13 @@ import com.simibubi.create.foundation.networking.AllPackets;
 import com.simibubi.create.foundation.utility.AngleHelper;
 import com.simibubi.create.foundation.utility.VecHelper;
 
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
+import net.fabricmc.fabric.api.object.builder.v1.entity.FabricEntityTypeBuilder;
 import net.minecraft.block.material.PushReaction;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntitySize;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.item.HangingEntity;
 import net.minecraft.entity.item.minecart.AbstractMinecartEntity;
@@ -43,8 +47,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
 import net.minecraft.world.gen.feature.template.Template.BlockInfo;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
 import net.minecraftforge.fml.common.registry.IEntityAdditionalSpawnData;
 import net.minecraftforge.fml.network.NetworkHooks;
 import net.minecraftforge.fml.network.PacketDistributor;
@@ -359,11 +361,11 @@ public abstract class AbstractContraptionEntity extends Entity implements IEntit
 		return (float) ((Math.acos(vec.y)) / Math.PI * 180);
 	}
 
-	public static EntityType.Builder<?> build(EntityType.Builder<?> builder) {
+	public static FabricEntityTypeBuilder<?> build(FabricEntityTypeBuilder<?> builder) {
 		@SuppressWarnings("unchecked")
-		EntityType.Builder<AbstractContraptionEntity> entityBuilder =
-			(EntityType.Builder<AbstractContraptionEntity>) builder;
-		return entityBuilder.size(1, 1);
+		FabricEntityTypeBuilder<AbstractContraptionEntity> entityBuilder =
+			(FabricEntityTypeBuilder<AbstractContraptionEntity>) builder;
+		return entityBuilder.dimensions(EntitySize.flexible(1, 1));
 	}
 
 	@Override
