@@ -48,8 +48,6 @@ import net.minecraft.world.IBlockDisplayReader;
 import net.minecraft.world.LightType;
 import net.minecraft.world.World;
 import net.minecraft.world.gen.feature.template.Template;
-import net.minecraftforge.client.ForgeHooksClient;
-import net.minecraftforge.client.model.data.EmptyModelData;
 
 public class ContraptionRenderDispatcher {
     public static final Int2ObjectMap<RenderedContraption> renderers = new Int2ObjectOpenHashMap<>();
@@ -195,7 +193,6 @@ public class ContraptionRenderDispatcher {
         if (renderWorld == null || renderWorld.getWorld() != Minecraft.getInstance().world)
             renderWorld = new PlacementSimulationWorld(Minecraft.getInstance().world);
 
-        ForgeHooksClient.setRenderLayer(layer);
         MatrixStack ms = new MatrixStack();
         BlockRendererDispatcher dispatcher = Minecraft.getInstance()
             .getBlockRendererDispatcher();
@@ -215,14 +212,14 @@ public class ContraptionRenderDispatcher {
 
             if (state.getRenderType() == BlockRenderType.ENTITYBLOCK_ANIMATED)
                 continue;
-            if (!RenderTypeLookup.canRenderInLayer(state, layer))
+            if (RenderTypeLookup.getBlockLayer(state) != layer)
                 continue;
 
             IBakedModel originalModel = dispatcher.getModelForState(state);
             ms.push();
             ms.translate(info.pos.getX(), info.pos.getY(), info.pos.getZ());
-            blockRenderer.renderModel(renderWorld, originalModel, state, info.pos, ms, builder, true, random, 42,
-                OverlayTexture.DEFAULT_UV, EmptyModelData.INSTANCE);
+            blockRenderer.render(renderWorld, originalModel, state, info.pos, ms, builder, true, random, 42,
+                OverlayTexture.DEFAULT_UV);
             ms.pop();
         }
 

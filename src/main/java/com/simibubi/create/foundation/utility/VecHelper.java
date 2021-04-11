@@ -4,6 +4,9 @@ import java.util.Random;
 
 import javax.annotation.Nullable;
 
+import com.simibubi.create.lib.helper.GameRendererHelper;
+import com.simibubi.create.lib.helper.Vector3fHelper;
+
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.ActiveRenderInfo;
 import net.minecraft.entity.Entity;
@@ -200,13 +203,13 @@ public class VecHelper {
 
 				Vector3f bob_translation = new Vector3f((MathHelper.sin(f1 * (float) Math.PI) * f2 * 0.5F),
 					(-Math.abs(MathHelper.cos(f1 * (float) Math.PI) * f2)), 0.0f);
-				bob_translation.setY(-bob_translation.getY()); // this is weird but hey, if it works
+				Vector3fHelper.setY(bob_translation, -bob_translation.getY()); // this is weird but hey, if it works
 				result3f.add(bob_translation);
 			}
 		}
 
 		// ----- adjust for fov -----
-		float fov = (float) mc.gameRenderer.getFOVModifier(ari, partialTicks, true);
+		float fov = (float) GameRendererHelper.getFOVModifier(mc.gameRenderer, ari, partialTicks, true);
 
 		float half_height = (float) mc.getWindow()
 			.getScaledHeight() / 2;

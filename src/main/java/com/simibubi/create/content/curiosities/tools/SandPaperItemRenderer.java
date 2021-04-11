@@ -4,6 +4,7 @@ import com.mojang.blaze3d.matrix.MatrixStack;
 import com.simibubi.create.foundation.block.render.CustomRenderedItemModel;
 import com.simibubi.create.foundation.utility.AnimationTickHolder;
 
+import net.fabricmc.fabric.api.client.rendering.v1.BuiltinItemRendererRegistry.DynamicItemRenderer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.player.ClientPlayerEntity;
 import net.minecraft.client.renderer.IRenderTypeBuffer;
@@ -11,20 +12,19 @@ import net.minecraft.client.renderer.ItemRenderer;
 import net.minecraft.client.renderer.model.IBakedModel;
 import net.minecraft.client.renderer.model.ItemCameraTransforms;
 import net.minecraft.client.renderer.model.ItemCameraTransforms.TransformType;
-import net.minecraft.client.renderer.tileentity.ItemStackTileEntityRenderer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.vector.Vector3f;
 
-public class SandPaperItemRenderer extends ItemStackTileEntityRenderer {
+public class SandPaperItemRenderer implements DynamicItemRenderer {
 
 	@Override
 	public void render(ItemStack stack, ItemCameraTransforms.TransformType p_239207_2_, MatrixStack ms, IRenderTypeBuffer buffer, int light, int overlay) {
 		ItemRenderer itemRenderer = Minecraft.getInstance().getItemRenderer();
 		ClientPlayerEntity player = Minecraft.getInstance().player;
 		SandPaperModel mainModel = (SandPaperModel) itemRenderer.getItemModelWithOverrides(stack, Minecraft.getInstance().world, null);
-		TransformType perspective = mainModel.getCurrentPerspective();
+		TransformType perspective = p_239207_2_;
 		float partialTicks = AnimationTickHolder.getPartialTicks();
 
 		boolean leftHand = perspective == TransformType.FIRST_PERSON_LEFT_HAND;
@@ -88,7 +88,7 @@ public class SandPaperItemRenderer extends ItemStackTileEntityRenderer {
 		}
 
 		@Override
-		public ItemStackTileEntityRenderer createRenderer() {
+		public DynamicItemRenderer createRenderer() {
 			return new SandPaperItemRenderer();
 		}
 

@@ -5,24 +5,19 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
-import net.minecraftforge.client.event.ModelBakeEvent;
-
-import net.minecraft.client.renderer.model.IBakedModel;
-import net.minecraft.client.renderer.model.ItemCameraTransforms.TransformType;
-import net.minecraft.client.renderer.model.ModelRotation;
-import net.minecraft.util.ResourceLocation;
+import com.simibubi.create.Create;
 
 import net.fabricmc.fabric.api.client.rendering.v1.BuiltinItemRendererRegistry.DynamicItemRenderer;
-
-import com.simibubi.create.Create;
+import net.minecraft.client.renderer.model.IBakedModel;
+import net.minecraft.client.renderer.model.ModelBakery;
+import net.minecraft.client.renderer.model.ModelRotation;
+import net.minecraft.util.ResourceLocation;
 
 @SuppressWarnings("deprecation")
 public abstract class CustomRenderedItemModel extends WrappedBakedModel {
 
 	protected String basePath;
 	protected Map<String, IBakedModel> partials = new HashMap<>();
-	protected TransformType currentPerspective;
 	protected DynamicItemRenderer renderer;
 
 	public CustomRenderedItemModel(IBakedModel template, String basePath) {
@@ -46,36 +41,26 @@ public abstract class CustomRenderedItemModel extends WrappedBakedModel {
 		return true;
 	}
 
-	@Override
-	public IBakedModel handlePerspective(TransformType cameraTransformType, MatrixStack mat) {
-		currentPerspective = cameraTransformType;
-		return super.handlePerspective(cameraTransformType, mat);
-	}
-
 	protected void addPartials(String... partials) {
 		this.partials.clear();
 		for (String name : partials)
 			this.partials.put(name, null);
 	}
 
-	public CustomRenderedItemModel loadPartials(ModelBakeEvent event) {
+	public CustomRenderedItemModel loadPartials(ModelBakery bakery) {
 		for (String name : partials.keySet())
-			partials.put(name, loadModel(event, name));
+			partials.put(name, loadModel(bakery, name));
 		return this;
 	}
 
-	private IBakedModel loadModel(ModelBakeEvent event, String name) {
-		return event.getModelLoader().func_217845_a(getPartialModelLocation(name), ModelRotation.X0_Y0);
+	private IBakedModel loadModel(ModelBakery bakery, String name) {
+		return bakery.func_217845_a(getPartialModelLocation(name), ModelRotation.X0_Y0);
 	}
 
 	private ResourceLocation getPartialModelLocation(String name) {
 		return new ResourceLocation(Create.ID, "item/" + basePath + "/" + name);
 	}
 
-	public TransformType getCurrentPerspective() {
-		return currentPerspective;
-	}
-	
 	public IBakedModel getPartial(String name) {
 		return partials.get(name);
 	}

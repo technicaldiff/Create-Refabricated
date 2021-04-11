@@ -25,8 +25,6 @@ import net.minecraft.client.renderer.RenderTypeLookup;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
-import net.minecraftforge.client.ForgeHooksClient;
-import net.minecraftforge.client.model.data.EmptyModelData;
 
 public class SchematicRenderer {
 
@@ -102,9 +100,8 @@ public class SchematicRenderer {
 				BlockState state = blockAccess.getBlockState(pos);
 
 				for (RenderType blockRenderLayer : RenderType.getBlockLayers()) {
-					if (!RenderTypeLookup.canRenderInLayer(state, blockRenderLayer))
+					if (RenderTypeLookup.getBlockLayer(state) != blockRenderLayer)
 						continue;
-					ForgeHooksClient.setRenderLayer(blockRenderLayer);
 					if (!buffers.containsKey(blockRenderLayer))
 						buffers.put(blockRenderLayer, new BufferBuilder(DefaultVertexFormats.BLOCK.getIntegerSize()));
 
@@ -114,15 +111,14 @@ public class SchematicRenderer {
 
 					TileEntity tileEntity = blockAccess.getTileEntity(localPos);
 
-					if (blockRendererDispatcher.renderModel(state, pos, blockAccess, ms, bufferBuilder, true,
-						minecraft.world.rand,
-						tileEntity != null ? tileEntity.getModelData() : EmptyModelData.INSTANCE)) {
+					if (blockRendererDispatcher.renderBlock(state, pos, blockAccess, ms, bufferBuilder, true,
+						minecraft.world.rand
+						)) {
 						usedBlockRenderLayers.add(blockRenderLayer);
 					}
 					blockstates.add(state);
 				}
 
-				ForgeHooksClient.setRenderLayer(null);
 				ms.pop();
 			});
 

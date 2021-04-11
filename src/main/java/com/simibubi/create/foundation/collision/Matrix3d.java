@@ -3,6 +3,9 @@ package com.simibubi.create.foundation.collision;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.vector.Matrix4f;
 import net.minecraft.util.math.vector.Vector3d;
+
+import com.simibubi.create.lib.helper.Matrix4fHelper;
+
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 
@@ -141,7 +144,7 @@ public class Matrix3d {
 		conversionBuffer[9] = (float) m21;
 		conversionBuffer[10] = (float) m22;
 
-		return new Matrix4f(conversionBuffer);
+		return Matrix4fHelper.fromFloatArray(conversionBuffer);
 	}
 
 }

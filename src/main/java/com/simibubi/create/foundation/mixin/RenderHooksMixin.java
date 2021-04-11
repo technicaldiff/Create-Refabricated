@@ -14,6 +14,7 @@ import com.simibubi.create.foundation.render.KineticRenderer;
 import com.simibubi.create.foundation.render.backend.Backend;
 import com.simibubi.create.foundation.render.backend.FastRenderDispatcher;
 import com.simibubi.create.foundation.render.backend.OptifineHandler;
+import com.simibubi.create.lib.helper.Matrix4fHelper;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.client.renderer.ActiveRenderInfo;
@@ -49,7 +50,7 @@ public class RenderHooksMixin {
 		Matrix4f viewProjection = stack.peek()
 			.getModel()
 			.copy();
-		viewProjection.multiplyBackward(Backend.projectionMatrix);
+		Matrix4fHelper.multiplyBackward(viewProjection, Backend.projectionMatrix);
 
 		FastRenderDispatcher.renderLayer(type, viewProjection, camX, camY, camZ);
 

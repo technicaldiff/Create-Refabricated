@@ -23,7 +23,7 @@ public class ExtendoGripItemRenderer extends CustomRenderedItemModelRenderer<Ext
 		IRenderTypeBuffer buffer, int light, int overlay) {
 		MatrixStacker stacker = MatrixStacker.of(ms);
 		float animation = 0.25f;
-		TransformType perspective = model.getCurrentPerspective();
+		TransformType perspective = renderer.getTransformType();
 		boolean leftHand = perspective == TransformType.FIRST_PERSON_LEFT_HAND;
 		boolean rightHand = perspective == TransformType.FIRST_PERSON_RIGHT_HAND;
 		if (leftHand || rightHand)

@@ -35,6 +35,7 @@ import com.tterrag.registrate.util.nullness.NonNullUnaryOperator;
 import alexiil.mc.lib.attributes.fluid.FluidAttributes;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
+import net.fabricmc.fabric.api.client.rendering.v1.BuiltinItemRendererRegistry;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.color.IBlockColor;
@@ -198,9 +199,7 @@ public class CreateRegistrate extends AbstractRegistrate<CreateRegistrate> {
 
 	public static <T extends Item, P> NonNullUnaryOperator<ItemBuilder<T, P>> customRenderedItem(
 		Supplier<NonNullFunction<IBakedModel, ? extends CustomRenderedItemModel>> func) {
-		return b -> b.properties(p -> p.setISTER(() -> () -> func.get()
-			.apply(null)
-			.createRenderer()))
+		return b -> b
 			.onRegister(entry -> onClient(() -> () -> registerCustomRenderedItem(entry, func)));
 	}
 
@@ -237,6 +236,7 @@ public class CreateRegistrate extends AbstractRegistrate<CreateRegistrate> {
 	@Environment(EnvType.CLIENT)
 	private static void registerCustomRenderedItem(Item entry,
 		Supplier<NonNullFunction<IBakedModel, ? extends CustomRenderedItemModel>> func) {
+		BuiltinItemRendererRegistry.INSTANCE.register(entry, func.get().apply(null).createRenderer());
 		CreateClient.getCustomRenderedItems()
 			.register(() -> entry, func.get());
 	}

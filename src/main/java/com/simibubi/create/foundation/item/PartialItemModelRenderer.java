@@ -6,6 +6,7 @@ import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
 import com.simibubi.create.foundation.renderState.RenderTypes;
 import com.simibubi.create.foundation.utility.Iterate;
+import com.simibubi.create.lib.helper.ItemRendererHelper;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.IRenderTypeBuffer;
@@ -42,6 +43,10 @@ public class PartialItemModelRenderer {
 		instance.transformType = transformType;
 		instance.overlay = overlay;
 		return instance;
+	}
+
+	public ItemCameraTransforms.TransformType getTransformType() {
+		return transformType;
 	}
 
 	public void render(IBakedModel model, int light) {
@@ -84,12 +89,12 @@ public class PartialItemModelRenderer {
 
 		for (Direction direction : Iterate.directions) {
 			random.setSeed(42L);
-			ir.renderBakedItemQuads(ms, p_229114_6_, model.getQuads(null, direction, random), stack, light,
+			ItemRendererHelper.renderBakedItemQuads(ir, ms, p_229114_6_, model.getQuads(null, direction, random), stack, light,
 				overlay);
 		}
 
 		random.setSeed(42L);
-		ir.renderBakedItemQuads(ms, p_229114_6_, model.getQuads(null, null, random), stack, light, overlay);
+		ItemRendererHelper.renderBakedItemQuads(ir, ms, p_229114_6_, model.getQuads(null, null, random), stack, light, overlay);
 	}
 
 }

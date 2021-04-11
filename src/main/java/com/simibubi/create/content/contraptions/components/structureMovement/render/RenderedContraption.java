@@ -37,8 +37,6 @@ import net.minecraft.util.math.vector.Matrix4f;
 import net.minecraft.world.World;
 import net.minecraft.world.gen.feature.template.Template;
 import net.minecraft.world.lighting.WorldLightManager;
-import net.minecraftforge.client.ForgeHooksClient;
-import net.minecraftforge.client.model.data.EmptyModelData;
 
 public class RenderedContraption {
     private final HashMap<RenderType, ContraptionModel> renderLayers = new HashMap<>();
@@ -189,7 +187,6 @@ public class RenderedContraption {
 
     private static BufferBuilder buildStructure(PlacementSimulationWorld renderWorld, Contraption c, RenderType layer) {
 
-        ForgeHooksClient.setRenderLayer(layer);
         MatrixStack ms = new MatrixStack();
         BlockRendererDispatcher dispatcher = Minecraft.getInstance()
                                                       .getBlockRendererDispatcher();
@@ -204,14 +201,14 @@ public class RenderedContraption {
 
             if (state.getRenderType() == BlockRenderType.ENTITYBLOCK_ANIMATED)
                 continue;
-            if (!RenderTypeLookup.canRenderInLayer(state, layer))
+            if (RenderTypeLookup.getBlockLayer(state) != layer)
                 continue;
 
             IBakedModel originalModel = dispatcher.getModelForState(state);
             ms.push();
             ms.translate(info.pos.getX(), info.pos.getY(), info.pos.getZ());
-            blockRenderer.renderModel(renderWorld, originalModel, state, info.pos, ms, builder, true, random, 42,
-                                      OverlayTexture.DEFAULT_UV, EmptyModelData.INSTANCE);
+            blockRenderer.render(renderWorld, originalModel, state, info.pos, ms, builder, true, random, 42,
+                                      OverlayTexture.DEFAULT_UV);
             ms.pop();
         }
 

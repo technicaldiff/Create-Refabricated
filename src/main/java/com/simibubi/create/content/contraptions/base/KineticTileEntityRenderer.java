@@ -23,10 +23,7 @@ import net.minecraft.util.Direction;
 import net.minecraft.util.Direction.Axis;
 import net.minecraft.util.Direction.AxisDirection;
 import net.minecraft.util.math.BlockPos;
-import net.fabricmc.api.EnvType;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 
-@EventBusSubscriber(value = EnvType.CLIENT)
 public class KineticTileEntityRenderer extends SafeTileEntityRenderer<KineticTileEntity> {
 
 	public static final Compartment<BlockState> KINETIC_TILE = new Compartment<>();
@@ -42,7 +39,7 @@ public class KineticTileEntityRenderer extends SafeTileEntityRenderer<KineticTil
 		if (FastRenderDispatcher.available(te.getWorld())) return;
 
 		for (RenderType type : RenderType.getBlockLayers())
-			if (RenderTypeLookup.canRenderInLayer(te.getBlockState(), type))
+			if (RenderTypeLookup.getBlockLayer(te.getBlockState()) == type)
 				renderRotatingBuffer(te, getRotatedModel(te), ms, buffer.getBuffer(type), light);
 	}
 

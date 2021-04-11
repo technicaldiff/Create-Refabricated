@@ -17,7 +17,7 @@ public class WindowBlock extends ConnectedGlassBlock {
 	@Environment(EnvType.CLIENT)
 	public boolean isSideInvisible(BlockState state, BlockState adjacentBlockState, Direction side) {
 		return adjacentBlockState.getBlock() instanceof ConnectedGlassBlock
-			? (!RenderTypeLookup.canRenderInLayer(state, RenderType.getTranslucent()) && side.getAxis()
+			? (RenderTypeLookup.getBlockLayer(state) != RenderType.getTranslucent() && side.getAxis()
 				.isHorizontal() || state.getBlock() == adjacentBlockState.getBlock())
 			: super.isSideInvisible(state, adjacentBlockState, side);
 	}

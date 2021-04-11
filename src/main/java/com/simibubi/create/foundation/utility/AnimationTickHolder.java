@@ -3,6 +3,7 @@ package com.simibubi.create.foundation.utility;
 import com.simibubi.create.foundation.ponder.PonderUI;
 import com.simibubi.create.foundation.ponder.PonderWorld;
 import com.simibubi.create.foundation.utility.worldWrappers.WrappedClientWorld;
+import com.simibubi.create.lib.helper.MinecraftHelper;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.world.IWorld;
@@ -32,7 +33,7 @@ public class AnimationTickHolder {
 
 	public static float getPartialTicks() {
 		Minecraft mc = Minecraft.getInstance();
-		return (mc.isGamePaused() ? mc.renderPartialTicksPaused : mc.getRenderPartialTicks());
+		return (mc.isGamePaused() ? MinecraftHelper.getRenderPartialTicksPaused(mc) : mc.getRenderPartialTicks());
 	}
 
 	public static int getTicks(IWorld world) {

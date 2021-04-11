@@ -2,29 +2,30 @@ package com.simibubi.create.foundation.render.backend.gl;
 
 import org.lwjgl.opengl.GL11;
 
-import com.mojang.blaze3d.platform.GlStateManager;
+import com.simibubi.create.lib.helper.GlStateManager$BooleanStateHelper;
+import com.simibubi.create.lib.helper.GlStateManagerHelper;
 
 public class GlFog {
     public static float[] FOG_COLOR = new float[] {0, 0, 0, 0};
 
     public static boolean fogEnabled() {
-        return GlStateManager.FOG.field_179049_a.field_179201_b;
+        return GlStateManager$BooleanStateHelper.getState(GlStateManagerHelper.getFOG().field_179049_a);
     }
 
     public static int getFogModeGlEnum() {
-        return GlStateManager.FOG.field_179047_b;
+        return GlStateManagerHelper.getFOG().field_179047_b;
     }
 
     public static float getFogDensity() {
-        return GlStateManager.FOG.field_179048_c;
+        return GlStateManagerHelper.getFOG().field_179048_c;
     }
 
     public static float getFogEnd() {
-        return GlStateManager.FOG.field_179046_e;
+        return GlStateManagerHelper.getFOG().field_179046_e;
     }
 
     public static float getFogStart() {
-        return GlStateManager.FOG.field_179045_d;
+        return GlStateManagerHelper.getFOG().field_179045_d;
     }
 
     public static GlFogMode getFogMode() {

@@ -13,6 +13,7 @@ import com.simibubi.create.foundation.render.backend.gl.BasicProgram;
 import com.simibubi.create.foundation.render.backend.gl.shader.ShaderCallback;
 import com.simibubi.create.foundation.render.backend.instancing.InstancedTileRenderer;
 import com.simibubi.create.foundation.render.backend.instancing.RenderMaterial;
+import com.simibubi.create.lib.helper.Matrix4fHelper;
 
 import net.minecraft.client.renderer.ActiveRenderInfo;
 import net.minecraft.client.renderer.RenderType;
@@ -77,7 +78,7 @@ public class KineticRenderer extends InstancedTileRenderer<BasicProgram> {
 
 		Matrix4f translate = Matrix4f.translate((float) -camX, (float) -camY, (float) -camZ);
 
-		translate.multiplyBackward(viewProjection);
+		Matrix4fHelper.multiplyBackward(translate, viewProjection);
 
 		super.render(layer, translate, camX, camY, camZ, callback);
 	}

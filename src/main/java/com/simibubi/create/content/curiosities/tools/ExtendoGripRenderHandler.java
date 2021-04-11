@@ -6,6 +6,7 @@ import com.simibubi.create.AllItems;
 import com.simibubi.create.foundation.utility.AnimationTickHolder;
 import com.simibubi.create.foundation.utility.MatrixStacker;
 
+import net.fabricmc.api.EnvType;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.player.AbstractClientPlayerEntity;
 import net.minecraft.client.entity.player.ClientPlayerEntity;
@@ -17,8 +18,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.Hand;
 import net.minecraft.util.HandSide;
 import net.minecraft.util.math.MathHelper;
-import net.fabricmc.api.EnvType;
-import net.minecraftforge.client.ForgeHooksClient;
 import net.minecraftforge.client.event.RenderHandEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
@@ -115,8 +114,7 @@ public class ExtendoGripRenderHandler {
 				event.getMatrixStack(), event.getBuffers(), event.getLight());
 
 			if (!notInOffhand) {
-				ForgeHooksClient.handleCameraTransforms(ms, mc.getItemRenderer()
-					.getItemModelWithOverrides(offhandItem, null, null), transform, !rightHand);
+				mc.getItemRenderer().getItemModelWithOverrides(offhandItem, null, null).getItemCameraTransforms().getTransform(transform).apply(!rightHand, ms);
 				ms.translate(flip * -.05f, .15f, -1.2f);
 				ms.translate(0, 0, -animation * 2.25f);
 				if (blockItem && mc.getItemRenderer()

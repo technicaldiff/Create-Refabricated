@@ -6,8 +6,8 @@ import com.simibubi.create.content.curiosities.zapper.blockzapper.BlockzapperIte
 import com.simibubi.create.foundation.block.render.CustomRenderedItemModel;
 import com.simibubi.create.foundation.utility.Lang;
 
+import net.fabricmc.fabric.api.client.rendering.v1.BuiltinItemRendererRegistry.DynamicItemRenderer;
 import net.minecraft.client.renderer.model.IBakedModel;
-import net.minecraft.client.renderer.tileentity.ItemStackTileEntityRenderer;
 
 public class BlockzapperModel extends CustomRenderedItemModel {
 
@@ -19,7 +19,7 @@ public class BlockzapperModel extends CustomRenderedItemModel {
 	}
 
 	@Override
-	public ItemStackTileEntityRenderer createRenderer() {
+	public DynamicItemRenderer createRenderer() {
 		return new BlockzapperItemRenderer();
 	}
 

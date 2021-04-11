@@ -52,8 +52,6 @@ import net.minecraft.util.math.RayTraceContext.FluidMode;
 import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.util.math.vector.Vector3d;
-import net.minecraftforge.client.ForgeHooksClient;
-import net.minecraftforge.client.model.data.EmptyModelData;
 
 public class WorldSectionElement extends AnimatedSceneElement {
 
@@ -322,7 +320,7 @@ public class WorldSectionElement extends AnimatedSceneElement {
 					overlayMS.peek().getNormal());
 			Minecraft.getInstance()
 				.getBlockRendererDispatcher()
-				.renderModel(world.getBlockState(pos), pos, world, ms, builder, true, world.rand, EmptyModelData.INSTANCE);
+				.renderBlock(world.getBlockState(pos), pos, world, ms, builder, true, world.rand);
 			ms.pop();
 		}
 	}
@@ -373,7 +371,6 @@ public class WorldSectionElement extends AnimatedSceneElement {
 	}
 
 	private SuperByteBuffer buildStructureBuffer(PonderWorld world, RenderType layer) {
-		ForgeHooksClient.setRenderLayer(layer);
 		MatrixStack ms = new MatrixStack();
 		BlockRendererDispatcher dispatcher = Minecraft.getInstance()
 			.getBlockRendererDispatcher();
@@ -391,14 +388,14 @@ public class WorldSectionElement extends AnimatedSceneElement {
 			ms.translate(pos.getX(), pos.getY(), pos.getZ());
 
 			if (state.getRenderType() != BlockRenderType.ENTITYBLOCK_ANIMATED && state.getBlock() != Blocks.AIR
-				&& RenderTypeLookup.canRenderInLayer(state, layer)) {
+				&& RenderTypeLookup.getBlockLayer(state) == layer) {
 				TileEntity tileEntity = world.getTileEntity(pos);
-				blockRenderer.renderModel(world, dispatcher.getModelForState(state), state, pos, ms, builder, true,
-					random, 42, OverlayTexture.DEFAULT_UV,
-					tileEntity != null ? tileEntity.getModelData() : EmptyModelData.INSTANCE);
+				blockRenderer.render(world, dispatcher.getModelForState(state), state, pos, ms, builder, true,
+					random, 42, OverlayTexture.DEFAULT_UV
+					);
 			}
 
-			if (!ifluidstate.isEmpty() && RenderTypeLookup.canRenderInLayer(ifluidstate, layer))
+			if (!ifluidstate.isEmpty() && RenderTypeLookup.getFluidLayer(ifluidstate) == layer)
 				dispatcher.renderFluid(pos, world, builder, ifluidstate);
 
 			ms.pop();

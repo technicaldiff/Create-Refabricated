@@ -3,17 +3,13 @@ package com.simibubi.create.foundation.block.render;
 import java.util.List;
 import java.util.Random;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
-
 import net.minecraft.block.BlockState;
 import net.minecraft.client.renderer.model.BakedQuad;
 import net.minecraft.client.renderer.model.IBakedModel;
-import net.minecraft.client.renderer.model.ItemCameraTransforms.TransformType;
+import net.minecraft.client.renderer.model.ItemCameraTransforms;
 import net.minecraft.client.renderer.model.ItemOverrideList;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.util.Direction;
-import net.minecraftforge.client.model.data.EmptyModelData;
-import net.minecraftforge.client.model.data.IModelData;
 
 public class WrappedBakedModel implements IBakedModel {
 
@@ -23,7 +19,6 @@ public class WrappedBakedModel implements IBakedModel {
 		this.template = template;
 	}
 	
-	@Override
 	public IBakedModel getBakedModel() {
 		return template;
 	}
@@ -44,8 +39,8 @@ public class WrappedBakedModel implements IBakedModel {
 	}
 
 	@Override
-	public TextureAtlasSprite getParticleTexture(IModelData data) {
-		return template.getParticleTexture(data);
+	public TextureAtlasSprite getParticleTexture() {
+		return template.getParticleTexture();
 	}
 
 	@Override
@@ -54,24 +49,13 @@ public class WrappedBakedModel implements IBakedModel {
 	}
 
 	@Override
-	public IBakedModel handlePerspective(TransformType cameraTransformType, MatrixStack mat) {
-		template.handlePerspective(cameraTransformType, mat);
-		return this;
+	public ItemCameraTransforms getItemCameraTransforms() {
+		return template.getItemCameraTransforms();
 	}
 
 	@Override
 	public List<BakedQuad> getQuads(BlockState state, Direction side, Random rand) {
-		return getQuads(state, side, rand, EmptyModelData.INSTANCE);
-	}
-
-	@Override
-	public List<BakedQuad> getQuads(BlockState state, Direction side, Random rand, IModelData data) {
-		return template.getQuads(state, side, rand, data);
-	}
-
-	@Override
-	public TextureAtlasSprite getParticleTexture() {
-		return getParticleTexture(EmptyModelData.INSTANCE);
+		return template.getQuads(state, side, rand);
 	}
 
 	@Override

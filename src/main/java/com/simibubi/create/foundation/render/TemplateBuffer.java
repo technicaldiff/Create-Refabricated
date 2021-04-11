@@ -5,6 +5,7 @@ import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 
 import com.mojang.datafixers.util.Pair;
+import com.simibubi.create.lib.helper.BufferBuilderHelper;
 
 import net.minecraft.client.renderer.BufferBuilder;
 
@@ -18,7 +19,7 @@ public class TemplateBuffer {
 		ByteBuffer rendered = state.getSecond();
 		rendered.order(ByteOrder.nativeOrder()); // Vanilla bug, endianness does not carry over into sliced buffers
 
-		formatSize = buf.getVertexFormat()
+		formatSize = BufferBuilderHelper.getVertexFormat(buf)
 			.getSize();
 		vertexCount = state.getFirst()
 			.getCount();

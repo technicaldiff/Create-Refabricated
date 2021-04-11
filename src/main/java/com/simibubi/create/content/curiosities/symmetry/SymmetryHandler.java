@@ -120,9 +120,9 @@ public class SymmetryHandler {
 
 			mc.getBlockRendererDispatcher()
 				.getBlockModelRenderer()
-				.renderModel(player.world, model, Blocks.AIR.getDefaultState(), pos, ms, builder, true,
-					player.world.getRandom(), MathHelper.getPositionRandom(pos), OverlayTexture.DEFAULT_UV,
-					EmptyModelData.INSTANCE);
+				.render(player.world, model, Blocks.AIR.getDefaultState(), pos, ms, builder, true,
+					player.world.getRandom(), MathHelper.getPositionRandom(pos), OverlayTexture.DEFAULT_UV
+					);
 
 			buffer.draw();
 			ms.pop();
