@@ -8,8 +8,6 @@ import com.tterrag.registrate.providers.DataGenContext;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.client.model.generators.BlockModelProvider;
-import net.minecraftforge.client.model.generators.ModelFile;
 
 public class ToggleLatchGenerator extends AbstractDiodeGenerator {
 

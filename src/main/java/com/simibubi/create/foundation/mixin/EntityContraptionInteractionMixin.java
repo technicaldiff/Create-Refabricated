@@ -30,7 +30,6 @@ import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.gen.feature.template.Template;
-import net.minecraftforge.common.capabilities.CapabilityProvider;
 
 @Mixin(Entity.class)
 public abstract class EntityContraptionInteractionMixin extends CapabilityProvider<Entity> {

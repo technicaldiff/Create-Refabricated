@@ -9,7 +9,6 @@ import net.minecraft.client.network.play.ClientPlayNetHandler;
 import net.minecraft.entity.Entity;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.math.BlockPos;
-import net.minecraftforge.fluids.FluidStack;
 
 public class ContraptionFluidPacket implements S2CPacket {
 
@@ -24,13 +23,13 @@ public class ContraptionFluidPacket implements S2CPacket {
 		this.localPos = localPos;
 		this.containedFluid = containedFluid;
 	}
-	
+
 	public ContraptionFluidPacket(PacketBuffer buffer) {
 		entityId = buffer.readInt();
 		localPos = buffer.readBlockPos();
 		containedFluid = FluidStack.readFromPacket(buffer);
 	}
-	
+
 	@Override
 	public void write(PacketBuffer buffer) {
 		buffer.writeInt(entityId);

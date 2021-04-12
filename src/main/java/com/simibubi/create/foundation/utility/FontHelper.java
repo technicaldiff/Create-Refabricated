@@ -10,7 +10,6 @@ import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.renderer.IRenderTypeBuffer;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.util.math.vector.Matrix4f;
-import net.minecraftforge.client.MinecraftForgeClient;
 
 public final class FontHelper {
 

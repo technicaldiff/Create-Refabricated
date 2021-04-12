@@ -32,7 +32,6 @@ import net.minecraft.data.ShapedRecipeBuilder;
 import net.minecraft.util.ResourceLocation;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraftforge.client.model.generators.ModelFile;
 
 public class PaletteBlockPatterns {
 

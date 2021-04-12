@@ -27,8 +27,6 @@ import net.minecraft.world.World;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import com.simibubi.create.lib.utility.Constants.NBT;
-import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fml.DistExecutor;
 
 public class PipeConnection {
 
@@ -87,7 +85,7 @@ public class PipeConnection {
 		FlowSource flowSource = source.get();
 		flowSource.manageSource(world);
 	}
-		
+
 	public boolean manageFlows(World world, BlockPos pos, FluidStack internalFluid,
 		Predicate<FluidStack> extractionPredicate) {
 
@@ -193,7 +191,7 @@ public class PipeConnection {
 		if (world.isRemote) {
 			if (!source.isPresent())
 				determineSource(world, pos);
-			
+
 			spawnParticles(world, pos, flow.fluid);
 			if (particleSplashNextTick)
 				spawnSplashOnRim(world, pos, flow.fluid);

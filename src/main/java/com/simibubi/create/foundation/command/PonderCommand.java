@@ -17,8 +17,6 @@ import net.minecraft.command.arguments.ResourceLocationArgument;
 import net.minecraft.command.arguments.SuggestionProviders;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.common.util.FakePlayer;
-import net.minecraftforge.fml.network.PacketDistributor;
 
 public class PonderCommand {
 	public static final SuggestionProvider<CommandSource> ITEM_PONDERS = SuggestionProviders.register(

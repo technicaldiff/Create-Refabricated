@@ -32,9 +32,6 @@ import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.fabricmc.api.EnvType;
-import net.minecraftforge.event.entity.player.PlayerInteractEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 
 @EventBusSubscriber(value = EnvType.CLIENT)
 public class EjectorTargetHandler {
@@ -44,7 +41,6 @@ public class EjectorTargetHandler {
 	static long lastHoveredBlockPos = -1;
 	static EntityLauncher launcher;
 
-	@SubscribeEvent
 	public static void rightClickingBlocksSelectsThem(PlayerInteractEvent.RightClickBlock event) {
 		if (currentItem == null)
 			return;
@@ -65,7 +61,6 @@ public class EjectorTargetHandler {
 		event.setCancellationResult(ActionResultType.SUCCESS);
 	}
 
-	@SubscribeEvent
 	public static void leftClickingBlocksDeselectsThem(PlayerInteractEvent.LeftClickBlock event) {
 		if (currentItem == null)
 			return;

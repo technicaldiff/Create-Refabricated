@@ -56,10 +56,6 @@ import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.GameType;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
-import net.minecraftforge.common.ForgeHooks;
-import net.minecraftforge.event.entity.player.PlayerInteractEvent.LeftClickBlock;
-import net.minecraftforge.event.entity.player.PlayerInteractEvent.RightClickBlock;
-import net.minecraftforge.eventbus.api.Event;
 
 public class DeployerHandler {
 
@@ -358,7 +354,7 @@ public class DeployerHandler {
 	protected static ActionResultType safeOnBeehiveUse(BlockState state, World world, BlockPos pos, PlayerEntity player,
 		Hand hand) {
 		// <> BeehiveBlock#onUse
-		
+
 		BeehiveBlock block = (BeehiveBlock) state.getBlock();
 		ItemStack prevHeldItem = player.getHeldItem(hand);
 		int honeyLevel = state.get(BeehiveBlock.HONEY_LEVEL);

@@ -7,9 +7,6 @@ import com.simibubi.create.foundation.tileEntity.TileEntityBehaviour;
 
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.Direction;
-import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.items.CapabilityItemHandler;
 
 public class DepotTileEntity extends SmartTileEntity {
 

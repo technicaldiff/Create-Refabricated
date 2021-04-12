@@ -29,7 +29,6 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
-import net.minecraftforge.registries.ForgeRegistries;
 
 public class PonderTagScreen extends NavigatableSimiScreen {
 
@@ -327,7 +326,7 @@ public class PonderTagScreen extends NavigatableSimiScreen {
 	public PonderTag getTag() {
 		return tag;
 	}
-	
+
 	@Override
 	public void removed() {
 		super.removed();

@@ -27,9 +27,6 @@ import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 import net.fabricmc.api.EnvType;
-import net.minecraftforge.event.entity.player.PlayerInteractEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 
 @EventBusSubscriber(value = EnvType.CLIENT)
 public class ArmInteractionPointHandler {
@@ -39,7 +36,6 @@ public class ArmInteractionPointHandler {
 
 	static long lastBlockPos = -1;
 
-	@SubscribeEvent
 	public static void rightClickingBlocksSelectsThem(PlayerInteractEvent.RightClickBlock event) {
 		if (currentItem == null)
 			return;
@@ -75,7 +71,6 @@ public class ArmInteractionPointHandler {
 		event.setCancellationResult(ActionResultType.SUCCESS);
 	}
 
-	@SubscribeEvent
 	public static void leftClickingBlocksDeselectsThem(PlayerInteractEvent.LeftClickBlock event) {
 		if (currentItem == null)
 			return;

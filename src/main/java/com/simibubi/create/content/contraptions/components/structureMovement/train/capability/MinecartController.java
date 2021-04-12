@@ -34,8 +34,6 @@ import com.simibubi.create.foundation.utility.NBTHelper;
 import com.simibubi.create.foundation.utility.VecHelper;
 import com.simibubi.create.lib.utility.Constants.NBT;
 
-import net.minecraftforge.common.util.INBTSerializable;
-import net.minecraftforge.fml.network.PacketDistributor;
 
 /**
  * Extended code for Minecarts, this allows for handling stalled carts and
@@ -177,11 +175,11 @@ public class MinecartController implements INBTSerializable<CompoundNBT> {
 			List<Entity> passengers = cart().getPassengers();
 			if (!passengers.isEmpty()) {
 				Entity entity = passengers.get(0);
-				if (entity instanceof AbstractContraptionEntity) 
+				if (entity instanceof AbstractContraptionEntity)
 					((AbstractContraptionEntity) entity).disassemble();
 			}
 		}
-		
+
 		couplings.set(main, Optional.empty());
 		needsEntryRefresh |= main;
 		sendData();

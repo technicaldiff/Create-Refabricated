@@ -29,7 +29,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
-import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 
 public class FluidPropagator {
 
@@ -181,8 +180,8 @@ public class FluidPropagator {
 	}
 
 //	static AxisAlignedBB smallCenter = new AxisAlignedBB(BlockPos.ZERO).shrink(.25);
-//	
-//	@Deprecated 
+//
+//	@Deprecated
 //	public static OutlineParams showBlockFace(BlockFace face) {
 //		MutableObject<OutlineParams> params = new MutableObject<>(new OutlineParams());
 //		DistExecutor.unsafeRunWhenOn(EnvType.CLIENT, () -> () -> {

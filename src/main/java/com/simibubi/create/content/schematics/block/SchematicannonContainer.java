@@ -11,7 +11,6 @@ import net.minecraft.inventory.container.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraftforge.items.SlotItemHandler;
 
 public class SchematicannonContainer extends Container {
 
@@ -48,10 +47,10 @@ public class SchematicannonContainer extends Container {
 		addSlot(new SlotItemHandler(te.inventory, 4, x + 15, y + 19));
 
 		// player Slots
-		for (int row = 0; row < 3; ++row) 
-			for (int col = 0; col < 9; ++col) 
+		for (int row = 0; row < 3; ++row)
+			for (int col = 0; col < 9; ++col)
 				addSlot(new Slot(player.inventory, col + row * 9 + 9, -2 + col * 18, 163 + row * 18));
-		for (int hotbarSlot = 0; hotbarSlot < 9; ++hotbarSlot) 
+		for (int hotbarSlot = 0; hotbarSlot < 9; ++hotbarSlot)
 			addSlot(new Slot(player.inventory, hotbarSlot, -2 + hotbarSlot * 18, 221));
 
 		detectAndSendChanges();

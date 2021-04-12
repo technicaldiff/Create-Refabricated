@@ -4,7 +4,6 @@ import com.simibubi.create.AllRecipeTypes;
 import com.simibubi.create.content.contraptions.processing.ProcessingRecipe;
 import com.simibubi.create.content.contraptions.processing.ProcessingRecipeBuilder.ProcessingRecipeParams;
 
-import net.minecraftforge.items.wrapper.RecipeWrapper;
 
 public abstract class AbstractCrushingRecipe extends ProcessingRecipe<RecipeWrapper> {
 

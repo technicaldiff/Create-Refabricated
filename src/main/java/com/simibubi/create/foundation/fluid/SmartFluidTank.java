@@ -2,8 +2,6 @@ package com.simibubi.create.foundation.fluid;
 
 import java.util.function.Consumer;
 
-import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.capability.templates.FluidTank;
 
 public class SmartFluidTank extends FluidTank {
 

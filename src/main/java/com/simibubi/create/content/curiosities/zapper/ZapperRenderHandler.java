@@ -27,9 +27,6 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.util.math.vector.Vector3f;
 import net.fabricmc.api.EnvType;
-import net.minecraftforge.client.event.RenderHandEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 
 @EventBusSubscriber(value = EnvType.CLIENT)
 public class ZapperRenderHandler {
@@ -82,21 +79,21 @@ public class ZapperRenderHandler {
 		lastRightHandAnimation = rightHandAnimation;
 		leftHandAnimation *= 0.8f;
 		rightHandAnimation *= 0.8f;
-		
+
 		if (cachedBeams == null)
 			cachedBeams = new LinkedList<>();
-		
+
 		cachedBeams.removeIf(b -> b.itensity < .1f);
 		if (cachedBeams.isEmpty())
 			return;
-		
+
 		cachedBeams.forEach(beam -> {
 			CreateClient.outliner.endChasingLine(beam, beam.start, beam.end, 1 - beam.itensity)
 			.disableNormals()
 			.colored(0xffffff)
 			.lineWidth(beam.itensity * 1 / 8f);
 		});
-		
+
 		cachedBeams.forEach(b -> b.itensity *= .6f);
 	}
 
@@ -136,7 +133,6 @@ public class ZapperRenderHandler {
 		cachedBeams.add(beam);
 	}
 
-	@SubscribeEvent
 	public static void onRenderPlayerHand(RenderHandEvent event) {
 		ItemStack heldItem = event.getItemStack();
 		if (!(heldItem.getItem() instanceof ZapperItem))
@@ -166,7 +162,7 @@ public class ZapperRenderHandler {
 		float f4 = -0.4F * MathHelper.sin(event.getSwingProgress() * (float) Math.PI);
 		float f5 = MathHelper.sin(event.getSwingProgress() * event.getSwingProgress() * (float) Math.PI);
 		float f6 = MathHelper.sin(f1 * (float) Math.PI);
-		
+
 		ms.translate(f * (f2 + 0.64000005F - .1f), f3 + -0.4F + equipProgress * -0.6F,
 			f4 + -0.71999997F + .3f + recoil);
 		ms.multiply(Vector3f.POSITIVE_Y.getDegreesQuaternion(f * 75.0F));
@@ -181,7 +177,7 @@ public class ZapperRenderHandler {
 		ms.multiply(Vector3f.POSITIVE_Y.getDegreesQuaternion(f * -135.0F));
 		ms.translate(f * 5.6F, 0.0F, 0.0F);
 		ms.multiply(Vector3f.POSITIVE_Y.getDegreesQuaternion(f * 40.0F));
-		
+
 		PlayerRenderer playerrenderer = (PlayerRenderer) mc.getRenderManager()
 			.getRenderer(abstractclientplayerentity);
 		if (rightHand) {

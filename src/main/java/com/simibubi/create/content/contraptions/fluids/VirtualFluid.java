@@ -6,7 +6,6 @@ import net.minecraft.fluid.Fluid;
 import net.minecraft.fluid.FluidState;
 import net.minecraft.item.Item;
 import net.minecraft.item.Items;
-import net.minecraftforge.fluids.ForgeFlowingFluid;
 
 public class VirtualFluid extends ForgeFlowingFluid {
 

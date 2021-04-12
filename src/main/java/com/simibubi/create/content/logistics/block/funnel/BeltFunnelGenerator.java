@@ -9,7 +9,6 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.client.model.generators.ModelFile;
 
 public class BeltFunnelGenerator extends SpecialBlockStateGen {
 
@@ -37,10 +36,10 @@ public class BeltFunnelGenerator extends SpecialBlockStateGen {
 		boolean powered = state.method_28500(BlockStateProperties.POWERED).orElse(false);
 		String shapeName = state.get(BeltFunnelBlock.SHAPE)
 			.getString();
-		
+
 		String poweredSuffix = powered ? "_powered" : "";
 		String name = ctx.getName() + "_" + poweredSuffix;
-		
+
 		return prov.models()
 			.withExistingParent(name + "_" + shapeName, prov.modLoc("block/belt_funnel/block_" + shapeName))
 			.texture("particle", materialBlockTexture)

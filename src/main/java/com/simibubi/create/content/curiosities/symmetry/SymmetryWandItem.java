@@ -39,11 +39,7 @@ import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraftforge.common.util.BlockSnapshot;
 import com.simibubi.create.lib.utility.Constants.BlockFlags;
-import net.minecraftforge.event.ForgeEventFactory;
-import net.minecraftforge.fml.DistExecutor;
-import net.minecraftforge.fml.network.PacketDistributor;
 
 public class SymmetryWandItem extends Item {
 
@@ -239,7 +235,7 @@ public class SymmetryWandItem extends Item {
 					blocksnapshot.restore(true, false);
 					continue;
 				}
-				
+
 				targets.add(position);
 			}
 		}

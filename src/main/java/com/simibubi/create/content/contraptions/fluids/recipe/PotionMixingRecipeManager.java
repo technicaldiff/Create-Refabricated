@@ -26,16 +26,11 @@ import net.minecraft.potion.PotionUtils;
 import net.minecraft.potion.Potions;
 import net.minecraft.profiler.IProfiler;
 import net.minecraft.resources.IResourceManager;
-import net.minecraftforge.common.brewing.BrewingRecipeRegistry;
-import net.minecraftforge.common.brewing.IBrewingRecipe;
-import net.minecraftforge.common.brewing.VanillaBrewingRecipe;
-import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.registries.ForgeRegistries;
 
 public class PotionMixingRecipeManager {
 
 	public static Map<Item, List<MixingRecipe>> ALL = new HashMap<>();
-	
+
 	public static List<MixingRecipe> getAllBrewingRecipes() {
 		List<MixingRecipe> mixingRecipes = new ArrayList<>();
 

@@ -14,7 +14,6 @@ import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.vector.Vector3d;
-import net.minecraftforge.items.IItemHandler;
 
 public class StockpileSwitchTileEntity extends SmartTileEntity {
 
@@ -137,19 +136,19 @@ public class StockpileSwitchTileEntity extends SmartTileEntity {
 	public float getLevelForDisplay() {
 		return currentLevel == -1 ? 0 : currentLevel;
 	}
-	
+
 	public boolean getState() {
 		return state;
 	}
-	
+
 	public boolean isPowered() {
 		return inverted != state;
 	}
-	
+
 	public boolean isInverted() {
 		return inverted;
 	}
-	
+
 	public void setInverted(boolean inverted) {
 		if (inverted == this.inverted)
 			return;

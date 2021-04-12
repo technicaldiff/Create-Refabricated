@@ -7,7 +7,6 @@ import com.simibubi.create.content.contraptions.processing.ProcessingRecipe;
 import com.simibubi.create.content.contraptions.processing.ProcessingRecipeBuilder.ProcessingRecipeParams;
 
 import net.minecraft.world.World;
-import net.minecraftforge.items.wrapper.RecipeWrapper;
 
 @ParametersAreNonnullByDefault
 public class CuttingRecipe extends ProcessingRecipe<RecipeWrapper> {
@@ -23,7 +22,7 @@ public class CuttingRecipe extends ProcessingRecipe<RecipeWrapper> {
 		return ingredients.get(0)
 			.test(inv.getStackInSlot(0));
 	}
-	
+
 	@Override
 	protected int getMaxInputCount() {
 		return 1;

@@ -46,9 +46,7 @@ import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraftforge.common.util.BlockSnapshot;
 import com.simibubi.create.lib.utility.Constants.BlockFlags;
-import net.minecraftforge.event.ForgeEventFactory;
 
 public class BlockzapperItem extends ZapperItem {
 
@@ -79,7 +77,7 @@ public class BlockzapperItem extends ZapperItem {
 	public void fillItemGroup(ItemGroup group, NonNullList<ItemStack> items) {
 		if (group != Create.baseCreativeTab && group != ItemGroup.SEARCH)
 			return;
-		
+
 		ItemStack gunWithoutStuff = new ItemStack(this);
 		items.add(gunWithoutStuff);
 

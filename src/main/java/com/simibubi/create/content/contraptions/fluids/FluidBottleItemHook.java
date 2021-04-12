@@ -14,18 +14,13 @@ import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.RayTraceContext;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
-import net.minecraftforge.event.entity.player.PlayerInteractEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 
-@EventBusSubscriber
 public class FluidBottleItemHook extends Item {
 
 	public FluidBottleItemHook(Properties p_i48487_1_) {
 		super(p_i48487_1_);
 	}
 
-	@SubscribeEvent
 	public static void preventWaterBottlesFromCreatesFluids(PlayerInteractEvent.RightClickItem event) {
 		ItemStack itemStack = event.getItemStack();
 		if (itemStack.isEmpty())

@@ -28,7 +28,6 @@ import net.minecraft.world.server.ServerWorld;
 import net.minecraft.world.storage.IServerWorldInfo;
 import net.minecraft.world.storage.MapData;
 import net.minecraft.world.storage.SaveFormat;
-import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 
 @ParametersAreNonnullByDefault
 @MethodsReturnNonnullByDefault
@@ -46,7 +45,7 @@ public class WrappedServerWorld extends ServerWorld {
 	public float getCelestialAngleRadians(float p_72826_1_) {
 		return 0;
 	}
-	
+
 	@Override
 	public int getLight(BlockPos pos) {
 		return 15;

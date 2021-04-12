@@ -7,7 +7,6 @@ import com.simibubi.create.content.contraptions.components.crusher.AbstractCrush
 import com.simibubi.create.content.contraptions.processing.ProcessingRecipeBuilder.ProcessingRecipeParams;
 
 import net.minecraft.world.World;
-import net.minecraftforge.items.wrapper.RecipeWrapper;
 
 @ParametersAreNonnullByDefault
 public class MillingRecipe extends AbstractCrushingRecipe {

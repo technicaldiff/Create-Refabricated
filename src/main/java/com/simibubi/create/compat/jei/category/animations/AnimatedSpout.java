@@ -14,7 +14,6 @@ import net.minecraft.client.renderer.IRenderTypeBuffer.Impl;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.vector.Vector3f;
-import net.minecraftforge.fluids.FluidStack;
 
 public class AnimatedSpout extends AnimatedKinetics {
 

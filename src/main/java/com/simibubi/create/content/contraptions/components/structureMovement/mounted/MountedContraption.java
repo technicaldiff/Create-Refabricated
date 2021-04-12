@@ -32,9 +32,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 import net.minecraft.world.gen.feature.template.Template.BlockInfo;
-import net.minecraftforge.items.IItemHandlerModifiable;
-import net.minecraftforge.items.wrapper.CombinedInvWrapper;
-import net.minecraftforge.items.wrapper.InvWrapper;
 
 public class MountedContraption extends Contraption {
 
@@ -53,7 +50,7 @@ public class MountedContraption extends Contraption {
 	protected ContraptionType getType() {
 		return ContraptionType.MOUNTED;
 	}
-	
+
 	@Override
 	public boolean assemble(World world, BlockPos pos) throws AssemblyException {
 		BlockState state = world.getBlockState(pos);
@@ -61,17 +58,17 @@ public class MountedContraption extends Contraption {
 			return false;
 		if (!searchMovedStructure(world, pos, null))
 			return false;
-		
+
 		Axis axis = state.get(RAIL_SHAPE) == RailShape.EAST_WEST ? Axis.X : Axis.Z;
 		addBlock(pos, Pair.of(new BlockInfo(pos, AllBlocks.MINECART_ANCHOR.getDefaultState()
 			.with(BlockStateProperties.HORIZONTAL_AXIS, axis), null), null));
-		
+
 		if (blocks.size() == 1)
 			return false;
-		
+
 		return true;
 	}
-	
+
 	@Override
 	protected boolean addToInitialFrontier(World world, BlockPos pos, Direction direction, Queue<BlockPos> frontier) {
 		frontier.clear();
@@ -149,12 +146,12 @@ public class MountedContraption extends Contraption {
 	protected boolean customBlockRemoval(IWorld world, BlockPos pos, BlockState state) {
 		return AllBlocks.MINECART_ANCHOR.has(state);
 	}
-	
+
 	@Override
 	public boolean canBeStabilized(Direction facing, BlockPos localPos) {
 		return true;
 	}
-	
+
 	@Override
 	public void addExtraInventories(Entity cart) {
 		if (!(cart instanceof IInventory))

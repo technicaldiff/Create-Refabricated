@@ -16,13 +16,6 @@ import net.minecraft.util.Direction;
 import net.minecraft.util.Direction.Axis;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.vector.Vector3d;
-import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.items.IItemHandler;
-import net.minecraftforge.items.ItemHandlerHelper;
-import net.minecraftforge.items.ItemStackHandler;
-import net.minecraftforge.items.wrapper.CombinedInvWrapper;
-import net.minecraftforge.items.wrapper.RecipeWrapper;
 
 public class MillstoneTileEntity extends KineticTileEntity {
 
@@ -89,7 +82,7 @@ public class MillstoneTileEntity extends KineticTileEntity {
 		super.remove();
 		capability.invalidate();
 	}
-	
+
 	private void process() {
 		RecipeWrapper inventoryIn = new RecipeWrapper(inputInv);
 

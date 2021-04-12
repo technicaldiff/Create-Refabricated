@@ -9,12 +9,7 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.vector.Vector3d;
-import net.minecraftforge.event.entity.living.LivingDropsEvent;
-import net.minecraftforge.event.entity.living.LootingLevelEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 
-@EventBusSubscriber
 public class CrushingWheelTileEntity extends KineticTileEntity {
 
 	public static DamageSource damageSource = new DamageSource("create.crush").setDamageBypassesArmor()
@@ -48,14 +43,12 @@ public class CrushingWheelTileEntity extends KineticTileEntity {
 		fixControllers();
 	}
 
-	@SubscribeEvent
 	public static void crushingIsFortunate(LootingLevelEvent event) {
 		if (event.getDamageSource() != damageSource)
 			return;
 		event.setLootingLevel(2);		//This does not currently increase mob drops. It seems like this only works for damage done by an entity.
 	}
 
-	@SubscribeEvent
 	public static void handleCrushedMobDrops(LivingDropsEvent event) {
 		if (event.getSource() != CrushingWheelTileEntity.damageSource)
 			return;

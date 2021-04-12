@@ -26,12 +26,6 @@ import net.minecraft.util.Direction.AxisDirection;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
-import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
-import net.minecraftforge.fluids.capability.IFluidHandler;
-import net.minecraftforge.fluids.capability.IFluidHandler.FluidAction;
-import net.minecraftforge.fluids.capability.templates.FluidTank;
 
 public class FluidTankConnectivityHandler {
 
@@ -199,7 +193,7 @@ public class FluidTankConnectivityHandler {
 
 		if (simulate)
 			return amount;
-		
+
 		boolean opaque = false;
 
 		for (int yOffset = 0; yOffset < height; yOffset++) {
@@ -234,7 +228,7 @@ public class FluidTankConnectivityHandler {
 				}
 			}
 		}
-		
+
 		te.setWindows(!opaque);
 
 		return amount;
@@ -281,7 +275,7 @@ public class FluidTankConnectivityHandler {
 					if (!toDistribute.isEmpty() && tankAt != te) {
 						FluidStack copy = toDistribute.copy();
 						FluidTank tankInventory = tankAt.tankInventory;
-						if (tankInventory.isEmpty() && tankInventory instanceof CreativeSmartFluidTank) 
+						if (tankInventory.isEmpty() && tankInventory instanceof CreativeSmartFluidTank)
 							((CreativeSmartFluidTank) tankInventory).setContainedFluid(toDistribute);
 						else {
 							int split = Math.min(maxCapacity, toDistribute.getAmount());

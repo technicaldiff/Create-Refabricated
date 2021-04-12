@@ -21,7 +21,6 @@ import net.minecraft.util.Direction;
 import net.minecraft.util.SoundCategory;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraftforge.fml.DistExecutor;
 
 public class StickerTileEntity extends SmartTileEntity implements IInstanceRendered {
 

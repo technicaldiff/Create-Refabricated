@@ -22,7 +22,6 @@ import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.network.NetworkHooks;
 
 public class SchematicTableBlock extends HorizontalBlock implements ITE<SchematicTableTileEntity> {
 

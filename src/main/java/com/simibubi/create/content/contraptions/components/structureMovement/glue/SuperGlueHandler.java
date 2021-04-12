@@ -25,13 +25,7 @@ import net.minecraft.util.math.RayTraceResult.Type;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
-import net.minecraftforge.common.ForgeMod;
-import net.minecraftforge.event.world.BlockEvent.EntityPlaceEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
-import net.minecraftforge.fml.network.PacketDistributor;
 
-@EventBusSubscriber
 public class SuperGlueHandler {
 
 	public static Map<Direction, SuperGlueEntity> gatherGlue(IWorld world, BlockPos pos) {
@@ -42,7 +36,6 @@ public class SuperGlueHandler {
 		return map;
 	}
 
-	@SubscribeEvent
 	public static void glueListensForBlockPlacement(EntityPlaceEvent event) {
 		IWorld world = event.getWorld();
 		Entity entity = event.getEntity();

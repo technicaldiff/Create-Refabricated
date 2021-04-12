@@ -19,10 +19,6 @@ import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.items.CapabilityItemHandler;
-import net.minecraftforge.items.IItemHandler;
-import net.minecraftforge.items.ItemHandlerHelper;
 
 public class InvManipulationBehaviour extends TileEntityBehaviour {
 
@@ -156,7 +152,7 @@ public class InvManipulationBehaviour extends TileEntityBehaviour {
 		if (!targetCapability.isPresent())
 			findNewCapability();
 	}
-	
+
 	@Override
 	public void tick() {
 		super.tick();

@@ -9,7 +9,6 @@ import net.minecraft.network.play.ServerPlayNetHandler;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.vector.Vector3d;
-import net.minecraftforge.common.ForgeMod;
 
 public class ExtendoGripInteractionPacket implements C2SPacket {
 

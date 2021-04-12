@@ -2,7 +2,6 @@ package com.simibubi.create.foundation.config;
 
 import com.simibubi.create.foundation.worldgen.AllWorldFeatures;
 
-import net.minecraftforge.common.ForgeConfigSpec.Builder;
 
 public class CWorldGen extends ConfigBase {
 

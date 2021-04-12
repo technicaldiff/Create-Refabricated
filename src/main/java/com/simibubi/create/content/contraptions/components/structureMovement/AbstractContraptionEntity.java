@@ -47,9 +47,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
 import net.minecraft.world.gen.feature.template.Template.BlockInfo;
-import net.minecraftforge.fml.common.registry.IEntityAdditionalSpawnData;
-import net.minecraftforge.fml.network.NetworkHooks;
-import net.minecraftforge.fml.network.PacketDistributor;
 
 public abstract class AbstractContraptionEntity extends Entity implements IEntityAdditionalSpawnData {
 
@@ -77,7 +74,7 @@ public abstract class AbstractContraptionEntity extends Entity implements IEntit
 			return;
 		contraption.onEntityCreated(this);
 	}
-	
+
 	public boolean supportsTerrainCollision() {
 		return contraption instanceof TranslatingContraption;
 	}
@@ -384,12 +381,12 @@ public abstract class AbstractContraptionEntity extends Entity implements IEntit
 		writeAdditional(compound, true);
 		buffer.writeCompoundTag(compound);
 	}
-	
+
 	@Override
 	protected final void writeAdditional(CompoundNBT compound) {
 		writeAdditional(compound, false);
 	}
-	
+
 	protected void writeAdditional(CompoundNBT compound, boolean spawnPacket) {
 		if (contraption != null)
 			compound.put("Contraption", contraption.writeNBT(spawnPacket));
@@ -401,12 +398,12 @@ public abstract class AbstractContraptionEntity extends Entity implements IEntit
 	public void readSpawnData(PacketBuffer additionalData) {
 		readAdditional(additionalData.readCompoundTag(), true);
 	}
-	
+
 	@Override
 	protected final void readAdditional(CompoundNBT compound) {
 		readAdditional(compound, false);
 	}
-	
+
 	protected void readAdditional(CompoundNBT compound, boolean spawnData) {
 		initialized = compound.getBoolean("Initialized");
 		contraption = Contraption.fromNBT(world, compound.getCompound("Contraption"), spawnData);

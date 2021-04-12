@@ -20,9 +20,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.vector.Vector3i;
 import net.minecraft.world.World;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.common.util.BlockSnapshot;
-import net.minecraftforge.event.world.BlockEvent;
 
 public class PlacementOffset {
 
@@ -102,7 +99,7 @@ public class PlacementOffset {
 
 		return world.getBlockState(new BlockPos(pos)).getMaterial().isReplaceable();
 	}
-	
+
 	public ActionResultType placeInWorld(World world, BlockItem blockItem, PlayerEntity player, Hand hand, BlockRayTraceResult ray) {
 
 		if (!isReplaceable(world))

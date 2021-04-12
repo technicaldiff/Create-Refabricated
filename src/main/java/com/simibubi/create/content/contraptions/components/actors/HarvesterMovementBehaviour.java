@@ -30,7 +30,6 @@ import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
-import net.minecraftforge.common.IPlantable;
 
 public class HarvesterMovementBehaviour extends MovementBehaviour {
 

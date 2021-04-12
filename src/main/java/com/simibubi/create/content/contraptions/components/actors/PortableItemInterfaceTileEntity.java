@@ -6,10 +6,6 @@ import com.simibubi.create.foundation.item.ItemHandlerWrapper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.Direction;
-import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.items.IItemHandlerModifiable;
-import net.minecraftforge.items.ItemStackHandler;
 
 public class PortableItemInterfaceTileEntity extends PortableStorageInterfaceTileEntity {
 

@@ -26,7 +26,6 @@ import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraftforge.fml.network.PacketDistributor;
 
 public class GantryContraptionEntity extends AbstractContraptionEntity {
 
@@ -121,7 +120,7 @@ public class GantryContraptionEntity extends AbstractContraptionEntity {
 
 		if (world.isRemote)
 			return;
-		
+
 		axisMotion = pinionMovementSpeed;
 		setContraptionMotion(movementVec);
 	}

@@ -11,7 +11,6 @@ import net.minecraft.command.arguments.EntityArgument;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.network.play.server.SPlayerAbilitiesPacket;
 import net.minecraft.util.text.StringTextComponent;
-import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 
 public class FlySpeedCommand {
 

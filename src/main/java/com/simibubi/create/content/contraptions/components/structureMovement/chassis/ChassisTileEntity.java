@@ -30,7 +30,6 @@ import net.minecraft.util.Direction.Axis;
 import net.minecraft.util.Direction.AxisDirection;
 import net.minecraft.util.math.BlockPos;
 import net.fabricmc.api.EnvType;
-import net.minecraftforge.fml.DistExecutor;
 
 public class ChassisTileEntity extends SmartTileEntity {
 

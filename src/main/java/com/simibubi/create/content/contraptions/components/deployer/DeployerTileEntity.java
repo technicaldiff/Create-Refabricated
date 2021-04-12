@@ -36,10 +36,7 @@ import net.minecraft.util.math.RayTraceContext.FluidMode;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.server.ServerWorld;
-import net.minecraftforge.common.capabilities.Capability;
 import com.simibubi.create.lib.utility.Constants.NBT;
-import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.items.IItemHandlerModifiable;
 
 public class DeployerTileEntity extends KineticTileEntity {
 
@@ -113,7 +110,7 @@ public class DeployerTileEntity extends KineticTileEntity {
 	@Override
 	public void tick() {
 		super.tick();
-		
+
 		if (getSpeed() == 0)
 			return;
 		if (!world.isRemote && player != null && player.blockBreakingProgress != null) {
@@ -331,7 +328,7 @@ public class DeployerTileEntity extends KineticTileEntity {
 	private IItemHandlerModifiable createHandler() {
 		return new DeployerItemHandler(this);
 	}
-	
+
 	public void redstoneUpdate() {
 		if (world.isRemote)
 			return;

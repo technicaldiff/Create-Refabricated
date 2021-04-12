@@ -17,9 +17,6 @@ import net.minecraft.client.renderer.model.IBakedModel;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockDisplayReader;
-import net.minecraftforge.client.model.data.IModelData;
-import net.minecraftforge.client.model.data.ModelDataMap.Builder;
-import net.minecraftforge.client.model.data.ModelProperty;
 
 public class FluidTankModel extends CTModel {
 
@@ -28,15 +25,15 @@ public class FluidTankModel extends CTModel {
 	public static FluidTankModel standard(IBakedModel originalModel) {
 		return new FluidTankModel(originalModel, AllSpriteShifts.FLUID_TANK, AllSpriteShifts.COPPER_CASING);
 	}
-	
+
 	public static FluidTankModel creative(IBakedModel originalModel) {
 		return new FluidTankModel(originalModel, AllSpriteShifts.CREATIVE_FLUID_TANK, AllSpriteShifts.CREATIVE_CASING);
 	}
-	
+
 	private FluidTankModel(IBakedModel originalModel, CTSpriteShiftEntry side, CTSpriteShiftEntry top) {
 		super(originalModel, new FluidTankCTBehaviour(side, top));
 	}
-	
+
 	@Override
 	protected Builder gatherModelData(Builder builder, IBlockDisplayReader world, BlockPos pos, BlockState state) {
 		CullData cullData = new CullData();

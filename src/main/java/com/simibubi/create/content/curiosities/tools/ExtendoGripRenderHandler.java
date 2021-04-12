@@ -18,9 +18,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.Hand;
 import net.minecraft.util.HandSide;
 import net.minecraft.util.math.MathHelper;
-import net.minecraftforge.client.event.RenderHandEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 
 @EventBusSubscriber(value = EnvType.CLIENT)
 public class ExtendoGripRenderHandler {
@@ -51,7 +48,6 @@ public class ExtendoGripRenderHandler {
 		pose = AllBlockPartials.DEPLOYER_HAND_HOLDING;
 	}
 
-	@SubscribeEvent
 	public static void onRenderPlayerHand(RenderHandEvent event) {
 		ItemStack heldItem = event.getItemStack();
 		Minecraft mc = Minecraft.getInstance();

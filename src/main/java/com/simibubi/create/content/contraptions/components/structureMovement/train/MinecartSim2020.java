@@ -20,7 +20,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.util.math.vector.Vector3i;
-import net.minecraftforge.common.util.LazyOptional;
 
 /**
  * Useful methods for dealing with Minecarts
@@ -44,7 +43,7 @@ public class MinecartSim2020 {
 			map.put(RailShape.NORTH_WEST, Pair.of(north, west));
 			map.put(RailShape.NORTH_EAST, Pair.of(north, east));
 		});
-	
+
 	public static Vector3d predictNextPositionOf(AbstractMinecartEntity cart) {
 		Vector3d position = cart.getPositionVec();
 		Vector3d motion = cart.getMotion();

@@ -25,7 +25,6 @@ import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.fluids.FluidStack;
 
 @MethodsReturnNonnullByDefault
 @ParametersAreNonnullByDefault
@@ -120,15 +119,15 @@ public abstract class ProcessingRecipe<T extends IInventory> implements IRecipe<
 	public NonNullList<Ingredient> getIngredients() {
 		return ingredients;
 	}
-	
+
 	public NonNullList<FluidIngredient> getFluidIngredients() {
 		return fluidIngredients;
 	}
-	
+
 	public NonNullList<ProcessingOutput> getRollableResults() {
 		return results;
 	}
-	
+
 	public NonNullList<FluidStack> getFluidResults() {
 		return fluidResults;
 	}
@@ -156,9 +155,9 @@ public abstract class ProcessingRecipe<T extends IInventory> implements IRecipe<
 	public HeatCondition getRequiredHeat() {
 		return requiredHeat;
 	}
-	
+
 	// IRecipe<> paperwork
-	
+
 	@Override
 	public ItemStack getCraftingResult(T inv) {
 		return getRecipeOutput();
@@ -180,7 +179,7 @@ public abstract class ProcessingRecipe<T extends IInventory> implements IRecipe<
 	public ResourceLocation getId() {
 		return id;
 	}
-	
+
 	@Override
 	public boolean isDynamic() {
 		return true;

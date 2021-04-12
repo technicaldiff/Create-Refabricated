@@ -20,7 +20,6 @@ import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockDisplayReader;
 import net.minecraft.world.World;
-import net.minecraftforge.fluids.FluidStack;
 
 public abstract class FluidTransportBehaviour extends TileEntityBehaviour {
 
@@ -58,7 +57,7 @@ public abstract class FluidTransportBehaviour extends TileEntityBehaviour {
 		World world = getWorld();
 		BlockPos pos = getPos();
 		boolean onClient = world.isRemote;
-		
+
 		if (interfaces == null)
 			return;
 		Collection<PipeConnection> connections = interfaces.values();

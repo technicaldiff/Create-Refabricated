@@ -16,10 +16,6 @@ import net.minecraft.client.renderer.vertex.VertexFormatElement;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockDisplayReader;
-import net.minecraftforge.client.model.BakedModelWrapper;
-import net.minecraftforge.client.model.data.IModelData;
-import net.minecraftforge.client.model.data.ModelDataMap;
-import net.minecraftforge.client.model.data.ModelProperty;
 
 public class ColoredVertexModel extends BakedModelWrapper<IBakedModel> {
 
@@ -43,7 +39,7 @@ public class ColoredVertexModel extends BakedModelWrapper<IBakedModel> {
 			return quads;
 		if (quads.isEmpty())
 			return quads;
-		
+
 		// Optifine might've rejigged vertex data
 		VertexFormat format = DefaultVertexFormats.BLOCK;
 		int colorIndex = 0;
@@ -52,9 +48,9 @@ public class ColoredVertexModel extends BakedModelWrapper<IBakedModel> {
 			if (e.getUsage() == VertexFormatElement.Usage.COLOR)
 				colorIndex = j;
 		}
-		int colorOffset = format.getOffset(colorIndex) / 4; 
+		int colorOffset = format.getOffset(colorIndex) / 4;
 		BlockPos data = extraData.getData(POSITION_PROPERTY);
-		
+
 		for (int i = 0; i < quads.size(); i++) {
 			BakedQuad quad = quads.get(i);
 			BakedQuad newQuad = new BakedQuad(Arrays.copyOf(quad.getVertexData(), quad.getVertexData().length),

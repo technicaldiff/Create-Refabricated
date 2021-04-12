@@ -7,7 +7,6 @@ import com.tterrag.registrate.providers.RegistrateBlockstateProvider;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
-import net.minecraftforge.client.model.generators.ModelFile;
 
 public class FlywheelGenerator extends SpecialBlockStateGen {
 

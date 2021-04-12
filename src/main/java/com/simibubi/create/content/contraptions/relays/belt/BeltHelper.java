@@ -10,7 +10,6 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.util.math.vector.Vector3i;
 import net.minecraft.world.IWorld;
-import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 
 public class BeltHelper {
 

@@ -16,7 +16,6 @@ import net.minecraft.util.math.vector.Vector2f;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.util.text.ITextProperties;
 import net.minecraft.util.text.Style;
-import net.minecraftforge.fml.client.gui.GuiUtils;
 
 public class TextWindowElement extends AnimatedOverlayElement {
 
