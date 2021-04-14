@@ -6,7 +6,10 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.AxeItem;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.PickaxeItem;
+import net.minecraft.item.ToolItem;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
@@ -23,24 +26,26 @@ public abstract class KineticBlock extends Block implements IRotate {
 		super(properties);
 	}
 
-	@Override
-	public ToolType getHarvestTool(BlockState state) {
-		return null;
-	}
+//	@Override
+//	public ToolType getHarvestTool(BlockState state) { // todo
+//		return null;
+//	}
 
-	@Override
+//	@Override
 	public boolean canHarvestBlock(BlockState state, IBlockReader world, BlockPos pos, PlayerEntity player) {
-		for (ToolType toolType : player.getHeldItemMainhand()
-			.getToolTypes()) {
-			if (isToolEffective(state, toolType))
-				return true;
-		}
-		return super.canHarvestBlock(state, world, pos, player);
+//		for (ToolType toolType : player.getHeldItemMainhand()
+//			.getToolTypes()) {
+//			if (isToolEffective(state, toolType))
+//				return true;
+//		}
+//		return super.canHarvestBlock(state, world, pos, player);
+		return player.getHeldItemMainhand().canHarvestBlock(state); // todo: see if this actually works
 	}
 
-	@Override
-	public boolean isToolEffective(BlockState state, ToolType tool) {
-		return tool == ToolType.AXE || tool == ToolType.PICKAXE;
+//	@Override
+	public boolean isToolEffective(BlockState state, ToolItem tool) {
+//		return tool == ToolType.AXE || tool == ToolType.PICKAXE;
+		return (tool instanceof PickaxeItem || tool instanceof AxeItem); // todo: see if this actually works
 	}
 
 	@Override
@@ -71,7 +76,6 @@ public abstract class KineticBlock extends Block implements IRotate {
 		return false;
 	}
 
-	@Override
 	public boolean hasTileEntity(BlockState state) {
 		return true;
 	}
@@ -80,7 +84,6 @@ public abstract class KineticBlock extends Block implements IRotate {
 		return getRotationAxis(newState) == getRotationAxis(oldState);
 	}
 
-	@Override
 	public abstract TileEntity createTileEntity(BlockState state, IBlockReader world);
 
 	@Override

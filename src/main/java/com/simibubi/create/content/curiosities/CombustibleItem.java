@@ -14,7 +14,6 @@ public class CombustibleItem extends Item {
 		this.burnTime = burnTime;
 	}
 
-	@Override
 	public int getBurnTime(ItemStack itemStack) {
 		return this.burnTime;
 	}

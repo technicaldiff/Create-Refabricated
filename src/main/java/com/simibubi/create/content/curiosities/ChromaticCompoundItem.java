@@ -8,6 +8,13 @@ import com.simibubi.create.foundation.config.CRecipes;
 import com.simibubi.create.foundation.utility.ColorHelper;
 import com.simibubi.create.foundation.utility.VecHelper;
 
+import com.simibubi.create.lib.helper.EntityHelper;
+import com.simibubi.create.lib.item.CustomDurabilityBarItem;
+
+import com.simibubi.create.lib.item.CustomMaxCountItem;
+
+import com.simibubi.create.lib.item.EntityTickListenerItem;
+
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.item.ItemEntity;
@@ -27,7 +34,7 @@ import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
 import net.minecraft.world.gen.Heightmap;
 
-public class ChromaticCompoundItem extends Item {
+public class ChromaticCompoundItem extends Item implements CustomDurabilityBarItem, CustomMaxCountItem, EntityTickListenerItem {
 
 	public ChromaticCompoundItem(Properties properties) {
 		super(properties);
@@ -67,7 +74,7 @@ public class ChromaticCompoundItem extends Item {
 		double y = entity.getY();
 		double yMotion = entity.getMotion().y;
 		World world = entity.world;
-		CompoundNBT data = entity.getPersistentData();
+		CompoundNBT data = EntityHelper.getExtraCustomData(entity);
 		CompoundNBT itemData = entity.getItem()
 			.getOrCreateTag();
 
@@ -101,8 +108,8 @@ public class ChromaticCompoundItem extends Item {
 			ItemStack newStack = AllItems.REFINED_RADIANCE.asStack();
 			ItemEntity newEntity = new ItemEntity(world, entity.getX(), entity.getY(), entity.getZ(), newStack);
 			newEntity.setMotion(entity.getMotion());
-			newEntity.getPersistentData()
-				.putBoolean("JustCreated", true);
+			EntityHelper.getExtraCustomData(newEntity)
+					.putBoolean("JustCreated", true);
 			itemData.remove("CollectingLight");
 			world.addEntity(newEntity);
 
@@ -135,7 +142,7 @@ public class ChromaticCompoundItem extends Item {
 
 				BeaconTileEntity bte = (BeaconTileEntity) te;
 
-				if (bte.getLevels() != 0 && !bte.beamSegments.isEmpty())
+				if (bte.getLevels() != 0 && !bte.getBeamSegments().isEmpty())
 					isOverBeacon = true;
 
 				break;
@@ -159,7 +166,7 @@ public class ChromaticCompoundItem extends Item {
 
 		BlockPos randomOffset = new BlockPos(VecHelper.offsetRandomly(positionVec, r, range));
 		BlockState state = world.getBlockState(randomOffset);
-		if (state.getLightValue(world, randomOffset) == 0)
+		if (state.getLightValue() == 0)
 			return false;
 		if (state.getBlockHardness(world, randomOffset) == -1)
 			return false;
@@ -181,7 +188,7 @@ public class ChromaticCompoundItem extends Item {
 		newEntity.setMotion(entity.getMotion());
 		newEntity.setDefaultPickupDelay();
 		world.addEntity(newEntity);
-		entity.lifespan = 6000;
+//		entity.lifespan = 6000; todo: see if this is actually needed
 		if (stack.isEmpty())
 			entity.remove();
 

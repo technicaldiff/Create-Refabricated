@@ -38,7 +38,7 @@ public class EncasedBeltBlock extends RotatedPillarKineticBlock {
 		setDefaultState(getDefaultState().with(PART, Part.NONE));
 	}
 
-	@Override
+//	@Override fixme; this might not even be needed since it returns false
 	public boolean shouldCheckWeakPower(BlockState state, IWorldReader world, BlockPos pos, Direction side) {
 		return false;
 	}

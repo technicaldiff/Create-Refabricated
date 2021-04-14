@@ -2,6 +2,10 @@ package com.simibubi.create.content.curiosities;
 
 import com.simibubi.create.foundation.utility.VecHelper;
 
+import com.simibubi.create.lib.helper.EntityHelper;
+
+import com.simibubi.create.lib.item.EntityTickListenerItem;
+
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -11,7 +15,7 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
 
-public class NoGravMagicalDohickyItem extends Item {
+public class NoGravMagicalDohickyItem extends Item implements EntityTickListenerItem {
 
 	public NoGravMagicalDohickyItem(Properties p_i48487_1_) {
 		super(p_i48487_1_);
@@ -21,7 +25,7 @@ public class NoGravMagicalDohickyItem extends Item {
 	public boolean onEntityItemUpdate(ItemStack stack, ItemEntity entity) {
 		World world = entity.world;
 		Vector3d pos = entity.getPositionVec();
-		CompoundNBT persistentData = entity.getPersistentData();
+		CompoundNBT persistentData = EntityHelper.getExtraCustomData(entity);
 
 		if (world.isRemote) {
 			if (world.rand.nextFloat() < getIdleParticleChance(entity)) {
@@ -57,7 +61,7 @@ public class NoGravMagicalDohickyItem extends Item {
 	}
 
 	protected void onCreated(ItemEntity entity, CompoundNBT persistentData) {
-		entity.lifespan = 6000;
+//		entity.lifespan = 6000; fixme if needed
 		persistentData.remove("JustCreated");
 
 		// just a flag to tell the client to play an effect

@@ -44,7 +44,7 @@ public class CogwheelBlockItem extends BlockItem {
 		integratedCogHelperId = large ? PlacementHelpers.register(new IntegratedCogHelper()) : -1;
 	}
 
-	@Override
+//	@Override // todo
 	public ActionResultType onItemUseFirst(ItemStack stack, ItemUseContext context) {
 		World world = context.getWorld();
 		BlockPos pos = context.getPos();
@@ -65,7 +65,8 @@ public class CogwheelBlockItem extends BlockItem {
 			}
 		}
 
-		return super.onItemUseFirst(stack, context);
+//		return super.onItemUseFirst(stack, context); todo: see if this actually works
+		return ActionResultType.PASS;
 	}
 
 	@Override
