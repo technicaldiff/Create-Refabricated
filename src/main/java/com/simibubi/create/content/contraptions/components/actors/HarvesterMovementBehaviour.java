@@ -4,6 +4,8 @@ import static net.minecraft.block.HorizontalBlock.HORIZONTAL_FACING;
 
 import javax.annotation.Nullable;
 
+import net.minecraft.block.ChorusPlantBlock;
+
 import org.apache.commons.lang3.mutable.MutableBoolean;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
@@ -141,7 +143,7 @@ public class HarvesterMovementBehaviour extends MovementBehaviour {
 				return false;
 			}
 
-			if (state.getBlock() instanceof IPlantable)
+			if (state.getBlock() instanceof CropsBlock) // todo: see if this is a good replacement
 				return true;
 		}
 

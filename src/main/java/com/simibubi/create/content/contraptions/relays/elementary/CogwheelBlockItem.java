@@ -16,7 +16,10 @@ import com.simibubi.create.foundation.utility.placement.PlacementOffset;
 
 import com.simibubi.create.lib.annotation.MethodsReturnNonnullByDefault;
 
+import com.simibubi.create.lib.item.CustomUseFirstBehavior;
+
 import net.minecraft.block.BlockState;
+import net.minecraft.client.multiplayer.PlayerController;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.BlockItemUseContext;
@@ -30,7 +33,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.world.World;
 
-public class CogwheelBlockItem extends BlockItem {
+public class CogwheelBlockItem extends BlockItem implements CustomUseFirstBehavior {
 
 	boolean large;
 
@@ -45,7 +48,7 @@ public class CogwheelBlockItem extends BlockItem {
 		integratedCogHelperId = large ? PlacementHelpers.register(new IntegratedCogHelper()) : -1;
 	}
 
-//	@Override // todo
+	@Override
 	public ActionResultType onItemUseFirst(ItemStack stack, ItemUseContext context) {
 		World world = context.getWorld();
 		BlockPos pos = context.getPos();

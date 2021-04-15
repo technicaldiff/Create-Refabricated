@@ -1,5 +1,7 @@
 package com.simibubi.create.content.contraptions.particle;
 
+import com.simibubi.create.lib.helper.ParticleHelper;
+
 import org.lwjgl.opengl.GL11;
 
 import com.mojang.blaze3d.platform.GlStateManager;
@@ -101,19 +103,19 @@ public class CubeParticle extends Particle {
 	public void averageAge(int age) {
 		this.maxAge = (int) (age + (rand.nextDouble() * 2D - 1D) * 8);
 	}
-	
+
 	public void setHot(boolean hot) {
 		this.hot = hot;
 	}
-	
+
 	private boolean billowing = false;
-	
+
 	@Override
 	public void tick() {
 		if (this.hot && this.age > 0) {
 			if (this.prevPosY == this.posY) {
 				billowing = true;
-				field_21507 = false; // Prevent motion being ignored due to vertical collision
+				ParticleHelper.setField_21507(this, false); // Prevent motion being ignored due to vertical collision
 				if (this.motionX == 0 && this.motionZ == 0) {
 					Vector3d diff = Vector3d.of(new BlockPos(posX, posY, posZ)).add(0.5, 0.5, 0.5).subtract(posX, posY, posZ);
 					this.motionX = -diff.x * 0.1;

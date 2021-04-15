@@ -11,6 +11,8 @@ import com.simibubi.create.foundation.utility.DyeHelper;
 
 import com.simibubi.create.lib.annotation.MethodsReturnNonnullByDefault;
 
+import com.simibubi.create.lib.entity.CustomPathfindingBehavior;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -23,6 +25,7 @@ import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.pathfinding.PathNodeType;
 import net.minecraft.pathfinding.PathType;
+import net.minecraft.pathfinding.WalkNodeProcessor;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
 import net.minecraft.util.NonNullList;
@@ -36,7 +39,7 @@ import net.minecraft.world.World;
 
 @ParametersAreNonnullByDefault
 @MethodsReturnNonnullByDefault
-public class SeatBlock extends Block {
+public class SeatBlock extends Block implements CustomPathfindingBehavior {
 
 	private final boolean inCreativeTab;
 
@@ -149,5 +152,5 @@ public class SeatBlock extends Block {
 	public boolean allowsMovement(BlockState state, IBlockReader reader, BlockPos pos, PathType type) {
 		return false;
 	}
-	
+
 }

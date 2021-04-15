@@ -2,6 +2,8 @@ package com.simibubi.create.content.contraptions.components.actors;
 
 import com.simibubi.create.AllEntityTypes;
 
+import com.simibubi.create.lib.entity.ExtraSpawnDataEntity;
+
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricEntityTypeBuilder;
 import net.minecraft.client.renderer.culling.ClippingHelper;
 import net.minecraft.client.renderer.entity.EntityRenderer;
@@ -9,6 +11,7 @@ import net.minecraft.client.renderer.entity.EntityRendererManager;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntitySize;
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.IPacket;
 import net.minecraft.network.PacketBuffer;
@@ -18,7 +21,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
 
-public class SeatEntity extends Entity implements IEntityAdditionalSpawnData {
+public class SeatEntity extends Entity implements ExtraSpawnDataEntity {
 
 	public SeatEntity(EntityType<?> p_i48580_1_, World p_i48580_2_) {
 		super(p_i48580_1_, p_i48580_2_);
@@ -65,7 +68,7 @@ public class SeatEntity extends Entity implements IEntityAdditionalSpawnData {
 	@Override
 	protected boolean canBeRidden(Entity entity) {
 		// Fake Players (tested with deployers) have a BUNCH of weird issues, don't let them ride seats
-		return !(entity instanceof FakePlayer);
+		return !(entity instanceof ServerPlayerEntity);
 	}
 
 	@Override

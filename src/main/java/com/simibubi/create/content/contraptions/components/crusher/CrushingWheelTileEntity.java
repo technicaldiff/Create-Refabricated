@@ -3,6 +3,8 @@ package com.simibubi.create.content.contraptions.components.crusher;
 import com.simibubi.create.content.contraptions.base.KineticTileEntity;
 import com.simibubi.create.foundation.utility.Iterate;
 
+import com.simibubi.create.lib.helper.DamageSourceHelper;
+
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.DamageSource;
@@ -12,8 +14,7 @@ import net.minecraft.util.math.vector.Vector3d;
 
 public class CrushingWheelTileEntity extends KineticTileEntity {
 
-	public static DamageSource damageSource = new DamageSource("create.crush").setDamageBypassesArmor()
-			.setDifficultyScaled();
+	public static DamageSource damageSource = DamageSourceHelper.createDamageSourceWhichBypassesArmor("create.crush").setDifficultyScaled();
 
 	public CrushingWheelTileEntity(TileEntityType<? extends CrushingWheelTileEntity> type) {
 		super(type);

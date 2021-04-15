@@ -3,6 +3,8 @@ package com.simibubi.create.content.contraptions.components.deployer;
 import java.util.OptionalInt;
 import java.util.UUID;
 
+import net.minecraft.server.management.PlayerInteractionManager;
+
 import org.apache.commons.lang3.tuple.Pair;
 
 import com.mojang.authlib.GameProfile;
@@ -34,7 +36,7 @@ import net.minecraft.world.server.ServerWorld;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 
-public class DeployerFakePlayer extends FakePlayer {
+public class DeployerFakePlayer extends ServerPlayerEntity {
 
 	private static final NetworkManager NETWORK_MANAGER = new NetworkManager(PacketDirection.CLIENTBOUND);
 	public static final GameProfile DEPLOYER_PROFILE =
@@ -43,7 +45,7 @@ public class DeployerFakePlayer extends FakePlayer {
 	ItemStack spawnedItemEffects;
 
 	public DeployerFakePlayer(ServerWorld world) {
-		super(world, DEPLOYER_PROFILE);
+		super(world.getServer(), world, DEPLOYER_PROFILE, new PlayerInteractionManager(world));
 		connection = new FakePlayNetHandler(world.getServer(), this);
 	}
 

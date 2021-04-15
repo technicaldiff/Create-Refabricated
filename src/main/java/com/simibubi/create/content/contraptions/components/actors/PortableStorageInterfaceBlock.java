@@ -11,6 +11,7 @@ import com.simibubi.create.lib.annotation.MethodsReturnNonnullByDefault;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
@@ -22,7 +23,7 @@ import net.minecraft.world.World;
 @ParametersAreNonnullByDefault
 @MethodsReturnNonnullByDefault
 public class PortableStorageInterfaceBlock extends ProperDirectionalBlock
-	implements ITE<PortableStorageInterfaceTileEntity> {
+	implements ITE<PortableStorageInterfaceTileEntity>, ITileEntityProvider {
 
 	boolean fluids;
 
@@ -39,13 +40,13 @@ public class PortableStorageInterfaceBlock extends ProperDirectionalBlock
 		this.fluids = fluids;
 	}
 
-	@Override
-	public boolean hasTileEntity(BlockState state) {
-		return true;
-	}
+//	@Override
+//	public boolean hasTileEntity(BlockState state) {
+//		return true;
+//	}
 
 	@Override
-	public TileEntity createTileEntity(BlockState state, IBlockReader world) {
+	public TileEntity createNewTileEntity(IBlockReader world) {
 		return (fluids ? AllTileEntities.PORTABLE_FLUID_INTERFACE : AllTileEntities.PORTABLE_STORAGE_INTERFACE)
 			.create();
 	}

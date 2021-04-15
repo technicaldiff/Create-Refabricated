@@ -10,6 +10,8 @@ import com.simibubi.create.foundation.gui.AbstractSimiScreen;
 import com.simibubi.create.foundation.gui.GuiGameElement;
 import com.simibubi.create.foundation.utility.Lang;
 
+import com.simibubi.create.lib.helper.ScreenHelper;
+
 import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.MathHelper;
@@ -91,7 +93,7 @@ public class GoggleConfigScreen extends AbstractSimiScreen {
 		int titleLinesCount = 1;
 		int tooltipTextWidth = 0;
 		for (ITextProperties textLine : tooltip) {
-			int textLineWidth = getMinecraft().fontRenderer.getWidth(textLine);
+			int textLineWidth = ScreenHelper.getClient(this).fontRenderer.getWidth(textLine);
 			if (textLineWidth > tooltipTextWidth)
 				tooltipTextWidth = textLineWidth;
 		}

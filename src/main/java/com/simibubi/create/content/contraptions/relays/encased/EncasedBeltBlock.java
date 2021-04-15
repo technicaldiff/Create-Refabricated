@@ -7,6 +7,8 @@ import com.simibubi.create.content.contraptions.base.RotatedPillarKineticBlock;
 import com.simibubi.create.foundation.utility.Iterate;
 import com.simibubi.create.foundation.utility.Lang;
 
+import com.simibubi.create.lib.block.CustomWeakPowerCheckingBehavior;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.material.PushReaction;
@@ -27,7 +29,7 @@ import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.IWorldReader;
 
-public class EncasedBeltBlock extends RotatedPillarKineticBlock {
+public class EncasedBeltBlock extends RotatedPillarKineticBlock implements CustomWeakPowerCheckingBehavior {
 
 	public static final Property<Part> PART = EnumProperty.create("part", Part.class);
 	public static final BooleanProperty CONNECTED_ALONG_FIRST_COORDINATE =
@@ -38,7 +40,7 @@ public class EncasedBeltBlock extends RotatedPillarKineticBlock {
 		setDefaultState(getDefaultState().with(PART, Part.NONE));
 	}
 
-//	@Override fixme
+	@Override
 	public boolean shouldCheckWeakPower(BlockState state, IWorldReader world, BlockPos pos, Direction side) {
 		return false;
 	}

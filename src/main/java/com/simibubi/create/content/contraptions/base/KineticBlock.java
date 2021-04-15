@@ -2,6 +2,8 @@ package com.simibubi.create.content.contraptions.base;
 
 import com.simibubi.create.foundation.item.ItemDescription.Palette;
 
+import com.simibubi.create.lib.block.CustomHarvestablilityBehavior;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.LivingEntity;
@@ -18,7 +20,7 @@ import net.minecraft.world.IWorld;
 import net.minecraft.world.IWorldReader;
 import net.minecraft.world.World;
 
-public abstract class KineticBlock extends Block implements IRotate {
+public abstract class KineticBlock extends Block implements IRotate, CustomHarvestablilityBehavior {
 
 	protected static final Palette color = Palette.Red;
 
@@ -31,7 +33,7 @@ public abstract class KineticBlock extends Block implements IRotate {
 //		return null;
 //	}
 
-//	@Override
+	@Override
 	public boolean canHarvestBlock(BlockState state, IBlockReader world, BlockPos pos, PlayerEntity player) {
 //		for (ToolType toolType : player.getHeldItemMainhand()
 //			.getToolTypes()) {
@@ -42,7 +44,7 @@ public abstract class KineticBlock extends Block implements IRotate {
 		return player.getHeldItemMainhand().canHarvestBlock(state); // todo: see if this actually works
 	}
 
-//	@Override
+	@Override
 	public boolean isToolEffective(BlockState state, ToolItem tool) {
 //		return tool == ToolType.AXE || tool == ToolType.PICKAXE;
 		return (tool instanceof PickaxeItem || tool instanceof AxeItem); // todo: see if this actually works

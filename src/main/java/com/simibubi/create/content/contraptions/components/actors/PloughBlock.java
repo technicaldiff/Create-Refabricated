@@ -4,6 +4,8 @@ import java.util.UUID;
 
 import com.mojang.authlib.GameProfile;
 
+import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.server.management.PlayerInteractionManager;
 import net.minecraft.world.server.ServerWorld;
 
 public class PloughBlock extends AttachedActorBlock {
@@ -15,13 +17,13 @@ public class PloughBlock extends AttachedActorBlock {
 	/**
 	 * The OnHoeUse event takes a player, so we better not pass null
 	 */
-	static class PloughFakePlayer extends FakePlayer {
+	static class PloughFakePlayer extends ServerPlayerEntity {
 
 		public static final GameProfile PLOUGH_PROFILE =
 				new GameProfile(UUID.fromString("9e2faded-eeee-4ec2-c314-dad129ae971d"), "Plough");
 
 		public PloughFakePlayer(ServerWorld world) {
-			super(world, PLOUGH_PROFILE);
+			super(world.getServer(), world, PLOUGH_PROFILE, new PlayerInteractionManager(world)); // this should work?
 		}
 
 	}

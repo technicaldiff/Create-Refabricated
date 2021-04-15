@@ -12,6 +12,8 @@ import com.simibubi.create.foundation.utility.AnimationTickHolder;
 import com.simibubi.create.foundation.utility.NBTHelper;
 import com.simibubi.create.foundation.utility.VecHelper;
 
+import com.simibubi.create.lib.helper.DamageSourceHelper;
+
 import net.minecraft.block.BlockState;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.particles.ParticleTypes;
@@ -25,7 +27,7 @@ import net.minecraft.world.Explosion;
 
 public class CuckooClockTileEntity extends KineticTileEntity {
 
-	public static DamageSource CUCKOO_SURPRISE = new DamageSource("create.cuckoo_clock_explosion").setExplosion();
+	public static DamageSource CUCKOO_SURPRISE = DamageSourceHelper.createDamageSource("create.cuckoo_clock_explosion").setExplosion();
 
 	public InterpolatedChasingValue hourHand = new InterpolatedChasingValue().withSpeed(.2f);
 	public InterpolatedChasingValue minuteHand = new InterpolatedChasingValue().withSpeed(.2f);
@@ -41,7 +43,7 @@ public class CuckooClockTileEntity extends KineticTileEntity {
 		super(type);
 		animationType = Animation.NONE;
 	}
-	
+
 	@Override
 	protected void fromTag(BlockState state, CompoundNBT compound, boolean clientPacket) {
 		super.fromTag(state, compound, clientPacket);
@@ -51,7 +53,7 @@ public class CuckooClockTileEntity extends KineticTileEntity {
 			animationProgress.value = 0;
 		}
 	}
-	
+
 	@Override
 	public void write(CompoundNBT compound, boolean clientPacket) {
 		if (clientPacket && sendAnimationUpdate)
@@ -150,10 +152,10 @@ public class CuckooClockTileEntity extends KineticTileEntity {
 		animationProgress.lastValue = 0;
 		animationProgress.value = 0;
 		sendAnimationUpdate = true;
-		
+
 		if (animation == Animation.CREEPER)
 			AllTriggers.triggerForNearbyPlayers(AllTriggers.CUCKOO, world, pos, 10);
-		
+
 		sendData();
 	}
 

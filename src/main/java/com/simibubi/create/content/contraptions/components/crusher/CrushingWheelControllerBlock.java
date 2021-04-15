@@ -10,9 +10,12 @@ import com.simibubi.create.foundation.block.ITE;
 import com.simibubi.create.foundation.item.ItemHelper;
 import com.simibubi.create.foundation.utility.Iterate;
 
+import com.simibubi.create.lib.helper.EntityHelper;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.DirectionalBlock;
+import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -38,7 +41,7 @@ import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 
 public class CrushingWheelControllerBlock extends DirectionalBlock
-		implements ITE<CrushingWheelControllerTileEntity> {
+		implements ITE<CrushingWheelControllerTileEntity>, ITileEntityProvider {
 
 	public CrushingWheelControllerBlock(Properties p_i48440_1_) {
 		super(p_i48440_1_);
@@ -46,10 +49,10 @@ public class CrushingWheelControllerBlock extends DirectionalBlock
 
 	public static final BooleanProperty VALID = BooleanProperty.create("valid");
 
-	@Override
-	public boolean hasTileEntity(BlockState state) {
-		return true;
-	}
+//	@Override
+//	public boolean hasTileEntity(BlockState state) {
+//		return true;
+//	}
 
 	@Override
 	public boolean isReplaceable(BlockState state, BlockItemUseContext useContext) {
@@ -62,7 +65,7 @@ public class CrushingWheelControllerBlock extends DirectionalBlock
 	}
 
 	@Override
-	public TileEntity createTileEntity(BlockState state, IBlockReader world) {
+	public TileEntity createNewTileEntity(IBlockReader world) {
 		return AllTileEntities.CRUSHING_WHEEL_CONTROLLER.create();
 	}
 
@@ -98,7 +101,7 @@ public class CrushingWheelControllerBlock extends DirectionalBlock
 				return;
 			if (entityIn instanceof ItemEntity)
 				((ItemEntity) entityIn).setPickupDelay(10);
-			CompoundNBT data = entityIn.getPersistentData();
+			CompoundNBT data = EntityHelper.getExtraCustomData(entityIn);
 			if (data.contains("BypassCrushingWheel")) {
 				if (pos.equals(NBTUtil.readBlockPos(data.getCompound("BypassCrushingWheel"))))
 					return;
@@ -173,7 +176,7 @@ public class CrushingWheelControllerBlock extends DirectionalBlock
 		Entity entity = context.getEntity();
 		if (entity != null) {
 
-			CompoundNBT data = entity.getPersistentData();
+			CompoundNBT data = EntityHelper.getExtraCustomData(entity);
 			if (data.contains("BypassCrushingWheel")) {
 				if (pos.equals(NBTUtil.readBlockPos(data.getCompound("BypassCrushingWheel"))))
 					if (state.get(FACING) != Direction.UP) //Allow output items to land on top of the block rather than falling back through.
@@ -202,7 +205,7 @@ public class CrushingWheelControllerBlock extends DirectionalBlock
 	public Class<CrushingWheelControllerTileEntity> getTileEntityClass() {
 		return CrushingWheelControllerTileEntity.class;
 	}
-	
+
 	@Override
 	public boolean allowsMovement(BlockState state, IBlockReader reader, BlockPos pos, PathType type) {
 		return false;
