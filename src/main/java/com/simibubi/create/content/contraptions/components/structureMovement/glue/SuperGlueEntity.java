@@ -59,6 +59,13 @@ import net.minecraft.util.math.RayTraceResult.Type;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.common.util.FakePlayer;
+import net.minecraftforge.fml.DistExecutor;
+import net.minecraftforge.fml.common.registry.IEntityAdditionalSpawnData;
+import net.minecraftforge.fml.network.NetworkHooks;
+import net.minecraftforge.fml.network.PacketDistributor;
 
 public class SuperGlueEntity extends Entity implements IEntityAdditionalSpawnData, ISpecialEntityItemRequirement {
 
@@ -93,12 +100,12 @@ public class SuperGlueEntity extends Entity implements IEntityAdditionalSpawnDat
 		if (onValidSurface()) {
 			AllPackets.channel.send(PacketDistributor.TRACKING_ENTITY.with(() -> this),
 				new GlueEffectPacket(getHangingPosition(), getFacingDirection().getOpposite(), false));
-			playSound(AllSoundEvents.SLIME_ADDED.get(), 0.5F, 0.5F);
+			AllSoundEvents.SLIME_ADDED.playFrom(this, 0.5F, 0.5F);
 		}
 	}
 
 	public void playPlaceSound() {
-		playSound(AllSoundEvents.SLIME_ADDED.get(), 0.5F, 0.75F);
+		AllSoundEvents.SLIME_ADDED.playFrom(this, 0.5F, 0.75F);
 	}
 
 	protected void updateFacingWithBoundingBox() {
@@ -182,7 +189,8 @@ public class SuperGlueEntity extends Entity implements IEntityAdditionalSpawnDat
 		if (!isValidFace(world, pos2, getFacingDirection())
 			&& !isValidFace(world, pos, getFacingDirection().getOpposite()))
 			return false;
-		if (isSideSticky(world, pos2, getFacingDirection()) || isSideSticky(world, pos, getFacingDirection().getOpposite()))
+		if (isSideSticky(world, pos2, getFacingDirection())
+			|| isSideSticky(world, pos, getFacingDirection().getOpposite()))
 			return false;
 		return world.getEntitiesInAABBexcluding(this, getBoundingBox(), e -> e instanceof SuperGlueEntity)
 			.isEmpty();
@@ -224,7 +232,8 @@ public class SuperGlueEntity extends Entity implements IEntityAdditionalSpawnDat
 
 		if (state.getBlock() instanceof AbstractChassisBlock) {
 			BooleanProperty glueableSide = ((AbstractChassisBlock) state.getBlock()).getGlueableSide(state, direction);
-			if (glueableSide == null) return false;
+			if (glueableSide == null)
+				return false;
 			return state.get(glueableSide);
 		}
 
@@ -252,7 +261,13 @@ public class SuperGlueEntity extends Entity implements IEntityAdditionalSpawnDat
 	public boolean attackEntityFrom(DamageSource source, float amount) {
 		if (this.isInvulnerableTo(source))
 			return false;
-		if (isAlive() && !world.isRemote && isVisible()) {
+		Entity immediateSource = source.getImmediateSource();
+		if (!isVisible() && immediateSource instanceof PlayerEntity) {
+			if (!AllItems.SUPER_GLUE.isIn(((PlayerEntity) immediateSource).getHeldItemMainhand()))
+				return true;
+		}
+
+		if (isAlive() && !world.isRemote) {
 			remove();
 			markVelocityChanged();
 			onBroken(source.getTrueSource());
@@ -294,6 +309,8 @@ public class SuperGlueEntity extends Entity implements IEntityAdditionalSpawnDat
 
 	@Override
 	public ActionResultType processInitialInteract(PlayerEntity player, Hand hand) {
+		if (player instanceof FakePlayer)
+			return ActionResultType.PASS;
 		DistExecutor.unsafeRunWhenOn(EnvType.CLIENT, () -> () -> {
 			triggerPlaceBlock(player, hand);
 		});

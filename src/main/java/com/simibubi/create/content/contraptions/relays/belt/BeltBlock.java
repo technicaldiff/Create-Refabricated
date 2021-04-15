@@ -38,6 +38,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUseContext;
 import net.minecraft.loot.LootParameters;
 import net.minecraft.pathfinding.PathNodeType;
+import net.minecraft.pathfinding.PathType;
 import net.minecraft.state.BooleanProperty;
 import net.minecraft.state.EnumProperty;
 import net.minecraft.state.Property;
@@ -86,8 +87,7 @@ public class BeltBlock extends HorizontalKineticBlock implements ITE<BeltTileEnt
 
 	@Override
 	protected boolean areStatesKineticallyEquivalent(BlockState oldState, BlockState newState) {
-		return super.areStatesKineticallyEquivalent(oldState.with(CASING, false), newState.with(CASING, false))
-			&& oldState.get(PART) == newState.get(PART);
+		return super.areStatesKineticallyEquivalent(oldState, newState) && oldState.get(PART) == newState.get(PART);
 	}
 
 	@Override
@@ -378,7 +378,8 @@ public class BeltBlock extends HorizontalKineticBlock implements ITE<BeltTileEnt
 	public static void initBelt(World world, BlockPos pos) {
 		if (world.isRemote)
 			return;
-		if (world instanceof ServerWorld && ((ServerWorld) world).getChunkProvider().getChunkGenerator() instanceof DebugChunkGenerator)
+		if (world instanceof ServerWorld && ((ServerWorld) world).getChunkProvider()
+			.getChunkGenerator() instanceof DebugChunkGenerator)
 			return;
 
 		BlockState state = world.getBlockState(pos);
@@ -593,6 +594,11 @@ public class BeltBlock extends HorizontalKineticBlock implements ITE<BeltTileEnt
 		}
 
 		return rotate;
+	}
+	
+	@Override
+	public boolean allowsMovement(BlockState state, IBlockReader reader, BlockPos pos, PathType type) {
+		return false;
 	}
 
 }

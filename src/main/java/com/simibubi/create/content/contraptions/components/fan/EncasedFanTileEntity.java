@@ -55,7 +55,7 @@ public class EncasedFanTileEntity extends GeneratingKineticTileEntity implements
 
 	@Override
 	public float calculateAddedStressCapacity() {
-		return isGenerator ? super.calculateAddedStressCapacity() : 0;
+		return lastCapacityProvided = (isGenerator ? super.calculateAddedStressCapacity() : 0);
 	}
 
 	@Override

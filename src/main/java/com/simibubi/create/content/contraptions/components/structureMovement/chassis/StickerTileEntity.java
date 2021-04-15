@@ -90,8 +90,7 @@ public class StickerTileEntity extends SmartTileEntity implements IInstanceRende
 
 	@Environment(EnvType.CLIENT)
 	public void playSound(boolean attach) {
-		world.playSound(Minecraft.getInstance().player, pos, AllSoundEvents.SLIME_ADDED.get(), SoundCategory.BLOCKS,
-			0.35F, attach ? 0.75F : 0.2f);
+		AllSoundEvents.SLIME_ADDED.play(world, Minecraft.getInstance().player, pos, 0.35f, attach ? 0.75f : 0.2f);
 	}
 
 }

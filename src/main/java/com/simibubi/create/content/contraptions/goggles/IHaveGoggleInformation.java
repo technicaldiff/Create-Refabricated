@@ -35,7 +35,7 @@ public interface IHaveGoggleInformation {
 
 	static String format(double d) {
 		return numberFormat.get()
-			.format(d);
+			.format(d).replace("\u00A0", " ");
 	}
 
 	default boolean containedFluidTooltip(List<ITextComponent> tooltip, boolean isPlayerSneaking, LazyOptional<IFluidHandler> handler) {

@@ -21,7 +21,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.particles.ParticleTypes;
 import net.minecraft.util.Hand;
 import net.minecraft.util.HandSide;
-import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.vector.Vector3d;
@@ -89,9 +88,9 @@ public class ZapperRenderHandler {
 
 		cachedBeams.forEach(beam -> {
 			CreateClient.outliner.endChasingLine(beam, beam.start, beam.end, 1 - beam.itensity)
-			.disableNormals()
-			.colored(0xffffff)
-			.lineWidth(beam.itensity * 1 / 8f);
+				.disableNormals()
+				.colored(0xffffff)
+				.lineWidth(beam.itensity * 1 / 8f);
 		});
 
 		cachedBeams.forEach(b -> b.itensity *= .6f);
@@ -112,8 +111,8 @@ public class ZapperRenderHandler {
 
 	public static void playSound(Hand hand, BlockPos position) {
 		float pitch = hand == Hand.MAIN_HAND ? 2f : 0.9f;
-		Minecraft.getInstance().world.playSound(position, AllSoundEvents.BLOCKZAPPER_PLACE.get(), SoundCategory.BLOCKS,
-			0.8f, pitch, false);
+		Minecraft mc = Minecraft.getInstance();
+		AllSoundEvents.BLOCKZAPPER_PLACE.play(mc.world, mc.player, position, 0.8f, pitch);
 	}
 
 	public static void addBeam(LaserBeam beam) {

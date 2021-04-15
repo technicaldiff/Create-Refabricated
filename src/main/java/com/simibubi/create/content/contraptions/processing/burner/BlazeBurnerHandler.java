@@ -5,7 +5,6 @@ import com.simibubi.create.content.contraptions.processing.burner.BlazeBurnerTil
 
 import net.minecraft.entity.projectile.EggEntity;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.RayTraceResult;
@@ -47,7 +46,7 @@ public class BlazeBurnerHandler {
 			heater.updateBlockState();
 			heater.notifyUpdate();
 		}
-
+		// changed to AllSoundEvents.BLAZE_MUNCH.playOnServer(world, heater.getPos()); upstream
 		world.playSound(null, heater.getPos(), AllSoundEvents.BLAZE_MUNCH.get(), SoundCategory.BLOCKS, .5F, 1F);
 	}
 

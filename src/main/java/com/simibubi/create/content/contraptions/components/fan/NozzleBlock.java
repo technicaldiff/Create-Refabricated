@@ -12,6 +12,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.item.ItemUseContext;
+import net.minecraft.pathfinding.PathType;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Direction;
@@ -74,6 +75,11 @@ public class NozzleBlock extends ProperDirectionalBlock {
 		TileEntity te = worldIn.getTileEntity(pos.offset(towardsFan));
 		return te instanceof IAirCurrentSource
 				&& ((IAirCurrentSource) te).getAirflowOriginSide() == towardsFan.getOpposite();
+	}
+	
+	@Override
+	public boolean allowsMovement(BlockState state, IBlockReader reader, BlockPos pos, PathType type) {
+		return false;
 	}
 
 }

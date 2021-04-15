@@ -55,7 +55,6 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.Direction;
 import net.minecraft.util.Direction.AxisDirection;
-import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MutableBoundingBox;
@@ -404,7 +403,8 @@ public class SchematicannonTileEntity extends SmartTileEntity implements INamedC
 		ItemRequirement requirement;
 
 		if (entityMode) {
-			requirement = ItemRequirement.of(blockReader.getEntities().collect(Collectors.toList())
+			requirement = ItemRequirement.of(blockReader.getEntities()
+				.collect(Collectors.toList())
 				.get(printingEntityIndex));
 
 		} else {
@@ -454,7 +454,8 @@ public class SchematicannonTileEntity extends SmartTileEntity implements INamedC
 
 		ItemStack icon = requirement.isEmpty() || requiredItems.isEmpty() ? ItemStack.EMPTY : requiredItems.get(0);
 		if (entityMode)
-			launchEntity(target, icon, blockReader.getEntities().collect(Collectors.toList())
+			launchEntity(target, icon, blockReader.getEntities()
+				.collect(Collectors.toList())
 				.get(printingEntityIndex));
 		else if (AllBlocks.BELT.has(blockState)) {
 			TileEntity te = blockReader.getTileEntity(currentPos.add(schematicAnchor));
@@ -641,7 +642,8 @@ public class SchematicannonTileEntity extends SmartTileEntity implements INamedC
 	}
 
 	protected void advanceCurrentPos() {
-		List<Entity> entities = blockReader.getEntities().collect(Collectors.toList());
+		List<Entity> entities = blockReader.getEntities()
+			.collect(Collectors.toList());
 		if (printingEntityIndex != -1) {
 			printingEntityIndex++;
 
@@ -687,8 +689,7 @@ public class SchematicannonTileEntity extends SmartTileEntity implements INamedC
 		statusMsg = "finished";
 		resetPrinter();
 		target = getPos().add(1, 0, 0);
-		world.playSound(null, pos.getX(), pos.getY(), pos.getZ(), AllSoundEvents.SCHEMATICANNON_FINISH.get(),
-			SoundCategory.BLOCKS, 1, .7f);
+		AllSoundEvents.SCHEMATICANNON_FINISH.playOnServer(world, pos);
 		sendUpdate = true;
 	}
 
@@ -870,8 +871,7 @@ public class SchematicannonTileEntity extends SmartTileEntity implements INamedC
 	}
 
 	public void playFiringSound() {
-		world.playSound(null, pos.getX(), pos.getY(), pos.getZ(), AllSoundEvents.SCHEMATICANNON_LAUNCH_BLOCK.get(),
-			SoundCategory.BLOCKS, .1f, 1.1f);
+		AllSoundEvents.SCHEMATICANNON_LAUNCH_BLOCK.playOnServer(world, pos);
 	}
 
 	public void sendToContainer(PacketBuffer buffer) {
@@ -914,14 +914,15 @@ public class SchematicannonTileEntity extends SmartTileEntity implements INamedC
 				checklist.require(requirement);
 				blocksToPlace++;
 			}
-			blockReader.getEntities().forEach(entity -> {
-				ItemRequirement requirement = ItemRequirement.of(entity);
-				if (requirement.isEmpty())
-					return;
-				if (requirement.isInvalid())
-					return;
-				checklist.require(requirement);
-			});
+			blockReader.getEntities()
+				.forEach(entity -> {
+					ItemRequirement requirement = ItemRequirement.of(entity);
+					if (requirement.isEmpty())
+						return;
+					if (requirement.isInvalid())
+						return;
+					checklist.require(requirement);
+				});
 
 		}
 		checklist.gathered.clear();
