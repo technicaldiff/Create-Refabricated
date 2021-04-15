@@ -41,7 +41,6 @@ import net.minecraft.world.gen.feature.Feature;
 import net.minecraft.world.gen.placement.Placement;
 import net.fabricmc.api.EnvType;
 
-@Mod(Create.ID)
 public class Create {
 
 	public static final String ID = "create";

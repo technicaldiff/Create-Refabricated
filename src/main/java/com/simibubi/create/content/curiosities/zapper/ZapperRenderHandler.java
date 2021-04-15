@@ -27,7 +27,6 @@ import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.util.math.vector.Vector3f;
 import net.fabricmc.api.EnvType;
 
-@EventBusSubscriber(value = EnvType.CLIENT)
 public class ZapperRenderHandler {
 
 	public static List<LaserBeam> cachedBeams;

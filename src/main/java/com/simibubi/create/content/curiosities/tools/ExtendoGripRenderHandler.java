@@ -19,7 +19,6 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.HandSide;
 import net.minecraft.util.math.MathHelper;
 
-@EventBusSubscriber(value = EnvType.CLIENT)
 public class ExtendoGripRenderHandler {
 
 	public static float mainHandAnimation;

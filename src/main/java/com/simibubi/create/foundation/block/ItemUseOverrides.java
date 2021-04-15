@@ -12,7 +12,6 @@ import net.minecraft.util.ActionResultType;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockRayTraceResult;
 
-@Mod.EventBusSubscriber
 public class ItemUseOverrides {
 
 	private static final Set<ResourceLocation> overrides = new HashSet<>();

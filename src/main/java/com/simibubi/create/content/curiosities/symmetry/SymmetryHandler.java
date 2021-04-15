@@ -28,7 +28,6 @@ import net.minecraft.util.math.vector.Vector3d;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 
-@EventBusSubscriber(bus = Bus.FORGE)
 public class SymmetryHandler {
 
 	private static int tickCounter = 0;

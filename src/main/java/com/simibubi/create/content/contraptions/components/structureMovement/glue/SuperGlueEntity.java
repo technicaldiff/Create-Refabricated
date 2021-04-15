@@ -2,6 +2,8 @@ package com.simibubi.create.content.contraptions.components.structureMovement.gl
 
 import javax.annotation.Nullable;
 
+import com.simibubi.create.lib.entity.ExtraSpawnDataEntity;
+
 import org.apache.commons.lang3.Validate;
 
 import com.simibubi.create.AllBlocks;
@@ -67,7 +69,7 @@ import net.minecraftforge.fml.common.registry.IEntityAdditionalSpawnData;
 import net.minecraftforge.fml.network.NetworkHooks;
 import net.minecraftforge.fml.network.PacketDistributor;
 
-public class SuperGlueEntity extends Entity implements IEntityAdditionalSpawnData, ISpecialEntityItemRequirement {
+public class SuperGlueEntity extends Entity implements ExtraSpawnDataEntity, ISpecialEntityItemRequirement {
 
 	private int validationTimer;
 	protected BlockPos hangingPosition;

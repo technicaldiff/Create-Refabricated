@@ -28,7 +28,6 @@ import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 import net.fabricmc.api.EnvType;
 
-@EventBusSubscriber(value = EnvType.CLIENT)
 public class ArmInteractionPointHandler {
 
 	static List<ArmInteractionPoint> currentSelection = new ArrayList<>();

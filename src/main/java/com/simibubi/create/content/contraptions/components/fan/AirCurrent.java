@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import com.simibubi.create.lib.helper.DamageSourceHelper;
+import com.simibubi.create.lib.helper.ServerPlayNetHandlerHelper;
+
 import org.apache.commons.lang3.tuple.Pair;
 
 import com.simibubi.create.AllTags;
@@ -42,10 +45,8 @@ import net.minecraft.world.World;
 
 public class AirCurrent {
 
-	private static final DamageSource damageSourceFire = new DamageSource("create.fan_fire").setDifficultyScaled()
-		.setFireDamage();
-	private static final DamageSource damageSourceLava = new DamageSource("create.fan_lava").setDifficultyScaled()
-		.setFireDamage();
+	private static final DamageSource damageSourceFire = DamageSourceHelper.createDamageSource("create.fan_fire").setDifficultyScaled();
+	private static final DamageSource damageSourceLava = DamageSourceHelper.createFireDamageSource("create.fan_lava").setDifficultyScaled();
 
 	public final IAirCurrentSource source;
 	public AxisAlignedBB bounds = new AxisAlignedBB(0, 0, 0, 0, 0, 0);
@@ -110,7 +111,7 @@ public class AirCurrent {
 			entity.fallDistance = 0;
 
 			if (entity instanceof ServerPlayerEntity)
-				((ServerPlayerEntity) entity).connection.floatingTickCount = 0;
+				ServerPlayNetHandlerHelper.setFloatingTickCount(((ServerPlayerEntity) entity).connection, 0);
 
 			entityDistance -= .5f;
 			InWorldProcessing.Type processingType = getSegmentAt((float) entityDistance);

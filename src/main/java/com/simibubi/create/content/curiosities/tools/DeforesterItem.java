@@ -24,7 +24,6 @@ import net.minecraft.world.World;
 
 @ParametersAreNonnullByDefault
 @MethodsReturnNonnullByDefault
-@EventBusSubscriber(bus = Bus.FORGE)
 public class DeforesterItem extends AxeItem {
 	private static boolean deforesting = false; // required as to not run into "recursions" over forge events on tree cutting
 

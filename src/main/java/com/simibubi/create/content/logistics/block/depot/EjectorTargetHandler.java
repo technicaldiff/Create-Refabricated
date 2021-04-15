@@ -33,7 +33,6 @@ import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.fabricmc.api.EnvType;
 
-@EventBusSubscriber(value = EnvType.CLIENT)
 public class EjectorTargetHandler {
 
 	static BlockPos currentSelection;

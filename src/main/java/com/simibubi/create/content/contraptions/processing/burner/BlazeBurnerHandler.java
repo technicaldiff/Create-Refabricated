@@ -11,7 +11,6 @@ import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
 
-@Mod.EventBusSubscriber
 public class BlazeBurnerHandler {
 
 	public static void thrownEggsGetEatenByBurner(ProjectileImpactEvent.Throwable event) {

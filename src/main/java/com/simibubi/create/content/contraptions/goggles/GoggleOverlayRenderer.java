@@ -35,7 +35,6 @@ import net.minecraft.util.text.ITextProperties;
 import net.minecraft.util.text.StringTextComponent;
 import net.fabricmc.api.EnvType;
 
-@EventBusSubscriber(value = EnvType.CLIENT)
 public class GoggleOverlayRenderer {
 
 	private static final Map<Object, OutlineEntry> outlines = CreateClient.outliner.getOutlines();
@@ -154,10 +153,10 @@ public class GoggleOverlayRenderer {
 
 		int posX = tooltipScreen.width / 2 + AllConfigs.CLIENT.overlayOffsetX.get();
 		int posY = tooltipScreen.height / 2 + AllConfigs.CLIENT.overlayOffsetY.get();
-		
+
 		posX = Math.min(posX, tooltipScreen.width - tooltipTextWidth - 20);
 		posY = Math.min(posY, tooltipScreen.height - tooltipHeight - 20);
-		
+
 		tooltipScreen.renderTooltip(ms, tooltip, posX, posY);
 
 		ItemStack item = AllItems.GOGGLES.asStack();

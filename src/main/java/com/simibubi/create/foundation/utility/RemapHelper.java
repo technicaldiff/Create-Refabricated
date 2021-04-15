@@ -63,7 +63,6 @@ import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
 
-@Mod.EventBusSubscriber
 public class RemapHelper {
 	private static final Map<String, ResourceLocation> reMap = new HashMap<>();
 

@@ -8,6 +8,8 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.UUID;
 
+import com.simibubi.create.lib.entity.ExtraSpawnDataEntity;
+
 import org.apache.commons.lang3.mutable.MutableInt;
 import org.apache.commons.lang3.tuple.MutablePair;
 
@@ -53,7 +55,7 @@ import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
 import net.minecraft.world.gen.feature.template.Template.BlockInfo;
 
-public abstract class AbstractContraptionEntity extends Entity implements IEntityAdditionalSpawnData {
+public abstract class AbstractContraptionEntity extends Entity implements ExtraSpawnDataEntity {
 
 	private static final DataParameter<Boolean> STALLED =
 		EntityDataManager.createKey(AbstractContraptionEntity.class, DataSerializers.BOOLEAN);
@@ -430,7 +432,7 @@ public abstract class AbstractContraptionEntity extends Entity implements IEntit
 	protected void readAdditional(CompoundNBT compound, boolean spawnData) {
 		if (compound.isEmpty())
 			return;
-		
+
 		initialized = compound.getBoolean("Initialized");
 		contraption = Contraption.fromNBT(world, compound.getCompound("Contraption"), spawnData);
 		contraption.entity = this;

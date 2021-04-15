@@ -34,7 +34,6 @@ import net.minecraft.util.math.vector.Vector3f;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 
-@Mod.EventBusSubscriber
 public class PlacementHelpers {
 
 	private static final List<IPlacementHelper> helpers = new ArrayList<>();

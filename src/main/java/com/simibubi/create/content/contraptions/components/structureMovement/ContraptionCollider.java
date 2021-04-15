@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
 
+import com.simibubi.create.lib.helper.ServerPlayNetHandlerHelper;
+
 import org.apache.commons.lang3.mutable.MutableBoolean;
 import org.apache.commons.lang3.mutable.MutableFloat;
 import org.apache.commons.lang3.mutable.MutableInt;
@@ -85,7 +87,7 @@ public class ContraptionCollider {
 				continue;
 
 			if (playerType == PlayerType.SERVER && entity instanceof ServerPlayerEntity) {
-				((ServerPlayerEntity) entity).connection.floatingTickCount = 0;
+				ServerPlayNetHandlerHelper.setFloatingTickCount(((ServerPlayerEntity) entity).connection, 0);
 				continue;
 			}
 
@@ -313,7 +315,7 @@ public class ContraptionCollider {
 				boolean canWalk = bounce != 0 || slide == 0;
 				if (canWalk || !rotation.hasVerticalRotation()) {
 					if (canWalk)
-						entity.onGround = true;
+						entity.setOnGround(true);
 					if (entity instanceof ItemEntity)
 						entityMotion = entityMotion.mul(.5f, 1, .5f);
 				}
