@@ -17,5 +17,9 @@ public final class DamageSourceHelper {
 		return MixinHelper.<DamageSourceAccessor>cast(createDamageSource(string)).create$setDamageBypassesArmor();
 	}
 
+	public static DamageSource createFireDamageSource(String string) {
+		return MixinHelper.<DamageSourceAccessor>cast(createDamageSource(string)).create$setFireDamage();
+	}
+
 	private DamageSourceHelper() {}
 }

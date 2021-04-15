@@ -12,6 +12,7 @@ import com.simibubi.create.foundation.utility.Iterate;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.client.particle.ParticleManager;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.ItemEntity;
@@ -32,16 +33,16 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraftforge.common.util.LazyOptional;
 
-public abstract class AbstractChuteBlock extends Block implements IWrenchable, ITE<ChuteTileEntity> {
+public abstract class AbstractChuteBlock extends Block implements IWrenchable, ITE<ChuteTileEntity>, ITileEntityProvider {
 
 	public AbstractChuteBlock(Properties p_i48440_1_) {
 		super(p_i48440_1_);
 	}
 
-	@Override
-	public boolean hasTileEntity(BlockState state) {
-		return true;
-	}
+//	@Override
+//	public boolean hasTileEntity(BlockState state) {
+//		return true;
+//	}
 
 	public static boolean isChute(BlockState state) {
 		return state.getBlock() instanceof AbstractChuteBlock;
@@ -73,7 +74,7 @@ public abstract class AbstractChuteBlock extends Block implements IWrenchable, I
 	}
 
 	@Override
-	public abstract TileEntity createTileEntity(BlockState state, IBlockReader world);
+	public abstract TileEntity createNewTileEntity(IBlockReader world);
 
 	@Override
 	public void onLanded(IBlockReader worldIn, Entity entityIn) {
@@ -128,7 +129,7 @@ public abstract class AbstractChuteBlock extends Block implements IWrenchable, I
 	@Override
 	public void onReplaced(BlockState state, World world, BlockPos pos, BlockState p_196243_4_, boolean p_196243_5_) {
 		boolean differentBlock = state.getBlock() != p_196243_4_.getBlock();
-		if (state.getBlock().hasTileEntity() && (differentBlock || !p_196243_4_.getBlock().hasTileEntity())) {
+		if (state.getBlock() instanceof ITileEntityProvider && (differentBlock || !(p_196243_4_.getBlock() instanceof ITileEntityProvider))) {
 			TileEntityBehaviour.destroy(world, pos, FilteringBehaviour.TYPE);
 			withTileEntityDo(world, pos, c -> c.onRemoved(state));
 			world.removeTileEntity(pos);

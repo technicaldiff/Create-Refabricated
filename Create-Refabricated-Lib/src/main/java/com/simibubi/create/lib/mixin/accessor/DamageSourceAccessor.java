@@ -9,6 +9,9 @@ import org.spongepowered.asm.mixin.gen.Invoker;
 @Mixin(DamageSource.class)
 public interface DamageSourceAccessor {
 
+	@Invoker("setFireDamage")
+	DamageSource create$setFireDamage();
+
 	@Invoker("setDamageBypassesArmor")
 	DamageSource create$setDamageBypassesArmor();
 
