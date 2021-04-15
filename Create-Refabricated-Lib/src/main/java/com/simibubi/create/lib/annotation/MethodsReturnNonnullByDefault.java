@@ -25,7 +25,7 @@ import javax.annotation.meta.TypeQualifierDefault;
  */
 @Documented
 @Nullable
-@TypeQualifierDefault(ElementType.PARAMETER)
+@TypeQualifierDefault(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)
 public @interface MethodsReturnNonnullByDefault {
 }
