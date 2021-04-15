@@ -40,8 +40,6 @@ import com.simibubi.create.foundation.utility.NBTHelper;
 import com.simibubi.create.foundation.utility.VecHelper;
 import com.simibubi.create.lib.utility.Constants.NBT;
 
-import net.minecraftforge.items.ItemStackHandler;
-import net.minecraftforge.items.wrapper.RecipeWrapper;
 
 public class MechanicalPressTileEntity extends BasinOperatingTileEntity {
 

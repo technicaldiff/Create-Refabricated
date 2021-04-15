@@ -31,15 +31,6 @@ import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
 import net.minecraft.world.chunk.Chunk;
 
-import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.capabilities.CapabilityInject;
-import net.minecraftforge.common.capabilities.CapabilityManager;
-import net.minecraftforge.common.capabilities.ICapabilitySerializable;
-import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.common.util.NonNullConsumer;
-import net.minecraftforge.event.AttachCapabilitiesEvent;
-import net.minecraftforge.event.entity.player.PlayerEvent;
-import net.minecraftforge.event.world.ChunkEvent;
 
 public class CapabilityMinecartController implements ICapabilitySerializable<CompoundNBT> {
 
@@ -101,16 +92,16 @@ public class CapabilityMinecartController implements ICapabilitySerializable<Com
 
 		for (AbstractMinecartEntity cart : queued) {
 			UUID uniqueID = cart.getUniqueID();
-			
+
 			if (world.isRemote && carts.containsKey(uniqueID)) {
 				MinecartController minecartController = carts.get(uniqueID);
 				if (minecartController != null) {
 					AbstractMinecartEntity minecartEntity = minecartController.cart();
-					if (minecartEntity != null && minecartEntity.getEntityId() != cart.getEntityId()) 
+					if (minecartEntity != null && minecartEntity.getEntityId() != cart.getEntityId())
 						continue; // Away with you, Fake Entities!
 				}
 			}
-			
+
 			cartsWithCoupling.remove(uniqueID);
 
 			LazyOptional<MinecartController> capability = cart.getCapability(MINECART_CONTROLLER_CAPABILITY);

@@ -12,9 +12,6 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.capability.IFluidHandler;
 
 /*
 * Implement this Interface in the TileEntity class that wants to add info to the screen
@@ -80,7 +77,7 @@ public interface IHaveGoggleInformation {
 				tooltip.remove(tooltip.size() - 1);
 			return true;
 		}
-		
+
 		if (!isEmpty)
 			return true;
 

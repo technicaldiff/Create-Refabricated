@@ -19,10 +19,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
-import net.minecraftforge.event.world.BlockEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
 
 
 @ParametersAreNonnullByDefault
@@ -49,7 +45,6 @@ public class DeforesterItem extends AxeItem {
 		deforesting = false;
 	}
 
-	@SubscribeEvent
 	public static void onBlockDestroyed(BlockEvent.BreakEvent event) {
 		ItemStack heldItemMainhand = event.getPlayer().getHeldItemMainhand();
 		if (!AllItems.DEFORESTER.isIn(heldItemMainhand))

@@ -33,18 +33,13 @@ import net.minecraft.util.Direction;
 import net.minecraft.util.Direction.Axis;
 import net.minecraft.util.Direction.AxisDirection;
 import net.fabricmc.api.EnvType;
-import net.minecraftforge.common.capabilities.Capability;
 import com.simibubi.create.lib.utility.Constants.NBT;
-import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.fml.DistExecutor;
-import net.minecraftforge.items.CapabilityItemHandler;
-import net.minecraftforge.items.IItemHandler;
 
 public class BeltTunnelTileEntity extends SmartTileEntity implements IInstanceRendered {
 
 	public Map<Direction, InterpolatedChasingValue> flaps;
 	public Set<Direction> sides;
-	
+
 	protected LazyOptional<IItemHandler> cap = LazyOptional.empty();
 	protected List<Pair<Direction, Boolean>> flapsToSend;
 
@@ -67,12 +62,12 @@ public class BeltTunnelTileEntity extends SmartTileEntity implements IInstanceRe
 		for (Direction direction : flaps.keySet())
 			flapsNBT.add(IntNBT.of(direction.getIndex()));
 		compound.put("Flaps", flapsNBT);
-		
+
 		ListNBT sidesNBT = new ListNBT();
 		for (Direction direction : sides)
 			sidesNBT.add(IntNBT.of(direction.getIndex()));
 		compound.put("Sides", sidesNBT);
-		
+
 		super.write(compound, clientPacket);
 	}
 
@@ -83,7 +78,7 @@ public class BeltTunnelTileEntity extends SmartTileEntity implements IInstanceRe
 		for (INBT inbt : flapsNBT)
 			if (inbt instanceof IntNBT)
 				newFlaps.add(Direction.byIndex(((IntNBT) inbt).getInt()));
-		
+
 		sides.clear();
 		ListNBT sidesNBT = compound.getList("Sides", NBT.TAG_INT);
 		for (INBT inbt : sidesNBT)
@@ -97,7 +92,7 @@ public class BeltTunnelTileEntity extends SmartTileEntity implements IInstanceRe
 				flaps.put(d, new InterpolatedChasingValue().start(.25f)
 					.target(0)
 					.withSpeed(.05f));
-		
+
 		// Backwards compat
 		if (!compound.contains("Sides") && compound.contains("Flaps"))
 			sides.addAll(flaps.keySet());
@@ -122,9 +117,9 @@ public class BeltTunnelTileEntity extends SmartTileEntity implements IInstanceRe
 				if (!positive && shape == Shape.T_RIGHT)
 					continue;
 			}
-			
+
 			sides.add(direction);
-			
+
 			// Flap might be occluded
 			BlockState nextState = world.getBlockState(pos.offset(direction));
 			if (nextState.getBlock() instanceof BeltTunnelBlock)
@@ -179,7 +174,7 @@ public class BeltTunnelTileEntity extends SmartTileEntity implements IInstanceRe
 	public boolean shouldRenderAsTE() {
 		return true;
 	}
-	
+
 	@Override
 	public void addBehaviours(List<TileEntityBehaviour> behaviours) {}
 

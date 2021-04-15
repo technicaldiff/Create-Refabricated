@@ -16,7 +16,6 @@ import net.minecraft.item.Item;
 import net.minecraft.tags.ITag;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.util.IItemProvider;
-import net.minecraftforge.common.Tags;
 
 public abstract class CreateRecipeProvider extends RecipeProvider {
 
@@ -50,7 +49,7 @@ public abstract class CreateRecipeProvider extends RecipeProvider {
 		static ITag.INamedTag<Item> redstone() {
 			return Tags.Items.DUSTS_REDSTONE;
 		}
-		
+
 		static ITag.INamedTag<Item> planks() {
 			return ItemTags.PLANKS;
 		}
@@ -134,7 +133,7 @@ public abstract class CreateRecipeProvider extends RecipeProvider {
 		static ITag.INamedTag<Item> copperSheet() {
 			return AllTags.forgeItemTag("plates/copper");
 		}
-		
+
 		static ITag.INamedTag<Item> copperNugget() {
 			return AllTags.forgeItemTag("nuggets/copper");
 		}

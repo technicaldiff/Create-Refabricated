@@ -18,8 +18,6 @@ import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
 import com.simibubi.create.lib.utility.Constants.NBT;
-import net.minecraftforge.items.ItemStackHandler;
-import net.minecraftforge.items.SlotItemHandler;
 
 public class AttributeFilterContainer extends AbstractFilterContainer {
 

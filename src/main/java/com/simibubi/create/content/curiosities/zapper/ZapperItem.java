@@ -46,8 +46,6 @@ import com.simibubi.create.foundation.utility.Lang;
 import com.simibubi.create.foundation.utility.NBTProcessors;
 import com.simibubi.create.lib.utility.Constants.NBT;
 
-import net.minecraftforge.fml.DistExecutor;
-import net.minecraftforge.fml.network.PacketDistributor;
 
 public abstract class ZapperItem extends Item {
 

@@ -33,16 +33,7 @@ import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraftforge.common.util.FakePlayer;
-import net.minecraftforge.event.entity.EntityEvent;
-import net.minecraftforge.event.entity.living.LivingDropsEvent;
-import net.minecraftforge.event.entity.living.LivingExperienceDropEvent;
-import net.minecraftforge.event.entity.living.LivingSetAttackTargetEvent;
-import net.minecraftforge.eventbus.api.EventPriority;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 
-@EventBusSubscriber
 public class DeployerFakePlayer extends FakePlayer {
 
 	private static final NetworkManager NETWORK_MANAGER = new NetworkManager(PacketDirection.CLIENTBOUND);
@@ -93,7 +84,6 @@ public class DeployerFakePlayer extends FakePlayer {
 		return stack;
 	}
 
-	@SubscribeEvent
 	public static void deployerHasEyesOnHisFeet(EntityEvent.Size event) {
 		if (event.getEntity() instanceof DeployerFakePlayer)
 			event.setNewEyeHeight(0);
@@ -123,13 +113,11 @@ public class DeployerFakePlayer extends FakePlayer {
 		super.remove(keepData);
 	}
 
-	@SubscribeEvent
 	public static void deployerKillsDoNotSpawnXP(LivingExperienceDropEvent event) {
 		if (event.getAttackingPlayer() instanceof DeployerFakePlayer)
 			event.setCanceled(true);
 	}
 
-	@SubscribeEvent
 	public static void entitiesDontRetaliate(LivingSetAttackTargetEvent event) {
 		if (!(event.getTarget() instanceof DeployerFakePlayer))
 			return;

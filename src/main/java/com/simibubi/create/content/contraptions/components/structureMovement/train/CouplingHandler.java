@@ -22,16 +22,9 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Hand;
 import net.minecraft.world.World;
-import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.event.entity.EntityMountEvent;
-import net.minecraftforge.eventbus.api.Event.Result;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 
-@EventBusSubscriber
 public class CouplingHandler {
 
-	@SubscribeEvent
 	public static void preventEntitiesFromMoutingOccupiedCart(EntityMountEvent event) {
 		Entity e = event.getEntityBeingMounted();
 		LazyOptional<MinecartController> optional = e.getCapability(CapabilityMinecartController.MINECART_CONTROLLER_CAPABILITY);
@@ -45,7 +38,7 @@ public class CouplingHandler {
 			event.setResult(Result.DENY);
 		}
 	}
-	
+
 	public static void forEachLoadedCoupling(World world, Consumer<Couple<MinecartController>> consumer) {
 		if (world == null)
 			return;
@@ -83,13 +76,13 @@ public class CouplingHandler {
 		int distanceTo = (int) entity1.getPositionVec()
 			.distanceTo(entity2.getPositionVec());
 		boolean contraptionCoupling = player == null;
-		
+
 		if (distanceTo < 2) {
 			if (contraptionCoupling)
 				return false; // dont allow train contraptions with <2 distance
 			distanceTo = 2;
 		}
-		
+
 		if (distanceTo > AllConfigs.SERVER.kinetics.maxCartCouplingLength.get()) {
 			status(player, tooFar);
 			return false;

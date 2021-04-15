@@ -16,9 +16,6 @@ import com.simibubi.create.foundation.utility.animation.LerpedFloat.Chaser;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.ListNBT;
 import com.simibubi.create.lib.utility.Constants.NBT;
-import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.capability.IFluidHandler;
 
 public class SmartFluidTankBehaviour extends TileEntityBehaviour {
 
@@ -102,7 +99,7 @@ public class SmartFluidTankBehaviour extends TileEntityBehaviour {
 
 		if (syncCooldown > 0) {
 			syncCooldown--;
-			if (syncCooldown == 0 && queuedSync) 
+			if (syncCooldown == 0 && queuedSync)
 				updateFluids();
 		}
 
@@ -203,7 +200,7 @@ public class SmartFluidTankBehaviour extends TileEntityBehaviour {
 				return 0;
 			return super.fill(resource, action);
 		}
-		
+
 		public int forceFill(FluidStack resource, FluidAction action) {
 			return super.fill(resource, action);
 		}
@@ -272,7 +269,7 @@ public class SmartFluidTankBehaviour extends TileEntityBehaviour {
 				.isEmpty())
 				renderedFluid = tank.getFluid();
 		}
-		
+
 		public boolean isEmpty(float partialTicks) {
 			FluidStack renderedFluid = getRenderedFluid();
 			if (renderedFluid.isEmpty())

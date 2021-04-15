@@ -19,7 +19,6 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraftforge.items.ItemHandlerHelper;
 
 public class BeltTunnelInteractionHandler {
 
@@ -44,7 +43,7 @@ public class BeltTunnelInteractionHandler {
 		boolean onServer = !world.isRemote || beltInventory.belt.isVirtual();
 		boolean removed = false;
 		BeltTunnelTileEntity nextTunnel = getTunnelOnSegement(beltInventory, upcomingSegment);
-		
+
 		if (nextTunnel instanceof BrassTunnelTileEntity) {
 			BrassTunnelTileEntity brassTunnel = (BrassTunnelTileEntity) nextTunnel;
 			if (brassTunnel.hasDistributionBehaviour()) {
@@ -80,13 +79,13 @@ public class BeltTunnelInteractionHandler {
 						continue;
 					if (!behaviour.canInsertFromSide(d))
 						continue;
-					
+
 					ItemStack toinsert = ItemHandlerHelper.copyStackWithSize(current.stack, 1);
 					if (!behaviour.handleInsertion(toinsert, d, false).isEmpty())
 						return true;
-					if (onServer) 
+					if (onServer)
 						flapTunnel(beltInventory, upcomingSegment, d, false);
-					
+
 					current.stack.shrink(1);
 					beltInventory.belt.sendData();
 					if (current.stack.getCount() <= 1)

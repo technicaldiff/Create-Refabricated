@@ -11,7 +11,6 @@ import com.simibubi.create.foundation.utility.animation.LerpedFloat;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.audio.SoundHandler;
 import net.minecraft.client.gui.FontRenderer;
-import net.minecraftforge.fml.client.gui.GuiUtils;
 
 public class PonderProgressBar extends AbstractSimiWidget {
 

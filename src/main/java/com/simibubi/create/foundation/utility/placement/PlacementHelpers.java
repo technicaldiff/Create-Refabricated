@@ -33,9 +33,6 @@ import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.util.math.vector.Vector3f;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraftforge.client.event.RenderGameOverlayEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
 
 @Mod.EventBusSubscriber
 public class PlacementHelpers {
@@ -143,7 +140,6 @@ public class PlacementHelpers {
 			lastTarget = target;
 	}
 
-	@SubscribeEvent
 	@Environment(EnvType.CLIENT)
 	public static void onRender(RenderGameOverlayEvent.Pre event) {
 		if (event.getType() != RenderGameOverlayEvent.ElementType.CROSSHAIRS)

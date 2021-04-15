@@ -22,10 +22,6 @@ import com.simibubi.create.foundation.utility.Pair;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.capability.IFluidHandler;
-import net.minecraftforge.fluids.capability.IFluidHandler.FluidAction;
 
 public class FluidNetwork {
 
@@ -90,7 +86,7 @@ public class FluidNetwork {
 
 				if (!pipeConnection.hasFlow())
 					continue;
-				
+
 				Flow flow = pipeConnection.flow.get();
 				if (!fluid.isEmpty() && !flow.fluid.isFluidEqual(fluid)) {
 					iterator.remove();
@@ -103,7 +99,7 @@ public class FluidNetwork {
 				}
 				if (!flow.complete)
 					continue;
-				
+
 				if (fluid.isEmpty())
 					fluid = flow.fluid;
 
@@ -179,7 +175,7 @@ public class FluidNetwork {
 			IFluidHandler handler = source.orElse(null);
 			if (handler == null)
 				return;
-			
+
 			FluidStack transfer = FluidStack.EMPTY;
 			for (int i = 0; i < handler.getTanks(); i++) {
 				FluidStack contained = handler.getFluidInTank(i);
@@ -190,13 +186,13 @@ public class FluidNetwork {
 				FluidStack toExtract = FluidHelper.copyStackWithAmount(contained, flowSpeed);
 				transfer = handler.drain(toExtract, action);
 			}
-			
+
 			if (transfer.isEmpty()) {
 				FluidStack genericExtract = handler.drain(flowSpeed, action);
 				if (!genericExtract.isEmpty() && genericExtract.isFluidEqual(fluid))
 					transfer = genericExtract;
 			}
-				
+
 			if (transfer.isEmpty())
 				return;
 

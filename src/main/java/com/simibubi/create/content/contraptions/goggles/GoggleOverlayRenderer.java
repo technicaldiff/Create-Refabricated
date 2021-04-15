@@ -33,17 +33,12 @@ import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.fabricmc.api.EnvType;
-import net.minecraftforge.client.event.RenderGameOverlayEvent;
-import net.minecraftforge.client.event.RenderGameOverlayEvent.ElementType;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 
 @EventBusSubscriber(value = EnvType.CLIENT)
 public class GoggleOverlayRenderer {
 
 	private static final Map<Object, OutlineEntry> outlines = CreateClient.outliner.getOutlines();
 
-	@SubscribeEvent
 	public static void lookingAtBlocksThroughGogglesShowsTooltip(RenderGameOverlayEvent.Post event) {
 		MatrixStack ms = event.getMatrixStack();
 		if (event.getType() != ElementType.HOTBAR)

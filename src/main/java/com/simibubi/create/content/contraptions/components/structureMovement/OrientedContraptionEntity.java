@@ -43,7 +43,6 @@ import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraftforge.common.util.LazyOptional;
 
 /**
  * Ex: Minecarts, Couplings <br>

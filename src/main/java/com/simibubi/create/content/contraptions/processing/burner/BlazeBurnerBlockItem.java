@@ -34,7 +34,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
 import net.minecraft.world.spawner.AbstractSpawner;
-import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 
 @MethodsReturnNonnullByDefault
 @ParametersAreNonnullByDefault
@@ -49,7 +48,7 @@ public class BlazeBurnerBlockItem extends BlockItem {
 	public static BlazeBurnerBlockItem withBlaze(Block block, Properties properties) {
 		return new BlazeBurnerBlockItem(block, properties, true);
 	}
-	
+
 	@Override
 	public void addToBlockToItemMap(Map<Block, Item> p_195946_1_, Item p_195946_2_) {
 		if (!hasCapturedBlaze())

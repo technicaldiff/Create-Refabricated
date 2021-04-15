@@ -44,9 +44,6 @@ import com.simibubi.create.foundation.utility.NBTHelper;
 import com.simibubi.create.foundation.utility.NBTProcessors;
 import com.simibubi.create.lib.utility.Constants.NBT;
 
-import net.minecraftforge.common.util.BlockSnapshot;
-import net.minecraftforge.event.ForgeEventFactory;
-import net.minecraftforge.items.IItemHandler;
 
 public class DeployerMovementBehaviour extends MovementBehaviour {
 
@@ -115,7 +112,7 @@ public class DeployerMovementBehaviour extends MovementBehaviour {
 
 		List<ItemStack> requiredItems = requirement.getRequiredItems();
 		ItemStack firstRequired = requiredItems.isEmpty() ? ItemStack.EMPTY : requiredItems.get(0);
-		
+
 		if (!context.contraption.hasUniversalCreativeCrate) {
 			IItemHandler iItemHandler = context.contraption.inventory;
 			for (ItemStack required : requiredItems) {

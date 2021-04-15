@@ -4,7 +4,6 @@ import java.util.function.Consumer;
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
-import net.minecraftforge.items.ItemStackHandler;
 
 public class ProcessingInventory extends ItemStackHandler {
 	public float remainingTime;

@@ -13,8 +13,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
-import net.minecraftforge.items.ItemStackHandler;
-import net.minecraftforge.items.wrapper.RecipeWrapper;
 
 @ParametersAreNonnullByDefault
 public class SandPaperPolishingRecipe extends ProcessingRecipe<SandPaperInv> {

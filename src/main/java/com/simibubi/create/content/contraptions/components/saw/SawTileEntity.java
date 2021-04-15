@@ -53,10 +53,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.util.registry.Registry;
-import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.items.CapabilityItemHandler;
-import net.minecraftforge.items.IItemHandler;
 
 @ParametersAreNonnullByDefault
 @MethodsReturnNonnullByDefault
@@ -280,7 +276,7 @@ public class SawTileEntity extends BlockBreakingKineticTileEntity {
 		 * RecipeConditions.isOfType(IRecipeType.STONECUTTING,
 		 * AllRecipeTypes.CUTTING.getType()) :
 		 * RecipeConditions.isOfType(AllRecipeTypes.CUTTING.getType());
-		 * 
+		 *
 		 */
 
 		Predicate<IRecipe<?>> types = RecipeConditions.isOfType(AllRecipeTypes.CUTTING.getType(),

@@ -17,7 +17,6 @@ import net.minecraft.data.DirectoryCache;
 import net.minecraft.data.IDataProvider;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.IItemProvider;
-import net.minecraftforge.fluids.FluidAttributes;
 
 public abstract class ProcessingRecipeGen extends CreateRecipeProvider {
 
@@ -36,14 +35,14 @@ public abstract class ProcessingRecipeGen extends CreateRecipeProvider {
 		generators.add(new PressingRecipeGen(gen));
 		generators.add(new FillingRecipeGen(gen));
 		generators.add(new EmptyingRecipeGen(gen));
-		
+
 		gen.addProvider(new IDataProvider() {
-			
+
 			@Override
 			public String getName() {
 				return "Create's Processing Recipes";
 			}
-			
+
 			@Override
 			public void act(DirectoryCache dc) throws IOException {
 				generators.forEach(g -> {
@@ -56,11 +55,11 @@ public abstract class ProcessingRecipeGen extends CreateRecipeProvider {
 			}
 		});
 	}
-	
+
 	public ProcessingRecipeGen(DataGenerator p_i48262_1_) {
 		super(p_i48262_1_);
 	}
-	
+
 	/**
 	 * Create a processing recipe with a single itemstack ingredient, using its id
 	 * as the name of the recipe
@@ -104,7 +103,7 @@ public abstract class ProcessingRecipeGen extends CreateRecipeProvider {
 	public final String getName() {
 		return "Create's Processing Recipes: " + getRecipeType();
 	}
-	
+
 	protected abstract AllRecipeTypes getRecipeType();
 
 }

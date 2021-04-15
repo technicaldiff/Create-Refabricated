@@ -8,7 +8,6 @@ import com.tterrag.registrate.util.nullness.NonNullSupplier;
 import net.minecraft.block.Block;
 import net.minecraft.world.gen.feature.ConfiguredFeature;
 import net.minecraft.world.gen.feature.OreFeatureConfig.FillerBlockType;
-import net.minecraftforge.common.ForgeConfigSpec;
 
 public class ConfigDrivenFeatureEntry extends ConfigBase {
 

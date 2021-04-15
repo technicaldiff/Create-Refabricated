@@ -11,14 +11,10 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
-import net.minecraftforge.event.entity.ProjectileImpactEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
 
 @Mod.EventBusSubscriber
 public class BlazeBurnerHandler {
 
-	@SubscribeEvent
 	public static void thrownEggsGetEatenByBurner(ProjectileImpactEvent.Throwable event) {
 		if (!(event.getThrowable() instanceof EggEntity))
 			return;
@@ -42,7 +38,7 @@ public class BlazeBurnerHandler {
 		World world = event.getThrowable().world;
 		if (world.isRemote)
 			return;
-		
+
 		BlazeBurnerTileEntity heater = (BlazeBurnerTileEntity) tile;
 		if (heater.activeFuel != FuelType.SPECIAL) {
 			heater.activeFuel = FuelType.NORMAL;
@@ -51,7 +47,7 @@ public class BlazeBurnerHandler {
 			heater.updateBlockState();
 			heater.notifyUpdate();
 		}
-		
+
 		world.playSound(null, heater.getPos(), AllSoundEvents.BLAZE_MUNCH.get(), SoundCategory.BLOCKS, .5F, 1F);
 	}
 

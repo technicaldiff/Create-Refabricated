@@ -14,8 +14,6 @@ import com.tterrag.registrate.util.nullness.NonNullSupplier;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityType;
 import net.fabricmc.api.EnvType;
-import net.minecraftforge.fml.DistExecutor;
-import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 
 public class CreateTileEntityBuilder<T extends TileEntity, P> extends TileEntityBuilder<T, P> {
 

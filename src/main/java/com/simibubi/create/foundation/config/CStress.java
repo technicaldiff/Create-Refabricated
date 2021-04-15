@@ -5,8 +5,6 @@ import java.util.Map;
 
 import net.minecraft.block.Block;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.common.ForgeConfigSpec.Builder;
-import net.minecraftforge.common.ForgeConfigSpec.ConfigValue;
 
 public class CStress extends ConfigBase {
 

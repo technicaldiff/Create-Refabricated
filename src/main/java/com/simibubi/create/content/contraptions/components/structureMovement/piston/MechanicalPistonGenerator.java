@@ -12,7 +12,6 @@ import net.minecraft.block.PistonBlock;
 import net.minecraft.state.properties.PistonType;
 import net.minecraft.util.Direction;
 import net.minecraft.util.Direction.Axis;
-import net.minecraftforge.client.model.generators.ModelFile;
 
 public class MechanicalPistonGenerator extends SpecialBlockStateGen {
 

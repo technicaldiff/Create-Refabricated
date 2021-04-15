@@ -10,9 +10,6 @@ import com.tterrag.registrate.util.nullness.NonNullSupplier;
 
 import net.minecraft.fluid.Fluid;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.fluids.FluidAttributes;
-import net.minecraftforge.fluids.ForgeFlowingFluid;
-import net.minecraftforge.fluids.ForgeFlowingFluid.Properties;
 
 /**
  * For registering fluids with no buckets/blocks

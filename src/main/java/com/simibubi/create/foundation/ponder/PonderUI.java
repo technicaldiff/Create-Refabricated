@@ -59,8 +59,6 @@ import net.minecraft.util.text.Style;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.gen.feature.template.PlacementSettings;
 import net.minecraft.world.gen.feature.template.Template;
-import net.minecraftforge.fml.client.gui.GuiUtils;
-import net.minecraftforge.registries.ForgeRegistries;
 
 public class PonderUI extends NavigatableSimiScreen {
 

@@ -24,7 +24,6 @@ import net.minecraft.util.Direction;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.vector.Vector3d;
-import net.minecraftforge.items.ItemHandlerHelper;
 
 public class CrafterScenes {
 
@@ -165,7 +164,7 @@ public class CrafterScenes {
 		ItemStack log = new ItemStack(Items.OAK_LOG);
 
 		scene.world.setCraftingResult(util.grid.at(1, 1, 2), AllBlocks.ANDESITE_CASING.asStack(4));
-		
+
 		scene.world.modifyTileEntity(util.grid.at(2, 3, 2), type, mct -> mct.getInventory()
 			.insertItem(0, planks.copy(), false));
 		scene.idle(5);
@@ -201,7 +200,7 @@ public class CrafterScenes {
 
 		ItemStack stick = new ItemStack(Items.STICK);
 		ItemStack iron = new ItemStack(Items.IRON_INGOT);
-		
+
 		scene.world.setCraftingResult(util.grid.at(1, 1, 2), new ItemStack(Items.IRON_PICKAXE));
 
 		scene.world.modifyTileEntity(util.grid.at(1, 3, 2), type, mct -> mct.getInventory()

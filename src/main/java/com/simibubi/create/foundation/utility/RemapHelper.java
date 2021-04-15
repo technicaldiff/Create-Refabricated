@@ -62,12 +62,6 @@ import com.simibubi.create.Create;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.event.RegistryEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.ModContainer;
-import net.minecraftforge.fml.ModList;
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.registries.ForgeRegistries;
 
 @Mod.EventBusSubscriber
 public class RemapHelper {
@@ -189,7 +183,6 @@ public class RemapHelper {
 //		reMap.put("rose_quartz_shovel", );
 	}
 
-	@SubscribeEvent
 	public static void onRemapBlocks(RegistryEvent.MissingMappings<Block> event) {
 		ModContainer mod = ModList.get()
 			.getModContainerById(Create.ID)
@@ -212,7 +205,6 @@ public class RemapHelper {
 		}
 	}
 
-	@SubscribeEvent
 	public static void onRemapItems(RegistryEvent.MissingMappings<Item> event) {
 		ModContainer mod = ModList.get()
 			.getModContainerById(Create.ID)

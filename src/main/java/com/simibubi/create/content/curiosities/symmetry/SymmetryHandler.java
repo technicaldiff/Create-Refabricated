@@ -27,16 +27,6 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.vector.Vector3d;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraftforge.client.event.RenderWorldLastEvent;
-import net.minecraftforge.client.model.data.EmptyModelData;
-import net.minecraftforge.event.TickEvent.ClientTickEvent;
-import net.minecraftforge.event.TickEvent.Phase;
-import net.minecraftforge.event.world.BlockEvent.BreakEvent;
-import net.minecraftforge.event.world.BlockEvent.EntityPlaceEvent;
-import net.minecraftforge.eventbus.api.EventPriority;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
 
 @EventBusSubscriber(bus = Bus.FORGE)
 public class SymmetryHandler {
@@ -81,7 +71,6 @@ public class SymmetryHandler {
 	}
 
 	@Environment(EnvType.CLIENT)
-	@SubscribeEvent
 	public static void render(RenderWorldLastEvent event) {
 		Minecraft mc = Minecraft.getInstance();
 		ClientPlayerEntity player = mc.player;
@@ -130,7 +119,6 @@ public class SymmetryHandler {
 	}
 
 	@Environment(EnvType.CLIENT)
-	@SubscribeEvent
 	public static void onClientTick(ClientTickEvent event) {
 		if (event.phase == Phase.START)
 			return;

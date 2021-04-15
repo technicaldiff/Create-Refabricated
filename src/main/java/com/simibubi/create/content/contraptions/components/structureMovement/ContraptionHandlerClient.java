@@ -22,16 +22,9 @@ import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.gen.feature.template.Template.BlockInfo;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraftforge.client.event.InputEvent.ClickInputEvent;
-import net.minecraftforge.event.TickEvent.Phase;
-import net.minecraftforge.event.TickEvent.PlayerTickEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 
-@EventBusSubscriber
 public class ContraptionHandlerClient {
 
-	@SubscribeEvent
 	@Environment(EnvType.CLIENT)
 	public static void preventRemotePlayersWalkingAnimations(PlayerTickEvent event) {
 		if (event.phase == Phase.START)
@@ -56,7 +49,6 @@ public class ContraptionHandlerClient {
 		remotePlayer.prevPosZ = remotePlayer.getZ();
 	}
 
-	@SubscribeEvent
 	@Environment(EnvType.CLIENT)
 	public static void rightClickingOnContraptionsGetsHandledLocally(ClickInputEvent event) {
 		Minecraft mc = Minecraft.getInstance();

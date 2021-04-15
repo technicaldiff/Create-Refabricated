@@ -11,12 +11,6 @@ import net.minecraft.item.Items;
 import net.minecraft.potion.PotionUtils;
 import net.minecraft.potion.Potions;
 import net.minecraft.world.World;
-import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
-import net.minecraftforge.fluids.capability.IFluidHandler.FluidAction;
-import net.minecraftforge.fluids.capability.IFluidHandlerItem;
-import net.minecraftforge.fluids.capability.wrappers.FluidBucketWrapper;
 
 public class GenericItemFilling {
 
@@ -91,13 +85,13 @@ public class GenericItemFilling {
 			stack.shrink(1);
 			return fillBottle;
 		}
-		
+
 		if (stack.getItem() == Items.BUCKET && canFillBucketInternally(toFill)) {
 			ItemStack filledBucket = new ItemStack(Items.MILK_BUCKET);
 			stack.shrink(1);
 			return filledBucket;
 		}
-		
+
 		ItemStack split = stack.copy();
 		split.setCount(1);
 		LazyOptional<IFluidHandlerItem> capability =

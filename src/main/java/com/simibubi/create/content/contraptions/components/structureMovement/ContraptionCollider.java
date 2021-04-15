@@ -51,7 +51,6 @@ import net.minecraft.world.World;
 import net.minecraft.world.gen.feature.template.Template.BlockInfo;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraftforge.fml.DistExecutor;
 
 public class ContraptionCollider {
 
@@ -116,7 +115,7 @@ public class ContraptionCollider {
 			motion = motion.subtract(contraptionMotion);
 			motion = rotationMatrix.transform(motion);
 
-			// Use simplified bbs when present 
+			// Use simplified bbs when present
 			final Vector3d motionCopy = motion;
 			List<AxisAlignedBB> collidableBBs = contraption.simplifiedEntityColliders.orElseGet(() -> {
 

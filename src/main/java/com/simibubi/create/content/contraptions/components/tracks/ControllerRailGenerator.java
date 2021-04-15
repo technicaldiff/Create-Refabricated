@@ -10,7 +10,6 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.state.Property;
 import net.minecraft.state.properties.RailShape;
-import net.minecraftforge.client.model.generators.ModelFile;
 
 public class ControllerRailGenerator extends SpecialBlockStateGen {
 

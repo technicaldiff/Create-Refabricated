@@ -26,7 +26,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MutableBoundingBox;
 import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.world.World;
-import net.minecraftforge.fluids.FluidStack;
 
 public class FluidDrainingBehaviour extends FluidManipulationBehaviour {
 

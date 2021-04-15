@@ -27,7 +27,6 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
-import net.minecraftforge.fluids.FluidStack;
 
 public abstract class CreateRecipeCategory<T extends IRecipe<?>> implements IRecipeCategory<T> {
 

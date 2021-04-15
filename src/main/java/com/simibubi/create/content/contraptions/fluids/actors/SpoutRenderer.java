@@ -12,7 +12,6 @@ import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.MathHelper;
-import net.minecraftforge.fluids.FluidStack;
 
 public class SpoutRenderer extends SafeTileEntityRenderer<SpoutTileEntity> {
 

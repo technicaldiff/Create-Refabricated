@@ -40,8 +40,6 @@ import com.simibubi.create.foundation.render.backend.gl.shader.ShaderType;
 import net.minecraft.resources.IResource;
 import net.minecraft.resources.IResourceManager;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.resource.IResourceType;
-import net.minecraftforge.resource.VanillaResourceType;
 
 public class ShaderLoader {
 	public static final String SHADER_DIR = "flywheel/shaders/";

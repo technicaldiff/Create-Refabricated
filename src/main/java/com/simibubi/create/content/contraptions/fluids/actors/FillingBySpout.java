@@ -8,9 +8,6 @@ import com.simibubi.create.foundation.fluid.FluidIngredient;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.world.World;
-import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.items.ItemStackHandler;
-import net.minecraftforge.items.wrapper.RecipeWrapper;
 
 public class FillingBySpout {
 
@@ -52,7 +49,7 @@ public class FillingBySpout {
 				return results.isEmpty() ? ItemStack.EMPTY : results.get(0);
 			}
 		}
-		
+
 		return GenericItemFilling.fillItem(world, requiredAmount, stack, availableFluid);
 	}
 

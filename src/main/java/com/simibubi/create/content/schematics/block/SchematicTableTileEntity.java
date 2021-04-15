@@ -14,7 +14,6 @@ import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
-import net.minecraftforge.items.ItemStackHandler;
 
 public class SchematicTableTileEntity extends SyncedTileEntity implements ITickableTileEntity, INamedContainerProvider {
 
@@ -93,7 +92,7 @@ public class SchematicTableTileEntity extends SyncedTileEntity implements ITicka
 			world.notifyBlockUpdate(pos, getBlockState(), getBlockState(), 6);
 		}
 	}
-	
+
 	public void startUpload(String schematic) {
 		isUploading = true;
 		uploadingProgress = 0;
@@ -101,7 +100,7 @@ public class SchematicTableTileEntity extends SyncedTileEntity implements ITicka
 		sendUpdate = true;
 		inventory.setStackInSlot(0, ItemStack.EMPTY);
 	}
-	
+
 	public void finishUpload() {
 		isUploading = false;
 		uploadingProgress = 0;

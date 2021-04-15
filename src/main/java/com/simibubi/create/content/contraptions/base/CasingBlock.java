@@ -9,7 +9,6 @@ import net.minecraft.item.ItemUseContext;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockReader;
-import net.minecraftforge.common.ToolType;
 
 public class CasingBlock extends Block implements IWrenchable {
 
@@ -32,10 +31,10 @@ public class CasingBlock extends Block implements IWrenchable {
 		for (ToolType toolType : player.getHeldItemMainhand().getToolTypes()) {
 			if (isToolEffective(state, toolType))
 				return true;
-		}		
+		}
 		return super.canHarvestBlock(state, world, pos, player);
 	}
-	
+
 	@Override
 	public boolean isToolEffective(BlockState state, ToolType tool) {
 		return tool == ToolType.AXE || tool == ToolType.PICKAXE;

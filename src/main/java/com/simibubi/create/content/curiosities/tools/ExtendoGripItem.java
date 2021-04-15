@@ -31,17 +31,7 @@ import net.minecraft.util.math.RayTraceResult.Type;
 import net.minecraft.util.math.vector.Vector3d;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraftforge.client.event.InputEvent.ClickInputEvent;
-import net.minecraftforge.common.ForgeMod;
-import net.minecraftforge.event.entity.living.LivingAttackEvent;
-import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
-import net.minecraftforge.event.entity.living.LivingKnockBackEvent;
-import net.minecraftforge.event.entity.player.AttackEntityEvent;
-import net.minecraftforge.event.entity.player.PlayerInteractEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 
-@EventBusSubscriber
 public class ExtendoGripItem extends Item {
 	private static DamageSource lastActiveDamageSource;
 
@@ -65,7 +55,6 @@ public class ExtendoGripItem extends Item {
 			.rarity(Rarity.UNCOMMON));
 	}
 
-	@SubscribeEvent
 	public static void holdingExtendoGripIncreasesRange(LivingUpdateEvent event) {
 		if (!(event.getEntity() instanceof PlayerEntity))
 			return;
@@ -112,7 +101,6 @@ public class ExtendoGripItem extends Item {
 
 	}
 
-	@SubscribeEvent
 	@Environment(EnvType.CLIENT)
 	public static void dontMissEntitiesWhenYouHaveHighReachDistance(ClickInputEvent event) {
 		Minecraft mc = Minecraft.getInstance();
@@ -151,13 +139,11 @@ public class ExtendoGripItem extends Item {
 		}
 	}
 
-	@SubscribeEvent
 	public static void bufferLivingAttackEvent(LivingAttackEvent event) {
 		// Workaround for removed patch to get the attacking entity. Tbf this is a hack and a half, but it should work.
 		lastActiveDamageSource = event.getSource();
 	}
 
-	@SubscribeEvent
 	public static void attacksByExtendoGripHaveMoreKnockback(LivingKnockBackEvent event) {
 		if (lastActiveDamageSource == null)
 			return;
@@ -181,7 +167,6 @@ public class ExtendoGripItem extends Item {
 		return true;
 	}
 
-	@SubscribeEvent
 	@Environment(EnvType.CLIENT)
 	public static void notifyServerOfLongRangeAttacks(AttackEntityEvent event) {
 		Entity entity = event.getEntity();
@@ -193,7 +178,6 @@ public class ExtendoGripItem extends Item {
 			AllPackets.channel.sendToServer(new ExtendoGripInteractionPacket(target));
 	}
 
-	@SubscribeEvent
 	@Environment(EnvType.CLIENT)
 	public static void notifyServerOfLongRangeInteractions(PlayerInteractEvent.EntityInteract event) {
 		Entity entity = event.getEntity();
@@ -205,7 +189,6 @@ public class ExtendoGripItem extends Item {
 			AllPackets.channel.sendToServer(new ExtendoGripInteractionPacket(target, event.getHand()));
 	}
 
-	@SubscribeEvent
 	@Environment(EnvType.CLIENT)
 	public static void notifyServerOfLongRangeSpecificInteractions(PlayerInteractEvent.EntityInteractSpecific event) {
 		Entity entity = event.getEntity();

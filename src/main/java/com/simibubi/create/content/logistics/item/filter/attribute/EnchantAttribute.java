@@ -13,7 +13,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraftforge.registries.ForgeRegistries;
 
 public class EnchantAttribute implements ItemAttribute {
     public static final EnchantAttribute EMPTY = new EnchantAttribute(null);

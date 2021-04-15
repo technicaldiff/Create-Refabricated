@@ -17,9 +17,6 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
-import net.minecraftforge.common.util.FakePlayer;
-import net.minecraftforge.fml.common.registry.IEntityAdditionalSpawnData;
-import net.minecraftforge.fml.network.NetworkHooks;
 
 public class SeatEntity extends Entity implements IEntityAdditionalSpawnData {
 
@@ -42,7 +39,7 @@ public class SeatEntity extends Entity implements IEntityAdditionalSpawnData {
 	public AxisAlignedBB getBoundingBox() {
 		return super.getBoundingBox();
 	}
-	
+
 	@Override
 	public void setPos(double x, double y, double z) {
 		super.setPos(x, y, z);
@@ -56,7 +53,7 @@ public class SeatEntity extends Entity implements IEntityAdditionalSpawnData {
 
 	@Override
 	public void tick() {
-		if (world.isRemote) 
+		if (world.isRemote)
 			return;
 		boolean blockPresent = world.getBlockState(getBlockPos())
 			.getBlock() instanceof SeatBlock;

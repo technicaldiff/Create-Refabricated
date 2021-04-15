@@ -16,8 +16,6 @@ import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.JSONUtils;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.registries.ForgeRegistryEntry;
 
 @MethodsReturnNonnullByDefault
 @ParametersAreNonnullByDefault
@@ -123,15 +121,15 @@ public class ProcessingRecipeSerializer<T extends ProcessingRecipe<?>> extends F
 		int size = buffer.readVarInt();
 		for (int i = 0; i < size; i++)
 			ingredients.add(Ingredient.read(buffer));
-		
+
 		size = buffer.readVarInt();
 		for (int i = 0; i < size; i++)
 			fluidIngredients.add(FluidIngredient.read(buffer));
-		
+
 		size = buffer.readVarInt();
 		for (int i = 0; i < size; i++)
 			results.add(ProcessingOutput.read(buffer));
-		
+
 		size = buffer.readVarInt();
 		for (int i = 0; i < size; i++)
 			fluidResults.add(FluidStack.readFromPacket(buffer));

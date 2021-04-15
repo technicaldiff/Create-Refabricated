@@ -14,7 +14,6 @@ import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
-import net.minecraftforge.items.ItemHandlerHelper;
 
 public class BeltFunnelInteractionHandler {
 
@@ -44,7 +43,7 @@ public class BeltFunnelInteractionHandler {
 			float funnelEntry = segment + .5f;
 			if (funnelState.get(BeltFunnelBlock.SHAPE) == Shape.EXTENDED)
 				funnelEntry += .499f * (beltMovementPositive ? -1 : 1);
-			
+
 			boolean hasCrossed = nextOffset > funnelEntry && beltMovementPositive
 				|| nextOffset < funnelEntry && !beltMovementPositive;
 			if (!hasCrossed)

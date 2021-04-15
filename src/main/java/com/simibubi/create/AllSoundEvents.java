@@ -15,8 +15,6 @@ import net.minecraft.data.IDataProvider;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.SoundEvents;
-import net.minecraftforge.event.RegistryEvent;
-import net.minecraftforge.registries.IForgeRegistry;
 
 public enum AllSoundEvents implements IDataProvider {
 

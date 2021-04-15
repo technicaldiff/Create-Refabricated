@@ -29,7 +29,6 @@ import net.minecraft.util.math.MutableBoundingBox;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
-import net.minecraftforge.fluids.FluidStack;
 
 public abstract class FluidManipulationBehaviour extends TileEntityBehaviour {
 
@@ -177,7 +176,7 @@ public abstract class FluidManipulationBehaviour extends TileEntityBehaviour {
 				frontier.add(new BlockPosEntry(offsetPos, entry.distance + 1));
 			}
 		}
-		
+
 		return fluid;
 	}
 
@@ -197,7 +196,7 @@ public abstract class FluidManipulationBehaviour extends TileEntityBehaviour {
 		if (world instanceof ServerWorld)
 			AllPackets.sendToNear(world, splooshPos, 10, new FluidSplashPacket(splooshPos, new FluidStack(fluid, 1)));
 	}
-	
+
 	protected boolean canDrainInfinitely(Fluid fluid) {
 		return maxBlocks() != -1; //  && !AllFluidTags.NO_INFINITE_DRAINING.matches(fluid);
 	}

@@ -3,7 +3,6 @@ package com.simibubi.create.foundation.command;
 import com.simibubi.create.foundation.networking.AllPackets;
 
 import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraftforge.fml.network.PacketDistributor;
 
 public class ToggleDebugCommand extends ConfigureConfigCommand {
 

@@ -46,8 +46,6 @@ import net.minecraft.item.Item;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.IItemProvider;
-import net.minecraftforge.fluids.ForgeFlowingFluid;
-import net.minecraftforge.fml.DistExecutor;
 
 public class CreateRegistrate extends AbstractRegistrate<CreateRegistrate> {
 

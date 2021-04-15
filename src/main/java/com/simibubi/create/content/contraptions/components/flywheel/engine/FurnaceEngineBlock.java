@@ -18,12 +18,7 @@ import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
-import net.minecraftforge.event.entity.player.PlayerInteractEvent.RightClickBlock;
-import net.minecraftforge.eventbus.api.Event.Result;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 
-@EventBusSubscriber
 public class FurnaceEngineBlock extends EngineBlock implements ITE<FurnaceEngineTileEntity> {
 
 	public FurnaceEngineBlock(Properties properties) {
@@ -64,7 +59,6 @@ public class FurnaceEngineBlock extends EngineBlock implements ITE<FurnaceEngine
 				withTileEntityDo(worldIn, pos, FurnaceEngineTileEntity::updateFurnace);
 	}
 
-	@SubscribeEvent
 	public static void usingFurnaceEngineOnFurnacePreventsGUI(RightClickBlock event) {
 		ItemStack item = event.getItemStack();
 		if (!(item.getItem() instanceof BlockItem))

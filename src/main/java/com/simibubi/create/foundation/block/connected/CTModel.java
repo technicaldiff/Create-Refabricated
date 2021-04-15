@@ -17,9 +17,6 @@ import net.minecraft.client.renderer.vertex.VertexFormat;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockDisplayReader;
-import net.minecraftforge.client.model.data.IModelData;
-import net.minecraftforge.client.model.data.ModelDataMap.Builder;
-import net.minecraftforge.client.model.data.ModelProperty;
 
 public class CTModel extends BakedModelWrapperWithData {
 
@@ -42,7 +39,7 @@ public class CTModel extends BakedModelWrapperWithData {
 			return indices[face.getIndex()];
 		}
 	}
-	
+
 	public CTModel(IBakedModel originalModel, ConnectedTextureBehaviour behaviour) {
 		super(originalModel);
 		this.behaviour = behaviour;

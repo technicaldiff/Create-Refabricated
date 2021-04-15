@@ -4,11 +4,6 @@ import com.simibubi.create.content.contraptions.components.structureMovement.Con
 
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.Direction;
-import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.capability.IFluidHandler;
-import net.minecraftforge.fluids.capability.templates.FluidTank;
 
 public class PortableFluidInterfaceTileEntity extends PortableStorageInterfaceTileEntity {
 

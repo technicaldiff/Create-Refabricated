@@ -51,7 +51,6 @@ import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraftforge.common.util.FakePlayer;
 
 @MethodsReturnNonnullByDefault
 @ParametersAreNonnullByDefault
@@ -149,7 +148,7 @@ public class BlazeBurnerBlock extends Block implements ITE<BlazeBurnerTileEntity
 
 		if (!burnerTE.tryUpdateFuel(stack, forceOverflow, simulate))
 			return ActionResult.fail(ItemStack.EMPTY);
-		
+
 		ItemStack container = stack.getContainerItem();
 		if (!simulate && !world.isRemote) {
 			world.playSound(null, pos, SoundEvents.ENTITY_BLAZE_SHOOT, SoundCategory.BLOCKS,
@@ -216,12 +215,12 @@ public class BlazeBurnerBlock extends Block implements ITE<BlazeBurnerTileEntity
 		builder.addLootPool(poolBuilder.rolls(ConstantRange.of(1)));
 		return builder;
 	}
-	
+
 	@Override
 	public boolean hasComparatorInputOverride(BlockState p_149740_1_) {
 		return true;
 	}
-	
+
 	@Override
 	public int getComparatorInputOverride(BlockState state, World p_180641_2_, BlockPos p_180641_3_) {
 		return Math.max(0, state.get(HEAT_LEVEL).ordinal() -1);

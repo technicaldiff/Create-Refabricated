@@ -29,7 +29,6 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.NonNullList;
-import net.minecraftforge.fluids.FluidStack;
 
 public class BasinCategory extends CreateRecipeCategory<BasinRecipe> {
 
@@ -162,7 +161,7 @@ public class BasinCategory extends CreateRecipeCategory<BasinRecipe> {
 
 		if (!needsHeating)
 			return;
-		
+
 		AllGuiTextures heatBar = noHeat ? AllGuiTextures.JEI_NO_HEAT_BAR : AllGuiTextures.JEI_HEAT_BAR;
 		heatBar.draw(matrixStack, 4, 80);
 		Minecraft.getInstance().fontRenderer.draw(matrixStack, Lang.translate(requiredHeat.getTranslationKey()), 9,

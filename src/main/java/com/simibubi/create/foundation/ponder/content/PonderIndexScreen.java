@@ -26,7 +26,6 @@ import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.MathHelper;
-import net.minecraftforge.registries.ForgeRegistries;
 
 public class PonderIndexScreen extends NavigatableSimiScreen {
 

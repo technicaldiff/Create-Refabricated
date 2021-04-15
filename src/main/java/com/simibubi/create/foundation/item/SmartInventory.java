@@ -8,9 +8,6 @@ import com.simibubi.create.foundation.tileEntity.SyncedTileEntity;
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
-import net.minecraftforge.common.util.INBTSerializable;
-import net.minecraftforge.items.ItemStackHandler;
-import net.minecraftforge.items.wrapper.RecipeWrapper;
 
 public class SmartInventory extends RecipeWrapper
 	implements IItemHandlerModifiableIntermediate, INBTSerializable<CompoundNBT> {

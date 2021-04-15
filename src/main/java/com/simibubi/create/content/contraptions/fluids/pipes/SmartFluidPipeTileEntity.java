@@ -20,7 +20,6 @@ import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.Direction;
 import net.minecraft.util.Direction.Axis;
 import net.minecraft.util.math.vector.Vector3d;
-import net.minecraftforge.fluids.FluidStack;
 
 public class SmartFluidPipeTileEntity extends SmartTileEntity {
 

@@ -11,7 +11,6 @@ import net.minecraft.data.DataGenerator;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.item.Items;
 import net.minecraft.tags.ItemTags;
-import net.minecraftforge.common.Tags;
 
 public class MixingRecipeGen extends ProcessingRecipeGen {
 

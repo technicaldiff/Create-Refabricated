@@ -29,7 +29,6 @@ import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraftforge.common.util.LazyOptional;
 
 public abstract class AbstractChuteBlock extends Block implements IWrenchable, ITE<ChuteTileEntity> {
 
@@ -49,7 +48,7 @@ public abstract class AbstractChuteBlock extends Block implements IWrenchable, I
 	public static boolean isOpenChute(BlockState state) {
 		return isChute(state) && ((AbstractChuteBlock) state.getBlock()).isOpen(state);
 	}
-	
+
 	public static boolean isTransparentChute(BlockState state) {
 		return isChute(state) && ((AbstractChuteBlock) state.getBlock()).isTransparent(state);
 	}
@@ -66,7 +65,7 @@ public abstract class AbstractChuteBlock extends Block implements IWrenchable, I
 	public boolean isOpen(BlockState state) {
 		return true;
 	}
-	
+
 	public boolean isTransparent(BlockState state) {
 		return false;
 	}
@@ -171,13 +170,13 @@ public abstract class AbstractChuteBlock extends Block implements IWrenchable, I
 		BlockHelper.addReducedDestroyEffects(state, world, pos, manager);
 		return true;
 	}
-	
+
 	@Override
 	public VoxelShape getShape(BlockState p_220053_1_, IBlockReader p_220053_2_, BlockPos p_220053_3_,
 		ISelectionContext p_220053_4_) {
 		return ChuteShapes.getShape(p_220053_1_);
 	}
-	
+
 	@Override
 	public VoxelShape getCollisionShape(BlockState p_220071_1_, IBlockReader p_220071_2_, BlockPos p_220071_3_,
 		ISelectionContext p_220071_4_) {

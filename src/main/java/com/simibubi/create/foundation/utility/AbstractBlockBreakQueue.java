@@ -11,7 +11,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraftforge.event.ForgeEventFactory;
 
 public abstract class AbstractBlockBreakQueue {
 	protected Consumer<BlockPos> makeCallbackFor(World world, float effectChance, ItemStack toDamage,

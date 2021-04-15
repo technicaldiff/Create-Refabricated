@@ -10,7 +10,6 @@ import com.tterrag.registrate.util.nullness.NonNullFunction;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.item.BlockItem;
-import net.minecraftforge.client.model.generators.ModelFile;
 
 public class BracketGenerator extends DirectionalAxisBlockStateGen {
 

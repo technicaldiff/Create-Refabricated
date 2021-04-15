@@ -31,7 +31,6 @@ import net.minecraft.block.WoodType;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.common.Tags;
 
 public class AllPaletteBlocks {
 

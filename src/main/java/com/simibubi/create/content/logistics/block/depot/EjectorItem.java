@@ -11,10 +11,7 @@ import net.minecraft.util.ActionResultType;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.fabricmc.api.EnvType;
-import net.minecraftforge.fml.DistExecutor;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 
-@EventBusSubscriber
 public class EjectorItem extends BlockItem {
 
 	public EjectorItem(Block p_i48527_1_, Properties p_i48527_2_) {

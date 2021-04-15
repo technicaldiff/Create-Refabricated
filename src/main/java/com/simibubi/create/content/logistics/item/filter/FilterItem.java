@@ -37,10 +37,6 @@ import com.simibubi.create.foundation.item.ItemDescription;
 import com.simibubi.create.foundation.utility.Lang;
 import com.simibubi.create.lib.utility.Constants.NBT;
 
-import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fml.network.NetworkHooks;
-import net.minecraftforge.items.ItemHandlerHelper;
-import net.minecraftforge.items.ItemStackHandler;
 
 public class FilterItem extends Item implements INamedContainerProvider {
 

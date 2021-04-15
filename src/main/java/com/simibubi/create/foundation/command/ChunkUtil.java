@@ -12,8 +12,6 @@ import net.minecraft.world.chunk.ChunkStatus;
 import net.minecraft.world.gen.Heightmap;
 import net.minecraft.world.server.ChunkHolder;
 import net.minecraft.world.server.ServerChunkProvider;
-import net.minecraftforge.event.world.ChunkEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 public class ChunkUtil {
 	private static final Logger LOGGER = LogManager.getLogger("Create/ChunkUtil");
@@ -82,7 +80,6 @@ public class ChunkUtil {
 		provider.forceChunk(pos, false);
 	}
 
-	@SubscribeEvent
 	public void chunkUnload(ChunkEvent.Unload event) {
 		// LOGGER.debug("Chunk Unload: " + event.getChunk().getPos().toString());
 		if (interestingChunks.contains(event.getChunk()
@@ -94,7 +91,6 @@ public class ChunkUtil {
 		}
 	}
 
-	@SubscribeEvent
 	public void chunkLoad(ChunkEvent.Load event) {
 		// LOGGER.debug("Chunk Load: " + event.getChunk().getPos().toString());
 

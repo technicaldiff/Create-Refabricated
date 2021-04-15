@@ -8,11 +8,6 @@ import com.simibubi.create.foundation.utility.BlockFace;
 
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
-import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
-import net.minecraftforge.fluids.capability.IFluidHandler;
-import net.minecraftforge.fluids.capability.IFluidHandler.FluidAction;
 
 public abstract class FlowSource {
 
@@ -52,7 +47,7 @@ public abstract class FlowSource {
 	public abstract boolean isEndpoint();
 
 	public void manageSource(World world) {}
-	
+
 	public void whileFlowPresent(World world, boolean pulling) {}
 
 	public LazyOptional<IFluidHandler> provideHandler() {

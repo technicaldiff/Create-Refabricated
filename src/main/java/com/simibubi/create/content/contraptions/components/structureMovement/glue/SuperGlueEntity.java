@@ -59,10 +59,6 @@ import net.minecraft.util.math.RayTraceResult.Type;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
-import net.minecraftforge.fml.DistExecutor;
-import net.minecraftforge.fml.common.registry.IEntityAdditionalSpawnData;
-import net.minecraftforge.fml.network.NetworkHooks;
-import net.minecraftforge.fml.network.PacketDistributor;
 
 public class SuperGlueEntity extends Entity implements IEntityAdditionalSpawnData, ISpecialEntityItemRequirement {
 
@@ -171,7 +167,7 @@ public class SuperGlueEntity extends Entity implements IEntityAdditionalSpawnDat
 			return false;
 		if (world instanceof WrappedWorld)
 			return true;
-		
+
 		BlockPos pos = hangingPosition;
 		BlockPos pos2 = pos.offset(getFacingDirection().getOpposite());
 		return isValidFace(world, pos2, getFacingDirection()) != isValidFace(world, pos,
@@ -210,12 +206,12 @@ public class SuperGlueEntity extends Entity implements IEntityAdditionalSpawnDat
 
 		if (AllBlocks.STICKER.has(state))
 			return state.get(DirectionalBlock.FACING) == direction;
-		
+
 		if (state.getBlock() == Blocks.SLIME_BLOCK)
 			return true;
 		if (state.getBlock() == Blocks.HONEY_BLOCK)
 			return true;
-		
+
 		if (AllBlocks.CART_ASSEMBLER.has(state))
 			return Direction.UP == direction;
 

@@ -1,8 +1,6 @@
 package com.simibubi.create.content.logistics.block.belts.tunnel;
 
 import net.minecraft.item.ItemStack;
-import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.items.IItemHandler;
 
 public class BrassTunnelItemHandler implements IItemHandler {
 
@@ -11,7 +9,7 @@ public class BrassTunnelItemHandler implements IItemHandler {
 	public BrassTunnelItemHandler(BrassTunnelTileEntity te) {
 		this.te = te;
 	}
-	
+
 	@Override
 	public int getSlots() {
 		return 1;
@@ -30,10 +28,10 @@ public class BrassTunnelItemHandler implements IItemHandler {
 				return stack;
 			return beltCapability.orElse(null).insertItem(slot, stack, simulate);
 		}
-		
+
 		if (!te.canTakeItems())
 			return stack;
-		if (!simulate) 
+		if (!simulate)
 			te.setStackToDistribute(stack);
 		return ItemStack.EMPTY;
 	}

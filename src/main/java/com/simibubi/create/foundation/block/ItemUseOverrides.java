@@ -11,9 +11,6 @@ import net.minecraft.block.BlockState;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraftforge.event.entity.player.PlayerInteractEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
 
 @Mod.EventBusSubscriber
 public class ItemUseOverrides {
@@ -24,7 +21,6 @@ public class ItemUseOverrides {
 		overrides.add(block.getRegistryName());
 	}
 
-	@SubscribeEvent
 	public static void onBlockActivated(PlayerInteractEvent.RightClickBlock event) {
 		if (AllItems.WRENCH.isIn(event.getItemStack()))
 			return;

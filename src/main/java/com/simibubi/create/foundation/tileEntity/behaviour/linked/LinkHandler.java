@@ -13,21 +13,15 @@ import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.world.World;
-import net.minecraftforge.event.entity.player.PlayerInteractEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.LogicalSide;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 
-@EventBusSubscriber
 public class LinkHandler {
 
-	@SubscribeEvent
 	public static void onBlockActivated(PlayerInteractEvent.RightClickBlock event) {
 		World world = event.getWorld();
 		BlockPos pos = event.getPos();
 		PlayerEntity player = event.getPlayer();
 		Hand hand = event.getHand();
-		
+
 		if (player.isSneaking() || player.isSpectator())
 			return;
 

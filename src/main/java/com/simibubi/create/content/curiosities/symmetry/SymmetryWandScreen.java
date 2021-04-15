@@ -26,7 +26,6 @@ import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.util.math.vector.Vector3f;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
-import net.minecraftforge.fml.network.PacketDistributor;
 
 public class SymmetryWandScreen extends AbstractSimiScreen {
 
@@ -96,14 +95,14 @@ public class SymmetryWandScreen extends AbstractSimiScreen {
 		widgets.add(labelAlign);
 		widgets.add(areaType);
 		widgets.add(labelType);
-		
+
 		confirmButton = new IconButton(guiLeft + background.width - 33, guiTop + background.height - 24, AllIcons.I_CONFIRM);
 		widgets.add(confirmButton);
 
 	}
 
 	private void initAlign(SymmetryMirror element) {
-		if (areaAlign != null) 
+		if (areaAlign != null)
 			widgets.remove(areaAlign);
 
 		areaAlign = new SelectionScrollInput(guiLeft + 45, guiTop + 43, 109, 18).forOptions(element.getAlignToolTips())
@@ -152,7 +151,7 @@ public class SymmetryWandScreen extends AbstractSimiScreen {
 		client.player.setHeldItem(hand, heldItem);
 		super.removed();
 	}
-	
+
 	@Override
 	public boolean mouseClicked(double x, double y, int button) {
 		if (confirmButton.isHovered()) {

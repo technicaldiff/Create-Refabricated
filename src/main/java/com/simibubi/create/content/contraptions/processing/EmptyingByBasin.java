@@ -11,13 +11,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.PotionItem;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.world.World;
-import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
-import net.minecraftforge.fluids.capability.IFluidHandler.FluidAction;
-import net.minecraftforge.fluids.capability.IFluidHandlerItem;
-import net.minecraftforge.items.ItemStackHandler;
-import net.minecraftforge.items.wrapper.RecipeWrapper;
 
 public class EmptyingByBasin {
 
@@ -26,7 +19,7 @@ public class EmptyingByBasin {
 	public static boolean canItemBeEmptied(World world, ItemStack stack) {
 		if (stack.getItem() instanceof PotionItem)
 			return true;
-		
+
 		wrapper.setInventorySlotContents(0, stack);
 		if (AllRecipeTypes.EMPTYING.find(wrapper, world)
 			.isPresent())
@@ -51,7 +44,7 @@ public class EmptyingByBasin {
 
 		if (stack.getItem() instanceof PotionItem)
 			return PotionFluidHandler.emptyPotion(stack, simulate);
-		
+
 		wrapper.setInventorySlotContents(0, stack);
 		Optional<IRecipe<RecipeWrapper>> recipe = AllRecipeTypes.EMPTYING.find(wrapper, world);
 		if (recipe.isPresent()) {

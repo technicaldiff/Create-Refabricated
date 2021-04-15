@@ -12,7 +12,6 @@ import net.minecraft.nbt.INBT;
 import net.minecraft.nbt.ListNBT;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraftforge.registries.ForgeRegistries;
 
 public class AstralSorceryAmuletAttribute implements ItemAttribute {
     String enchName;

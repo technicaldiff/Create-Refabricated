@@ -5,7 +5,6 @@ import java.util.function.Consumer;
 import com.simibubi.create.foundation.fluid.SmartFluidTank;
 
 import net.minecraft.tileentity.TileEntityType;
-import net.minecraftforge.fluids.FluidStack;
 
 public class CreativeFluidTankTileEntity extends FluidTankTileEntity {
 
@@ -23,15 +22,15 @@ public class CreativeFluidTankTileEntity extends FluidTankTileEntity {
 		public CreativeSmartFluidTank(int capacity, Consumer<FluidStack> updateCallback) {
 			super(capacity, updateCallback);
 		}
-		
+
 		@Override
 		public int getFluidAmount() {
 			return getFluid().isEmpty() ? 0 : getTankCapacity(0);
 		}
-		
+
 		public void setContainedFluid(FluidStack fluidStack) {
 			fluid = fluidStack.copy();
-			if (!fluidStack.isEmpty()) 
+			if (!fluidStack.isEmpty())
 				fluid.setAmount(getTankCapacity(0));
 			onContentsChanged();
 		}

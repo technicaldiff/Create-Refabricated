@@ -18,8 +18,6 @@ import net.minecraft.particles.ParticleType;
 import net.minecraft.util.registry.Registry;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.registries.ForgeRegistries;
 
 public class FluidParticleData implements IParticleData, ICustomParticleData<FluidParticleData> {
 

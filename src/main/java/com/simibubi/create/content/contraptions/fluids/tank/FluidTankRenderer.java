@@ -8,8 +8,6 @@ import com.simibubi.create.foundation.tileEntity.renderer.SafeTileEntityRenderer
 import net.minecraft.client.renderer.IRenderTypeBuffer;
 import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
 import net.minecraft.util.math.MathHelper;
-import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.capability.templates.FluidTank;
 
 public class FluidTankRenderer extends SafeTileEntityRenderer<FluidTankTileEntity> {
 
@@ -44,7 +42,7 @@ public class FluidTankRenderer extends SafeTileEntityRenderer<FluidTankTileEntit
 
 		if (fluidStack.isEmpty())
 			return;
-		
+
 		boolean top = fluidStack.getFluid()
 			.getAttributes()
 			.isLighterThanAir();

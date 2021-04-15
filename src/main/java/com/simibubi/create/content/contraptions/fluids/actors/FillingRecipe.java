@@ -6,7 +6,6 @@ import com.simibubi.create.content.contraptions.processing.ProcessingRecipeBuild
 import com.simibubi.create.foundation.fluid.FluidIngredient;
 
 import net.minecraft.world.World;
-import net.minecraftforge.items.wrapper.RecipeWrapper;
 
 public class FillingRecipe extends ProcessingRecipe<RecipeWrapper> {
 
@@ -28,12 +27,12 @@ public class FillingRecipe extends ProcessingRecipe<RecipeWrapper> {
 	protected int getMaxOutputCount() {
 		return 1;
 	}
-	
+
 	@Override
 	protected int getMaxFluidInputCount() {
 		return 1;
 	}
-	
+
 	public FluidIngredient getRequiredFluid() {
 		if (fluidIngredients.isEmpty())
 			throw new IllegalStateException("Filling Recipe: " + id.toString() + " has no fluid ingredient!");

@@ -109,14 +109,6 @@ import com.simibubi.create.foundation.utility.worldWrappers.WrappedWorld;
 import com.simibubi.create.lib.utility.Constants.BlockFlags;
 import com.simibubi.create.lib.utility.Constants.NBT;
 
-import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.IFluidTank;
-import net.minecraftforge.fluids.capability.IFluidHandler;
-import net.minecraftforge.fluids.capability.IFluidHandler.FluidAction;
-import net.minecraftforge.fluids.capability.templates.FluidTank;
-import net.minecraftforge.items.IItemHandlerModifiable;
-import net.minecraftforge.items.wrapper.CombinedInvWrapper;
-import net.minecraftforge.registries.GameData;
 
 public abstract class Contraption {
 

@@ -1,7 +1,5 @@
 package com.simibubi.create.foundation.utility;
 
-import net.minecraftforge.client.model.data.IModelData;
-import net.minecraftforge.client.model.data.ModelProperty;
 
 /**
  * This model data instance is passed whenever a model is rendered without

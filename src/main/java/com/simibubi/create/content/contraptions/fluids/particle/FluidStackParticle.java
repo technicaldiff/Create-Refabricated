@@ -12,7 +12,6 @@ import net.minecraft.inventory.container.PlayerContainer;
 import net.minecraft.particles.ParticleType;
 import net.minecraft.particles.ParticleTypes;
 import net.minecraft.util.math.vector.Vector3d;
-import net.minecraftforge.fluids.FluidStack;
 
 public class FluidStackParticle extends SpriteTexturedParticle {
 	private final float field_217587_G;
@@ -43,7 +42,7 @@ public class FluidStackParticle extends SpriteTexturedParticle {
 		this.multiplyColor(fluid.getFluid()
 			.getAttributes()
 			.getColor(fluid));
-		
+
 		this.motionX = vx;
 		this.motionY = vy;
 		this.motionZ = vz;
@@ -103,7 +102,7 @@ public class FluidStackParticle extends SpriteTexturedParticle {
 			.getColor(fluid));
 		world.addParticle(ParticleTypes.ENTITY_EFFECT, posX, posY, posZ, rgb.x, rgb.y, rgb.z);
 	}
-	
+
 	protected boolean canEvaporate() {
 		return fluid.getFluid() instanceof PotionFluid;
 	}

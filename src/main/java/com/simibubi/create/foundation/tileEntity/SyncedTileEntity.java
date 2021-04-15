@@ -11,7 +11,6 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.math.SectionPos;
 import net.minecraft.world.chunk.Chunk;
-import net.minecraftforge.fml.network.PacketDistributor;
 
 @MethodsReturnNonnullByDefault
 @ParametersAreNonnullByDefault

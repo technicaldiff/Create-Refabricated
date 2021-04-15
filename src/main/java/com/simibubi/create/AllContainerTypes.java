@@ -22,8 +22,6 @@ import net.minecraft.inventory.container.ContainerType.IFactory;
 import net.minecraft.util.ResourceLocation;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraftforge.event.RegistryEvent;
-import net.minecraftforge.fml.network.IContainerFactory;
 
 public enum AllContainerTypes {
 

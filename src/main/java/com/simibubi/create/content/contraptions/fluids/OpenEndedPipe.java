@@ -31,10 +31,6 @@ import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.capability.IFluidHandler;
-import net.minecraftforge.fluids.capability.templates.FluidTank;
 
 public class OpenEndedPipe extends FlowSource {
 
@@ -74,7 +70,7 @@ public class OpenEndedPipe extends FlowSource {
 		BlockState state = world.getBlockState(outputPos);
 		FluidState fluidState = state.getFluidState();
 		boolean waterlog = state.contains(WATERLOGGED);
-		
+
 		if (state.contains(HONEY_LEVEL) && state.get(HONEY_LEVEL) >= 5) {
 			if (!simulate)
 				world.setBlockState(outputPos, state.with(HONEY_LEVEL, 0), 3);
