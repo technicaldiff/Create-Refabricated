@@ -4,7 +4,7 @@
   "package": "com.simibubi.create.lib.mixin",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
-  	"EntityMixin",
+    "EntityMixin",
     "EntitySelectionContextMixin",
     "ItemEntityMixin",
     "ItemStackMixin",
@@ -13,6 +13,7 @@
     "accessor.BeaconTileEntityAccessor",
     "accessor.BiomeManagerAccessor",
     "accessor.CriteriaTriggersAccessor",
+    "accessor.DamageSourceAccessor",
     "accessor.ItemEntityAccessor",
     "accessor.MinecraftServerAccessor",
     "accessor.ServerPlayNetHandlerAccessor",

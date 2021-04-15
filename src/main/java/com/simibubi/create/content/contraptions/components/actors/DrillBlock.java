@@ -9,6 +9,8 @@ import com.simibubi.create.foundation.block.ITE;
 
 import com.simibubi.create.lib.annotation.MethodsReturnNonnullByDefault;
 
+import com.simibubi.create.lib.helper.DamageSourceHelper;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.material.PushReaction;
@@ -31,8 +33,8 @@ import net.minecraft.world.World;
 @ParametersAreNonnullByDefault
 @MethodsReturnNonnullByDefault
 public class DrillBlock extends DirectionalKineticBlock implements ITE<DrillTileEntity> {
-	public static DamageSource damageSourceDrill = new DamageSource("create.mechanical_drill").setDamageBypassesArmor();
-
+	// this is probably going to crash and burn
+	public static DamageSource damageSourceDrill = DamageSourceHelper.createDamageSourceWhichBypassesArmor("create.mechanical_drill");
 	public DrillBlock(Properties properties) {
 		super(properties);
 	}
@@ -90,7 +92,7 @@ public class DrillBlock extends DirectionalKineticBlock implements ITE<DrillTile
 	public Class<DrillTileEntity> getTileEntityClass() {
 		return DrillTileEntity.class;
 	}
-	
+
 	@Override
 	public boolean allowsMovement(BlockState state, IBlockReader reader, BlockPos pos, PathType type) {
 		return false;

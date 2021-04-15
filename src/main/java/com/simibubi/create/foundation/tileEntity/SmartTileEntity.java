@@ -163,13 +163,13 @@ public abstract class SmartTileEntity extends SyncedTileEntity implements ITicka
 		return (T) behaviours.get(type);
 	}
 
-	protected boolean isItemHandlerCap(Capability<?> cap) {
-		return cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY;
-	}
-
-	protected boolean isFluidHandlerCap(Capability<?> cap) {
-		return cap == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY;
-	}
+//	protected boolean isItemHandlerCap(Capability<?> cap) { todo: fluid and item handling
+//		return cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY;
+//	}
+//
+//	protected boolean isFluidHandlerCap(Capability<?> cap) {
+//		return cap == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY;
+//	}
 
 	public void markVirtual() {
 		virtualMode = true;
