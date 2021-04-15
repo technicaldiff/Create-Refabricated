@@ -54,7 +54,7 @@ public class ContraptionInteractionPacket implements C2SPacket {
 			if (!(entityByID instanceof AbstractContraptionEntity))
 				return;
 			AbstractContraptionEntity contraptionEntity = (AbstractContraptionEntity) entityByID;
-			double d = sender.getAttribute(ForgeMod.REACH_DISTANCE.get()).getValue();
+			double d = sender.getAttribute(ForgeMod.REACH_DISTANCE.get()).getValue() + 10;
 			if (!sender.canEntityBeSeen(entityByID))
 				d -= 3;
 			d *= d;
