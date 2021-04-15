@@ -1,5 +1,7 @@
 package com.simibubi.create.content.contraptions.components.structureMovement.chassis;
 
+import java.util.List;
+
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.AllSoundEvents;
 import com.simibubi.create.content.contraptions.components.structureMovement.glue.SuperGlueEntity;
@@ -10,17 +12,15 @@ import com.simibubi.create.foundation.tileEntity.SmartTileEntity;
 import com.simibubi.create.foundation.tileEntity.TileEntityBehaviour;
 import com.simibubi.create.foundation.utility.animation.LerpedFloat;
 import com.simibubi.create.foundation.utility.animation.LerpedFloat.Chaser;
+
 import net.minecraft.block.BlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.Direction;
-import net.minecraft.util.SoundCategory;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.DistExecutor;
-
-import java.util.List;
 
 public class StickerTileEntity extends SmartTileEntity implements IInstanceRendered {
 
@@ -90,8 +90,7 @@ public class StickerTileEntity extends SmartTileEntity implements IInstanceRende
 
 	@OnlyIn(Dist.CLIENT)
 	public void playSound(boolean attach) {
-		world.playSound(Minecraft.getInstance().player, pos, AllSoundEvents.SLIME_ADDED.get(), SoundCategory.BLOCKS,
-			0.35F, attach ? 0.75F : 0.2f);
+		AllSoundEvents.SLIME_ADDED.play(world, Minecraft.getInstance().player, pos, 0.35f, attach ? 0.75f : 0.2f);
 	}
 
 }

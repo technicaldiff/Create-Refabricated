@@ -7,7 +7,6 @@ import com.simibubi.create.Create;
 import com.simibubi.create.content.contraptions.components.structureMovement.render.ContraptionRenderDispatcher;
 import com.simibubi.create.foundation.config.AllConfigs;
 import com.simibubi.create.foundation.utility.AnimationTickHolder;
-import com.simibubi.create.foundation.utility.Debug;
 import com.simibubi.create.foundation.utility.MatrixStacker;
 import com.simibubi.create.foundation.utility.worldWrappers.PlacementSimulationWorld;
 
@@ -27,7 +26,7 @@ public class TileEntityRenderHelper {
 		MatrixStack localTransform, IRenderTypeBuffer buffer) {
 		renderTileEntities(world, null, customRenderTEs, ms, localTransform, buffer);
 	}
-	
+
 	public static void renderTileEntities(World world, Iterable<TileEntity> customRenderTEs, MatrixStack ms,
 		MatrixStack localTransform, IRenderTypeBuffer buffer, float pt) {
 		renderTileEntities(world, null, customRenderTEs, ms, localTransform, buffer, pt);
@@ -38,7 +37,7 @@ public class TileEntityRenderHelper {
 		renderTileEntities(world, renderWorld, customRenderTEs, ms, localTransform, buffer,
 			AnimationTickHolder.getPartialTicks());
 	}
-	
+
 	public static void renderTileEntities(World world, PlacementSimulationWorld renderWorld,
 		Iterable<TileEntity> customRenderTEs, MatrixStack ms, MatrixStack localTransform, IRenderTypeBuffer buffer,
 		float pt) {
@@ -47,7 +46,7 @@ public class TileEntityRenderHelper {
 
 		for (Iterator<TileEntity> iterator = customRenderTEs.iterator(); iterator.hasNext();) {
 			TileEntity tileEntity = iterator.next();
-			//if (tileEntity instanceof IInstanceRendered) continue; // TODO: some things still need to render
+			// if (tileEntity instanceof IInstanceRendered) continue; // TODO: some things still need to render
 
 			TileEntityRenderer<TileEntity> renderer = TileEntityRendererDispatcher.instance.getRenderer(tileEntity);
 			if (renderer == null) {
@@ -55,35 +54,31 @@ public class TileEntityRenderHelper {
 				continue;
 			}
 
-			try {
-				BlockPos pos = tileEntity.getPos();
-				ms.push();
-				MatrixStacker.of(ms)
-					.translate(pos);
+			BlockPos pos = tileEntity.getPos();
+			ms.push();
+			MatrixStacker.of(ms)
+				.translate(pos);
 
+			try {
 				Vector4f vec = new Vector4f(pos.getX() + .5f, pos.getY() + .5f, pos.getZ() + .5f, 1);
 				vec.transform(matrix);
 				BlockPos lightPos = new BlockPos(vec.getX(), vec.getY(), vec.getZ());
 				int worldLight = ContraptionRenderDispatcher.getLightOnContraption(world, renderWorld, pos, lightPos);
-
-				renderer.render(tileEntity, pt, ms, buffer, worldLight,
-								OverlayTexture.DEFAULT_UV);
-				ms.pop();
+				renderer.render(tileEntity, pt, ms, buffer, worldLight, OverlayTexture.DEFAULT_UV);
 
 			} catch (Exception e) {
 				iterator.remove();
-				
+
 				String message = "TileEntity " + tileEntity.getType()
 					.getRegistryName()
 					.toString() + " didn't want to render while moved.\n";
-				if (AllConfigs.CLIENT.explainRenderErrors.get()) {
+				if (AllConfigs.CLIENT.explainRenderErrors.get())
 					Create.logger.error(message, e);
-					continue;
-				}
-				
-				Create.logger.error(message);
-				continue;
+				else
+					Create.logger.error(message);
 			}
+
+			ms.pop();
 		}
 	}
 

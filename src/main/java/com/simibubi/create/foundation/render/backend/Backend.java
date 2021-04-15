@@ -3,28 +3,34 @@ package com.simibubi.create.foundation.render.backend;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.simibubi.create.foundation.render.backend.gl.GlFog;
-import com.simibubi.create.foundation.render.backend.gl.shader.*;
-import com.simibubi.create.foundation.render.backend.gl.versioned.GlCompat;
-import com.simibubi.create.foundation.render.backend.instancing.IFlywheelWorld;
-import net.minecraft.world.World;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.lwjgl.opengl.GL;
 import org.lwjgl.opengl.GLCapabilities;
 
 import com.simibubi.create.foundation.config.AllConfigs;
+import com.simibubi.create.foundation.render.backend.gl.GlFog;
+import com.simibubi.create.foundation.render.backend.gl.shader.GlProgram;
+import com.simibubi.create.foundation.render.backend.gl.shader.IMultiProgram;
+import com.simibubi.create.foundation.render.backend.gl.shader.ProgramSpec;
+import com.simibubi.create.foundation.render.backend.gl.versioned.GlCompat;
+import com.simibubi.create.foundation.render.backend.instancing.IFlywheelWorld;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.resources.IReloadableResourceManager;
 import net.minecraft.resources.IResourceManager;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.vector.Matrix4f;
+import net.minecraft.world.World;
 import net.minecraftforge.resource.ISelectiveResourceReloadListener;
 
 public class Backend {
-	public static final Boolean SHADER_DEBUG_OUTPUT = true;
-
 	public static final Logger log = LogManager.getLogger(Backend.class);
+
+	public static final ShaderLoader shaderLoader = new ShaderLoader();
+
+	public static Matrix4f projectionMatrix = new Matrix4f();
+
 	public static GLCapabilities capabilities;
 	public static GlCompat compat;
 
@@ -32,7 +38,7 @@ public class Backend {
 	private static boolean enabled;
 
 	static final Map<ResourceLocation, ProgramSpec<?>> registry = new HashMap<>();
-	static final Map<ProgramSpec<?>, ProgramGroup<?>> programs = new HashMap<>();
+	static final Map<ProgramSpec<?>, IMultiProgram<?>> programs = new HashMap<>();
 
 	public Backend() {
 		throw new IllegalStateException();
@@ -52,7 +58,7 @@ public class Backend {
 
 	@SuppressWarnings("unchecked")
 	public static <P extends GlProgram, S extends ProgramSpec<P>> P getProgram(S spec) {
-		return (P) programs.get(spec).get(GlFog.getFogMode());
+		return (P) programs.get(spec).get();
 	}
 
 	public static boolean isFlywheelWorld(World world) {
@@ -87,7 +93,7 @@ public class Backend {
 		IResourceManager manager = mc.getResourceManager();
 
 		if (manager instanceof IReloadableResourceManager) {
-			ISelectiveResourceReloadListener listener = ShaderLoader::onResourceManagerReload;
+			ISelectiveResourceReloadListener listener = shaderLoader::onResourceManagerReload;
 			((IReloadableResourceManager) manager).addReloadListener(listener);
 		}
 	}

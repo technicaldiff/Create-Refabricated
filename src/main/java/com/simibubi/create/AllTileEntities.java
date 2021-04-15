@@ -1,6 +1,5 @@
 package com.simibubi.create;
 
-import com.simibubi.create.content.contraptions.base.BackHalfShaftInstance;
 import com.simibubi.create.content.contraptions.base.HalfShaftInstance;
 import com.simibubi.create.content.contraptions.base.HorizontalHalfShaftInstance;
 import com.simibubi.create.content.contraptions.base.KineticTileEntityRenderer;
@@ -50,7 +49,11 @@ import com.simibubi.create.content.contraptions.components.press.PressInstance;
 import com.simibubi.create.content.contraptions.components.saw.SawInstance;
 import com.simibubi.create.content.contraptions.components.saw.SawRenderer;
 import com.simibubi.create.content.contraptions.components.saw.SawTileEntity;
-import com.simibubi.create.content.contraptions.components.structureMovement.bearing.*;
+import com.simibubi.create.content.contraptions.components.structureMovement.bearing.BearingInstance;
+import com.simibubi.create.content.contraptions.components.structureMovement.bearing.BearingRenderer;
+import com.simibubi.create.content.contraptions.components.structureMovement.bearing.ClockworkBearingTileEntity;
+import com.simibubi.create.content.contraptions.components.structureMovement.bearing.MechanicalBearingTileEntity;
+import com.simibubi.create.content.contraptions.components.structureMovement.bearing.WindmillBearingTileEntity;
 import com.simibubi.create.content.contraptions.components.structureMovement.chassis.ChassisTileEntity;
 import com.simibubi.create.content.contraptions.components.structureMovement.chassis.StickerInstance;
 import com.simibubi.create.content.contraptions.components.structureMovement.chassis.StickerRenderer;
@@ -61,8 +64,10 @@ import com.simibubi.create.content.contraptions.components.structureMovement.gan
 import com.simibubi.create.content.contraptions.components.structureMovement.mounted.CartAssemblerTileEntity;
 import com.simibubi.create.content.contraptions.components.structureMovement.piston.MechanicalPistonRenderer;
 import com.simibubi.create.content.contraptions.components.structureMovement.piston.MechanicalPistonTileEntity;
+import com.simibubi.create.content.contraptions.components.structureMovement.pulley.HosePulleyInstance;
 import com.simibubi.create.content.contraptions.components.structureMovement.pulley.PulleyRenderer;
 import com.simibubi.create.content.contraptions.components.structureMovement.pulley.PulleyTileEntity;
+import com.simibubi.create.content.contraptions.components.structureMovement.pulley.RopePulleyInstance;
 import com.simibubi.create.content.contraptions.components.turntable.TurntableTileEntity;
 import com.simibubi.create.content.contraptions.components.waterwheel.WaterWheelTileEntity;
 import com.simibubi.create.content.contraptions.fluids.PumpCogInstance;
@@ -119,7 +124,11 @@ import com.simibubi.create.content.logistics.block.chute.ChuteRenderer;
 import com.simibubi.create.content.logistics.block.chute.ChuteTileEntity;
 import com.simibubi.create.content.logistics.block.chute.SmartChuteRenderer;
 import com.simibubi.create.content.logistics.block.chute.SmartChuteTileEntity;
-import com.simibubi.create.content.logistics.block.depot.*;
+import com.simibubi.create.content.logistics.block.depot.DepotRenderer;
+import com.simibubi.create.content.logistics.block.depot.DepotTileEntity;
+import com.simibubi.create.content.logistics.block.depot.EjectorInstance;
+import com.simibubi.create.content.logistics.block.depot.EjectorRenderer;
+import com.simibubi.create.content.logistics.block.depot.EjectorTileEntity;
 import com.simibubi.create.content.logistics.block.diodes.AdjustablePulseRepeaterTileEntity;
 import com.simibubi.create.content.logistics.block.diodes.AdjustableRepeaterInstance;
 import com.simibubi.create.content.logistics.block.diodes.AdjustableRepeaterRenderer;
@@ -145,6 +154,7 @@ import com.simibubi.create.content.schematics.block.SchematicannonInstance;
 import com.simibubi.create.content.schematics.block.SchematicannonRenderer;
 import com.simibubi.create.content.schematics.block.SchematicannonTileEntity;
 import com.simibubi.create.foundation.tileEntity.renderer.SmartTileEntityRenderer;
+import com.tterrag.registrate.util.entry.BlockEntry;
 import com.tterrag.registrate.util.entry.TileEntityEntry;
 
 public class AllTileEntities {
@@ -236,7 +246,7 @@ public class AllTileEntities {
 		.tileEntity("hand_crank", HandCrankTileEntity::new)
 		.instance(() -> HandCrankInstance::new)
 		.validBlocks(AllBlocks.HAND_CRANK, AllBlocks.COPPER_VALVE_HANDLE)
-		.validBlocks(AllBlocks.DYED_VALVE_HANDLES)
+		.validBlocks(AllBlocks.DYED_VALVE_HANDLES.toArray(new BlockEntry<?>[AllBlocks.DYED_VALVE_HANDLES.size()]))
 		.renderer(() -> HandCrankRenderer::new)
 		.register();
 
@@ -246,14 +256,14 @@ public class AllTileEntities {
 		.validBlocks(AllBlocks.CUCKOO_CLOCK, AllBlocks.MYSTERIOUS_CUCKOO_CLOCK)
 		.renderer(() -> CuckooClockRenderer::new)
 		.register();
-	
+
 	public static final TileEntityEntry<GantryShaftTileEntity> GANTRY_SHAFT = Create.registrate()
 		.tileEntity("gantry_shaft", GantryShaftTileEntity::new)
 		.instance(() -> SingleRotatingInstance::new)
 		.validBlocks(AllBlocks.GANTRY_SHAFT)
 		.renderer(() -> KineticTileEntityRenderer::new)
 		.register();
-	
+
 	public static final TileEntityEntry<GantryCarriageTileEntity> GANTRY_PINION = Create.registrate()
 		.tileEntity("gantry_pinion", GantryCarriageTileEntity::new)
 		.instance(() -> GantryCarriageInstance::new)
@@ -311,7 +321,7 @@ public class AllTileEntities {
 
 	public static final TileEntityEntry<HosePulleyTileEntity> HOSE_PULLEY = Create.registrate()
 		.tileEntity("hose_pulley", HosePulleyTileEntity::new)
-		.instance(() -> ShaftInstance::new)
+		.instance(() -> HosePulleyInstance::new)
 		.validBlocks(AllBlocks.HOSE_PULLEY)
 		.renderer(() -> HosePulleyRenderer::new)
 		.register();
@@ -398,7 +408,7 @@ public class AllTileEntities {
 
 	public static final TileEntityEntry<PulleyTileEntity> ROPE_PULLEY = Create.registrate()
 		.tileEntity("rope_pulley", PulleyTileEntity::new)
-		.instance(() -> ShaftInstance::new)
+		.instance(() -> RopePulleyInstance::new)
 		.validBlocks(AllBlocks.ROPE_PULLEY)
 		.renderer(() -> PulleyRenderer::new)
 		.register();
@@ -408,7 +418,7 @@ public class AllTileEntities {
 		.validBlocks(AllBlocks.RADIAL_CHASSIS, AllBlocks.LINEAR_CHASSIS, AllBlocks.SECONDARY_LINEAR_CHASSIS)
 		// .renderer(() -> renderer)
 		.register();
-	
+
 	public static final TileEntityEntry<StickerTileEntity> STICKER = Create.registrate()
 		.tileEntity("sticker", StickerTileEntity::new)
 		.instance(() -> StickerInstance::new)

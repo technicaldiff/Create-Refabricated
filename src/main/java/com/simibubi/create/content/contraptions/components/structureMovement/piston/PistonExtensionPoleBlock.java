@@ -1,13 +1,20 @@
 package com.simibubi.create.content.contraptions.components.structureMovement.piston;
 
+import static com.simibubi.create.content.contraptions.components.structureMovement.piston.MechanicalPistonBlock.isExtensionPole;
+import static com.simibubi.create.content.contraptions.components.structureMovement.piston.MechanicalPistonBlock.isPiston;
+import static com.simibubi.create.content.contraptions.components.structureMovement.piston.MechanicalPistonBlock.isPistonHead;
+
+import java.util.function.Predicate;
+
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.AllShapes;
-import com.simibubi.create.content.contraptions.components.structureMovement.piston.MechanicalPistonBlock.*;
+import com.simibubi.create.content.contraptions.components.structureMovement.piston.MechanicalPistonBlock.PistonState;
 import com.simibubi.create.content.contraptions.wrench.IWrenchable;
 import com.simibubi.create.foundation.block.ProperDirectionalBlock;
 import com.simibubi.create.foundation.utility.placement.IPlacementHelper;
 import com.simibubi.create.foundation.utility.placement.PlacementHelpers;
 import com.simibubi.create.foundation.utility.placement.util.PoleHelper;
+
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -19,6 +26,7 @@ import net.minecraft.fluid.Fluids;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.item.ItemStack;
+import net.minecraft.pathfinding.PathType;
 import net.minecraft.state.StateContainer.Builder;
 import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.util.ActionResultType;
@@ -33,10 +41,7 @@ import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
-
-import java.util.function.Predicate;
-
-import static com.simibubi.create.content.contraptions.components.structureMovement.piston.MechanicalPistonBlock.*;
+import net.minecraftforge.common.ToolType;
 
 public class PistonExtensionPoleBlock extends ProperDirectionalBlock implements IWrenchable, IWaterLoggable {
 
@@ -47,6 +52,26 @@ public class PistonExtensionPoleBlock extends ProperDirectionalBlock implements 
         setDefaultState(getDefaultState().with(FACING, Direction.UP).with(BlockStateProperties.WATERLOGGED, false));
     }
 
+    @Override
+	public ToolType getHarvestTool(BlockState state) {
+		return null;
+	}
+
+	@Override
+	public boolean canHarvestBlock(BlockState state, IBlockReader world, BlockPos pos, PlayerEntity player) {
+		for (ToolType toolType : player.getHeldItemMainhand()
+			.getToolTypes()) {
+			if (isToolEffective(state, toolType))
+				return true;
+		}
+		return super.canHarvestBlock(state, world, pos, player);
+	}
+
+	@Override
+	public boolean isToolEffective(BlockState state, ToolType tool) {
+		return tool == ToolType.AXE || tool == ToolType.PICKAXE;
+	}
+    
 	@Override
 	public PushReaction getPushReaction(BlockState state) {
 		return PushReaction.NORMAL;
@@ -143,6 +168,11 @@ public class PistonExtensionPoleBlock extends ProperDirectionalBlock implements 
         }
         return state;
     }
+    
+    @Override
+	public boolean allowsMovement(BlockState state, IBlockReader reader, BlockPos pos, PathType type) {
+		return false;
+	}
 
     @MethodsReturnNonnullByDefault
     public static class PlacementHelper extends PoleHelper<Direction> {

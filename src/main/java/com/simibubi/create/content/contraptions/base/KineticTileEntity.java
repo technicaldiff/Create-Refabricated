@@ -1,5 +1,12 @@
 package com.simibubi.create.content.contraptions.base;
 
+import static net.minecraft.util.text.TextFormatting.GOLD;
+import static net.minecraft.util.text.TextFormatting.GRAY;
+
+import java.util.List;
+
+import javax.annotation.Nullable;
+
 import com.simibubi.create.Create;
 import com.simibubi.create.content.contraptions.KineticNetwork;
 import com.simibubi.create.content.contraptions.RotationPropagator;
@@ -15,6 +22,7 @@ import com.simibubi.create.foundation.render.backend.instancing.IInstanceRendere
 import com.simibubi.create.foundation.tileEntity.SmartTileEntity;
 import com.simibubi.create.foundation.tileEntity.TileEntityBehaviour;
 import com.simibubi.create.foundation.utility.Lang;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.resources.I18n;
@@ -35,12 +43,6 @@ import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
-import javax.annotation.Nullable;
-import java.util.List;
-
-import static net.minecraft.util.text.TextFormatting.GOLD;
-import static net.minecraft.util.text.TextFormatting.GRAY;
-
 public abstract class KineticTileEntity extends SmartTileEntity
 	implements ITickableTileEntity, IHaveGoggleInformation, IHaveHoveringInformation, IInstanceRendered {
 
@@ -48,7 +50,7 @@ public abstract class KineticTileEntity extends SmartTileEntity
 	public @Nullable BlockPos source;
 	public boolean networkDirty;
 	public boolean updateSpeed;
-	public boolean preventSpeedUpdate;
+	public int preventSpeedUpdate;
 
 	protected KineticEffectHandler effects;
 	protected float speed;

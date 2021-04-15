@@ -1,5 +1,13 @@
 package com.simibubi.create.content.contraptions.components.structureMovement.mounted;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.AllShapes;
 import com.simibubi.create.AllTileEntities;
@@ -18,6 +26,7 @@ import com.simibubi.create.foundation.block.ITE;
 import com.simibubi.create.foundation.utility.Couple;
 import com.simibubi.create.foundation.utility.Iterate;
 import com.simibubi.create.foundation.utility.VecHelper;
+
 import net.minecraft.block.AbstractRailBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -33,6 +42,7 @@ import net.minecraft.item.ItemUseContext;
 import net.minecraft.loot.LootContext;
 import net.minecraft.loot.LootParameters;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.pathfinding.PathType;
 import net.minecraft.state.BooleanProperty;
 import net.minecraft.state.EnumProperty;
 import net.minecraft.state.Property;
@@ -40,8 +50,13 @@ import net.minecraft.state.StateContainer.Builder;
 import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.state.properties.RailShape;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.*;
+import net.minecraft.util.ActionResultType;
+import net.minecraft.util.Direction;
 import net.minecraft.util.Direction.Axis;
+import net.minecraft.util.Hand;
+import net.minecraft.util.Rotation;
+import net.minecraft.util.SoundCategory;
+import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.MathHelper;
@@ -55,13 +70,6 @@ import net.minecraft.world.IWorldReader;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.common.util.LazyOptional;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
 
 public class CartAssemblerBlock extends AbstractRailBlock
 	implements ITE<CartAssemblerTileEntity>, IWrenchable, ISpecialBlockItemRequirement {
@@ -130,54 +138,6 @@ public class CartAssemblerBlock extends AbstractRailBlock
 			return;
 
 		withTileEntityDo(world, pos, te -> {
-			/*
-		}
-<<<<<<< HEAD
-			if (te.isMinecartUpdateValid()) {
-				switch (state.get(RAIL_TYPE)) {
-				case POWERED_RAIL:
-					if (state.get(POWERED)) {
-						assemble(world, pos, cart);
-						Direction facing = cart.getAdjustedHorizontalFacing();
-						float speed = getRailMaxSpeed(state, world, pos, cart);
-						cart.setMotion(facing.getXOffset() * speed, facing.getYOffset() * speed,
-							facing.getZOffset() * speed);
-					} else {
-						disassemble(world, pos, cart);
-						Vector3d diff = VecHelper.getCenterOf(pos)
-							.subtract(cart.getPositionVec());
-						cart.setMotion(diff.x / 16f, 0, diff.z / 16f);
-					}
-					break;
-				case REGULAR:
-					if (state.get(POWERED)) {
-						assemble(world, pos, cart);
-					} else {
-						disassemble(world, pos, cart);
-					}
-					break;
-				case ACTIVATOR_RAIL:
-					if (state.get(POWERED)) {
-						disassemble(world, pos, cart);
-					}
-					break;
-				case DETECTOR_RAIL:
-					if (cart.getPassengers()
-						.isEmpty()) {
-						assemble(world, pos, cart);
-						Direction facing = cart.getAdjustedHorizontalFacing();
-						float speed = getRailMaxSpeed(state, world, pos, cart);
-						cart.setMotion(facing.getXOffset() * speed, facing.getYOffset() * speed,
-							facing.getZOffset() * speed);
-					} else {
-						disassemble(world, pos, cart);
-					}
-					break;
-				default:
-					break;
-				}
-				te.resetTicksSinceMinecartUpdate();
-=======*/
 			if (!te.isMinecartUpdateValid())
 				return;
 
@@ -451,13 +411,6 @@ public class CartAssemblerBlock extends AbstractRailBlock
 		return PushReaction.BLOCK;
 	}
 
-	/* FIXME: Is there a 1.16 equivalent to be used? Or is this just removed?
-	@Override
-	public boolean isNormalCube(@Nonnull BlockState state, @Nonnull IBlockReader worldIn, @Nonnull BlockPos pos) {
-		return false;
-	}
-	 */
-
 	@Override
 	public Class<CartAssemblerTileEntity> getTileEntityClass() {
 		return CartAssemblerTileEntity.class;
@@ -535,6 +488,11 @@ public class CartAssemblerBlock extends AbstractRailBlock
 		}
 	}
 
+	@Override
+	public boolean allowsMovement(BlockState state, IBlockReader reader, BlockPos pos, PathType type) {
+		return false;
+	}
+	
 	@Override
 	public ActionResultType onWrenched(BlockState state, ItemUseContext context) {
 		World world = context.getWorld();

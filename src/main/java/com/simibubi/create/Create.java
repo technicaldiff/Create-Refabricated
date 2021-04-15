@@ -2,8 +2,6 @@ package com.simibubi.create;
 
 import java.util.Random;
 
-import net.minecraft.world.gen.feature.Feature;
-import net.minecraft.world.gen.placement.Placement;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -39,6 +37,8 @@ import net.minecraft.item.crafting.IRecipeSerializer;
 import net.minecraft.particles.ParticleType;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
+import net.minecraft.world.gen.feature.Feature;
+import net.minecraft.world.gen.placement.Placement;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.world.BiomeLoadingEvent;
@@ -55,7 +55,7 @@ public class Create {
 
 	public static final String ID = "create";
 	public static final String NAME = "Create";
-	public static final String VERSION = "0.3.1a";
+	public static final String VERSION = "0.3.1b";
 
 	public static Logger logger = LogManager.getLogger();
 	public static ItemGroup baseCreativeTab = new CreateItemGroup();
@@ -120,13 +120,13 @@ public class Create {
 
 		AllPackets.registerPackets();
 		AllTriggers.register();
-		
+
 		event.enqueueWork(() -> {
 			SchematicProcessor.register();
 			AllWorldFeatures.registerFeatures();
 		});
 	}
-	
+
 	public static void onBiomeLoad(BiomeLoadingEvent event) {
 		AllWorldFeatures.reload(event);
 	}
@@ -143,7 +143,7 @@ public class Create {
 		DataGenerator gen = event.getGenerator();
 		gen.addProvider(new AllAdvancements(gen));
 		gen.addProvider(new LangMerger(gen));
-		gen.addProvider(AllSoundEvents.BLAZE_MUNCH.generator(gen));
+		gen.addProvider(AllSoundEvents.provider(gen));
 		gen.addProvider(new StandardRecipeGen(gen));
 		gen.addProvider(new MechanicalCraftingRecipeGen(gen));
 		ProcessingRecipeGen.registerAll(gen);

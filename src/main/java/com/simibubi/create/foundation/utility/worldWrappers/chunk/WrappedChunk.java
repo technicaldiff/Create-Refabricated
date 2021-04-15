@@ -72,6 +72,11 @@ public class WrappedChunk implements IChunk {
         return sections;
     }
 
+    @Override
+    public ChunkStatus getStatus() {
+        return ChunkStatus.LIGHT;
+    }
+
     @Nullable
     @Override
     public BlockState setBlockState(BlockPos p_177436_1_, BlockState p_177436_2_, boolean p_177436_3_) {
@@ -115,7 +120,7 @@ public class WrappedChunk implements IChunk {
 
     @Override
     public ChunkPos getPos() {
-        return null;
+        return pos;
     }
 
     @Override
@@ -137,11 +142,6 @@ public class WrappedChunk implements IChunk {
     @Override
     public boolean isModified() {
         return false;
-    }
-
-    @Override
-    public ChunkStatus getStatus() {
-        return null;
     }
 
     @Override
@@ -219,7 +219,7 @@ public class WrappedChunk implements IChunk {
 
 	@Override
 	public void addStructureReference(Structure<?> arg0, long arg1) {
-		
+
 	}
 
 	@Override
@@ -239,17 +239,17 @@ public class WrappedChunk implements IChunk {
 
 	@Override
 	public void setStructureReferences(Map<Structure<?>, LongSet> arg0) {
-		
+
 	}
 
 	@Override
 	public void setStructureStart(Structure<?> arg0, StructureStart<?> arg1) {
-		
+
 	}
 
 	@Override
 	public void setStructureStarts(Map<Structure<?>, StructureStart<?>> p_201612_1_) {
-		
+
 	}
 
 	@Override

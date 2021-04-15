@@ -6,6 +6,7 @@ import java.util.HashSet;
 import java.util.function.Predicate;
 
 import com.simibubi.create.foundation.render.backend.instancing.IFlywheelWorld;
+
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.tileentity.TileEntity;

@@ -18,14 +18,21 @@ import com.simibubi.create.foundation.item.ItemHelper;
 import com.simibubi.create.foundation.tileEntity.TileEntityBehaviour;
 import com.simibubi.create.foundation.tileEntity.behaviour.belt.DirectBeltInputBehaviour;
 import com.simibubi.create.foundation.tileEntity.behaviour.filtering.FilteringBehaviour;
-import com.simibubi.create.foundation.utility.BlockHelper;
 import com.simibubi.create.foundation.utility.TreeCutter;
-import com.simibubi.create.foundation.utility.TreeCutter.Tree;
 import com.simibubi.create.foundation.utility.VecHelper;
 import com.simibubi.create.foundation.utility.recipe.RecipeConditions;
 import com.simibubi.create.foundation.utility.recipe.RecipeFinder;
+
 import mcp.MethodsReturnNonnullByDefault;
-import net.minecraft.block.*;
+import net.minecraft.block.BambooBlock;
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.CactusBlock;
+import net.minecraft.block.ChorusPlantBlock;
+import net.minecraft.block.KelpBlock;
+import net.minecraft.block.KelpTopBlock;
+import net.minecraft.block.StemGrownBlock;
+import net.minecraft.block.SugarCaneBlock;
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.ItemStack;
@@ -360,13 +367,7 @@ public class SawTileEntity extends BlockBreakingKineticTileEntity {
 	@Override
 	public void onBlockBroken(BlockState stateToBreak) {
 		super.onBlockBroken(stateToBreak);
-		Tree tree = TreeCutter.cutTree(world, breakingPos);
-		if (tree != null) {
-			for (BlockPos log : tree.logs)
-				BlockHelper.destroyBlock(world, log, 1 / 2f, stack -> dropItemFromCutTree(log, stack));
-			for (BlockPos leaf : tree.leaves)
-				BlockHelper.destroyBlock(world, leaf, 1 / 8f, stack -> dropItemFromCutTree(leaf, stack));
-		}
+		TreeCutter.findTree(world, breakingPos).destroyBlocks(world, null, this::dropItemFromCutTree);
 	}
 
 	public void dropItemFromCutTree(BlockPos pos, ItemStack stack) {

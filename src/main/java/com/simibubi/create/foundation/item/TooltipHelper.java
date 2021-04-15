@@ -47,19 +47,23 @@ public class TooltipHelper {
 	private static final Map<Item, Supplier<String>> tooltipReferrals = new HashMap<>();
 
 	public static IFormattableTextComponent holdShift(Palette color, boolean highlighted) {
-		TextFormatting colorFormat = highlighted ? color.hColor : color.color;
-		return Lang.translate("tooltip.holdKey", Lang.translate("tooltip.keyShift")
-			.formatted(colorFormat)).formatted(TextFormatting.DARK_GRAY);
+		return Lang.translate("tooltip.holdForDescription", Lang.translate("tooltip.keyShift")
+			.formatted(TextFormatting.GRAY))
+			.formatted(TextFormatting.DARK_GRAY);
 	}
 
 	public static void addHint(List<ITextComponent> tooltip, String hintKey, Object... messageParams) {
 		ITextComponent spacing = IHaveGoggleInformation.componentSpacing;
-		tooltip.add(spacing.copy().append(Lang.translate(hintKey + ".title")).formatted(GOLD));
+		tooltip.add(spacing.copy()
+			.append(Lang.translate(hintKey + ".title"))
+			.formatted(GOLD));
 		ITextComponent hint = Lang.translate(hintKey);
 		List<ITextComponent> cutComponent = TooltipHelper.cutTextComponent(hint, GRAY, TextFormatting.WHITE);
-		for (ITextComponent component : cutComponent) tooltip.add(spacing.copy().append(component));
+		for (ITextComponent component : cutComponent)
+			tooltip.add(spacing.copy()
+				.append(component));
 	}
-	
+
 	public static void referTo(IItemProvider item, Supplier<? extends IItemProvider> itemWithTooltip) {
 		tooltipReferrals.put(item.asItem(), () -> itemWithTooltip.get()
 			.asItem()
@@ -126,7 +130,7 @@ public class TooltipHelper {
 		String s = getUnformattedDeepText(c);
 
 		// Apply markup
-		String markedUp = s;//.replaceAll("_([^_]+)_", highlightColor + "$1" + defaultColor);
+		String markedUp = s;// .replaceAll("_([^_]+)_", highlightColor + "$1" + defaultColor);
 
 		// Split words
 		List<String> words = new LinkedList<>();
@@ -181,7 +185,6 @@ public class TooltipHelper {
 			formattedLines.add(currentComponent);
 			currentlyHighlighted = !currentlyHighlighted;
 		}
-
 
 		return formattedLines;
 	}
@@ -300,7 +303,8 @@ public class TooltipHelper {
 			if (!I18n.hasKey(conditionKey))
 				break;
 			if (i == 1)
-				tooltip.getLinesOnShift().add(new StringTextComponent(""));
+				tooltip.getLinesOnShift()
+					.add(new StringTextComponent(""));
 			tooltip.withBehaviour(I18n.format(conditionKey), I18n.format(behaviourKey));
 		}
 
@@ -319,7 +323,8 @@ public class TooltipHelper {
 	public static String getTooltipTranslationKey(ItemStack stack) {
 		Item item = stack.getItem();
 		if (tooltipReferrals.containsKey(item))
-			return tooltipReferrals.get(item).get() + ".tooltip";
+			return tooltipReferrals.get(item)
+				.get() + ".tooltip";
 		return item.getTranslationKey(stack) + ".tooltip";
 	}
 

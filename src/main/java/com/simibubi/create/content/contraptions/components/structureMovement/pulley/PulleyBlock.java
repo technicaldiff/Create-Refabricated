@@ -5,7 +5,6 @@ import com.simibubi.create.AllShapes;
 import com.simibubi.create.AllTileEntities;
 import com.simibubi.create.content.contraptions.base.HorizontalAxisKineticBlock;
 import com.simibubi.create.foundation.block.ITE;
-import com.simibubi.create.foundation.utility.BlockHelper;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -16,6 +15,7 @@ import net.minecraft.fluid.FluidState;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.item.ItemStack;
+import net.minecraft.pathfinding.PathType;
 import net.minecraft.state.EnumProperty;
 import net.minecraft.state.StateContainer.Builder;
 import net.minecraft.state.properties.BlockStateProperties;
@@ -98,6 +98,11 @@ public class PulleyBlock extends HorizontalAxisKineticBlock implements ITE<Pulle
             super(properties);
             setDefaultState(super.getDefaultState().with(BlockStateProperties.WATERLOGGED, false));
         }
+        
+        @Override
+    	public boolean allowsMovement(BlockState state, IBlockReader reader, BlockPos pos, PathType type) {
+    		return false;
+    	}
 
         @Override
         public PushReaction getPushReaction(BlockState state) {
