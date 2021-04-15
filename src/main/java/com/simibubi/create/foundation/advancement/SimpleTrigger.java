@@ -8,7 +8,8 @@ import javax.annotation.ParametersAreNonnullByDefault;
 
 import com.google.gson.JsonObject;
 
-import mcp.MethodsReturnNonnullByDefault;
+import com.simibubi.create.lib.annotation.MethodsReturnNonnullByDefault;
+
 import net.minecraft.advancements.criterion.EntityPredicate;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.loot.ConditionArrayParser;

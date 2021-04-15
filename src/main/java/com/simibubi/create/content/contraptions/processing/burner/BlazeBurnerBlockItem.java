@@ -9,7 +9,8 @@ import javax.annotation.ParametersAreNonnullByDefault;
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.foundation.utility.VecHelper;
 
-import mcp.MethodsReturnNonnullByDefault;
+import com.simibubi.create.lib.annotation.MethodsReturnNonnullByDefault;
+
 import net.minecraft.block.Block;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;

@@ -23,7 +23,8 @@ import com.simibubi.create.foundation.utility.VecHelper;
 import com.simibubi.create.foundation.utility.recipe.RecipeConditions;
 import com.simibubi.create.foundation.utility.recipe.RecipeFinder;
 
-import mcp.MethodsReturnNonnullByDefault;
+import com.simibubi.create.lib.annotation.MethodsReturnNonnullByDefault;
+
 import net.minecraft.block.BambooBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;

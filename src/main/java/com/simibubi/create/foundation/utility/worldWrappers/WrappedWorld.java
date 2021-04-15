@@ -7,7 +7,8 @@ import java.util.function.Predicate;
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 
-import mcp.MethodsReturnNonnullByDefault;
+import com.simibubi.create.lib.annotation.MethodsReturnNonnullByDefault;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.Entity;
@@ -51,12 +52,12 @@ public class WrappedWorld extends World {
 	public World getWorld() {
 		return world;
 	}
-	
+
 	@Override
 	public WorldLightManager getLightingProvider() {
 		return world.getLightingProvider();
 	}
-	
+
 	@Override
 	public BlockState getBlockState(@Nullable BlockPos pos) {
 		return world.getBlockState(pos);

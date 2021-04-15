@@ -10,7 +10,8 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.simibubi.create.AllParticleTypes;
 
-import mcp.MethodsReturnNonnullByDefault;
+import com.simibubi.create.lib.annotation.MethodsReturnNonnullByDefault;
+
 import net.minecraft.client.particle.ParticleManager.IParticleMetaFactory;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.particles.IParticleData;
@@ -22,7 +23,7 @@ import net.fabricmc.api.Environment;
 @MethodsReturnNonnullByDefault
 public class HeaterParticleData implements IParticleData, ICustomParticleDataWithSprite<HeaterParticleData> {
 
-	public static final Codec<HeaterParticleData> CODEC = RecordCodecBuilder.create(i -> 
+	public static final Codec<HeaterParticleData> CODEC = RecordCodecBuilder.create(i ->
 		i.group(
 			Codec.FLOAT.fieldOf("r").forGetter(p -> p.r),
 			Codec.FLOAT.fieldOf("g").forGetter(p -> p.g),

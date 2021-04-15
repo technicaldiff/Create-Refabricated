@@ -13,7 +13,8 @@ import javax.annotation.ParametersAreNonnullByDefault;
 import com.google.common.collect.Maps;
 import com.simibubi.create.Create;
 
-import mcp.MethodsReturnNonnullByDefault;
+import com.simibubi.create.lib.annotation.MethodsReturnNonnullByDefault;
+
 import net.minecraft.advancements.ICriterionTrigger;
 import net.minecraft.advancements.PlayerAdvancements;
 import net.minecraft.advancements.criterion.CriterionInstance;

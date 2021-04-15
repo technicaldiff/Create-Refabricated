@@ -6,7 +6,8 @@ import javax.annotation.ParametersAreNonnullByDefault;
 
 import com.simibubi.create.content.contraptions.components.structureMovement.MovementContext;
 
-import mcp.MethodsReturnNonnullByDefault;
+import com.simibubi.create.lib.annotation.MethodsReturnNonnullByDefault;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.DispenserBlock;
@@ -39,7 +40,7 @@ public class DispenserMovementBehaviour extends DropperMovementBehaviour {
 			spawneggsRegistered = true;
 			IMovedDispenseItemBehaviour.initSpawneggs();
 		}
-		
+
 		DispenseItemLocation location = getDispenseLocation(context);
 		if (location.isEmpty()) {
 			context.world.playEvent(1001, pos, 0);

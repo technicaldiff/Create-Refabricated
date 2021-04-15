@@ -5,6 +5,8 @@ import java.util.List;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 
+import com.simibubi.create.lib.annotation.MethodsReturnNonnullByDefault;
+
 import org.apache.logging.log4j.LogManager;
 
 import com.simibubi.create.content.logistics.item.filter.AbstractFilterContainer;
@@ -13,7 +15,6 @@ import com.simibubi.create.content.logistics.item.filter.AttributeFilterScreen;
 import com.simibubi.create.content.logistics.item.filter.FilterScreenPacket;
 import com.simibubi.create.foundation.networking.AllPackets;
 
-import mcp.MethodsReturnNonnullByDefault;
 import mezz.jei.api.gui.handlers.IGhostIngredientHandler;
 import net.minecraft.client.renderer.Rectangle2d;
 import net.minecraft.inventory.container.Slot;

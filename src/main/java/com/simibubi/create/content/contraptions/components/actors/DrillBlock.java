@@ -7,7 +7,8 @@ import com.simibubi.create.AllTileEntities;
 import com.simibubi.create.content.contraptions.base.DirectionalKineticBlock;
 import com.simibubi.create.foundation.block.ITE;
 
-import mcp.MethodsReturnNonnullByDefault;
+import com.simibubi.create.lib.annotation.MethodsReturnNonnullByDefault;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.material.PushReaction;
@@ -34,7 +35,7 @@ public class DrillBlock extends DirectionalKineticBlock implements ITE<DrillTile
 	public DrillBlock(Properties properties) {
 		super(properties);
 	}
-	
+
 	@Override
 	public boolean hasTileEntity(BlockState state) {
 		return true;

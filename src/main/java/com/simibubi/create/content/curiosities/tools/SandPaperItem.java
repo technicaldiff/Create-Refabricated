@@ -4,7 +4,8 @@ import javax.annotation.ParametersAreNonnullByDefault;
 
 import com.simibubi.create.foundation.utility.VecHelper;
 
-import mcp.MethodsReturnNonnullByDefault;
+import com.simibubi.create.lib.annotation.MethodsReturnNonnullByDefault;
+
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.item.ItemEntity;

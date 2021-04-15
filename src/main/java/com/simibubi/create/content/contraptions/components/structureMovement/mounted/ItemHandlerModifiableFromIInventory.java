@@ -3,7 +3,8 @@ package com.simibubi.create.content.contraptions.components.structureMovement.mo
 import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
 
-import mcp.MethodsReturnNonnullByDefault;
+import com.simibubi.create.lib.annotation.MethodsReturnNonnullByDefault;
+
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 

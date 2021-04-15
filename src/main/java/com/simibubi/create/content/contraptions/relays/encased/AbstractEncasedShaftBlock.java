@@ -4,7 +4,8 @@ import javax.annotation.Nullable;
 
 import com.simibubi.create.content.contraptions.base.RotatedPillarKineticBlock;
 
-import mcp.MethodsReturnNonnullByDefault;
+import com.simibubi.create.lib.annotation.MethodsReturnNonnullByDefault;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.material.PushReaction;

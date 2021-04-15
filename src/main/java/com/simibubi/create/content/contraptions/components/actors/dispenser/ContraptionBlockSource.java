@@ -4,7 +4,8 @@ import javax.annotation.Nullable;
 
 import com.simibubi.create.content.contraptions.components.structureMovement.MovementContext;
 
-import mcp.MethodsReturnNonnullByDefault;
+import com.simibubi.create.lib.annotation.MethodsReturnNonnullByDefault;
+
 import net.minecraft.block.BlockState;
 import net.minecraft.dispenser.IBlockSource;
 import net.minecraft.server.MinecraftServer;

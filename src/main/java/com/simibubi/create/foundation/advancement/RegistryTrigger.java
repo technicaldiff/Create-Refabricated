@@ -3,7 +3,8 @@ package com.simibubi.create.foundation.advancement;
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 
-import mcp.MethodsReturnNonnullByDefault;
+import com.simibubi.create.lib.annotation.MethodsReturnNonnullByDefault;
+
 import net.minecraft.util.ResourceLocation;
 
 @ParametersAreNonnullByDefault

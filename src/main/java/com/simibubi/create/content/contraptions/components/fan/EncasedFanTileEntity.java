@@ -9,7 +9,8 @@ import com.simibubi.create.content.contraptions.processing.burner.BlazeBurnerBlo
 import com.simibubi.create.content.logistics.block.chute.ChuteTileEntity;
 import com.simibubi.create.foundation.config.AllConfigs;
 
-import mcp.MethodsReturnNonnullByDefault;
+import com.simibubi.create.lib.annotation.MethodsReturnNonnullByDefault;
+
 import net.minecraft.block.BlockState;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.state.properties.BlockStateProperties;
@@ -40,7 +41,7 @@ public class EncasedFanTileEntity extends GeneratingKineticTileEntity implements
 	@Override
 	protected void fromTag(BlockState state, CompoundNBT compound, boolean clientPacket) {
 		super.fromTag(state, compound, clientPacket);
-		if (!wasMoved) 
+		if (!wasMoved)
 			isGenerator = compound.getBoolean("Generating");
 		if (clientPacket)
 			airCurrent.rebuild();
@@ -177,7 +178,7 @@ public class EncasedFanTileEntity extends GeneratingKineticTileEntity implements
 		super.tick();
 
 		boolean server = !world.isRemote || isVirtual();
-		
+
 		if (server && airCurrentUpdateCooldown-- <= 0) {
 			airCurrentUpdateCooldown = AllConfigs.SERVER.kinetics.fanBlockCheckRate.get();
 			updateAirFlow = true;
@@ -188,7 +189,7 @@ public class EncasedFanTileEntity extends GeneratingKineticTileEntity implements
 			airCurrent.rebuild();
 			sendData();
 		}
-		
+
 		if (updateGenerator) {
 			updateGenerator = false;
 			updateGenerator();
