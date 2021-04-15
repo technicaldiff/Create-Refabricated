@@ -1,16 +1,15 @@
 package com.simibubi.create.lib.mixin;
 
-import com.simibubi.create.lib.entity.Equipment;
-
-import net.minecraft.entity.MobEntity;
-
-import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.item.ItemStack;
-
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
+
+import com.simibubi.create.lib.entity.Equipment;
+
+import net.minecraft.entity.MobEntity;
+import net.minecraft.inventory.EquipmentSlotType;
+import net.minecraft.item.ItemStack;
 
 @Mixin(MobEntity.class)
 public abstract class MobEntityMixin {

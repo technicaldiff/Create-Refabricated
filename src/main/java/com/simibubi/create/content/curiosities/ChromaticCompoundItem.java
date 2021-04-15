@@ -7,12 +7,10 @@ import com.simibubi.create.foundation.config.AllConfigs;
 import com.simibubi.create.foundation.config.CRecipes;
 import com.simibubi.create.foundation.utility.ColorHelper;
 import com.simibubi.create.foundation.utility.VecHelper;
-
+import com.simibubi.create.lib.helper.BeaconTileEntityHelper;
 import com.simibubi.create.lib.helper.EntityHelper;
 import com.simibubi.create.lib.item.CustomDurabilityBarItem;
-
 import com.simibubi.create.lib.item.CustomMaxCountItem;
-
 import com.simibubi.create.lib.item.EntityTickListenerItem;
 
 import net.minecraft.block.BlockState;
@@ -142,7 +140,7 @@ public class ChromaticCompoundItem extends Item implements CustomDurabilityBarIt
 
 				BeaconTileEntity bte = (BeaconTileEntity) te;
 
-				if (bte.getLevels() != 0 && !bte.getBeamSegments().isEmpty())
+				if (bte.getLevels() != 0 && !BeaconTileEntityHelper.getBeamSegments(bte).isEmpty())
 					isOverBeacon = true;
 
 				break;

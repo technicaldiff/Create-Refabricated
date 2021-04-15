@@ -1,13 +1,11 @@
 package com.simibubi.create.lib.helper;
 
 import com.simibubi.create.lib.mixin.accessor.DamageSourceAccessor;
-
 import com.simibubi.create.lib.utility.MixinHelper;
 
 import net.minecraft.util.DamageSource;
 
 public final class DamageSourceHelper {
-
 	public static DamageSource createDamageSource(String string) {
 		return DamageSourceAccessor.create$init(string);
 	}

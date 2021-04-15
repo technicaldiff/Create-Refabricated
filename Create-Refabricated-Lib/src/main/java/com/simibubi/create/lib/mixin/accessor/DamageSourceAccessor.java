@@ -1,14 +1,12 @@
 package com.simibubi.create.lib.mixin.accessor;
 
-import net.minecraft.util.DamageSource;
-
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.gen.Accessor;
 import org.spongepowered.asm.mixin.gen.Invoker;
+
+import net.minecraft.util.DamageSource;
 
 @Mixin(DamageSource.class)
 public interface DamageSourceAccessor {
-
 	@Invoker("setFireDamage")
 	DamageSource create$setFireDamage();
 
