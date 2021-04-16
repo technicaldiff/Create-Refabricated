@@ -17,11 +17,7 @@ import com.simibubi.create.foundation.data.BlockStateGen;
 import com.simibubi.create.foundation.data.CreateRegistrate;
 import com.simibubi.create.foundation.data.WindowGen;
 import com.tterrag.registrate.providers.DataGenContext;
-import com.tterrag.registrate.providers.RegistrateBlockstateProvider;
-import com.tterrag.registrate.providers.loot.RegistrateBlockLootTables;
-import com.tterrag.registrate.util.DataIngredient;
 import com.tterrag.registrate.util.entry.BlockEntry;
-import com.tterrag.registrate.util.nullness.NonNullBiConsumer;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
@@ -43,11 +39,11 @@ public class AllPaletteBlocks {
 	public static final BlockEntry<GlassBlock> TILED_GLASS = REGISTRATE.block("tiled_glass", GlassBlock::new)
 		.initialProperties(() -> Blocks.GLASS)
 		.addLayer(() -> RenderType::getCutoutMipped)
-		.recipe((c, p) -> p.stonecutting(DataIngredient.tag(Tags.Items.GLASS_COLORLESS), c::get))
-		.blockstate(palettesCubeAll())
-		.tag(Tags.Blocks.GLASS_COLORLESS, BlockTags.IMPERMEABLE)
+//		.recipe((c, p) -> p.stonecutting(DataIngredient.tag(Tags.Items.GLASS_COLORLESS), c::get))
+//		.blockstate(palettesCubeAll())
+		.tag(BlockTags.IMPERMEABLE)
 		.item()
-		.tag(Tags.Items.GLASS_COLORLESS)
+//		.tag(Tags.Items.GLASS_COLORLESS)
 		.build()
 		.register();
 
@@ -107,7 +103,7 @@ public class AllPaletteBlocks {
 
 	public static final BlockEntry<SandBlock> LIMESAND = REGISTRATE.block("limesand", p -> new SandBlock(0xD7D7C7, p))
 		.initialProperties(() -> Blocks.SAND)
-		.blockstate(palettesCubeAll())
+//		.blockstate(palettesCubeAll())
 		.simpleItem()
 		.register();
 
@@ -151,8 +147,8 @@ public class AllPaletteBlocks {
 		.initialProperties(() -> Blocks.ANDESITE)
 		.tag(BlockTags.BASE_STONE_OVERWORLD)
 		.onRegister(CreateRegistrate.blockVertexColors(new ScoriaVertexColor()))
-		.loot((p, g) -> p.registerLootTable(g, RegistrateBlockLootTables.droppingWithSilkTouch(g, SCORIA.get())))
-		.blockstate(palettesCubeAll())
+//		.loot((p, g) -> p.registerLootTable(g, RegistrateBlockLootTables.droppingWithSilkTouch(g, SCORIA.get())))
+//		.blockstate(palettesCubeAll())
 		.simpleItem()
 		.register();
 
@@ -168,7 +164,7 @@ public class AllPaletteBlocks {
 
 	public static void register() {}
 
-	private static <T extends Block> NonNullBiConsumer<DataGenContext<Block, T>, RegistrateBlockstateProvider> palettesCubeAll() {
-		return (c, p) -> BlockStateGen.cubeAll(c, p, "palettes/");
-	}
+//	private static <T extends Block> NonNullBiConsumer<DataGenContext<Block, T>, RegistrateBlockstateProvider> palettesCubeAll() {
+//		return (c, p) -> BlockStateGen.cubeAll(c, p, "palettes/");
+//	}
 }

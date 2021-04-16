@@ -103,7 +103,7 @@ public class WaterWheelBlock extends HorizontalKineticBlock implements ITE<Water
 		if (side.getAxis()
 			.isHorizontal()) {
 			BlockState adjacentBlock = world.getBlockState(pos.offset(side));
-			if (adjacentBlock.getBlock() == Blocks.BUBBLE_COLUMN.getBlock())
+			if (adjacentBlock.getBlock() == Blocks.BUBBLE_COLUMN)
 				vec = new Vector3d(0, adjacentBlock.get(BubbleColumnBlock.DRAG) ? -1 : 1, 0);
 		}
 

@@ -18,9 +18,6 @@ import com.simibubi.create.foundation.block.connected.HorizontalCTBehaviour;
 import com.simibubi.create.foundation.data.BlockStateGen;
 import com.simibubi.create.foundation.data.ModelGen;
 import com.tterrag.registrate.providers.DataGenContext;
-import com.tterrag.registrate.providers.RegistrateBlockstateProvider;
-import com.tterrag.registrate.providers.RegistrateRecipeProvider;
-import com.tterrag.registrate.util.DataIngredient;
 import com.tterrag.registrate.util.nullness.NonNullBiConsumer;
 import com.tterrag.registrate.util.nullness.NonNullFunction;
 
@@ -40,14 +37,15 @@ public class PaletteBlockPatterns {
 	COBBLESTONE = create("cobblestone", Suffix, AllPartials),
 
 		POLISHED = create("polished", Prefix, ForPolished)
-			.addRecipes(v -> (c,
-			p) -> {
-				DataIngredient ingredient = DataIngredient.items(v.getBaseBlock().get());
-				ShapedRecipeBuilder.shapedRecipe(c.get(), 4).key('X', ingredient)
-						.patternLine("XX").patternLine("XX")
-						.addCriterion("has_" + p.safeName(ingredient), ingredient.getCritereon(p)).build(p, p.safeId(c.get()));
-				}
-			),
+//			.addRecipes(v -> (c,
+//			p) -> {
+//				DataIngredient ingredient = DataIngredient.items(v.getBaseBlock().get());
+//				ShapedRecipeBuilder.shapedRecipe(c.get(), 4).key('X', ingredient)
+//						.patternLine("XX").patternLine("XX")
+//						.addCriterion("has_" + p.safeName(ingredient), ingredient.getCritereon(p)).build(p, p.safeId(c.get()));
+//				}
+//			)
+		,
 
 		BRICKS = create("bricks", Suffix, AllPartials), FANCY_BRICKS = create("fancy_bricks", Wrap, AllPartials),
 
