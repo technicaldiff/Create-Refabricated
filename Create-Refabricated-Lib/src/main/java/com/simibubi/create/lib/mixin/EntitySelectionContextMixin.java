@@ -14,6 +14,7 @@ import net.minecraft.util.math.shapes.EntitySelectionContext;
 
 @Mixin(EntitySelectionContext.class)
 public abstract class EntitySelectionContextMixin implements EntitySelectionContextExtensions {
+
 	@Unique
 	private Entity create$cachedEntity;
 

@@ -2,6 +2,10 @@ package com.simibubi.create.content.contraptions.components.tracks;
 
 import javax.annotation.Nonnull;
 
+import com.simibubi.create.lib.block.CustomSlopability;
+
+import com.simibubi.create.lib.helper.EntitySelectionContextHelper;
+
 import net.minecraft.block.AbstractRailBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -18,6 +22,7 @@ import net.minecraft.state.properties.RailShape;
 import net.minecraft.util.Direction.Axis;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.shapes.EntitySelectionContext;
 import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.util.math.shapes.VoxelShapes;
@@ -25,7 +30,7 @@ import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorldReader;
 import net.minecraft.world.World;
 
-public class ReinforcedRailBlock extends AbstractRailBlock {
+public class ReinforcedRailBlock extends AbstractRailBlock implements CustomSlopability {
 
     public static Property<RailShape> RAIL_SHAPE =
             EnumProperty.create("shape", RailShape.class, RailShape.EAST_WEST, RailShape.NORTH_SOUTH);
@@ -90,7 +95,7 @@ public class ReinforcedRailBlock extends AbstractRailBlock {
     @Nonnull
     public VoxelShape getCollisionShape(@Nonnull BlockState state, @Nonnull IBlockReader worldIn, @Nonnull BlockPos pos,
                                         ISelectionContext context) {    //FIXME
-        if (context.getEntity() instanceof AbstractMinecartEntity)
+        if (EntitySelectionContextHelper.getEntity(context) instanceof AbstractMinecartEntity)
             return VoxelShapes.empty();
         return getShape(state, worldIn, pos, null);
     }

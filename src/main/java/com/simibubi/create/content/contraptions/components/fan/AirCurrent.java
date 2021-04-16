@@ -45,8 +45,8 @@ import net.minecraft.world.World;
 
 public class AirCurrent {
 
-	private static final DamageSource damageSourceFire = DamageSourceHelper.createDamageSource("create.fan_fire").setDifficultyScaled();
-	private static final DamageSource damageSourceLava = DamageSourceHelper.createFireDamageSource("create.fan_lava").setDifficultyScaled();
+	private static final DamageSource damageSourceFire = DamageSourceHelper.create$createDamageSource("create.fan_fire").setDifficultyScaled();
+	private static final DamageSource damageSourceLava = DamageSourceHelper.create$createFireDamageSource("create.fan_lava").setDifficultyScaled();
 
 	public final IAirCurrentSource source;
 	public AxisAlignedBB bounds = new AxisAlignedBB(0, 0, 0, 0, 0, 0);

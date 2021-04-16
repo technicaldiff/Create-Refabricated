@@ -27,7 +27,7 @@ import net.minecraft.world.Explosion;
 
 public class CuckooClockTileEntity extends KineticTileEntity {
 
-	public static DamageSource CUCKOO_SURPRISE = DamageSourceHelper.createDamageSource("create.cuckoo_clock_explosion").setExplosion();
+	public static DamageSource CUCKOO_SURPRISE = DamageSourceHelper.create$createDamageSource("create.cuckoo_clock_explosion").setExplosion();
 
 	public InterpolatedChasingValue hourHand = new InterpolatedChasingValue().withSpeed(.2f);
 	public InterpolatedChasingValue minuteHand = new InterpolatedChasingValue().withSpeed(.2f);

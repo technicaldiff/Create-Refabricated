@@ -6,6 +6,8 @@ import com.simibubi.create.AllTileEntities;
 import com.simibubi.create.content.contraptions.base.HorizontalKineticBlock;
 import com.simibubi.create.foundation.block.ITE;
 
+import com.simibubi.create.lib.helper.EntitySelectionContextHelper;
+
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.BlockItemUseContext;
@@ -27,7 +29,7 @@ public class MechanicalPressBlock extends HorizontalKineticBlock implements ITE<
 
 	@Override
 	public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
-		if (context.getEntity() instanceof PlayerEntity)
+		if (EntitySelectionContextHelper.getEntity(context) instanceof PlayerEntity)
 			return AllShapes.CASING_14PX.get(Direction.DOWN);
 		return AllShapes.MECHANICAL_PROCESSOR_SHAPE;
 	}
@@ -66,7 +68,7 @@ public class MechanicalPressBlock extends HorizontalKineticBlock implements ITE<
 	public Class<MechanicalPressTileEntity> getTileEntityClass() {
 		return MechanicalPressTileEntity.class;
 	}
-	
+
 	@Override
 	public boolean allowsMovement(BlockState state, IBlockReader reader, BlockPos pos, PathType type) {
 		return false;

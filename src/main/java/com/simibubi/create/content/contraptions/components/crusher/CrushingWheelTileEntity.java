@@ -14,7 +14,7 @@ import net.minecraft.util.math.vector.Vector3d;
 
 public class CrushingWheelTileEntity extends KineticTileEntity {
 
-	public static DamageSource damageSource = DamageSourceHelper.createDamageSourceWhichBypassesArmor("create.crush").setDifficultyScaled();
+	public static DamageSource damageSource = DamageSourceHelper.create$createDamageSourceWhichBypassesArmor("create.crush").setDifficultyScaled();
 
 	public CrushingWheelTileEntity(TileEntityType<? extends CrushingWheelTileEntity> type) {
 		super(type);

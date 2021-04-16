@@ -24,6 +24,8 @@ import com.simibubi.create.foundation.utility.Iterate;
 
 import com.simibubi.create.lib.entity.CustomPathfindingBehavior;
 
+import com.simibubi.create.lib.helper.EntitySelectionContextHelper;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
@@ -350,7 +352,7 @@ public class BeltBlock extends HorizontalKineticBlock implements ITE<BeltTileEnt
 
 		VoxelShape shape = getShape(state, worldIn, pos, context);
 		try {
-			if (context.getEntity() == null)
+			if (EntitySelectionContextHelper.getEntity(context) == null)
 				return shape;
 
 			BeltTileEntity belt = getTileEntity(worldIn, pos);
@@ -358,7 +360,7 @@ public class BeltBlock extends HorizontalKineticBlock implements ITE<BeltTileEnt
 
 			if (controller == null)
 				return shape;
-			if (controller.passengers == null || !controller.passengers.containsKey(context.getEntity())) {
+			if (controller.passengers == null || !controller.passengers.containsKey(EntitySelectionContextHelper.getEntity(context))) {
 				return BeltShapes.getCollisionShape(state);
 			}
 

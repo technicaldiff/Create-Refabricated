@@ -7,6 +7,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import com.simibubi.create.lib.helper.EntityHelper;
+
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import it.unimi.dsi.fastutil.objects.ObjectLists;
 
@@ -61,7 +63,7 @@ public class ContraptionHandler {
 	public static void entitiesWhoJustDismountedGetSentToTheRightLocation(LivingEntity entityLiving, World world) {
 		if (world.isRemote)
 			return;
-		CompoundNBT data = entityLiving.getPersistentData();
+		CompoundNBT data = EntityHelper.getExtraCustomData(entityLiving);
 		if (!data.contains("ContraptionDismountLocation"))
 			return;
 		Vector3d position = VecHelper.readNBT(data.getList("ContraptionDismountLocation", NBT.TAG_DOUBLE));

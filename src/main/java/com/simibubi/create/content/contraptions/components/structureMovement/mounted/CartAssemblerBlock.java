@@ -31,6 +31,8 @@ import com.simibubi.create.lib.block.CustomMinecartPassBehavior;
 
 import com.simibubi.create.lib.block.CustomSlopability;
 
+import com.simibubi.create.lib.helper.EntitySelectionContextHelper;
+
 import net.minecraft.block.AbstractRailBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -401,7 +403,7 @@ public class CartAssemblerBlock extends AbstractRailBlock
 	@Nonnull
 	public VoxelShape getCollisionShape(@Nonnull BlockState state, @Nonnull IBlockReader worldIn, @Nonnull BlockPos pos,
 		ISelectionContext context) {
-		Entity entity = context.getEntity();
+		Entity entity = EntitySelectionContextHelper.getEntity(context);
 		if (entity instanceof AbstractMinecartEntity)
 			return VoxelShapes.empty();
 		if (entity instanceof PlayerEntity)

@@ -5,6 +5,8 @@ import com.simibubi.create.AllItems;
 import com.simibubi.create.AllShapes;
 import com.simibubi.create.foundation.utility.VecHelper;
 
+import com.simibubi.create.lib.helper.EntitySelectionContextHelper;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.Entity;
@@ -136,7 +138,7 @@ public abstract class FunnelBlock extends AbstractDirectionalFunnelBlock {
 
 	@Override
 	public VoxelShape getCollisionShape(BlockState state, IBlockReader world, BlockPos pos, ISelectionContext context) {
-		if (context.getEntity() instanceof ItemEntity && getFacing(state).getAxis()
+		if (EntitySelectionContextHelper.getEntity(context) instanceof ItemEntity && getFacing(state).getAxis()
 			.isHorizontal())
 			return AllShapes.FUNNEL_COLLISION.get(getFacing(state));
 		return getShape(state, world, pos, context);

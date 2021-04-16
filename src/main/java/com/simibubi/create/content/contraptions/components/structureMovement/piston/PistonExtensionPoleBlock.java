@@ -17,6 +17,8 @@ import com.simibubi.create.foundation.utility.placement.util.PoleHelper;
 
 import com.simibubi.create.lib.annotation.MethodsReturnNonnullByDefault;
 
+import com.simibubi.create.lib.block.CustomHarvestablilityBehavior;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.IWaterLoggable;
@@ -24,9 +26,12 @@ import net.minecraft.block.material.PushReaction;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.fluid.FluidState;
 import net.minecraft.fluid.Fluids;
+import net.minecraft.item.AxeItem;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.PickaxeItem;
+import net.minecraft.item.ToolItem;
 import net.minecraft.pathfinding.PathType;
 import net.minecraft.state.StateContainer.Builder;
 import net.minecraft.state.properties.BlockStateProperties;
@@ -42,9 +47,8 @@ import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
-import net.minecraftforge.common.ToolType;
 
-public class PistonExtensionPoleBlock extends ProperDirectionalBlock implements IWrenchable, IWaterLoggable {
+public class PistonExtensionPoleBlock extends ProperDirectionalBlock implements IWrenchable, IWaterLoggable, CustomHarvestablilityBehavior {
 
     private static final int placementHelperId = PlacementHelpers.register(PlacementHelper.get());
 
@@ -53,26 +57,27 @@ public class PistonExtensionPoleBlock extends ProperDirectionalBlock implements 
         setDefaultState(getDefaultState().with(FACING, Direction.UP).with(BlockStateProperties.WATERLOGGED, false));
     }
 
-    @Override
-	public ToolType getHarvestTool(BlockState state) {
-		return null;
-	}
+//    @Override
+//	public ToolType getHarvestTool(BlockState state) {
+//		return null;
+//	}
 
 	@Override
 	public boolean canHarvestBlock(BlockState state, IBlockReader world, BlockPos pos, PlayerEntity player) {
-		for (ToolType toolType : player.getHeldItemMainhand()
-			.getToolTypes()) {
-			if (isToolEffective(state, toolType))
-				return true;
-		}
-		return super.canHarvestBlock(state, world, pos, player);
+//		for (ToolType toolType : player.getHeldItemMainhand().getToolTypes()) {
+//			if (isToolEffective(state, toolType))
+//				return true;
+//		}
+//		return super.canHarvestBlock(state, world, pos, player);
+		return player.getHeldItemMainhand().canHarvestBlock(state);
 	}
 
 	@Override
-	public boolean isToolEffective(BlockState state, ToolType tool) {
-		return tool == ToolType.AXE || tool == ToolType.PICKAXE;
+	public boolean isToolEffective(BlockState state, ToolItem tool) {
+//		return tool == ToolType.AXE || tool == ToolType.PICKAXE;
+		return (tool instanceof PickaxeItem || tool instanceof AxeItem);
 	}
-    
+
 	@Override
 	public PushReaction getPushReaction(BlockState state) {
 		return PushReaction.NORMAL;
@@ -169,7 +174,7 @@ public class PistonExtensionPoleBlock extends ProperDirectionalBlock implements 
         }
         return state;
     }
-    
+
     @Override
 	public boolean allowsMovement(BlockState state, IBlockReader reader, BlockPos pos, PathType type) {
 		return false;

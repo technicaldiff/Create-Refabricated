@@ -34,7 +34,7 @@ import net.minecraft.world.World;
 @MethodsReturnNonnullByDefault
 public class DrillBlock extends DirectionalKineticBlock implements ITE<DrillTileEntity> {
 	// this is probably going to crash and burn
-	public static DamageSource damageSourceDrill = DamageSourceHelper.createDamageSourceWhichBypassesArmor("create.mechanical_drill");
+	public static DamageSource damageSourceDrill = DamageSourceHelper.create$createDamageSourceWhichBypassesArmor("create.mechanical_drill");
 	public DrillBlock(Properties properties) {
 		super(properties);
 	}

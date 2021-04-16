@@ -7,6 +7,8 @@ import com.simibubi.create.AllShapes;
 import com.simibubi.create.content.contraptions.components.structureMovement.piston.MechanicalPistonBlock.PistonState;
 import com.simibubi.create.foundation.block.ProperDirectionalBlock;
 
+import com.simibubi.create.lib.block.CustomPickBlockBehavior;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.IWaterLoggable;
@@ -30,7 +32,7 @@ import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 
-public class MechanicalPistonHeadBlock extends ProperDirectionalBlock implements IWaterLoggable {
+public class MechanicalPistonHeadBlock extends ProperDirectionalBlock implements IWaterLoggable, CustomPickBlockBehavior {
 
     public static final EnumProperty<PistonType> TYPE = BlockStateProperties.PISTON_TYPE;
 
@@ -112,7 +114,7 @@ public class MechanicalPistonHeadBlock extends ProperDirectionalBlock implements
         FluidState FluidState = context.getWorld().getFluidState(context.getPos());
         return super.getStateForPlacement(context).with(BlockStateProperties.WATERLOGGED, Boolean.valueOf(FluidState.getFluid() == Fluids.WATER));
     }
-    
+
     @Override
 	public boolean allowsMovement(BlockState state, IBlockReader reader, BlockPos pos, PathType type) {
 		return false;

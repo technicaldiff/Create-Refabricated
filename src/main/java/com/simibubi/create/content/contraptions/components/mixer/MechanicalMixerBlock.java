@@ -7,6 +7,8 @@ import com.simibubi.create.content.contraptions.base.KineticBlock;
 import com.simibubi.create.content.contraptions.relays.elementary.ICogWheel;
 import com.simibubi.create.foundation.block.ITE;
 
+import com.simibubi.create.lib.helper.EntitySelectionContextHelper;
+
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.pathfinding.PathType;
@@ -37,7 +39,7 @@ public class MechanicalMixerBlock extends KineticBlock implements ITE<Mechanical
 
 	@Override
 	public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
-		if (context.getEntity() instanceof PlayerEntity)
+		if (EntitySelectionContextHelper.getEntity(context) instanceof PlayerEntity)
 			return AllShapes.CASING_14PX.get(Direction.DOWN);
 
 		return AllShapes.MECHANICAL_PROCESSOR_SHAPE;
@@ -72,7 +74,7 @@ public class MechanicalMixerBlock extends KineticBlock implements ITE<Mechanical
 	public Class<MechanicalMixerTileEntity> getTileEntityClass() {
 		return MechanicalMixerTileEntity.class;
 	}
-	
+
 	@Override
 	public boolean allowsMovement(BlockState state, IBlockReader reader, BlockPos pos, PathType type) {
 		return false;

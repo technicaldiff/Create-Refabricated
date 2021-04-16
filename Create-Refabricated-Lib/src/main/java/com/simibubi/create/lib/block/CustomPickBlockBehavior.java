@@ -8,6 +8,6 @@ import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.IBlockReader;
 
 public interface CustomPickBlockBehavior {
-	public ItemStack getPickBlock(BlockState state, RayTraceResult target, IBlockReader world, BlockPos pos, PlayerEntity player);
-	public ItemStack getPickedResult(RayTraceResult target);
+	public default ItemStack getPickBlock(BlockState state, RayTraceResult target, IBlockReader world, BlockPos pos, PlayerEntity player) {return null;}
+	public default ItemStack getPickedResult(RayTraceResult target) {return null;}
 }

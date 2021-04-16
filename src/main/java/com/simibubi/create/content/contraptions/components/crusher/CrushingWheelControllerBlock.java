@@ -12,6 +12,8 @@ import com.simibubi.create.foundation.utility.Iterate;
 
 import com.simibubi.create.lib.helper.EntityHelper;
 
+import com.simibubi.create.lib.helper.EntitySelectionContextHelper;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.DirectionalBlock;
@@ -173,7 +175,7 @@ public class CrushingWheelControllerBlock extends DirectionalBlock
 		if (!state.get(VALID))
 			return AllShapes.CRUSHING_WHEEL_CONTROLLER_COLLISION.get(state.get(FACING));
 
-		Entity entity = context.getEntity();
+		Entity entity = EntitySelectionContextHelper.getEntity(context);
 		if (entity != null) {
 
 			CompoundNBT data = EntityHelper.getExtraCustomData(entity);
