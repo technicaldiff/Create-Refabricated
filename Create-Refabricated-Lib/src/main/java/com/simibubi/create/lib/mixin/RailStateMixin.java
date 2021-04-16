@@ -43,7 +43,10 @@ public abstract class RailStateMixin {
 	@Inject(at = @At(value = "INVOKE", target = "Lnet/minecraft/block/RailState;reset(Lnet/minecraft/state/properties/RailShape;)V", shift = At.Shift.BEFORE),
 			method = "Lnet/minecraft/block/RailState;<init>(Lnet/minecraft/world/World;Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/block/BlockState;)V")
 	public void RailState(World world, BlockPos blockPos, BlockState blockState, CallbackInfo ci) {
-		canMakeSlopes = (block instanceof CustomSlopability);
+		canMakeSlopes = true;
+		if (block instanceof CustomSlopability) {
+			canMakeSlopes = ((CustomSlopability) block).canMakeSlopes(blockState, world, pos);
+		}
 	}
 
 	/**
