@@ -16,7 +16,7 @@ import net.minecraft.world.World;
 @Mixin(World.class)
 public abstract class WorldMixin {
 	@Inject(at = @At("RETURN"), method = "Lnet/minecraft/world/World;getRedstonePower(Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/util/Direction;)I", cancellable = true)
-	public void getRedstonePower(BlockPos blockPos, Direction direction, CallbackInfoReturnable<Integer> cir) {
+	public void create$getRedstonePower(BlockPos blockPos, Direction direction, CallbackInfoReturnable<Integer> cir) {
 		BlockState create$blockstate = MixinHelper.<World>cast(this).getBlockState(blockPos);
 		int create$i = create$blockstate.getWeakPower(MixinHelper.<World>cast(this), blockPos, direction);
 

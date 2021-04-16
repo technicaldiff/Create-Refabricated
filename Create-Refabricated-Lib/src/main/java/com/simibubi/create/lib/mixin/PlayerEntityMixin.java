@@ -22,7 +22,7 @@ public abstract class PlayerEntityMixin {
 	public final PlayerInventory inventory = new PlayerInventory(MixinHelper.cast(this));
 
 	@Inject(at = @At("HEAD"), method = "Lnet/minecraft/entity/player/PlayerEntity;isUsingEffectiveTool(Lnet/minecraft/block/BlockState;)Z", cancellable = true)
-	public void isUsingEffectiveTool(BlockState blockState, CallbackInfoReturnable<Boolean> cir) {
+	public void create$isUsingEffectiveTool(BlockState blockState, CallbackInfoReturnable<Boolean> cir) {
 		if (blockState.getBlock() instanceof CustomHarvestablilityBehavior && inventory.getCurrentItem().getItem() instanceof ToolItem) {
 			cir.setReturnValue(((CustomHarvestablilityBehavior) blockState.getBlock()).isToolEffective(blockState, (ToolItem) inventory.getCurrentItem().getItem()));
 		}

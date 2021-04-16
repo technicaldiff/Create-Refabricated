@@ -59,7 +59,7 @@ public abstract class MinecraftMixin {
 	}
 
 	@Inject(at = @At(value = "FIELD", target = "Lnet/minecraft/client/Minecraft;middleClickMouse()V"), method = "Lnet/minecraft/client/Minecraft;middleClickMouse()V", cancellable = true)
-	private void middleClickMouse(CallbackInfo ci) {
+	private void create$middleClickMouse(CallbackInfo ci) {
 		if (MixinHelper.<Minecraft>cast(this).objectMouseOver.getType() == RayTraceResult.Type.BLOCK) {
 			BlockState blockstate = world.getBlockState(((BlockRayTraceResult) MixinHelper.<Minecraft>cast(this).objectMouseOver).getPos());
 			if (blockstate.getBlock() instanceof CustomPickBlockBehavior) {

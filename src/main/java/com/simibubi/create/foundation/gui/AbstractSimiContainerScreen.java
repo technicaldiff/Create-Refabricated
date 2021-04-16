@@ -11,6 +11,8 @@ import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.simibubi.create.foundation.gui.widgets.AbstractSimiWidget;
 
+import com.simibubi.create.lib.item.CustomDurabilityBarItem;
+
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.screen.inventory.ContainerScreen;
@@ -30,7 +32,7 @@ import net.fabricmc.api.Environment;
 
 @Environment(EnvType.CLIENT)
 @ParametersAreNonnullByDefault
-public abstract class AbstractSimiContainerScreen<T extends Container> extends ContainerScreen<T> {
+public abstract class AbstractSimiContainerScreen<T extends Container> extends ContainerScreen<T> implements CustomDurabilityBarItem {
 
 	protected List<Widget> widgets;
 
@@ -94,7 +96,7 @@ public abstract class AbstractSimiContainerScreen<T extends Container> extends C
 			return true;
 
 		InputMappings.Input mouseKey = InputMappings.getInputByCode(code, p_keyPressed_2_);
-		if (this.client.gameSettings.keyBindInventory.isActiveAndMatches(mouseKey)) {
+		if (super.keyPressed(mouseKey.getKeyCode(), p_keyPressed_2_, p_keyPressed_3_)) { // todo: see if this works
 			this.onClose();
 			return true;
 		}
@@ -162,8 +164,7 @@ public abstract class AbstractSimiContainerScreen<T extends Container> extends C
 	protected void renderItemOverlayIntoGUI(MatrixStack matrixStack, FontRenderer fr, ItemStack stack, int xPosition,
 		int yPosition, @Nullable String text, int textColor) {
 		if (!stack.isEmpty()) {
-			if (stack.getItem()
-				.showDurabilityBar(stack)) {
+			if (showDurabilityBar(stack)) {
 				RenderSystem.disableLighting();
 				RenderSystem.disableDepthTest();
 				RenderSystem.disableTexture();
@@ -171,11 +172,9 @@ public abstract class AbstractSimiContainerScreen<T extends Container> extends C
 				RenderSystem.disableBlend();
 				Tessellator tessellator = Tessellator.getInstance();
 				BufferBuilder bufferbuilder = tessellator.getBuffer();
-				double health = stack.getItem()
-					.getDurabilityForDisplay(stack);
+				double health = getDurabilityForDisplay(stack);
 				int i = Math.round(13.0F - (float) health * 13.0F);
-				int j = stack.getItem()
-					.getRGBDurabilityForDisplay(stack);
+				int j = getRGBDurabilityForDisplay(stack);
 				this.draw(bufferbuilder, xPosition + 2, yPosition + 13, 13, 2, 0, 0, 0, 255);
 				this.draw(bufferbuilder, xPosition + 2, yPosition + 13, i, 1, j >> 16 & 255, j >> 8 & 255, j & 255,
 					255);

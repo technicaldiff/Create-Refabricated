@@ -31,7 +31,7 @@ public abstract class PlayerControllerMixin {
 	@Inject(at = @At(value = "FIELD", target = "Lnet/minecraft/client/multiplayer/PlayerController;func_217292_a(Lnet/minecraft/client/entity/player/ClientPlayerEntity;Lnet/minecraft/client/world/ClientWorld;Lnet/minecraft/util/Hand;Lnet/minecraft/util/math/BlockRayTraceResult;)Lnet/minecraft/util/ActionResultType;"),
 			method = "Lnet/minecraft/client/multiplayer/PlayerController;func_217292_a(Lnet/minecraft/client/entity/player/ClientPlayerEntity;Lnet/minecraft/client/world/ClientWorld;Lnet/minecraft/util/Hand;Lnet/minecraft/util/math/BlockRayTraceResult;)Lnet/minecraft/util/ActionResultType;",
 			cancellable = true)
-	public void func_217292_a(ClientPlayerEntity clientPlayerEntity, ClientWorld clientWorld, Hand hand, BlockRayTraceResult blockRayTraceResult, CallbackInfoReturnable<ActionResultType> cir) {
+	public void create$func_217292_a(ClientPlayerEntity clientPlayerEntity, ClientWorld clientWorld, Hand hand, BlockRayTraceResult blockRayTraceResult, CallbackInfoReturnable<ActionResultType> cir) {
 		if (clientPlayerEntity.getHeldItem(hand).getItem() instanceof CustomUseFirstBehavior) {
 			ItemUseContext create$itemUseContext = new ItemUseContext(clientPlayerEntity, hand, blockRayTraceResult);
 			ActionResultType create$result = ((CustomUseFirstBehavior) clientPlayerEntity.getHeldItem(hand).getItem()).onItemUseFirst(clientPlayerEntity.getHeldItem(hand), create$itemUseContext);
