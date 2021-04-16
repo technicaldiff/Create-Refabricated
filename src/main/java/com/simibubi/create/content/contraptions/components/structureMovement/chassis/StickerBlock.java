@@ -5,9 +5,12 @@ import com.simibubi.create.AllTileEntities;
 import com.simibubi.create.foundation.block.ITE;
 import com.simibubi.create.foundation.block.ProperDirectionalBlock;
 
+import com.simibubi.create.lib.block.CustomWeakPowerCheckingBehavior;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
+import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.BlockItemUseContext;
@@ -25,7 +28,7 @@ import net.minecraft.world.IWorldReader;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 
-public class StickerBlock extends ProperDirectionalBlock implements ITE<StickerTileEntity> {
+public class StickerBlock extends ProperDirectionalBlock implements ITE<StickerTileEntity>, CustomWeakPowerCheckingBehavior, ITileEntityProvider {
 
 	public static final BooleanProperty POWERED = BlockStateProperties.POWERED;
 	public static final BooleanProperty EXTENDED = BlockStateProperties.EXTENDED;
@@ -68,10 +71,10 @@ public class StickerBlock extends ProperDirectionalBlock implements ITE<StickerT
 		}
 	}
 
-	@Override
-	public boolean hasTileEntity(BlockState state) {
-		return true;
-	}
+//	@Override
+//	public boolean hasTileEntity(BlockState state) {
+//		return true;
+//	}
 
 	@Override
 	public boolean shouldCheckWeakPower(BlockState state, IWorldReader world, BlockPos pos, Direction side) {
@@ -79,7 +82,7 @@ public class StickerBlock extends ProperDirectionalBlock implements ITE<StickerT
 	}
 
 	@Override
-	public TileEntity createTileEntity(BlockState state, IBlockReader world) {
+	public TileEntity createNewTileEntity(IBlockReader world) {
 		return AllTileEntities.STICKER.create();
 	}
 

@@ -2,6 +2,9 @@ package com.simibubi.create.content.contraptions.components.structureMovement.gl
 
 import com.simibubi.create.foundation.utility.VecHelper;
 
+import com.simibubi.create.lib.helper.CustomDurabilityPropertyHelper;
+import com.simibubi.create.lib.item.CustomMaxCountItem;
+
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
@@ -20,10 +23,10 @@ import net.minecraft.world.World;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 
-public class SuperGlueItem extends Item {
+public class SuperGlueItem extends Item implements CustomMaxCountItem {
 
 	public SuperGlueItem(Properties properties) {
-		super(properties);
+		super(CustomDurabilityPropertyHelper.setMaxDamage(99, properties));
 	}
 
 	@Override
@@ -31,10 +34,10 @@ public class SuperGlueItem extends Item {
 		return true;
 	}
 
-	@Override
-	public int getMaxDamage(ItemStack stack) {
-		return 99;
-	}
+//	@Override
+//	public int getMaxDamage(ItemStack stack) { // if I did this right, this is now done in the constructor
+//		return 99;
+//	}
 
 	@Override
 	public int getItemStackLimit(ItemStack stack) {

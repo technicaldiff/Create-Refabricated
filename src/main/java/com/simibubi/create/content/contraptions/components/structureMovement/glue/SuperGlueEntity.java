@@ -2,7 +2,10 @@ package com.simibubi.create.content.contraptions.components.structureMovement.gl
 
 import javax.annotation.Nullable;
 
+import com.simibubi.create.lib.block.CustomPickBlockBehavior;
 import com.simibubi.create.lib.entity.ExtraSpawnDataEntity;
+
+import net.minecraft.entity.player.ServerPlayerEntity;
 
 import org.apache.commons.lang3.Validate;
 
@@ -69,7 +72,7 @@ import net.minecraftforge.fml.common.registry.IEntityAdditionalSpawnData;
 import net.minecraftforge.fml.network.NetworkHooks;
 import net.minecraftforge.fml.network.PacketDistributor;
 
-public class SuperGlueEntity extends Entity implements ExtraSpawnDataEntity, ISpecialEntityItemRequirement {
+public class SuperGlueEntity extends Entity implements ExtraSpawnDataEntity, ISpecialEntityItemRequirement, CustomPickBlockBehavior {
 
 	private int validationTimer;
 	protected BlockPos hangingPosition;
@@ -186,7 +189,7 @@ public class SuperGlueEntity extends Entity implements ExtraSpawnDataEntity, ISp
 	public boolean onValidSurface() {
 		BlockPos pos = hangingPosition;
 		BlockPos pos2 = hangingPosition.offset(getFacingDirection().getOpposite());
-		if (!world.isAreaLoaded(pos, 0) || !world.isAreaLoaded(pos2, 0))
+		if (!world.isAreaLoaded(pos.add(-1, -1, -1), pos.add(1, 1, 1)) || !world.isAreaLoaded(pos2.add(-1, -1, -1), pos2.add(1, 1, 1)))
 			return true;
 		if (!isValidFace(world, pos2, getFacingDirection())
 			&& !isValidFace(world, pos, getFacingDirection().getOpposite()))
@@ -311,7 +314,7 @@ public class SuperGlueEntity extends Entity implements ExtraSpawnDataEntity, ISp
 
 	@Override
 	public ActionResultType processInitialInteract(PlayerEntity player, Hand hand) {
-		if (player instanceof FakePlayer)
+		if (player instanceof ServerPlayerEntity)
 			return ActionResultType.PASS;
 		DistExecutor.unsafeRunWhenOn(EnvType.CLIENT, () -> () -> {
 			triggerPlaceBlock(player, hand);

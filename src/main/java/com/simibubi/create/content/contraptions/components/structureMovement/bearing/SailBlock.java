@@ -19,6 +19,8 @@ import com.simibubi.create.foundation.utility.placement.PlacementOffset;
 
 import com.simibubi.create.lib.annotation.MethodsReturnNonnullByDefault;
 
+import com.simibubi.create.lib.block.CustomPickBlockBehavior;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.Entity;
@@ -42,7 +44,7 @@ import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 
-public class SailBlock extends ProperDirectionalBlock {
+public class SailBlock extends ProperDirectionalBlock implements CustomPickBlockBehavior {
 
 	public static SailBlock frame(Properties properties) {
 		return new SailBlock(properties, true);
@@ -168,7 +170,7 @@ public class SailBlock extends ProperDirectionalBlock {
 
 	@Override
 	public ItemStack getPickBlock(BlockState state, RayTraceResult target, IBlockReader world, BlockPos pos, PlayerEntity player) {
-		ItemStack pickBlock = super.getPickBlock(state, target, world, pos, player);
+		ItemStack pickBlock = new ItemStack(world.getBlockState(pos).getBlock().asItem());
 		if (pickBlock.isEmpty())
 			return AllBlocks.SAIL.get()
 					.getPickBlock(state, target, world, pos, player);
@@ -197,7 +199,7 @@ public class SailBlock extends ProperDirectionalBlock {
 		}
 
 	}
-	
+
 	@Override
 	public boolean allowsMovement(BlockState state, IBlockReader reader, BlockPos pos, PathType type) {
 		return false;
