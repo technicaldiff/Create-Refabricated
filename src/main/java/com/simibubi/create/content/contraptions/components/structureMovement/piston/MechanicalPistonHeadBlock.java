@@ -7,8 +7,7 @@ import com.simibubi.create.AllShapes;
 import com.simibubi.create.content.contraptions.components.structureMovement.piston.MechanicalPistonBlock.PistonState;
 import com.simibubi.create.foundation.block.ProperDirectionalBlock;
 
-import com.simibubi.create.lib.block.CustomPickBlockBehavior;
-
+import net.fabricmc.fabric.api.block.BlockPickInteractionAware;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.IWaterLoggable;
@@ -32,7 +31,7 @@ import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 
-public class MechanicalPistonHeadBlock extends ProperDirectionalBlock implements IWaterLoggable, CustomPickBlockBehavior {
+public class MechanicalPistonHeadBlock extends ProperDirectionalBlock implements IWaterLoggable, BlockPickInteractionAware {
 
     public static final EnumProperty<PistonType> TYPE = BlockStateProperties.PISTON_TYPE;
 
@@ -53,8 +52,7 @@ public class MechanicalPistonHeadBlock extends ProperDirectionalBlock implements
     }
 
     @Override
-    public ItemStack getPickBlock(BlockState state, RayTraceResult target, IBlockReader world, BlockPos pos,
-                                  PlayerEntity player) {
+    public ItemStack getPickedStack(BlockState state, IBlockReader world, BlockPos pos, PlayerEntity player, RayTraceResult target) {
         return AllBlocks.PISTON_EXTENSION_POLE.asStack();
     }
 

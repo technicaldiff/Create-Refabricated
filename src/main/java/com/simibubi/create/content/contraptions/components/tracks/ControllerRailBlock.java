@@ -12,7 +12,7 @@ import com.simibubi.create.foundation.utility.VecHelper;
 
 import com.simibubi.create.lib.annotation.MethodsReturnNonnullByDefault;
 
-import com.simibubi.create.lib.block.CustomMinecartPassBehavior;
+import com.simibubi.create.lib.block.MinecartPassHandlerBlock;
 
 import net.minecraft.block.AbstractRailBlock;
 import net.minecraft.block.Block;
@@ -45,7 +45,7 @@ import net.minecraft.world.World;
 
 @ParametersAreNonnullByDefault
 @MethodsReturnNonnullByDefault
-public class ControllerRailBlock extends AbstractRailBlock implements IWrenchable, CustomMinecartPassBehavior {
+public class ControllerRailBlock extends AbstractRailBlock implements IWrenchable, MinecartPassHandlerBlock {
 
 	public static final EnumProperty<RailShape> SHAPE = BlockStateProperties.RAIL_SHAPE_STRAIGHT;
 	public static final BooleanProperty BACKWARDS = BooleanProperty.create("backwards");

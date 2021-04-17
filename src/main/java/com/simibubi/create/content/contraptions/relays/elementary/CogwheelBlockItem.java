@@ -16,7 +16,7 @@ import com.simibubi.create.foundation.utility.placement.PlacementOffset;
 
 import com.simibubi.create.lib.annotation.MethodsReturnNonnullByDefault;
 
-import com.simibubi.create.lib.item.CustomUseFirstBehavior;
+import com.simibubi.create.lib.item.UseFirstBehaviorItem;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.client.multiplayer.PlayerController;
@@ -33,7 +33,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.world.World;
 
-public class CogwheelBlockItem extends BlockItem implements CustomUseFirstBehavior {
+public class CogwheelBlockItem extends BlockItem implements UseFirstBehaviorItem {
 
 	boolean large;
 

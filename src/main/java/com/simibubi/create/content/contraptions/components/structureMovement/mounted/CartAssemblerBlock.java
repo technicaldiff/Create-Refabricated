@@ -27,9 +27,9 @@ import com.simibubi.create.foundation.utility.Couple;
 import com.simibubi.create.foundation.utility.Iterate;
 import com.simibubi.create.foundation.utility.VecHelper;
 
-import com.simibubi.create.lib.block.CustomMinecartPassBehavior;
+import com.simibubi.create.lib.block.MinecartPassHandlerBlock;
 
-import com.simibubi.create.lib.block.CustomSlopability;
+import com.simibubi.create.lib.block.SlopeCreationCheckingRail;
 
 import com.simibubi.create.lib.helper.EntitySelectionContextHelper;
 
@@ -78,7 +78,7 @@ import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 
 public class CartAssemblerBlock extends AbstractRailBlock
-	implements ITE<CartAssemblerTileEntity>, IWrenchable, ISpecialBlockItemRequirement, ITileEntityProvider, CustomMinecartPassBehavior, CustomSlopability {
+	implements ITE<CartAssemblerTileEntity>, IWrenchable, ISpecialBlockItemRequirement, ITileEntityProvider, MinecartPassHandlerBlock, SlopeCreationCheckingRail {
 
 	public static final Property<RailShape> RAIL_SHAPE =
 		EnumProperty.create("shape", RailShape.class, RailShape.EAST_WEST, RailShape.NORTH_SOUTH);
@@ -119,11 +119,6 @@ public class CartAssemblerBlock extends AbstractRailBlock
 		builder.add(RAIL_SHAPE, POWERED, RAIL_TYPE);
 		super.fillStateContainer(builder);
 	}
-
-//	@Override
-//	public boolean hasTileEntity(BlockState state) {
-//		return true;
-//	}
 
 	@Override
 	public TileEntity createNewTileEntity(IBlockReader world) {

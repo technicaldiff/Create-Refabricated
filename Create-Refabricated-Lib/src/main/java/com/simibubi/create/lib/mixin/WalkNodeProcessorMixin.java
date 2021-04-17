@@ -5,7 +5,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-import com.simibubi.create.lib.entity.CustomPathfindingBehavior;
+import com.simibubi.create.lib.block.CustomPathNodeTypeBlock;
 
 import net.minecraft.block.Block;
 import net.minecraft.pathfinding.PathNodeType;
@@ -19,8 +19,8 @@ public abstract class WalkNodeProcessorMixin {
 	@Inject(at = @At("HEAD"), method = "Lnet/minecraft/pathfinding/WalkNodeProcessor;getCommonNodeType(Lnet/minecraft/world/IBlockReader;Lnet/minecraft/util/math/BlockPos;)Lnet/minecraft/pathfinding/PathNodeType;", cancellable = true)
 	protected static void create$getCommonNodeType(IBlockReader iBlockReader, BlockPos blockPos, CallbackInfoReturnable<PathNodeType> cir) {
 		Block block = iBlockReader.getBlockState(blockPos).getBlock();
-		if (block instanceof CustomPathfindingBehavior) {
-			cir.setReturnValue(((CustomPathfindingBehavior) block).getAiPathNodeType(iBlockReader.getBlockState(blockPos), iBlockReader, blockPos, null));
+		if (block instanceof CustomPathNodeTypeBlock) {
+			cir.setReturnValue(((CustomPathNodeTypeBlock) block).getAiPathNodeType(iBlockReader.getBlockState(blockPos), iBlockReader, blockPos, null));
 		}
 	}
 }

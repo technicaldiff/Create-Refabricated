@@ -7,7 +7,7 @@ import com.simibubi.create.content.contraptions.base.RotatedPillarKineticBlock;
 import com.simibubi.create.foundation.utility.Iterate;
 import com.simibubi.create.foundation.utility.Lang;
 
-import com.simibubi.create.lib.block.CustomWeakPowerCheckingBehavior;
+import com.simibubi.create.lib.block.WeakPowerCheckingBlock;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -29,7 +29,7 @@ import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.IWorldReader;
 
-public class EncasedBeltBlock extends RotatedPillarKineticBlock implements CustomWeakPowerCheckingBehavior {
+public class EncasedBeltBlock extends RotatedPillarKineticBlock implements WeakPowerCheckingBlock {
 
 	public static final Property<Part> PART = EnumProperty.create("part", Part.class);
 	public static final BooleanProperty CONNECTED_ALONG_FIRST_COORDINATE =

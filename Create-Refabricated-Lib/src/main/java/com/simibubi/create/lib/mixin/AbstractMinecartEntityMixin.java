@@ -5,7 +5,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import com.simibubi.create.lib.block.CustomMinecartPassBehavior;
+import com.simibubi.create.lib.block.MinecartPassHandlerBlock;
 import com.simibubi.create.lib.utility.MixinHelper;
 
 import net.minecraft.block.BlockState;
@@ -20,8 +20,8 @@ public abstract class AbstractMinecartEntityMixin {
 	@Inject(at = @At(value = "FIELD", target = "Lnet/minecraft/entity/item/minecart/AbstractMinecartEntity;moveAlongTrack(Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/block/BlockState;)V", ordinal = 3),
 			method = "Lnet/minecraft/entity/item/minecart/AbstractMinecartEntity;moveAlongTrack(Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/block/BlockState;)V")
 	protected void create$moveAlongTrack(BlockPos blockPos, BlockState blockState, CallbackInfo ci) {
-		if (blockState.getBlock() instanceof CustomMinecartPassBehavior) {
-			((CustomMinecartPassBehavior) blockState.getBlock()).onMinecartPass(blockState, MixinHelper.<Entity>cast(this).world, blockPos, MixinHelper.cast(this));
+		if (blockState.getBlock() instanceof MinecartPassHandlerBlock) {
+			((MinecartPassHandlerBlock) blockState.getBlock()).onMinecartPass(blockState, MixinHelper.<Entity>cast(this).world, blockPos, MixinHelper.cast(this));
 		}
 	}
 }

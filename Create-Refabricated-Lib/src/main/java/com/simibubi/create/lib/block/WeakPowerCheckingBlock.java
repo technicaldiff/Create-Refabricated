@@ -5,6 +5,6 @@ import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IWorldReader;
 
-public interface CustomWeakPowerCheckingBehavior {
+public interface WeakPowerCheckingBlock {
 	boolean shouldCheckWeakPower(BlockState state, IWorldReader world, BlockPos pos, Direction side);
 }

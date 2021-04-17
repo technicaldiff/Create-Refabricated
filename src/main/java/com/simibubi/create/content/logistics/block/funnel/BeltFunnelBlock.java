@@ -11,8 +11,10 @@ import com.simibubi.create.foundation.tileEntity.TileEntityBehaviour;
 import com.simibubi.create.foundation.tileEntity.behaviour.belt.DirectBeltInputBehaviour;
 import com.simibubi.create.foundation.utility.Lang;
 import com.simibubi.create.foundation.utility.VoxelShaper;
+import com.simibubi.create.lib.helper.EntitySelectionContextHelper;
 import com.tterrag.registrate.util.entry.BlockEntry;
 
+import net.fabricmc.fabric.api.block.BlockPickInteractionAware;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.item.ItemEntity;
@@ -34,7 +36,7 @@ import net.minecraft.world.IWorld;
 import net.minecraft.world.IWorldReader;
 import net.minecraft.world.World;
 
-public class BeltFunnelBlock extends AbstractHorizontalFunnelBlock implements ISpecialBlockItemRequirement {
+public class BeltFunnelBlock extends AbstractHorizontalFunnelBlock implements ISpecialBlockItemRequirement, BlockPickInteractionAware {
 
 	private BlockEntry<? extends FunnelBlock> parent;
 
@@ -78,7 +80,7 @@ public class BeltFunnelBlock extends AbstractHorizontalFunnelBlock implements IS
 	@Override
 	public VoxelShape getCollisionShape(BlockState p_220071_1_, IBlockReader p_220071_2_, BlockPos p_220071_3_,
 		ISelectionContext p_220071_4_) {
-		if (p_220071_4_.getEntity() instanceof ItemEntity
+		if (EntitySelectionContextHelper.getEntity(p_220071_4_) instanceof ItemEntity
 			&& (p_220071_1_.get(SHAPE) == Shape.PULLING || p_220071_1_.get(SHAPE) == Shape.PUSHING))
 			return AllShapes.FUNNEL_COLLISION.get(getFacing(p_220071_1_));
 		return getShape(p_220071_1_, p_220071_2_, p_220071_3_, p_220071_4_);
@@ -110,8 +112,7 @@ public class BeltFunnelBlock extends AbstractHorizontalFunnelBlock implements IS
 	}
 
 	@Override
-	public ItemStack getPickBlock(BlockState state, RayTraceResult target, IBlockReader world, BlockPos pos,
-		PlayerEntity player) {
+	public ItemStack getPickedStack(BlockState state, IBlockReader world, BlockPos pos, PlayerEntity player, RayTraceResult target) {
 		return parent.asStack();
 	}
 

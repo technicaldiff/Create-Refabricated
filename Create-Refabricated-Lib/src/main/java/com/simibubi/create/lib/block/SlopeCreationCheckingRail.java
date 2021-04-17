@@ -6,6 +6,6 @@ import net.minecraft.world.IBlockReader;
 
 import javax.annotation.Nonnull;
 
-public interface CustomSlopability {
+public interface SlopeCreationCheckingRail {
 	public boolean canMakeSlopes(@Nonnull BlockState state, @Nonnull IBlockReader world, @Nonnull BlockPos pos);
 }

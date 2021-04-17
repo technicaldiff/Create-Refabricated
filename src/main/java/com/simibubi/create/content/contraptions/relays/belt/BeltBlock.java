@@ -21,11 +21,12 @@ import com.simibubi.create.foundation.block.ITE;
 import com.simibubi.create.foundation.tileEntity.behaviour.belt.TransportedItemStackHandlerBehaviour.TransportedResult;
 import com.simibubi.create.foundation.utility.BlockHelper;
 import com.simibubi.create.foundation.utility.Iterate;
-
-import com.simibubi.create.lib.entity.CustomPathfindingBehavior;
-
+import com.simibubi.create.lib.block.CustomPathNodeTypeBlock;
 import com.simibubi.create.lib.helper.EntitySelectionContextHelper;
 
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
+import net.fabricmc.fabric.api.block.BlockPickInteractionAware;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
@@ -68,10 +69,8 @@ import net.minecraft.world.IWorldReader;
 import net.minecraft.world.World;
 import net.minecraft.world.gen.DebugChunkGenerator;
 import net.minecraft.world.server.ServerWorld;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
 
-public class BeltBlock extends HorizontalKineticBlock implements ITE<BeltTileEntity>, ISpecialBlockItemRequirement, CustomPathfindingBehavior {
+public class BeltBlock extends HorizontalKineticBlock implements ITE<BeltTileEntity>, ISpecialBlockItemRequirement, BlockPickInteractionAware, CustomPathNodeTypeBlock {
 
 	public static final Property<BeltSlope> SLOPE = EnumProperty.create("slope", BeltSlope.class);
 	public static final Property<BeltPart> PART = EnumProperty.create("part", BeltPart.class);
@@ -115,8 +114,7 @@ public class BeltBlock extends HorizontalKineticBlock implements ITE<BeltTileEnt
 	}
 
 	@Override
-	public ItemStack getPickBlock(BlockState state, RayTraceResult target, IBlockReader world, BlockPos pos,
-		PlayerEntity player) {
+	public ItemStack getPickedStack(BlockState state, IBlockReader world, BlockPos pos, PlayerEntity player, RayTraceResult target) {
 		return AllItems.BELT_CONNECTOR.asStack();
 	}
 

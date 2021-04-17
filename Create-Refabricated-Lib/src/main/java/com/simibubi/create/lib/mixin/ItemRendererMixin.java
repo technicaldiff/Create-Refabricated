@@ -5,6 +5,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Redirect;
 
 import com.simibubi.create.lib.item.CustomGuiOverlayItem;
+import com.simibubi.create.lib.utility.DurabilityBarUtil;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -23,6 +24,6 @@ public abstract class ItemRendererMixin {
 		if (item instanceof CustomGuiOverlayItem && ((CustomGuiOverlayItem) item).renderOverlay(stack, x, y, textRenderer, (ItemRenderer) (Object) this)) {
 			return false;
 		}
-		return stack.isDamaged();
+		return DurabilityBarUtil.showDurabilityBarDefault(stack);
 	}
 }

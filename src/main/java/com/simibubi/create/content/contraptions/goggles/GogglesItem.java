@@ -1,8 +1,7 @@
 package com.simibubi.create.content.contraptions.goggles;
 
 import com.simibubi.create.AllItems;
-
-import com.simibubi.create.lib.entity.Equipment;
+import com.simibubi.create.lib.item.EquipmentItem;
 
 import net.minecraft.block.DispenserBlock;
 import net.minecraft.entity.MobEntity;
@@ -16,7 +15,7 @@ import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
 import net.minecraft.world.World;
 
-public class GogglesItem extends Item implements Equipment {
+public class GogglesItem extends Item implements EquipmentItem {
 
 	public GogglesItem(Properties properties) {
 		super(properties);

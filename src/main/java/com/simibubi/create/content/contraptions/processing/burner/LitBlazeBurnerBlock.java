@@ -5,6 +5,9 @@ import java.util.Random;
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.AllItems;
 
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
+import net.fabricmc.fabric.api.block.BlockPickInteractionAware;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -23,10 +26,8 @@ import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
 
-public class LitBlazeBurnerBlock extends Block {
+public class LitBlazeBurnerBlock extends Block implements BlockPickInteractionAware {
 
 // 	1.16: add a soul fire variant
 
@@ -71,8 +72,7 @@ public class LitBlazeBurnerBlock extends Block {
 	}
 
 	@Override
-	public ItemStack getPickBlock(BlockState state, RayTraceResult target, IBlockReader world, BlockPos pos,
-		PlayerEntity player) {
+	public ItemStack getPickedStack(BlockState state, IBlockReader world, BlockPos pos, PlayerEntity player, RayTraceResult target) {
 		return AllItems.EMPTY_BLAZE_BURNER.asStack();
 	}
 

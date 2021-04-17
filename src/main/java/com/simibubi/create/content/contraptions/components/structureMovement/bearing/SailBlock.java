@@ -16,11 +16,9 @@ import com.simibubi.create.foundation.utility.Iterate;
 import com.simibubi.create.foundation.utility.placement.IPlacementHelper;
 import com.simibubi.create.foundation.utility.placement.PlacementHelpers;
 import com.simibubi.create.foundation.utility.placement.PlacementOffset;
-
 import com.simibubi.create.lib.annotation.MethodsReturnNonnullByDefault;
 
-import com.simibubi.create.lib.block.CustomPickBlockBehavior;
-
+import net.fabricmc.fabric.api.block.BlockPickInteractionAware;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.Entity;
@@ -44,7 +42,7 @@ import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 
-public class SailBlock extends ProperDirectionalBlock implements CustomPickBlockBehavior {
+public class SailBlock extends ProperDirectionalBlock implements BlockPickInteractionAware {
 
 	public static SailBlock frame(Properties properties) {
 		return new SailBlock(properties, true);
@@ -169,11 +167,11 @@ public class SailBlock extends ProperDirectionalBlock implements CustomPickBlock
 	}
 
 	@Override
-	public ItemStack getPickBlock(BlockState state, RayTraceResult target, IBlockReader world, BlockPos pos, PlayerEntity player) {
+	public ItemStack getPickedStack(BlockState state, IBlockReader world, BlockPos pos, PlayerEntity player, RayTraceResult target) {
 		ItemStack pickBlock = new ItemStack(world.getBlockState(pos).getBlock().asItem());
 		if (pickBlock.isEmpty())
 			return AllBlocks.SAIL.get()
-					.getPickBlock(state, target, world, pos, player);
+					.getPickedStack(state, world, pos, player, target);
 		return pickBlock;
 	}
 

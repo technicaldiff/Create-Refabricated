@@ -10,9 +10,10 @@ import javax.annotation.ParametersAreNonnullByDefault;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.simibubi.create.foundation.gui.widgets.AbstractSimiWidget;
+import com.simibubi.create.lib.utility.DurabilityBarUtil;
 
-import com.simibubi.create.lib.item.CustomDurabilityBarItem;
-
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.screen.inventory.ContainerScreen;
@@ -27,12 +28,10 @@ import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.text.ITextComponent;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
 
 @Environment(EnvType.CLIENT)
 @ParametersAreNonnullByDefault
-public abstract class AbstractSimiContainerScreen<T extends Container> extends ContainerScreen<T> implements CustomDurabilityBarItem {
+public abstract class AbstractSimiContainerScreen<T extends Container> extends ContainerScreen<T> {
 
 	protected List<Widget> widgets;
 
@@ -164,7 +163,7 @@ public abstract class AbstractSimiContainerScreen<T extends Container> extends C
 	protected void renderItemOverlayIntoGUI(MatrixStack matrixStack, FontRenderer fr, ItemStack stack, int xPosition,
 		int yPosition, @Nullable String text, int textColor) {
 		if (!stack.isEmpty()) {
-			if (showDurabilityBar(stack)) {
+			if (DurabilityBarUtil.showDurabilityBar(stack)) {
 				RenderSystem.disableLighting();
 				RenderSystem.disableDepthTest();
 				RenderSystem.disableTexture();
@@ -172,9 +171,9 @@ public abstract class AbstractSimiContainerScreen<T extends Container> extends C
 				RenderSystem.disableBlend();
 				Tessellator tessellator = Tessellator.getInstance();
 				BufferBuilder bufferbuilder = tessellator.getBuffer();
-				double health = getDurabilityForDisplay(stack);
+				double health = DurabilityBarUtil.getDurabilityForDisplay(stack);
 				int i = Math.round(13.0F - (float) health * 13.0F);
-				int j = getRGBDurabilityForDisplay(stack);
+				int j = DurabilityBarUtil.getRGBDurabilityForDisplay(stack);
 				this.draw(bufferbuilder, xPosition + 2, yPosition + 13, 13, 2, 0, 0, 0, 255);
 				this.draw(bufferbuilder, xPosition + 2, yPosition + 13, i, 1, j >> 16 & 255, j >> 8 & 255, j & 255,
 					255);

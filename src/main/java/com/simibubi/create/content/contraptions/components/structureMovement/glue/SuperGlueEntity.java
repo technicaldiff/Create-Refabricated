@@ -2,11 +2,6 @@ package com.simibubi.create.content.contraptions.components.structureMovement.gl
 
 import javax.annotation.Nullable;
 
-import com.simibubi.create.lib.block.CustomPickBlockBehavior;
-import com.simibubi.create.lib.entity.ExtraSpawnDataEntity;
-
-import net.minecraft.entity.player.ServerPlayerEntity;
-
 import org.apache.commons.lang3.Validate;
 
 import com.simibubi.create.AllBlocks;
@@ -24,9 +19,11 @@ import com.simibubi.create.foundation.networking.AllPackets;
 import com.simibubi.create.foundation.utility.AnimationTickHolder;
 import com.simibubi.create.foundation.utility.BlockFace;
 import com.simibubi.create.foundation.utility.worldWrappers.WrappedWorld;
+import com.simibubi.create.lib.entity.ExtraSpawnDataEntity;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
+import net.fabricmc.fabric.api.entity.EntityPickInteractionAware;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricEntityTypeBuilder;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -42,6 +39,7 @@ import net.minecraft.entity.Pose;
 import net.minecraft.entity.effect.LightningBoltEntity;
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.IPacket;
@@ -64,15 +62,11 @@ import net.minecraft.util.math.RayTraceResult.Type;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.fml.DistExecutor;
-import net.minecraftforge.fml.common.registry.IEntityAdditionalSpawnData;
 import net.minecraftforge.fml.network.NetworkHooks;
 import net.minecraftforge.fml.network.PacketDistributor;
 
-public class SuperGlueEntity extends Entity implements ExtraSpawnDataEntity, ISpecialEntityItemRequirement, CustomPickBlockBehavior {
+public class SuperGlueEntity extends Entity implements ExtraSpawnDataEntity, ISpecialEntityItemRequirement, EntityPickInteractionAware {
 
 	private int validationTimer;
 	protected BlockPos hangingPosition;
@@ -303,7 +297,7 @@ public class SuperGlueEntity extends Entity implements ExtraSpawnDataEntity, ISp
 	}
 
 	@Override
-	public ItemStack getPickedResult(RayTraceResult target) {
+	public ItemStack getPickedStack(PlayerEntity player, RayTraceResult target) {
 		return AllItems.SUPER_GLUE.asStack();
 	}
 

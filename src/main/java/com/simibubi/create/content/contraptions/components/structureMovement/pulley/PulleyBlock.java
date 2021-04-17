@@ -6,6 +6,7 @@ import com.simibubi.create.AllTileEntities;
 import com.simibubi.create.content.contraptions.base.HorizontalAxisKineticBlock;
 import com.simibubi.create.foundation.block.ITE;
 
+import net.fabricmc.fabric.api.block.BlockPickInteractionAware;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.IWaterLoggable;
@@ -92,7 +93,7 @@ public class PulleyBlock extends HorizontalAxisKineticBlock implements ITE<Pulle
         return PulleyTileEntity.class;
     }
 
-    private static class RopeBlockBase extends Block implements IWaterLoggable {
+    private static class RopeBlockBase extends Block implements IWaterLoggable, BlockPickInteractionAware {
 
         public RopeBlockBase(Properties properties) {
             super(properties);
@@ -110,8 +111,7 @@ public class PulleyBlock extends HorizontalAxisKineticBlock implements ITE<Pulle
         }
 
         @Override
-        public ItemStack getPickBlock(BlockState state, RayTraceResult target, IBlockReader world, BlockPos pos,
-                                      PlayerEntity player) {
+        public ItemStack getPickedStack(BlockState state, IBlockReader world, BlockPos pos, PlayerEntity player, RayTraceResult target) {
             return AllBlocks.ROPE_PULLEY.asStack();
         }
 

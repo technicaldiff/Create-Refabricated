@@ -2,7 +2,7 @@ package com.simibubi.create.content.contraptions.base;
 
 import com.simibubi.create.foundation.item.ItemDescription.Palette;
 
-import com.simibubi.create.lib.block.CustomHarvestablilityBehavior;
+import com.simibubi.create.lib.block.HarvestableBlock;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -20,7 +20,7 @@ import net.minecraft.world.IWorld;
 import net.minecraft.world.IWorldReader;
 import net.minecraft.world.World;
 
-public abstract class KineticBlock extends Block implements IRotate, CustomHarvestablilityBehavior {
+public abstract class KineticBlock extends Block implements IRotate, HarvestableBlock {
 
 	protected static final Palette color = Palette.Red;
 

@@ -5,7 +5,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-import com.simibubi.create.lib.block.CustomWeakPowerCheckingBehavior;
+import com.simibubi.create.lib.block.WeakPowerCheckingBlock;
 import com.simibubi.create.lib.utility.MixinHelper;
 
 import net.minecraft.block.BlockState;
@@ -20,9 +20,9 @@ public abstract class WorldMixin {
 		BlockState create$blockstate = MixinHelper.<World>cast(this).getBlockState(blockPos);
 		int create$i = create$blockstate.getWeakPower(MixinHelper.<World>cast(this), blockPos, direction);
 
-		if (create$blockstate.getBlock() instanceof CustomWeakPowerCheckingBehavior) {
+		if (create$blockstate.getBlock() instanceof WeakPowerCheckingBlock) {
 			cir.setReturnValue(
-					((CustomWeakPowerCheckingBehavior) create$blockstate.getBlock()).shouldCheckWeakPower(create$blockstate, MixinHelper.<World>cast(this), blockPos, direction)
+					((WeakPowerCheckingBlock) create$blockstate.getBlock()).shouldCheckWeakPower(create$blockstate, MixinHelper.<World>cast(this), blockPos, direction)
 							? Math.max(create$i, MixinHelper.<World>cast(this).getStrongPower(blockPos))
 							: create$i);
 		}

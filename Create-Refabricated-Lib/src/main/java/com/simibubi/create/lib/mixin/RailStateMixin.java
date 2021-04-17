@@ -1,7 +1,7 @@
 package com.simibubi.create.lib.mixin;
 
 import com.google.common.collect.Lists;
-import com.simibubi.create.lib.block.CustomSlopability;
+import com.simibubi.create.lib.block.SlopeCreationCheckingRail;
 
 import com.simibubi.create.lib.mixin.accessor.RailStateAccessor;
 import com.simibubi.create.lib.utility.MixinHelper;
@@ -44,8 +44,8 @@ public abstract class RailStateMixin {
 			method = "Lnet/minecraft/block/RailState;<init>(Lnet/minecraft/world/World;Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/block/BlockState;)V")
 	public void RailState(World world, BlockPos blockPos, BlockState blockState, CallbackInfo ci) {
 		canMakeSlopes = true;
-		if (block instanceof CustomSlopability) {
-			canMakeSlopes = ((CustomSlopability) block).canMakeSlopes(blockState, world, pos);
+		if (block instanceof SlopeCreationCheckingRail) {
+			canMakeSlopes = ((SlopeCreationCheckingRail) block).canMakeSlopes(blockState, world, pos);
 		}
 	}
 

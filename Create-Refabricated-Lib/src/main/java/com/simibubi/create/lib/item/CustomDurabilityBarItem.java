@@ -2,6 +2,7 @@ package com.simibubi.create.lib.item;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.simibubi.create.lib.mixin.accessor.ItemRendererAccessor;
+import com.simibubi.create.lib.utility.DurabilityBarUtil;
 
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.renderer.BufferBuilder;
@@ -37,14 +38,14 @@ public interface CustomDurabilityBarItem extends CustomGuiOverlayItem {
 	}
 
 	default boolean showDurabilityBar(ItemStack stack) {
-		return stack.isDamaged();
+		return DurabilityBarUtil.showDurabilityBarDefault(stack);
 	}
 
 	default double getDurabilityForDisplay(ItemStack stack) {
-		return stack.getDamage() / stack.getMaxDamage();
+		return DurabilityBarUtil.getDurabilityForDisplayDefault(stack);
 	}
 
 	default int getRGBDurabilityForDisplay(ItemStack stack) {
-		return MathHelper.hsvToRGB((float) Math.max(0.0D, 1.0D - getDurabilityForDisplay(stack)) / 3.0F, 1.0F, 1.0F);
+		return DurabilityBarUtil.getRGBDurabilityForDisplayDefault(stack);
 	}
 }

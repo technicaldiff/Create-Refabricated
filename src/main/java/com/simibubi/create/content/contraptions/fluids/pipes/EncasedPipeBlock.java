@@ -18,8 +18,10 @@ import com.simibubi.create.content.schematics.ISpecialBlockItemRequirement;
 import com.simibubi.create.content.schematics.ItemRequirement;
 import com.simibubi.create.foundation.utility.Iterate;
 
+import net.fabricmc.fabric.api.block.BlockPickInteractionAware;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.SixWayBlock;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
@@ -37,7 +39,7 @@ import net.minecraft.world.TickPriority;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 
-public class EncasedPipeBlock extends Block implements IWrenchable, ISpecialBlockItemRequirement {
+public class EncasedPipeBlock extends Block implements IWrenchable, ISpecialBlockItemRequirement, ITileEntityProvider, BlockPickInteractionAware {
 
 	public static final Map<Direction, BooleanProperty> FACING_TO_PROPERTY_MAP = SixWayBlock.FACING_TO_PROPERTY_MAP;
 
@@ -58,11 +60,6 @@ public class EncasedPipeBlock extends Block implements IWrenchable, ISpecialBloc
 	}
 
 	@Override
-	public boolean hasTileEntity(BlockState state) {
-		return true;
-	}
-
-	@Override
 	public void onReplaced(BlockState state, World world, BlockPos pos, BlockState newState, boolean isMoving) {
 		boolean blockTypeChanged = state.getBlock() != newState.getBlock();
 		if (blockTypeChanged && !world.isRemote)
@@ -79,8 +76,7 @@ public class EncasedPipeBlock extends Block implements IWrenchable, ISpecialBloc
 	}
 
 	@Override
-	public ItemStack getPickBlock(BlockState state, RayTraceResult target, IBlockReader world, BlockPos pos,
-		PlayerEntity player) {
+	public ItemStack getPickedStack(BlockState state, IBlockReader world, BlockPos pos, PlayerEntity player, RayTraceResult target) {
 		return AllBlocks.FLUID_PIPE.asStack();
 	}
 
@@ -103,7 +99,7 @@ public class EncasedPipeBlock extends Block implements IWrenchable, ISpecialBloc
 	}
 
 	@Override
-	public TileEntity createTileEntity(BlockState state, IBlockReader world) {
+	public TileEntity createNewTileEntity(IBlockReader world) {
 		return AllTileEntities.ENCASED_FLUID_PIPE.create();
 	}
 

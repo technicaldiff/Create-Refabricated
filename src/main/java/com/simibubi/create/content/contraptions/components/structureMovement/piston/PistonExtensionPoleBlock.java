@@ -17,7 +17,7 @@ import com.simibubi.create.foundation.utility.placement.util.PoleHelper;
 
 import com.simibubi.create.lib.annotation.MethodsReturnNonnullByDefault;
 
-import com.simibubi.create.lib.block.CustomHarvestablilityBehavior;
+import com.simibubi.create.lib.block.HarvestableBlock;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -48,7 +48,7 @@ import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 
-public class PistonExtensionPoleBlock extends ProperDirectionalBlock implements IWrenchable, IWaterLoggable, CustomHarvestablilityBehavior {
+public class PistonExtensionPoleBlock extends ProperDirectionalBlock implements IWrenchable, IWaterLoggable, HarvestableBlock {
 
     private static final int placementHelperId = PlacementHelpers.register(PlacementHelper.get());
 

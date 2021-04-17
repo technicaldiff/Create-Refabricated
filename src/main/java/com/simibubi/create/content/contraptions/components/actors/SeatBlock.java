@@ -10,8 +10,7 @@ import com.simibubi.create.AllShapes;
 import com.simibubi.create.foundation.utility.DyeHelper;
 
 import com.simibubi.create.lib.annotation.MethodsReturnNonnullByDefault;
-
-import com.simibubi.create.lib.entity.CustomPathfindingBehavior;
+import com.simibubi.create.lib.block.CustomPathNodeTypeBlock;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -39,7 +38,7 @@ import net.minecraft.world.World;
 
 @ParametersAreNonnullByDefault
 @MethodsReturnNonnullByDefault
-public class SeatBlock extends Block implements CustomPathfindingBehavior {
+public class SeatBlock extends Block implements CustomPathNodeTypeBlock {
 
 	private final boolean inCreativeTab;
 

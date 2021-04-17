@@ -5,7 +5,7 @@ import com.simibubi.create.AllTileEntities;
 import com.simibubi.create.foundation.block.ITE;
 import com.simibubi.create.foundation.block.ProperDirectionalBlock;
 
-import com.simibubi.create.lib.block.CustomWeakPowerCheckingBehavior;
+import com.simibubi.create.lib.block.WeakPowerCheckingBlock;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -28,7 +28,7 @@ import net.minecraft.world.IWorldReader;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 
-public class StickerBlock extends ProperDirectionalBlock implements ITE<StickerTileEntity>, CustomWeakPowerCheckingBehavior, ITileEntityProvider {
+public class StickerBlock extends ProperDirectionalBlock implements ITE<StickerTileEntity>, WeakPowerCheckingBlock, ITileEntityProvider {
 
 	public static final BooleanProperty POWERED = BlockStateProperties.POWERED;
 	public static final BooleanProperty EXTENDED = BlockStateProperties.EXTENDED;

@@ -2,7 +2,7 @@ package com.simibubi.create.content.contraptions.components.tracks;
 
 import javax.annotation.Nonnull;
 
-import com.simibubi.create.lib.block.CustomSlopability;
+import com.simibubi.create.lib.block.SlopeCreationCheckingRail;
 
 import com.simibubi.create.lib.helper.EntitySelectionContextHelper;
 
@@ -30,7 +30,7 @@ import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorldReader;
 import net.minecraft.world.World;
 
-public class ReinforcedRailBlock extends AbstractRailBlock implements CustomSlopability {
+public class ReinforcedRailBlock extends AbstractRailBlock implements SlopeCreationCheckingRail {
 
     public static Property<RailShape> RAIL_SHAPE =
             EnumProperty.create("shape", RailShape.class, RailShape.EAST_WEST, RailShape.NORTH_SOUTH);
