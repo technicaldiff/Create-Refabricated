@@ -11,6 +11,8 @@ import com.simibubi.create.foundation.utility.VecHelper;
 
 import com.simibubi.create.lib.annotation.MethodsReturnNonnullByDefault;
 
+import com.simibubi.create.lib.helper.AbstractSpawnerHelper;
+
 import net.minecraft.block.Block;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
@@ -88,12 +90,11 @@ public class BlazeBurnerBlockItem extends BlockItem {
 			return super.onItemUse(context);
 
 		AbstractSpawner spawner = ((MobSpawnerTileEntity) te).getSpawnerBaseLogic();
-		List<WeightedSpawnerEntity> possibleSpawns =
-			ObfuscationReflectionHelper.getPrivateValue(AbstractSpawner.class, spawner, "field_98285_e");
+		List<WeightedSpawnerEntity> possibleSpawns = AbstractSpawnerHelper.getPotentialSpawns(spawner);
 		if (possibleSpawns.isEmpty()) {
 			possibleSpawns = new ArrayList<>();
 			possibleSpawns
-				.add(ObfuscationReflectionHelper.getPrivateValue(AbstractSpawner.class, spawner, "field_98282_f"));
+				.add(AbstractSpawnerHelper.getSpawnData(spawner));
 		}
 
 		ResourceLocation blazeId = EntityType.BLAZE.getRegistryName();

@@ -5,6 +5,8 @@ import com.mojang.brigadier.arguments.FloatArgumentType;
 import com.mojang.brigadier.builder.ArgumentBuilder;
 import com.mojang.brigadier.context.CommandContext;
 
+import com.simibubi.create.lib.helper.SPlayerAbilitiesPacketHelper;
+
 import net.minecraft.command.CommandSource;
 import net.minecraft.command.Commands;
 import net.minecraft.command.arguments.EntityArgument;
@@ -35,7 +37,7 @@ public class FlySpeedCommand {
 	private static int sendFlySpeedUpdate(CommandContext<CommandSource> ctx, ServerPlayerEntity player, float speed) {
 		SPlayerAbilitiesPacket packet = new SPlayerAbilitiesPacket(player.abilities);
 		// packet.setFlySpeed(speed);
-		ObfuscationReflectionHelper.setPrivateValue(SPlayerAbilitiesPacket.class, packet, speed, "field_149116_e");
+		SPlayerAbilitiesPacketHelper.setFlySpeed(packet, speed);
 		player.connection.sendPacket(packet);
 
 		ctx.getSource()

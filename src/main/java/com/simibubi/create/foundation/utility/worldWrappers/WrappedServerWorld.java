@@ -9,6 +9,8 @@ import com.simibubi.create.lib.annotation.MethodsReturnNonnullByDefault;
 
 import com.simibubi.create.lib.helper.BiomeManagerHelper;
 
+import com.simibubi.create.lib.helper.MinecraftServerHelper;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.Entity;
@@ -139,6 +141,6 @@ public class WrappedServerWorld extends ServerWorld {
 	}
 
 	private static SaveFormat.LevelSave getLevelSaveFromWorld(World world) {
-		return ObfuscationReflectionHelper.getPrivateValue(MinecraftServer.class, world.getServer(), "field_71310_m");
+		return MinecraftServerHelper.getAnvilConverterForAnvilFile(world.getServer());
 	}
 }
