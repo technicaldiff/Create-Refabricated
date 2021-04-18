@@ -8,7 +8,6 @@ import net.fabricmc.api.Environment;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.storage.SaveFormat;
 
-@Environment(EnvType.CLIENT)
 public final class MinecraftServerHelper {
 	public static SaveFormat.LevelSave getAnvilConverterForAnvilFile(MinecraftServer minecraftServer) {
 		return get(minecraftServer).create$anvilConverterForAnvilFile();
