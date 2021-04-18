@@ -48,7 +48,7 @@ public class SuperGlueHandler {
 
 		Map<Direction, SuperGlueEntity> gatheredGlue = gatherGlue(world, pos);
 		for (Direction direction : gatheredGlue.keySet())
-			AllPackets.channel.sendToClientsTracking(
+			AllPackets.channel.sendToClientsTrackingAndSelf(
 				new GlueEffectPacket(pos, direction, true), entity);
 
 		if (entity instanceof PlayerEntity)

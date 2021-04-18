@@ -246,7 +246,7 @@ public class SymmetryWandItem extends Item {
 			}
 		}
 
-		AllPackets.channel.sendToClientsTracking(
+		AllPackets.channel.sendToClientsTrackingAndSelf(
 			new SymmetryEffectPacket(to, targets), player);
 	}
 
@@ -304,7 +304,7 @@ public class SymmetryWandItem extends Item {
 			}
 		}
 
-		AllPackets.channel.sendToClientsTracking(
+		AllPackets.channel.sendToClientsTrackingAndSelf(
 			new SymmetryEffectPacket(to, targets), player);
 	}
 

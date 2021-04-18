@@ -20,6 +20,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.network.play.ClientPlayNetHandler;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.network.IPacket;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.network.play.ServerPlayNetHandler;
 import net.minecraft.server.MinecraftServer;
@@ -117,8 +118,9 @@ public class SimpleChannel {
 	public void sendToClients(S2CPacket packet, Collection<ServerPlayerEntity> players) {
 		PacketBuffer buf = createBuf(packet);
 		if (buf == null) return;
+		IPacket<?> vanillaPacket = ServerPlayNetworking.createS2CPacket(channelName, buf);
 		for (ServerPlayerEntity player : players) {
-			ServerPlayNetworking.send(player, channelName, buf);
+			ServerPlayNetworking.getSender(player).sendPacket(vanillaPacket);
 		}
 	}
 
@@ -144,6 +146,14 @@ public class SimpleChannel {
 
 	public void sendToClientsTracking(S2CPacket packet, TileEntity blockEntity) {
 		sendToClients(packet, PlayerLookup.tracking(blockEntity));
+	}
+
+	public void sendToClientsTrackingAndSelf(S2CPacket packet, Entity entity) {
+		Collection<ServerPlayerEntity> clients = PlayerLookup.tracking(entity);
+		if (entity instanceof ServerPlayerEntity && !clients.contains(entity)) {
+			clients.add((ServerPlayerEntity) entity);
+		}
+		sendToClients(packet, clients);
 	}
 
 	public void sendToClientsAround(S2CPacket packet, ServerWorld world, Vector3d pos, double radius) {
