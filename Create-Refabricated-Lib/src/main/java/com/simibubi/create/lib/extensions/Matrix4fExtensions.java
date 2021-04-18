@@ -12,4 +12,6 @@ public interface Matrix4fExtensions {
 	@ApiStatus.Internal
 	@Contract(mutates = "this")
 	void create$fromFloatArray(float[] floats);
+
+	float[] create$writeMatrix();
 }

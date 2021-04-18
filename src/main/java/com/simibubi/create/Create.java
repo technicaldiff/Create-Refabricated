@@ -2,6 +2,8 @@ package com.simibubi.create;
 
 import java.util.Random;
 
+import net.fabricmc.api.ModInitializer;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -41,7 +43,7 @@ import net.minecraft.world.gen.feature.Feature;
 import net.minecraft.world.gen.placement.Placement;
 import net.fabricmc.api.EnvType;
 
-public class Create {
+public class Create implements ModInitializer {
 
 	public static final String ID = "create";
 	public static final String NAME = "Create";
@@ -64,10 +66,8 @@ public class Create {
 
 	private static final NonNullLazyValue<CreateRegistrate> registrate = CreateRegistrate.lazy(ID);
 
-	public Create() {
-		IEventBus modEventBus = FMLJavaModLoadingContext.get()
-			.getModEventBus();
-
+	@Override
+	public void onInitialize() {
 		AllBlocks.register();
 		AllItems.register();
 		AllFluids.register();
@@ -88,7 +88,7 @@ public class Create {
 		modEventBus.addGenericListener(SoundEvent.class, AllSoundEvents::register);
 		modEventBus.addListener(AllConfigs::onLoad);
 		modEventBus.addListener(AllConfigs::onReload);
-		modEventBus.addListener(EventPriority.LOWEST, this::gatherData);
+//		modEventBus.addListener(EventPriority.LOWEST, this::gatherData);
 
 		AllConfigs.register();
 		random = new Random();
@@ -129,14 +129,14 @@ public class Create {
 		return new ResourceLocation(ID, path);
 	}
 
-	public void gatherData(GatherDataEvent event) {
-		DataGenerator gen = event.getGenerator();
-		gen.addProvider(new AllAdvancements(gen));
-		gen.addProvider(new LangMerger(gen));
-		gen.addProvider(AllSoundEvents.provider(gen));
-		gen.addProvider(new StandardRecipeGen(gen));
-		gen.addProvider(new MechanicalCraftingRecipeGen(gen));
-		ProcessingRecipeGen.registerAll(gen);
-	}
+//	public void gatherData(GatherDataEvent event) {
+//		DataGenerator gen = event.getGenerator();
+//		gen.addProvider(new AllAdvancements(gen));
+//		gen.addProvider(new LangMerger(gen));
+//		gen.addProvider(AllSoundEvents.provider(gen));
+//		gen.addProvider(new StandardRecipeGen(gen));
+//		gen.addProvider(new MechanicalCraftingRecipeGen(gen));
+//		ProcessingRecipeGen.registerAll(gen);
+//	}
 
 }

@@ -1,5 +1,7 @@
 package com.simibubi.create.foundation.gui;
 
+import com.simibubi.create.lib.gui.GuiUtils;
+
 import org.lwjgl.opengl.GL11;
 
 import com.mojang.blaze3d.matrix.MatrixStack;

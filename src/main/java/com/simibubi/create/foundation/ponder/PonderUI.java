@@ -8,6 +8,8 @@ import java.util.List;
 import java.util.Random;
 import java.util.stream.IntStream;
 
+import com.simibubi.create.lib.gui.GuiUtils;
+
 import org.apache.commons.lang3.mutable.MutableBoolean;
 import org.lwjgl.opengl.GL11;
 

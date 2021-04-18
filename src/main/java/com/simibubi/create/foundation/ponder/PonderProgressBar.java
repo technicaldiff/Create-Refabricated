@@ -6,6 +6,8 @@ import com.simibubi.create.foundation.utility.AnimationTickHolder;
 import com.simibubi.create.foundation.utility.ColorHelper;
 import com.simibubi.create.foundation.utility.animation.LerpedFloat;
 
+import com.simibubi.create.lib.gui.GuiUtils;
+
 import it.unimi.dsi.fastutil.ints.IntList;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.audio.SoundHandler;

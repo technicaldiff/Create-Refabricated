@@ -32,6 +32,7 @@ import com.simibubi.create.foundation.utility.WorldAttached;
 import com.simibubi.create.foundation.utility.ghost.GhostBlocks;
 import com.simibubi.create.foundation.utility.outliner.Outliner;
 
+import net.fabricmc.api.ClientModInitializer;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.BlockModelShapes;
@@ -52,7 +53,7 @@ import net.minecraft.util.text.event.ClickEvent;
 import net.minecraft.util.text.event.HoverEvent;
 import net.minecraft.world.IWorld;
 
-public class CreateClient {
+public class CreateClient implements ClientModInitializer {
 
 	public static ClientSchematicLoader schematicSender;
 	public static SchematicHandler schematicHandler;
@@ -79,7 +80,8 @@ public class CreateClient {
 		OptifineHandler.init();
 	}
 
-	public static void clientInit(FMLClientSetupEvent event) {
+	@Override
+	public void onInitializeClient() {
 		AllProgramSpecs.init();
 		kineticRenderer = new WorldAttached<>(KineticRenderer::new);
 
@@ -106,7 +108,7 @@ public class CreateClient {
 		UIRenderHelper.init();
 
 		IResourceManager resourceManager = Minecraft.getInstance()
-			.getResourceManager();
+				.getResourceManager();
 		if (resourceManager instanceof IReloadableResourceManager)
 			((IReloadableResourceManager) resourceManager).addReloadListener(new ResourceReloadHandler());
 	}

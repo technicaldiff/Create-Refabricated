@@ -24,6 +24,10 @@ public final class Matrix4fHelper {
 		return matrix;
 	}
 
+	public static float[] writeMatrix(Matrix4f matrix) {
+		return get(matrix).create$writeMatrix();
+	}
+
 	private static Matrix4fExtensions get(Matrix4f m) {
 		return MixinHelper.cast(m);
 	}

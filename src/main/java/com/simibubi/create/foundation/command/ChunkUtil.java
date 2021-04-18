@@ -4,6 +4,8 @@ import java.util.EnumSet;
 import java.util.LinkedList;
 import java.util.List;
 
+import com.simibubi.create.lib.helper.ChunkManagerHelper;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -46,11 +48,11 @@ public class ChunkUtil {
 	}
 
 	public boolean reloadChunk(ServerChunkProvider provider, ChunkPos pos) {
-		ChunkHolder holder = provider.chunkManager.loadedChunks.remove(pos.asLong());
+		ChunkHolder holder = ChunkManagerHelper.getLoadedChunks(provider.chunkManager).remove(pos.asLong());
 		provider.chunkManager.immutableLoadedChunksDirty = true;
 		if (holder != null) {
-			provider.chunkManager.chunksToUnload.put(pos.asLong(), holder);
-			provider.chunkManager.scheduleSave(pos.asLong(), holder);
+			ChunkManagerHelper.getChunksToUnload(provider.chunkManager).put(pos.asLong(), holder);
+			ChunkManagerHelper.scheduleSave(provider.chunkManager, pos.asLong(), holder);
 			return true;
 		} else {
 			return false;

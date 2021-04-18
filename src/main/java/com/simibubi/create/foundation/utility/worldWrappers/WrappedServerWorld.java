@@ -7,6 +7,8 @@ import javax.annotation.ParametersAreNonnullByDefault;
 
 import com.simibubi.create.lib.annotation.MethodsReturnNonnullByDefault;
 
+import com.simibubi.create.lib.helper.BiomeManagerHelper;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.Entity;
@@ -38,7 +40,7 @@ public class WrappedServerWorld extends ServerWorld {
 
 	public WrappedServerWorld(World world) {
 		// Replace null with world.getChunkProvider().chunkManager.field_219266_t ? We had null in 1.15
-		super(world.getServer(), Util.getServerExecutor(), getLevelSaveFromWorld(world), (IServerWorldInfo) world.getWorldInfo(), world.getRegistryKey(), world.getDimension(), null, ((ServerChunkProvider) world.getChunkProvider()).getChunkGenerator(), world.isDebugWorld(), world.getBiomeAccess().seed, Collections.EMPTY_LIST, false); //, world.field_25143);
+		super(world.getServer(), Util.getServerExecutor(), getLevelSaveFromWorld(world), (IServerWorldInfo) world.getWorldInfo(), world.getRegistryKey(), world.getDimension(), null, ((ServerChunkProvider) world.getChunkProvider()).getChunkGenerator(), world.isDebugWorld(), BiomeManagerHelper.getSeed(world.getBiomeAccess()), Collections.EMPTY_LIST, false); //, world.field_25143);
 		this.world = world;
 	}
 
