@@ -190,8 +190,8 @@ public abstract class ZapperItem extends Item {
 		// Server side
 		if (activate(world, player, item, stateToUse, raytrace, data)) {
 			applyCooldown(player, item, gunInOtherHand);
-			AllPackets.channel.send(PacketDistributor.TRACKING_ENTITY.with(() -> player),
-				new ZapperBeamPacket(barrelPos, raytrace.getHitVec(), hand, false));
+			AllPackets.channel.sendToClientsTracking(
+				new ZapperBeamPacket(barrelPos, raytrace.getHitVec(), hand, false), player);
 			AllPackets.channel.send(PacketDistributor.PLAYER.with(() -> (ServerPlayerEntity) player),
 				new ZapperBeamPacket(barrelPos, raytrace.getHitVec(), hand, true));
 		}

@@ -101,8 +101,8 @@ public abstract class AbstractContraptionEntity extends Entity implements ExtraS
 			return;
 		contraption.getSeatMapping()
 			.put(passenger.getUniqueID(), seatIndex);
-		AllPackets.channel.send(PacketDistributor.TRACKING_ENTITY.with(() -> this),
-			new ContraptionSeatMappingPacket(getEntityId(), contraption.getSeatMapping()));
+		AllPackets.channel.sendToClientsTracking(
+			new ContraptionSeatMappingPacket(getEntityId(), contraption.getSeatMapping()), this);
 	}
 
 	@Override
@@ -116,8 +116,8 @@ public abstract class AbstractContraptionEntity extends Entity implements ExtraS
 				.put("ContraptionDismountLocation", VecHelper.writeNBT(transformedVector));
 		contraption.getSeatMapping()
 			.remove(passenger.getUniqueID());
-		AllPackets.channel.send(PacketDistributor.TRACKING_ENTITY.with(() -> this),
-			new ContraptionSeatMappingPacket(getEntityId(), contraption.getSeatMapping()));
+		AllPackets.channel.sendToClientsTracking(
+			new ContraptionSeatMappingPacket(getEntityId(), contraption.getSeatMapping()), this);
 	}
 
 	@Override
@@ -314,8 +314,8 @@ public abstract class AbstractContraptionEntity extends Entity implements ExtraS
 	}
 
 	protected void onContraptionStalled() {
-		AllPackets.channel.send(PacketDistributor.TRACKING_ENTITY.with(() -> this),
-			new ContraptionStallPacket(getEntityId(), getX(), getY(), getZ(), getStalledAngle()));
+		AllPackets.channel.sendToClientsTracking(
+			new ContraptionStallPacket(getEntityId(), getX(), getY(), getZ(), getStalledAngle()), this);
 	}
 
 	protected boolean shouldActorTrigger(MovementContext context, BlockInfo blockInfo, MovementBehaviour actor,
@@ -448,8 +448,8 @@ public abstract class AbstractContraptionEntity extends Entity implements ExtraS
 		remove();
 
 		StructureTransform transform = makeStructureTransform();
-		AllPackets.channel.send(PacketDistributor.TRACKING_ENTITY.with(() -> this),
-			new ContraptionDisassemblyPacket(this.getEntityId(), transform));
+		AllPackets.channel.sendToClientsTracking(
+			new ContraptionDisassemblyPacket(this.getEntityId(), transform), this);
 
 		contraption.addBlocksToWorld(world, transform);
 		contraption.addPassengersToWorld(world, transform, getPassengers());

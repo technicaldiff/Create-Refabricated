@@ -246,8 +246,8 @@ public class SymmetryWandItem extends Item {
 			}
 		}
 
-		AllPackets.channel.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> player),
-			new SymmetryEffectPacket(to, targets));
+		AllPackets.channel.sendToClientsTracking(
+			new SymmetryEffectPacket(to, targets), player);
 	}
 
 	private static boolean isHoldingBlock(PlayerEntity player, BlockState block) {
@@ -304,8 +304,8 @@ public class SymmetryWandItem extends Item {
 			}
 		}
 
-		AllPackets.channel.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> player),
-			new SymmetryEffectPacket(to, targets));
+		AllPackets.channel.sendToClientsTracking(
+			new SymmetryEffectPacket(to, targets), player);
 	}
 
 }

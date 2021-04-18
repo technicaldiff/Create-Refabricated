@@ -97,8 +97,8 @@ public class SuperGlueEntity extends Entity implements ExtraSpawnDataEntity, ISp
 	public void onBroken(@Nullable Entity breaker) {
 		playSound(SoundEvents.ENTITY_SLIME_SQUISH_SMALL, 1.0F, 1.0F);
 		if (onValidSurface()) {
-			AllPackets.channel.send(PacketDistributor.TRACKING_ENTITY.with(() -> this),
-				new GlueEffectPacket(getHangingPosition(), getFacingDirection().getOpposite(), false));
+			AllPackets.channel.sendToClientsTracking(
+				new GlueEffectPacket(getHangingPosition(), getFacingDirection().getOpposite(), true), this);
 			AllSoundEvents.SLIME_ADDED.playFrom(this, 0.5F, 0.5F);
 		}
 	}

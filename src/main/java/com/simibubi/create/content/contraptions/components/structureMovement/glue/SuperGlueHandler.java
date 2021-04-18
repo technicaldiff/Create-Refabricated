@@ -48,8 +48,8 @@ public class SuperGlueHandler {
 
 		Map<Direction, SuperGlueEntity> gatheredGlue = gatherGlue(world, pos);
 		for (Direction direction : gatheredGlue.keySet())
-			AllPackets.channel.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> entity),
-				new GlueEffectPacket(pos, direction, true));
+			AllPackets.channel.sendToClientsTracking(
+				new GlueEffectPacket(pos, direction, true), entity);
 
 		if (entity instanceof PlayerEntity)
 			glueInOffHandAppliesOnBlockPlace(event, pos, (PlayerEntity) entity);
@@ -96,8 +96,8 @@ public class SuperGlueHandler {
 			if (!world.isRemote) {
 				entity.playPlaceSound();
 				world.addEntity(entity);
-				AllPackets.channel.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> entity),
-					new GlueEffectPacket(ray.getPos(), face, true));
+				AllPackets.channel.sendToClientsTracking(
+					new GlueEffectPacket(ray.getPos(), face, true), entity);
 			}
 			itemstack.damageItem(1, placer, SuperGlueItem::onBroken);
 		}

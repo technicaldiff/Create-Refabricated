@@ -291,8 +291,8 @@ public class MinecartController implements INBTSerializable<CompoundNBT> {
 	public void sendData() {
 		if (getWorld().isRemote)
 			return;
-		AllPackets.channel.send(PacketDistributor.TRACKING_ENTITY.with(this::cart),
-			new MinecartControllerUpdatePacket(this));
+		AllPackets.channel.sendToClientsTracking(
+			new MinecartControllerUpdatePacket(this), this.cart());
 	}
 
 	@Override
