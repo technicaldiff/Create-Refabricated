@@ -4,6 +4,8 @@ import java.util.List;
 
 import javax.annotation.Nonnull;
 
+import com.tterrag.registrate.fabric.EnvExecutor;
+
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.client.util.ITooltipFlag;
@@ -94,7 +96,7 @@ public abstract class ZapperItem extends Item {
 		if (context.getPlayer() != null && context.getPlayer()
 			.isSneaking()) {
 			if (context.getWorld().isRemote) {
-				DistExecutor.unsafeRunWhenOn(EnvType.CLIENT, () -> () -> {
+				EnvExecutor.runWhenOn(EnvType.CLIENT, () -> () -> {
 					openHandgunGUI(context.getItem(), context.getHand() == Hand.OFF_HAND);
 				});
 				applyCooldown(context.getPlayer(), context.getItem(), false);
@@ -112,7 +114,7 @@ public abstract class ZapperItem extends Item {
 		// Shift -> Open GUI
 		if (player.isSneaking()) {
 			if (world.isRemote) {
-				DistExecutor.unsafeRunWhenOn(EnvType.CLIENT, () -> () -> {
+				EnvExecutor.runWhenOn(EnvType.CLIENT, () -> () -> {
 					openHandgunGUI(item, hand == Hand.OFF_HAND);
 				});
 				applyCooldown(player, item, false);

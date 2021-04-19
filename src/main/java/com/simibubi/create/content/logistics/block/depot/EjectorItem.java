@@ -1,5 +1,7 @@
 package com.simibubi.create.content.logistics.block.depot;
 
+import com.tterrag.registrate.fabric.EnvExecutor;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
@@ -36,7 +38,7 @@ public class EjectorItem extends BlockItem {
 	protected boolean onBlockPlaced(BlockPos pos, World world, PlayerEntity p_195943_3_, ItemStack p_195943_4_,
 		BlockState p_195943_5_) {
 		if (world.isRemote)
-			DistExecutor.unsafeRunWhenOn(EnvType.CLIENT, () -> () -> EjectorTargetHandler.flushSettings(pos));
+			EnvExecutor.runWhenOn(EnvType.CLIENT, () -> () -> EjectorTargetHandler.flushSettings(pos));
 		return super.onBlockPlaced(pos, world, p_195943_3_, p_195943_4_, p_195943_5_);
 	}
 

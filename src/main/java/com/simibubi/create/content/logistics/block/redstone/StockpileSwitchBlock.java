@@ -8,6 +8,8 @@ import com.simibubi.create.foundation.block.ITE;
 import com.simibubi.create.foundation.gui.ScreenOpener;
 import com.simibubi.create.foundation.utility.Iterate;
 
+import com.tterrag.registrate.fabric.EnvExecutor;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.HorizontalBlock;
@@ -98,7 +100,7 @@ public class StockpileSwitchBlock extends HorizontalBlock implements ITE<Stockpi
 		BlockRayTraceResult hit) {
 		if (player != null && AllItems.WRENCH.isIn(player.getHeldItem(handIn)))
 			return ActionResultType.PASS;
-		DistExecutor.unsafeRunWhenOn(EnvType.CLIENT,
+		EnvExecutor.runWhenOn(EnvType.CLIENT,
 			() -> () -> withTileEntityDo(worldIn, pos, te -> this.displayScreen(te, player)));
 		return ActionResultType.SUCCESS;
 	}

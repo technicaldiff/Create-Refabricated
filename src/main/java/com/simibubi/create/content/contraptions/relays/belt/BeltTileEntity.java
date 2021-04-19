@@ -32,6 +32,8 @@ import com.simibubi.create.foundation.tileEntity.behaviour.belt.TransportedItemS
 import com.simibubi.create.foundation.tileEntity.behaviour.belt.TransportedItemStackHandlerBehaviour.TransportedResult;
 import com.simibubi.create.foundation.utility.NBTHelper;
 
+import com.tterrag.registrate.fabric.EnvExecutor;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.Entity;
@@ -259,7 +261,7 @@ public class BeltTileEntity extends KineticTileEntity implements LightUpdateList
 			belt.color = Optional.ofNullable(colorIn);
 			belt.markDirty();
 			belt.sendData();
-			DistExecutor.unsafeRunWhenOn(EnvType.CLIENT, () -> () -> FastRenderDispatcher.enqueueUpdate(belt));
+			EnvExecutor.runWhenOn(EnvType.CLIENT, () -> () -> FastRenderDispatcher.enqueueUpdate(belt));
 		}
 	}
 

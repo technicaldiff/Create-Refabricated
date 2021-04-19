@@ -87,7 +87,7 @@ public class PlacementSimulationWorld extends WrappedWorld implements IFlywheelW
 	}
 
 	@Override
-	public boolean isAreaLoaded(BlockPos center, int range) {
+	public boolean isAreaLoaded(BlockPos blockPos, BlockPos blockPos2) {
 		return true;
 	}
 

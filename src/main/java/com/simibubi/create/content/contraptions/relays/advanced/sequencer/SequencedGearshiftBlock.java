@@ -10,6 +10,8 @@ import com.simibubi.create.content.contraptions.base.RotatedPillarKineticBlock;
 import com.simibubi.create.foundation.block.ITE;
 import com.simibubi.create.foundation.gui.ScreenOpener;
 
+import com.tterrag.registrate.fabric.EnvExecutor;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.entity.player.ClientPlayerEntity;
@@ -103,7 +105,7 @@ public class SequencedGearshiftBlock extends HorizontalAxisKineticBlock implemen
 				return ActionResultType.PASS;
 		}
 
-		DistExecutor.unsafeRunWhenOn(EnvType.CLIENT,
+		EnvExecutor.runWhenOn(EnvType.CLIENT,
 			() -> () -> withTileEntityDo(worldIn, pos, te -> this.displayScreen(te, player)));
 		return ActionResultType.SUCCESS;
 	}

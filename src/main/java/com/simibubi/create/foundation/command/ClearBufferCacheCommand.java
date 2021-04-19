@@ -3,6 +3,8 @@ package com.simibubi.create.foundation.command;
 import com.mojang.brigadier.builder.ArgumentBuilder;
 import com.simibubi.create.CreateClient;
 
+import com.tterrag.registrate.fabric.EnvExecutor;
+
 import net.minecraft.command.CommandSource;
 import net.minecraft.command.Commands;
 import net.minecraft.util.text.StringTextComponent;
@@ -15,7 +17,7 @@ public class ClearBufferCacheCommand {
 		return Commands.literal("clearRenderBuffers")
 			.requires(cs -> cs.hasPermissionLevel(0))
 			.executes(ctx -> {
-				DistExecutor.unsafeRunWhenOn(EnvType.CLIENT, () -> ClearBufferCacheCommand::execute);
+				EnvExecutor.runWhenOn(EnvType.CLIENT, () -> ClearBufferCacheCommand::execute);
 				ctx.getSource()
 					.sendFeedback(new StringTextComponent("Cleared rendering buffers."), true);
 				return 1;

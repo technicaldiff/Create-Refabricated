@@ -7,6 +7,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import com.tterrag.registrate.fabric.EnvExecutor;
+
 import org.apache.commons.lang3.tuple.Pair;
 
 import com.simibubi.create.AllBlocks;
@@ -98,7 +100,7 @@ public class BeltTunnelTileEntity extends SmartTileEntity implements IInstanceRe
 			sides.addAll(flaps.keySet());
 		super.fromTag(state, compound, clientPacket);
 		if (clientPacket)
-			DistExecutor.unsafeRunWhenOn(EnvType.CLIENT, () -> () -> FastRenderDispatcher.enqueueUpdate(this));
+			EnvExecutor.runWhenOn(EnvType.CLIENT, () -> () -> FastRenderDispatcher.enqueueUpdate(this));
 	}
 
 	public void updateTunnelConnections() {

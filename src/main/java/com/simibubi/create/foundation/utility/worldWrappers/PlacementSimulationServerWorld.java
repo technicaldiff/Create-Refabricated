@@ -15,7 +15,7 @@ public class PlacementSimulationServerWorld extends WrappedServerWorld {
 		super(wrapped);
 		blocksAdded = new HashMap<>();
 	}
-	
+
 	public void clear() {
 		blocksAdded.clear();
 	}
@@ -35,14 +35,14 @@ public class PlacementSimulationServerWorld extends WrappedServerWorld {
 	public boolean hasBlockState(BlockPos pos, Predicate<BlockState> condition) {
 		return condition.test(getBlockState(pos));
 	}
-	
+
 	@Override
 	public boolean isBlockPresent(BlockPos pos) {
 		return true;
 	}
-	
+
 	@Override
-	public boolean isAreaLoaded(BlockPos center, int range) {
+	public boolean isAreaLoaded(BlockPos blockPos, BlockPos blockPos2) {
 		return true;
 	}
 
@@ -52,5 +52,5 @@ public class PlacementSimulationServerWorld extends WrappedServerWorld {
 			return blocksAdded.get(pos);
 		return Blocks.AIR.getDefaultState();
 	}
-	
+
 }

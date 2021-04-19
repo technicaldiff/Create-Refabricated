@@ -16,6 +16,8 @@ import com.simibubi.create.foundation.tileEntity.behaviour.belt.BeltProcessingBe
 import com.simibubi.create.foundation.tileEntity.behaviour.belt.TransportedItemStackHandlerBehaviour;
 import com.simibubi.create.foundation.tileEntity.behaviour.belt.TransportedItemStackHandlerBehaviour.TransportedResult;
 
+import com.simibubi.create.lib.helper.ItemHandlerHelper;
+
 import net.minecraftforge.items.ItemHandlerHelper;
 
 public class BeltPressingCallbacks {

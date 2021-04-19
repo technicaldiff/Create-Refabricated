@@ -2,6 +2,8 @@ package com.simibubi.create.content.contraptions.components.structureMovement.gl
 
 import javax.annotation.Nullable;
 
+import com.tterrag.registrate.fabric.EnvExecutor;
+
 import org.apache.commons.lang3.Validate;
 
 import com.simibubi.create.AllBlocks;
@@ -310,7 +312,7 @@ public class SuperGlueEntity extends Entity implements ExtraSpawnDataEntity, ISp
 	public ActionResultType processInitialInteract(PlayerEntity player, Hand hand) {
 		if (player instanceof ServerPlayerEntity)
 			return ActionResultType.PASS;
-		DistExecutor.unsafeRunWhenOn(EnvType.CLIENT, () -> () -> {
+		EnvExecutor.runWhenOn(EnvType.CLIENT, () -> () -> {
 			triggerPlaceBlock(player, hand);
 		});
 		return ActionResultType.CONSUME;

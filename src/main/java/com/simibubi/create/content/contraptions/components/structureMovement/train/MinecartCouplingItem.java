@@ -4,6 +4,8 @@ import com.simibubi.create.AllItems;
 import com.simibubi.create.content.contraptions.components.structureMovement.train.capability.CapabilityMinecartController;
 import com.simibubi.create.content.contraptions.components.structureMovement.train.capability.MinecartController;
 
+import com.tterrag.registrate.fabric.EnvExecutor;
+
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.minecart.AbstractMinecartEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -58,7 +60,7 @@ public class MinecartCouplingItem extends Item {
 			return true;
 		}
 		if (world != null && world.isRemote)
-			DistExecutor.unsafeRunWhenOn(EnvType.CLIENT, () -> () -> cartClicked(player, minecart));
+			EnvExecutor.runWhenOn(EnvType.CLIENT, () -> () -> cartClicked(player, minecart));
 		return true;
 	}
 

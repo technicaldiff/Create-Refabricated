@@ -9,6 +9,8 @@ import java.util.stream.Stream;
 
 import com.simibubi.create.lib.helper.ServerPlayNetHandlerHelper;
 
+import com.tterrag.registrate.fabric.EnvExecutor;
+
 import org.apache.commons.lang3.mutable.MutableBoolean;
 import org.apache.commons.lang3.mutable.MutableFloat;
 import org.apache.commons.lang3.mutable.MutableInt;
@@ -444,7 +446,7 @@ public class ContraptionCollider {
 		if (!entity.world.isRemote)
 			return PlayerType.SERVER;
 		MutableBoolean isClient = new MutableBoolean(false);
-		DistExecutor.unsafeRunWhenOn(EnvType.CLIENT, () -> () -> isClient.setValue(isClientPlayerEntity(entity)));
+		EnvExecutor.runWhenOn(EnvType.CLIENT, () -> () -> isClient.setValue(isClientPlayerEntity(entity)));
 		return isClient.booleanValue() ? PlayerType.CLIENT : PlayerType.REMOTE;
 	}
 

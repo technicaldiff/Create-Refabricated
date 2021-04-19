@@ -5,6 +5,7 @@ import java.util.Arrays;
 import com.simibubi.create.foundation.tileEntity.TileEntityBehaviour;
 import com.simibubi.create.foundation.utility.RaycastHelper;
 
+import net.fabricmc.fabric.api.event.player.UseBlockCallback;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
@@ -16,32 +17,24 @@ import net.minecraft.world.World;
 
 public class LinkHandler {
 
-	public static void onBlockActivated(PlayerInteractEvent.RightClickBlock event) {
-		World world = event.getWorld();
-		BlockPos pos = event.getPos();
-		PlayerEntity player = event.getPlayer();
-		Hand hand = event.getHand();
-
+	public static ActionResultType onBlockActivated(PlayerEntity player, World world, Hand hand, BlockRayTraceResult blockRayTraceResult) {
 		if (player.isSneaking() || player.isSpectator())
-			return;
+			return ActionResultType.PASS;
 
-		LinkBehaviour behaviour = TileEntityBehaviour.get(world, pos, LinkBehaviour.TYPE);
+		LinkBehaviour behaviour = TileEntityBehaviour.get(world, blockRayTraceResult.getPos(), LinkBehaviour.TYPE);
 		if (behaviour == null)
-			return;
-
-		BlockRayTraceResult ray = RaycastHelper.rayTraceRange(world, player, 10);
-		if (ray == null)
-			return;
+			return ActionResultType.PASS;
 
 		for (boolean first : Arrays.asList(false, true)) {
-			if (behaviour.testHit(first, ray.getHitVec())) {
-				if (event.getSide() != LogicalSide.CLIENT)
+			if (behaviour.testHit(first, blockRayTraceResult.getHitVec())) {
+				if (!world.isRemote)
 					behaviour.setFrequency(first, player.getHeldItem(hand));
-				event.setCanceled(true);
-				event.setCancellationResult(ActionResultType.SUCCESS);
-				world.playSound(null, pos, SoundEvents.ENTITY_ITEM_FRAME_ADD_ITEM, SoundCategory.BLOCKS, .25f, .1f);
+				world.playSound(null, blockRayTraceResult.getPos(), SoundEvents.ENTITY_ITEM_FRAME_ADD_ITEM, SoundCategory.BLOCKS, .25f, .1f);
+				return ActionResultType.SUCCESS;
 			}
 		}
+
+		return ActionResultType.PASS;
 	}
 
 }

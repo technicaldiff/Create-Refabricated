@@ -13,6 +13,8 @@ import com.simibubi.create.foundation.utility.Iterate;
 import com.simibubi.create.foundation.utility.VecHelper;
 import com.simibubi.create.foundation.utility.animation.LerpedFloat;
 
+import com.tterrag.registrate.fabric.EnvExecutor;
+
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 import net.minecraft.nbt.CompoundNBT;
@@ -356,11 +358,11 @@ public class PipeConnection {
 	public static final Random r = new Random();
 
 	public void spawnSplashOnRim(World world, BlockPos pos, FluidStack fluid) {
-		DistExecutor.unsafeRunWhenOn(EnvType.CLIENT, () -> () -> spawnSplashOnRimInner(world, pos, fluid));
+		EnvExecutor.runWhenOn(EnvType.CLIENT, () -> () -> spawnSplashOnRimInner(world, pos, fluid));
 	}
 
 	public void spawnParticles(World world, BlockPos pos, FluidStack fluid) {
-		DistExecutor.unsafeRunWhenOn(EnvType.CLIENT, () -> () -> spawnParticlesInner(world, pos, fluid));
+		EnvExecutor.runWhenOn(EnvType.CLIENT, () -> () -> spawnParticlesInner(world, pos, fluid));
 	}
 
 	@Environment(EnvType.CLIENT)

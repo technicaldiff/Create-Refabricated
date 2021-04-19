@@ -17,6 +17,8 @@ import com.simibubi.create.foundation.networking.AllPackets;
 import com.simibubi.create.foundation.utility.BlockHelper;
 import com.simibubi.create.foundation.utility.Iterate;
 
+import com.tterrag.registrate.fabric.EnvExecutor;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -67,7 +69,7 @@ public class SymmetryWandItem extends Item {
 		// Shift -> open GUI
 		if (player.isSneaking()) {
 			if (player.world.isRemote) {
-				DistExecutor.unsafeRunWhenOn(EnvType.CLIENT, () -> () -> {
+				EnvExecutor.runWhenOn(EnvType.CLIENT, () -> () -> {
 					openWandGUI(wand, context.getHand());
 				});
 				player.getCooldownTracker()
@@ -136,7 +138,7 @@ public class SymmetryWandItem extends Item {
 		// Shift -> Open GUI
 		if (playerIn.isSneaking()) {
 			if (worldIn.isRemote) {
-				DistExecutor.unsafeRunWhenOn(EnvType.CLIENT, () -> () -> {
+				EnvExecutor.runWhenOn(EnvType.CLIENT, () -> () -> {
 					openWandGUI(playerIn.getHeldItem(handIn), handIn);
 				});
 				playerIn.getCooldownTracker()

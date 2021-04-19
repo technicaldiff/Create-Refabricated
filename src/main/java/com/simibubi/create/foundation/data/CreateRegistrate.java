@@ -23,6 +23,7 @@ import com.tterrag.registrate.builders.BlockBuilder;
 import com.tterrag.registrate.builders.Builder;
 import com.tterrag.registrate.builders.FluidBuilder;
 import com.tterrag.registrate.builders.ItemBuilder;
+import com.tterrag.registrate.fabric.EnvExecutor;
 import com.tterrag.registrate.fabric.RegistryObject;
 import com.tterrag.registrate.util.NonNullLazyValue;
 import com.tterrag.registrate.util.entry.RegistryEntry;
@@ -202,7 +203,7 @@ public class CreateRegistrate extends AbstractRegistrate<CreateRegistrate> {
 	}
 
 	protected static void onClient(Supplier<Runnable> toRun) {
-		DistExecutor.unsafeRunWhenOn(EnvType.CLIENT, toRun);
+		EnvExecutor.runWhenOn(EnvType.CLIENT, toRun);
 	}
 
 	@Environment(EnvType.CLIENT)

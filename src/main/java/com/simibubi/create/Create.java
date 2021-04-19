@@ -2,6 +2,8 @@ package com.simibubi.create;
 
 import java.util.Random;
 
+import com.tterrag.registrate.fabric.EnvExecutor;
+
 import net.fabricmc.api.ModInitializer;
 
 import org.apache.logging.log4j.LogManager;
@@ -93,7 +95,7 @@ public class Create implements ModInitializer {
 		AllConfigs.register();
 		random = new Random();
 
-		DistExecutor.unsafeRunWhenOn(EnvType.CLIENT, () -> () -> CreateClient.addClientListeners(modEventBus));
+		EnvExecutor.runWhenOn(EnvType.CLIENT, () -> () -> CreateClient.addClientListeners(modEventBus));
 	}
 
 	public static void init(final FMLCommonSetupEvent event) {

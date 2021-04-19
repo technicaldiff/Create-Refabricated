@@ -3,6 +3,8 @@ package com.simibubi.create.foundation.command;
 import com.mojang.brigadier.builder.ArgumentBuilder;
 import com.simibubi.create.foundation.networking.AllPackets;
 
+import com.tterrag.registrate.fabric.EnvExecutor;
+
 import net.minecraft.command.CommandSource;
 import net.minecraft.command.Commands;
 import net.minecraft.entity.player.ServerPlayerEntity;
@@ -16,10 +18,10 @@ public class OverlayConfigCommand {
 			.requires(cs -> cs.hasPermissionLevel(0))
 			.then(Commands.literal("reset")
 				.executes(ctx -> {
-					DistExecutor.unsafeRunWhenOn(EnvType.CLIENT,
+					EnvExecutor.runWhenOn(EnvType.CLIENT,
 						() -> () -> ConfigureConfigPacket.Actions.overlayReset.performAction(""));
 
-					DistExecutor.unsafeRunWhenOn(EnvType.SERVER,
+					EnvExecutor.runWhenOn(EnvType.SERVER,
 						() -> () -> AllPackets.channel.send(
 							PacketDistributor.PLAYER.with(() -> (ServerPlayerEntity) ctx.getSource()
 								.getEntity()),
@@ -31,10 +33,10 @@ public class OverlayConfigCommand {
 					return 1;
 				}))
 			.executes(ctx -> {
-				DistExecutor.unsafeRunWhenOn(EnvType.CLIENT,
+				EnvExecutor.runWhenOn(EnvType.CLIENT,
 					() -> () -> ConfigureConfigPacket.Actions.overlayScreen.performAction(""));
 
-				DistExecutor.unsafeRunWhenOn(EnvType.SERVER,
+				EnvExecutor.runWhenOn(EnvType.SERVER,
 					() -> () -> AllPackets.channel.send(
 						PacketDistributor.PLAYER.with(() -> (ServerPlayerEntity) ctx.getSource()
 							.getEntity()),

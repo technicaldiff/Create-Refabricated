@@ -23,6 +23,8 @@ import com.simibubi.create.foundation.tileEntity.behaviour.inventory.InvManipula
 import com.simibubi.create.foundation.utility.BlockFace;
 import com.simibubi.create.foundation.utility.VecHelper;
 
+import com.tterrag.registrate.fabric.EnvExecutor;
+
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.item.ItemStack;
@@ -322,7 +324,7 @@ public class FunnelTileEntity extends SmartTileEntity implements IHaveHoveringIn
 		extractionCooldown = compound.getInt("TransferCooldown");
 
 		if (clientPacket)
-			DistExecutor.unsafeRunWhenOn(EnvType.CLIENT, () -> () -> FastRenderDispatcher.enqueueUpdate(this));
+			EnvExecutor.runWhenOn(EnvType.CLIENT, () -> () -> FastRenderDispatcher.enqueueUpdate(this));
 	}
 
 	@Override

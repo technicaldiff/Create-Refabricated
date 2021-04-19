@@ -21,6 +21,8 @@ import com.simibubi.create.foundation.tileEntity.behaviour.scrollvalue.ScrollVal
 import com.simibubi.create.foundation.utility.Iterate;
 import com.simibubi.create.foundation.utility.Lang;
 
+import com.tterrag.registrate.fabric.EnvExecutor;
+
 import net.minecraft.block.BlockState;
 import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.tileentity.TileEntity;
@@ -48,7 +50,7 @@ public class ChassisTileEntity extends SmartTileEntity {
 		range.between(1, max);
 		range
 				.withClientCallback(
-						i -> DistExecutor.unsafeRunWhenOn(EnvType.CLIENT, () -> () -> ChassisRangeDisplay.display(this)));
+						i -> EnvExecutor.runWhenOn(EnvType.CLIENT, () -> () -> ChassisRangeDisplay.display(this)));
 		range.value = max / 2;
 		behaviours.add(range);
 	}

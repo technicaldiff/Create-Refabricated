@@ -12,6 +12,8 @@ import java.util.zip.GZIPInputStream;
 
 import javax.annotation.Nonnull;
 
+import com.tterrag.registrate.fabric.EnvExecutor;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -163,7 +165,7 @@ public class SchematicItem extends Item {
 		if (!player.getHeldItem(hand)
 			.hasTag())
 			return false;
-		DistExecutor.unsafeRunWhenOn(EnvType.CLIENT, () -> this::displayBlueprintScreen);
+		EnvExecutor.runWhenOn(EnvType.CLIENT, () -> this::displayBlueprintScreen);
 		return true;
 	}
 

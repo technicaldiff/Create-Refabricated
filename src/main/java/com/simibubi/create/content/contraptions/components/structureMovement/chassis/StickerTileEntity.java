@@ -13,6 +13,8 @@ import com.simibubi.create.foundation.tileEntity.TileEntityBehaviour;
 import com.simibubi.create.foundation.utility.animation.LerpedFloat;
 import com.simibubi.create.foundation.utility.animation.LerpedFloat.Chaser;
 
+import com.tterrag.registrate.fabric.EnvExecutor;
+
 import net.minecraft.block.BlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.nbt.CompoundNBT;
@@ -59,7 +61,7 @@ public class StickerTileEntity extends SmartTileEntity implements IInstanceRende
 
 		if (isAttachedToBlock() && piston.getValue(0) != piston.getValue() && piston.getValue() == 1) {
 			SuperGlueItem.spawnParticles(world, pos, getBlockState().get(StickerBlock.FACING), true);
-			DistExecutor.unsafeRunWhenOn(EnvType.CLIENT, () -> () -> playSound(true));
+			EnvExecutor.runWhenOn(EnvType.CLIENT, () -> () -> playSound(true));
 		}
 
 		if (!update)
@@ -67,10 +69,10 @@ public class StickerTileEntity extends SmartTileEntity implements IInstanceRende
 		update = false;
 		int target = isBlockStateExtended() ? 1 : 0;
 		if (isAttachedToBlock() && target == 0 && piston.getChaseTarget() == 1)
-			DistExecutor.unsafeRunWhenOn(EnvType.CLIENT, () -> () -> playSound(false));
+			EnvExecutor.runWhenOn(EnvType.CLIENT, () -> () -> playSound(false));
 		piston.chase(target, .4f, Chaser.LINEAR);
 
-		DistExecutor.unsafeRunWhenOn(EnvType.CLIENT, () -> () -> FastRenderDispatcher.enqueueUpdate(this));
+		EnvExecutor.runWhenOn(EnvType.CLIENT, () -> () -> FastRenderDispatcher.enqueueUpdate(this));
 	}
 
 	public boolean isAttachedToBlock() {
