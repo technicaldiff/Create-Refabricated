@@ -10,6 +10,7 @@
     "ISelectionContextMixin",
     "ItemEntityMixin",
     "ItemStackMixin",
+    "Matrix3fMixin",
     "Matrix4fMixin",
     "MobEntityMixin",
     "PlayerControllerMixin",
@@ -21,12 +22,14 @@
     "accessor.AbstractSpawnerAccessor",
     "accessor.BeaconTileEntityAccessor",
     "accessor.BiomeManagerAccessor",
+    "accessor.ChunkManagerAccessor",
     "accessor.CriteriaTriggersAccessor",
     "accessor.DamageSourceAccessor",
     "accessor.ItemEntityAccessor",
     "accessor.MinecraftServerAccessor",
     "accessor.ParticleAccessor",
     "accessor.RailStateAccessor",
+    "accessor.SPlayerAbilitiesPacketAccessor",
     "accessor.ScreenAccessor",
     "accessor.ServerPlayNetHandlerAccessor",
     "accessor.StairsBlockAccessor",
@@ -50,7 +53,7 @@
     "accessor.MinecraftAccessor"
   ],
   "server": [
-    "Vec3dMixin",
+    "Vector3dMixin",
     "WoodTypeMixin"
   ],
   "injectors": {
