@@ -56,7 +56,7 @@ public class EjectorBlock extends HorizontalKineticBlock implements ITE<EjectorT
 		BlockPos p_220069_5_, boolean p_220069_6_) {
 		withTileEntityDo(world, pos, EjectorTileEntity::updateSignal);
 	}
-	
+
 	@Override
 	public void onFallenUpon(World p_180658_1_, BlockPos p_180658_2_, Entity p_180658_3_, float p_180658_4_) {
 		Optional<EjectorTileEntity> tileEntityOptional = getTileEntityOptional(p_180658_1_, p_180658_2_);
@@ -94,8 +94,8 @@ public class EjectorBlock extends HorizontalKineticBlock implements ITE<EjectorT
 		if (ejectorTileEntity.launcher.getHorizontalDistance() == 0)
 			return;
 
-		if (entityIn.onGround) {
-			entityIn.onGround = false;
+		if (entityIn.isOnGround()) {
+			entityIn.setOnGround(false);
 			Vector3d center = VecHelper.getCenterOf(position)
 				.add(0, 7 / 16f, 0);
 			Vector3d positionVec = entityIn.getPositionVec();
@@ -160,7 +160,7 @@ public class EjectorBlock extends HorizontalKineticBlock implements ITE<EjectorT
 	public int getComparatorInputOverride(BlockState blockState, World worldIn, BlockPos pos) {
 		return SharedDepotBlockMethods.getComparatorInputOverride(blockState, worldIn, pos);
 	}
-	
+
 	@Override
 	public boolean allowsMovement(BlockState state, IBlockReader reader, BlockPos pos, PathType type) {
 		return false;

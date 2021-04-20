@@ -9,6 +9,7 @@ import com.simibubi.create.foundation.utility.VecHelper;
 
 import com.simibubi.create.lib.annotation.MethodsReturnNonnullByDefault;
 
+import net.fabricmc.fabric.api.event.player.PlayerBlockBreakEvents;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.item.ItemEntity;
@@ -16,6 +17,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.AxeItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tags.BlockTags;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.IWorld;
@@ -45,11 +47,11 @@ public class DeforesterItem extends AxeItem {
 		deforesting = false;
 	}
 
-	public static void onBlockDestroyed(BlockEvent.BreakEvent event) {
-		ItemStack heldItemMainhand = event.getPlayer().getHeldItemMainhand();
+	public static void onBlockDestroyed(World world, PlayerEntity player, BlockPos pos, BlockState state, TileEntity te) {
+		ItemStack heldItemMainhand = player.getHeldItemMainhand();
 		if (!AllItems.DEFORESTER.isIn(heldItemMainhand))
 			return;
-		destroyTree(event.getWorld(), event.getState(), event.getPos(), event.getPlayer());
+		destroyTree(world, state, pos, player);
 	}
 
 	public static void dropItemFromCutTree(World world, BlockPos breakingPos, Vector3d fallDirection, BlockPos pos,

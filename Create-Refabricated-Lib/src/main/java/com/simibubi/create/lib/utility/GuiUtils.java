@@ -1,4 +1,4 @@
-package com.simibubi.create.lib.gui;
+package com.simibubi.create.lib.utility;
 
 import org.lwjgl.opengl.GL11;
 

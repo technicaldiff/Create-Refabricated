@@ -16,6 +16,10 @@ public class ChunkManagerHelper {
 		return get(chunkManager).create$chunksToUnload();
 	}
 
+	public static void setImmutableLoadedChunksDirty(ChunkManager chunkManager, boolean v) {
+		get(chunkManager).create$immutableLoadedChunksDirty(v);
+	}
+
 	public static void scheduleSave(ChunkManager chunkManager, long l, ChunkHolder chunkHolder) {
 		get(chunkManager).create$scheduleSave(l, chunkHolder);
 	}

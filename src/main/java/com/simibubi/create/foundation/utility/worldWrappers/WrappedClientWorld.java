@@ -9,6 +9,9 @@ import javax.annotation.ParametersAreNonnullByDefault;
 
 import com.simibubi.create.lib.annotation.MethodsReturnNonnullByDefault;
 
+import com.simibubi.create.lib.helper.BiomeManagerHelper;
+import com.simibubi.create.lib.helper.ClientPlayNetHandlerHelper;
+
 import net.minecraft.block.BlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.world.ClientWorld;
@@ -39,7 +42,7 @@ public class WrappedClientWorld extends ClientWorld {
 	protected World world;
 
 	private WrappedClientWorld(World world) {
-		super(mc.getConnection(), mc.world.getWorldInfo(), world.getRegistryKey(), world.getDimension(), mc.getConnection().viewDistance, world.getProfilerSupplier(), mc.worldRenderer, world.isDebugWorld(), world.getBiomeAccess().seed);
+		super(mc.getConnection(), mc.world.getWorldInfo(), world.getRegistryKey(), world.getDimension(), ClientPlayNetHandlerHelper.getViewDistance(mc.getConnection()), world.getProfilerSupplier(), mc.worldRenderer, world.isDebugWorld(), BiomeManagerHelper.getSeed(world.getBiomeAccess()));
 		this.world = world;
 	}
 

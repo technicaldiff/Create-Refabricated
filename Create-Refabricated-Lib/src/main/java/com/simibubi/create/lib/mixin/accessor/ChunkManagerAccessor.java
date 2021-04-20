@@ -16,6 +16,9 @@ public interface ChunkManagerAccessor {
 	@Accessor("chunksToUnload")
 	Long2ObjectLinkedOpenHashMap<ChunkHolder> create$chunksToUnload();
 
+	@Accessor("immutableLoadedChunksDirty")
+	void create$immutableLoadedChunksDirty(boolean v);
+
 	@Invoker("scheduleSave")
 	void create$scheduleSave(long l, ChunkHolder chunkHolder);
 }

@@ -6,6 +6,8 @@ import java.util.List;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
 
+import com.simibubi.create.lib.event.RenderHandCallback;
+
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.network.play.ClientPlayNetHandler;
 import net.minecraft.client.renderer.ActiveRenderInfo;
@@ -297,6 +299,8 @@ public class ClientEvents {
 		ClientEntityEvents.ENTITY_LOAD.register(CommonEvents::onEntityAdded);
 		ClientWorldEvents.LOAD.register((client, world) -> CommonEvents.onLoadWorld(world));
 		ClientWorldEvents.UNLOAD.register((client, world) -> CommonEvents.onUnloadWorld(world));
+
+		RenderHandCallback.EVENT.register(ExtendoGripRenderHandler::onRenderPlayerHand);
 	}
 
 }
