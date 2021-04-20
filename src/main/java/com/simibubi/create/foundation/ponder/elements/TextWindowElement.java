@@ -10,7 +10,7 @@ import com.simibubi.create.foundation.ponder.PonderUI;
 import com.simibubi.create.foundation.ponder.content.PonderPalette;
 import com.simibubi.create.foundation.utility.ColorHelper;
 
-import com.simibubi.create.lib.gui.GuiUtils;
+import com.simibubi.create.lib.utility.GuiUtils;
 
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.vector.Matrix4f;

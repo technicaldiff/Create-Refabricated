@@ -147,7 +147,7 @@ public class SymmetryWandScreen extends AbstractSimiScreen {
 		CompoundNBT compound = heldItem.getTag();
 		compound.put(SymmetryWandItem.SYMMETRY, currentElement.writeToNbt());
 		heldItem.setTag(compound);
-		AllPackets.channel.send(PacketDistributor.SERVER.noArg(), new NbtPacket(heldItem, hand));
+		AllPackets.channel.sendToServer(new NbtPacket(heldItem, hand));
 		client.player.setHeldItem(hand, heldItem);
 		super.removed();
 	}

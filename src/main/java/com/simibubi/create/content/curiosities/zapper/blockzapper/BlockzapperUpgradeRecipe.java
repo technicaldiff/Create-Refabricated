@@ -79,7 +79,7 @@ public class BlockzapperUpgradeRecipe implements ICraftingRecipe {
 		return AllRecipeTypes.BLOCKZAPPER_UPGRADE.serializer;
 	}
 
-	public static class Serializer extends ForgeRegistryEntry<IRecipeSerializer<?>> implements IRecipeSerializer<BlockzapperUpgradeRecipe> {
+	public static class Serializer implements IRecipeSerializer<BlockzapperUpgradeRecipe> {
 
 		@Override
 		public BlockzapperUpgradeRecipe read(ResourceLocation recipeId, JsonObject json) {

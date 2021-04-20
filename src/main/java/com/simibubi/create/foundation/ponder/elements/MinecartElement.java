@@ -54,7 +54,7 @@ public class MinecartElement extends AnimatedSceneElement {
 			entity = constructor.create(scene.getWorld(), 0, 0, 0);
 
 		entity.ticksExisted++;
-		entity.onGround = true;
+		entity.setOnGround(true);
 		entity.prevPosX = entity.getX();
 		entity.prevPosY = entity.getY();
 		entity.prevPosZ = entity.getZ();

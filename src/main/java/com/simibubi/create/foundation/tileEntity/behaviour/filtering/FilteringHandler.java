@@ -11,6 +11,8 @@ import com.simibubi.create.foundation.tileEntity.behaviour.ValueBoxTransform.Sid
 import com.simibubi.create.foundation.utility.Lang;
 import com.simibubi.create.foundation.utility.RaycastHelper;
 
+import com.simibubi.create.lib.helper.ItemHandlerHelper;
+
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.world.ClientWorld;
 import net.minecraft.entity.player.PlayerEntity;
@@ -32,43 +34,40 @@ import net.fabricmc.api.Environment;
 
 public class FilteringHandler {
 
-	public static void onBlockActivated(PlayerInteractEvent.RightClickBlock event) {
-		World world = event.getWorld();
-		BlockPos pos = event.getPos();
-		PlayerEntity player = event.getPlayer();
-		Hand hand = event.getHand();
+	public static ActionResultType onBlockActivated(PlayerEntity player, World world, Hand hand, BlockRayTraceResult traceResult) {
+		BlockPos pos = traceResult.getPos();
 
 		if (player.isSneaking() || player.isSpectator())
-			return;
+			return ActionResultType.PASS;
 
 		FilteringBehaviour behaviour = TileEntityBehaviour.get(world, pos, FilteringBehaviour.TYPE);
 		if (behaviour == null)
-			return;
+			return ActionResultType.PASS;
 
 		BlockRayTraceResult ray = RaycastHelper.rayTraceRange(world, player, 10);
 		if (ray == null)
-			return;
+			return ActionResultType.PASS;
 		if (behaviour instanceof SidedFilteringBehaviour) {
 			behaviour = ((SidedFilteringBehaviour) behaviour).get(ray.getFace());
 			if (behaviour == null)
-				return;
+				return ActionResultType.PASS;
 		}
 		if (!behaviour.isActive())
-			return;
+			return ActionResultType.PASS;
 		if (behaviour.slotPositioning instanceof ValueBoxTransform.Sided)
 			((Sided) behaviour.slotPositioning).fromSide(ray.getFace());
 		if (!behaviour.testHit(ray.getHitVec()))
-			return;
+			return ActionResultType.PASS;
 
 		ItemStack toApply = player.getHeldItem(hand)
 			.copy();
 
 		if (AllItems.WRENCH.isIn(toApply))
-			return;
+			return ActionResultType.PASS;
 		if (AllBlocks.MECHANICAL_ARM.isIn(toApply))
-			return;
+			return ActionResultType.PASS;
 
-		if (event.getSide() != LogicalSide.CLIENT) {
+		if (!world.isRemote) {
 			if (!player.isCreative()) {
 				if (toApply.getItem() instanceof FilterItem)
 					player.getHeldItem(hand)
@@ -96,9 +95,8 @@ public class FilteringHandler {
 				.formatted(TextFormatting.WHITE), true);
 		}
 
-		event.setCanceled(true);
-		event.setCancellationResult(ActionResultType.SUCCESS);
 		world.playSound(null, pos, SoundEvents.ENTITY_ITEM_FRAME_ADD_ITEM, SoundCategory.BLOCKS, .25f, .1f);
+		return ActionResultType.SUCCESS;
 	}
 
 	@Environment(EnvType.CLIENT)

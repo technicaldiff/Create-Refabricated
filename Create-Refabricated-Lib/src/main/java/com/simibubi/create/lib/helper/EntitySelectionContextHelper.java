@@ -1,7 +1,6 @@
 package com.simibubi.create.lib.helper;
 
 import com.simibubi.create.lib.extensions.EntitySelectionContextExtensions;
-
 import com.simibubi.create.lib.utility.MixinHelper;
 
 import net.minecraft.entity.Entity;

@@ -1,6 +1,6 @@
 package com.simibubi.create.foundation.gui;
 
-import com.simibubi.create.lib.gui.GuiUtils;
+import com.simibubi.create.lib.utility.GuiUtils;
 
 import org.lwjgl.opengl.GL11;
 

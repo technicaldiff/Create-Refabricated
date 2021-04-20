@@ -22,6 +22,8 @@ import java.util.stream.Collectors;
 
 import javax.annotation.Nullable;
 
+import com.simibubi.create.lib.utility.StickinessHelper;
+
 import org.apache.commons.lang3.tuple.MutablePair;
 import org.apache.commons.lang3.tuple.Pair;
 
@@ -386,7 +388,7 @@ public abstract class Contraption {
 			boolean blockAttachedTowardsFace =
 				BlockMovementTraits.isBlockAttachedTowards(world, offsetPos, blockState, offset.getOpposite());
 			boolean brittle = BlockMovementTraits.isBrittle(blockState);
-			boolean canStick = !brittle && state.canStickTo(blockState) && blockState.canStickTo(state);
+			boolean canStick = !brittle && StickinessHelper.canStickTo(state, blockState) && StickinessHelper.canStickTo(blockState, state);
 			if (canStick) {
 				if (state.getPushReaction() == PushReaction.PUSH_ONLY
 					|| blockState.getPushReaction() == PushReaction.PUSH_ONLY) {

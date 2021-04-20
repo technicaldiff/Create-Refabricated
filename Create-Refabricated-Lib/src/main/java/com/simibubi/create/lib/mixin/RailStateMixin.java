@@ -1,18 +1,6 @@
 package com.simibubi.create.lib.mixin;
 
-import com.google.common.collect.Lists;
-import com.simibubi.create.lib.block.SlopeCreationCheckingRail;
-
-import com.simibubi.create.lib.mixin.accessor.RailStateAccessor;
-import com.simibubi.create.lib.utility.MixinHelper;
-
-import net.minecraft.block.AbstractRailBlock;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.RailState;
-
-import net.minecraft.state.properties.RailShape;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
+import java.util.List;
 
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Final;
@@ -23,7 +11,17 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import java.util.List;
+import com.google.common.collect.Lists;
+import com.simibubi.create.lib.block.SlopeCreationCheckingRail;
+import com.simibubi.create.lib.mixin.accessor.RailStateAccessor;
+import com.simibubi.create.lib.utility.MixinHelper;
+
+import net.minecraft.block.AbstractRailBlock;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.RailState;
+import net.minecraft.state.properties.RailShape;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
 
 @Mixin(value = RailState.class, priority = 1501) // bigger number is applied first right?
 public abstract class RailStateMixin {

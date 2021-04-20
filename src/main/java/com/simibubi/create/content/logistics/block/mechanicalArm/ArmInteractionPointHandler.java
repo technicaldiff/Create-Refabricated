@@ -19,6 +19,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ActionResultType;
+import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.RayTraceResult;
@@ -35,23 +36,21 @@ public class ArmInteractionPointHandler {
 
 	static long lastBlockPos = -1;
 
-	public static void rightClickingBlocksSelectsThem(PlayerInteractEvent.RightClickBlock event) {
+	public static ActionResultType rightClickingBlocksSelectsThem(PlayerEntity player, World world, Hand hand, BlockRayTraceResult traceResult) {
 		if (currentItem == null)
-			return;
-		BlockPos pos = event.getPos();
-		World world = event.getWorld();
+			return ActionResultType.PASS;
+		BlockPos pos = traceResult.getPos();
 		if (!world.isRemote)
-			return;
-		PlayerEntity player = event.getPlayer();
+			return ActionResultType.PASS;
 		if (player != null && player.isSpectator())
-			return;
+			return ActionResultType.PASS;
 
 		ArmInteractionPoint selected = getSelected(pos);
 
 		if (selected == null) {
 			ArmInteractionPoint point = ArmInteractionPoint.createAt(world, pos);
 			if (point == null)
-				return;
+				return ActionResultType.PASS;
 			selected = point;
 			put(point);
 		}
@@ -66,8 +65,7 @@ public class ArmInteractionPointHandler {
 				true);
 		}
 
-		event.setCanceled(true);
-		event.setCancellationResult(ActionResultType.SUCCESS);
+		return ActionResultType.SUCCESS;
 	}
 
 	public static void leftClickingBlocksDeselectsThem(PlayerInteractEvent.LeftClickBlock event) {

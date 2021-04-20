@@ -39,11 +39,7 @@ public class GoggleOverlayRenderer {
 
 	private static final Map<Object, OutlineEntry> outlines = CreateClient.outliner.getOutlines();
 
-	public static void lookingAtBlocksThroughGogglesShowsTooltip(RenderGameOverlayEvent.Post event) {
-		MatrixStack ms = event.getMatrixStack();
-		if (event.getType() != ElementType.HOTBAR)
-			return;
-
+	public static void lookingAtBlocksThroughGogglesShowsTooltip(MatrixStack ms, float v) {
 		RayTraceResult objectMouseOver = Minecraft.getInstance().objectMouseOver;
 		if (!(objectMouseOver instanceof BlockRayTraceResult))
 			return;

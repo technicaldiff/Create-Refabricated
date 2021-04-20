@@ -20,22 +20,22 @@ import net.minecraft.world.gen.feature.template.StructureProcessor;
 import net.minecraft.world.gen.feature.template.Template;
 
 public class SchematicProcessor extends StructureProcessor {
-	
+
 	public static final SchematicProcessor INSTANCE = new SchematicProcessor();
 	public static final Codec<SchematicProcessor> CODEC = Codec.unit(() -> {
 		return INSTANCE;
 	});
-	
+
 	public static IStructureProcessorType<SchematicProcessor> TYPE;
-	
+
 	public static void register() {
 		TYPE = IStructureProcessorType.register("schematic", CODEC);
 	}
-	
+
 	@Nullable
 	@Override
 	public Template.BlockInfo process(IWorldReader world, BlockPos pos, BlockPos anotherPos, Template.BlockInfo rawInfo,
-			Template.BlockInfo info, PlacementSettings settings, @Nullable Template template) {
+			Template.BlockInfo info, PlacementSettings settings) {
 		if (info.nbt != null) {
 			TileEntity te = info.state.createTileEntity(world);
 			if (te != null) {

@@ -66,7 +66,7 @@ public class ParrotElement extends AnimatedSceneElement {
 		entity.prevRotationYawHead = entity.rotationYawHead;
 		entity.oFlapSpeed = entity.flapSpeed;
 		entity.oFlap = entity.flap;
-		entity.onGround = true;
+		entity.setOnGround(true);
 
 		entity.prevPosX = entity.getX();
 		entity.prevPosY = entity.getY();
@@ -174,7 +174,7 @@ public class ParrotElement extends AnimatedSceneElement {
 			double length = entity.getPositionVec()
 				.subtract(entity.lastTickPosX, entity.lastTickPosY, entity.lastTickPosZ)
 				.length();
-			entity.onGround = false;
+			entity.setOnGround(false);
 			double phase = Math.min(length * 15, 8);
 			float f = (float) ((PonderUI.ponderTicks % 100) * phase);
 			entity.flapSpeed = MathHelper.sin(f) + 1;

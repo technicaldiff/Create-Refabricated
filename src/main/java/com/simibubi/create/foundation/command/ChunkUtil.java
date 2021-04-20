@@ -49,7 +49,7 @@ public class ChunkUtil {
 
 	public boolean reloadChunk(ServerChunkProvider provider, ChunkPos pos) {
 		ChunkHolder holder = ChunkManagerHelper.getLoadedChunks(provider.chunkManager).remove(pos.asLong());
-		provider.chunkManager.immutableLoadedChunksDirty = true;
+		ChunkManagerHelper.setImmutableLoadedChunksDirty(provider.chunkManager, true);
 		if (holder != null) {
 			ChunkManagerHelper.getChunksToUnload(provider.chunkManager).put(pos.asLong(), holder);
 			ChunkManagerHelper.scheduleSave(provider.chunkManager, pos.asLong(), holder);

@@ -14,6 +14,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.player.AbstractClientPlayerEntity;
 import net.minecraft.client.entity.player.ClientPlayerEntity;
 import net.minecraft.client.renderer.FirstPersonRenderer;
+import net.minecraft.client.renderer.IRenderTypeBuffer;
 import net.minecraft.client.renderer.entity.PlayerRenderer;
 import net.minecraft.client.renderer.model.ItemCameraTransforms;
 import net.minecraft.client.world.ClientWorld;
@@ -25,7 +26,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.util.math.vector.Vector3f;
-import net.fabricmc.api.EnvType;
 
 public class ZapperRenderHandler {
 
@@ -131,21 +131,16 @@ public class ZapperRenderHandler {
 		cachedBeams.add(beam);
 	}
 
-	public static void onRenderPlayerHand(RenderHandEvent event) {
-		ItemStack heldItem = event.getItemStack();
+	public static boolean onRenderPlayerHand(AbstractClientPlayerEntity client, Hand hand, ItemStack heldItem, MatrixStack ms, IRenderTypeBuffer vertexConsumers, float tickDelta, float pitch, float swingProgress, float equipProgress, int light) {
 		if (!(heldItem.getItem() instanceof ZapperItem))
-			return;
+			return true;
 
 		Minecraft mc = Minecraft.getInstance();
-		boolean rightHand = event.getHand() == Hand.MAIN_HAND ^ mc.player.getPrimaryHand() == HandSide.LEFT;
-
-		MatrixStack ms = event.getMatrixStack();
+		boolean rightHand = hand == Hand.MAIN_HAND ^ mc.player.getPrimaryHand() == HandSide.LEFT;
 
 		ms.push();
-		float recoil = rightHand ? MathHelper.lerp(event.getPartialTicks(), lastRightHandAnimation, rightHandAnimation)
-			: MathHelper.lerp(event.getPartialTicks(), lastLeftHandAnimation, leftHandAnimation);
-
-		float equipProgress = event.getEquipProgress();
+		float recoil = rightHand ? MathHelper.lerp(tickDelta, lastRightHandAnimation, rightHandAnimation)
+			: MathHelper.lerp(tickDelta, lastLeftHandAnimation, leftHandAnimation);
 
 		if (rightHand && (rightHandAnimation > .01f || dontReequipRight))
 			equipProgress = 0;
@@ -154,11 +149,11 @@ public class ZapperRenderHandler {
 
 		// Render arm
 		float f = rightHand ? 1.0F : -1.0F;
-		float f1 = MathHelper.sqrt(event.getSwingProgress());
+		float f1 = MathHelper.sqrt(swingProgress);
 		float f2 = -0.3F * MathHelper.sin(f1 * (float) Math.PI);
 		float f3 = 0.4F * MathHelper.sin(f1 * ((float) Math.PI * 2F));
-		float f4 = -0.4F * MathHelper.sin(event.getSwingProgress() * (float) Math.PI);
-		float f5 = MathHelper.sin(event.getSwingProgress() * event.getSwingProgress() * (float) Math.PI);
+		float f4 = -0.4F * MathHelper.sin(swingProgress * (float) Math.PI);
+		float f5 = MathHelper.sin(swingProgress * swingProgress * (float) Math.PI);
 		float f6 = MathHelper.sin(f1 * (float) Math.PI);
 
 		ms.translate(f * (f2 + 0.64000005F - .1f), f3 + -0.4F + equipProgress * -0.6F,
@@ -179,10 +174,10 @@ public class ZapperRenderHandler {
 		PlayerRenderer playerrenderer = (PlayerRenderer) mc.getRenderManager()
 			.getRenderer(abstractclientplayerentity);
 		if (rightHand) {
-			playerrenderer.renderRightArm(event.getMatrixStack(), event.getBuffers(), event.getLight(),
+			playerrenderer.renderRightArm(ms, vertexConsumers, light,
 				abstractclientplayerentity);
 		} else {
-			playerrenderer.renderLeftArm(event.getMatrixStack(), event.getBuffers(), event.getLight(),
+			playerrenderer.renderLeftArm(ms, vertexConsumers, light,
 				abstractclientplayerentity);
 		}
 		ms.pop();
@@ -201,10 +196,10 @@ public class ZapperRenderHandler {
 		firstPersonRenderer.renderItem(mc.player, heldItem,
 			rightHand ? ItemCameraTransforms.TransformType.FIRST_PERSON_RIGHT_HAND
 				: ItemCameraTransforms.TransformType.FIRST_PERSON_LEFT_HAND,
-			!rightHand, event.getMatrixStack(), event.getBuffers(), event.getLight());
+			!rightHand, ms, vertexConsumers, light);
 		ms.pop();
 
-		event.setCanceled(true);
+		return true;
 	}
 
 	public static void dontAnimateItem(Hand hand) {
