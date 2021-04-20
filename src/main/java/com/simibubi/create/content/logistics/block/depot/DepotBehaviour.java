@@ -19,6 +19,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
 
+import com.simibubi.create.AllSoundEvents;
 import com.simibubi.create.content.contraptions.relays.belt.BeltHelper;
 import com.simibubi.create.content.contraptions.relays.belt.transport.TransportedItemStack;
 import com.simibubi.create.content.logistics.block.funnel.AbstractFunnelBlock;
@@ -273,8 +274,16 @@ public class DepotBehaviour extends TileEntityBehaviour {
 			return returned;
 		}
 
-		if (!simulate)
+		if (!simulate) {
+			if (this.isEmpty()) {
+				if (heldItem.insertedFrom.getAxis()
+					.isHorizontal())
+					AllSoundEvents.DEPOT_SLIDE.playOnServer(getWorld(), getPos());
+				else
+					AllSoundEvents.DEPOT_PLOP.playOnServer(getWorld(), getPos());
+			}
 			this.heldItem = heldItem;
+		}
 		return ItemStack.EMPTY;
 	}
 
