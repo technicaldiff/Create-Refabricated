@@ -75,7 +75,7 @@ public abstract class AbstractSimiScreen extends Screen {
 			return true;
 
 		InputMappings.Input mouseKey = InputMappings.getInputByCode(code, p_keyPressed_2_);
-		if (this.client.gameSettings.keyBindInventory.isActiveAndMatches(mouseKey)) {
+		if (super.keyPressed(mouseKey.getKeyCode(), p_keyPressed_2_, p_keyPressed_3_)) {
 			this.onClose();
 			return true;
 		}

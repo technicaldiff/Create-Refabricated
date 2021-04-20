@@ -10,6 +10,7 @@ import com.simibubi.create.content.contraptions.base.RotatedPillarKineticBlock;
 import com.simibubi.create.foundation.block.ITE;
 import com.simibubi.create.foundation.gui.ScreenOpener;
 
+import com.simibubi.create.lib.block.WeakPowerCheckingBlock;
 import com.tterrag.registrate.fabric.EnvExecutor;
 
 import net.minecraft.block.Block;
@@ -36,9 +37,8 @@ import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraftforge.fml.DistExecutor;
 
-public class SequencedGearshiftBlock extends HorizontalAxisKineticBlock implements ITE<SequencedGearshiftTileEntity> {
+public class SequencedGearshiftBlock extends HorizontalAxisKineticBlock implements ITE<SequencedGearshiftTileEntity>, WeakPowerCheckingBlock {
 
 	public static final BooleanProperty VERTICAL = BooleanProperty.create("vertical");
 	public static final IntegerProperty STATE = IntegerProperty.create("state", 0, 5);

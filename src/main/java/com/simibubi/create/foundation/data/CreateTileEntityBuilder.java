@@ -7,6 +7,7 @@ import com.simibubi.create.foundation.render.backend.instancing.InstancedTileRen
 import com.tterrag.registrate.AbstractRegistrate;
 import com.tterrag.registrate.builders.BuilderCallback;
 import com.tterrag.registrate.builders.TileEntityBuilder;
+import com.tterrag.registrate.fabric.EnvExecutor;
 import com.tterrag.registrate.util.OneTimeEventReceiver;
 import com.tterrag.registrate.util.nullness.NonNullFunction;
 import com.tterrag.registrate.util.nullness.NonNullSupplier;
@@ -32,7 +33,7 @@ public class CreateTileEntityBuilder<T extends TileEntity, P> extends TileEntity
 
     public CreateTileEntityBuilder<T, P> instance(NonNullSupplier<IRendererFactory<? super T>> instanceFactory) {
 		if (this.instanceFactory == null) {
-			DistExecutor.runWhenOn(EnvType.CLIENT, () -> this::registerInstance);
+			EnvExecutor.runWhenOn(EnvType.CLIENT, () -> this::registerInstance);
 		}
 
 		this.instanceFactory = instanceFactory;
