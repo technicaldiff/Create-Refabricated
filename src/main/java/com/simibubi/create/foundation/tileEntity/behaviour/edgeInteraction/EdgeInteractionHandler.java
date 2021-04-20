@@ -24,33 +24,28 @@ import net.minecraft.world.World;
 
 public class EdgeInteractionHandler {
 
-	public static void onBlockActivated(PlayerInteractEvent.RightClickBlock event) {
-		World world = event.getWorld();
-		BlockPos pos = event.getPos();
-		PlayerEntity player = event.getPlayer();
-		Hand hand = event.getHand();
+	public static ActionResultType onBlockActivated(PlayerEntity player, World world, Hand hand, BlockRayTraceResult traceResult) {
 		ItemStack heldItem = player.getHeldItem(hand);
 
 		if (player.isSneaking() || player.isSpectator())
-			return;
-		EdgeInteractionBehaviour behaviour = TileEntityBehaviour.get(world, pos, EdgeInteractionBehaviour.TYPE);
+			return ActionResultType.PASS;
+		EdgeInteractionBehaviour behaviour = TileEntityBehaviour.get(world, traceResult.getPos(), EdgeInteractionBehaviour.TYPE);
 		if (behaviour == null)
-			return;
+			return ActionResultType.PASS;
 		BlockRayTraceResult ray = RaycastHelper.rayTraceRange(world, player, 10);
 		if (ray == null)
-			return;
+			return ActionResultType.PASS;
 		if (behaviour.requiredItem.orElse(heldItem.getItem()) != heldItem.getItem())
-			return;
+			return ActionResultType.PASS;
 
-		Direction activatedDirection = getActivatedDirection(world, pos, ray.getFace(), ray.getHitVec(), behaviour);
+		Direction activatedDirection = getActivatedDirection(world, traceResult.getPos(), ray.getFace(), ray.getHitVec(), behaviour);
 		if (activatedDirection == null)
-			return;
+			return ActionResultType.PASS;
 
-		if (event.getSide() != LogicalSide.CLIENT)
-			behaviour.connectionCallback.apply(world, pos, pos.offset(activatedDirection));
-		event.setCanceled(true);
-		event.setCancellationResult(ActionResultType.SUCCESS);
-		world.playSound(null, pos, SoundEvents.ENTITY_ITEM_FRAME_ADD_ITEM, SoundCategory.BLOCKS, .25f, .1f);
+		if (!world.isRemote)
+			behaviour.connectionCallback.apply(world, traceResult.getPos(), traceResult.getPos().offset(activatedDirection));
+		world.playSound(null, traceResult.getPos(), SoundEvents.ENTITY_ITEM_FRAME_ADD_ITEM, SoundCategory.BLOCKS, .25f, .1f);
+		return ActionResultType.SUCCESS;
 	}
 
 	public static List<Direction> getConnectiveSides(World world, BlockPos pos, Direction face,

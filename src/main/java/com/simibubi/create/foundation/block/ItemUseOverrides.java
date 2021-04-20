@@ -8,9 +8,12 @@ import com.simibubi.create.foundation.utility.VecHelper;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.ActionResultType;
+import net.minecraft.util.Hand;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockRayTraceResult;
+import net.minecraft.world.World;
 
 public class ItemUseOverrides {
 
@@ -20,12 +23,12 @@ public class ItemUseOverrides {
 		overrides.add(block.getRegistryName());
 	}
 
-	public static void onBlockActivated(PlayerInteractEvent.RightClickBlock event) {
+	public static ActionResultType onBlockActivated(PlayerEntity player, World world, Hand hand, BlockRayTraceResult traceResult) {
 		if (AllItems.WRENCH.isIn(event.getItemStack()))
 			return;
 
-		BlockState state = event.getWorld()
-			.getBlockState(event.getPos());
+		BlockState state = world
+			.getBlockState(traceResult.getPos());
 		ResourceLocation id = state.getBlock()
 			.getRegistryName();
 
@@ -33,8 +36,8 @@ public class ItemUseOverrides {
 			return;
 
 		BlockRayTraceResult blockTrace =
-			new BlockRayTraceResult(VecHelper.getCenterOf(event.getPos()), event.getFace(), event.getPos(), true);
-		ActionResultType result = state.onUse(event.getWorld(), event.getPlayer(), event.getHand(), blockTrace);
+			new BlockRayTraceResult(VecHelper.getCenterOf(traceResult.getPos()), traceResult.getFace(), traceResult.getPos(), true);
+		ActionResultType result = state.onUse(world, player, hand, blockTrace);
 
 		if (!result.isAccepted())
 			return;

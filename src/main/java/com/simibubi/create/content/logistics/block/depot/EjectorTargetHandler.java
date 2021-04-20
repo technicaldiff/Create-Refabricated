@@ -22,6 +22,7 @@ import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Direction;
 import net.minecraft.util.Direction.Axis;
 import net.minecraft.util.Direction.AxisDirection;
+import net.minecraft.util.Hand;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
@@ -40,24 +41,21 @@ public class EjectorTargetHandler {
 	static long lastHoveredBlockPos = -1;
 	static EntityLauncher launcher;
 
-	public static void rightClickingBlocksSelectsThem(PlayerInteractEvent.RightClickBlock event) {
+	public static ActionResultType rightClickingBlocksSelectsThem(PlayerEntity player, World world, Hand hand, BlockRayTraceResult traceResult) {
 		if (currentItem == null)
-			return;
-		BlockPos pos = event.getPos();
-		World world = event.getWorld();
+			return ActionResultType.PASS;
+		BlockPos pos = traceResult.getPos();
 		if (!world.isRemote)
-			return;
-		PlayerEntity player = event.getPlayer();
+			return ActionResultType.PASS;
 		if (player == null || player.isSpectator() || !player.isSneaking())
-			return;
+			return ActionResultType.PASS;
 
 		String key = "weighted_ejector.target_set";
 		TextFormatting colour = TextFormatting.GOLD;
 		player.sendStatusMessage(Lang.translate(key).formatted(colour), true);
 		currentSelection = pos;
 		launcher = null;
-		event.setCanceled(true);
-		event.setCancellationResult(ActionResultType.SUCCESS);
+		return ActionResultType.SUCCESS;
 	}
 
 	public static void leftClickingBlocksDeselectsThem(PlayerInteractEvent.LeftClickBlock event) {
