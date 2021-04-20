@@ -39,6 +39,7 @@
   "client": [
     "ClientPlayNetHandlerMixin",
     "ClientWorldMixin",
+    "FirstPersonRendererMixin",
     "ItemRendererMixin",
     "KeyboardListenerMixin",
     "MinecraftMixin",

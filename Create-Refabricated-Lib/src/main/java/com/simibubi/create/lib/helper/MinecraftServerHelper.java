@@ -3,8 +3,6 @@ package com.simibubi.create.lib.helper;
 import com.simibubi.create.lib.mixin.accessor.MinecraftServerAccessor;
 import com.simibubi.create.lib.utility.MixinHelper;
 
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.storage.SaveFormat;
 

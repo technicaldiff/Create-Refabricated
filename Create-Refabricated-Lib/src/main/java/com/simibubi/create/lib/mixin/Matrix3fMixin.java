@@ -1,11 +1,11 @@
 package com.simibubi.create.lib.mixin;
 
+import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Shadow;
+
 import com.simibubi.create.lib.extensions.Matrix3fExtensions;
 
 import net.minecraft.util.math.vector.Matrix3f;
-
-import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Shadow;
 
 @Mixin(Matrix3f.class)
 public abstract class Matrix3fMixin implements Matrix3fExtensions {

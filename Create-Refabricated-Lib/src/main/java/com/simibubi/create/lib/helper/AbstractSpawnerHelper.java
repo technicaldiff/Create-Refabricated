@@ -1,12 +1,12 @@
 package com.simibubi.create.lib.helper;
 
+import java.util.List;
+
 import com.simibubi.create.lib.mixin.accessor.AbstractSpawnerAccessor;
 import com.simibubi.create.lib.utility.MixinHelper;
 
 import net.minecraft.util.WeightedSpawnerEntity;
 import net.minecraft.world.spawner.AbstractSpawner;
-
-import java.util.List;
 
 public class AbstractSpawnerHelper {
 	public static List<WeightedSpawnerEntity> getPotentialSpawns(AbstractSpawner abstractSpawner) {

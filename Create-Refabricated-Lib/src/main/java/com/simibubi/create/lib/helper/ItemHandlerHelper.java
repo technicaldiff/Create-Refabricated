@@ -1,8 +1,8 @@
 package com.simibubi.create.lib.helper;
 
-import net.minecraft.item.ItemStack;
-
 import javax.annotation.Nonnull;
+
+import net.minecraft.item.ItemStack;
 
 public class ItemHandlerHelper {
 	public static boolean canItemStacksStack(@Nonnull ItemStack a, @Nonnull ItemStack b) {

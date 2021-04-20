@@ -1,14 +1,13 @@
 package com.simibubi.create.lib.gui;
 
+import org.lwjgl.opengl.GL11;
+
 import com.mojang.blaze3d.systems.RenderSystem;
 
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
-
 import net.minecraft.util.math.vector.Matrix4f;
-
-import org.lwjgl.opengl.GL11;
 
 public class GuiUtils {
 	public static void drawGradientRect(Matrix4f matrix, int z, int left, int top, int right, int bottom, int startColor, int endColor) {
