@@ -19,6 +19,7 @@
     "SSpawnObjectPacketMixin",
     "WalkNodeProcessorMixin",
     "WorldMixin",
+    "accessor.AbstractMinecartEntityAccessor",
     "accessor.AbstractSpawnerAccessor",
     "accessor.BeaconTileEntityAccessor",
     "accessor.BiomeManagerAccessor",

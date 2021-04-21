@@ -14,6 +14,8 @@ import com.simibubi.create.lib.annotation.MethodsReturnNonnullByDefault;
 
 import com.simibubi.create.lib.block.MinecartPassHandlerBlock;
 
+import com.simibubi.create.lib.helper.AbstractMinecartEntityHelper;
+
 import net.minecraft.block.AbstractRailBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -148,7 +150,7 @@ public class ControllerRailBlock extends AbstractRailBlock implements IWrenchabl
 		if (world.isRemote)
 			return;
 		Vector3d accelerationVec = Vector3d.of(getAccelerationVector(state));
-		double targetSpeed = cart.getMaxSpeedWithRail() * state.get(POWER) / 15f;
+		double targetSpeed = AbstractMinecartEntityHelper.getMaximumSpeed(cart) * state.get(POWER) / 15f; // getMaximumSpeed instead of getMaxSpeedWithRail *should* be fine after intense pain looking at Forge patches
 
 		if (cart instanceof FurnaceMinecartEntity) {
 			FurnaceMinecartEntity fme = (FurnaceMinecartEntity) cart;

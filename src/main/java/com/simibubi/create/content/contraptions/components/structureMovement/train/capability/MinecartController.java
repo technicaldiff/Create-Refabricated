@@ -8,6 +8,10 @@ import java.util.UUID;
 
 import javax.annotation.Nullable;
 
+import com.simibubi.create.lib.utility.RailUtil;
+
+import net.minecraft.block.Blocks;
+
 import org.apache.commons.lang3.mutable.MutableBoolean;
 
 import net.minecraft.block.BlockState;
@@ -110,8 +114,8 @@ public class MinecartController implements INBTSerializable<CompoundNBT> {
 		BlockState blockstate = world.getBlockState(blockpos);
 		if (cart.canUseRail() && blockstate.isIn(BlockTags.RAILS)
 				&& blockstate.getBlock() instanceof PoweredRailBlock
-				&& ((PoweredRailBlock) blockstate.getBlock())
-						.isActivatorRail()) {
+				&& (RailUtil.isActivatorRail(
+						blockstate.getBlock()))) {
 			if (cart.isBeingRidden()) {
 				cart.removePassengers();
 			}
