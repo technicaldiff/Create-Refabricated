@@ -35,9 +35,6 @@ public abstract class AbstractMinecartEntityMixin implements AbstractMinecartEnt
 	@Shadow protected abstract Vector3d getMotion();
 	@Shadow protected abstract void move(MoverType moverType, Vector3d vector3d);
 	@Shadow protected abstract double getMaximumSpeed();
-	@Shadow protected abstract double getX();
-	@Shadow protected abstract double getY();
-	@Shadow protected abstract double getZ();
 
 	// this *should* inject into right before the 4th reference to bl, right in between the 2 if statements.
 	@Inject(at = @At(value = "FIELD", target = "Lnet/minecraft/entity/item/minecart/AbstractMinecartEntity;moveAlongTrack(Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/block/BlockState;)V", ordinal = 3),
@@ -51,7 +48,7 @@ public abstract class AbstractMinecartEntityMixin implements AbstractMinecartEnt
 	@Override
 	public void create$moveMinecartOnRail(BlockPos pos) {
 		double d24 = isBeingRidden() ? 0.75D : 1.0D;
-		double d25 = getMaximumSpeed();
+		double d25 = getMaximumSpeed(); // getMaximumSpeed instead of getMaxSpeedWithRail *should* be fine after intense pain looking at Forge patche
 		Vector3d vec3d1 = getMotion();
 		move(MoverType.SELF, new Vector3d(MathHelper.clamp(d24 * vec3d1.x, -d25, d25), 0.0D, MathHelper.clamp(d24 * vec3d1.z, -d25, d25)));
 	}
