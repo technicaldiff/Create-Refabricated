@@ -15,24 +15,28 @@ import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.state.properties.StairsShape;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ActionResultType;
+import net.minecraft.util.Direction;
+import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.RayTraceContext;
 import net.minecraft.util.math.RayTraceContext.BlockMode;
 import net.minecraft.util.math.RayTraceContext.FluidMode;
 import net.minecraft.util.math.vector.Vector3d;
+import net.minecraft.world.World;
 
 public class ZapperInteractionHandler {
 
-	public static void leftClickingBlocksWithTheZapperSelectsTheBlock(PlayerInteractEvent.LeftClickBlock event) {
-		if (event.getWorld().isRemote)
-			return;
-		ItemStack heldItem = event.getPlayer()
+	public static ActionResultType leftClickingBlocksWithTheZapperSelectsTheBlock(PlayerEntity player, World world, Hand hand, BlockPos blockPos, Direction direction) {
+		if (world.isRemote)
+			return ActionResultType.PASS;
+		ItemStack heldItem = player
 			.getHeldItemMainhand();
-		if (heldItem.getItem() instanceof ZapperItem && trySelect(heldItem, event.getPlayer())) {
-			event.setCancellationResult(ActionResultType.FAIL);
-			event.setCanceled(true);
+		if (heldItem.getItem() instanceof ZapperItem && trySelect(heldItem, player)) {
+			return ActionResultType.SUCCESS;
 		}
+
+		return ActionResultType.PASS;
 	}
 
 	public static boolean trySelect(ItemStack stack, PlayerEntity player) {

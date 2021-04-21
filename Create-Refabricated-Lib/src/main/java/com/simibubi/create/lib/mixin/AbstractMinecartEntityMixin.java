@@ -1,17 +1,5 @@
 package com.simibubi.create.lib.mixin;
 
-import com.simibubi.create.lib.extensions.AbstractMinecartEntityExtensions;
-
-import com.simibubi.create.lib.utility.RailUtil;
-
-import net.minecraft.block.AbstractRailBlock;
-import net.minecraft.entity.MoverType;
-import net.minecraft.tags.BlockTags;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.vector.Vector3d;
-
-import net.minecraft.world.World;
-
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -19,12 +7,17 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import com.simibubi.create.lib.block.MinecartPassHandlerBlock;
+import com.simibubi.create.lib.extensions.AbstractMinecartEntityExtensions;
 import com.simibubi.create.lib.utility.MixinHelper;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.MoverType;
 import net.minecraft.entity.item.minecart.AbstractMinecartEntity;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.vector.Vector3d;
+import net.minecraft.world.World;
 
 @Mixin(AbstractMinecartEntity.class)
 public abstract class AbstractMinecartEntityMixin implements AbstractMinecartEntityExtensions {
@@ -48,7 +41,7 @@ public abstract class AbstractMinecartEntityMixin implements AbstractMinecartEnt
 	@Override
 	public void create$moveMinecartOnRail(BlockPos pos) {
 		double d24 = isBeingRidden() ? 0.75D : 1.0D;
-		double d25 = getMaximumSpeed(); // getMaximumSpeed instead of getMaxSpeedWithRail *should* be fine after intense pain looking at Forge patche
+		double d25 = getMaximumSpeed(); // getMaximumSpeed instead of getMaxSpeedWithRail *should* be fine after intense pain looking at Forge patches
 		Vector3d vec3d1 = getMotion();
 		move(MoverType.SELF, new Vector3d(MathHelper.clamp(d24 * vec3d1.x, -d25, d25), 0.0D, MathHelper.clamp(d24 * vec3d1.z, -d25, d25)));
 	}

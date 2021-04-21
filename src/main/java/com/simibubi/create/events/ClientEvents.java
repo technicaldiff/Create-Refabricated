@@ -13,6 +13,7 @@ import com.simibubi.create.foundation.tileEntity.behaviour.filtering.FilteringHa
 import com.simibubi.create.lib.event.RenderHandCallback;
 
 import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
+import net.fabricmc.fabric.api.event.player.AttackBlockCallback;
 import net.fabricmc.fabric.api.event.player.UseBlockCallback;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.network.play.ClientPlayNetHandler;
@@ -323,6 +324,7 @@ public class ClientEvents {
 		UseBlockCallback.EVENT.register(FilteringHandler::onBlockActivated);
 		UseBlockCallback.EVENT.register(ArmInteractionPointHandler::rightClickingBlocksSelectsThem);
 		UseBlockCallback.EVENT.register(EjectorTargetHandler::rightClickingBlocksSelectsThem);
+		AttackBlockCallback.EVENT.register(ArmInteractionPointHandler::leftClickingBlocksDeselectsThem);
 	}
 
 }

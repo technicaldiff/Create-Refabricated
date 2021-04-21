@@ -32,7 +32,6 @@ import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
-import net.fabricmc.api.EnvType;
 
 public class EjectorTargetHandler {
 
@@ -58,21 +57,21 @@ public class EjectorTargetHandler {
 		return ActionResultType.SUCCESS;
 	}
 
-	public static void leftClickingBlocksDeselectsThem(PlayerInteractEvent.LeftClickBlock event) {
+	public static ActionResultType leftClickingBlocksDeselectsThem(PlayerEntity player, World world, Hand hand, BlockPos pos, Direction direction) {
 		if (currentItem == null)
-			return;
-		if (!event.getWorld().isRemote)
-			return;
-		if (!event.getPlayer()
+			return ActionResultType.PASS;
+		if (!world.isRemote)
+			return ActionResultType.PASS;
+		if (!player
 			.isSneaking())
-			return;
-		BlockPos pos = event.getPos();
+			return ActionResultType.PASS;
 		if (pos.equals(currentSelection)) {
 			currentSelection = null;
 			launcher = null;
-			event.setCanceled(true);
-			event.setCancellationResult(ActionResultType.SUCCESS);
+			return ActionResultType.SUCCESS;
 		}
+
+		return ActionResultType.PASS;
 	}
 
 	public static void flushSettings(BlockPos pos) {

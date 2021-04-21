@@ -19,6 +19,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ActionResultType;
+import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
@@ -27,7 +28,6 @@ import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
-import net.fabricmc.api.EnvType;
 
 public class ArmInteractionPointHandler {
 
@@ -68,16 +68,16 @@ public class ArmInteractionPointHandler {
 		return ActionResultType.SUCCESS;
 	}
 
-	public static void leftClickingBlocksDeselectsThem(PlayerInteractEvent.LeftClickBlock event) {
+	public static ActionResultType leftClickingBlocksDeselectsThem(PlayerEntity playerEntity, World world, Hand hand, BlockPos pos, Direction direction) {
 		if (currentItem == null)
-			return;
-		if (!event.getWorld().isRemote)
-			return;
-		BlockPos pos = event.getPos();
+			return ActionResultType.PASS;
+		if (!world.isRemote)
+			return ActionResultType.PASS;
 		if (remove(pos) != null) {
-			event.setCanceled(true);
-			event.setCancellationResult(ActionResultType.SUCCESS);
+			return ActionResultType.SUCCESS;
 		}
+
+		return ActionResultType.PASS;
 	}
 
 	public static void flushSettings(BlockPos pos) {
