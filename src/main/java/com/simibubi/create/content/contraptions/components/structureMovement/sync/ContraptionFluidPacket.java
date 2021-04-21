@@ -24,7 +24,8 @@ public class ContraptionFluidPacket implements S2CPacket {
 		this.containedFluid = containedFluid;
 	}
 
-	public ContraptionFluidPacket(PacketBuffer buffer) {
+	@Override
+	public void read(PacketBuffer buffer) {
 		entityId = buffer.readInt();
 		localPos = buffer.readBlockPos();
 		containedFluid = FluidStack.readFromPacket(buffer);

@@ -11,7 +11,7 @@ import com.simibubi.create.foundation.tileEntity.behaviour.ValueBoxTransform.Sid
 import com.simibubi.create.foundation.utility.Lang;
 import com.simibubi.create.foundation.utility.RaycastHelper;
 
-import com.simibubi.create.lib.helper.ItemHandlerHelper;
+import com.simibubi.create.lib.utility.ItemHandlerHelper;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.world.ClientWorld;
@@ -125,14 +125,14 @@ public class FilteringHandler {
 			((Sided) filtering.slotPositioning).fromSide(result.getFace());
 		if (!filtering.testHit(objectMouseOver.getHitVec()))
 			return false;
-		
+
 		ItemStack filterItem = filtering.getFilter();
 		filtering.ticksUntilScrollPacket = 10;
 		int maxAmount = (filterItem.getItem() instanceof FilterItem) ? 64 : filterItem.getMaxStackSize();
 		int prev = filtering.scrollableValue;
 		filtering.scrollableValue =
 			(int) MathHelper.clamp(filtering.scrollableValue + delta * (AllKeys.ctrlDown() ? 16 : 1), 0, maxAmount);
-		
+
 		if (prev != filtering.scrollableValue) {
 			float pitch = (filtering.scrollableValue) / (float) (maxAmount);
 			pitch = MathHelper.lerp(pitch, 1.5f, 2f);

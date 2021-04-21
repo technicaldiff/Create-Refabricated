@@ -5,7 +5,7 @@ import com.simibubi.create.lib.utility.MixinHelper;
 
 import net.minecraft.network.play.server.SPlayerAbilitiesPacket;
 
-public class SPlayerAbilitiesPacketHelper {
+public final class SPlayerAbilitiesPacketHelper {
 	public static void setFlySpeed(SPlayerAbilitiesPacket sPlayerAbilitiesPacket, float speed) {
 		get(sPlayerAbilitiesPacket).create$flySpeed(speed);
 	}

@@ -13,7 +13,7 @@ import com.simibubi.create.foundation.tileEntity.TileEntityBehaviour;
 import com.simibubi.create.foundation.tileEntity.behaviour.belt.DirectBeltInputBehaviour;
 import com.simibubi.create.foundation.utility.Iterate;
 
-import com.simibubi.create.lib.helper.ItemHandlerHelper;
+import com.simibubi.create.lib.utility.ItemHandlerHelper;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.item.ItemStack;

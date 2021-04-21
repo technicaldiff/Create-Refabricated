@@ -31,6 +31,7 @@ import com.simibubi.create.lib.block.MinecartPassHandlerBlock;
 
 import com.simibubi.create.lib.block.SlopeCreationCheckingRail;
 
+import com.simibubi.create.lib.helper.EntityHelper;
 import com.simibubi.create.lib.helper.EntitySelectionContextHelper;
 
 import net.minecraft.block.AbstractRailBlock;
@@ -213,7 +214,7 @@ public class CartAssemblerBlock extends AbstractRailBlock
 	}
 
 	public static boolean canAssembleTo(AbstractMinecartEntity cart) {
-		return cart.canBeRidden() || cart instanceof FurnaceMinecartEntity || cart instanceof ChestMinecartEntity;
+		return EntityHelper.canBeRidden(cart) || cart instanceof FurnaceMinecartEntity || cart instanceof ChestMinecartEntity;
 	}
 
 	@Override

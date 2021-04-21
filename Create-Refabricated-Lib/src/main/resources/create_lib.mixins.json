@@ -25,6 +25,7 @@
     "accessor.ChunkManagerAccessor",
     "accessor.CriteriaTriggersAccessor",
     "accessor.DamageSourceAccessor",
+    "accessor.EntityAccessor",
     "accessor.ItemEntityAccessor",
     "accessor.MinecraftServerAccessor",
     "accessor.ParticleAccessor",

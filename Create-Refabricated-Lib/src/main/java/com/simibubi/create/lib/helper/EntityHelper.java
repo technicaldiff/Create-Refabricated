@@ -2,6 +2,9 @@ package com.simibubi.create.lib.helper;
 
 import com.simibubi.create.lib.extensions.EntityExtensions;
 
+import com.simibubi.create.lib.mixin.accessor.EntityAccessor;
+import com.simibubi.create.lib.utility.MixinHelper;
+
 import net.minecraft.entity.Entity;
 import net.minecraft.nbt.CompoundNBT;
 
@@ -10,6 +13,14 @@ public final class EntityHelper {
 
 	public static CompoundNBT getExtraCustomData(Entity entity) {
 		return ((EntityExtensions) entity).create$getExtraCustomData();
+	}
+
+	public static boolean canBeRidden(Entity entity) {
+		return get(entity).create$canBeRidden();
+	}
+
+	private static EntityAccessor get(Entity entity) {
+		return MixinHelper.cast(entity);
 	}
 
 	private EntityHelper() {}

@@ -569,7 +569,7 @@ public abstract class KineticTileEntity extends SmartTileEntity
 		return super.getRenderBoundingBox();
 	}
 
-	@OnlyIn(Dist.CLIENT)
+	@Environment(EnvType.CLIENT)
 	public void tickAudio() {
 		float componentSpeed = Math.abs(getSpeed());
 		if (componentSpeed == 0)

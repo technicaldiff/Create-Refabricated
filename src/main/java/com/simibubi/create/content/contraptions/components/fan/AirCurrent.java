@@ -7,6 +7,9 @@ import java.util.List;
 import com.simibubi.create.lib.helper.DamageSourceHelper;
 import com.simibubi.create.lib.helper.ServerPlayNetHandlerHelper;
 
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
+
 import org.apache.commons.lang3.tuple.Pair;
 
 import com.simibubi.create.AllTags;
@@ -356,10 +359,10 @@ public class AirCurrent {
 		int endOffset;
 	}
 
-	@OnlyIn(Dist.CLIENT)
+	@Environment(EnvType.CLIENT)
 	static AirCurrentSound flyingSound;
 
-	@OnlyIn(Dist.CLIENT)
+	@Environment(EnvType.CLIENT)
 	private static void enableClientPlayerSound(Entity e, float maxVolume) {
 		if (e != Minecraft.getInstance()
 			.getRenderViewEntity())
@@ -380,7 +383,7 @@ public class AirCurrent {
 		flyingSound.fadeIn(maxVolume);
 	}
 
-	@OnlyIn(Dist.CLIENT)
+	@Environment(EnvType.CLIENT)
 	public static void tickClientPlayerSounds() {
 		if (!AirCurrent.isClientPlayerInAirCurrent && flyingSound != null)
 			if (flyingSound.isFaded())

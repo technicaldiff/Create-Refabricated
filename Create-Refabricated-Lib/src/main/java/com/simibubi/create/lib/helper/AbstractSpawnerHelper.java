@@ -8,7 +8,7 @@ import com.simibubi.create.lib.utility.MixinHelper;
 import net.minecraft.util.WeightedSpawnerEntity;
 import net.minecraft.world.spawner.AbstractSpawner;
 
-public class AbstractSpawnerHelper {
+public final class AbstractSpawnerHelper {
 	public static List<WeightedSpawnerEntity> getPotentialSpawns(AbstractSpawner abstractSpawner) {
 		return get(abstractSpawner).create$potentialSpawns();
 	}

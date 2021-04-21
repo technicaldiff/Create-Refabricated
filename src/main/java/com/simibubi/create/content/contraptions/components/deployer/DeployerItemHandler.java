@@ -4,7 +4,7 @@ import java.util.Iterator;
 
 import com.simibubi.create.foundation.tileEntity.behaviour.filtering.FilteringBehaviour;
 
-import com.simibubi.create.lib.helper.ItemHandlerHelper;
+import com.simibubi.create.lib.utility.ItemHandlerHelper;
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Hand;

@@ -10,6 +10,9 @@ import com.simibubi.create.content.contraptions.components.structureMovement.tra
 import com.simibubi.create.content.contraptions.components.structureMovement.train.capability.MinecartController;
 import com.simibubi.create.foundation.utility.VecHelper;
 
+import com.simibubi.create.lib.helper.AbstractMinecartEntityHelper;
+import com.simibubi.create.lib.utility.MinecartUtil;
+
 import net.minecraft.block.AbstractRailBlock;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.item.minecart.AbstractMinecartEntity;
@@ -87,19 +90,19 @@ public class MinecartSim2020 {
 		RailShape railshape = abstractrailblock.getRailDirection(trackState, cart.world, cartPos, cart);
 		switch (railshape) {
 		case ASCENDING_EAST:
-			forcedMovement = forcedMovement.add(-1 * cart.getSlopeAdjustment(), 0.0D, 0.0D);
+			forcedMovement = forcedMovement.add(-1 * MinecartUtil.getSlopeAdjustment(), 0.0D, 0.0D);
 			actualY++;
 			break;
 		case ASCENDING_WEST:
-			forcedMovement = forcedMovement.add(cart.getSlopeAdjustment(), 0.0D, 0.0D);
+			forcedMovement = forcedMovement.add(MinecartUtil.getSlopeAdjustment(), 0.0D, 0.0D);
 			actualY++;
 			break;
 		case ASCENDING_NORTH:
-			forcedMovement = forcedMovement.add(0.0D, 0.0D, cart.getSlopeAdjustment());
+			forcedMovement = forcedMovement.add(0.0D, 0.0D, MinecartUtil.getSlopeAdjustment());
 			actualY++;
 			break;
 		case ASCENDING_SOUTH:
-			forcedMovement = forcedMovement.add(0.0D, 0.0D, -1 * cart.getSlopeAdjustment());
+			forcedMovement = forcedMovement.add(0.0D, 0.0D, -1 * MinecartUtil.getSlopeAdjustment());
 			actualY++;
 		default:
 			break;
@@ -139,7 +142,7 @@ public class MinecartSim2020 {
 
 		cart.setPosition(actualX, actualY, actualZ);
 		cart.setMotion(forcedMovement);
-		cart.moveMinecartOnRail(cartPos);
+		AbstractMinecartEntityHelper.moveMinecartOnRail(cart, cartPos);
 
 		x = cart.getX();
 		y = cart.getY();

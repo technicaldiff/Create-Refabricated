@@ -9,7 +9,7 @@ import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.util.math.vector.Matrix4f;
 
-public class GuiUtils {
+public class GuiUtils { // name is this to maintain max compat with upstream
 	public static void drawGradientRect(Matrix4f matrix, int z, int left, int top, int right, int bottom, int startColor, int endColor) {
 		float sA = (float) (startColor >> 24 & 255) / 255.0f;
 		float sR = (float) (startColor >> 16 & 255) / 255.0f;

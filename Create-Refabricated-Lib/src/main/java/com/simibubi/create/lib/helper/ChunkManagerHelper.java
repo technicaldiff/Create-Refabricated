@@ -7,7 +7,7 @@ import it.unimi.dsi.fastutil.longs.Long2ObjectLinkedOpenHashMap;
 import net.minecraft.world.server.ChunkHolder;
 import net.minecraft.world.server.ChunkManager;
 
-public class ChunkManagerHelper {
+public final class ChunkManagerHelper {
 	public static Long2ObjectLinkedOpenHashMap<ChunkHolder> getLoadedChunks(ChunkManager chunkManager) {
 		return get(chunkManager).create$loadedChunks();
 	}
