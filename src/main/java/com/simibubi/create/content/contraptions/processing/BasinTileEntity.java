@@ -35,6 +35,7 @@ import com.simibubi.create.foundation.utility.VecHelper;
 import com.simibubi.create.foundation.utility.animation.LerpedFloat;
 import com.simibubi.create.foundation.utility.animation.LerpedFloat.Chaser;
 
+import com.simibubi.create.lib.lba.CombinedInvWrapper;
 import com.simibubi.create.lib.lba.IItemHandlerModifiable;
 
 import net.minecraft.block.Block;

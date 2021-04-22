@@ -12,6 +12,8 @@ import com.simibubi.create.content.contraptions.processing.EmptyingByBasin;
 import com.simibubi.create.foundation.tileEntity.SmartTileEntity;
 import com.simibubi.create.foundation.utility.Pair;
 
+import com.simibubi.create.lib.lba.FluidStack;
+
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.player.PlayerEntity;
@@ -47,9 +49,7 @@ public class FluidHelper {
 	public static FluidStack copyStackWithAmount(FluidStack fs, int amount) {
 		if (fs.isEmpty())
 			return FluidStack.EMPTY;
-		FluidStack copy = fs.copy();
-		copy.setAmount(amount);
-		return copy;
+		return fs.withAmount(amount);
 	}
 
 	public static Fluid convertToFlowing(Fluid fluid) {
@@ -165,8 +165,7 @@ public class FluidHelper {
 				heldItem = heldItem.copy();
 			ItemStack out = GenericItemFilling.fillItem(world, requiredAmountForItem, heldItem, fluid.copy());
 
-			FluidStack copy = fluid.copy();
-			copy.setAmount(requiredAmountForItem);
+			FluidStack copy = fluid.withAmount(requiredAmountForItem);
 			tank.drain(copy, FluidAction.EXECUTE);
 
 			if (!player.isCreative())

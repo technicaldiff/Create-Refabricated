@@ -4,6 +4,8 @@ import com.simibubi.create.AllFluids;
 import com.simibubi.create.content.contraptions.fluids.potion.PotionFluidHandler;
 import com.simibubi.create.foundation.fluid.FluidHelper;
 
+import com.simibubi.create.lib.lba.FluidStack;
+
 import net.minecraft.fluid.Fluids;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -72,8 +74,7 @@ public class GenericItemFilling {
 	}
 
 	public static ItemStack fillItem(World world, int requiredAmount, ItemStack stack, FluidStack availableFluid) {
-		FluidStack toFill = availableFluid.copy();
-		toFill.setAmount(requiredAmount);
+		FluidStack toFill = availableFluid.withAmount(requiredAmount);
 		availableFluid.shrink(requiredAmount);
 
 		if (stack.getItem() == Items.GLASS_BOTTLE && canFillGlassBottleInternally(toFill)) {

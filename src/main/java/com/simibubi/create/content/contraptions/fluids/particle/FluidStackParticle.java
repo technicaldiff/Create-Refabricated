@@ -4,6 +4,8 @@ import com.simibubi.create.AllParticleTypes;
 import com.simibubi.create.content.contraptions.fluids.potion.PotionFluid;
 import com.simibubi.create.foundation.utility.ColorHelper;
 
+import com.simibubi.create.lib.lba.FluidStack;
+
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.particle.IParticleRenderType;
 import net.minecraft.client.particle.SpriteTexturedParticle;
@@ -26,7 +28,7 @@ public class FluidStackParticle extends SpriteTexturedParticle {
 	}
 
 	public FluidStackParticle(ClientWorld world, FluidStack fluid, double x, double y, double z, double vx, double vy,
-		double vz) {
+							  double vz) {
 		super(world, x, y, z, vx, vy, vz);
 		this.fluid = fluid;
 		this.setSprite(Minecraft.getInstance()

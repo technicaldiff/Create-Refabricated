@@ -1,10 +1,12 @@
 package com.simibubi.create.content.schematics.block;
 
+import org.jetbrains.annotations.NotNull;
+
 import com.simibubi.create.AllItems;
+import com.simibubi.create.lib.lba.ItemStackHandler;
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
-import org.jetbrains.annotations.NotNull;
 
 public class SchematicannonInventory extends ItemStackHandler {
 	/**

@@ -22,6 +22,8 @@ import java.util.stream.Collectors;
 
 import javax.annotation.Nullable;
 
+import com.simibubi.create.lib.lba.CombinedInvWrapper;
+import com.simibubi.create.lib.lba.FluidStack;
 import com.simibubi.create.lib.lba.IItemHandlerModifiable;
 import com.simibubi.create.lib.utility.StickinessUtil;
 

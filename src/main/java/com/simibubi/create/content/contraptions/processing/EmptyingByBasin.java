@@ -7,6 +7,10 @@ import com.simibubi.create.AllRecipeTypes;
 import com.simibubi.create.content.contraptions.fluids.potion.PotionFluidHandler;
 import com.simibubi.create.foundation.utility.Pair;
 
+import com.simibubi.create.lib.lba.FluidStack;
+
+import com.simibubi.create.lib.lba.ItemStackHandler;
+
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.PotionItem;
 import net.minecraft.item.crafting.IRecipe;

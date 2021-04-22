@@ -7,6 +7,8 @@ import javax.annotation.Nullable;
 import com.simibubi.create.foundation.fluid.FluidHelper;
 import com.simibubi.create.foundation.fluid.SmartFluidTank;
 
+import com.simibubi.create.lib.lba.FluidStack;
+
 import net.minecraft.util.math.BlockPos;
 
 public class HosePulleyFluidHandler implements IFluidHandler {

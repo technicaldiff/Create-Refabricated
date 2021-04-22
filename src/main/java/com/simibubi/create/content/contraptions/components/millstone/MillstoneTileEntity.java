@@ -9,6 +9,7 @@ import com.simibubi.create.foundation.tileEntity.TileEntityBehaviour;
 import com.simibubi.create.foundation.tileEntity.behaviour.belt.DirectBeltInputBehaviour;
 import com.simibubi.create.foundation.utility.VecHelper;
 
+import com.simibubi.create.lib.lba.CombinedInvWrapper;
 import com.simibubi.create.lib.lba.IItemHandler;
 import com.simibubi.create.lib.lba.ItemStackHandler;
 

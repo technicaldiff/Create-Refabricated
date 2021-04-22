@@ -15,11 +15,11 @@ import java.util.stream.Collectors;
 
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.foundation.utility.Iterate;
-
+import com.simibubi.create.lib.lba.CombinedInvWrapper;
 import com.simibubi.create.lib.lba.IItemHandler;
 import com.simibubi.create.lib.lba.IItemHandlerModifiable;
-
 import com.simibubi.create.lib.lba.ItemStackHandler;
+import com.simibubi.create.lib.utility.Constants.NBT;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.nbt.CompoundNBT;
@@ -29,7 +29,6 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import com.simibubi.create.lib.utility.Constants.NBT;
 
 public class ConnectedInputHandler {
 

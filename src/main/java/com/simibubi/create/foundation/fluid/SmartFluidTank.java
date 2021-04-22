@@ -1,5 +1,7 @@
 package com.simibubi.create.foundation.fluid;
 
+import com.simibubi.create.lib.lba.FluidStack;
+
 import java.util.function.Consumer;
 
 
