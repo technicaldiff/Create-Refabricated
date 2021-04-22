@@ -6,8 +6,12 @@ import javax.annotation.Nonnull;
 
 import com.simibubi.create.foundation.tileEntity.SyncedTileEntity;
 
+import com.simibubi.create.lib.lba.ItemStackHandler;
+
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
+
+import org.jetbrains.annotations.NotNull;
 
 public class SmartInventory extends RecipeWrapper
 	implements IItemHandlerModifiableIntermediate, INBTSerializable<CompoundNBT> {
@@ -30,7 +34,7 @@ public class SmartInventory extends RecipeWrapper
 		this.stackSize = stackSize;
 		wrapped = (SyncedStackHandler) inv;
 	}
-	
+
 	public SmartInventory withMaxStackSize(int maxStackSize) {
 		stackSize = maxStackSize;
 		wrapped.stackSize = maxStackSize;
@@ -106,7 +110,7 @@ public class SmartInventory extends RecipeWrapper
 		return super.getStackInSlot(slot);
 	}
 
-	public int getStackLimit(int slot, @Nonnull ItemStack stack) {
+	public int getStackLimit(int slot, ItemStack stack) {
 		return Math.min(getSlotLimit(slot), stack.getMaxStackSize());
 	}
 

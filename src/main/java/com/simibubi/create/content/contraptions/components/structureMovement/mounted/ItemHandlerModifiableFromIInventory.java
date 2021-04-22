@@ -4,7 +4,6 @@ import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
 
 import com.simibubi.create.lib.annotation.MethodsReturnNonnullByDefault;
-
 import com.simibubi.create.lib.lba.IItemHandlerModifiable;
 import com.simibubi.create.lib.lba.ItemHandlerHelper;
 
