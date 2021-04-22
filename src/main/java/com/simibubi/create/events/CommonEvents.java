@@ -1,5 +1,7 @@
 package com.simibubi.create.events;
 
+import net.fabricmc.fabric.api.event.player.AttackBlockCallback;
+
 import org.jetbrains.annotations.Nullable;
 
 import com.mojang.brigadier.CommandDispatcher;
@@ -154,6 +156,10 @@ public class CommonEvents {
 		ServerLifecycleEvents.SERVER_STOPPED.register(CommonEvents::serverStopped);
 		ServerWorldEvents.LOAD.register((server, world) -> CommonEvents.onLoadWorld(world));
 		ServerWorldEvents.UNLOAD.register((server, world) -> CommonEvents.onUnloadWorld(world));
+
+		// External Events
+
+		AttackBlockCallback.EVENT.register(ZapperInteractionHandler::leftClickingBlocksWithTheZapperSelectsTheBlock);
 	}
 
 }

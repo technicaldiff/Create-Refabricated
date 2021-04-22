@@ -1,4 +1,4 @@
-package com.simibubi.create.lib.utility;
+package com.simibubi.create.lib.lba;
 
 import javax.annotation.Nonnull;
 

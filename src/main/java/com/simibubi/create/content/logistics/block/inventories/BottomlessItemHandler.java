@@ -6,9 +6,11 @@ import javax.annotation.ParametersAreNonnullByDefault;
 
 import com.simibubi.create.lib.annotation.MethodsReturnNonnullByDefault;
 
-import com.simibubi.create.lib.utility.ItemHandlerHelper;
+import com.simibubi.create.lib.lba.ItemHandlerHelper;
 
 import net.minecraft.item.ItemStack;
+
+import org.jetbrains.annotations.NotNull;
 
 @MethodsReturnNonnullByDefault
 @ParametersAreNonnullByDefault
@@ -26,7 +28,7 @@ public class BottomlessItemHandler extends ItemStackHandler {
 	}
 
 	@Override
-	public ItemStack getStackInSlot(int slot) {
+	public @NotNull ItemStack getStackInSlot(int slot) {
 		ItemStack stack = suppliedItemStack.get();
 		if (slot == 1)
 			return ItemStack.EMPTY;
@@ -58,7 +60,7 @@ public class BottomlessItemHandler extends ItemStackHandler {
 	}
 
 	@Override
-	public boolean isItemValid(int slot, ItemStack stack) {
+	public boolean isItemValid(int slot, @NotNull ItemStack stack) {
 		return true;
 	}
 }

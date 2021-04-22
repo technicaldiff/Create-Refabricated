@@ -13,6 +13,10 @@ import com.simibubi.create.foundation.utility.IntAttached;
 import com.simibubi.create.foundation.utility.MatrixStacker;
 import com.simibubi.create.foundation.utility.VecHelper;
 
+import com.simibubi.create.lib.lba.IItemHandlerModifiable;
+
+import com.simibubi.create.lib.lba.ItemStackHandler;
+
 import net.minecraft.block.BlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.IRenderTypeBuffer;

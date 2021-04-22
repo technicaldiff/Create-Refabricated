@@ -4,12 +4,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import com.simibubi.create.lib.helper.DamageSourceHelper;
-import com.simibubi.create.lib.helper.ServerPlayNetHandlerHelper;
-
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
-
 import org.apache.commons.lang3.tuple.Pair;
 
 import com.simibubi.create.AllTags;
@@ -23,7 +17,12 @@ import com.simibubi.create.foundation.tileEntity.behaviour.belt.TransportedItemS
 import com.simibubi.create.foundation.tileEntity.behaviour.belt.TransportedItemStackHandlerBehaviour.TransportedResult;
 import com.simibubi.create.foundation.utility.Iterate;
 import com.simibubi.create.foundation.utility.VecHelper;
+import com.simibubi.create.lib.helper.DamageSourceHelper;
+import com.simibubi.create.lib.helper.ServerPlayNetHandlerHelper;
+import com.tterrag.registrate.fabric.EnvExecutor;
 
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
@@ -46,9 +45,6 @@ import net.minecraft.util.math.shapes.VoxelShapes;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.util.math.vector.Vector3i;
 import net.minecraft.world.World;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.fml.DistExecutor;
 
 public class AirCurrent {
 
@@ -119,7 +115,7 @@ public class AirCurrent {
 
 			entity.setMotion(previousMotion.add(new Vector3d(xIn, yIn, zIn).scale(1 / 8f)));
 			entity.fallDistance = 0;
-			DistExecutor.unsafeRunWhenOn(Dist.CLIENT,
+			EnvExecutor.runWhenOn(EnvType.CLIENT,
 				() -> () -> enableClientPlayerSound(entity, MathHelper.clamp(speed / 128f * .4f, 0.01f, .4f)));
 
 			if (entity instanceof ServerPlayerEntity)

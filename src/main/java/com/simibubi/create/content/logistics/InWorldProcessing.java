@@ -20,7 +20,7 @@ import com.simibubi.create.foundation.item.ItemHelper;
 import com.simibubi.create.foundation.tileEntity.behaviour.belt.TransportedItemStackHandlerBehaviour.TransportedResult;
 import com.simibubi.create.foundation.utility.ColorHelper;
 
-import com.simibubi.create.lib.utility.ItemHandlerHelper;
+import com.simibubi.create.lib.lba.ItemHandlerHelper;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;

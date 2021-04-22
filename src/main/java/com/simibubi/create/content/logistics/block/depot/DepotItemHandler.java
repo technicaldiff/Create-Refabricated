@@ -4,6 +4,8 @@ import com.simibubi.create.content.contraptions.relays.belt.transport.Transporte
 
 import net.minecraft.item.ItemStack;
 
+import org.jetbrains.annotations.NotNull;
+
 public class DepotItemHandler implements IItemHandler {
 
 	private static final int MAIN_SLOT = 0;
@@ -19,7 +21,7 @@ public class DepotItemHandler implements IItemHandler {
 	}
 
 	@Override
-	public ItemStack getStackInSlot(int slot) {
+	public @NotNull ItemStack getStackInSlot(int slot) {
 		return slot == MAIN_SLOT ? te.getHeldItemStack() : te.processingOutputBuffer.getStackInSlot(slot - 1);
 	}
 
@@ -64,7 +66,7 @@ public class DepotItemHandler implements IItemHandler {
 	}
 
 	@Override
-	public boolean isItemValid(int slot, ItemStack stack) {
+	public boolean isItemValid(int slot, @NotNull ItemStack stack) {
 		return slot == MAIN_SLOT;
 	}
 

@@ -2,6 +2,9 @@ package com.simibubi.create.content.logistics.block.inventories;
 
 import com.simibubi.create.AllBlocks;
 
+import com.simibubi.create.lib.lba.IItemHandler;
+import com.simibubi.create.lib.lba.ItemStackHandler;
+
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
@@ -16,6 +19,8 @@ import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.Direction;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
+
+import org.jetbrains.annotations.NotNull;
 
 public class AdjustableCrateTileEntity extends CrateTileEntity implements INamedContainerProvider {
 
@@ -34,7 +39,7 @@ public class AdjustableCrateTileEntity extends CrateTileEntity implements INamed
 		}
 
 		@Override
-		public boolean isItemValid(int slot, ItemStack stack) {
+		public boolean isItemValid(int slot, @NotNull ItemStack stack) {
 			if (slot > allowedAmount / 64)
 				return false;
 			return super.isItemValid(slot, stack);

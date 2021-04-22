@@ -11,7 +11,7 @@ import com.simibubi.create.foundation.tileEntity.behaviour.ValueBoxTransform.Sid
 import com.simibubi.create.foundation.utility.Lang;
 import com.simibubi.create.foundation.utility.RaycastHelper;
 
-import com.simibubi.create.lib.utility.ItemHandlerHelper;
+import com.simibubi.create.lib.lba.ItemHandlerHelper;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.world.ClientWorld;

@@ -8,6 +8,8 @@ import com.simibubi.create.foundation.block.ITE;
 import com.simibubi.create.foundation.item.ItemHelper;
 import com.simibubi.create.foundation.utility.Iterate;
 
+import com.simibubi.create.lib.lba.IItemHandlerModifiable;
+
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.ItemEntity;
@@ -137,7 +139,7 @@ public class MillstoneBlock extends KineticBlock implements ITE<MillstoneTileEnt
 	public Class<MillstoneTileEntity> getTileEntityClass() {
 		return MillstoneTileEntity.class;
 	}
-	
+
 	@Override
 	public boolean allowsMovement(BlockState state, IBlockReader reader, BlockPos pos, PathType type) {
 		return false;

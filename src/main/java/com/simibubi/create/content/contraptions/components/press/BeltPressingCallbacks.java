@@ -15,10 +15,7 @@ import com.simibubi.create.content.logistics.InWorldProcessing;
 import com.simibubi.create.foundation.tileEntity.behaviour.belt.BeltProcessingBehaviour.ProcessingResult;
 import com.simibubi.create.foundation.tileEntity.behaviour.belt.TransportedItemStackHandlerBehaviour;
 import com.simibubi.create.foundation.tileEntity.behaviour.belt.TransportedItemStackHandlerBehaviour.TransportedResult;
-
-import com.simibubi.create.lib.utility.ItemHandlerHelper;
-
-import net.minecraftforge.items.ItemHandlerHelper;
+import com.simibubi.create.lib.lba.ItemHandlerHelper;
 
 public class BeltPressingCallbacks {
 

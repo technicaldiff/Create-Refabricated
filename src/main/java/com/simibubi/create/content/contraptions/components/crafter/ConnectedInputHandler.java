@@ -16,6 +16,11 @@ import java.util.stream.Collectors;
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.foundation.utility.Iterate;
 
+import com.simibubi.create.lib.lba.IItemHandler;
+import com.simibubi.create.lib.lba.IItemHandlerModifiable;
+
+import com.simibubi.create.lib.lba.ItemStackHandler;
+
 import net.minecraft.block.BlockState;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.ListNBT;

@@ -4,6 +4,8 @@ import static com.simibubi.create.content.contraptions.components.structureMovem
 
 import java.util.Queue;
 
+import com.simibubi.create.lib.lba.IItemHandlerModifiable;
+
 import org.apache.commons.lang3.tuple.Pair;
 
 import com.simibubi.create.AllBlocks;

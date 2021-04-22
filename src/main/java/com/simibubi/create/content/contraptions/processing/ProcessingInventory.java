@@ -2,8 +2,11 @@ package com.simibubi.create.content.contraptions.processing;
 
 import java.util.function.Consumer;
 
+import com.simibubi.create.lib.lba.ItemStackHandler;
+
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
+import org.jetbrains.annotations.NotNull;
 
 public class ProcessingInventory extends ItemStackHandler {
 	public float remainingTime;
@@ -64,7 +67,7 @@ public class ProcessingInventory extends ItemStackHandler {
 	}
 
 	@Override
-	public boolean isItemValid(int slot, ItemStack stack) {
+	public boolean isItemValid(int slot, @NotNull ItemStack stack) {
 		return slot == 0 && isEmpty();
 	}
 

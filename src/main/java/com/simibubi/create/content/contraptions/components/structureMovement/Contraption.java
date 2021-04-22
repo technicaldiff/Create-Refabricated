@@ -22,6 +22,7 @@ import java.util.stream.Collectors;
 
 import javax.annotation.Nullable;
 
+import com.simibubi.create.lib.lba.IItemHandlerModifiable;
 import com.simibubi.create.lib.utility.StickinessUtil;
 
 import org.apache.commons.lang3.tuple.MutablePair;

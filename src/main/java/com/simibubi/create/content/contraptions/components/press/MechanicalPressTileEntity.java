@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Optional;
 
 import com.simibubi.create.Create;
-import com.simibubi.create.lib.utility.ItemHandlerHelper;
+import com.simibubi.create.lib.lba.ItemHandlerHelper;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.block.SoundType;

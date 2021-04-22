@@ -3,6 +3,8 @@ package com.simibubi.create.content.contraptions.components.actors;
 import com.simibubi.create.content.contraptions.components.structureMovement.Contraption;
 import com.simibubi.create.foundation.item.ItemHandlerWrapper;
 
+import com.simibubi.create.lib.lba.IItemHandlerModifiable;
+
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.Direction;

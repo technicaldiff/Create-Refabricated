@@ -2,6 +2,8 @@ package com.simibubi.create.content.logistics.block.belts.tunnel;
 
 import net.minecraft.item.ItemStack;
 
+import org.jetbrains.annotations.NotNull;
+
 public class BrassTunnelItemHandler implements IItemHandler {
 
 	private BrassTunnelTileEntity te;
@@ -16,7 +18,7 @@ public class BrassTunnelItemHandler implements IItemHandler {
 	}
 
 	@Override
-	public ItemStack getStackInSlot(int slot) {
+	public @NotNull ItemStack getStackInSlot(int slot) {
 		return te.stackToDistribute;
 	}
 
@@ -50,7 +52,7 @@ public class BrassTunnelItemHandler implements IItemHandler {
 	}
 
 	@Override
-	public boolean isItemValid(int slot, ItemStack stack) {
+	public boolean isItemValid(int slot, @NotNull ItemStack stack) {
 		return true;
 	}
 

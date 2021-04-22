@@ -3,10 +3,12 @@ package com.simibubi.create.content.contraptions.fluids.actors;
 import com.simibubi.create.content.contraptions.processing.EmptyingByBasin;
 import com.simibubi.create.content.contraptions.relays.belt.transport.TransportedItemStack;
 
-import com.simibubi.create.lib.utility.ItemHandlerHelper;
+import com.simibubi.create.lib.lba.ItemHandlerHelper;
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Direction;
+
+import org.jetbrains.annotations.NotNull;
 
 public class ItemDrainItemHandler implements IItemHandler {
 
@@ -24,7 +26,7 @@ public class ItemDrainItemHandler implements IItemHandler {
 	}
 
 	@Override
-	public ItemStack getStackInSlot(int slot) {
+	public @NotNull ItemStack getStackInSlot(int slot) {
 		return te.getHeldItemStack();
 	}
 
@@ -73,7 +75,7 @@ public class ItemDrainItemHandler implements IItemHandler {
 	}
 
 	@Override
-	public boolean isItemValid(int slot, ItemStack stack) {
+	public boolean isItemValid(int slot, @NotNull ItemStack stack) {
 		return true;
 	}
 

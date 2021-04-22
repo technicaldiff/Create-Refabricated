@@ -5,7 +5,8 @@ import javax.annotation.ParametersAreNonnullByDefault;
 
 import com.simibubi.create.lib.annotation.MethodsReturnNonnullByDefault;
 
-import com.simibubi.create.lib.utility.ItemHandlerHelper;
+import com.simibubi.create.lib.lba.IItemHandlerModifiable;
+import com.simibubi.create.lib.lba.ItemHandlerHelper;
 
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;

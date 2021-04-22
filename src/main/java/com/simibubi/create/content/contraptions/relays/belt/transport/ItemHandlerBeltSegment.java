@@ -2,6 +2,8 @@ package com.simibubi.create.content.contraptions.relays.belt.transport;
 
 import net.minecraft.item.ItemStack;
 
+import org.jetbrains.annotations.NotNull;
+
 public class ItemHandlerBeltSegment implements IItemHandler {
 
 	private final BeltInventory beltInventory;
@@ -18,7 +20,7 @@ public class ItemHandlerBeltSegment implements IItemHandler {
 	}
 
 	@Override
-	public ItemStack getStackInSlot(int slot) {
+	public @NotNull ItemStack getStackInSlot(int slot) {
 		TransportedItemStack stackAtOffset = this.beltInventory.getStackAtOffset(offset);
 		if (stackAtOffset == null)
 			return ItemStack.EMPTY;
@@ -63,7 +65,7 @@ public class ItemHandlerBeltSegment implements IItemHandler {
 	}
 
 	@Override
-	public boolean isItemValid(int slot, ItemStack stack) {
+	public boolean isItemValid(int slot, @NotNull ItemStack stack) {
 		return true;
 	}
 

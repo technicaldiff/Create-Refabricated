@@ -2,6 +2,8 @@ package com.simibubi.create.content.logistics.block.chute;
 
 import net.minecraft.item.ItemStack;
 
+import org.jetbrains.annotations.NotNull;
+
 public class ChuteItemHandler implements IItemHandler {
 
 	private ChuteTileEntity te;
@@ -16,7 +18,7 @@ public class ChuteItemHandler implements IItemHandler {
 	}
 
 	@Override
-	public ItemStack getStackInSlot(int slot) {
+	public @NotNull ItemStack getStackInSlot(int slot) {
 		return te.item;
 	}
 
@@ -44,7 +46,7 @@ public class ChuteItemHandler implements IItemHandler {
 	}
 
 	@Override
-	public boolean isItemValid(int slot, ItemStack stack) {
+	public boolean isItemValid(int slot, @NotNull ItemStack stack) {
 		return true;
 	}
 

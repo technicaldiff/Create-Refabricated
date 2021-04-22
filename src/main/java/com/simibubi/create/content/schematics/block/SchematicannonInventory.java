@@ -4,6 +4,7 @@ import com.simibubi.create.AllItems;
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import org.jetbrains.annotations.NotNull;
 
 public class SchematicannonInventory extends ItemStackHandler {
 	/**
@@ -23,7 +24,7 @@ public class SchematicannonInventory extends ItemStackHandler {
 	}
 
 	@Override
-	public boolean isItemValid(int slot, ItemStack stack) {
+	public boolean isItemValid(int slot, @NotNull ItemStack stack) {
 		switch (slot) {
 		case 0: // Blueprint Slot
 			return AllItems.SCHEMATIC.isIn(stack);

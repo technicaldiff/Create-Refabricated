@@ -19,6 +19,8 @@ import com.simibubi.create.foundation.tileEntity.behaviour.belt.DirectBeltInputB
 import com.simibubi.create.foundation.utility.NBTHelper;
 import com.simibubi.create.foundation.utility.VecHelper;
 
+import com.simibubi.create.lib.lba.IItemHandlerModifiable;
+
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
@@ -38,6 +40,7 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.vector.Vector3d;
+import org.jetbrains.annotations.NotNull;
 
 public class CrushingWheelControllerTileEntity extends SmartTileEntity {
 
@@ -55,7 +58,7 @@ public class CrushingWheelControllerTileEntity extends SmartTileEntity {
 		inventory = new ProcessingInventory(this::itemInserted) {
 
 			@Override
-			public boolean isItemValid(int slot, ItemStack stack) {
+			public boolean isItemValid(int slot, @NotNull ItemStack stack) {
 				return super.isItemValid(slot, stack) && processingEntity == null;
 			}
 

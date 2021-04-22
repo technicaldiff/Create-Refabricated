@@ -5,6 +5,12 @@ import com.simibubi.create.content.logistics.block.inventories.AdjustableCrateBl
 import com.simibubi.create.content.logistics.block.inventories.BottomlessItemHandler;
 import com.simibubi.create.foundation.utility.NBTHelper;
 
+import com.simibubi.create.lib.lba.IItemHandler;
+
+import com.simibubi.create.lib.lba.IItemHandlerModifiable;
+
+import com.simibubi.create.lib.lba.ItemStackHandler;
+
 import net.minecraft.block.ChestBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;

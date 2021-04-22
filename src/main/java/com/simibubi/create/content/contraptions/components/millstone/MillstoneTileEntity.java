@@ -9,6 +9,9 @@ import com.simibubi.create.foundation.tileEntity.TileEntityBehaviour;
 import com.simibubi.create.foundation.tileEntity.behaviour.belt.DirectBeltInputBehaviour;
 import com.simibubi.create.foundation.utility.VecHelper;
 
+import com.simibubi.create.lib.lba.IItemHandler;
+import com.simibubi.create.lib.lba.ItemStackHandler;
+
 import net.minecraft.block.BlockState;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
@@ -34,7 +37,7 @@ public class MillstoneTileEntity extends KineticTileEntity {
 		outputInv = new ItemStackHandler(9);
 		capability = LazyOptional.of(MillstoneInventoryHandler::new);
 	}
-	
+
 	@Override
 	public void addBehaviours(List<TileEntityBehaviour> behaviours) {
 		behaviours.add(new DirectBeltInputBehaviour(this));
