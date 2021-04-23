@@ -2,7 +2,7 @@ package com.simibubi.create.content.contraptions.components.structureMovement.sy
 
 import com.simibubi.create.content.contraptions.components.structureMovement.AbstractContraptionEntity;
 
-import com.simibubi.create.lib.lba.FluidStack;
+import com.simibubi.create.lib.lba.fluid.FluidStack;
 
 import me.pepperbell.simplenetworking.S2CPacket;
 import me.pepperbell.simplenetworking.SimpleChannel.ResponseTarget;

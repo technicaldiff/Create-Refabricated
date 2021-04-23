@@ -3,8 +3,8 @@ package com.simibubi.create.content.contraptions.components.deployer;
 import java.util.Iterator;
 
 import com.simibubi.create.foundation.tileEntity.behaviour.filtering.FilteringBehaviour;
-import com.simibubi.create.lib.lba.IItemHandlerModifiable;
-import com.simibubi.create.lib.lba.ItemHandlerHelper;
+import com.simibubi.create.lib.lba.item.IItemHandlerModifiable;
+import com.simibubi.create.lib.lba.item.ItemHandlerHelper;
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Hand;

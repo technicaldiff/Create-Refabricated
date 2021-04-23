@@ -15,7 +15,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.JsonSyntaxException;
 
-import com.simibubi.create.lib.lba.FluidStack;
+import com.simibubi.create.lib.lba.fluid.FluidStack;
 
 import net.minecraft.fluid.FlowingFluid;
 import net.minecraft.fluid.Fluid;

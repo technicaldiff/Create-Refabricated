@@ -4,7 +4,7 @@ import java.util.function.Supplier;
 
 import javax.annotation.Nullable;
 
-import com.simibubi.create.lib.lba.ItemHandlerHelper;
+import com.simibubi.create.lib.lba.item.ItemHandlerHelper;
 
 import org.apache.commons.lang3.mutable.MutableBoolean;
 

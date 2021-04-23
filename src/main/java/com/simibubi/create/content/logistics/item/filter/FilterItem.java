@@ -6,10 +6,10 @@ import java.util.List;
 
 import javax.annotation.Nonnull;
 
-import com.simibubi.create.lib.lba.FluidStack;
-import com.simibubi.create.lib.lba.ItemStackHandler;
+import com.simibubi.create.lib.lba.fluid.FluidStack;
+import com.simibubi.create.lib.lba.item.ItemStackHandler;
 
-import com.simibubi.create.lib.lba.ItemHandlerHelper;
+import com.simibubi.create.lib.lba.item.ItemHandlerHelper;
 
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.PlayerEntity;

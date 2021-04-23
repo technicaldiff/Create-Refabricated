@@ -16,7 +16,7 @@ import com.simibubi.create.content.contraptions.processing.HeatCondition;
 import com.simibubi.create.content.contraptions.processing.ProcessingRecipeBuilder;
 import com.simibubi.create.foundation.fluid.FluidIngredient;
 
-import com.simibubi.create.lib.lba.FluidStack;
+import com.simibubi.create.lib.lba.fluid.FluidStack;
 
 import net.minecraft.client.resources.ReloadListener;
 import net.minecraft.item.Item;

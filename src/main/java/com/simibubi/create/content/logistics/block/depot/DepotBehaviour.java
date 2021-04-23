@@ -7,7 +7,7 @@ import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
 
-import com.simibubi.create.lib.lba.ItemHandlerHelper;
+import com.simibubi.create.lib.lba.item.ItemHandlerHelper;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.inventory.InventoryHelper;

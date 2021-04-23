@@ -13,14 +13,14 @@ public class ComparatorUtil {
 		return MathHelper.floor(MathHelper.clamp(frac * 14 + (frac > 0 ? 1 : 0), 0, 15));
 	}
 
-//	public static int levelOfSmartFluidTank(IBlockReader world, BlockPos pos) { todo: fluid handling
-//		SmartFluidTankBehaviour fluidBehaviour = TileEntityBehaviour.get(world, pos, SmartFluidTankBehaviour.TYPE);
-//		if (fluidBehaviour == null)
-//			return 0;
-//		SmartFluidTank primaryHandler = fluidBehaviour.getPrimaryHandler();
-//		double fillFraction = (double) primaryHandler.getFluid()
-//			.getAmount() / primaryHandler.getCapacity();
-//		return fractionToRedstoneLevel(fillFraction);
-//	}
+	public static int levelOfSmartFluidTank(IBlockReader world, BlockPos pos) {
+		SmartFluidTankBehaviour fluidBehaviour = TileEntityBehaviour.get(world, pos, SmartFluidTankBehaviour.TYPE);
+		if (fluidBehaviour == null)
+			return 0;
+		SmartFluidTank primaryHandler = fluidBehaviour.getPrimaryHandler();
+		double fillFraction = (double) primaryHandler.getFluid()
+			.getAmount() / primaryHandler.getCapacity();
+		return fractionToRedstoneLevel(fillFraction);
+	}
 
 }

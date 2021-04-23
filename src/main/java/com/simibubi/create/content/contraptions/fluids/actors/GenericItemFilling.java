@@ -4,7 +4,8 @@ import com.simibubi.create.AllFluids;
 import com.simibubi.create.content.contraptions.fluids.potion.PotionFluidHandler;
 import com.simibubi.create.foundation.fluid.FluidHelper;
 
-import com.simibubi.create.lib.lba.FluidStack;
+import com.simibubi.create.lib.lba.fluid.FluidAction;
+import com.simibubi.create.lib.lba.fluid.FluidStack;
 
 import net.minecraft.fluid.Fluids;
 import net.minecraft.item.Item;

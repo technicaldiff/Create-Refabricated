@@ -1,6 +1,6 @@
 package com.simibubi.create.foundation.item;
 
-import com.simibubi.create.lib.lba.IItemHandlerModifiable;
+import com.simibubi.create.lib.lba.item.IItemHandlerModifiable;
 
 import net.minecraft.item.ItemStack;
 

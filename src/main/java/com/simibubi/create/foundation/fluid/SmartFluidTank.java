@@ -1,8 +1,9 @@
 package com.simibubi.create.foundation.fluid;
 
-import com.simibubi.create.lib.lba.FluidStack;
-
 import java.util.function.Consumer;
+
+import com.simibubi.create.lib.lba.fluid.FluidStack;
+import com.simibubi.create.lib.lba.fluid.FluidTank;
 
 
 public class SmartFluidTank extends FluidTank {

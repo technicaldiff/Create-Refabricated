@@ -1,4 +1,4 @@
-package com.simibubi.create.lib.lba;
+package com.simibubi.create.lib.lba.item;
 
 import net.minecraft.item.ItemStack;
 

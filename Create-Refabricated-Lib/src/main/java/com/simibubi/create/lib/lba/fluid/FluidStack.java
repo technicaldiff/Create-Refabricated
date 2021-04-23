@@ -1,9 +1,9 @@
-package com.simibubi.create.lib.lba;
+package com.simibubi.create.lib.lba.fluid;
 
 import java.io.IOException;
 
+import alexiil.mc.lib.attributes.fluid.FluidVolumeUtil;
 import alexiil.mc.lib.attributes.fluid.amount.FluidAmount;
-import alexiil.mc.lib.attributes.fluid.volume.FluidKey;
 import alexiil.mc.lib.attributes.fluid.volume.FluidKeys;
 import alexiil.mc.lib.attributes.fluid.volume.FluidVolume;
 import net.minecraft.fluid.Fluid;
@@ -12,20 +12,16 @@ import net.minecraft.network.PacketBuffer;
 
 public class FluidStack {
 
-	public static FluidStack EMPTY = new FluidStack(FluidKeys.EMPTY, 0);
+	public static FluidStack EMPTY = new FluidStack(FluidVolumeUtil.EMPTY);
 
 	private FluidVolume volume;
 
-	public FluidStack(FluidVolume volume) {
-		this.volume = volume;
+	public FluidStack(FluidVolume v) {
+		volume = v;
 	}
 
 	public FluidStack(Fluid fluid, int amount) {
-		volume = FluidKeys.get(fluid).withAmount(amount);
-	}
-
-	public FluidStack(FluidKey key, int amount) {
-		volume = key.withAmount(amount);
+		volume = FluidKeys.get(fluid).withAmount(FluidAmount.of1620(amount));
 	}
 
 	public Fluid getFluid() {
@@ -33,7 +29,7 @@ public class FluidStack {
 	}
 
 	public int getAmount() {
-		return volume.getAmount();
+		return volume.getAmount_F().as1620();
 	}
 
 	public FluidStack withAmount(int amount) {
@@ -42,6 +38,10 @@ public class FluidStack {
 
 	public boolean isEmpty() {
 		return volume.isEmpty();
+	}
+
+	public void shrink(int amount) {
+		volume = volume.withAmount(FluidAmount.of1620(getAmount() - amount));
 	}
 
 	public FluidStack copy() {

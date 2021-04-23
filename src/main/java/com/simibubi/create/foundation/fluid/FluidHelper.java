@@ -12,7 +12,7 @@ import com.simibubi.create.content.contraptions.processing.EmptyingByBasin;
 import com.simibubi.create.foundation.tileEntity.SmartTileEntity;
 import com.simibubi.create.foundation.utility.Pair;
 
-import com.simibubi.create.lib.lba.FluidStack;
+import com.simibubi.create.lib.lba.fluid.FluidStack;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;

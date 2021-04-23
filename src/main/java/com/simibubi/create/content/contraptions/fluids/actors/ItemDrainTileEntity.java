@@ -17,7 +17,7 @@ import com.simibubi.create.foundation.utility.Iterate;
 import com.simibubi.create.foundation.utility.Pair;
 import com.simibubi.create.foundation.utility.VecHelper;
 
-import com.simibubi.create.lib.lba.ItemHandlerHelper;
+import com.simibubi.create.lib.lba.item.ItemHandlerHelper;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.item.ItemEntity;

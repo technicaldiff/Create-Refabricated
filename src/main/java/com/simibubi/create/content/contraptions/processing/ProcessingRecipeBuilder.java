@@ -13,7 +13,7 @@ import com.simibubi.create.foundation.fluid.FluidIngredient;
 import com.simibubi.create.foundation.utility.Lang;
 import com.simibubi.create.foundation.utility.Pair;
 
-import com.simibubi.create.lib.lba.FluidStack;
+import com.simibubi.create.lib.lba.fluid.FluidStack;
 
 import net.minecraft.data.IFinishedRecipe;
 import net.minecraft.fluid.Fluid;

@@ -2,16 +2,12 @@ package com.simibubi.create.foundation.item;
 
 import java.util.function.Consumer;
 
-import javax.annotation.Nonnull;
-
 import com.simibubi.create.foundation.tileEntity.SyncedTileEntity;
 
-import com.simibubi.create.lib.lba.ItemStackHandler;
+import com.simibubi.create.lib.lba.item.ItemStackHandler;
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
-
-import org.jetbrains.annotations.NotNull;
 
 public class SmartInventory extends RecipeWrapper
 	implements IItemHandlerModifiableIntermediate, INBTSerializable<CompoundNBT> {

@@ -1,4 +1,4 @@
-package com.simibubi.create.lib.lba;
+package com.simibubi.create.lib.lba.item;
 
 import alexiil.mc.lib.attributes.Simulation;
 import alexiil.mc.lib.attributes.item.impl.FullFixedItemInv;
@@ -9,12 +9,12 @@ public class ItemStackHandler extends FullFixedItemInv implements IItemHandler, 
 
 	public ItemStackHandler() {
 		super(1);
-		super.setOwnerListener((fixedItemInvView, slot, previous, current) -> onContentsChanged(slot));
+		super.addListener((fixedItemInvView, slot, previous, current) -> onContentsChanged(slot), () -> { });
 	}
 
 	public ItemStackHandler(int invSize) {
 		super(invSize);
-		super.setOwnerListener((fixedItemInvView, slot, previous, current) -> onContentsChanged(slot));
+		super.addListener((fixedItemInvView, slot, previous, current) -> onContentsChanged(slot), () -> { });
 	}
 
 	protected void onContentsChanged(int slot) { }

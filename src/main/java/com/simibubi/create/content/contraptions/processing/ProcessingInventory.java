@@ -2,7 +2,7 @@ package com.simibubi.create.content.contraptions.processing;
 
 import java.util.function.Consumer;
 
-import com.simibubi.create.lib.lba.ItemStackHandler;
+import com.simibubi.create.lib.lba.item.ItemStackHandler;
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;

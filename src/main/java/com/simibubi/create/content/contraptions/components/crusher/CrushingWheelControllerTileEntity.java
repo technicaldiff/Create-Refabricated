@@ -19,7 +19,7 @@ import com.simibubi.create.foundation.tileEntity.behaviour.belt.DirectBeltInputB
 import com.simibubi.create.foundation.utility.NBTHelper;
 import com.simibubi.create.foundation.utility.VecHelper;
 
-import com.simibubi.create.lib.lba.IItemHandlerModifiable;
+import com.simibubi.create.lib.lba.item.IItemHandlerModifiable;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.Entity;

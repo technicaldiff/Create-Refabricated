@@ -2,7 +2,7 @@ package com.simibubi.create.content.schematics.block;
 
 import com.simibubi.create.foundation.tileEntity.SyncedTileEntity;
 
-import com.simibubi.create.lib.lba.ItemStackHandler;
+import com.simibubi.create.lib.lba.item.ItemStackHandler;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;

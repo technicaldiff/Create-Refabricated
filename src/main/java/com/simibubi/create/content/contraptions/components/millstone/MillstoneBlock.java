@@ -8,7 +8,7 @@ import com.simibubi.create.foundation.block.ITE;
 import com.simibubi.create.foundation.item.ItemHelper;
 import com.simibubi.create.foundation.utility.Iterate;
 
-import com.simibubi.create.lib.lba.IItemHandlerModifiable;
+import com.simibubi.create.lib.lba.item.IItemHandlerModifiable;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.Entity;

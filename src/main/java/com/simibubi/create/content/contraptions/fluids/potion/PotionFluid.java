@@ -7,7 +7,7 @@ import com.simibubi.create.AllFluids;
 import com.simibubi.create.content.contraptions.fluids.VirtualFluid;
 import com.simibubi.create.foundation.utility.NBTHelper;
 
-import com.simibubi.create.lib.lba.FluidStack;
+import com.simibubi.create.lib.lba.fluid.FluidStack;
 
 import net.minecraft.fluid.Fluid;
 import net.minecraft.nbt.CompoundNBT;

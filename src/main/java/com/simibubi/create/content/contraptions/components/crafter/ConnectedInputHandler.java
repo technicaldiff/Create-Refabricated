@@ -15,10 +15,10 @@ import java.util.stream.Collectors;
 
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.foundation.utility.Iterate;
-import com.simibubi.create.lib.lba.CombinedInvWrapper;
-import com.simibubi.create.lib.lba.IItemHandler;
-import com.simibubi.create.lib.lba.IItemHandlerModifiable;
-import com.simibubi.create.lib.lba.ItemStackHandler;
+import com.simibubi.create.lib.lba.item.CombinedInvWrapper;
+import com.simibubi.create.lib.lba.item.IItemHandler;
+import com.simibubi.create.lib.lba.item.IItemHandlerModifiable;
+import com.simibubi.create.lib.lba.item.ItemStackHandler;
 import com.simibubi.create.lib.utility.Constants.NBT;
 
 import net.minecraft.block.BlockState;

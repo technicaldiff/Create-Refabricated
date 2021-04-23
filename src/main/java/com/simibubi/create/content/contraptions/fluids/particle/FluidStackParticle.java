@@ -4,7 +4,7 @@ import com.simibubi.create.AllParticleTypes;
 import com.simibubi.create.content.contraptions.fluids.potion.PotionFluid;
 import com.simibubi.create.foundation.utility.ColorHelper;
 
-import com.simibubi.create.lib.lba.FluidStack;
+import com.simibubi.create.lib.lba.fluid.FluidStack;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.particle.IParticleRenderType;

@@ -2,6 +2,8 @@ package com.simibubi.create.content.contraptions.components.actors;
 
 import com.simibubi.create.content.contraptions.components.structureMovement.Contraption;
 
+import com.simibubi.create.lib.lba.fluid.FluidStack;
+
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.Direction;
 

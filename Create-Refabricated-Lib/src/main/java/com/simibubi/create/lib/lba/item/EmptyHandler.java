@@ -1,4 +1,4 @@
-package com.simibubi.create.lib.lba;
+package com.simibubi.create.lib.lba.item;
 
 import net.minecraft.item.ItemStack;
 
@@ -6,26 +6,22 @@ public class EmptyHandler implements IItemHandlerModifiable {
 	public static final IItemHandler INSTANCE = new EmptyHandler();
 
 	@Override
-	public int getSlots()
-	{
+	public int getSlots() {
 		return 0;
 	}
 
 	@Override
-	public ItemStack getStackInSlot(int slot)
-	{
+	public ItemStack getStackInSlot(int slot) {
 		return ItemStack.EMPTY;
 	}
 
 	@Override
-	public ItemStack insertItem(int slot, ItemStack stack, boolean simulate)
-	{
+	public ItemStack insertItem(int slot, ItemStack stack, boolean simulate) {
 		return stack;
 	}
 
 	@Override
-	public ItemStack extractItem(int slot, int amount, boolean simulate)
-	{
+	public ItemStack extractItem(int slot, int amount, boolean simulate) {
 		return ItemStack.EMPTY;
 	}
 
@@ -33,14 +29,12 @@ public class EmptyHandler implements IItemHandlerModifiable {
 	public void setStackInSlot(int slot, ItemStack stack) { }
 
 	@Override
-	public int getSlotLimit(int slot)
-	{
+	public int getSlotLimit(int slot) {
 		return 0;
 	}
 
 	@Override
-	public boolean isItemValid(int slot, ItemStack stack)
-	{
+	public boolean isItemValid(int slot, ItemStack stack) {
 		return false;
 	}
 }

@@ -6,7 +6,7 @@ import java.util.Map;
 import com.simibubi.create.content.contraptions.components.structureMovement.MovementBehaviour;
 import com.simibubi.create.content.contraptions.components.structureMovement.MovementContext;
 
-import com.simibubi.create.lib.lba.ItemStackHandler;
+import com.simibubi.create.lib.lba.item.ItemStackHandler;
 
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.item.ItemStack;

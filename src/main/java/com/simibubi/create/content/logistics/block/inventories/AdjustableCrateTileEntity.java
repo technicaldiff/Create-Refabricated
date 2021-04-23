@@ -2,8 +2,8 @@ package com.simibubi.create.content.logistics.block.inventories;
 
 import com.simibubi.create.AllBlocks;
 
-import com.simibubi.create.lib.lba.IItemHandler;
-import com.simibubi.create.lib.lba.ItemStackHandler;
+import com.simibubi.create.lib.lba.item.IItemHandler;
+import com.simibubi.create.lib.lba.item.ItemStackHandler;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
