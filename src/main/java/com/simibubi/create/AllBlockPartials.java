@@ -22,6 +22,8 @@ import com.simibubi.create.foundation.utility.MatrixStacker;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.client.renderer.model.IBakedModel;
+import net.minecraft.client.renderer.model.ModelBakery;
+import net.minecraft.client.renderer.model.ModelManager;
 import net.minecraft.util.Direction;
 import net.minecraft.util.ResourceLocation;
 
@@ -175,8 +177,7 @@ public class AllBlockPartials {
 			ModelLoader.addSpecialModel(partial.modelLocation);
 	}
 
-	public static void onModelBake(ModelBakeEvent event) {
-		Map<ResourceLocation, IBakedModel> modelRegistry = event.getModelRegistry();
+	public static void onModelBake(Map<ResourceLocation, IBakedModel> modelRegistry) {
 		for (AllBlockPartials partial : all)
 			partial.bakedModel = modelRegistry.get(partial.modelLocation);
 	}

@@ -32,11 +32,15 @@ import com.simibubi.create.foundation.utility.WorldAttached;
 import com.simibubi.create.foundation.utility.ghost.GhostBlocks;
 import com.simibubi.create.foundation.utility.outliner.Outliner;
 
+import com.simibubi.create.lib.event.ModelsBakedCallback;
+
 import net.fabricmc.api.ClientModInitializer;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.BlockModelShapes;
 import net.minecraft.client.renderer.model.IBakedModel;
+import net.minecraft.client.renderer.model.ModelBakery;
+import net.minecraft.client.renderer.model.ModelManager;
 import net.minecraft.client.renderer.model.ModelResourceLocation;
 import net.minecraft.client.settings.GraphicsFanciness;
 import net.minecraft.inventory.container.PlayerContainer;
@@ -111,6 +115,9 @@ public class CreateClient implements ClientModInitializer {
 				.getResourceManager();
 		if (resourceManager instanceof IReloadableResourceManager)
 			((IReloadableResourceManager) resourceManager).addReloadListener(new ResourceReloadHandler());
+
+
+		ModelsBakedCallback.EVENT.register(CreateClient::onModelBake);
 	}
 
 	public static void onTextureStitch(TextureStitchEvent.Pre event) {
@@ -122,9 +129,8 @@ public class CreateClient implements ClientModInitializer {
 			.forEach(event::addSprite);
 	}
 
-	public static void onModelBake(ModelBakeEvent event) {
-		Map<ResourceLocation, IBakedModel> modelRegistry = event.getModelRegistry();
-		AllBlockPartials.onModelBake(event);
+	public static void onModelBake(ModelManager modelManager, Map<ResourceLocation, IBakedModel> modelRegistry, ModelBakery modelBakery) {
+		AllBlockPartials.onModelBake(modelRegistry);
 
 		getCustomBlockModels()
 			.foreach((block, modelFunc) -> swapModels(modelRegistry, getAllBlockStateModelLocations(block), modelFunc));
@@ -132,7 +138,7 @@ public class CreateClient implements ClientModInitializer {
 			.foreach((item, modelFunc) -> swapModels(modelRegistry, getItemModelLocation(item), modelFunc));
 		getCustomRenderedItems().foreach((item, modelFunc) -> {
 			swapModels(modelRegistry, getItemModelLocation(item), m -> modelFunc.apply(m)
-				.loadPartials(event));
+				.loadPartials(modelBakery));
 		});
 	}
 

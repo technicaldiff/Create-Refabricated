@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import com.simibubi.create.lib.helper.AbstractMinecartEntityHelper;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -103,12 +105,12 @@ public class ItemRequirement {
 
 		if (entity instanceof AbstractMinecartEntity) {
 			AbstractMinecartEntity minecartEntity = (AbstractMinecartEntity) entity;
-			return new ItemRequirement(ItemUseType.CONSUME, minecartEntity.getCartItem().getItem());
+			return new ItemRequirement(ItemUseType.CONSUME, AbstractMinecartEntityHelper.getCartItem(minecartEntity).getItem());
 		}
 
 		if (entity instanceof BoatEntity) {
 			BoatEntity boatEntity = (BoatEntity) entity;
-			return new ItemRequirement(ItemUseType.CONSUME, boatEntity.getItemBoat().getItem());
+			return new ItemRequirement(ItemUseType.CONSUME, boatEntity.getItemBoat());
 		}
 
 		if (type == EntityType.END_CRYSTAL)

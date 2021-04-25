@@ -10,11 +10,13 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import com.simibubi.create.lib.event.BeforeFirstReloadCallback;
 import com.simibubi.create.lib.event.ClientWorldEvents;
+import com.simibubi.create.lib.event.LeftClickAirCallback;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.GameConfiguration;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.entity.player.ClientPlayerEntity;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.world.ClientWorld;
 
@@ -22,7 +24,9 @@ import net.minecraft.client.world.ClientWorld;
 @Mixin(Minecraft.class)
 public abstract class MinecraftMixin {
 	@Shadow
-	private ClientWorld world;
+	public ClientWorld world;
+	@Shadow
+	public ClientPlayerEntity player;
 
 	@Inject(at = @At(value = "INVOKE", target = "Lnet/minecraft/client/Minecraft;setLoadingGui(Lnet/minecraft/client/gui/LoadingGui;)V"), method = "<init>(Lnet/minecraft/client/GameConfiguration;)V")
 	public void create$beforeFirstReload(GameConfiguration args, CallbackInfo ci) {
@@ -39,5 +43,10 @@ public abstract class MinecraftMixin {
 	@Inject(at = @At(value = "JUMP", opcode = Opcodes.IFNULL, ordinal = 1, shift = Shift.AFTER), method = "func_213231_b(Lnet/minecraft/client/gui/screen/Screen;)V")
 	public void create$onDisconnect(Screen screen, CallbackInfo ci) {
 		ClientWorldEvents.UNLOAD.invoker().onWorldUnload((Minecraft) (Object) this, this.world);
+	}
+
+	@Inject(method = "clickMouse()V", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/network/ClientPlayerEntity;resetLastAttackedTicks()V"))
+	private void create$onClickMouse(CallbackInfo ci) {
+		LeftClickAirCallback.EVENT.invoker().onLeftClickAir(player);
 	}
 }

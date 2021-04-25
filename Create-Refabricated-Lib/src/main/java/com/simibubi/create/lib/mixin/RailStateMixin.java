@@ -11,7 +11,6 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import com.google.common.collect.Lists;
 import com.simibubi.create.lib.block.SlopeCreationCheckingRail;
 import com.simibubi.create.lib.mixin.accessor.RailStateAccessor;
 import com.simibubi.create.lib.utility.MixinHelper;
@@ -27,16 +26,16 @@ import net.minecraft.world.World;
 public abstract class RailStateMixin {
 	// I hate everything about this file so much
 	public boolean canMakeSlopes;
-	@Final @Shadow private final World world = null;
-	@Final @Shadow private final AbstractRailBlock block = null;
-	@Final @Shadow private final BlockPos pos = null;
-	@Final @Shadow private final boolean disableCorners = false;
+	@Shadow private World world;
+	@Final @Shadow private AbstractRailBlock block;
+	@Final @Shadow private BlockPos pos;
+	@Final @Shadow private boolean disableCorners;
 	@Shadow private BlockState newState;
-	@Shadow private boolean func_208512_d(BlockPos blockPos) {return false;}
-	@Shadow private void reset(RailShape railShape) {}
-	@Final @Shadow private final List<BlockPos> connectedRails = Lists.newArrayList();
-	@Shadow @Nullable private RailState createForAdjacent(BlockPos blockPos) {return null;}
-	@Shadow private boolean isConnectedTo(BlockPos blockPos) {return false;}
+	@Shadow protected abstract boolean func_208512_d(BlockPos blockPos);
+	@Shadow protected abstract void reset(RailShape railShape);
+	@Final @Shadow private List<BlockPos> connectedRails;
+	@Shadow @Nullable protected abstract RailState createForAdjacent(BlockPos blockPos);
+	@Shadow protected abstract boolean isConnectedTo(BlockPos blockPos);
 
 	@Inject(at = @At(value = "INVOKE", target = "Lnet/minecraft/block/RailState;reset(Lnet/minecraft/state/properties/RailShape;)V", shift = At.Shift.BEFORE),
 			method = "Lnet/minecraft/block/RailState;<init>(Lnet/minecraft/world/World;Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/block/BlockState;)V")

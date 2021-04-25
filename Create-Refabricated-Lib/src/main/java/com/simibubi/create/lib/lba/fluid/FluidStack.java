@@ -49,7 +49,7 @@ public class FluidStack {
 	}
 
 	public void setTag(CompoundNBT nbt) {
-		volume = FluidVolume.fromTag(nbt);
+		volume = FluidVolume.fromTag(nbt); // I have doubts. About this whole class actually.
 	}
 
 	public CompoundNBT getTag() {
@@ -68,5 +68,9 @@ public class FluidStack {
 
 	public void writeToPacket(PacketBuffer buffer) {
 		volume.toMcBuffer(buffer);
+	}
+
+	public boolean isFluidEqual(FluidStack other) {
+		return getFluid() == other.getFluid();
 	}
 }

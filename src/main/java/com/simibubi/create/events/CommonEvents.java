@@ -1,5 +1,13 @@
 package com.simibubi.create.events;
 
+import com.simibubi.create.content.contraptions.components.deployer.DeployerFakePlayer;
+import com.simibubi.create.lib.event.FluidPlaceBlockCallback;
+
+import com.simibubi.create.lib.event.LivingEntityExperienceDropCallback;
+import com.simibubi.create.lib.event.LivingEntityTickCallback;
+
+import com.simibubi.create.lib.event.MobEntitySetTargetCallback;
+
 import net.fabricmc.fabric.api.event.player.AttackBlockCallback;
 
 import org.jetbrains.annotations.Nullable;
@@ -62,14 +70,11 @@ public class CommonEvents {
 		CapabilityMinecartController.onChunkUnloaded(world, chunk);
 	}
 
-	public static void whenFluidsMeet(FluidPlaceBlockEvent event) {
-		BlockState blockState = event.getOriginalState();
-		FluidState fluidState = blockState.getFluidState();
-		BlockPos pos = event.getPos();
-		IWorld world = event.getWorld();
+	public static BlockState whenFluidsMeet(IWorld world, BlockPos pos, BlockState state) {
+		FluidState fluidState = state.getFluidState();
 
 		if (fluidState.isSource() && FluidHelper.isLava(fluidState.getFluid()))
-			return;
+			return null;
 
 		for (Direction direction : Iterate.directions) {
 			FluidState metFluidState = fluidState.isSource() ? fluidState : world.getFluidState(pos.offset(direction));
@@ -78,9 +83,10 @@ public class CommonEvents {
 			BlockState lavaInteraction = AllFluids.getLavaInteraction(metFluidState);
 			if (lavaInteraction == null)
 				continue;
-			event.setNewState(lavaInteraction);
-			break;
+			return lavaInteraction;
 		}
+
+		return null;
 	}
 
 	public static void onWorldTick(World world) {
@@ -89,8 +95,7 @@ public class CommonEvents {
 		CouplingPhysics.tick(world);
 	}
 
-	public static void onUpdateLivingEntity(LivingUpdateEvent event) {
-		LivingEntity entityLiving = event.getEntityLiving();
+	public static void onUpdateLivingEntity(LivingEntity entityLiving) {
 		World world = entityLiving.world;
 		if (world == null)
 			return;
@@ -156,10 +161,14 @@ public class CommonEvents {
 		ServerLifecycleEvents.SERVER_STOPPED.register(CommonEvents::serverStopped);
 		ServerWorldEvents.LOAD.register((server, world) -> CommonEvents.onLoadWorld(world));
 		ServerWorldEvents.UNLOAD.register((server, world) -> CommonEvents.onUnloadWorld(world));
+		FluidPlaceBlockCallback.EVENT.register(CommonEvents::whenFluidsMeet);
+		LivingEntityTickCallback.EVENT.register(CommonEvents::onUpdateLivingEntity);
 
 		// External Events
 
 		AttackBlockCallback.EVENT.register(ZapperInteractionHandler::leftClickingBlocksWithTheZapperSelectsTheBlock);
+		MobEntitySetTargetCallback.EVENT.register(DeployerFakePlayer::entitiesDontRetaliate);
+		LivingEntityExperienceDropCallback.EVENT.register(DeployerFakePlayer::deployerKillsDoNotSpawnXP);
 	}
 
 }

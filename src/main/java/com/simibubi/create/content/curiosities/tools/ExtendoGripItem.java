@@ -9,6 +9,7 @@ import com.simibubi.create.foundation.advancement.AllTriggers;
 import com.simibubi.create.foundation.networking.AllPackets;
 import com.simibubi.create.foundation.utility.AnimationTickHolder;
 
+import net.fabricmc.fabric.api.event.player.AttackEntityCallback;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.player.ClientPlayerEntity;
 import net.minecraft.entity.Entity;
@@ -22,7 +23,9 @@ import net.minecraft.entity.projectile.ProjectileHelper;
 import net.minecraft.item.Item;
 import net.minecraft.item.Rarity;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.util.ActionResultType;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.Hand;
 import net.minecraft.util.LazyValue;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockRayTraceResult;
@@ -31,6 +34,9 @@ import net.minecraft.util.math.RayTraceResult.Type;
 import net.minecraft.util.math.vector.Vector3d;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
+import net.minecraft.world.World;
+
+import org.jetbrains.annotations.Nullable;
 
 public class ExtendoGripItem extends Item {
 	private static DamageSource lastActiveDamageSource;
@@ -168,14 +174,12 @@ public class ExtendoGripItem extends Item {
 	}
 
 	@Environment(EnvType.CLIENT)
-	public static void notifyServerOfLongRangeAttacks(AttackEntityEvent event) {
-		Entity entity = event.getEntity();
-		Entity target = event.getTarget();
-		if (!isUncaughtClientInteraction(entity, target))
-			return;
-		PlayerEntity player = (PlayerEntity) entity;
+	public static ActionResultType notifyServerOfLongRangeAttacks(PlayerEntity player, World world, Hand hand, Entity target, @Nullable EntityRayTraceResult traceResult) {
+		if (!isUncaughtClientInteraction(player, target))
+			return ActionResultType.PASS;
 		if (isHoldingExtendoGrip(player))
 			AllPackets.channel.sendToServer(new ExtendoGripInteractionPacket(target));
+		return ActionResultType.SUCCESS;
 	}
 
 	@Environment(EnvType.CLIENT)
@@ -207,5 +211,4 @@ public class ExtendoGripItem extends Item {
 		boolean holdingGrip = inOff || inMain;
 		return holdingGrip;
 	}
-
 }

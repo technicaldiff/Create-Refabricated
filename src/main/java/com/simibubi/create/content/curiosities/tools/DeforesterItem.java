@@ -9,7 +9,6 @@ import com.simibubi.create.foundation.utility.VecHelper;
 
 import com.simibubi.create.lib.annotation.MethodsReturnNonnullByDefault;
 
-import net.fabricmc.fabric.api.event.player.PlayerBlockBreakEvents;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.item.ItemEntity;

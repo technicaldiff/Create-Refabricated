@@ -7,16 +7,20 @@ import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
 
 import com.simibubi.create.content.contraptions.goggles.GoggleOverlayRenderer;
-import com.simibubi.create.content.curiosities.zapper.ZapperInteractionHandler;
+import com.simibubi.create.content.curiosities.tools.ExtendoGripItem;
 import com.simibubi.create.foundation.block.ItemUseOverrides;
 import com.simibubi.create.foundation.tileEntity.behaviour.edgeInteraction.EdgeInteractionHandler;
 import com.simibubi.create.foundation.tileEntity.behaviour.filtering.FilteringHandler;
+import com.simibubi.create.foundation.tileEntity.behaviour.linked.LinkHandler;
+import com.simibubi.create.lib.event.LeftClickAirCallback;
 import com.simibubi.create.lib.event.RenderHandCallback;
 
 import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
 import net.fabricmc.fabric.api.event.player.AttackBlockCallback;
+import net.fabricmc.fabric.api.event.player.AttackEntityCallback;
 import net.fabricmc.fabric.api.event.player.UseBlockCallback;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.entity.player.ClientPlayerEntity;
 import net.minecraft.client.network.play.ClientPlayNetHandler;
 import net.minecraft.client.renderer.ActiveRenderInfo;
 import net.minecraft.client.renderer.IRenderTypeBuffer;
@@ -294,8 +298,8 @@ public class ClientEvents {
 		}
 	}
 
-	public static void leftClickEmpty(PlayerInteractEvent.LeftClickEmpty event) {
-		ItemStack stack = event.getItemStack();
+	public static void leftClickEmpty(ClientPlayerEntity player) {
+		ItemStack stack = player.getHeldItemMainhand();
 		if (stack.getItem() instanceof ZapperItem) {
 			AllPackets.channel.sendToServer(new LeftClickPacket());
 		}
@@ -308,6 +312,7 @@ public class ClientEvents {
 		ClientWorldEvents.UNLOAD.register(ClientEvents::onUnloadWorld);
 		WorldRenderEvents.END.register(ClientEvents::onRenderWorld);
 		ItemTooltipCallback.EVENT.register(ClientEvents::addToItemTooltip);
+		LeftClickAirCallback.EVENT.register(ClientEvents::leftClickEmpty);
 
 		ClientChunkEvents.CHUNK_UNLOAD.register(CommonEvents::onChunkUnloaded);
 		ClientTickEvents.END_WORLD_TICK.register(CommonEvents::onWorldTick);
@@ -323,10 +328,12 @@ public class ClientEvents {
 		UseBlockCallback.EVENT.register(ItemUseOverrides::onBlockActivated);
 		UseBlockCallback.EVENT.register(EdgeInteractionHandler::onBlockActivated);
 		UseBlockCallback.EVENT.register(FilteringHandler::onBlockActivated);
+		UseBlockCallback.EVENT.register(LinkHandler::onBlockActivated);
 		UseBlockCallback.EVENT.register(ArmInteractionPointHandler::rightClickingBlocksSelectsThem);
 		UseBlockCallback.EVENT.register(EjectorTargetHandler::rightClickingBlocksSelectsThem);
 		AttackBlockCallback.EVENT.register(ArmInteractionPointHandler::leftClickingBlocksDeselectsThem);
 		AttackBlockCallback.EVENT.register(EjectorTargetHandler::leftClickingBlocksDeselectsThem);
+		AttackEntityCallback.EVENT.register(ExtendoGripItem::notifyServerOfLongRangeAttacks);
 	}
 
 }

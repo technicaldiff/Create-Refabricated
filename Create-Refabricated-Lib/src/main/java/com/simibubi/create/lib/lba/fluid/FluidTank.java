@@ -14,6 +14,10 @@ public class FluidTank {
 
 	}
 
+	public int getCapacity() {
+
+	}
+
 	public int fill(FluidStack resource, FluidAction action) {
 
 	}

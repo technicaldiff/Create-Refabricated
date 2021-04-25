@@ -3,6 +3,7 @@ package com.simibubi.create.content.contraptions.components.deployer;
 import java.util.OptionalInt;
 import java.util.UUID;
 
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.server.management.PlayerInteractionManager;
 
 import org.apache.commons.lang3.tuple.Pair;
@@ -115,15 +116,15 @@ public class DeployerFakePlayer extends ServerPlayerEntity {
 		super.remove(keepData);
 	}
 
-	public static void deployerKillsDoNotSpawnXP(LivingExperienceDropEvent event) {
-		if (event.getAttackingPlayer() instanceof DeployerFakePlayer)
-			event.setCanceled(true);
+	public static int deployerKillsDoNotSpawnXP(int i, PlayerEntity player) {
+		if (player instanceof DeployerFakePlayer)
+			return 0;
+		return i;
 	}
 
-	public static void entitiesDontRetaliate(LivingSetAttackTargetEvent event) {
-		if (!(event.getTarget() instanceof DeployerFakePlayer))
+	public static void entitiesDontRetaliate(LivingEntity entityLiving, LivingEntity target) {
+		if (!(target instanceof DeployerFakePlayer))
 			return;
-		LivingEntity entityLiving = event.getEntityLiving();
 		if (!(entityLiving instanceof MobEntity))
 			return;
 		MobEntity mob = (MobEntity) entityLiving;

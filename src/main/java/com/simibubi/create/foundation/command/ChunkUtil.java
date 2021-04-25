@@ -6,6 +6,11 @@ import java.util.List;
 
 import com.simibubi.create.lib.helper.ChunkManagerHelper;
 
+import net.fabricmc.fabric.api.event.lifecycle.v1.ServerChunkEvents;
+
+import net.minecraft.world.chunk.Chunk;
+import net.minecraft.world.server.ServerWorld;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -45,6 +50,8 @@ public class ChunkUtil {
 					}
 				});
 
+		ServerChunkEvents.CHUNK_LOAD.register(this::chunkLoad);
+		ServerChunkEvents.CHUNK_UNLOAD.register(this::chunkUnload);
 	}
 
 	public boolean reloadChunk(ServerChunkProvider provider, ChunkPos pos) {
@@ -82,21 +89,21 @@ public class ChunkUtil {
 		provider.forceChunk(pos, false);
 	}
 
-	public void chunkUnload(ChunkEvent.Unload event) {
+	public void chunkUnload(ServerWorld serverWorld, Chunk chunk) {
 		// LOGGER.debug("Chunk Unload: " + event.getChunk().getPos().toString());
-		if (interestingChunks.contains(event.getChunk()
+		if (interestingChunks.contains(chunk
 			.getPos()
 			.asLong())) {
-			LOGGER.info("Interesting Chunk Unload: " + event.getChunk()
+			LOGGER.info("Interesting Chunk Unload: " + chunk
 				.getPos()
 				.toString());
 		}
 	}
 
-	public void chunkLoad(ChunkEvent.Load event) {
+	public void chunkLoad(ServerWorld serverWorld, Chunk chunk) {
 		// LOGGER.debug("Chunk Load: " + event.getChunk().getPos().toString());
 
-		ChunkPos pos = event.getChunk()
+		ChunkPos pos = chunk
 			.getPos();
 		if (interestingChunks.contains(pos.asLong())) {
 			LOGGER.info("Interesting Chunk Load: " + pos.toString());
