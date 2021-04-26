@@ -16,7 +16,8 @@ import net.minecraft.entity.player.PlayerEntity;
 
 @Mixin(LivingEntity.class)
 public abstract class LivingEntityMixin {
-	@Shadow protected PlayerEntity attackingPlayer;
+	@Shadow
+	protected PlayerEntity attackingPlayer;
 
 	@Inject(method = "tick()V", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/Entity;tick()V"))
 	private void create$tick(CallbackInfo ci) {

@@ -23,7 +23,6 @@ import net.minecraft.world.World;
 
 @Mixin(AbstractMinecartEntity.class)
 public abstract class AbstractMinecartEntityMixin implements AbstractMinecartEntityExtensions {
-
 	@Shadow protected World world;
 
 	@Shadow protected abstract boolean isBeingRidden();
@@ -34,7 +33,7 @@ public abstract class AbstractMinecartEntityMixin implements AbstractMinecartEnt
 
 	// this *should* inject into right before the 4th reference to bl, right in between the 2 if statements.
 	@Inject(at = @At(value = "FIELD", target = "Lnet/minecraft/entity/item/minecart/AbstractMinecartEntity;moveAlongTrack(Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/block/BlockState;)V", ordinal = 3),
-			method = "Lnet/minecraft/entity/item/minecart/AbstractMinecartEntity;moveAlongTrack(Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/block/BlockState;)V")
+			method = "moveAlongTrack(Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/block/BlockState;)V")
 	protected void create$moveAlongTrack(BlockPos blockPos, BlockState blockState, CallbackInfo ci) {
 		if (blockState.getBlock() instanceof MinecartPassHandlerBlock) {
 			((MinecartPassHandlerBlock) blockState.getBlock()).onMinecartPass(blockState, MixinHelper.<Entity>cast(this).world, blockPos, MixinHelper.cast(this));

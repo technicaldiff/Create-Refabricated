@@ -26,7 +26,7 @@ import net.minecraft.world.World;
 public abstract class RailStateMixin {
 	// I hate everything about this file so much
 	public boolean canMakeSlopes;
-	@Shadow private World world;
+	@Final @Shadow private World world;
 	@Final @Shadow private AbstractRailBlock block;
 	@Final @Shadow private BlockPos pos;
 	@Final @Shadow private boolean disableCorners;
@@ -38,7 +38,7 @@ public abstract class RailStateMixin {
 	@Shadow protected abstract boolean isConnectedTo(BlockPos blockPos);
 
 	@Inject(at = @At(value = "INVOKE", target = "Lnet/minecraft/block/RailState;reset(Lnet/minecraft/state/properties/RailShape;)V", shift = At.Shift.BEFORE),
-			method = "Lnet/minecraft/block/RailState;<init>(Lnet/minecraft/world/World;Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/block/BlockState;)V")
+			method = "<init>(Lnet/minecraft/world/World;Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/block/BlockState;)V")
 	public void RailState(World world, BlockPos blockPos, BlockState blockState, CallbackInfo ci) {
 		canMakeSlopes = true;
 		if (block instanceof SlopeCreationCheckingRail) {
