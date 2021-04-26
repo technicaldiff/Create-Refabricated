@@ -8,6 +8,7 @@ import org.spongepowered.asm.mixin.injection.ModifyVariable;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import com.simibubi.create.lib.event.LivingEntityExperienceDropCallback;
+import com.simibubi.create.lib.event.LivingEntityKnockbackStrengthCallback;
 import com.simibubi.create.lib.event.LivingEntityTickCallback;
 
 import net.minecraft.entity.LivingEntity;
@@ -20,6 +21,11 @@ public abstract class LivingEntityMixin {
 	@Inject(method = "tick()V", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/Entity;tick()V"))
 	private void create$tick(CallbackInfo ci) {
 		LivingEntityTickCallback.EVENT.invoker().onLivingEntityTick((LivingEntity) (Object) this);
+	}
+
+	@ModifyVariable(method = "takeKnockback(FDD)V", at = @At(value = "STORE", ordinal = 0), ordinal = 0)
+	private float create$takeKnockback(float f) {
+		return LivingEntityKnockbackStrengthCallback.EVENT.invoker().onLivingEntityTakeKnockback(f, attackingPlayer);
 	}
 
 	@ModifyVariable(method = "dropXp()V", at = @At(value = "STORE", ordinal = 0), ordinal = 0)

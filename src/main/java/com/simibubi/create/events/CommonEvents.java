@@ -1,9 +1,11 @@
 package com.simibubi.create.events;
 
 import com.simibubi.create.content.contraptions.components.deployer.DeployerFakePlayer;
+import com.simibubi.create.content.curiosities.tools.ExtendoGripItem;
 import com.simibubi.create.lib.event.FluidPlaceBlockCallback;
 
 import com.simibubi.create.lib.event.LivingEntityExperienceDropCallback;
+import com.simibubi.create.lib.event.LivingEntityKnockbackStrengthCallback;
 import com.simibubi.create.lib.event.LivingEntityTickCallback;
 
 import com.simibubi.create.lib.event.MobEntitySetTargetCallback;
@@ -169,6 +171,8 @@ public class CommonEvents {
 		AttackBlockCallback.EVENT.register(ZapperInteractionHandler::leftClickingBlocksWithTheZapperSelectsTheBlock);
 		MobEntitySetTargetCallback.EVENT.register(DeployerFakePlayer::entitiesDontRetaliate);
 		LivingEntityExperienceDropCallback.EVENT.register(DeployerFakePlayer::deployerKillsDoNotSpawnXP);
+		LivingEntityKnockbackStrengthCallback.EVENT.register(ExtendoGripItem::attacksByExtendoGripHaveMoreKnockback);
+		LivingEntityTickCallback.EVENT.register(ExtendoGripItem::holdingExtendoGripIncreasesRange);
 	}
 
 }

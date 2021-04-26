@@ -61,11 +61,11 @@ public class ExtendoGripItem extends Item {
 			.rarity(Rarity.UNCOMMON));
 	}
 
-	public static void holdingExtendoGripIncreasesRange(LivingUpdateEvent event) {
-		if (!(event.getEntity() instanceof PlayerEntity))
+	public static void holdingExtendoGripIncreasesRange(LivingEntity entity) {
+		if (!(entity instanceof PlayerEntity))
 			return;
 
-		PlayerEntity player = (PlayerEntity) event.getEntityLiving();
+		PlayerEntity player = (PlayerEntity) entity;
 		String marker = "createExtendo";
 		String dualMarker = "createDualExtendo";
 
@@ -150,16 +150,12 @@ public class ExtendoGripItem extends Item {
 		lastActiveDamageSource = event.getSource();
 	}
 
-	public static void attacksByExtendoGripHaveMoreKnockback(LivingKnockBackEvent event) {
+	public static float attacksByExtendoGripHaveMoreKnockback(float strength, PlayerEntity player) {
 		if (lastActiveDamageSource == null)
-			return;
-		Entity entity = lastActiveDamageSource.getImmediateSource();
-		if (!(entity instanceof PlayerEntity))
-			return;
-		PlayerEntity player = (PlayerEntity) entity;
+			return strength;
 		if (!isHoldingExtendoGrip(player))
-			return;
-		event.setStrength(event.getStrength() + 2);
+			return strength;
+		return strength + 2;
 	}
 
 	private static boolean isUncaughtClientInteraction(Entity entity, Entity target) {
@@ -177,20 +173,24 @@ public class ExtendoGripItem extends Item {
 	public static ActionResultType notifyServerOfLongRangeAttacks(PlayerEntity player, World world, Hand hand, Entity target, @Nullable EntityRayTraceResult traceResult) {
 		if (!isUncaughtClientInteraction(player, target))
 			return ActionResultType.PASS;
-		if (isHoldingExtendoGrip(player))
+		if (isHoldingExtendoGrip(player)) {
 			AllPackets.channel.sendToServer(new ExtendoGripInteractionPacket(target));
-		return ActionResultType.SUCCESS;
+			return ActionResultType.SUCCESS;
+		}
+
+		return ActionResultType.PASS;
 	}
 
 	@Environment(EnvType.CLIENT)
-	public static void notifyServerOfLongRangeInteractions(PlayerInteractEvent.EntityInteract event) {
-		Entity entity = event.getEntity();
-		Entity target = event.getTarget();
-		if (!isUncaughtClientInteraction(entity, target))
-			return;
-		PlayerEntity player = (PlayerEntity) entity;
-		if (isHoldingExtendoGrip(player))
-			AllPackets.channel.sendToServer(new ExtendoGripInteractionPacket(target, event.getHand()));
+	public static ActionResultType notifyServerOfLongRangeInteractions(PlayerEntity player, World world, Hand hand, Entity target, @Nullable EntityRayTraceResult traceResult) {
+		if (!isUncaughtClientInteraction(player, target))
+			return ActionResultType.PASS;
+		if (isHoldingExtendoGrip(player)) {
+			AllPackets.channel.sendToServer(new ExtendoGripInteractionPacket(target, hand));
+			return ActionResultType.SUCCESS;
+		}
+
+		return ActionResultType.PASS;
 	}
 
 	@Environment(EnvType.CLIENT)
