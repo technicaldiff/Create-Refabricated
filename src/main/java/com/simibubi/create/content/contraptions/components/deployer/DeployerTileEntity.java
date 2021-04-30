@@ -11,6 +11,7 @@ import com.simibubi.create.content.contraptions.base.KineticTileEntity;
 import com.simibubi.create.content.curiosities.tools.SandPaperItem;
 import com.simibubi.create.foundation.advancement.AllTriggers;
 import com.simibubi.create.foundation.item.TooltipHelper;
+import com.simibubi.create.foundation.render.backend.core.PartialModel;
 import com.simibubi.create.foundation.tileEntity.TileEntityBehaviour;
 import com.simibubi.create.foundation.tileEntity.behaviour.filtering.FilteringBehaviour;
 import com.simibubi.create.foundation.utility.NBTHelper;
@@ -341,7 +342,7 @@ public class DeployerTileEntity extends KineticTileEntity {
 		sendData();
 	}
 
-	public AllBlockPartials getHandPose() {
+	public PartialModel getHandPose() {
 		return mode == Mode.PUNCH ? AllBlockPartials.DEPLOYER_HAND_PUNCHING
 			: heldItem.isEmpty() ? AllBlockPartials.DEPLOYER_HAND_POINTING : AllBlockPartials.DEPLOYER_HAND_HOLDING;
 	}
@@ -394,7 +395,7 @@ public class DeployerTileEntity extends KineticTileEntity {
 
 		float progress = 0;
 		int timerSpeed = getTimerSpeed();
-		AllBlockPartials handPose = getHandPose();
+		PartialModel handPose = getHandPose();
 
 		if (state == State.EXPANDING)
 			progress = 1 - (timer - partialTicks * timerSpeed) / 1000f;
