@@ -131,8 +131,7 @@ public class CreateClient implements ClientModInitializer {
 	}
 
 	public static void onModelBake(ModelManager modelManager, Map<ResourceLocation, IBakedModel> modelRegistry, ModelBakery modelBakery) {
-		AllBlockPartials.onModelBake(modelRegistry);
-		PartialModel.onModelBake(event);
+		PartialModel.onModelBake(modelRegistry);
 
 		getCustomBlockModels()
 			.foreach((block, modelFunc) -> swapModels(modelRegistry, getAllBlockStateModelLocations(block), modelFunc));

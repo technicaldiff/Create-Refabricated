@@ -9,7 +9,6 @@ public class GlFog {
 	public static float[] FOG_COLOR = new float[]{0, 0, 0, 0};
 
     public static boolean fogEnabled() {
-        return GlStateManagerHelper.getFOG().field_179049_a.field_179201_b;
 		return GlStateManager$BooleanStateHelper.getState(GlStateManagerHelper.getFOG().field_179049_a);
     }
 

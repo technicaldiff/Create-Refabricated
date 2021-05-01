@@ -9,6 +9,7 @@ import com.simibubi.create.foundation.utility.Iterate;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.HorizontalBlock;
+import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.item.ItemUseContext;
 import net.minecraft.state.StateContainer.Builder;
@@ -22,7 +23,7 @@ import net.minecraft.world.World;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 
-public abstract class EngineBlock extends HorizontalBlock implements IWrenchable {
+public abstract class EngineBlock extends HorizontalBlock implements IWrenchable, ITileEntityProvider {
 
 	protected EngineBlock(Properties builder) {
 		super(builder);
@@ -33,10 +34,10 @@ public abstract class EngineBlock extends HorizontalBlock implements IWrenchable
 		return isValidPosition(state, worldIn, pos, state.get(HORIZONTAL_FACING));
 	}
 
-	@Override
-	public boolean hasTileEntity(BlockState state) {
-		return true;
-	}
+//	@Override
+//	public boolean hasTileEntity(BlockState state) {
+//		return true;
+//	}
 
 	@Override
 	public ActionResultType onWrenched(BlockState state, ItemUseContext context) {
@@ -44,7 +45,7 @@ public abstract class EngineBlock extends HorizontalBlock implements IWrenchable
 	}
 
 	@Override
-	public abstract TileEntity createTileEntity(BlockState state, IBlockReader world);
+	public abstract TileEntity createNewTileEntity(IBlockReader world);
 
 	@Override
 	public BlockState getStateForPlacement(BlockItemUseContext context) {

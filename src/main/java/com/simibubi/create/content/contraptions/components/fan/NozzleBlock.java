@@ -10,6 +10,7 @@ import com.simibubi.create.lib.annotation.MethodsReturnNonnullByDefault;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.item.ItemUseContext;
 import net.minecraft.pathfinding.PathType;
@@ -25,16 +26,16 @@ import net.minecraft.world.World;
 
 @MethodsReturnNonnullByDefault
 @ParametersAreNonnullByDefault
-public class NozzleBlock extends ProperDirectionalBlock {
+public class NozzleBlock extends ProperDirectionalBlock implements ITileEntityProvider {
 
 	public NozzleBlock(Properties p_i48415_1_) {
 		super(p_i48415_1_);
 	}
 
-	@Override
-	public boolean hasTileEntity(BlockState state) {
-		return true;
-	}
+//	@Override
+//	public boolean hasTileEntity(BlockState state) {
+//		return true;
+//	}
 
 	@Override
 	public ActionResultType onWrenched(BlockState state, ItemUseContext context) {
@@ -42,7 +43,7 @@ public class NozzleBlock extends ProperDirectionalBlock {
 	}
 
 	@Override
-	public TileEntity createTileEntity(BlockState state, IBlockReader world) {
+	public TileEntity createNewTileEntity(IBlockReader world) {
 		return AllTileEntities.NOZZLE.create();
 	}
 
@@ -76,7 +77,7 @@ public class NozzleBlock extends ProperDirectionalBlock {
 		return te instanceof IAirCurrentSource
 				&& ((IAirCurrentSource) te).getAirflowOriginSide() == towardsFan.getOpposite();
 	}
-	
+
 	@Override
 	public boolean allowsMovement(BlockState state, IBlockReader reader, BlockPos pos, PathType type) {
 		return false;

@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import net.minecraft.client.renderer.model.IBakedModel;
+import net.minecraft.client.renderer.model.ModelManager;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.event.ModelBakeEvent;
 import net.minecraftforge.client.event.ModelRegistryEvent;
@@ -43,8 +44,7 @@ public class PartialModel {
 		tooLate = true;
 	}
 
-	public static void onModelBake(ModelBakeEvent event) {
-		Map<ResourceLocation, IBakedModel> modelRegistry = event.getModelRegistry();
+	public static void onModelBake(Map<ResourceLocation, IBakedModel> modelRegistry) {
 		for (PartialModel partial : all)
 			partial.bakedModel = modelRegistry.get(partial.modelLocation);
 	}

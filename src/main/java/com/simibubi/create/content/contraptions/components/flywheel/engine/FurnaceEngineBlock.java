@@ -11,6 +11,7 @@ import com.simibubi.create.foundation.utility.worldWrappers.WrappedWorld;
 import net.minecraft.block.AbstractFurnaceBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
@@ -20,7 +21,7 @@ import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 
-public class FurnaceEngineBlock extends EngineBlock implements ITE<FurnaceEngineTileEntity> {
+public class FurnaceEngineBlock extends EngineBlock implements ITE<FurnaceEngineTileEntity>, ITileEntityProvider {
 
 	public FurnaceEngineBlock(Properties properties) {
 		super(properties);
@@ -42,7 +43,7 @@ public class FurnaceEngineBlock extends EngineBlock implements ITE<FurnaceEngine
 	}
 
 	@Override
-	public TileEntity createTileEntity(BlockState state, IBlockReader world) {
+	public TileEntity createNewTileEntity(IBlockReader world) {
 		return AllTileEntities.FURNACE_ENGINE.create();
 	}
 

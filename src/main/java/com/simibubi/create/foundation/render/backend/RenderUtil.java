@@ -2,17 +2,17 @@ package com.simibubi.create.foundation.render.backend;
 
 import java.util.function.Supplier;
 
+import org.apache.commons.lang3.ArrayUtils;
+
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.simibubi.create.foundation.utility.AngleHelper;
 import com.simibubi.create.foundation.utility.MatrixStacker;
-
 import com.simibubi.create.lib.helper.Matrix3fHelper;
 import com.simibubi.create.lib.helper.Matrix4fHelper;
+
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.vector.Matrix3f;
 import net.minecraft.util.math.vector.Matrix4f;
-
-import org.apache.commons.lang3.ArrayUtils;
 
 public class RenderUtil {
 	public static int nextPowerOf2(int a) {
@@ -31,33 +31,6 @@ public class RenderUtil {
 
 	// GPUs want matrices in column major order.
 	public static float[] writeMatrixStack(Matrix4f model, Matrix3f normal) {
-		return new float[]{
-				model.a00,
-				model.a10,
-				model.a20,
-				model.a30,
-				model.a01,
-				model.a11,
-				model.a21,
-				model.a31,
-				model.a02,
-				model.a12,
-				model.a22,
-				model.a32,
-				model.a03,
-				model.a13,
-				model.a23,
-				model.a33,
-				normal.a00,
-				normal.a10,
-				normal.a20,
-				normal.a01,
-				normal.a11,
-				normal.a21,
-				normal.a02,
-				normal.a12,
-				normal.a22,
-		};
 		return ArrayUtils.addAll(Matrix4fHelper.writeMatrix(model), Matrix3fHelper.writeMatrix(normal));
 	}
 
