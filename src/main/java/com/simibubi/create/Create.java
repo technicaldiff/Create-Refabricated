@@ -70,6 +70,7 @@ public class Create implements ModInitializer {
 
 	@Override
 	public void onInitialize() {
+		AllSoundEvents.prepare();
 		AllBlocks.register();
 		AllItems.register();
 		AllFluids.register();

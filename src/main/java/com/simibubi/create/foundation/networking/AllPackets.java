@@ -31,8 +31,9 @@ import com.simibubi.create.content.schematics.packet.InstantSchematicPacket;
 import com.simibubi.create.content.schematics.packet.SchematicPlacePacket;
 import com.simibubi.create.content.schematics.packet.SchematicSyncPacket;
 import com.simibubi.create.content.schematics.packet.SchematicUploadPacket;
-import com.simibubi.create.foundation.command.ConfigureConfigPacket;
+import com.simibubi.create.foundation.command.SConfigureConfigPacket;
 import com.simibubi.create.foundation.command.HighlightPacket;
+import com.simibubi.create.foundation.config.ui.CConfigureConfigPacket;
 import com.simibubi.create.foundation.tileEntity.behaviour.filtering.FilteringCountUpdatePacket;
 import com.simibubi.create.foundation.tileEntity.behaviour.scrollvalue.ScrollValueUpdatePacket;
 import com.simibubi.create.foundation.utility.ServerSpeedProvider;
@@ -69,12 +70,13 @@ public enum AllPackets {
 	PLACE_EJECTOR(EjectorPlacementPacket.class),
 	TRIGGER_EJECTOR(EjectorTriggerPacket.class),
 	EJECTOR_ELYTRA(EjectorElytraPacket.class),
+	C_CONFIGURE_CONFIG(CConfigureConfigPacket.class),
 
 	// Server to Client
 	SYMMETRY_EFFECT(SymmetryEffectPacket.class),
 	SERVER_SPEED(ServerSpeedProvider.Packet.class),
 	BEAM_EFFECT(ZapperBeamPacket.class),
-	CONFIGURE_CONFIG(ConfigureConfigPacket.class),
+	CONFIGURE_CONFIG(SConfigureConfigPacket.class),
 	CONTRAPTION_STALL(ContraptionStallPacket.class),
 	CONTRAPTION_DISASSEMBLE(ContraptionDisassemblyPacket.class),
 	GLUE_EFFECT(GlueEffectPacket.class),

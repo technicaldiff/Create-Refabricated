@@ -91,7 +91,7 @@ public class AllSoundEvents {
 			.category(SoundCategory.BLOCKS)
 			.build(),
 
-		BLOCKZAPPER_PLACE = create("blockzapper_place").subtitle("Blockzapper zaps")
+		WORLDSHAPER_PLACE = create("worldshaper_place").subtitle("Worldshaper zaps")
 			.playExisting(SoundEvents.BLOCK_NOTE_BLOCK_BASEDRUM)
 			.category(SoundCategory.PLAYERS)
 			.build(),
@@ -101,12 +101,12 @@ public class AllSoundEvents {
 			.category(SoundCategory.PLAYERS)
 			.build(),
 
-		BLOCKZAPPER_CONFIRM = create("blockzapper_confirm").subtitle("Affirmative ding")
+		CONFIRM = create("confirm").subtitle("Affirmative ding")
 			.playExisting(SoundEvents.BLOCK_NOTE_BLOCK_BELL, 0.5f, 0.8f)
 			.category(SoundCategory.PLAYERS)
 			.build(),
 
-		BLOCKZAPPER_DENY = create("blockzapper_deny").subtitle("Declining boop")
+		DENY = create("deny").subtitle("Declining boop")
 			.playExisting(SoundEvents.BLOCK_NOTE_BLOCK_BASS, 1f, 0.5f)
 			.category(SoundCategory.PLAYERS)
 			.build(),
@@ -136,15 +136,25 @@ public class AllSoundEvents {
 			.playExisting(SoundEvents.BLOCK_NETHERITE_BLOCK_HIT, .25f, .75f)
 			.category(SoundCategory.BLOCKS)
 			.build(),
-			
+
 		CRAFTER_CLICK = create("crafter_click").subtitle("Crafter clicks")
 			.playExisting(SoundEvents.BLOCK_NETHERITE_BLOCK_HIT, .25f, 1)
 			.playExisting(SoundEvents.BLOCK_WOODEN_TRAPDOOR_OPEN, .125f, 1)
 			.category(SoundCategory.BLOCKS)
 			.build(),
-			
+
 		CRAFTER_CRAFT = create("crafter_craft").subtitle("Crafter crafts")
 			.playExisting(SoundEvents.ENTITY_ITEM_BREAK, .125f, .75f)
+			.category(SoundCategory.BLOCKS)
+			.build(),
+
+		COPPER_ARMOR_EQUIP = create("copper_armor_equip").subtitle("Diving equipment clinks")
+			.playExisting(SoundEvents.ITEM_ARMOR_EQUIP_GOLD, 1f, 1f)
+			.category(SoundCategory.PLAYERS)
+			.build(),
+			
+		AUTO_POLISH = create("deployer_polish").subtitle("Deployer applies polish")
+			.playExisting(SoundEvents.UI_STONECUTTER_TAKE_RESULT, 1f, 1f)
 			.category(SoundCategory.BLOCKS)
 			.build(),
 
@@ -161,6 +171,11 @@ public class AllSoundEvents {
 		IForgeRegistry<SoundEvent> registry = event.getRegistry();
 		for (SoundEntry entry : entries.values())
 			entry.register(registry);
+	}
+	
+	public static void prepare() {
+		for (SoundEntry entry : entries.values())
+			entry.prepare();
 	}
 
 	public static JsonElement provideLangEntries() {
@@ -278,6 +293,8 @@ public class AllSoundEvents {
 			this.category = category;
 		}
 
+		public abstract void prepare();
+
 		public abstract void register(IForgeRegistry<SoundEvent> registry);
 
 		public abstract void write(JsonObject json);
@@ -346,16 +363,21 @@ public class AllSoundEvents {
 			this.wrappedEvents = wrappedEvents;
 			compiledEvents = Lists.newArrayList();
 		}
-
+		
 		@Override
-		public void register(IForgeRegistry<SoundEvent> registry) {
+		public void prepare() {
 			for (int i = 0; i < wrappedEvents.size(); i++) {
 				ResourceLocation location = Create.asResource(getIdOf(i));
 				SoundEvent sound = new SoundEvent(location).setRegistryName(location);
-				registry.register(sound);
 				compiledEvents.add(Pair.of(sound, wrappedEvents.get(i)
 					.getSecond()));
 			}
+		}
+
+		@Override
+		public void register(IForgeRegistry<SoundEvent> registry) {
+			for (Pair<SoundEvent, Couple<Float>> pair : compiledEvents) 
+				registry.register(pair.getFirst());
 		}
 
 		@Override
@@ -413,11 +435,16 @@ public class AllSoundEvents {
 		public CustomSoundEntry(String id, String subtitle, SoundCategory category) {
 			super(id, subtitle, category);
 		}
+		
+		@Override
+		public void prepare() {
+			ResourceLocation location = getLocation();
+			event = new SoundEvent(location).setRegistryName(location);
+		}
 
 		@Override
 		public void register(IForgeRegistry<SoundEvent> registry) {
-			ResourceLocation location = getLocation();
-			registry.register(event = new SoundEvent(location).setRegistryName(location));
+			registry.register(event);
 		}
 
 		@Override

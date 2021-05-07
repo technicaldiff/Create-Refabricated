@@ -10,9 +10,11 @@ import javax.annotation.Nullable;
 import com.simibubi.create.content.contraptions.base.KineticTileEntityRenderer;
 import com.simibubi.create.content.contraptions.components.structureMovement.render.ContraptionRenderDispatcher;
 import com.simibubi.create.content.contraptions.relays.encased.CasingConnectivity;
+import com.simibubi.create.content.curiosities.armor.CopperBacktankArmorLayer;
 import com.simibubi.create.content.schematics.ClientSchematicLoader;
 import com.simibubi.create.content.schematics.client.SchematicAndQuillHandler;
 import com.simibubi.create.content.schematics.client.SchematicHandler;
+import com.simibubi.create.events.ClientEvents;
 import com.simibubi.create.foundation.ResourceReloadHandler;
 import com.simibubi.create.foundation.block.render.CustomBlockModels;
 import com.simibubi.create.foundation.block.render.SpriteShifter;
@@ -80,6 +82,7 @@ public class CreateClient implements ClientModInitializer {
 		modEventBus.addListener(CreateClient::onModelRegistry);
 		modEventBus.addListener(CreateClient::onTextureStitch);
 		modEventBus.addListener(AllParticleTypes::registerFactories);
+		modEventBus.addListener(ClientEvents::loadCompleted);
 
 		Backend.init();
 		OptifineHandler.init();
@@ -111,6 +114,7 @@ public class CreateClient implements ClientModInitializer {
 		PonderIndex.registerTags();
 
 		UIRenderHelper.init();
+		UIRenderHelper.enableStencil();
 
 		IResourceManager resourceManager = Minecraft.getInstance()
 				.getResourceManager();
@@ -119,6 +123,9 @@ public class CreateClient implements ClientModInitializer {
 
 		AllBlockPartials.clientInit();
 		ModelsBakedCallback.EVENT.register(CreateClient::onModelBake);
+		event.enqueueWork(() -> {
+			CopperBacktankArmorLayer.register();
+		});
 	}
 
 	public static void onTextureStitch(TextureStitchEvent.Pre event) {

@@ -47,6 +47,7 @@ import net.fabricmc.fabric.api.client.rendering.v1.WorldRenderEvents;
 import net.fabricmc.fabric.api.networking.v1.PacketSender;
 
 import com.simibubi.create.AllFluids;
+import com.simibubi.create.AllItems;
 import com.simibubi.create.Create;
 import com.simibubi.create.CreateClient;
 import com.simibubi.create.content.contraptions.KineticDebugger;
@@ -63,14 +64,16 @@ import com.simibubi.create.content.contraptions.components.structureMovement.tra
 import com.simibubi.create.content.contraptions.components.turntable.TurntableHandler;
 import com.simibubi.create.content.contraptions.goggles.IHaveGoggleInformation;
 import com.simibubi.create.content.contraptions.relays.belt.item.BeltConnectorHandler;
+import com.simibubi.create.content.curiosities.armor.CopperBacktankArmorLayer;
 import com.simibubi.create.content.curiosities.tools.ExtendoGripRenderHandler;
 import com.simibubi.create.content.curiosities.zapper.ZapperItem;
 import com.simibubi.create.content.curiosities.zapper.ZapperRenderHandler;
-import com.simibubi.create.content.curiosities.zapper.blockzapper.BlockzapperRenderHandler;
 import com.simibubi.create.content.curiosities.zapper.terrainzapper.WorldshaperRenderHandler;
 import com.simibubi.create.content.logistics.block.depot.EjectorTargetHandler;
 import com.simibubi.create.content.logistics.block.mechanicalArm.ArmInteractionPointHandler;
 import com.simibubi.create.foundation.config.AllConfigs;
+import com.simibubi.create.foundation.config.ui.BaseConfigScreen;
+import com.simibubi.create.foundation.fluid.FluidHelper;
 import com.simibubi.create.foundation.item.ItemDescription;
 import com.simibubi.create.foundation.item.TooltipHelper;
 import com.simibubi.create.foundation.networking.AllPackets;
@@ -92,6 +95,37 @@ import com.simibubi.create.foundation.utility.placement.PlacementHelpers;
 import com.simibubi.create.foundation.utility.worldWrappers.WrappedClientWorld;
 import com.simibubi.create.lib.event.ClientWorldEvents;
 
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.ActiveRenderInfo;
+import net.minecraft.client.renderer.IRenderTypeBuffer;
+import net.minecraft.client.renderer.texture.OverlayTexture;
+import net.minecraft.client.world.ClientWorld;
+import net.minecraft.fluid.Fluid;
+import net.minecraft.fluid.FluidState;
+import net.minecraft.item.BlockItem;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.math.vector.Vector3d;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.world.IWorld;
+import net.minecraft.world.World;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.client.event.ClientPlayerNetworkEvent;
+import net.minecraftforge.client.event.EntityViewRenderEvent;
+import net.minecraftforge.client.event.RenderGameOverlayEvent;
+import net.minecraftforge.client.event.RenderGameOverlayEvent.ElementType;
+import net.minecraftforge.client.event.RenderTooltipEvent;
+import net.minecraftforge.client.event.RenderWorldLastEvent;
+import net.minecraftforge.event.TickEvent.ClientTickEvent;
+import net.minecraftforge.event.TickEvent.Phase;
+import net.minecraftforge.event.TickEvent.RenderTickEvent;
+import net.minecraftforge.event.entity.player.ItemTooltipEvent;
+import net.minecraftforge.event.entity.player.PlayerInteractEvent;
+import net.minecraftforge.event.world.WorldEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
+
+@EventBusSubscriber(value = Dist.CLIENT)
 public class ClientEvents {
 
 	private static final String itemPrefix = "item." + Create.ID;
@@ -130,7 +164,6 @@ public class ClientEvents {
 		ChassisRangeDisplay.tick();
 		EdgeInteractionRenderer.tick();
 		WorldshaperRenderHandler.tick();
-		BlockzapperRenderHandler.tick();
 		CouplingHandlerClient.tick();
 		CouplingRenderer.tickDebugModeRenders();
 		KineticDebugger.tick();
@@ -199,12 +232,20 @@ public class ClientEvents {
 	}
 
 	public static void onRenderOverlay(RenderGameOverlayEvent.Post event) {
+		MatrixStack ms = event.getMatrixStack();
+		Impl buffers = Minecraft.getInstance()
+			.getBufferBuilders()
+			.getEntityVertexConsumers();
+		int light = 0xF000F0;
+		int overlay = OverlayTexture.DEFAULT_UV;
+		float pt = event.getPartialTicks();
+
+		if (event.getType() == ElementType.AIR)
+			CopperBacktankArmorLayer.renderRemainingAirOverlay(ms, buffers, light, overlay, pt);
 		if (event.getType() != ElementType.HOTBAR)
 			return;
 
-		onRenderHotbar(event.getMatrixStack(), Minecraft.getInstance()
-			.getBufferBuilders()
-			.getEntityVertexConsumers(), 0xF000F0, OverlayTexture.DEFAULT_UV, event.getPartialTicks());
+		onRenderHotbar(ms, buffers, light, overlay, pt);
 	}
 
 	public static void onRenderHotbar(MatrixStack ms, IRenderTypeBuffer buffer, int light, int overlay,
@@ -271,11 +312,20 @@ public class ClientEvents {
 		if (fluid.isEquivalentTo(AllFluids.CHOCOLATE.get())) {
 			event.setDensity(5f);
 			event.setCanceled(true);
+			return;
 		}
 
 		if (fluid.isEquivalentTo(AllFluids.HONEY.get())) {
 			event.setDensity(1.5f);
 			event.setCanceled(true);
+			return;
+		}
+
+		if (FluidHelper.isWater(fluid) && AllItems.DIVING_HELMET.get()
+			.isWornBy(Minecraft.getInstance().renderViewEntity)) {
+			event.setDensity(0.010f);
+			event.setCanceled(true);
+			return;
 		}
 	}
 
@@ -338,4 +388,8 @@ public class ClientEvents {
 		UseEntityCallback.EVENT.register(ExtendoGripItem::notifyServerOfLongRangeInteractions);
 	}
 
+	public static void loadCompleted(FMLLoadCompleteEvent event) {
+		ModContainer createContainer = ModList.get().getModContainerById("create").orElseThrow(() -> new IllegalStateException("Create Mod Container missing after loadCompleted"));
+		createContainer.registerExtensionPoint(ExtensionPoint.CONFIGGUIFACTORY, () -> (mc, previousScreen) -> new BaseConfigScreen(previousScreen));
+	}
 }

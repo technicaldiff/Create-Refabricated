@@ -9,16 +9,19 @@ import com.simibubi.create.Create;
 
 import net.fabricmc.fabric.api.client.rendering.v1.BuiltinItemRendererRegistry.DynamicItemRenderer;
 import net.minecraft.client.renderer.model.IBakedModel;
+import net.minecraft.client.renderer.model.ItemCameraTransforms;
 import net.minecraft.client.renderer.model.ModelBakery;
 import net.minecraft.client.renderer.model.ModelRotation;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.client.event.ModelBakeEvent;
+import net.minecraftforge.client.model.BakedModelWrapper;
 
 @SuppressWarnings("deprecation")
-public abstract class CustomRenderedItemModel extends WrappedBakedModel {
+public abstract class CustomRenderedItemModel extends BakedModelWrapper<IBakedModel> {
 
 	protected String basePath;
 	protected Map<String, IBakedModel> partials = new HashMap<>();
-	protected DynamicItemRenderer renderer;
+	protected ItemStackTileEntityRenderer renderer;
 
 	public CustomRenderedItemModel(IBakedModel template, String basePath) {
 		super(template);
@@ -26,19 +29,30 @@ public abstract class CustomRenderedItemModel extends WrappedBakedModel {
 		this.renderer = createRenderer();
 	}
 
-	public final List<ResourceLocation> getModelLocations() {
-		return partials.keySet().stream().map(this::getPartialModelLocation).collect(Collectors.toList());
-	}
-	
-	public DynamicItemRenderer getRenderer() {
-		return renderer;
-	}
-
-	public abstract DynamicItemRenderer createRenderer();
-
 	@Override
 	public boolean isBuiltInRenderer() {
 		return true;
+	}
+
+	@Override
+	public IBakedModel handlePerspective(ItemCameraTransforms.TransformType cameraTransformType, MatrixStack mat) {
+		// Super call returns originalModel, but we want to return this, else ISTER won't be used.
+		super.handlePerspective(cameraTransformType, mat);
+		return this;
+	}
+
+	public final IBakedModel getOriginalModel() {
+		return originalModel;
+	}
+
+	public ItemStackTileEntityRenderer getRenderer() {
+		return renderer;
+	}
+
+	public abstract ItemStackTileEntityRenderer createRenderer();
+
+	public final List<ResourceLocation> getModelLocations() {
+		return partials.keySet().stream().map(this::getPartialModelLocation).collect(Collectors.toList());
 	}
 
 	protected void addPartials(String... partials) {

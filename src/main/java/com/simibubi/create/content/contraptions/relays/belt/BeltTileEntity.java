@@ -489,7 +489,7 @@ public class BeltTileEntity extends KineticTileEntity implements LightUpdateList
 		return empty;
 	}
 
-	public static ModelProperty<CasingType> CASING_PROPERTY = new ModelProperty<>();
+	public static final ModelProperty<CasingType> CASING_PROPERTY = new ModelProperty<>();
 
 	@Override
 	public IModelData getModelData() {

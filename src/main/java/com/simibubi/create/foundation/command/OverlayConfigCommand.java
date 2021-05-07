@@ -15,35 +15,32 @@ public class OverlayConfigCommand {
 
 	public static ArgumentBuilder<CommandSource, ?> register() {
 		return Commands.literal("overlay")
-			.requires(cs -> cs.hasPermissionLevel(0))
-			.then(Commands.literal("reset")
-				.executes(ctx -> {
-					EnvExecutor.runWhenOn(EnvType.CLIENT,
-						() -> () -> ConfigureConfigPacket.Actions.overlayReset.performAction(""));
+				.requires(cs -> cs.hasPermissionLevel(0))
+				.then(Commands.literal("reset")
+					.executes(ctx -> {
+						EnvExecutor.runWhenOn(EnvType.CLIENT, () -> () -> SConfigureConfigPacket.Actions.overlayReset.performAction(""));
 
-					EnvExecutor.runWhenOn(EnvType.SERVER,
-						() -> () -> AllPackets.channel.send(
-							PacketDistributor.PLAYER.with(() -> (ServerPlayerEntity) ctx.getSource()
-								.getEntity()),
-							new ConfigureConfigPacket(ConfigureConfigPacket.Actions.overlayReset.name(), "")));
+						EnvExecutor.runWhenOn(EnvType.SERVER, () -> () ->
+								AllPackets.channel.send(
+										PacketDistributor.PLAYER.with(() -> (ServerPlayerEntity) ctx.getSource().getEntity()),
+										new SConfigureConfigPacket(SConfigureConfigPacket.Actions.overlayReset.name(), "")));
 
 					ctx.getSource()
 						.sendFeedback(new StringTextComponent("reset overlay offset"), true);
 
-					return 1;
-				}))
-			.executes(ctx -> {
-				EnvExecutor.runWhenOn(EnvType.CLIENT,
-					() -> () -> ConfigureConfigPacket.Actions.overlayScreen.performAction(""));
+						return 1;
+					})
+				)
+				.executes(ctx -> {
+					EnvExecutor.runWhenOn(EnvType.CLIENT, () -> () -> SConfigureConfigPacket.Actions.overlayScreen.performAction(""));
 
-				EnvExecutor.runWhenOn(EnvType.SERVER,
-					() -> () -> AllPackets.channel.send(
-						PacketDistributor.PLAYER.with(() -> (ServerPlayerEntity) ctx.getSource()
-							.getEntity()),
-						new ConfigureConfigPacket(ConfigureConfigPacket.Actions.overlayScreen.name(), "")));
+				EnvExecutor.runWhenOn(EnvType.SERVER, () -> () ->
+							AllPackets.channel.send(
+									PacketDistributor.PLAYER.with(() -> (ServerPlayerEntity) ctx.getSource().getEntity()),
+									new SConfigureConfigPacket(SConfigureConfigPacket.Actions.overlayScreen.name(), "")));
 
-				ctx.getSource()
-					.sendFeedback(new StringTextComponent("window opened"), true);
+					ctx.getSource()
+							.sendFeedback(new StringTextComponent("window opened"), true);
 
 				return 1;
 			});

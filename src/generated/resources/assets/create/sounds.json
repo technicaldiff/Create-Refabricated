@@ -8,38 +8,20 @@
     ],
     "subtitle": "create.subtitle.blaze_munch"
   },
-  "blockzapper_confirm": {
+  "cogs": {
+    "sounds": [
+      "create:cogs"
+    ],
+    "subtitle": "create.subtitle.cogs"
+  },
+  "confirm": {
     "sounds": [
       {
         "name": "minecraft:block.note_block.bell",
         "type": "event"
       }
     ],
-    "subtitle": "create.subtitle.blockzapper_confirm"
-  },
-  "blockzapper_deny": {
-    "sounds": [
-      {
-        "name": "minecraft:block.note_block.bass",
-        "type": "event"
-      }
-    ],
-    "subtitle": "create.subtitle.blockzapper_deny"
-  },
-  "blockzapper_place": {
-    "sounds": [
-      {
-        "name": "minecraft:block.note_block.basedrum",
-        "type": "event"
-      }
-    ],
-    "subtitle": "create.subtitle.blockzapper_place"
-  },
-  "cogs": {
-    "sounds": [
-      "create:cogs"
-    ],
-    "subtitle": "create.subtitle.cogs"
+    "subtitle": "create.subtitle.confirm"
   },
   "contraption_assemble": {
     "sounds": [
@@ -66,6 +48,15 @@
       }
     ],
     "subtitle": "create.subtitle.contraption_disassemble"
+  },
+  "copper_armor_equip": {
+    "sounds": [
+      {
+        "name": "minecraft:item.armor.equip_gold",
+        "type": "event"
+      }
+    ],
+    "subtitle": "create.subtitle.copper_armor_equip"
   },
   "crafter_click": {
     "sounds": [
@@ -109,6 +100,24 @@
         "type": "event"
       }
     ]
+  },
+  "deny": {
+    "sounds": [
+      {
+        "name": "minecraft:block.note_block.bass",
+        "type": "event"
+      }
+    ],
+    "subtitle": "create.subtitle.deny"
+  },
+  "deployer_polish": {
+    "sounds": [
+      {
+        "name": "minecraft:ui.stonecutter.take_result",
+        "type": "event"
+      }
+    ],
+    "subtitle": "create.subtitle.deployer_polish"
   },
   "depot_plop": {
     "sounds": [
@@ -231,6 +240,15 @@
       }
     ],
     "subtitle": "create.subtitle.slime_added"
+  },
+  "worldshaper_place": {
+    "sounds": [
+      {
+        "name": "minecraft:block.note_block.basedrum",
+        "type": "event"
+      }
+    ],
+    "subtitle": "create.subtitle.worldshaper_place"
   },
   "wrench_remove": {
     "sounds": [

@@ -24,6 +24,7 @@ import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.item.DyeColor;
+import net.minecraft.item.Rarity;
 import net.minecraft.state.properties.PistonType;
 import net.minecraft.util.ResourceLocation;
 
@@ -51,7 +52,7 @@ public class BuilderTransformers {
 			.transform(StressConfigDefaults.setNoImpact())
 //			.loot((p, b) -> p.registerDropping(b, AllBlocks.SHAFT.get()))
 			.item()
-//			.model(AssetLookup.customItemModel("encased_shaft", "item_" + casing))
+//			.model(AssetLookup.customBlockItemModel("encased_shaft", "item_" + casing))
 			.build();
 	}
 
@@ -200,6 +201,7 @@ public class BuilderTransformers {
 //					});
 //			})
 			.item()
+			.properties(p -> type.equals("creative") ? p : p.rarity(Rarity.EPIC))
 			.transform(ModelGen.customItemModel("crate", type, "single"));
 	}
 

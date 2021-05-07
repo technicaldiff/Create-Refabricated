@@ -17,9 +17,9 @@ import com.simibubi.create.AllRecipeTypes;
 import com.simibubi.create.Create;
 import com.simibubi.create.compat.jei.category.BlockCuttingCategory;
 import com.simibubi.create.compat.jei.category.BlockCuttingCategory.CondensedBlockCuttingRecipe;
-import com.simibubi.create.compat.jei.category.BlockzapperUpgradeCategory;
 import com.simibubi.create.compat.jei.category.CreateRecipeCategory;
 import com.simibubi.create.compat.jei.category.CrushingCategory;
+import com.simibubi.create.compat.jei.category.DeployingCategory;
 import com.simibubi.create.compat.jei.category.FanBlastingCategory;
 import com.simibubi.create.compat.jei.category.FanSmokingCategory;
 import com.simibubi.create.compat.jei.category.FanWashingCategory;
@@ -34,6 +34,7 @@ import com.simibubi.create.compat.jei.category.PressingCategory;
 import com.simibubi.create.compat.jei.category.ProcessingViaFanCategory;
 import com.simibubi.create.compat.jei.category.SawingCategory;
 import com.simibubi.create.compat.jei.category.SpoutCategory;
+import com.simibubi.create.content.contraptions.components.deployer.DeployerApplicationRecipe;
 import com.simibubi.create.content.contraptions.components.press.MechanicalPressTileEntity;
 import com.simibubi.create.content.contraptions.components.saw.SawTileEntity;
 import com.simibubi.create.content.contraptions.fluids.recipe.PotionMixingRecipeManager;
@@ -54,7 +55,6 @@ import mezz.jei.api.registration.IGuiHandlerRegistration;
 import mezz.jei.api.registration.IRecipeCatalystRegistration;
 import mezz.jei.api.registration.IRecipeCategoryRegistration;
 import mezz.jei.api.registration.IRecipeRegistration;
-import mezz.jei.api.registration.ISubtypeRegistration;
 import mezz.jei.api.runtime.IIngredientManager;
 import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemStack;
@@ -107,11 +107,6 @@ public class CreateJEI implements IModPlugin {
 		blasting = register("fan_blasting", FanBlastingCategory::new)
 			.recipesExcluding(() -> IRecipeType.SMELTING, () -> IRecipeType.SMOKING)
 			.catalystStack(ProcessingViaFanCategory.getFan("fan_blasting"))
-			.build(),
-
-		blockzapper = register("blockzapper_upgrade", BlockzapperUpgradeCategory::new)
-			.recipes(AllRecipeTypes.BLOCKZAPPER_UPGRADE.serializer.getRegistryName())
-			.catalyst(AllItems.BLOCKZAPPER::get)
 			.build(),
 
 		mixing = register("mixing", MixingCategory::standard).recipes(AllRecipeTypes.MIXING::getType)
@@ -169,6 +164,14 @@ public class CreateJEI implements IModPlugin {
 			.catalyst(AllItems.SAND_PAPER::get)
 			.catalyst(AllItems.RED_SAND_PAPER::get)
 			.build(),
+			
+		deploying = register("deploying", DeployingCategory::new)
+			.recipeList(() -> DeployerApplicationRecipe.convert(findRecipesByType(AllRecipeTypes.SANDPAPER_POLISHING.type)))
+			.recipes(AllRecipeTypes.DEPLOYING)
+			.catalyst(AllBlocks.DEPLOYER::get)
+			.catalyst(AllBlocks.DEPOT::get)
+			.catalyst(AllItems.BELT_CONNECTOR::get)
+			.build(),
 
 		mysteryConversion = register("mystery_conversion", MysteriousItemConversionCategory::new)
 			.recipeList(MysteriousItemConversionCategory::getRecipes)
@@ -205,11 +208,6 @@ public class CreateJEI implements IModPlugin {
 	private <T extends IRecipe<?>> CategoryBuilder<T> register(String name,
 		Supplier<CreateRecipeCategory<T>> supplier) {
 		return new CategoryBuilder<T>(name, supplier);
-	}
-
-	@Override
-	public void registerItemSubtypes(ISubtypeRegistration registration) {
-		registration.useNbtForSubtypes(AllItems.BLOCKZAPPER.get());
 	}
 
 	@Override
