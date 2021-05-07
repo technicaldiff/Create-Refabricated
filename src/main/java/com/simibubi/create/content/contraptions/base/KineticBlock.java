@@ -28,26 +28,14 @@ public abstract class KineticBlock extends Block implements IRotate, Harvestable
 		super(properties);
 	}
 
-//	@Override
-//	public ToolType getHarvestTool(BlockState state) { // todo
-//		return null;
-//	}
-
 	@Override
 	public boolean canHarvestBlock(BlockState state, IBlockReader world, BlockPos pos, PlayerEntity player) {
-//		for (ToolType toolType : player.getHeldItemMainhand()
-//			.getToolTypes()) {
-//			if (isToolEffective(state, toolType))
-//				return true;
-//		}
-//		return super.canHarvestBlock(state, world, pos, player);
-		return player.getHeldItemMainhand().canHarvestBlock(state); // todo: see if this actually works
+		return player.getHeldItemMainhand().canHarvestBlock(state);
 	}
 
 	@Override
 	public boolean isToolEffective(BlockState state, ToolItem tool) {
-//		return tool == ToolType.AXE || tool == ToolType.PICKAXE;
-		return (tool instanceof PickaxeItem || tool instanceof AxeItem); // todo: see if this actually works
+		return (tool instanceof PickaxeItem || tool instanceof AxeItem);
 	}
 
 	@Override

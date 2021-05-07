@@ -25,6 +25,8 @@ import com.simibubi.create.foundation.tileEntity.SmartTileEntity;
 import com.simibubi.create.foundation.tileEntity.TileEntityBehaviour;
 import com.simibubi.create.foundation.utility.Lang;
 
+import com.tterrag.registrate.fabric.EnvExecutor;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.resources.I18n;
@@ -96,7 +98,7 @@ public abstract class KineticTileEntity extends SmartTileEntity
 
 		if (world.isRemote) {
 			cachedBoundingBox = null; // cache the bounding box for every frame between ticks
-			DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> this.tickAudio());
+			EnvExecutor.runWhenOn(EnvType.CLIENT, () -> () -> this.tickAudio());
 			return;
 		}
 

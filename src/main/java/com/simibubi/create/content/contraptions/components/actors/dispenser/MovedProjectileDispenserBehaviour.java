@@ -6,6 +6,8 @@ import javax.annotation.Nullable;
 
 import com.simibubi.create.content.contraptions.components.structureMovement.MovementContext;
 
+import com.simibubi.create.lib.utility.MethodGetter;
+
 import net.minecraft.dispenser.IPosition;
 import net.minecraft.dispenser.ProjectileDispenseBehavior;
 import net.minecraft.entity.projectile.ProjectileEntity;
@@ -80,19 +82,19 @@ public abstract class MovedProjectileDispenserBehaviour extends MovedDefaultDisp
 	}
 
 	private static Method getProjectileEntityLookup() {
-		Method getProjectileEntity = ObfuscationReflectionHelper.findMethod(ProjectileDispenseBehavior.class, "func_82499_a", World.class, IPosition.class, ItemStack.class);
+		Method getProjectileEntity = MethodGetter.findMethod(ProjectileDispenseBehavior.class, "getProjectileEntity", "func_82499_a", World.class, IPosition.class, ItemStack.class);
 		getProjectileEntity.setAccessible(true);
 		return getProjectileEntity;
 	}
 
 	private static Method getProjectileInaccuracyLookup() {
-		Method getProjectileInaccuracy = ObfuscationReflectionHelper.findMethod(ProjectileDispenseBehavior.class, "func_82498_a");
+		Method getProjectileInaccuracy = MethodGetter.findMethod(ProjectileDispenseBehavior.class, "getProjectileInaccuracy", "func_82498_a");
 		getProjectileInaccuracy.setAccessible(true);
 		return getProjectileInaccuracy;
 	}
 
 	private static Method getProjectileVelocityLookup() {
-		Method getProjectileVelocity = ObfuscationReflectionHelper.findMethod(ProjectileDispenseBehavior.class, "func_82500_b");
+		Method getProjectileVelocity = MethodGetter.findMethod(ProjectileDispenseBehavior.class, "getProjectileVelocity", "func_82500_b");
 		getProjectileVelocity.setAccessible(true);
 		return getProjectileVelocity;
 	}
