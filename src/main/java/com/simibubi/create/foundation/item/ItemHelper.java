@@ -11,6 +11,8 @@ import org.apache.commons.lang3.mutable.MutableInt;
 
 import com.simibubi.create.foundation.config.AllConfigs;
 import com.simibubi.create.foundation.utility.Pair;
+import com.simibubi.create.lib.lba.item.IItemHandler;
+import com.simibubi.create.lib.lba.item.ItemHandlerHelper;
 
 import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.item.ItemStack;

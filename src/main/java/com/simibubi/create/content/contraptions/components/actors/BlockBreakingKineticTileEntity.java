@@ -40,7 +40,7 @@ public abstract class BlockBreakingKineticTileEntity extends KineticTileEntity {
 		if (destroyProgress == -1)
 			destroyNextTick();
 	}
-	
+
 	@Override
 	public void lazyTick() {
 		super.lazyTick();
@@ -93,9 +93,9 @@ public abstract class BlockBreakingKineticTileEntity extends KineticTileEntity {
 			return;
 		if (getSpeed() == 0)
 			return;
-		
+
 		breakingPos = getBreakingPos();
-		
+
 		if (ticksUntilNextProgress < 0)
 			return;
 		if (ticksUntilNextProgress-- > 0)
@@ -144,8 +144,8 @@ public abstract class BlockBreakingKineticTileEntity extends KineticTileEntity {
 		Vector3d vec = VecHelper.offsetRandomly(VecHelper.getCenterOf(breakingPos), world.rand, .125f);
 
 		Block.getDrops(stateToBreak, (ServerWorld) world, breakingPos, tileentity).forEach((stack) -> {
-			if (!stack.isEmpty() && world.getGameRules().getBoolean(GameRules.DO_TILE_DROPS)
-					&& !world.restoringBlockSnapshots) {
+			if (!stack.isEmpty() && world.getGameRules().getBoolean(GameRules.DO_TILE_DROPS)) {
+//					&& !world.restoringBlockSnapshots) { block snapshots are a forge thing so technically the world is never restoring them
 				ItemEntity itementity = new ItemEntity(world, vec.x, vec.y, vec.z, stack);
 				itementity.setDefaultPickupDelay();
 				itementity.setMotion(Vector3d.ZERO);

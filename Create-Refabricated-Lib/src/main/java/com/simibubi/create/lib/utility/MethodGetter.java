@@ -7,6 +7,10 @@ import org.apache.logging.log4j.Logger;
 
 public class MethodGetter {
 	private static final Logger LOGGER = LogManager.getLogger();
+
+	/**
+	 * remember, this is a Fabric mod, you need intermediary for obfuscatedName, not SRG
+	 */
 	public static Method findMethod(Class clas, String methodName, String obfuscatedName, Class<?>... parameterTypes) {
 		Method method;
 		try {

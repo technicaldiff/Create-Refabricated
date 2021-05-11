@@ -1,7 +1,6 @@
 package com.simibubi.create.content.contraptions.components.actors;
 
 import com.simibubi.create.AllEntityTypes;
-
 import com.simibubi.create.lib.entity.ExtraSpawnDataEntity;
 
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricEntityTypeBuilder;
@@ -15,6 +14,7 @@ import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.IPacket;
 import net.minecraft.network.PacketBuffer;
+import net.minecraft.network.play.server.SSpawnObjectPacket;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
@@ -89,7 +89,7 @@ public class SeatEntity extends Entity implements ExtraSpawnDataEntity {
 
 	@Override
 	public IPacket<?> createSpawnPacket() {
-		return NetworkHooks.getEntitySpawningPacket(this);
+		return new SSpawnObjectPacket(this);
 	}
 
 	public static class Render extends EntityRenderer<SeatEntity> {

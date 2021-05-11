@@ -7,7 +7,10 @@ import com.simibubi.create.content.contraptions.components.saw.SawTileEntity;
 import com.simibubi.create.content.contraptions.components.structureMovement.MovementContext;
 import com.simibubi.create.foundation.utility.TreeCutter;
 import com.simibubi.create.foundation.utility.VecHelper;
+import com.simibubi.create.lib.lba.item.ItemHandlerHelper;
 
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.renderer.IRenderTypeBuffer;
 import net.minecraft.entity.item.ItemEntity;
@@ -18,8 +21,6 @@ import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
 
 public class SawMovementBehaviour extends BlockBreakingMovementBehaviour {
 

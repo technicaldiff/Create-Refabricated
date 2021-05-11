@@ -1,17 +1,11 @@
 package com.simibubi.create;
 
-import static com.simibubi.create.AllTags.forgeItemTag;
-import static com.simibubi.create.AllTags.AllItemTags.CREATE_INGOTS;
-import static com.simibubi.create.AllTags.AllItemTags.CRUSHED_ORES;
-import static com.simibubi.create.AllTags.AllItemTags.NUGGETS;
-import static com.simibubi.create.AllTags.AllItemTags.PLATES;
 import static com.simibubi.create.content.AllSections.CURIOSITIES;
 import static com.simibubi.create.content.AllSections.KINETICS;
 import static com.simibubi.create.content.AllSections.LOGISTICS;
 import static com.simibubi.create.content.AllSections.MATERIALS;
 import static com.simibubi.create.content.AllSections.SCHEMATICS;
 
-import com.simibubi.create.AllTags.AllItemTags;
 import com.simibubi.create.content.contraptions.components.structureMovement.glue.SuperGlueItem;
 import com.simibubi.create.content.contraptions.components.structureMovement.mounted.MinecartContraptionItem;
 import com.simibubi.create.content.contraptions.components.structureMovement.train.MinecartCouplingItem;
@@ -44,6 +38,7 @@ import com.simibubi.create.content.curiosities.zapper.terrainzapper.WorldshaperM
 import com.simibubi.create.content.logistics.item.filter.FilterItem;
 import com.simibubi.create.content.schematics.item.SchematicAndQuillItem;
 import com.simibubi.create.content.schematics.item.SchematicItem;
+import com.simibubi.create.foundation.data.AssetLookup;
 import com.simibubi.create.foundation.data.CreateRegistrate;
 import com.simibubi.create.foundation.item.HiddenIngredientItem;
 import com.simibubi.create.foundation.item.TagDependentIngredientItem;
@@ -77,11 +72,11 @@ public class AllItems {
 
 	public static final ItemEntry<HiddenIngredientItem> BLAZE_CAKE_BASE =
 		REGISTRATE.item("blaze_cake_base", HiddenIngredientItem::new)
-			.tag(AllItemTags.UPRIGHT_ON_BELT.tag)
+//			.tag(AllItemTags.UPRIGHT_ON_BELT.tag)
 			.register();
 
 	public static final ItemEntry<CombustibleItem> BLAZE_CAKE = REGISTRATE.item("blaze_cake", CombustibleItem::new)
-		.tag(AllItemTags.UPRIGHT_ON_BELT.tag)
+//		.tag(AllItemTags.UPRIGHT_ON_BELT.tag)
 		.register();
 
 	public static final ItemEntry<Item> BAR_OF_CHOCOLATE = REGISTRATE.item("bar_of_chocolate", Item::new)
@@ -110,15 +105,15 @@ public class AllItems {
 		.register();
 
 	public static final ItemEntry<BuildersTeaItem> BUILDERS_TEA = REGISTRATE.item("builders_tea", BuildersTeaItem::new)
-		.tag(AllItemTags.UPRIGHT_ON_BELT.tag)
+//		.tag(AllItemTags.UPRIGHT_ON_BELT.tag)
 		.properties(p -> p.maxCount(16))
 		.lang("Builder's Tea")
 		.register();
 
 	public static final ItemEntry<Item> ANDESITE_ALLOY = ingredient("andesite_alloy"),
-		COPPER_INGOT = taggedIngredient("copper_ingot", forgeItemTag("ingots/copper"), CREATE_INGOTS.tag),
-		ZINC_INGOT = taggedIngredient("zinc_ingot", forgeItemTag("ingots/zinc"), CREATE_INGOTS.tag),
-		BRASS_INGOT = taggedIngredient("brass_ingot", forgeItemTag("ingots/brass"), CREATE_INGOTS.tag);
+		COPPER_INGOT = taggedIngredient("copper_ingot"/*, forgeItemTag("ingots/copper"), CREATE_INGOTS.tag*/),
+		ZINC_INGOT = taggedIngredient("zinc_ingot"/*, forgeItemTag("ingots/zinc"), CREATE_INGOTS.tag*/),
+		BRASS_INGOT = taggedIngredient("brass_ingot"/*, forgeItemTag("ingots/brass"), CREATE_INGOTS.tag*/);
 
 	public static final ItemEntry<ChromaticCompoundItem> CHROMATIC_COMPOUND =
 		REGISTRATE.item("chromatic_compound", ChromaticCompoundItem::new)
@@ -137,21 +132,21 @@ public class AllItems {
 			.register();
 
 	public static final ItemEntry<Item> COPPER_NUGGET =
-		taggedIngredient("copper_nugget", forgeItemTag("nuggets/copper"), NUGGETS.tag),
-		ZINC_NUGGET = taggedIngredient("zinc_nugget", forgeItemTag("nuggets/zinc"), NUGGETS.tag),
-		BRASS_NUGGET = taggedIngredient("brass_nugget", forgeItemTag("nuggets/brass"), NUGGETS.tag),
+		taggedIngredient("copper_nugget"/*, forgeItemTag("nuggets/copper"), NUGGETS.tag*/),
+		ZINC_NUGGET = taggedIngredient("zinc_nugget"/*, forgeItemTag("nuggets/zinc"), NUGGETS.tag*/),
+		BRASS_NUGGET = taggedIngredient("brass_nugget"/*, forgeItemTag("nuggets/brass"), NUGGETS.tag*/),
 
-		COPPER_SHEET = taggedIngredient("copper_sheet", forgeItemTag("plates/copper"), PLATES.tag),
-		BRASS_SHEET = taggedIngredient("brass_sheet", forgeItemTag("plates/brass"), PLATES.tag),
-		IRON_SHEET = taggedIngredient("iron_sheet", forgeItemTag("plates/iron"), PLATES.tag),
-		GOLDEN_SHEET = taggedIngredient("golden_sheet", forgeItemTag("plates/gold"), PLATES.tag),
-		LAPIS_SHEET = taggedIngredient("lapis_sheet", forgeItemTag("plates/lapis_lazuli"), PLATES.tag),
+		COPPER_SHEET = taggedIngredient("copper_sheet"/*, forgeItemTag("plates/copper"), PLATES.tag*/),
+		BRASS_SHEET = taggedIngredient("brass_sheet"/*, forgeItemTag("plates/brass"), PLATES.tag*/),
+		IRON_SHEET = taggedIngredient("iron_sheet"/*, forgeItemTag("plates/iron"), PLATES.tag*/),
+		GOLDEN_SHEET = taggedIngredient("golden_sheet"/*, forgeItemTag("plates/gold"), PLATES.tag*/),
+		LAPIS_SHEET = taggedIngredient("lapis_sheet"/*, forgeItemTag("plates/lapis_lazuli"), PLATES.tag*/),
 
-		CRUSHED_IRON = taggedIngredient("crushed_iron_ore", CRUSHED_ORES.tag),
-		CRUSHED_GOLD = taggedIngredient("crushed_gold_ore", CRUSHED_ORES.tag),
-		CRUSHED_COPPER = taggedIngredient("crushed_copper_ore", CRUSHED_ORES.tag),
-		CRUSHED_ZINC = taggedIngredient("crushed_zinc_ore", CRUSHED_ORES.tag),
-		CRUSHED_BRASS = taggedIngredient("crushed_brass", CRUSHED_ORES.tag);
+		CRUSHED_IRON = taggedIngredient("crushed_iron_ore"/*, CRUSHED_ORES.tag*/),
+		CRUSHED_GOLD = taggedIngredient("crushed_gold_ore"/*, CRUSHED_ORES.tag*/),
+		CRUSHED_COPPER = taggedIngredient("crushed_copper_ore"/*, CRUSHED_ORES.tag*/),
+		CRUSHED_ZINC = taggedIngredient("crushed_zinc_ore"/*, CRUSHED_ORES.tag*/),
+		CRUSHED_BRASS = taggedIngredient("crushed_brass"/*, CRUSHED_ORES.tag*/);
 
 	public static final ItemEntry<TagDependentIngredientItem> CRUSHED_OSMIUM = compatCrushedOre("osmium"),
 		CRUSHED_PLATINUM = compatCrushedOre("platinum"), CRUSHED_SILVER = compatCrushedOre("silver"),
@@ -210,13 +205,13 @@ public class AllItems {
 
 	public static final ItemEntry<ExtendoGripItem> EXTENDO_GRIP = REGISTRATE.item("extendo_grip", ExtendoGripItem::new)
 		.transform(CreateRegistrate.customRenderedItem(() -> ExtendoGripModel::new))
-		.model(AssetLookup.itemModelWithPartials())
+//		.model(AssetLookup.itemModelWithPartials())
 		.register();
 
 	public static final ItemEntry<SymmetryWandItem> WAND_OF_SYMMETRY =
 		REGISTRATE.item("wand_of_symmetry", SymmetryWandItem::new)
 			.transform(CreateRegistrate.customRenderedItem(() -> SymmetryWandModel::new))
-			.model(AssetLookup.itemModelWithPartials())
+//			.model(AssetLookup.itemModelWithPartials())
 			.register();
 
 	public static final ItemEntry<WorldshaperItem> WORLDSHAPER =
@@ -224,7 +219,7 @@ public class AllItems {
 			.properties(p -> p.rarity(Rarity.EPIC))
 			.transform(CreateRegistrate.customRenderedItem(() -> WorldshaperModel::new))
 			.lang("Creative Worldshaper")
-			.model(AssetLookup.itemModelWithPartials())
+//			.model(AssetLookup.itemModelWithPartials())
 			.register();
 
 	public static final ItemEntry<MinecartContraptionItem> MINECART_CONTRAPTION =
@@ -265,7 +260,7 @@ public class AllItems {
 	COPPER_BACKTANK =
 		REGISTRATE
 			.item("copper_backtank", p -> new CopperBacktankItem(p, new BlockItem(AllBlocks.COPPER_BACKTANK.get(), p)))
-			.model(AssetLookup.<CopperBacktankItem>customGenericItemModel("_", "item"))
+//			.model(AssetLookup.<CopperBacktankItem>customGenericItemModel("_", "items"))
 			.register(),
 
 		DIVING_HELMET = REGISTRATE.item("diving_helmet", DivingHelmetItem::new)
@@ -313,7 +308,7 @@ public class AllItems {
 	@SafeVarargs
 	private static ItemEntry<Item> taggedIngredient(String name, ITag.INamedTag<Item>... tags) {
 		return REGISTRATE.item(name, Item::new)
-			.tag(tags)
+//			.tag(tags)
 			.register();
 	}
 
@@ -321,7 +316,7 @@ public class AllItems {
 		return REGISTRATE
 			.item("crushed_" + metalName + "_ore",
 				props -> new TagDependentIngredientItem(props, new ResourceLocation("forge", "ores/" + metalName)))
-			.tag(AllItemTags.CRUSHED_ORES.tag)
+//			.tag(AllItemTags.CRUSHED_ORES.tag)
 			.register();
 	}
 
