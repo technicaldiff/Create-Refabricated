@@ -31,6 +31,7 @@
     "accessor.DamageSourceAccessor",
     "accessor.EntityAccessor",
     "accessor.EntityRendererManagerAccessor",
+    "accessor.FirstPersonRendererAccessor",
     "accessor.ItemEntityAccessor",
     "accessor.LivingRendererAccessor",
     "accessor.MinecraftServerAccessor",

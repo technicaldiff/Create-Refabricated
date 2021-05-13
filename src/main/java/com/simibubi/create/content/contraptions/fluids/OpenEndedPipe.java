@@ -12,6 +12,11 @@ import com.simibubi.create.content.contraptions.fluids.potion.PotionFluidHandler
 import com.simibubi.create.foundation.advancement.AllTriggers;
 import com.simibubi.create.foundation.fluid.FluidHelper;
 import com.simibubi.create.foundation.utility.BlockFace;
+import com.simibubi.create.lib.lba.fluid.FluidAction;
+import com.simibubi.create.lib.lba.fluid.FluidStack;
+import com.simibubi.create.lib.lba.fluid.FluidTank;
+import com.simibubi.create.lib.utility.LazyOptional;
+import com.simibubi.create.lib.utility.LoadedCheckUtil;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.block.FlowingFluidBlock;
@@ -64,7 +69,7 @@ public class OpenEndedPipe extends FlowSource {
 		FluidStack empty = FluidStack.EMPTY;
 		if (world == null)
 			return empty;
-		if (!world.isAreaLoaded(outputPos, 0))
+		if (!LoadedCheckUtil.isAreaLoaded(world, outputPos, 0))
 			return empty;
 
 		BlockState state = world.getBlockState(outputPos);
@@ -105,7 +110,7 @@ public class OpenEndedPipe extends FlowSource {
 	private boolean provideFluidToSpace(FluidStack fluid, boolean simulate) {
 		if (world == null)
 			return false;
-		if (!world.isAreaLoaded(outputPos, 0))
+		if (!LoadedCheckUtil.isAreaLoaded(world, outputPos, 0))
 			return false;
 
 		BlockState state = world.getBlockState(outputPos);
@@ -222,7 +227,7 @@ public class OpenEndedPipe extends FlowSource {
 			// Never allow being filled when a source is attached
 			if (world == null)
 				return 0;
-			if (!world.isAreaLoaded(outputPos, 0))
+			if (!LoadedCheckUtil.isAreaLoaded(world, outputPos, 0))
 				return 0;
 			if (resource.isEmpty())
 				return 0;
@@ -257,7 +262,7 @@ public class OpenEndedPipe extends FlowSource {
 
 			if (world == null)
 				return empty;
-			if (!world.isAreaLoaded(outputPos, 0))
+			if (!LoadedCheckUtil.isAreaLoaded(world, outputPos, 0))
 				return empty;
 			if (amount == 0)
 				return empty;

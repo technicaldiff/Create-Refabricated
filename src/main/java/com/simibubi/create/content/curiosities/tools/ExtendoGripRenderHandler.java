@@ -7,6 +7,8 @@ import com.simibubi.create.foundation.render.backend.core.PartialModel;
 import com.simibubi.create.foundation.utility.AnimationTickHolder;
 import com.simibubi.create.foundation.utility.MatrixStacker;
 
+import com.simibubi.create.lib.helper.FirstPersonRendererHelper;
+
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.player.AbstractClientPlayerEntity;
 import net.minecraft.client.entity.player.ClientPlayerEntity;
@@ -126,11 +128,11 @@ public class ExtendoGripRenderHandler {
 	}
 
 	private static ItemStack getRenderedMainHandStack() {
-		return Minecraft.getInstance().getFirstPersonRenderer().itemStackMainHand;
+		return FirstPersonRendererHelper.getStackInMainHand(Minecraft.getInstance().getFirstPersonRenderer());
 	}
 
 	private static ItemStack getRenderedOffHandStack() {
-		return Minecraft.getInstance().getFirstPersonRenderer().itemStackOffHand;
+		return FirstPersonRendererHelper.getStackInOffHand(Minecraft.getInstance().getFirstPersonRenderer());
 	}
 
 }
