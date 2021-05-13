@@ -158,6 +158,12 @@ repositories {
 			includeGroup("com.github.SuperCoder7979")
 		}
 	}
+	maven("https://maven.jamieswhiteshirt.com/libs-release") {
+		name = "Reach Entity Attributes"
+		content {
+			includeGroup("com.jamieswhiteshirt")
+		}
+	}
 }
 
 dependencies {
@@ -168,6 +174,7 @@ dependencies {
 	val modmenu_version: String by project
 	val rei_version: String by project
 	val databreaker_version: String by project
+	val reach_entity_attributes_version: String by project
 
 	implementation(project(":Create-Refabricated-Lib"))
 	include(project(":Create-Refabricated-Lib"))
@@ -204,6 +211,9 @@ dependencies {
 	modRuntime("com.github.SuperCoder7979", "databreaker", databreaker_version) {
 		exclude(module = "fabric-loader")
 	}
+
+	// Reach Entity Attributes
+	modImplementation("com.jamieswhiteshirt", "reach-entity-attributes", reach_entity_attributes_version)
 }
 
 loom.accessWidener("src/main/resources/create.accesswidener")
