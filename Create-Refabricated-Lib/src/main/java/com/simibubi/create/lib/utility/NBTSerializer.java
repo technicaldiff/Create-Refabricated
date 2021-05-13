@@ -5,6 +5,7 @@ import com.simibubi.create.lib.helper.EntityHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.tileentity.TileEntity;
 
 public class NBTSerializer {
 	public static CompoundNBT serializeItemStackNBT(ItemStack stack) {
@@ -21,6 +22,16 @@ public class NBTSerializer {
 			nbt.putString("id", id);
 		}
 
+		return nbt;
+	}
+
+	public static void deserializeEntityNBT(Entity entity, CompoundNBT nbt) {
+		entity.read(nbt);
+	}
+
+	public static CompoundNBT serializeTileEntityNBT(TileEntity entity) {
+		CompoundNBT nbt = new CompoundNBT();
+		entity.write(nbt);
 		return nbt;
 	}
 }

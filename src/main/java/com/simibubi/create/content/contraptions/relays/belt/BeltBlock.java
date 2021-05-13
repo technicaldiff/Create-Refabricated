@@ -8,6 +8,7 @@ import org.apache.commons.lang3.mutable.MutableBoolean;
 
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.AllItems;
+import com.simibubi.create.AllTags;
 import com.simibubi.create.AllTileEntities;
 import com.simibubi.create.Create;
 import com.simibubi.create.content.contraptions.base.HorizontalKineticBlock;
@@ -26,6 +27,7 @@ import com.simibubi.create.foundation.utility.BlockHelper;
 import com.simibubi.create.foundation.utility.Iterate;
 import com.simibubi.create.lib.block.CustomPathNodeTypeBlock;
 import com.simibubi.create.lib.helper.EntitySelectionContextHelper;
+import com.simibubi.create.lib.lba.item.IItemHandler;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -125,7 +127,7 @@ public class BeltBlock extends HorizontalKineticBlock implements ITE<BeltTileEnt
 
 	/*
 	 * FIXME
-	 * 
+	 *
 	 * @Override
 	 * public Material getMaterial(BlockState state) {
 	 * return state.get(CASING) ? Material.WOOD : Material.WOOL;
@@ -241,7 +243,7 @@ public class BeltBlock extends HorizontalKineticBlock implements ITE<BeltTileEnt
 			return ActionResultType.PASS;
 		ItemStack heldItem = player.getHeldItem(handIn);
 		boolean isShaft = AllBlocks.SHAFT.isIn(heldItem);
-		boolean isDye = Tags.Items.DYES.contains(heldItem.getItem());
+		boolean isDye = AllTags.isDye(heldItem.getItem());
 		boolean hasWater = EmptyingByBasin.emptyItem(world, heldItem, true)
 			.getFirst()
 			.getFluid()
@@ -250,7 +252,7 @@ public class BeltBlock extends HorizontalKineticBlock implements ITE<BeltTileEnt
 
 		if (isDye || hasWater) {
 			if (!world.isRemote)
-				withTileEntityDo(world, pos, te -> te.applyColor(DyeColor.getColor(heldItem)));
+				withTileEntityDo(world, pos, te -> te.applyColor(AllTags.getColorFromStack(heldItem)));
 			return ActionResultType.SUCCESS;
 		}
 
@@ -416,7 +418,7 @@ public class BeltBlock extends HorizontalKineticBlock implements ITE<BeltTileEnt
 			BlockPos nextSegmentPosition = nextSegmentPosition(currentState, currentPos, false);
 			if (nextSegmentPosition == null)
 				break;
-			if (!world.isAreaLoaded(nextSegmentPosition, 0))
+			if (!world.isAreaLoaded(nextSegmentPosition, nextSegmentPosition))
 				return;
 			currentPos = nextSegmentPosition;
 		}

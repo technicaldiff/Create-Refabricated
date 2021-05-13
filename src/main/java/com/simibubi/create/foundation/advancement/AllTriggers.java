@@ -6,6 +6,7 @@ import java.util.function.Predicate;
 
 import com.simibubi.create.content.logistics.InWorldProcessing;
 
+import net.fabricmc.fabric.api.object.builder.v1.advancement.CriterionRegistry;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.PlayerEntity;
@@ -55,7 +56,7 @@ public class AllTriggers {
 	}
 
 	public static void register() {
-		triggers.forEach(CriteriaTriggers::register);
+		triggers.forEach(CriterionRegistry::register);
 	}
 
 	public static void triggerFor(ITriggerable trigger, PlayerEntity player) {

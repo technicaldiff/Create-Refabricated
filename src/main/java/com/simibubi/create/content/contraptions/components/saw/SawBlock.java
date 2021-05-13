@@ -13,6 +13,8 @@ import com.simibubi.create.foundation.tileEntity.behaviour.filtering.FilteringBe
 
 import com.simibubi.create.lib.annotation.MethodsReturnNonnullByDefault;
 
+import com.simibubi.create.lib.helper.DamageSourceHelper;
+
 import net.minecraft.block.BlockState;
 import net.minecraft.block.material.PushReaction;
 import net.minecraft.entity.Entity;
@@ -34,7 +36,7 @@ import net.minecraft.world.World;
 @ParametersAreNonnullByDefault
 @MethodsReturnNonnullByDefault
 public class SawBlock extends DirectionalAxisKineticBlock implements ITE<SawTileEntity> {
-	public static DamageSource damageSourceSaw = new DamageSource("create.mechanical_saw").setDamageBypassesArmor();
+	public static DamageSource damageSourceSaw = DamageSourceHelper.create$createDamageSourceWhichBypassesArmor("create.mechanical_saw");
 
 	public SawBlock(Properties properties) {
 		super(properties);
@@ -122,7 +124,7 @@ public class SawBlock extends DirectionalAxisKineticBlock implements ITE<SawTile
 	public Class<SawTileEntity> getTileEntityClass() {
 		return SawTileEntity.class;
 	}
-	
+
 	@Override
 	public boolean allowsMovement(BlockState state, IBlockReader reader, BlockPos pos, PathType type) {
 		return false;

@@ -21,6 +21,8 @@ import com.simibubi.create.foundation.utility.MatrixStacker;
 import com.simibubi.create.foundation.utility.NBTHelper;
 import com.simibubi.create.foundation.utility.VecHelper;
 
+import com.simibubi.create.lib.utility.NBTSerializer;
+
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
@@ -410,7 +412,8 @@ public class OrientedContraptionEntity extends AbstractContraptionEntity {
 
 		// Notify to not trigger serialization side-effects
 		isSerializingFurnaceCart = true;
-		CompoundNBT nbt = furnaceCart.serializeNBT();
+		CompoundNBT nbt = NBTSerializer.serializeEntityNBT(furnaceCart);
+
 		isSerializingFurnaceCart = false;
 
 		int fuel = nbt.getInt("Fuel");
@@ -442,7 +445,7 @@ public class OrientedContraptionEntity extends AbstractContraptionEntity {
 			nbt.putInt("Fuel", fuel);
 			nbt.putDouble("PushX", 0);
 			nbt.putDouble("PushZ", 0);
-			furnaceCart.deserializeNBT(nbt);
+			NBTSerializer.deserializeEntityNBT(furnaceCart, nbt);
 		}
 	}
 

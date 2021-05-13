@@ -7,6 +7,8 @@ import java.util.function.Function;
 
 import javax.annotation.Nonnull;
 
+import com.simibubi.create.lib.utility.NBTSerializer;
+
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.FloatNBT;
@@ -54,7 +56,7 @@ public class NBTHelper {
 	}
 
 	public static ListNBT writeItemList(List<ItemStack> stacks) {
-		return writeCompoundList(stacks, ItemStack::serializeNBT);
+		return writeCompoundList(stacks, NBTSerializer::serializeItemStackNBT);
 	}
 
 	public static List<ItemStack> readItemList(ListNBT stacks) {

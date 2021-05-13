@@ -2,6 +2,7 @@ package com.simibubi.create.content.contraptions.particle;
 
 import com.mojang.serialization.Codec;
 
+import net.fabricmc.fabric.api.client.particle.v1.ParticleFactoryRegistry;
 import net.minecraft.client.particle.IParticleFactory;
 import net.minecraft.client.particle.ParticleManager;
 import net.minecraft.particles.IParticleData;
@@ -14,8 +15,8 @@ public interface ICustomParticleData<T extends IParticleData> {
 
 	IDeserializer<T> getDeserializer();
 
-	Codec<T> getCodec(ParticleType<T> type); 
-	
+	Codec<T> getCodec(ParticleType<T> type);
+
 	public default ParticleType<T> createType() {
 		return new ParticleType<T>(false, getDeserializer()) {
 
@@ -25,13 +26,13 @@ public interface ICustomParticleData<T extends IParticleData> {
 			}
 		};
 	}
-	
+
 	@Environment(EnvType.CLIENT)
 	public IParticleFactory<T> getFactory();
-	
+
 	@Environment(EnvType.CLIENT)
 	public default void register(ParticleType<T> type, ParticleManager particles) {
-		particles.registerFactory(type, getFactory());
+		ParticleFactoryRegistry.getInstance().register(type, getFactory());
 	}
-	
+
 }

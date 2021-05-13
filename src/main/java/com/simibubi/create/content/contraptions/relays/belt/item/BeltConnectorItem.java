@@ -193,9 +193,9 @@ public class BeltConnectorItem extends BlockItem {
 	}
 
 	public static boolean canConnect(World world, BlockPos first, BlockPos second) {
-		if (!world.isAreaLoaded(first, 1))
+		if (!world.isAreaLoaded(first.add(-1, -1, -1), first.add(1, 1, 1)))
 			return false;
-		if (!world.isAreaLoaded(second, 1))
+		if (!world.isAreaLoaded(second.add(-1, -1, -1), second.add(1, 1, 1)))
 			return false;
 		if (!second.withinDistance(first, maxLength()))
 			return false;
@@ -254,7 +254,7 @@ public class BeltConnectorItem extends BlockItem {
 	}
 
 	public static boolean validateAxis(World world, BlockPos pos) {
-		if (!world.isAreaLoaded(pos, 1))
+		if (!world.isAreaLoaded(pos.add(-1, -1, -1), pos.add(1, 1, 1)))
 			return false;
 		if (!ShaftBlock.isShaft(world.getBlockState(pos)))
 			return false;

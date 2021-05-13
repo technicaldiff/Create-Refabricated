@@ -8,7 +8,10 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.simibubi.create.AllParticleTypes;
 import com.simibubi.create.content.contraptions.particle.ICustomParticleData;
+import com.simibubi.create.lib.lba.fluid.FluidStack;
 
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.client.particle.IParticleFactory;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.nbt.CompoundNBT;
@@ -16,8 +19,6 @@ import net.minecraft.network.PacketBuffer;
 import net.minecraft.particles.IParticleData;
 import net.minecraft.particles.ParticleType;
 import net.minecraft.util.registry.Registry;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
 
 public class FluidParticleData implements IParticleData, ICustomParticleData<FluidParticleData> {
 

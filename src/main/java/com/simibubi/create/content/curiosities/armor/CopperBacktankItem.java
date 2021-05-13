@@ -2,6 +2,8 @@ package com.simibubi.create.content.curiosities.armor;
 
 import com.simibubi.create.foundation.config.AllConfigs;
 
+import com.simibubi.create.lib.item.CustomDurabilityBarItem;
+
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.ItemGroup;
@@ -12,7 +14,7 @@ import net.minecraft.util.ActionResultType;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.MathHelper;
 
-public class CopperBacktankItem extends CopperArmorItem {
+public class CopperBacktankItem extends CopperArmorItem implements CustomDurabilityBarItem {
 
 	private BlockItem blockItem;
 
@@ -40,7 +42,7 @@ public class CopperBacktankItem extends CopperArmorItem {
 	public void fillItemGroup(ItemGroup p_150895_1_, NonNullList<ItemStack> p_150895_2_) {
 		if (!isInGroup(p_150895_1_))
 			return;
-		
+
 		ItemStack stack = new ItemStack(this);
 		CompoundNBT nbt = new CompoundNBT();
 		nbt.putInt("Air", AllConfigs.SERVER.curiosities.maxAirInBacktank.get());

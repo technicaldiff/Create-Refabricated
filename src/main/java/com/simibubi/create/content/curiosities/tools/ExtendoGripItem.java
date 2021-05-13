@@ -9,6 +9,8 @@ import com.simibubi.create.foundation.advancement.AllTriggers;
 import com.simibubi.create.foundation.networking.AllPackets;
 import com.simibubi.create.foundation.utility.AnimationTickHolder;
 
+import com.simibubi.create.lib.helper.EntityHelper;
+
 import net.fabricmc.fabric.api.event.player.AttackEntityCallback;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.player.ClientPlayerEntity;
@@ -69,7 +71,7 @@ public class ExtendoGripItem extends Item {
 		String marker = "createExtendo";
 		String dualMarker = "createDualExtendo";
 
-		CompoundNBT persistentData = player.getPersistentData();
+		CompoundNBT persistentData = EntityHelper.getExtraCustomData(player);
 		boolean inOff = AllItems.EXTENDO_GRIP.isIn(player.getHeldItemOffhand());
 		boolean inMain = AllItems.EXTENDO_GRIP.isIn(player.getHeldItemMainhand());
 		boolean holdingDualExtendo = inOff && inMain;

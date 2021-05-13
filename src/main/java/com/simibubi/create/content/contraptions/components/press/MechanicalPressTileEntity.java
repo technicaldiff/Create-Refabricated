@@ -4,8 +4,27 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import com.simibubi.create.AllBlocks;
+import com.simibubi.create.AllRecipeTypes;
+import com.simibubi.create.AllSoundEvents;
 import com.simibubi.create.Create;
+import com.simibubi.create.content.contraptions.processing.BasinOperatingTileEntity;
+import com.simibubi.create.content.contraptions.processing.BasinTileEntity;
+import com.simibubi.create.content.logistics.InWorldProcessing;
+import com.simibubi.create.foundation.advancement.AllTriggers;
+import com.simibubi.create.foundation.advancement.ITriggerable;
+import com.simibubi.create.foundation.config.AllConfigs;
+import com.simibubi.create.foundation.item.ItemHelper;
+import com.simibubi.create.foundation.item.SmartInventory;
+import com.simibubi.create.foundation.tileEntity.TileEntityBehaviour;
+import com.simibubi.create.foundation.tileEntity.behaviour.belt.BeltProcessingBehaviour;
+import com.simibubi.create.foundation.tileEntity.behaviour.belt.TransportedItemStackHandlerBehaviour;
+import com.simibubi.create.foundation.utility.NBTHelper;
+import com.simibubi.create.foundation.utility.VecHelper;
 import com.simibubi.create.lib.lba.item.ItemHandlerHelper;
+import com.simibubi.create.lib.lba.item.ItemStackHandler;
+import com.simibubi.create.lib.utility.Constants.NBT;
+import com.simibubi.create.lib.utility.NBTSerializer;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.block.SoundType;
@@ -24,24 +43,6 @@ import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.vector.Vector3d;
-
-import com.simibubi.create.AllBlocks;
-import com.simibubi.create.AllRecipeTypes;
-import com.simibubi.create.AllSoundEvents;
-import com.simibubi.create.content.contraptions.processing.BasinOperatingTileEntity;
-import com.simibubi.create.content.contraptions.processing.BasinTileEntity;
-import com.simibubi.create.content.logistics.InWorldProcessing;
-import com.simibubi.create.foundation.advancement.AllTriggers;
-import com.simibubi.create.foundation.advancement.ITriggerable;
-import com.simibubi.create.foundation.config.AllConfigs;
-import com.simibubi.create.foundation.item.ItemHelper;
-import com.simibubi.create.foundation.item.SmartInventory;
-import com.simibubi.create.foundation.tileEntity.TileEntityBehaviour;
-import com.simibubi.create.foundation.tileEntity.behaviour.belt.BeltProcessingBehaviour;
-import com.simibubi.create.foundation.tileEntity.behaviour.belt.TransportedItemStackHandlerBehaviour;
-import com.simibubi.create.foundation.utility.NBTHelper;
-import com.simibubi.create.foundation.utility.VecHelper;
-import com.simibubi.create.lib.utility.Constants.NBT;
 
 
 public class MechanicalPressTileEntity extends BasinOperatingTileEntity {
@@ -99,7 +100,7 @@ public class MechanicalPressTileEntity extends BasinOperatingTileEntity {
 		super.write(compound, clientPacket);
 
 		if (clientPacket) {
-			compound.put("ParticleItems", NBTHelper.writeCompoundList(pressedItems, ItemStack::serializeNBT));
+			compound.put("ParticleItems", NBTHelper.writeCompoundList(pressedItems, NBTSerializer::serializeItemStackNBT));
 			pressedItems.clear();
 		}
 	}

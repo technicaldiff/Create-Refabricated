@@ -6,6 +6,8 @@ import com.simibubi.create.foundation.utility.VecHelper;
 
 import com.simibubi.create.lib.annotation.MethodsReturnNonnullByDefault;
 
+import com.simibubi.create.lib.utility.NBTSerializer;
+
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.item.ItemEntity;
@@ -63,7 +65,7 @@ public class SandPaperItem extends Item {
 			ItemStack toPolish = item.split(1);
 			playerIn.setActiveHand(handIn);
 			itemstack.getOrCreateTag()
-				.put("Polishing", toPolish.serializeNBT());
+				.put("Polishing", NBTSerializer.serializeItemStackNBT(toPolish));
 			playerIn.setHeldItem(otherHand, item);
 			return new ActionResult<>(ActionResultType.SUCCESS, itemstack);
 		}
@@ -100,7 +102,7 @@ public class SandPaperItem extends Item {
 
 		if (!worldIn.isRemote) {
 			itemstack.getOrCreateTag()
-				.put("Polishing", toPolish.serializeNBT());
+				.put("Polishing", NBTSerializer.serializeItemStackNBT(toPolish));
 			if (item.isEmpty())
 				pickUp.remove();
 			else

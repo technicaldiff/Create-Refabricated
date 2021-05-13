@@ -11,6 +11,8 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.fluid.Fluid;
 import net.minecraft.item.BlockItem;
+import net.minecraft.item.DyeColor;
+import net.minecraft.item.DyeItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tags.ITag;
@@ -242,6 +244,9 @@ public class AllTags {
 	public static final NamedTagWrapper<Item> WHITE_DYES = makeWrapperTag("white_dyes");
 	public static final NamedTagWrapper<Item> YELLOW_DYES = makeWrapperTag("yellow_dyes");
 
+	// misc
+	public static final NamedTagWrapper<Item> SLIMEBALLS = makeWrapperTag("slime_balls");
+
 	private static NamedTagWrapper makeWrapperTag(String string) {
 		return (NamedTagWrapper) collection.add(string);
 	}
@@ -266,5 +271,52 @@ public class AllTags {
 //		AllBlockTags.SAFE_NBT.includeAll(BlockTags.SIGNS);
 //
 //		AllFluidTags.loadClass();
+	}
+
+	// fabric tag helper methods
+	public static boolean isDye(Item item) {
+		return  item.isIn(BLACK_DYES) ||
+				item.isIn(BLUE_DYES) ||
+				item.isIn(BROWN_DYES) ||
+				item.isIn(CYAN_DYES) ||
+				item.isIn(GRAY_DYES) ||
+				item.isIn(GREEN_DYES) ||
+				item.isIn(LIGHT_BLUE_DYES) ||
+				item.isIn(LIGHT_GRAY_DYES) ||
+				item.isIn(LIME_DYES) ||
+				item.isIn(MAGENTA_DYES) ||
+				item.isIn(ORANGE_DYES) ||
+				item.isIn(PINK_DYES) ||
+				item.isIn(PURPLE_DYES) ||
+				item.isIn(RED_DYES) ||
+				item.isIn(WHITE_DYES) ||
+				item.isIn(YELLOW_DYES);
+	}
+
+	public static DyeColor getColorFromStack(ItemStack stack) {
+		Item item = stack.getItem();
+		if (item instanceof DyeItem) {
+			return ((DyeItem) stack.getItem()).getDyeColor();
+		}
+
+		if (item.isIn(BLACK_DYES)) return DyeColor.BLACK;
+		if (item.isIn(BLUE_DYES)) return DyeColor.BLUE;
+		if (item.isIn(BROWN_DYES)) return DyeColor.BROWN;
+		if (item.isIn(CYAN_DYES)) return DyeColor.CYAN;
+		if (item.isIn(GRAY_DYES)) return DyeColor.GRAY;
+		if (item.isIn(GREEN_DYES)) return DyeColor.GREEN;
+		if (item.isIn(LIGHT_BLUE_DYES)) return DyeColor.LIGHT_BLUE;
+		if (item.isIn(LIGHT_GRAY_DYES)) return DyeColor.LIGHT_GRAY;
+		if (item.isIn(LIME_DYES)) return DyeColor.LIME;
+		if (item.isIn(MAGENTA_DYES)) return DyeColor.MAGENTA;
+		if (item.isIn(ORANGE_DYES)) return DyeColor.ORANGE;
+		if (item.isIn(PINK_DYES)) return DyeColor.PINK;
+		if (item.isIn(PURPLE_DYES)) return DyeColor.PURPLE;
+		if (item.isIn(RED_DYES)) return DyeColor.RED;
+		if (item.isIn(WHITE_DYES)) return DyeColor.WHITE;
+		if (item.isIn(YELLOW_DYES)) return DyeColor.YELLOW;
+
+		// item is not in color tags, default to black I guess
+		return DyeColor.BLACK;
 	}
 }

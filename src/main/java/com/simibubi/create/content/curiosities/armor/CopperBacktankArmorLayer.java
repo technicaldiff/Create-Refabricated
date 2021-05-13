@@ -11,6 +11,11 @@ import com.simibubi.create.foundation.utility.AngleHelper;
 import com.simibubi.create.foundation.utility.AnimationTickHolder;
 import com.simibubi.create.foundation.utility.ColorHelper;
 
+import com.simibubi.create.lib.helper.EntityHelper;
+
+import com.simibubi.create.lib.helper.EntityRendererManagerHelper;
+import com.simibubi.create.lib.helper.LivingRendererHelper;
+
 import net.minecraft.block.BlockState;
 import net.minecraft.client.MainWindow;
 import net.minecraft.client.Minecraft;
@@ -39,7 +44,7 @@ public class CopperBacktankArmorLayer<T extends LivingEntity, M extends EntityMo
 	public CopperBacktankArmorLayer(LivingRenderer<T, M> renderer) {
 		super(renderer);
 		this.renderer = renderer;
-		renderer.addLayer(this);
+		LivingRendererHelper.addRenderer(renderer, this);
 	}
 
 	@Override
@@ -92,8 +97,8 @@ public class CopperBacktankArmorLayer<T extends LivingEntity, M extends EntityMo
 	public static void register() {
 		EntityRendererManager renderManager = Minecraft.getInstance()
 			.getRenderManager();
-		registerOn(renderManager.playerRenderer);
-		for (EntityRenderer<?> renderer : renderManager.renderers.values())
+		registerOn(EntityRendererManagerHelper.getPlayerRenderer(renderManager));
+		for (EntityRenderer<?> renderer : EntityRendererManagerHelper.getRenderers(renderManager).values())
 			registerOn(renderer);
 	}
 
@@ -109,13 +114,13 @@ public class CopperBacktankArmorLayer<T extends LivingEntity, M extends EntityMo
 			return;
 		if (player.isSpectator() || player.isCreative())
 			return;
-		if (!player.getPersistentData()
+		if (!EntityHelper.getExtraCustomData(player)
 			.contains("VisualBacktankAir"))
 			return;
 		if (!player.areEyesInFluid(FluidTags.WATER))
 			return;
 
-		int timeLeft = player.getPersistentData()
+		int timeLeft = EntityHelper.getExtraCustomData(player)
 			.getInt("VisualBacktankAir");
 
 		ms.push();

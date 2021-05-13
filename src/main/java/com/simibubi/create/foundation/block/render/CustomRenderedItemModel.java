@@ -5,15 +5,15 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import com.mojang.blaze3d.matrix.MatrixStack;
 import com.simibubi.create.Create;
 
-import net.fabricmc.fabric.api.client.rendering.v1.BuiltinItemRendererRegistry.DynamicItemRenderer;
 import net.minecraft.client.renderer.model.IBakedModel;
 import net.minecraft.client.renderer.model.ItemCameraTransforms;
 import net.minecraft.client.renderer.model.ModelBakery;
 import net.minecraft.client.renderer.model.ModelRotation;
+import net.minecraft.client.renderer.tileentity.ItemStackTileEntityRenderer;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.client.event.ModelBakeEvent;
 import net.minecraftforge.client.model.BakedModelWrapper;
 
 @SuppressWarnings("deprecation")

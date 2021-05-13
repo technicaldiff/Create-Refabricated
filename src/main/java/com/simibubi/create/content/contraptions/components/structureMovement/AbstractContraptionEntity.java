@@ -10,6 +10,8 @@ import java.util.UUID;
 
 import com.simibubi.create.lib.entity.ExtraSpawnDataEntity;
 
+import com.simibubi.create.lib.helper.EntityHelper;
+
 import org.apache.commons.lang3.mutable.MutableInt;
 import org.apache.commons.lang3.tuple.MutablePair;
 
@@ -112,7 +114,7 @@ public abstract class AbstractContraptionEntity extends Entity implements ExtraS
 		if (world.isRemote)
 			return;
 		if (transformedVector != null)
-			passenger.getPersistentData()
+			EntityHelper.getExtraCustomData(passenger)
 				.put("ContraptionDismountLocation", VecHelper.writeNBT(transformedVector));
 		contraption.getSeatMapping()
 			.remove(passenger.getUniqueID());

@@ -2,6 +2,7 @@ package com.simibubi.create.content.contraptions.components.structureMovement.ch
 
 import com.simibubi.create.AllItems;
 import com.simibubi.create.AllSoundEvents;
+import com.simibubi.create.AllTags;
 import com.simibubi.create.AllTileEntities;
 import com.simibubi.create.content.contraptions.wrench.IWrenchable;
 import com.simibubi.create.foundation.utility.Iterate;
@@ -49,7 +50,7 @@ public abstract class AbstractChassisBlock extends RotatedPillarBlock implements
 
 		ItemStack heldItem = player.getHeldItem(handIn);
 		boolean isSlimeBall = heldItem.getItem()
-			.isIn(Tags.Items.SLIMEBALLS) || AllItems.SUPER_GLUE.isIn(heldItem);
+			.isIn(AllTags.SLIMEBALLS) || AllItems.SUPER_GLUE.isIn(heldItem);
 
 		BooleanProperty affectedSide = getGlueableSide(state, hit.getFace());
 		if (affectedSide == null)

@@ -5,13 +5,13 @@ import java.util.function.Supplier;
 import com.simibubi.create.AllItems;
 import com.simibubi.create.AllSoundEvents;
 
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.IArmorMaterial;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.LazyValue;
 import net.minecraft.util.SoundEvent;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 
 public enum AllArmorMaterials implements IArmorMaterial {
 
@@ -62,7 +62,7 @@ public enum AllArmorMaterials implements IArmorMaterial {
 		return this.repairMaterial.getValue();
 	}
 
-	@OnlyIn(Dist.CLIENT)
+	@Environment(EnvType.CLIENT)
 	public String getName() {
 		return this.name;
 	}
