@@ -15,6 +15,10 @@ public final class EntityHelper {
 		return ((EntityExtensions) entity).create$getExtraCustomData();
 	}
 
+	public static String getEntityString(Entity entity) {
+		return ((EntityAccessor) entity).getEntityString();
+	}
+
 	public static boolean canBeRidden(Entity entity) {
 		return get(entity).create$canBeRidden(entity);
 	}

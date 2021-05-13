@@ -17,6 +17,7 @@ import net.minecraft.block.AbstractFurnaceBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
+import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.ArmorStandEntity;
 import net.minecraft.entity.item.ItemFrameEntity;
@@ -96,7 +97,7 @@ public class SchematicWorld extends WrappedWorld implements IServerWorld {
 		BlockState blockState = getBlockState(pos);
 		if (blockState.getBlock().hasBlockEntity()) {
 			try {
-				TileEntity tileEntity = blockState.createTileEntity(this);
+				TileEntity tileEntity = ((ITileEntityProvider) blockState.getBlock()).createNewTileEntity(this);
 				if (tileEntity != null) {
 					onTEadded(tileEntity, pos);
 					tileEntities.put(pos, tileEntity);

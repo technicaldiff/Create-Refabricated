@@ -13,6 +13,7 @@ import com.simibubi.create.Create;
 import com.simibubi.create.CreateClient;
 import com.simibubi.create.content.AllSections;
 import com.simibubi.create.content.contraptions.fluids.VirtualFluid;
+import com.simibubi.create.content.contraptions.fluids.potion.PotionFluid;
 import com.simibubi.create.content.contraptions.relays.encased.CasingConnectivity;
 import com.simibubi.create.foundation.block.IBlockVertexColor;
 import com.simibubi.create.foundation.block.connected.CTModel;
@@ -25,6 +26,8 @@ import com.tterrag.registrate.builders.FluidBuilder;
 import com.tterrag.registrate.builders.ItemBuilder;
 import com.tterrag.registrate.fabric.EnvExecutor;
 import com.tterrag.registrate.fabric.RegistryObject;
+import com.tterrag.registrate.fabric.SimpleFlowableFluid;
+import com.tterrag.registrate.util.FluidAttributes;
 import com.tterrag.registrate.util.NonNullLazyValue;
 import com.tterrag.registrate.util.entry.RegistryEntry;
 import com.tterrag.registrate.util.nullness.NonNullBiFunction;
@@ -33,7 +36,6 @@ import com.tterrag.registrate.util.nullness.NonNullFunction;
 import com.tterrag.registrate.util.nullness.NonNullSupplier;
 import com.tterrag.registrate.util.nullness.NonNullUnaryOperator;
 
-import alexiil.mc.lib.attributes.fluid.FluidAttributes;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.client.rendering.v1.BuiltinItemRendererRegistry;
@@ -139,29 +141,36 @@ public class CreateRegistrate extends AbstractRegistrate<CreateRegistrate> {
 
 	/* Fluids */
 
-	public <T extends ForgeFlowingFluid> FluidBuilder<T, CreateRegistrate> virtualFluid(String name,
-		BiFunction<FluidAttributes.Builder, Fluid, FluidAttributes> attributesFactory,
-		NonNullFunction<ForgeFlowingFluid.Properties, T> factory) {
-		return entry(name,
-			c -> new VirtualFluidBuilder<>(self(), self(), name, c, Create.asResource("fluid/" + name + "_still"),
-				Create.asResource("fluid/" + name + "_flow"), attributesFactory, factory));
-	}
+//	public <T extends SimpleFlowableFluid> FluidBuilder<T, CreateRegistrate> virtualFluid(String name,
+//		BiFunction<FluidAttributes, Fluid, FluidAttributes> attributesFactory,
+//		NonNullFunction<SimpleFlowableFluid.Properties, T> factory) {
+//		return entry(name,
+//			c -> new VirtualFluidBuilder<>(self(), self(), name, c, Create.asResource("fluid/" + name + "_still"),
+//				Create.asResource("fluid/" + name + "_flow"), attributesFactory, factory));
+//	}
 
 	public FluidBuilder<VirtualFluid, CreateRegistrate> virtualFluid(String name) {
 		return entry(name,
 			c -> new VirtualFluidBuilder<>(self(), self(), name, c, Create.asResource("fluid/" + name + "_still"),
-				Create.asResource("fluid/" + name + "_flow"), null, VirtualFluid::new));
+				Create.asResource("fluid/" + name + "_flow"), /*null,*/ VirtualFluid::new));
 	}
 
-	public FluidBuilder<ForgeFlowingFluid.Flowing, CreateRegistrate> standardFluid(String name) {
+	// potion fluids
+	public FluidBuilder<PotionFluid, CreateRegistrate> potionFluid(String name) {
+		return entry(name,
+				c -> new VirtualFluidBuilder<>(self(), self(), name, c, Create.asResource("fluid/" + name + "_still"),
+						Create.asResource("fluid/" + name + "_flow"), /*null,*/ PotionFluid::new));
+	}
+
+	public FluidBuilder<SimpleFlowableFluid.Flowing, CreateRegistrate> standardFluid(String name) {
 		return fluid(name, Create.asResource("fluid/" + name + "_still"), Create.asResource("fluid/" + name + "_flow"));
 	}
 
-	public FluidBuilder<ForgeFlowingFluid.Flowing, CreateRegistrate> standardFluid(String name,
-		NonNullBiFunction<FluidAttributes.Builder, Fluid, FluidAttributes> attributesFactory) {
-		return fluid(name, Create.asResource("fluid/" + name + "_still"), Create.asResource("fluid/" + name + "_flow"),
-			attributesFactory);
-	}
+//	public FluidBuilder<SimpleFlowableFluid.Flowing, CreateRegistrate> standardFluid(String name,
+//		NonNullBiFunction<FluidAttributes, Fluid, FluidAttributes> attributesFactory) {
+//		return fluid(name, Create.asResource("fluid/" + name + "_still"), Create.asResource("fluid/" + name + "_flow"),
+//			attributesFactory);
+//	}
 
 	/* Util */
 

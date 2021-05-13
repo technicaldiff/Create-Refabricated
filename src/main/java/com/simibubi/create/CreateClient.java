@@ -106,7 +106,7 @@ public class CreateClient implements ClientModInitializer {
 
 		AllKeys.register();
 		AllContainerTypes.registerScreenFactories();
-		// AllTileEntities.registerRenderers();
+//		AllTileEntities.registerRenderers();
 		AllEntityTypes.registerRenderers();
 		getColorHandler().init();
 		AllFluids.assignRenderLayers();

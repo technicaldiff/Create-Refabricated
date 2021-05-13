@@ -7,6 +7,7 @@ import com.simibubi.create.foundation.item.ItemHelper;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.PushReaction;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
@@ -20,19 +21,19 @@ import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 
-public class SchematicannonBlock extends Block implements ITE<SchematicannonTileEntity> {
+public class SchematicannonBlock extends Block implements ITE<SchematicannonTileEntity>, ITileEntityProvider {
 
 	public SchematicannonBlock(Properties properties) {
 		super(properties);
 	}
 
-	@Override
-	public boolean hasTileEntity(BlockState state) {
-		return true;
-	}
+//	@Override
+//	public boolean hasTileEntity(BlockState state) {
+//		return true;
+//	}
 
 	@Override
-	public TileEntity createTileEntity(BlockState state, IBlockReader world) {
+	public TileEntity createNewTileEntity(IBlockReader world) {
 		return AllTileEntities.SCHEMATICANNON.create();
 	}
 

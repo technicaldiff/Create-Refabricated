@@ -4,6 +4,7 @@ import java.util.Random;
 
 import com.simibubi.create.content.contraptions.relays.belt.BeltHelper;
 import com.simibubi.create.content.logistics.InWorldProcessing;
+import com.simibubi.create.lib.utility.NBTSerializer;
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
@@ -66,7 +67,7 @@ public class TransportedItemStack implements Comparable<TransportedItemStack> {
 
 	public CompoundNBT serializeNBT() {
 		CompoundNBT nbt = new CompoundNBT();
-		nbt.put("Item", stack.serializeNBT());
+		nbt.put("Item", NBTSerializer.serializeItemStackNBT(stack));
 		nbt.putFloat("Pos", beltPosition);
 		nbt.putFloat("PrevPos", prevBeltPosition);
 		nbt.putFloat("Offset", sideOffset);

@@ -12,8 +12,6 @@ import java.util.zip.GZIPInputStream;
 
 import javax.annotation.Nonnull;
 
-import com.tterrag.registrate.fabric.EnvExecutor;
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -23,7 +21,11 @@ import com.simibubi.create.content.schematics.client.SchematicEditScreen;
 import com.simibubi.create.content.schematics.filtering.SchematicInstances;
 import com.simibubi.create.foundation.gui.ScreenOpener;
 import com.simibubi.create.foundation.utility.Lang;
+import com.tterrag.registrate.fabric.EnvExecutor;
 
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
+import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
@@ -47,8 +49,6 @@ import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraft.world.gen.feature.template.PlacementSettings;
 import net.minecraft.world.gen.feature.template.Template;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
 
 public class SchematicItem extends Item {
 
@@ -121,7 +121,15 @@ public class SchematicItem extends Item {
 		Path dir;
 		Path file;
 
-		if (Thread.currentThread().getThreadGroup() == SidedThreadGroups.SERVER) {
+//		if (Thread.currentThread().getThreadGroup() == SidedThreadGroups.SERVER) {
+//			dir = Paths.get("schematics", "uploaded").toAbsolutePath();
+//			file = Paths.get(owner, schematic);
+//		} else {
+//			dir = Paths.get("schematics").toAbsolutePath();
+//			file = Paths.get(schematic);
+//		}
+
+		if (FabricLoader.getInstance().getEnvironmentType() == EnvType.SERVER) {
 			dir = Paths.get("schematics", "uploaded").toAbsolutePath();
 			file = Paths.get(owner, schematic);
 		} else {

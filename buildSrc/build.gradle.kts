@@ -12,5 +12,5 @@ repositories {
 
 dependencies {
 	implementation("com.github.PepperCode1", "mcp-tiny", "1bde92310cd80f0d834403d40219a2a06be431da")
-	implementation("net.fabricmc", "fabric-loom", "0.6-SNAPSHOT")
+	implementation("net.fabricmc", "fabric-loom", "0.7-SNAPSHOT")
 }

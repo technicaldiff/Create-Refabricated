@@ -1,5 +1,7 @@
 package com.simibubi.create.content.contraptions.fluids;
 
+import com.tterrag.registrate.fabric.SimpleFlowableFluid;
+
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.fluid.Fluid;
@@ -7,7 +9,7 @@ import net.minecraft.fluid.FluidState;
 import net.minecraft.item.Item;
 import net.minecraft.item.Items;
 
-public class VirtualFluid extends ForgeFlowingFluid {
+public class VirtualFluid extends SimpleFlowableFluid {
 
 	public VirtualFluid(Properties properties) {
 		super(properties);

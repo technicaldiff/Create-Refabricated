@@ -7,6 +7,7 @@ import javax.annotation.Nullable;
 import com.mojang.serialization.Codec;
 import com.simibubi.create.foundation.utility.NBTProcessors;
 
+import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.nbt.CompoundNBT;
@@ -37,7 +38,7 @@ public class SchematicProcessor extends StructureProcessor {
 	public Template.BlockInfo process(IWorldReader world, BlockPos pos, BlockPos anotherPos, Template.BlockInfo rawInfo,
 			Template.BlockInfo info, PlacementSettings settings) {
 		if (info.nbt != null) {
-			TileEntity te = info.state.createTileEntity(world);
+			TileEntity te = ((ITileEntityProvider) info.state.getBlock()).createNewTileEntity(world);
 			if (te != null) {
 				CompoundNBT nbt = NBTProcessors.process(te, info.nbt, false);
 				if (nbt != info.nbt)

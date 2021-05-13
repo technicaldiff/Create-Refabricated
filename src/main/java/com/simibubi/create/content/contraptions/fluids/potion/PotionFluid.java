@@ -5,18 +5,12 @@ import java.util.List;
 
 import com.simibubi.create.AllFluids;
 import com.simibubi.create.content.contraptions.fluids.VirtualFluid;
-import com.simibubi.create.foundation.utility.NBTHelper;
-
 import com.simibubi.create.lib.lba.fluid.FluidStack;
-
-import net.minecraft.fluid.Fluid;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.ListNBT;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Potion;
-import net.minecraft.potion.PotionUtils;
 import net.minecraft.potion.Potions;
-import net.minecraft.util.IItemProvider;
 import net.minecraft.util.ResourceLocation;
 
 public class PotionFluid extends VirtualFluid {
@@ -37,30 +31,34 @@ public class PotionFluid extends VirtualFluid {
 		return fluidStack;
 	}
 
-	public static class PotionFluidAttributes extends FluidAttributes {
-
-		public PotionFluidAttributes(Builder builder, Fluid fluid) {
-			super(builder, fluid);
-		}
-
-		@Override
-		public int getColor(FluidStack stack) {
-			CompoundNBT tag = stack.getOrCreateTag();
-			int color = PotionUtils.getPotionColorFromEffectList(PotionUtils.getEffectsFromTag(tag)) | 0xff000000;
-			return color;
-		}
-
-		@Override
-		public String getTranslationKey(FluidStack stack) {
-			CompoundNBT tag = stack.getOrCreateTag();
-			IItemProvider itemFromBottleType =
-				PotionFluidHandler.itemFromBottleType(NBTHelper.readEnum(tag, "Bottle", BottleType.class));
-			return PotionUtils.getPotionTypeFromNBT(tag)
-				.getNamePrefixed(itemFromBottleType.asItem()
-					.getTranslationKey() + ".effect.");
-		}
-
-	}
+//	public static class PotionFluidAttributes extends FluidAttributes {
+//
+//		public PotionFluidAttributes(Builder builder, Fluid fluid) {
+//			super(builder, fluid);
+//		}
+//
+//		public PotionFluidAttributes(FluidAttributes fluidAttributes, Fluid fluid) {
+//			super();
+//		}
+//
+//		@Override
+//		public int getColor(FluidStack stack) {
+//			CompoundNBT tag = stack.getOrCreateTag();
+//			int color = PotionUtils.getPotionColorFromEffectList(PotionUtils.getEffectsFromTag(tag)) | 0xff000000;
+//			return color;
+//		}
+//
+//		@Override
+//		public String getTranslationKey(FluidStack stack) {
+//			CompoundNBT tag = stack.getOrCreateTag();
+//			IItemProvider itemFromBottleType =
+//				PotionFluidHandler.itemFromBottleType(NBTHelper.readEnum(tag, "Bottle", BottleType.class));
+//			return PotionUtils.getPotionTypeFromNBT(tag)
+//				.getNamePrefixed(itemFromBottleType.asItem()
+//					.getTranslationKey() + ".effect.");
+//		}
+//
+//	}
 
 	public static FluidStack addPotionToFluidStack(FluidStack fs, Potion potion) {
 		ResourceLocation resourcelocation = ForgeRegistries.POTION_TYPES.getKey(potion);
