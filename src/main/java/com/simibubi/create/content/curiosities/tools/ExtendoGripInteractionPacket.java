@@ -1,5 +1,7 @@
 package com.simibubi.create.content.curiosities.tools;
 
+import com.jamieswhiteshirt.reachentityattributes.ReachEntityAttributes;
+
 import me.pepperbell.simplenetworking.C2SPacket;
 import me.pepperbell.simplenetworking.SimpleChannel.ResponseTarget;
 import net.minecraft.entity.Entity;
@@ -59,7 +61,7 @@ public class ExtendoGripInteractionPacket implements C2SPacket {
 				return;
 			Entity entityByID = sender.getServerWorld().getEntityByID(target);
 			if (entityByID != null && ExtendoGripItem.isHoldingExtendoGrip(sender)) {
-				double d = sender.getAttribute(ForgeMod.REACH_DISTANCE.get()).getValue();
+				double d = sender.getAttribute(ReachEntityAttributes.REACH).getValue();
 				if (!sender.canEntityBeSeen(entityByID))
 					d -= 3;
 				d *= d;

@@ -4,6 +4,7 @@ import java.util.UUID;
 
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
+import com.jamieswhiteshirt.reachentityattributes.ReachEntityAttributes;
 import com.simibubi.create.AllItems;
 import com.simibubi.create.foundation.advancement.AllTriggers;
 import com.simibubi.create.foundation.networking.AllPackets;
@@ -49,13 +50,13 @@ public class ExtendoGripItem extends Item {
 	static LazyValue<Multimap<Attribute, AttributeModifier>> rangeModifier =
 			new LazyValue<>(() ->
 					// Holding an ExtendoGrip
-					ImmutableMultimap.of(ForgeMod.REACH_DISTANCE.get(), singleRangeAttributeModifier)
+					ImmutableMultimap.of(ReachEntityAttributes.REACH, singleRangeAttributeModifier)
 			);
 
 	static LazyValue<Multimap<Attribute, AttributeModifier>> doubleRangeModifier =
 			new LazyValue<>(() ->
 					// Holding two ExtendoGrips o.O
-					ImmutableMultimap.of(ForgeMod.REACH_DISTANCE.get(), doubleRangeAttributeModifier)
+					ImmutableMultimap.of(ReachEntityAttributes.REACH, doubleRangeAttributeModifier)
 			);
 
 	public ExtendoGripItem(Properties properties) {
@@ -121,7 +122,7 @@ public class ExtendoGripItem extends Item {
 			return;
 
 		// Modified version of GameRenderer#getMouseOver
-		double d0 = player.getAttribute(ForgeMod.REACH_DISTANCE.get())
+		double d0 = player.getAttribute(ReachEntityAttributes.REACH)
 			.getValue();
 		if (!player.isCreative())
 			d0 -= 0.5f;
