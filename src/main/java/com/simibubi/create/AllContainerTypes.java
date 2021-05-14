@@ -12,14 +12,16 @@ import com.simibubi.create.content.schematics.block.SchematicannonContainer;
 import com.simibubi.create.content.schematics.block.SchematicannonScreen;
 import com.simibubi.create.foundation.utility.Lang;
 
+import com.simibubi.create.lib.utility.ContainerTypeFactoryWrapper;
+
 import net.minecraft.client.gui.IHasContainer;
 import net.minecraft.client.gui.ScreenManager;
 import net.minecraft.client.gui.ScreenManager.IScreenFactory;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.ContainerType;
-import net.minecraft.inventory.container.ContainerType.IFactory;
 import net.minecraft.util.ResourceLocation;
+import net.fabricmc.fabric.api.screenhandler.v1.ScreenHandlerRegistry;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 
@@ -34,18 +36,16 @@ public enum AllContainerTypes {
 	;
 
 	public ContainerType<? extends Container> type;
-	private IFactory<?> factory;
+	private ContainerTypeFactoryWrapper<?> factory;
 
-	private <C extends Container> AllContainerTypes(IContainerFactory<C> factory) {
+	<C extends Container> AllContainerTypes(ContainerTypeFactoryWrapper<C> factory) {
 		this.factory = factory;
 	}
 
-	public static void register(RegistryEvent.Register<ContainerType<?>> event) {
+	public static void register() {
 		for (AllContainerTypes container : values()) {
-			container.type = new ContainerType<>(container.factory)
-				.setRegistryName(new ResourceLocation(Create.ID, Lang.asId(container.name())));
-			event.getRegistry()
-				.register(container.type);
+			container.type = new ContainerType<>(container.factory);
+			ScreenHandlerRegistry.registerSimple(new ResourceLocation(Create.ID, Lang.asId(container.name())), container.factory);
 		}
 	}
 
