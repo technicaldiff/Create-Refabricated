@@ -15,6 +15,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.registry.Registry;
 
 public class AllMovementBehaviours {
 	private static final HashMap<ResourceLocation, MovementBehaviour> movementBehaviours = new HashMap<>();
@@ -26,7 +27,7 @@ public class AllMovementBehaviours {
 	}
 
 	public static void addMovementBehaviour(Block block, MovementBehaviour movementBehaviour) {
-		addMovementBehaviour(block.getRegistryName(), movementBehaviour);
+		addMovementBehaviour(Registry.BLOCK.getKey(block), movementBehaviour);
 	}
 
 	@Nullable
@@ -36,7 +37,7 @@ public class AllMovementBehaviours {
 
 	@Nullable
 	public static MovementBehaviour of(Block block) {
-		return of(block.getRegistryName());
+		return of(Registry.BLOCK.getKey(block));
 	}
 
 	@Nullable
@@ -45,12 +46,12 @@ public class AllMovementBehaviours {
 	}
 
 	public static boolean contains(Block block) {
-		return movementBehaviours.containsKey(block.getRegistryName());
+		return movementBehaviours.containsKey(Registry.BLOCK.getKey(block));
 	}
 
 	public static <B extends Block> NonNullConsumer<? super B> addMovementBehaviour(
 		MovementBehaviour movementBehaviour) {
-		return b -> addMovementBehaviour(b.getRegistryName(), movementBehaviour);
+		return b -> addMovementBehaviour(Registry.BLOCK.getKey(b), movementBehaviour);
 	}
 
 	static void register() {
