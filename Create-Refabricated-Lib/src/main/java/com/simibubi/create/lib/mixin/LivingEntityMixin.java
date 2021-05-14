@@ -8,6 +8,7 @@ import org.spongepowered.asm.mixin.injection.ModifyVariable;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import com.simibubi.create.lib.event.LivingEntityEvents;
+import com.simibubi.create.lib.item.EntitySwingListenerItem;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -27,7 +28,8 @@ public abstract class LivingEntityMixin {
 	@Inject(method = "swingHand(Lnet/minecraft/util/Hand;Z)V", at = @At("HEAD"), cancellable = true)
 	private void create$swingHand(Hand hand, boolean bl, CallbackInfo ci) {
 		ItemStack stack = getHeldItem(hand);
-		if (!stack.isEmpty() && LivingEntityEvents.ITEM_SWING.invoker().onEntityItemSwing(stack, (LivingEntity) (Object) this)) ci.cancel();
+		if (!stack.isEmpty() && stack.getItem() instanceof EntitySwingListenerItem && ((EntitySwingListenerItem) stack.getItem())
+				.onEntitySwing(stack, (LivingEntity) (Object) this)) ci.cancel();
 	}
 
 	@Inject(method = "tick()V", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/Entity;tick()V"))

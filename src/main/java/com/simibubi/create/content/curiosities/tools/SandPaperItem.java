@@ -6,6 +6,7 @@ import com.simibubi.create.foundation.utility.VecHelper;
 
 import com.simibubi.create.lib.annotation.MethodsReturnNonnullByDefault;
 
+import com.simibubi.create.lib.item.CustomItemEnchantabilityItem;
 import com.simibubi.create.lib.utility.NBTSerializer;
 
 import net.minecraft.enchantment.Enchantment;
@@ -31,7 +32,7 @@ import net.minecraft.world.World;
 
 @MethodsReturnNonnullByDefault
 @ParametersAreNonnullByDefault
-public class SandPaperItem extends Item {
+public class SandPaperItem extends Item implements CustomItemEnchantabilityItem {
 
 	public SandPaperItem(Properties properties) {
 		super(properties.maxDamage(8));
@@ -117,7 +118,8 @@ public class SandPaperItem extends Item {
 		return super.canApplyAtEnchantingTable(stack, enchantment);
 	}
 
-	public static int getItemEnchantability(ItemStack stack) {
+	@Override
+	public int getItemEnchantability(ItemStack stack) {
 		return 1;
 	}
 

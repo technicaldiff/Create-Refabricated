@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.annotation.Nonnull;
 
+import com.simibubi.create.lib.item.EntitySwingListenerItem;
 import com.tterrag.registrate.fabric.EnvExecutor;
 
 import net.minecraft.block.BlockState;
@@ -47,7 +48,7 @@ import com.simibubi.create.foundation.utility.NBTProcessors;
 import com.simibubi.create.lib.utility.Constants.NBT;
 
 
-public abstract class ZapperItem extends Item {
+public abstract class ZapperItem extends Item implements EntitySwingListenerItem {
 
 	public ZapperItem(Properties properties) {
 		super(properties.maxStackSize(1));
@@ -226,7 +227,8 @@ public abstract class ZapperItem extends Item {
 			.setCooldown(item.getItem(), dual ? delay * 2 / 3 : delay);
 	}
 
-	public static boolean onEntitySwing(ItemStack stack, LivingEntity entity) {
+	@Override
+	public boolean onEntitySwing(ItemStack stack, LivingEntity entity) {
 		return true;
 	}
 

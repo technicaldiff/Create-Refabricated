@@ -10,20 +10,14 @@ import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
 import net.minecraft.world.World;
-import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 
-@EventBusSubscriber
 public class DivingHelmetItem extends CopperArmorItem {
 
 	public DivingHelmetItem(Properties p_i48534_3_) {
 		super(EquipmentSlotType.HEAD, p_i48534_3_);
 	}
 
-	@SubscribeEvent
-	public static void breatheUnderwater(LivingUpdateEvent event) {
-		LivingEntity entity = event.getEntityLiving();
+	public static void breatheUnderwater(LivingEntity entity) {
 		World world = entity.world;
 		boolean second = world.getGameTime() % 20 == 0;
 		boolean drowning = entity.getAir() == 0;

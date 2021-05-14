@@ -1,23 +1,11 @@
 package com.simibubi.create.lib.event;
 
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.event.Event;
 import net.fabricmc.fabric.api.event.EventFactory;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
 
 public class LivingEntityEvents {
-	@Environment(EnvType.CLIENT)
-	public static final Event<ItemSwing> ITEM_SWING = EventFactory.createArrayBacked(ItemSwing.class, callbacks -> (stack, entity) -> {
-		for (ItemSwing callback : callbacks) {
-			return callback.onEntityItemSwing(stack, entity);
-		}
-
-		return false;
-	});
-
 	public static final Event<ExperienceDrop> EXPERIENCE_DROP = EventFactory.createArrayBacked(ExperienceDrop.class, callbacks -> (i, player) -> {
 		for (ExperienceDrop callback : callbacks) {
 			return callback.onLivingEntityExperienceDrop(i, player);
@@ -39,12 +27,6 @@ public class LivingEntityEvents {
 			callback.onLivingEntityTick(entity);
 		}
 	});
-
-	@Environment(EnvType.CLIENT)
-	@FunctionalInterface
-	public interface ItemSwing {
-		boolean onEntityItemSwing(ItemStack stack, LivingEntity entity);
-	}
 
 	@FunctionalInterface
 	public interface ExperienceDrop {
