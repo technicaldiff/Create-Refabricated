@@ -117,8 +117,7 @@ public class SandPaperItem extends Item {
 		return super.canApplyAtEnchantingTable(stack, enchantment);
 	}
 
-	@Override
-	public int getItemEnchantability(ItemStack stack) {
+	public static int getItemEnchantability(ItemStack stack) {
 		return 1;
 	}
 

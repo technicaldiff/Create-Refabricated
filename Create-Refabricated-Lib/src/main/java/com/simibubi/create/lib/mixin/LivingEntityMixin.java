@@ -7,10 +7,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyVariable;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import com.simibubi.create.lib.event.LivingEntityItemSwingCallback;
-import com.simibubi.create.lib.event.LivingEntityExperienceDropCallback;
-import com.simibubi.create.lib.event.LivingEntityKnockbackStrengthCallback;
-import com.simibubi.create.lib.event.LivingEntityTickCallback;
+import com.simibubi.create.lib.event.LivingEntityEvents;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -30,21 +27,21 @@ public abstract class LivingEntityMixin {
 	@Inject(method = "swingHand(Lnet/minecraft/util/Hand;Z)V", at = @At("HEAD"), cancellable = true)
 	private void create$swingHand(Hand hand, boolean bl, CallbackInfo ci) {
 		ItemStack stack = getHeldItem(hand);
-		if (!stack.isEmpty() && LivingEntityItemSwingCallback.EVENT.invoker().onEntityItemSwing(stack, (LivingEntity) (Object) this)) ci.cancel();
+		if (!stack.isEmpty() && LivingEntityEvents.ITEM_SWING.invoker().onEntityItemSwing(stack, (LivingEntity) (Object) this)) ci.cancel();
 	}
 
 	@Inject(method = "tick()V", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/Entity;tick()V"))
 	private void create$tick(CallbackInfo ci) {
-		LivingEntityTickCallback.EVENT.invoker().onLivingEntityTick((LivingEntity) (Object) this);
+		LivingEntityEvents.TICK.invoker().onLivingEntityTick((LivingEntity) (Object) this);
 	}
 
-	@ModifyVariable(method = "takeKnockback(FDD)V", at = @At(value = "STORE", ordinal = 0), ordinal = 0)
+	@ModifyVariable(method = "takeKnockback(FDD)V", at = @At("STORE"), ordinal = 0)
 	private float create$takeKnockback(float f) {
-		return LivingEntityKnockbackStrengthCallback.EVENT.invoker().onLivingEntityTakeKnockback(f, attackingPlayer);
+		return LivingEntityEvents.KNOCKBACK_STRENGTH.invoker().onLivingEntityTakeKnockback(f, attackingPlayer);
 	}
 
-	@ModifyVariable(method = "dropXp()V", at = @At(value = "STORE", ordinal = 0), ordinal = 0)
+	@ModifyVariable(method = "dropXp()V", at = @At("STORE"), ordinal = 0)
 	private int create$dropXp(int i) {
-		return LivingEntityExperienceDropCallback.EVENT.invoker().onLivingEntityExperienceDrop(i, attackingPlayer);
+		return LivingEntityEvents.EXPERIENCE_DROP.invoker().onLivingEntityExperienceDrop(i, attackingPlayer);
 	}
 }

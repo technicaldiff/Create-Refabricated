@@ -6,6 +6,7 @@
   "mixins": [
     "AbstractMinecartEntityMixin",
     "AbstractRailBlockMixin",
+    "EnchantmentHelperMixin",
     "EntityMixin",
     "EntitySelectionContextMixin",
     "FlowingFluidBlockMixin",

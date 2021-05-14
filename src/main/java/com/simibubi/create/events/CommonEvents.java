@@ -2,8 +2,10 @@ package com.simibubi.create.events;
 
 import com.simibubi.create.content.contraptions.components.deployer.DeployerFakePlayer;
 import com.simibubi.create.content.curiosities.tools.ExtendoGripItem;
+import com.simibubi.create.content.curiosities.tools.SandPaperItem;
 import com.simibubi.create.lib.event.FluidPlaceBlockCallback;
 
+import com.simibubi.create.lib.event.ItemEnchantabilityCallback;
 import com.simibubi.create.lib.event.LivingEntityEvents;
 import com.simibubi.create.lib.event.LivingEntityExperienceDropCallback;
 import com.simibubi.create.lib.event.LivingEntityKnockbackStrengthCallback;
@@ -174,6 +176,7 @@ public class CommonEvents {
 		LivingEntityEvents.EXPERIENCE_DROP.register(DeployerFakePlayer::deployerKillsDoNotSpawnXP);
 		LivingEntityEvents.KNOCKBACK_STRENGTH.register(ExtendoGripItem::attacksByExtendoGripHaveMoreKnockback);
 		LivingEntityEvents.TICK.register(ExtendoGripItem::holdingExtendoGripIncreasesRange);
+		ItemEnchantabilityCallback.EVENT.register(SandPaperItem::getItemEnchantability);
 	}
 
 }
