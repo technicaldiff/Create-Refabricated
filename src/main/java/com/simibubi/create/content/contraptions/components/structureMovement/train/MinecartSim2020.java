@@ -13,7 +13,6 @@ import com.simibubi.create.lib.helper.AbstractMinecartEntityHelper;
 import com.simibubi.create.lib.utility.CapabilityUtil;
 import com.simibubi.create.lib.utility.LazyOptional;
 import com.simibubi.create.lib.utility.MinecartAndRailUtil;
-import com.simibubi.create.lib.utility.MinecartUtil;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.item.minecart.AbstractMinecartEntity;
@@ -92,19 +91,19 @@ public class MinecartSim2020 {
 
 		switch (railshape) {
 		case ASCENDING_EAST:
-			forcedMovement = forcedMovement.add(-1 * MinecartUtil.getSlopeAdjustment(), 0.0D, 0.0D);
+			forcedMovement = forcedMovement.add(-1 * MinecartAndRailUtil.getSlopeAdjustment(), 0.0D, 0.0D);
 			actualY++;
 			break;
 		case ASCENDING_WEST:
-			forcedMovement = forcedMovement.add(MinecartUtil.getSlopeAdjustment(), 0.0D, 0.0D);
+			forcedMovement = forcedMovement.add(MinecartAndRailUtil.getSlopeAdjustment(), 0.0D, 0.0D);
 			actualY++;
 			break;
 		case ASCENDING_NORTH:
-			forcedMovement = forcedMovement.add(0.0D, 0.0D, MinecartUtil.getSlopeAdjustment());
+			forcedMovement = forcedMovement.add(0.0D, 0.0D, MinecartAndRailUtil.getSlopeAdjustment());
 			actualY++;
 			break;
 		case ASCENDING_SOUTH:
-			forcedMovement = forcedMovement.add(0.0D, 0.0D, -1 * MinecartUtil.getSlopeAdjustment());
+			forcedMovement = forcedMovement.add(0.0D, 0.0D, -1 * MinecartAndRailUtil.getSlopeAdjustment());
 			actualY++;
 		default:
 			break;

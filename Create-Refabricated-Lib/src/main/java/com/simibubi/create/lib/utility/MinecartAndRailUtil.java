@@ -52,4 +52,8 @@ public class MinecartAndRailUtil {
 	public static BlockPos getExpectedRailPos(AbstractMinecartEntity cart) {
 		return AbstractMinecartEntityHelper.getCurrentRailPos(cart);
 	}
+
+	public static double getSlopeAdjustment() {
+		return 0.0078125D;
+	}
 }

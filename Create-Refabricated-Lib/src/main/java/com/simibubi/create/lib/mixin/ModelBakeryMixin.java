@@ -1,0 +1,48 @@
+package com.simibubi.create.lib.mixin;
+
+import java.util.Map;
+
+import org.spongepowered.asm.mixin.Final;
+import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+
+import com.google.common.collect.Maps;
+import com.simibubi.create.lib.event.OnModelRegistryCallback;
+import com.simibubi.create.lib.utility.SpecialModelUtil;
+
+import net.minecraft.client.renderer.color.BlockColors;
+import net.minecraft.client.renderer.model.IUnbakedModel;
+import net.minecraft.client.renderer.model.ModelBakery;
+import net.minecraft.profiler.IProfiler;
+import net.minecraft.resources.IResourceManager;
+import net.minecraft.util.ResourceLocation;
+
+@Mixin(ModelBakery.class)
+public abstract class ModelBakeryMixin {
+	@Final @Shadow private final Map<ResourceLocation, IUnbakedModel> field_217849_F = Maps.newHashMap();
+	@Final @Shadow private final Map<ResourceLocation, IUnbakedModel> field_217851_H = Maps.newHashMap();
+	@Shadow public abstract IUnbakedModel getUnbakedModel(ResourceLocation p_209597_1_);
+
+	private void create$addModelToCache(ResourceLocation p_217843_1_) {
+		IUnbakedModel iunbakedmodel = this.getUnbakedModel(p_217843_1_);
+		this.field_217849_F.put(p_217843_1_, iunbakedmodel);
+		this.field_217851_H.put(p_217843_1_, iunbakedmodel);
+	}
+
+	@Inject(at = @At(value = "INVOKE", target = "Lnet/minecraft/profiler/IProfiler;startSection(Ljava/lang/String;)V", shift = At.Shift.BEFORE),
+	method = "Lnet/minecraft/client/renderer/model/ModelBakery;<init>(Lnet/minecraft/resources/IResourceManager;Lnet/minecraft/client/renderer/color/BlockColors;Lnet/minecraft/profiler/IProfiler;I)V")
+	public void onModelRegistry(IResourceManager iResourceManager, BlockColors blockColors, IProfiler iProfiler, int i, CallbackInfo ci) {
+		OnModelRegistryCallback.EVENT.invoker().onModelRegistry();
+	}
+
+	@Inject(at = @At(value = "INVOKE", target = "Lnet/minecraft/profiler/IProfiler;endStartSection(Ljava/lang/String;)V", shift = At.Shift.BEFORE, ordinal = 4),
+			method = "Lnet/minecraft/client/renderer/model/ModelBakery;<init>(Lnet/minecraft/resources/IResourceManager;Lnet/minecraft/client/renderer/color/BlockColors;Lnet/minecraft/profiler/IProfiler;I)V")
+	public void registerSpecialModels(IResourceManager iResourceManager, BlockColors blockColors, IProfiler iProfiler, int i, CallbackInfo ci) {
+		for (ResourceLocation location : SpecialModelUtil.specialModels) {
+			create$addModelToCache(location);
+		}
+	}
+}

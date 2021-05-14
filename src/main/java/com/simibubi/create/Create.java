@@ -70,6 +70,9 @@ public class Create implements ModInitializer {
 
 	@Override
 	public void onInitialize() {
+//		IEventBus modEventBus = FMLJavaModLoadingContext.get()
+//				.getModEventBus();
+
 		AllSoundEvents.prepare();
 		AllBlocks.register();
 		AllItems.register();
@@ -81,7 +84,8 @@ public class Create implements ModInitializer {
 		AllMovementBehaviours.register();
 		AllWorldFeatures.register();
 
-		modEventBus.addListener(Create::init);
+//		modEventBus.addListener(Create::init); // I think this can just be run now
+		init();
 		MinecraftForge.EVENT_BUS.addListener(EventPriority.HIGH, Create::onBiomeLoad);
 		modEventBus.addGenericListener(Feature.class, AllWorldFeatures::registerOreFeatures);
 		modEventBus.addGenericListener(Placement.class, AllWorldFeatures::registerDecoratorFeatures);
@@ -91,15 +95,15 @@ public class Create implements ModInitializer {
 		modEventBus.addGenericListener(SoundEvent.class, AllSoundEvents::register);
 		modEventBus.addListener(AllConfigs::onLoad);
 		modEventBus.addListener(AllConfigs::onReload);
-//		modEventBus.addListener(EventPriority.LOWEST, this::gatherData);
+//		modEventBus.addListener(EventPriority.LOWEST, this::gatherData); // method commented, don't need datagen
 
 		AllConfigs.register();
 		random = new Random();
 
-		EnvExecutor.runWhenOn(EnvType.CLIENT, () -> () -> CreateClient.addClientListeners(modEventBus));
+		EnvExecutor.runWhenOn(EnvType.CLIENT, () -> () -> CreateClient.addClientListeners());
 	}
 
-	public static void init(final FMLCommonSetupEvent event) {
+	public static void init() {
 		CapabilityMinecartController.register();
 		SchematicInstances.register();
 		schematicReceiver = new ServerSchematicLoader();
@@ -109,15 +113,15 @@ public class Create implements ModInitializer {
 
 		chunkUtil = new ChunkUtil();
 		chunkUtil.init();
-		MinecraftForge.EVENT_BUS.register(chunkUtil);
+//		MinecraftForge.EVENT_BUS.register(chunkUtil); // init() handles registering events
 
 		AllPackets.registerPackets();
 		AllTriggers.register();
 
-		event.enqueueWork(() -> {
+//		event.enqueueWork(() -> { // I think this can just be run on initialize too
 			SchematicProcessor.register();
 			AllWorldFeatures.registerFeatures();
-		});
+//		});
 	}
 
 	public static void onBiomeLoad(BiomeLoadingEvent event) {

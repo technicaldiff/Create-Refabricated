@@ -1,8 +1,10 @@
 package com.simibubi.create;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.function.Function;
 
 import javax.annotation.Nullable;
@@ -34,8 +36,10 @@ import com.simibubi.create.foundation.render.backend.instancing.InstancedTileRen
 import com.simibubi.create.foundation.utility.WorldAttached;
 import com.simibubi.create.foundation.utility.ghost.GhostBlocks;
 import com.simibubi.create.foundation.utility.outliner.Outliner;
-
 import com.simibubi.create.lib.event.ModelsBakedCallback;
+import com.simibubi.create.lib.event.OnModelRegistryCallback;
+
+import com.simibubi.create.lib.utility.SpecialModelUtil;
 
 import net.fabricmc.api.ClientModInitializer;
 import net.minecraft.block.Block;
@@ -76,9 +80,9 @@ public class CreateClient implements ClientModInitializer {
 	private static AllColorHandlers colorHandlers;
 	private static CasingConnectivity casingConnectivity;
 
-	public static void addClientListeners(IEventBus modEventBus) {
-		modEventBus.addListener(CreateClient::clientInit);
-		modEventBus.addListener(CreateClient::onModelBake);
+	public static void addClientListeners() {
+//		modEventBus.addListener(CreateClient::clientInit); // turned into onInitializeClient()
+//		modEventBus.addListener(CreateClient::onModelBake); // registered in OnInitializeClient()
 		modEventBus.addListener(CreateClient::onModelRegistry);
 		modEventBus.addListener(CreateClient::onTextureStitch);
 		modEventBus.addListener(AllParticleTypes::registerFactories);
@@ -122,10 +126,14 @@ public class CreateClient implements ClientModInitializer {
 			((IReloadableResourceManager) resourceManager).addReloadListener(new ResourceReloadHandler());
 
 		AllBlockPartials.clientInit();
+
+		// fabric events
 		ModelsBakedCallback.EVENT.register(CreateClient::onModelBake);
-		event.enqueueWork(() -> {
+		OnModelRegistryCallback.EVENT.register(CreateClient::onModelRegistry);
+
+//		event.enqueueWork(() -> { // I think this can just be run on initialize
 			CopperBacktankArmorLayer.register();
-		});
+//		});
 	}
 
 	public static void onTextureStitch(TextureStitchEvent.Pre event) {
@@ -150,12 +158,13 @@ public class CreateClient implements ClientModInitializer {
 		});
 	}
 
-	public static void onModelRegistry(ModelRegistryEvent event) {
-		PartialModel.onModelRegistry(event);
+
+	public static void onModelRegistry() {
+		PartialModel.onModelRegistry();
 
 		getCustomRenderedItems().foreach((item, modelFunc) -> modelFunc.apply(null)
 			.getModelLocations()
-			.forEach(ModelLoader::addSpecialModel));
+			.forEach(SpecialModelUtil::addSpecialModel));
 	}
 
 	protected static ModelResourceLocation getItemModelLocation(Item item) {

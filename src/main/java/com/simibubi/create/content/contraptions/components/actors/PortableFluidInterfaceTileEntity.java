@@ -1,13 +1,17 @@
 package com.simibubi.create.content.contraptions.components.actors;
 
 import com.simibubi.create.content.contraptions.components.structureMovement.Contraption;
-
+import com.simibubi.create.lib.capabilities.Capability;
+import com.simibubi.create.lib.capabilities.CapabilityProvider;
+import com.simibubi.create.lib.lba.fluid.FluidAction;
 import com.simibubi.create.lib.lba.fluid.FluidStack;
+import com.simibubi.create.lib.lba.fluid.FluidTank;
+import com.simibubi.create.lib.utility.LazyOptional;
 
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.Direction;
 
-public class PortableFluidInterfaceTileEntity extends PortableStorageInterfaceTileEntity {
+public class PortableFluidInterfaceTileEntity extends PortableStorageInterfaceTileEntity implements CapabilityProvider {
 
 	protected LazyOptional<IFluidHandler> capability;
 
@@ -45,7 +49,8 @@ public class PortableFluidInterfaceTileEntity extends PortableStorageInterfaceTi
 	public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
 		if (isFluidHandlerCap(cap))
 			return capability.cast();
-		return super.getCapability(cap, side);
+//		return super.getCapability(cap, side);
+		return LazyOptional.empty();
 	}
 
 	class InterfaceFluidHandler implements IFluidHandler {

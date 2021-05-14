@@ -17,6 +17,7 @@
     "Matrix3fMixin",
     "Matrix4fMixin",
     "MobEntityMixin",
+    "ModelBakeryMixin",
     "PlayerControllerMixin",
     "PlayerEntityMixin",
     "RailStateMixin",

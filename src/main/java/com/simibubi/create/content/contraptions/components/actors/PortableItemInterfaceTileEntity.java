@@ -3,6 +3,7 @@ package com.simibubi.create.content.contraptions.components.actors;
 import com.simibubi.create.content.contraptions.components.structureMovement.Contraption;
 import com.simibubi.create.foundation.item.ItemHandlerWrapper;
 import com.simibubi.create.lib.capabilities.Capability;
+import com.simibubi.create.lib.capabilities.CapabilityProvider;
 import com.simibubi.create.lib.lba.item.IItemHandlerModifiable;
 import com.simibubi.create.lib.lba.item.ItemStackHandler;
 import com.simibubi.create.lib.utility.LazyOptional;
@@ -11,7 +12,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.Direction;
 
-public class PortableItemInterfaceTileEntity extends PortableStorageInterfaceTileEntity {
+public class PortableItemInterfaceTileEntity extends PortableStorageInterfaceTileEntity implements CapabilityProvider {
 
 	protected LazyOptional<IItemHandlerModifiable> capability;
 
@@ -45,7 +46,8 @@ public class PortableItemInterfaceTileEntity extends PortableStorageInterfaceTil
 	public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
 		if (isItemHandlerCap(cap))
 			return capability.cast();
-		return super.getCapability(cap, side);
+//		return super.getCapability(cap, side);
+		return LazyOptional.empty();
 	}
 
 	class InterfaceItemHandler extends ItemHandlerWrapper {

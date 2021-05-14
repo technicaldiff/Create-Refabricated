@@ -4,12 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import com.simibubi.create.lib.utility.SpecialModelUtil;
+
 import net.minecraft.client.renderer.model.IBakedModel;
-import net.minecraft.client.renderer.model.ModelManager;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.client.event.ModelBakeEvent;
-import net.minecraftforge.client.event.ModelRegistryEvent;
-import net.minecraftforge.client.model.ModelLoader;
 
 /**
  * A helper class for loading and accessing json models.
@@ -37,9 +35,9 @@ public class PartialModel {
 		all.add(this);
 	}
 
-	public static void onModelRegistry(ModelRegistryEvent event) {
+	public static void onModelRegistry() {
 		for (PartialModel partial : all)
-			ModelLoader.addSpecialModel(partial.modelLocation);
+			SpecialModelUtil.addSpecialModel(partial.modelLocation);
 
 		tooLate = true;
 	}

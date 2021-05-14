@@ -19,6 +19,7 @@ import com.simibubi.create.foundation.config.AllConfigs;
 import com.simibubi.create.foundation.item.ItemHelper;
 import com.simibubi.create.foundation.tileEntity.behaviour.belt.TransportedItemStackHandlerBehaviour.TransportedResult;
 import com.simibubi.create.foundation.utility.ColorHelper;
+import com.simibubi.create.lib.helper.EntityHelper;
 import com.simibubi.create.lib.lba.item.ItemHandlerHelper;
 import com.simibubi.create.lib.lba.item.ItemStackHandler;
 
@@ -79,9 +80,9 @@ public class InWorldProcessing {
 	}
 
 	public static boolean canProcess(ItemEntity entity, Type type) {
-		if (entity.getPersistentData()
+		if (EntityHelper.getExtraCustomData(entity)
 			.contains("CreateData")) {
-			CompoundNBT compound = entity.getPersistentData()
+			CompoundNBT compound = EntityHelper.getExtraCustomData(entity)
 				.getCompound("CreateData");
 			if (compound.contains("Processing")) {
 				CompoundNBT processing = compound.getCompound("Processing");
@@ -225,7 +226,7 @@ public class InWorldProcessing {
 	}
 
 	private static int decrementProcessingTime(ItemEntity entity, Type type) {
-		CompoundNBT nbt = entity.getPersistentData();
+		CompoundNBT nbt = EntityHelper.getExtraCustomData(entity);
 
 		if (!nbt.contains("CreateData"))
 			nbt.put("CreateData", new CompoundNBT());
