@@ -64,8 +64,7 @@ public enum AllRecipeTypes {
 		this.type = existingType;
 	}
 
-	public static void register(RegistryEvent.Register<IRecipeSerializer<?>> event) {
-		ShapedRecipe.setCraftingSize(9, 9);
+	public static void register() {
 
 		for (AllRecipeTypes r : AllRecipeTypes.values()) {
 			if (r.type == null)
@@ -73,8 +72,7 @@ public enum AllRecipeTypes {
 
 			r.serializer = r.supplier.get();
 			ResourceLocation location = new ResourceLocation(Create.ID, Lang.asId(r.name()));
-			event.getRegistry()
-				.register(r.serializer.setRegistryName(location));
+			Registry.register(Registry.RECIPE_SERIALIZER, location, r.serializer);
 		}
 	}
 
