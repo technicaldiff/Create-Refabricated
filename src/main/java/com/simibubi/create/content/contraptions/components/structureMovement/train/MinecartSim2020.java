@@ -10,11 +10,11 @@ import com.simibubi.create.content.contraptions.components.structureMovement.tra
 import com.simibubi.create.content.contraptions.components.structureMovement.train.capability.MinecartController;
 import com.simibubi.create.foundation.utility.VecHelper;
 import com.simibubi.create.lib.helper.AbstractMinecartEntityHelper;
+import com.simibubi.create.lib.utility.CapabilityUtil;
 import com.simibubi.create.lib.utility.LazyOptional;
 import com.simibubi.create.lib.utility.MinecartAndRailUtil;
 import com.simibubi.create.lib.utility.MinecartUtil;
 
-import net.minecraft.block.AbstractRailBlock;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.item.minecart.AbstractMinecartEntity;
 import net.minecraft.entity.item.minecart.FurnaceMinecartEntity;
@@ -60,9 +60,9 @@ public class MinecartSim2020 {
 			return MathHelper.epsilonEquals(((FurnaceMinecartEntity) c).pushX, 0)
 				&& MathHelper.epsilonEquals(((FurnaceMinecartEntity) c).pushZ, 0);
 		LazyOptional<MinecartController> capability =
-				c.getCapability(CapabilityMinecartController.MINECART_CONTROLLER_CAPABILITY);
+				CapabilityUtil.getCapability(c, CapabilityMinecartController.MINECART_CONTROLLER_CAPABILITY);
 		if (capability.isPresent() && capability.orElse(null)
-			.isStalled())
+				.isStalled())
 			return false;
 		return true;
 	}

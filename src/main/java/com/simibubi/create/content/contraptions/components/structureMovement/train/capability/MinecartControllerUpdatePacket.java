@@ -1,5 +1,7 @@
 package com.simibubi.create.content.contraptions.components.structureMovement.train.capability;
 
+import com.simibubi.create.lib.utility.CapabilityUtil;
+
 import me.pepperbell.simplenetworking.S2CPacket;
 import me.pepperbell.simplenetworking.SimpleChannel.ResponseTarget;
 import net.fabricmc.api.EnvType;
@@ -49,8 +51,8 @@ public class MinecartControllerUpdatePacket implements S2CPacket {
 		Entity entityByID = world.getEntityByID(entityID);
 		if (entityByID == null)
 			return;
-		entityByID.getCapability(CapabilityMinecartController.MINECART_CONTROLLER_CAPABILITY)
-			.ifPresent(mc -> mc.deserializeNBT(nbt));
+		CapabilityUtil.getCapability(entityByID, CapabilityMinecartController.MINECART_CONTROLLER_CAPABILITY)
+			.ifPresent(mc -> ((MinecartController) mc).deserializeNBT(nbt)); // fixme, this cast shouldn't be needed and probably means something broke
 	}
 
 }

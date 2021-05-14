@@ -3,9 +3,12 @@ package com.simibubi.create.content.contraptions.components.structureMovement.tr
 import com.simibubi.create.AllItems;
 import com.simibubi.create.content.contraptions.components.structureMovement.train.capability.CapabilityMinecartController;
 import com.simibubi.create.content.contraptions.components.structureMovement.train.capability.MinecartController;
-
+import com.simibubi.create.lib.utility.CapabilityUtil;
+import com.simibubi.create.lib.utility.LazyOptional;
 import com.tterrag.registrate.fabric.EnvExecutor;
 
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.minecart.AbstractMinecartEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -13,8 +16,6 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.world.World;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
 
 public class MinecartCouplingItem extends Item {
 
@@ -32,7 +33,7 @@ public class MinecartCouplingItem extends Item {
 		if (player == null)
 			return;
 		LazyOptional<MinecartController> capability =
-			minecart.getCapability(CapabilityMinecartController.MINECART_CONTROLLER_CAPABILITY);
+				CapabilityUtil.getCapability(minecart, CapabilityMinecartController.MINECART_CONTROLLER_CAPABILITY);
 		if (!capability.isPresent())
 			return;
 		MinecartController controller = capability.orElse(null);

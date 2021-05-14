@@ -16,6 +16,9 @@ import com.simibubi.create.Create;
 import com.simibubi.create.content.contraptions.components.structureMovement.train.CouplingHandler;
 import com.simibubi.create.foundation.utility.Iterate;
 import com.simibubi.create.foundation.utility.WorldAttached;
+import com.simibubi.create.lib.capabilities.Capability;
+import com.simibubi.create.lib.capabilities.CapabilityProvider;
+import com.simibubi.create.lib.utility.CapabilityUtil;
 import com.simibubi.create.lib.utility.LazyOptional;
 import com.tterrag.registrate.util.nullness.NonNullConsumer;
 
@@ -106,7 +109,8 @@ public class CapabilityMinecartController implements ICapabilitySerializable<Com
 
 			cartsWithCoupling.remove(uniqueID);
 
-			LazyOptional<MinecartController> capability = cart.getCapability(MINECART_CONTROLLER_CAPABILITY);
+			LazyOptional<MinecartController> capability = CapabilityUtil.getCapability(cart, MINECART_CONTROLLER_CAPABILITY);
+
 			MinecartController controller = capability.orElse(null);
 			capability.addListener(new MinecartRemovalListener(world, cart));
 			carts.put(uniqueID, controller);
@@ -201,7 +205,7 @@ public class CapabilityMinecartController implements ICapabilitySerializable<Com
 
 	/* Capability management */
 
-	@CapabilityInject(MinecartController.class)
+//	@CapabilityInject(MinecartController.class)
 	public static Capability<MinecartController> MINECART_CONTROLLER_CAPABILITY = null;
 
 	public static void attach(AttachCapabilitiesEvent<Entity> event) {
@@ -224,7 +228,7 @@ public class CapabilityMinecartController implements ICapabilitySerializable<Com
 		Entity entity = event.getTarget();
 		if (!(entity instanceof AbstractMinecartEntity))
 			return;
-		entity.getCapability(MINECART_CONTROLLER_CAPABILITY)
+		((CapabilityProvider) entity).getCapability(MINECART_CONTROLLER_CAPABILITY) // I don't understand why, but I couldn't use a util class for this. Errors.
 			.ifPresent(MinecartController::sendData);
 	}
 
@@ -233,7 +237,7 @@ public class CapabilityMinecartController implements ICapabilitySerializable<Com
 
 			@Override
 			public INBT writeNBT(Capability<MinecartController> capability, MinecartController instance,
-				Direction side) {
+								 Direction side) {
 				return instance.serializeNBT();
 			}
 
