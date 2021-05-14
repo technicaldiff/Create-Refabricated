@@ -10,6 +10,7 @@
     "EntityMixin",
     "EntitySelectionContextMixin",
     "FlowingFluidBlockMixin",
+    "GameRendererMixin",
     "ItemEntityMixin",
     "ItemStackMixin",
     "LanguageMixin",

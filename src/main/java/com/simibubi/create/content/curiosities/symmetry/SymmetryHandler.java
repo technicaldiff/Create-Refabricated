@@ -70,7 +70,7 @@ public class SymmetryHandler {
 	}
 
 	@Environment(EnvType.CLIENT)
-	public static void render(RenderWorldLastEvent event) {
+	public static void render(MatrixStack ms) {
 		Minecraft mc = Minecraft.getInstance();
 		ClientPlayerEntity player = mc.player;
 
@@ -96,7 +96,6 @@ public class SymmetryHandler {
 			ActiveRenderInfo info = mc.gameRenderer.getActiveRenderInfo();
 			Vector3d view = info.getProjectedView();
 
-			MatrixStack ms = event.getMatrixStack();
 			ms.push();
 			ms.translate(-view.getX(), -view.getY(), -view.getZ());
 			ms.translate(pos.getX(), pos.getY(), pos.getZ());

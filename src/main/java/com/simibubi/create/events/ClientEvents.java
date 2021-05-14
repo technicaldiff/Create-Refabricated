@@ -7,6 +7,7 @@ import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
 
 import com.simibubi.create.content.contraptions.goggles.GoggleOverlayRenderer;
+import com.simibubi.create.content.curiosities.symmetry.SymmetryHandler;
 import com.simibubi.create.content.curiosities.tools.ExtendoGripItem;
 import com.simibubi.create.foundation.block.ItemUseOverrides;
 import com.simibubi.create.foundation.tileEntity.behaviour.edgeInteraction.EdgeInteractionHandler;
@@ -16,6 +17,8 @@ import com.simibubi.create.lib.event.LivingEntityEvents;
 import com.simibubi.create.lib.event.LivingEntityItemSwingCallback;
 import com.simibubi.create.lib.event.LeftClickAirCallback;
 import com.simibubi.create.lib.event.RenderHandCallback;
+
+import com.simibubi.create.lib.event.RenderWorldLastCallback;
 
 import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
 import net.fabricmc.fabric.api.event.player.AttackBlockCallback;
@@ -375,6 +378,7 @@ public class ClientEvents {
 		AttackEntityCallback.EVENT.register(ExtendoGripItem::notifyServerOfLongRangeAttacks);
 		UseEntityCallback.EVENT.register(ExtendoGripItem::notifyServerOfLongRangeInteractions);
 		LivingEntityEvents.ITEM_SWING.register(ZapperItem::onEntitySwing);
+		RenderWorldLastCallback.EVENT.register(SymmetryHandler::render);
 	}
 
 	public static void loadCompleted(FMLLoadCompleteEvent event) {
