@@ -1,7 +1,6 @@
 package com.simibubi.create;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -38,8 +37,11 @@ import com.simibubi.create.foundation.utility.ghost.GhostBlocks;
 import com.simibubi.create.foundation.utility.outliner.Outliner;
 import com.simibubi.create.lib.event.ModelsBakedCallback;
 import com.simibubi.create.lib.event.OnModelRegistryCallback;
-
+import com.simibubi.create.lib.event.OnTextureStitchCallback;
+import com.simibubi.create.lib.event.ParticleManagerRegistrationCallback;
 import com.simibubi.create.lib.utility.SpecialModelUtil;
+
+import com.simibubi.create.lib.utility.TextureStitchUtil;
 
 import net.fabricmc.api.ClientModInitializer;
 import net.minecraft.block.Block;
@@ -49,12 +51,14 @@ import net.minecraft.client.renderer.model.IBakedModel;
 import net.minecraft.client.renderer.model.ModelBakery;
 import net.minecraft.client.renderer.model.ModelManager;
 import net.minecraft.client.renderer.model.ModelResourceLocation;
+import net.minecraft.client.renderer.texture.AtlasTexture;
 import net.minecraft.client.settings.GraphicsFanciness;
 import net.minecraft.inventory.container.PlayerContainer;
 import net.minecraft.item.Item;
 import net.minecraft.resources.IReloadableResourceManager;
 import net.minecraft.resources.IResourceManager;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.registry.Registry;
 import net.minecraft.util.text.ChatType;
 import net.minecraft.util.text.IFormattableTextComponent;
 import net.minecraft.util.text.StringTextComponent;
@@ -83,10 +87,10 @@ public class CreateClient implements ClientModInitializer {
 	public static void addClientListeners() {
 //		modEventBus.addListener(CreateClient::clientInit); // turned into onInitializeClient()
 //		modEventBus.addListener(CreateClient::onModelBake); // registered in OnInitializeClient()
-		modEventBus.addListener(CreateClient::onModelRegistry);
-		modEventBus.addListener(CreateClient::onTextureStitch);
-		modEventBus.addListener(AllParticleTypes::registerFactories);
-		modEventBus.addListener(ClientEvents::loadCompleted);
+//		modEventBus.addListener(CreateClient::onModelRegistry); // registered in OnInitializeClient()
+//		modEventBus.addListener(CreateClient::onTextureStitch); // registered in OnInitializeClient()
+//		modEventBus.addListener(AllParticleTypes::registerFactories); // registered in OnInitializeClient()
+//		modEventBus.addListener(ClientEvents::loadCompleted); unnecessary on fabric
 
 		Backend.init();
 		OptifineHandler.init();
@@ -130,19 +134,21 @@ public class CreateClient implements ClientModInitializer {
 		// fabric events
 		ModelsBakedCallback.EVENT.register(CreateClient::onModelBake);
 		OnModelRegistryCallback.EVENT.register(CreateClient::onModelRegistry);
+		OnTextureStitchCallback.EVENT.register(CreateClient::onTextureStitch);
+		ParticleManagerRegistrationCallback.EVENT.register(AllParticleTypes::registerFactories);
 
 //		event.enqueueWork(() -> { // I think this can just be run on initialize
 			CopperBacktankArmorLayer.register();
 //		});
 	}
 
-	public static void onTextureStitch(TextureStitchEvent.Pre event) {
-		if (!event.getMap()
+	public static void onTextureStitch(TextureStitchUtil util) {
+		if (!util.map
 			.getId()
 			.equals(PlayerContainer.BLOCK_ATLAS_TEXTURE))
 			return;
 		SpriteShifter.getAllTargetSprites()
-			.forEach(event::addSprite);
+			.forEach(util::addSprite);
 	}
 
 	public static void onModelBake(ModelManager modelManager, Map<ResourceLocation, IBakedModel> modelRegistry, ModelBakery modelBakery) {
@@ -168,7 +174,7 @@ public class CreateClient implements ClientModInitializer {
 	}
 
 	protected static ModelResourceLocation getItemModelLocation(Item item) {
-		return new ModelResourceLocation(item.getRegistryName(), "inventory");
+		return new ModelResourceLocation(Registry.ITEM.getKey(item), "inventory");
 	}
 
 	protected static List<ModelResourceLocation> getAllBlockStateModelLocations(Block block) {
@@ -182,7 +188,7 @@ public class CreateClient implements ClientModInitializer {
 	}
 
 	protected static ModelResourceLocation getBlockModelLocation(Block block, String suffix) {
-		return new ModelResourceLocation(block.getRegistryName(), suffix);
+		return new ModelResourceLocation(Registry.BLOCK.getKey(block), suffix);
 	}
 
 	protected static <T extends IBakedModel> void swapModels(Map<ResourceLocation, IBakedModel> modelRegistry,

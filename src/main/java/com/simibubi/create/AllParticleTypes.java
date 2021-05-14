@@ -45,7 +45,7 @@ public enum AllParticleTypes {
 	}
 
 	@Environment(EnvType.CLIENT)
-	public static void registerFactories(ParticleFactoryRegisterEvent event) {
+	public static void registerFactories() {
 		ParticleManager particles = Minecraft.getInstance().particles;
 		for (AllParticleTypes particle : values())
 			particle.entry.registerFactory(particles);

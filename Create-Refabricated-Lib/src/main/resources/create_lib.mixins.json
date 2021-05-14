@@ -49,6 +49,7 @@
     "accessor.WoodTypeAccessor"
   ],
   "client": [
+    "AtlasTextureMixin",
     "ClientPlayNetHandlerMixin",
     "ClientWorldMixin",
     "FirstPersonRendererMixin",
