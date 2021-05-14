@@ -25,6 +25,7 @@ import com.simibubi.create.lib.capabilities.Capability;
 import com.simibubi.create.lib.lba.item.ItemHandlerHelper;
 import com.simibubi.create.lib.lba.item.ItemStackHandler;
 import com.simibubi.create.lib.utility.Constants.NBT;
+import com.simibubi.create.lib.utility.LazyOptional;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.inventory.InventoryHelper;
