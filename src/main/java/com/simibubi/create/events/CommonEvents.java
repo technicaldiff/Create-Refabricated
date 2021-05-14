@@ -4,6 +4,7 @@ import com.simibubi.create.content.contraptions.components.deployer.DeployerFake
 import com.simibubi.create.content.curiosities.tools.ExtendoGripItem;
 import com.simibubi.create.lib.event.FluidPlaceBlockCallback;
 
+import com.simibubi.create.lib.event.LivingEntityEvents;
 import com.simibubi.create.lib.event.LivingEntityExperienceDropCallback;
 import com.simibubi.create.lib.event.LivingEntityKnockbackStrengthCallback;
 import com.simibubi.create.lib.event.LivingEntityTickCallback;
@@ -164,15 +165,15 @@ public class CommonEvents {
 		ServerWorldEvents.LOAD.register((server, world) -> CommonEvents.onLoadWorld(world));
 		ServerWorldEvents.UNLOAD.register((server, world) -> CommonEvents.onUnloadWorld(world));
 		FluidPlaceBlockCallback.EVENT.register(CommonEvents::whenFluidsMeet);
-		LivingEntityTickCallback.EVENT.register(CommonEvents::onUpdateLivingEntity);
+		LivingEntityEvents.TICK.register(CommonEvents::onUpdateLivingEntity);
 
 		// External Events
 
 		AttackBlockCallback.EVENT.register(ZapperInteractionHandler::leftClickingBlocksWithTheZapperSelectsTheBlock);
 		MobEntitySetTargetCallback.EVENT.register(DeployerFakePlayer::entitiesDontRetaliate);
-		LivingEntityExperienceDropCallback.EVENT.register(DeployerFakePlayer::deployerKillsDoNotSpawnXP);
-		LivingEntityKnockbackStrengthCallback.EVENT.register(ExtendoGripItem::attacksByExtendoGripHaveMoreKnockback);
-		LivingEntityTickCallback.EVENT.register(ExtendoGripItem::holdingExtendoGripIncreasesRange);
+		LivingEntityEvents.EXPERIENCE_DROP.register(DeployerFakePlayer::deployerKillsDoNotSpawnXP);
+		LivingEntityEvents.KNOCKBACK_STRENGTH.register(ExtendoGripItem::attacksByExtendoGripHaveMoreKnockback);
+		LivingEntityEvents.TICK.register(ExtendoGripItem::holdingExtendoGripIncreasesRange);
 	}
 
 }

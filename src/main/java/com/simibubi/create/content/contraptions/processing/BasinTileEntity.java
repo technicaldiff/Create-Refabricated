@@ -40,6 +40,8 @@ import com.simibubi.create.lib.lba.fluid.FluidStack;
 import com.simibubi.create.lib.lba.item.CombinedInvWrapper;
 import com.simibubi.create.lib.lba.item.IItemHandlerModifiable;
 
+import com.simibubi.create.lib.utility.LazyOptional;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.item.ItemStack;

@@ -226,8 +226,7 @@ public abstract class ZapperItem extends Item {
 			.setCooldown(item.getItem(), dual ? delay * 2 / 3 : delay);
 	}
 
-	@Override
-	public boolean onEntitySwing(ItemStack stack, LivingEntity entity) {
+	public static boolean onEntitySwing(ItemStack stack, LivingEntity entity) {
 		return true;
 	}
 
