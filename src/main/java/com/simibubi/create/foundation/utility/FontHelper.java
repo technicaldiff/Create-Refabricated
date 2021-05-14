@@ -5,6 +5,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
+import com.simibubi.create.lib.utility.MinecraftClientUtil;
 
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.renderer.IRenderTypeBuffer;
@@ -18,7 +19,7 @@ public final class FontHelper {
 	public static List<String> cutString(FontRenderer font, String text, int maxWidthPerLine) {
 		// Split words
 		List<String> words = new LinkedList<>();
-		BreakIterator iterator = BreakIterator.getLineInstance(MinecraftForgeClient.getLocale());
+		BreakIterator iterator = BreakIterator.getLineInstance(MinecraftClientUtil.getLocale());
 		iterator.setText(text);
 		int start = iterator.first();
 		for (int end = iterator.next(); end != BreakIterator.DONE; start = end, end = iterator.next()) {
