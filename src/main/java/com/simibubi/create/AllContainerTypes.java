@@ -64,5 +64,4 @@ public enum AllContainerTypes {
 		IScreenFactory<C, S> factory) {
 		ScreenManager.registerFactory((ContainerType<C>) c.type, factory);
 	}
-
 }

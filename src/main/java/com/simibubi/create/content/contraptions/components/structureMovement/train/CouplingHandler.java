@@ -15,6 +15,8 @@ import com.simibubi.create.foundation.config.AllConfigs;
 import com.simibubi.create.foundation.utility.Couple;
 import com.simibubi.create.foundation.utility.Iterate;
 import com.simibubi.create.foundation.utility.Lang;
+import com.simibubi.create.lib.utility.CapabilityUtil;
+import com.simibubi.create.lib.utility.LazyOptional;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.minecart.AbstractMinecartEntity;
@@ -27,7 +29,8 @@ public class CouplingHandler {
 
 	public static void preventEntitiesFromMoutingOccupiedCart(EntityMountEvent event) {
 		Entity e = event.getEntityBeingMounted();
-		LazyOptional<MinecartController> optional = e.getCapability(CapabilityMinecartController.MINECART_CONTROLLER_CAPABILITY);
+		LazyOptional<MinecartController> optional = CapabilityUtil.getCapability(e, CapabilityMinecartController.MINECART_CONTROLLER_CAPABILITY);
+
 		if (!optional.isPresent())
 			return;
 		if (event.getEntityMounting() instanceof AbstractContraptionEntity)

@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.function.Consumer;
 
 import com.simibubi.create.foundation.tileEntity.behaviour.BehaviourType;
+import com.simibubi.create.lib.capabilities.Capability;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.nbt.CompoundNBT;

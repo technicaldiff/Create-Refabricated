@@ -20,6 +20,7 @@ import com.simibubi.create.foundation.utility.Couple;
 import com.simibubi.create.foundation.utility.MatrixStacker;
 import com.simibubi.create.foundation.utility.NBTHelper;
 import com.simibubi.create.foundation.utility.VecHelper;
+import com.simibubi.create.lib.utility.CapabilityUtil;
 import com.simibubi.create.lib.utility.LazyOptional;
 import com.simibubi.create.lib.utility.MinecartAndRailUtil;
 import com.simibubi.create.lib.utility.NBTSerializer;
@@ -287,7 +288,7 @@ public class OrientedContraptionEntity extends AbstractContraptionEntity {
 		boolean isStalled = isStalled();
 
 		LazyOptional<MinecartController> capability =
-			riding.getCapability(CapabilityMinecartController.MINECART_CONTROLLER_CAPABILITY);
+				CapabilityUtil.getCapability(riding, CapabilityMinecartController.MINECART_CONTROLLER_CAPABILITY);
 		if (capability.isPresent()) {
 			if (!world.isRemote())
 				capability.orElse(null)

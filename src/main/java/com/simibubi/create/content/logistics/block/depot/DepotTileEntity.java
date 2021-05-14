@@ -4,6 +4,8 @@ import java.util.List;
 
 import com.simibubi.create.foundation.tileEntity.SmartTileEntity;
 import com.simibubi.create.foundation.tileEntity.TileEntityBehaviour;
+import com.simibubi.create.lib.capabilities.Capability;
+import com.simibubi.create.lib.utility.LazyOptional;
 
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.Direction;

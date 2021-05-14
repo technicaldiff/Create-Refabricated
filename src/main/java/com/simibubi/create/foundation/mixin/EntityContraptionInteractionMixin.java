@@ -18,6 +18,7 @@ import com.simibubi.create.content.contraptions.components.structureMovement.Abs
 import com.simibubi.create.content.contraptions.components.structureMovement.Contraption;
 import com.simibubi.create.content.contraptions.components.structureMovement.ContraptionCollider;
 import com.simibubi.create.content.contraptions.components.structureMovement.ContraptionHandler;
+import com.simibubi.create.lib.capabilities.CapabilityProvider;
 
 import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
@@ -32,10 +33,10 @@ import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.gen.feature.template.Template;
 
 @Mixin(Entity.class)
-public abstract class EntityContraptionInteractionMixin extends CapabilityProvider<Entity> {
-	private EntityContraptionInteractionMixin(Class<Entity> baseClass) {
-		super(baseClass);
-	}
+public abstract class EntityContraptionInteractionMixin implements CapabilityProvider {
+//	private EntityContraptionInteractionMixin(Class<Entity> baseClass) {
+//		super(baseClass);
+//	}
 
 	private final Entity self = (Entity) (Object) this;
 

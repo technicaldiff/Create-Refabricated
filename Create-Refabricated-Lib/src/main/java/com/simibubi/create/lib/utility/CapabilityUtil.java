@@ -3,8 +3,14 @@ package com.simibubi.create.lib.utility;
 import com.simibubi.create.lib.capabilities.Capability;
 import com.simibubi.create.lib.capabilities.CapabilityProvider;
 
+import net.minecraft.util.Direction;
+
 public class CapabilityUtil {
+	public static LazyOptional getCapability(Object o, Capability capability, Direction side) {
+		return ((CapabilityProvider) o).getCapability(capability, side);
+	}
+
 	public static LazyOptional getCapability(Object o, Capability capability) {
-		return ((CapabilityProvider) o).getCapability(capability);
+		return getCapability(o, capability, null);
 	}
 }
