@@ -20,9 +20,12 @@ import com.simibubi.create.foundation.utility.Couple;
 import com.simibubi.create.foundation.utility.MatrixStacker;
 import com.simibubi.create.foundation.utility.NBTHelper;
 import com.simibubi.create.foundation.utility.VecHelper;
-
+import com.simibubi.create.lib.utility.LazyOptional;
+import com.simibubi.create.lib.utility.MinecartAndRailUtil;
 import com.simibubi.create.lib.utility.NBTSerializer;
 
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
@@ -43,8 +46,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
 
 /**
  * Ex: Minecarts, Couplings <br>
@@ -430,7 +431,7 @@ public class OrientedContraptionEntity extends AbstractContraptionEntity {
 
 		BlockPos blockpos = new BlockPos(i, j, k);
 		BlockState blockstate = this.world.getBlockState(blockpos);
-		if (furnaceCart.canUseRail() && blockstate.isIn(BlockTags.RAILS))
+		if (MinecartAndRailUtil.canCartUseRail(furnaceCart) && blockstate.isIn(BlockTags.RAILS))
 			if (fuel > 1)
 				riding.setMotion(riding.getMotion()
 					.normalize()

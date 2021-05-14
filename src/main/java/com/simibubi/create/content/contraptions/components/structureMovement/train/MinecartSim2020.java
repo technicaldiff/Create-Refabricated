@@ -9,8 +9,9 @@ import com.mojang.datafixers.util.Pair;
 import com.simibubi.create.content.contraptions.components.structureMovement.train.capability.CapabilityMinecartController;
 import com.simibubi.create.content.contraptions.components.structureMovement.train.capability.MinecartController;
 import com.simibubi.create.foundation.utility.VecHelper;
-
 import com.simibubi.create.lib.helper.AbstractMinecartEntityHelper;
+import com.simibubi.create.lib.utility.LazyOptional;
+import com.simibubi.create.lib.utility.MinecartAndRailUtil;
 import com.simibubi.create.lib.utility.MinecartUtil;
 
 import net.minecraft.block.AbstractRailBlock;
@@ -59,7 +60,7 @@ public class MinecartSim2020 {
 			return MathHelper.epsilonEquals(((FurnaceMinecartEntity) c).pushX, 0)
 				&& MathHelper.epsilonEquals(((FurnaceMinecartEntity) c).pushZ, 0);
 		LazyOptional<MinecartController> capability =
-			c.getCapability(CapabilityMinecartController.MINECART_CONTROLLER_CAPABILITY);
+				c.getCapability(CapabilityMinecartController.MINECART_CONTROLLER_CAPABILITY);
 		if (capability.isPresent() && capability.orElse(null)
 			.isStalled())
 			return false;
@@ -86,8 +87,9 @@ public class MinecartSim2020 {
 		Vector3d actualVec = cart.getPos(actualX, actualY, actualZ);
 		actualY = cartPos.getY() + 1;
 
-		AbstractRailBlock abstractrailblock = (AbstractRailBlock) trackState.getBlock();
-		RailShape railshape = abstractrailblock.getRailDirection(trackState, cart.world, cartPos, cart);
+//		AbstractRailBlock abstractrailblock = (AbstractRailBlock) trackState.getBlock();
+		RailShape railshape = MinecartAndRailUtil.getDirectionOfRail(trackState, cart.world, cartPos, cart);
+
 		switch (railshape) {
 		case ASCENDING_EAST:
 			forcedMovement = forcedMovement.add(-1 * MinecartUtil.getSlopeAdjustment(), 0.0D, 0.0D);

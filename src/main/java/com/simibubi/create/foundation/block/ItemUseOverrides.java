@@ -24,7 +24,7 @@ public class ItemUseOverrides {
 	}
 
 	public static ActionResultType onBlockActivated(PlayerEntity player, World world, Hand hand, BlockRayTraceResult traceResult) {
-		if (AllItems.WRENCH.isIn(event.getItemStack()))
+		if (AllItems.WRENCH.isIn(player.getHeldItem(hand)))
 			return;
 
 		BlockState state = world

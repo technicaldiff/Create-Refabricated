@@ -12,24 +12,27 @@ import com.simibubi.create.lib.utility.MixinHelper;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityType;
 import net.minecraft.entity.MoverType;
 import net.minecraft.entity.item.minecart.AbstractMinecartEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
 
 @Mixin(AbstractMinecartEntity.class)
-public abstract class AbstractMinecartEntityMixin implements AbstractMinecartEntityExtensions {
-	@Shadow protected World world;
+public abstract class AbstractMinecartEntityMixin extends Entity implements AbstractMinecartEntityExtensions {
+	private AbstractMinecartEntityMixin(EntityType<?> entityType, World world) {
+		super(entityType, world);
+	}
 
-	@Shadow protected abstract boolean isBeingRidden();
-	@Shadow protected abstract Vector3d getMotion();
-	@Shadow protected abstract void move(MoverType moverType, Vector3d vector3d);
 	@Shadow protected abstract double getMaximumSpeed();
-	@Shadow protected abstract AbstractMinecartEntity.Type getMinecartType();
+	@Shadow public abstract AbstractMinecartEntity.Type getMinecartType();
+
+	public boolean canUseRail = true;
 
 	// this *should* inject into right before the 4th reference to bl, right in between the 2 if statements.
 	@Inject(at = @At(value = "FIELD", target = "Lnet/minecraft/entity/item/minecart/AbstractMinecartEntity;moveAlongTrack(Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/block/BlockState;)V", ordinal = 3),
@@ -58,5 +61,20 @@ public abstract class AbstractMinecartEntityMixin implements AbstractMinecartEnt
 			case COMMAND_BLOCK: return new ItemStack(Items.COMMAND_BLOCK_MINECART);
 			default: return new ItemStack(Items.MINECART);
 		}
+	}
+
+	@Override
+	public boolean create$canUseRail() {
+		return canUseRail;
+	}
+
+	@Override
+	public BlockPos getCurrentRailPos() {
+		BlockPos pos = new BlockPos(MathHelper.floor(getX()), MathHelper.floor(getY()), MathHelper.floor(getZ()));
+		if (world.getBlockState(pos.down()).isIn(BlockTags.RAILS)) {
+			pos = pos.down();
+		}
+
+		return pos;
 	}
 }

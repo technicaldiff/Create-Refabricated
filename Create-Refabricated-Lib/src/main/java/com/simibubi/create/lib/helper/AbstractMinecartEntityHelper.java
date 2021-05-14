@@ -21,5 +21,17 @@ public final class AbstractMinecartEntityHelper {
 		return ((AbstractMinecartEntityAccessor) MixinHelper.cast(entity)).create$getMaximumSpeed();
 	}
 
+	public static float getMaximumSpeedF(AbstractMinecartEntity entity) {
+		return (float) getMaximumSpeed(entity);
+	}
+
+	public static boolean canCartUseRail(AbstractMinecartEntity entity) {
+		return ((AbstractMinecartEntityExtensions) entity).create$canUseRail();
+	}
+
+	public static BlockPos getCurrentRailPos(AbstractMinecartEntity cart) {
+		return ((AbstractMinecartEntityExtensions) cart).getCurrentRailPos();
+	}
+
 	private AbstractMinecartEntityHelper() {}
 }

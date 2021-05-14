@@ -8,11 +8,20 @@ import java.util.UUID;
 
 import javax.annotation.Nullable;
 
-import com.simibubi.create.lib.utility.RailUtil;
-
-import net.minecraft.block.Blocks;
-
 import org.apache.commons.lang3.mutable.MutableBoolean;
+
+import com.simibubi.create.Create;
+import com.simibubi.create.content.contraptions.components.structureMovement.AbstractContraptionEntity;
+import com.simibubi.create.content.contraptions.components.structureMovement.OrientedContraptionEntity;
+import com.simibubi.create.content.contraptions.components.structureMovement.train.CouplingHandler;
+import com.simibubi.create.foundation.networking.AllPackets;
+import com.simibubi.create.foundation.utility.Couple;
+import com.simibubi.create.foundation.utility.Iterate;
+import com.simibubi.create.foundation.utility.NBTHelper;
+import com.simibubi.create.foundation.utility.VecHelper;
+import com.simibubi.create.lib.helper.AbstractMinecartEntityHelper;
+import com.simibubi.create.lib.utility.Constants.NBT;
+import com.simibubi.create.lib.utility.MinecartAndRailUtil;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.block.PoweredRailBlock;
@@ -27,23 +36,12 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
 
-import com.simibubi.create.Create;
-import com.simibubi.create.content.contraptions.components.structureMovement.AbstractContraptionEntity;
-import com.simibubi.create.content.contraptions.components.structureMovement.OrientedContraptionEntity;
-import com.simibubi.create.content.contraptions.components.structureMovement.train.CouplingHandler;
-import com.simibubi.create.foundation.networking.AllPackets;
-import com.simibubi.create.foundation.utility.Couple;
-import com.simibubi.create.foundation.utility.Iterate;
-import com.simibubi.create.foundation.utility.NBTHelper;
-import com.simibubi.create.foundation.utility.VecHelper;
-import com.simibubi.create.lib.utility.Constants.NBT;
-
 
 /**
  * Extended code for Minecarts, this allows for handling stalled carts and
  * coupled trains
  */
-public class MinecartController implements INBTSerializable<CompoundNBT> {
+public class MinecartController /*implements INBTSerializable<CompoundNBT>*/ {
 
 	public static MinecartController EMPTY;
 	private boolean needsEntryRefresh;
@@ -112,9 +110,9 @@ public class MinecartController implements INBTSerializable<CompoundNBT> {
 		}
 		BlockPos blockpos = new BlockPos(i, j, k);
 		BlockState blockstate = world.getBlockState(blockpos);
-		if (cart.canUseRail() && blockstate.isIn(BlockTags.RAILS)
+		if (AbstractMinecartEntityHelper.canCartUseRail(cart) && blockstate.isIn(BlockTags.RAILS)
 				&& blockstate.getBlock() instanceof PoweredRailBlock
-				&& (RailUtil.isActivatorRail(
+				&& (MinecartAndRailUtil.isActivatorRail(
 						blockstate.getBlock()))) {
 			if (cart.isBeingRidden()) {
 				cart.removePassengers();
@@ -299,7 +297,7 @@ public class MinecartController implements INBTSerializable<CompoundNBT> {
 			new MinecartControllerUpdatePacket(this), this.cart());
 	}
 
-	@Override
+//	@Override
 	public CompoundNBT serializeNBT() {
 		CompoundNBT compoundNBT = new CompoundNBT();
 
@@ -311,7 +309,7 @@ public class MinecartController implements INBTSerializable<CompoundNBT> {
 		return compoundNBT;
 	}
 
-	@Override
+//	@Override
 	public void deserializeNBT(CompoundNBT nbt) {
 		Optional<StallData> internalSD = Optional.empty();
 		Optional<StallData> externalSD = Optional.empty();
