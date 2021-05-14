@@ -35,11 +35,15 @@ import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.item.crafting.IRecipeType;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.AbstractFurnaceTileEntity;
+import net.minecraft.util.registry.Registry;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
+import net.fabricmc.loader.api.FabricLoader;
+import net.fabricmc.loader.api.ModContainer;
+import net.fabricmc.loader.api.metadata.ModMetadata;
 
 public interface ItemAttribute {
 
@@ -321,14 +325,12 @@ public interface ItemAttribute {
 
 		@Override
 		public boolean appliesTo(ItemStack stack) {
-			return modId.equals(stack.getItem()
-				.getCreatorModId(stack));
+			return modId.equals(Registry.ITEM.getKey(stack.getItem()).getNamespace());
 		}
 
 		@Override
 		public List<ItemAttribute> listAttributesOf(ItemStack stack) {
-			String id = stack.getItem()
-				.getCreatorModId(stack);
+			String id = Registry.ITEM.getKey(stack.getItem()).getNamespace();
 			return id == null ? Collections.emptyList() : Arrays.asList(new AddedBy(id));
 		}
 
@@ -339,10 +341,9 @@ public interface ItemAttribute {
 
 		@Override
 		public Object[] getTranslationParameters() {
-			Optional<? extends ModContainer> modContainerById = ModList.get()
-				.getModContainerById(modId);
-			String name = modContainerById.map(ModContainer::getModInfo)
-				.map(IModInfo::getDisplayName)
+			Optional<? extends ModContainer> modContainerById = FabricLoader.getInstance().getModContainer(modId);
+			String name = modContainerById.map(ModContainer::getMetadata)
+				.map(ModMetadata::getName)
 				.orElse(StringUtils.capitalize(modId));
 			return new Object[] { name };
 		}

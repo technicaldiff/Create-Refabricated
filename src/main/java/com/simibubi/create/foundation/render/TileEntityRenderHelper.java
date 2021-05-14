@@ -18,6 +18,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.vector.Matrix4f;
 import net.minecraft.util.math.vector.Vector4f;
+import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
 
 public class TileEntityRenderHelper {
@@ -69,9 +70,8 @@ public class TileEntityRenderHelper {
 			} catch (Exception e) {
 				iterator.remove();
 
-				String message = "TileEntity " + tileEntity.getType()
-					.getRegistryName()
-					.toString() + " didn't want to render while moved.\n";
+				String message = "TileEntity " + Registry.BLOCK_ENTITY_TYPE.getKey(tileEntity.getType()).toString()
+						+ " didn't want to render while moved.\n";
 				if (AllConfigs.CLIENT.explainRenderErrors.get())
 					Create.logger.error(message, e);
 				else

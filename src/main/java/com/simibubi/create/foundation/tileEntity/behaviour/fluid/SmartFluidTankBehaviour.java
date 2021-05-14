@@ -2,8 +2,6 @@ package com.simibubi.create.foundation.tileEntity.behaviour.fluid;
 
 import java.util.function.Consumer;
 
-import com.simibubi.create.lib.lba.fluid.FluidStack;
-
 import org.apache.commons.lang3.mutable.MutableInt;
 
 import com.simibubi.create.foundation.fluid.CombinedTankWrapper;
@@ -14,10 +12,13 @@ import com.simibubi.create.foundation.tileEntity.behaviour.BehaviourType;
 import com.simibubi.create.foundation.utility.NBTHelper;
 import com.simibubi.create.foundation.utility.animation.LerpedFloat;
 import com.simibubi.create.foundation.utility.animation.LerpedFloat.Chaser;
+import com.simibubi.create.lib.lba.fluid.FluidAction;
+import com.simibubi.create.lib.lba.fluid.FluidStack;
+import com.simibubi.create.lib.utility.LazyOptional;
+import com.simibubi.create.lib.utility.Constants.NBT;
 
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.ListNBT;
-import com.simibubi.create.lib.utility.Constants.NBT;
 
 public class SmartFluidTankBehaviour extends TileEntityBehaviour {
 

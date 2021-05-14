@@ -60,7 +60,7 @@ public class TransportedItemStackHandlerBehaviour extends TileEntityBehaviour {
 
 		public boolean didntChangeFrom(ItemStack stackBefore) {
 			return doesNothing()
-				|| outputs.size() == 1 && outputs.get(0).stack.equals(stackBefore, false) && !hasHeldOutput();
+				|| outputs.size() == 1 && ItemStack.areItemStacksEqual(outputs.get(0).stack, stackBefore) && !hasHeldOutput();
 		}
 
 		public List<TransportedItemStack> getOutputs() {

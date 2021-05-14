@@ -410,9 +410,8 @@ public class BeltScenes {
 			.withItem(andesiteCasingItem), 20);
 		scene.idle(7);
 		scene.world.modifyBlock(beltPos2, s -> s.with(BeltBlock.CASING, true), true);
-		scene.world.modifyTileNBT(util.select.position(beltPos2), BeltTileEntity.class, nbt -> {
-			NBTHelper.writeEnum(nbt, "Casing", BeltTileEntity.CasingType.ANDESITE);
-		});
+		scene.world.modifyTileNBT(util.select.position(beltPos2), BeltTileEntity.class, nbt ->
+				NBTHelper.writeEnum(nbt, "Casing", BeltTileEntity.CasingType.ANDESITE));
 		scene.idle(20);
 
 		scene.overlay.showControls(
@@ -446,9 +445,8 @@ public class BeltScenes {
 		for (BlockPos pos : andesiteBelts) {
 			scene.idle(4);
 			scene.world.modifyBlock(pos, s -> s.with(BeltBlock.CASING, true), true);
-			scene.world.modifyTileNBT(util.select.position(pos), BeltTileEntity.class, nbt -> {
-				NBTHelper.writeEnum(nbt, "Casing", BeltTileEntity.CasingType.ANDESITE);
-			});
+			scene.world.modifyTileNBT(util.select.position(pos), BeltTileEntity.class, nbt ->
+					NBTHelper.writeEnum(nbt, "Casing", BeltTileEntity.CasingType.ANDESITE));
 		}
 		for (BlockPos pos : brassBelts) {
 			scene.idle(4);

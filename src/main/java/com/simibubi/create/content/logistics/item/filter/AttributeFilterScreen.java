@@ -178,7 +178,7 @@ public class AttributeFilterScreen extends AbstractFilterScreen<AttributeFilterC
 	public void tick() {
 		super.tick();
 		ItemStack stackInSlot = container.filterInventory.getStackInSlot(0);
-		if (!stackInSlot.equals(lastItemScanned, false))
+		if (!ItemStack.areItemStacksEqual(stackInSlot, lastItemScanned))
 			referenceItemChanged(stackInSlot);
 	}
 

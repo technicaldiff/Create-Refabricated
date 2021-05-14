@@ -13,7 +13,10 @@ import com.simibubi.create.foundation.render.backend.OptifineHandler;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.screen.VideoSettingsScreen;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 
+@Environment(EnvType.CLIENT)
 @Mixin(Minecraft.class)
 public class ShaderCloseMixin {
 

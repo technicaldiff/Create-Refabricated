@@ -29,8 +29,11 @@ import com.simibubi.create.foundation.utility.BlockHelper;
 import com.simibubi.create.foundation.utility.Iterate;
 import com.simibubi.create.foundation.utility.Lang;
 import com.simibubi.create.foundation.utility.VecHelper;
-
 import com.simibubi.create.lib.annotation.MethodsReturnNonnullByDefault;
+import com.simibubi.create.lib.capabilities.Capability;
+import com.simibubi.create.lib.lba.item.IItemHandler;
+import com.simibubi.create.lib.lba.item.ItemHandlerHelper;
+import com.simibubi.create.lib.utility.LazyOptional;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;

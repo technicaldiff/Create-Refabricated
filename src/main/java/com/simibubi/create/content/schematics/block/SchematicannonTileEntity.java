@@ -31,6 +31,11 @@ import com.simibubi.create.foundation.tileEntity.TileEntityBehaviour;
 import com.simibubi.create.foundation.utility.BlockHelper;
 import com.simibubi.create.foundation.utility.Iterate;
 import com.simibubi.create.foundation.utility.NBTProcessors;
+import com.simibubi.create.lib.lba.item.EmptyHandler;
+import com.simibubi.create.lib.lba.item.IItemHandler;
+import com.simibubi.create.lib.lba.item.ItemHandlerHelper;
+import com.simibubi.create.lib.utility.LazyOptional;
+import com.simibubi.create.lib.utility.LoadedCheckUtil;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -58,6 +63,7 @@ import net.minecraft.util.Direction.AxisDirection;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MutableBoundingBox;
+import net.minecraft.util.registry.Registry;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.world.gen.feature.template.PlacementSettings;
@@ -386,7 +392,7 @@ public class SchematicannonTileEntity extends SmartTileEntity implements INamedC
 		boolean entityMode = printingEntityIndex >= 0;
 
 		// Check block
-		if (!getWorld().isAreaLoaded(target, 0)) {
+		if (!LoadedCheckUtil.isAreaLoaded(getWorld(), target, 0)) {
 			positionNotLoaded = true;
 			statusMsg = "targetNotLoaded";
 			state = State.PAUSED;
@@ -710,8 +716,7 @@ public class SchematicannonTileEntity extends SmartTileEntity implements INamedC
 		if (world == null)
 			return false;
 		BlockState toReplace = world.getBlockState(pos);
-		boolean placingAir = state.getBlock()
-			.isAir(state, world, pos);
+		boolean placingAir = state.isAir();
 
 		BlockState toReplaceOther = null;
 		if (state.contains(BlockStateProperties.BED_PART) && state.contains(BlockStateProperties.HORIZONTAL_FACING)
@@ -857,8 +862,7 @@ public class SchematicannonTileEntity extends SmartTileEntity implements INamedC
 	}
 
 	protected void launchBlock(BlockPos target, ItemStack stack, BlockState state, @Nullable CompoundNBT data) {
-		if (state.getBlock()
-			.isAir(state, world, target))
+		if (state.isAir())
 			blocksPlaced++;
 		flyingBlocks.add(new LaunchedItem.ForBlockState(this.getPos(), target, stack, state, data));
 		playFiringSound();
@@ -886,8 +890,7 @@ public class SchematicannonTileEntity extends SmartTileEntity implements INamedC
 
 	@Override
 	public ITextComponent getDisplayName() {
-		return new StringTextComponent(getType().getRegistryName()
-			.toString());
+		return new StringTextComponent(Registry.BLOCK_ENTITY_TYPE.getKey(getType()).toString());
 	}
 
 	public void updateChecklist() {
@@ -900,7 +903,7 @@ public class SchematicannonTileEntity extends SmartTileEntity implements INamedC
 			for (BlockPos pos : blockReader.getAllPositions()) {
 				BlockState required = blockReader.getBlockState(pos.add(schematicAnchor));
 
-				if (!getWorld().isAreaLoaded(pos.add(schematicAnchor), 0)) {
+				if (!LoadedCheckUtil.isAreaLoaded(getWorld(), pos.add(schematicAnchor), 0)) {
 					checklist.warnBlockNotLoaded();
 					continue;
 				}

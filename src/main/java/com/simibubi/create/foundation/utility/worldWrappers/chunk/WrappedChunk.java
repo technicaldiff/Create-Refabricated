@@ -62,7 +62,7 @@ public class WrappedChunk implements IChunk {
                 .filter(it -> {
                     BlockPos blockPos = it.getKey();
                     boolean chunkContains = blockPos.getX() >> 4 == x && blockPos.getZ() >> 4 == z;
-                    return chunkContains && it.getValue().getLightValue(world, blockPos) != 0;
+                    return chunkContains && it.getValue().getLightValue() != 0;
                 })
                 .map(Map.Entry::getKey);
     }

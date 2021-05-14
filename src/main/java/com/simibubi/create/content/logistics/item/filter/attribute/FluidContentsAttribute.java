@@ -12,6 +12,7 @@ import net.minecraft.fluid.Fluid;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.registry.Registry;
 import net.minecraft.util.text.TranslationTextComponent;
 
 public class FluidContentsAttribute implements ItemAttribute {
@@ -50,15 +51,15 @@ public class FluidContentsAttribute implements ItemAttribute {
     public void writeNBT(CompoundNBT nbt) {
         if (fluid == null)
             return;
-        ResourceLocation id = ForgeRegistries.FLUIDS.getKey(fluid);
-        if (id == null)
+        ResourceLocation id = Registry.FLUID.getKey(fluid);
+        if (id == Registry.FLUID.getDefaultKey())
             return;
         nbt.putString("id", id.toString());
     }
 
     @Override
     public ItemAttribute readNBT(CompoundNBT nbt) {
-        return nbt.contains("id") ? new FluidContentsAttribute(ForgeRegistries.FLUIDS.getValue(ResourceLocation.tryCreate(nbt.getString("id")))) : EMPTY;
+        return nbt.contains("id") ? new FluidContentsAttribute(Registry.FLUID.getOrDefault(ResourceLocation.tryCreate(nbt.getString("id")))) : EMPTY;
     }
 
     private List<Fluid> extractFluids(ItemStack stack) {

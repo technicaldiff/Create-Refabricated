@@ -259,7 +259,7 @@ public class WorldSectionElement extends AnimatedSceneElement {
 				((ITickableTileEntity) te).tick();
 		});
 	}
-	
+
 	@Override
 	public void whileSkipping(PonderScene scene) {
 		if (redraw)
@@ -350,7 +350,7 @@ public class WorldSectionElement extends AnimatedSceneElement {
 		if (selectedBlock == null)
 			return;
 		BlockState blockState = world.getBlockState(selectedBlock);
-		if (blockState.isAir(world, selectedBlock))
+		if (blockState.isAir())
 			return;
 		VoxelShape shape =
 			blockState.getShape(world, selectedBlock, ISelectionContext.forEntity(Minecraft.getInstance().player));

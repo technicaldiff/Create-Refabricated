@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.simibubi.create.AllContainerTypes;
 import com.simibubi.create.foundation.utility.Pair;
+import com.simibubi.create.lib.lba.item.ItemStackHandler;
 
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;

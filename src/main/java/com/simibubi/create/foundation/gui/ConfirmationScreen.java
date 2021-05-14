@@ -10,6 +10,7 @@ import org.lwjgl.opengl.GL30;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.simibubi.create.foundation.gui.widgets.BoxWidget;
+import com.simibubi.create.lib.helper.ScreenHelper;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screen.Screen;
@@ -76,7 +77,7 @@ public class ConfirmationScreen extends AbstractSimiScreen {
 
 	public void open(@Nonnull Screen source) {
 		this.source = source;
-		Minecraft client = source.getMinecraft();
+		Minecraft client = ScreenHelper.getClient(source);
 		this.init(client, client.getWindow().getScaledWidth(), client.getWindow().getScaledHeight());
 		this.client.currentScreen = this;
 	}

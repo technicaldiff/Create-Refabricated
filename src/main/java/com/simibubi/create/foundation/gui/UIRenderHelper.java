@@ -10,6 +10,7 @@ import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.simibubi.create.foundation.utility.ColorHelper;
 import com.simibubi.create.foundation.utility.Couple;
+import com.simibubi.create.lib.utility.GuiUtils;
 
 import net.minecraft.client.MainWindow;
 import net.minecraft.client.Minecraft;

@@ -23,6 +23,8 @@ import com.simibubi.create.foundation.utility.Lang;
 import com.simibubi.create.foundation.utility.NBTHelper;
 import com.simibubi.create.foundation.utility.VecHelper;
 
+import com.simibubi.create.lib.utility.LoadedCheckUtil;
+
 import net.minecraft.block.BlockState;
 import net.minecraft.block.JukeboxBlock;
 import net.minecraft.item.ItemStack;
@@ -122,14 +124,14 @@ public class ArmTileEntity extends KineticTileEntity {
 		}
 		if (world.isRemote)
 			return;
-		
+
 		if (phase == Phase.MOVE_TO_INPUT)
 			collectItem();
 		else if (phase == Phase.MOVE_TO_OUTPUT)
 			depositItem();
 		else if (phase == Phase.SEARCH_INPUTS || phase == Phase.DANCING)
 			searchForItem();
-		
+
 		if (targetReached)
 			lazyTick();
 	}
@@ -142,7 +144,7 @@ public class ArmTileEntity extends KineticTileEntity {
 			return;
 		if (chasedPointProgress < .5f)
 			return;
-		if (phase == Phase.SEARCH_INPUTS || phase == Phase.DANCING) 
+		if (phase == Phase.SEARCH_INPUTS || phase == Phase.DANCING)
 			checkForMusic();
 		if (phase == Phase.SEARCH_OUTPUTS)
 			searchForDestination();
@@ -175,7 +177,7 @@ public class ArmTileEntity extends KineticTileEntity {
 	}
 
 	private boolean tickMovementProgress() {
-		boolean targetReachedPreviously = chasedPointProgress >= 1; 
+		boolean targetReachedPreviously = chasedPointProgress >= 1;
 		chasedPointProgress += Math.min(256, Math.abs(getSpeed())) / 1024f;
 		if (chasedPointProgress > 1)
 			chasedPointProgress = 1;
@@ -279,7 +281,7 @@ public class ArmTileEntity extends KineticTileEntity {
 				continue;
 
 			ItemStack remainder = armInteractionPoint.insert(world, held, true);
-			if (remainder.equals(heldItem, false))
+			if (ItemStack.areItemStacksEqual(remainder, heldItem))
 				continue;
 
 			selectIndex(false, i);
@@ -349,7 +351,7 @@ public class ArmTileEntity extends KineticTileEntity {
 				chasedPointIndex = -1;
 				sendData();
 				markDirty();
-				
+
 				if (!prevHeld.isItemEqual(heldItem))
 					world.playSound(null, pos, SoundEvents.ENTITY_ITEM_PICKUP, SoundCategory.BLOCKS, .125f,
 						.5f + Create.random.nextFloat() * .25f);
@@ -387,7 +389,7 @@ public class ArmTileEntity extends KineticTileEntity {
 	protected void initInteractionPoints() {
 		if (!updateInteractionPoints || interactionPointTag == null)
 			return;
-		if (!world.isAreaLoaded(pos, getRange() + 1))
+		if (!LoadedCheckUtil.isAreaLoaded(world, pos, getRange() + 1))
 			return;
 		inputs.clear();
 		outputs.clear();

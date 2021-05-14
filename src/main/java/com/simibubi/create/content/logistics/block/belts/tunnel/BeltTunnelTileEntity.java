@@ -7,8 +7,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import com.tterrag.registrate.fabric.EnvExecutor;
-
 import org.apache.commons.lang3.tuple.Pair;
 
 import com.simibubi.create.AllBlocks;
@@ -22,6 +20,10 @@ import com.simibubi.create.foundation.render.backend.instancing.IInstanceRendere
 import com.simibubi.create.foundation.tileEntity.SmartTileEntity;
 import com.simibubi.create.foundation.tileEntity.TileEntityBehaviour;
 import com.simibubi.create.foundation.utility.Iterate;
+import com.simibubi.create.lib.capabilities.Capability;
+import com.simibubi.create.lib.lba.item.IItemHandler;
+import com.simibubi.create.lib.utility.LazyOptional;
+import com.tterrag.registrate.fabric.EnvExecutor;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.nbt.CompoundNBT;

@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.function.Function;
 import java.util.function.Predicate;
 
+import com.jamieswhiteshirt.reachentityattributes.ReachEntityAttributes;
 import com.simibubi.create.content.curiosities.tools.ExtendoGripItem;
 import com.simibubi.create.foundation.config.AllConfigs;
 import com.simibubi.create.foundation.utility.placement.IPlacementHelper;
@@ -63,7 +64,7 @@ public abstract class PoleHelper<T extends Comparable<T>> implements IPlacementH
 		for (Direction dir : directions) {
 			int range = AllConfigs.SERVER.curiosities.placementAssistRange.get();
 			if (player != null) {
-				ModifiableAttributeInstance reach = player.getAttribute(ForgeMod.REACH_DISTANCE.get());
+				ModifiableAttributeInstance reach = player.getAttribute(ReachEntityAttributes.REACH);
 				if (reach != null && reach.hasModifier(ExtendoGripItem.singleRangeAttributeModifier))
 					range += 4;
 			}

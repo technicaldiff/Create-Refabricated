@@ -12,6 +12,7 @@ import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.registry.Registry;
 import net.minecraft.util.text.TranslationTextComponent;
 
 public class EnchantAttribute implements ItemAttribute {
@@ -50,7 +51,7 @@ public class EnchantAttribute implements ItemAttribute {
     public void writeNBT(CompoundNBT nbt) {
         if (enchantment == null)
             return;
-        ResourceLocation id = ForgeRegistries.ENCHANTMENTS.getKey(enchantment);
+        ResourceLocation id = Registry.ENCHANTMENT.getKey(enchantment);
         if (id == null)
             return;
         nbt.putString("id", id.toString());
@@ -58,6 +59,6 @@ public class EnchantAttribute implements ItemAttribute {
 
     @Override
     public ItemAttribute readNBT(CompoundNBT nbt) {
-        return nbt.contains("id") ? new EnchantAttribute(ForgeRegistries.ENCHANTMENTS.getValue(ResourceLocation.tryCreate(nbt.getString("id")))) : EMPTY;
+        return nbt.contains("id") ? new EnchantAttribute(Registry.ENCHANTMENT.getOrDefault(ResourceLocation.tryCreate(nbt.getString("id")))) : EMPTY;
     }
 }

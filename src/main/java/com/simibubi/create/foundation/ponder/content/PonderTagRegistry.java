@@ -13,6 +13,7 @@ import com.tterrag.registrate.util.entry.ItemProviderEntry;
 
 import net.minecraft.util.IItemProvider;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.registry.Registry;
 
 public class PonderTagRegistry {
 
@@ -93,8 +94,7 @@ public class PonderTagRegistry {
 		}
 
 		public TagBuilder add(IItemProvider item) {
-			return add(item.asItem()
-				.getRegistryName());
+			return add(Registry.ITEM.getKey(item.asItem()));
 		}
 
 		public TagBuilder add(ItemProviderEntry<?> entry) {
