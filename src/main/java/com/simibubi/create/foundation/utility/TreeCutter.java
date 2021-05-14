@@ -211,7 +211,8 @@ public class TreeCutter {
 	}
 
 	private static boolean isLog(BlockState state) {
-		return state.isIn(BlockTags.LOGS) || AllTags.AllBlockTags.SLIMY_LOGS.matches(state);
+		return state.isIn(BlockTags.LOGS);// || AllTags.AllBlockTags.SLIMY_LOGS.matches(state);
+		// TODO wait for TIC port
 	}
 
 	private static boolean isNonDecayingLeaf(BlockState state) {
