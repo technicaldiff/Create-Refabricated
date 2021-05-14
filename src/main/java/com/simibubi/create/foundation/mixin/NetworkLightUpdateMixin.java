@@ -14,7 +14,10 @@ import net.minecraft.client.network.play.ClientPlayNetHandler;
 import net.minecraft.client.world.ClientWorld;
 import net.minecraft.network.play.server.SUpdateLightPacket;
 import net.minecraft.world.chunk.Chunk;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 
+@Environment(EnvType.CLIENT)
 @Mixin(ClientPlayNetHandler.class)
 public class NetworkLightUpdateMixin {
 

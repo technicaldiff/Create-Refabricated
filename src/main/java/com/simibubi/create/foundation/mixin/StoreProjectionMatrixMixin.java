@@ -11,7 +11,10 @@ import com.simibubi.create.foundation.render.backend.Backend;
 
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.util.math.vector.Matrix4f;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 
+@Environment(EnvType.CLIENT)
 @Mixin(GameRenderer.class)
 public class StoreProjectionMatrixMixin {
 
