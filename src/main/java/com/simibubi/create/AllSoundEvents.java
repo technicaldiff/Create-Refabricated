@@ -25,11 +25,9 @@ import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
-import net.minecraftforge.event.RegistryEvent;
-import net.minecraftforge.registries.IForgeRegistry;
 
-//@EventBusSubscriber(bus = Bus.FORGE)
 public class AllSoundEvents {
 
 	public static Map<ResourceLocation, SoundEntry> entries = Maps.newHashMap();
@@ -152,7 +150,7 @@ public class AllSoundEvents {
 			.playExisting(SoundEvents.ITEM_ARMOR_EQUIP_GOLD, 1f, 1f)
 			.category(SoundCategory.PLAYERS)
 			.build(),
-			
+
 		AUTO_POLISH = create("deployer_polish").subtitle("Deployer applies polish")
 			.playExisting(SoundEvents.UI_STONECUTTER_TAKE_RESULT, 1f, 1f)
 			.category(SoundCategory.BLOCKS)
@@ -167,12 +165,11 @@ public class AllSoundEvents {
 		return new SoundEntryBuilder(id);
 	}
 
-	public static void register(RegistryEvent.Register<SoundEvent> event) {
-		IForgeRegistry<SoundEvent> registry = event.getRegistry();
+	public static void register() {
 		for (SoundEntry entry : entries.values())
-			entry.register(registry);
+			entry.register();
 	}
-	
+
 	public static void prepare() {
 		for (SoundEntry entry : entries.values())
 			entry.prepare();
@@ -295,7 +292,7 @@ public class AllSoundEvents {
 
 		public abstract void prepare();
 
-		public abstract void register(IForgeRegistry<SoundEvent> registry);
+		public abstract void register();
 
 		public abstract void write(JsonObject json);
 
@@ -363,21 +360,21 @@ public class AllSoundEvents {
 			this.wrappedEvents = wrappedEvents;
 			compiledEvents = Lists.newArrayList();
 		}
-		
+
 		@Override
 		public void prepare() {
 			for (int i = 0; i < wrappedEvents.size(); i++) {
 				ResourceLocation location = Create.asResource(getIdOf(i));
-				SoundEvent sound = new SoundEvent(location).setRegistryName(location);
+				SoundEvent sound = new SoundEvent(location);
 				compiledEvents.add(Pair.of(sound, wrappedEvents.get(i)
 					.getSecond()));
 			}
 		}
 
 		@Override
-		public void register(IForgeRegistry<SoundEvent> registry) {
-			for (Pair<SoundEvent, Couple<Float>> pair : compiledEvents) 
-				registry.register(pair.getFirst());
+		public void register() {
+			for (Pair<SoundEvent, Couple<Float>> pair : compiledEvents)
+				Registry.register(Registry.SOUND_EVENT, pair.getFirst().getName(), pair.getFirst());
 		}
 
 		@Override
@@ -435,16 +432,16 @@ public class AllSoundEvents {
 		public CustomSoundEntry(String id, String subtitle, SoundCategory category) {
 			super(id, subtitle, category);
 		}
-		
+
 		@Override
 		public void prepare() {
 			ResourceLocation location = getLocation();
-			event = new SoundEvent(location).setRegistryName(location);
+			event = new SoundEvent(location);
 		}
 
 		@Override
-		public void register(IForgeRegistry<SoundEvent> registry) {
-			registry.register(event);
+		public void register() {
+			Registry.register(Registry.SOUND_EVENT, event.getName(), event);
 		}
 
 		@Override
