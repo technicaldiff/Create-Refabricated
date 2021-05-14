@@ -31,7 +31,7 @@ public class WrappedChunkProvider extends AbstractChunkProvider {
         return world.blocksAdded
                 .entrySet()
                 .stream()
-                .filter(it -> it.getValue().getLightValue(world, it.getKey()) != 0)
+                .filter(it -> it.getValue().getLightValue() != 0)
                 .map(Map.Entry::getKey);
     }
 
@@ -54,7 +54,7 @@ public class WrappedChunkProvider extends AbstractChunkProvider {
 
     public WrappedChunk getChunk(int x, int z) {
         long pos = ChunkPos.asLong(x, z);
-        
+
         if (chunks == null)
         	return null;
 
