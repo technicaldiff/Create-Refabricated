@@ -5,6 +5,8 @@ import java.util.function.Predicate;
 
 import com.simibubi.create.foundation.tileEntity.TileEntityBehaviour;
 import com.simibubi.create.foundation.utility.BlockFace;
+import com.simibubi.create.lib.lba.fluid.FluidAction;
+import com.simibubi.create.lib.lba.fluid.FluidStack;
 
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;

@@ -31,7 +31,9 @@ import com.simibubi.create.foundation.tileEntity.behaviour.belt.DirectBeltInputB
 import com.simibubi.create.foundation.tileEntity.behaviour.belt.TransportedItemStackHandlerBehaviour;
 import com.simibubi.create.foundation.tileEntity.behaviour.belt.TransportedItemStackHandlerBehaviour.TransportedResult;
 import com.simibubi.create.foundation.utility.NBTHelper;
-
+import com.simibubi.create.lib.capabilities.Capability;
+import com.simibubi.create.lib.lba.item.IItemHandler;
+import com.simibubi.create.lib.utility.LazyOptional;
 import com.tterrag.registrate.fabric.EnvExecutor;
 
 import net.minecraft.block.Block;

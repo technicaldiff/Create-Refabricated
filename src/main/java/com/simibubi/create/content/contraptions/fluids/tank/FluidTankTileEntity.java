@@ -14,8 +14,11 @@ import com.simibubi.create.foundation.fluid.SmartFluidTank;
 import com.simibubi.create.foundation.gui.widgets.InterpolatedChasingValue;
 import com.simibubi.create.foundation.tileEntity.SmartTileEntity;
 import com.simibubi.create.foundation.tileEntity.TileEntityBehaviour;
-
+import com.simibubi.create.lib.capabilities.Capability;
+import com.simibubi.create.lib.lba.fluid.FluidAction;
 import com.simibubi.create.lib.lba.fluid.FluidStack;
+import com.simibubi.create.lib.lba.fluid.FluidTank;
+import com.simibubi.create.lib.utility.LazyOptional;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.nbt.CompoundNBT;

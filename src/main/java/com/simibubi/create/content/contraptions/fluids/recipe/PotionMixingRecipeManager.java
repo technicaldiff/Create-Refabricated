@@ -16,6 +16,7 @@ import com.simibubi.create.content.contraptions.processing.HeatCondition;
 import com.simibubi.create.content.contraptions.processing.ProcessingRecipeBuilder;
 import com.simibubi.create.foundation.fluid.FluidIngredient;
 import com.simibubi.create.foundation.utility.ISimpleReloadListener;
+import com.simibubi.create.lib.lba.fluid.FluidStack;
 
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -24,11 +25,7 @@ import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionBrewing;
 import net.minecraft.potion.PotionUtils;
 import net.minecraft.potion.Potions;
-import net.minecraftforge.common.brewing.BrewingRecipeRegistry;
-import net.minecraftforge.common.brewing.IBrewingRecipe;
-import net.minecraftforge.common.brewing.VanillaBrewingRecipe;
-import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraft.util.registry.Registry;
 
 public class PotionMixingRecipeManager {
 
@@ -51,7 +48,7 @@ public class PotionMixingRecipeManager {
 			Collection<ItemStack> reagents = getAllReagents(iBrewingRecipe);
 
 			Set<ItemStack> basicPotions = new HashSet<>();
-			for (Potion potion : ForgeRegistries.POTION_TYPES.getValues()) {
+			for (Potion potion : Registry.POTION) {
 				if (potion == Potions.EMPTY)
 					continue;
 				for (ItemStack stack : bottles)
@@ -124,7 +121,7 @@ public class PotionMixingRecipeManager {
 	}
 
 	public static Collection<ItemStack> getAllReagents(IBrewingRecipe recipe) {
-		return ForgeRegistries.ITEMS.getValues()
+		return Registry.ITEM
 			.stream()
 			.map(ItemStack::new)
 			.filter(recipe::isIngredient)

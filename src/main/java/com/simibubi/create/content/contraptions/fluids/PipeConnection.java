@@ -12,7 +12,9 @@ import com.simibubi.create.foundation.utility.Couple;
 import com.simibubi.create.foundation.utility.Iterate;
 import com.simibubi.create.foundation.utility.VecHelper;
 import com.simibubi.create.foundation.utility.animation.LerpedFloat;
-
+import com.simibubi.create.lib.lba.fluid.FluidStack;
+import com.simibubi.create.lib.utility.Constants.NBT;
+import com.simibubi.create.lib.utility.LoadedCheckUtil;
 import com.tterrag.registrate.fabric.EnvExecutor;
 
 import net.minecraft.client.Minecraft;
@@ -28,7 +30,6 @@ import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import com.simibubi.create.lib.utility.Constants.NBT;
 
 public class PipeConnection {
 
@@ -160,7 +161,7 @@ public class PipeConnection {
 	}
 
 	private boolean determineSource(World world, BlockPos pos) {
-		if (!world.isAreaLoaded(pos, 1))
+		if (!LoadedCheckUtil.isAreaLoaded(world, pos, 1))
 			return false;
 		BlockFace location = new BlockFace(pos, side);
 

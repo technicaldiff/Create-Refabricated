@@ -11,6 +11,8 @@ import java.util.Set;
 
 import javax.annotation.Nullable;
 
+import com.simibubi.create.lib.utility.LoadedCheckUtil;
+
 import org.apache.commons.lang3.mutable.MutableBoolean;
 
 import com.simibubi.create.content.contraptions.base.KineticTileEntity;
@@ -100,7 +102,7 @@ public class PumpTileEntity extends KineticTileEntity {
 		BlockPos backPos = pos.offset(getFront().getOpposite());
 		FluidPropagator.propagateChangedPipe(world, frontPos, world.getBlockState(frontPos));
 		FluidPropagator.propagateChangedPipe(world, backPos, world.getBlockState(backPos));
-		
+
 		FluidTransportBehaviour behaviour = getBehaviour(FluidTransportBehaviour.TYPE);
 		if (behaviour != null)
 			behaviour.wipePressure();
@@ -138,7 +140,7 @@ public class PumpTileEntity extends KineticTileEntity {
 				int distance = entry.getFirst();
 				BlockPos currentPos = entry.getSecond();
 
-				if (!world.isAreaLoaded(currentPos, 0))
+				if (!LoadedCheckUtil.isAreaLoaded(world, currentPos, 0))
 					continue;
 				if (visited.contains(currentPos))
 					continue;
@@ -152,7 +154,7 @@ public class PumpTileEntity extends KineticTileEntity {
 					BlockFace blockFace = new BlockFace(currentPos, face);
 					BlockPos connectedPos = blockFace.getConnectedPos();
 
-					if (!world.isAreaLoaded(connectedPos, 0))
+					if (!LoadedCheckUtil.isAreaLoaded(world, connectedPos, 0))
 						continue;
 					if (blockFace.isEquivalent(start))
 						continue;

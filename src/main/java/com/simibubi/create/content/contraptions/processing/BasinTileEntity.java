@@ -34,12 +34,14 @@ import com.simibubi.create.foundation.utility.NBTHelper;
 import com.simibubi.create.foundation.utility.VecHelper;
 import com.simibubi.create.foundation.utility.animation.LerpedFloat;
 import com.simibubi.create.foundation.utility.animation.LerpedFloat.Chaser;
-
+import com.simibubi.create.lib.capabilities.Capability;
 import com.simibubi.create.lib.lba.fluid.FluidAction;
 import com.simibubi.create.lib.lba.fluid.FluidStack;
 import com.simibubi.create.lib.lba.item.CombinedInvWrapper;
+import com.simibubi.create.lib.lba.item.IItemHandler;
 import com.simibubi.create.lib.lba.item.IItemHandlerModifiable;
-
+import com.simibubi.create.lib.lba.item.ItemHandlerHelper;
+import com.simibubi.create.lib.utility.Constants.NBT;
 import com.simibubi.create.lib.utility.LazyOptional;
 
 import net.minecraft.block.Block;
@@ -59,7 +61,6 @@ import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.util.text.ITextComponent;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import com.simibubi.create.lib.utility.Constants.NBT;
 
 public class BasinTileEntity extends SmartTileEntity implements IHaveGoggleInformation {
 

@@ -6,8 +6,10 @@ import java.util.Locale;
 import java.util.Optional;
 
 import com.simibubi.create.foundation.utility.Lang;
+import com.simibubi.create.lib.lba.fluid.FluidStack;
+import com.simibubi.create.lib.utility.LazyOptional;
+import com.simibubi.create.lib.utility.MinecraftClientUtil;
 
-import net.minecraft.client.Minecraft;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
@@ -101,10 +103,7 @@ public interface IHaveGoggleInformation {
 		}
 
 		public void update() {
-			format = NumberFormat.getInstance(Minecraft.getInstance()
-				.getLanguageManager()
-				.getCurrentLanguage()
-				.getJavaLocale());
+			format = NumberFormat.getInstance(MinecraftClientUtil.getLocale());
 			format.setMaximumFractionDigits(2);
 			format.setMinimumFractionDigits(0);
 			format.setGroupingUsed(true);

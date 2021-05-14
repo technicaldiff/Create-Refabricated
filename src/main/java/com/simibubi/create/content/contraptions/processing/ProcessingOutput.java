@@ -15,6 +15,7 @@ import net.minecraft.nbt.JsonToNBT;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.JSONUtils;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.registry.Registry;
 
 public class ProcessingOutput {
 
@@ -59,8 +60,8 @@ public class ProcessingOutput {
 
 	public JsonElement serialize() {
 		JsonObject json = new JsonObject();
-		ResourceLocation resourceLocation = compatDatagenOutput == null ? stack.getItem()
-			.getRegistryName() : compatDatagenOutput.getFirst();
+		ResourceLocation resourceLocation = compatDatagenOutput == null ?
+				Registry.ITEM.getKey(stack.getItem()) : compatDatagenOutput.getFirst();
 		json.addProperty("item", resourceLocation.toString());
 		int count = compatDatagenOutput == null ? stack.getCount() : compatDatagenOutput.getSecond();
 		if (count != 1)
@@ -81,7 +82,7 @@ public class ProcessingOutput {
 		String itemId = JSONUtils.getString(json, "item");
 		int count = JSONUtils.getInt(json, "count", 1);
 		float chance = JSONUtils.hasField(json, "chance") ? JSONUtils.getFloat(json, "chance") : 1;
-		ItemStack itemstack = new ItemStack(ForgeRegistries.ITEMS.getValue(new ResourceLocation(itemId)), count);
+		ItemStack itemstack = new ItemStack(Registry.ITEM.getOrDefault(new ResourceLocation(itemId)), count);
 
 		if (JSONUtils.hasField(json, "nbt")) {
 			try {

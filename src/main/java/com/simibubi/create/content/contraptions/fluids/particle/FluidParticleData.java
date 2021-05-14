@@ -52,8 +52,7 @@ public class FluidParticleData implements IParticleData, ICustomParticleData<Flu
 
 	@Override
 	public String getParameters() {
-		return ForgeRegistries.PARTICLE_TYPES.getKey(type) + " " + fluid.getFluid()
-			.getRegistryName();
+		return Registry.PARTICLE_TYPE.getKey(type) + " " + Registry.FLUID.getKey(fluid.getFluid());
 	}
 
 	public static final Codec<FluidStack> FLUID_CODEC = RecordCodecBuilder.create(i -> i.group(

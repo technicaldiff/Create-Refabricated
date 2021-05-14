@@ -15,6 +15,10 @@ import com.simibubi.create.foundation.item.ItemHelper;
 import com.simibubi.create.foundation.tileEntity.TileEntityBehaviour;
 import com.simibubi.create.foundation.tileEntity.behaviour.belt.DirectBeltInputBehaviour;
 import com.simibubi.create.foundation.tileEntity.behaviour.filtering.FilteringBehaviour;
+import com.simibubi.create.lib.lba.fluid.FluidStack;
+import com.simibubi.create.lib.lba.item.IItemHandlerModifiable;
+import com.simibubi.create.lib.lba.item.ItemHandlerHelper;
+import com.simibubi.create.lib.lba.item.ItemStackHandler;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;

@@ -12,6 +12,7 @@ import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.Potions;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.registry.Registry;
 
 public class PotionFluid extends VirtualFluid {
 
@@ -61,7 +62,7 @@ public class PotionFluid extends VirtualFluid {
 //	}
 
 	public static FluidStack addPotionToFluidStack(FluidStack fs, Potion potion) {
-		ResourceLocation resourcelocation = ForgeRegistries.POTION_TYPES.getKey(potion);
+		ResourceLocation resourcelocation = Registry.POTION.getKey(potion);
 		if (potion == Potions.EMPTY) {
 			fs.removeChildTag("Potion");
 			return fs;

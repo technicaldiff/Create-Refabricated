@@ -1,5 +1,7 @@
 package com.simibubi.create.content.contraptions.fluids.tank;
 
+import com.simibubi.create.lib.lba.fluid.FluidStack;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;

@@ -16,6 +16,9 @@ import org.apache.commons.lang3.tuple.Pair;
 
 import com.simibubi.create.content.contraptions.fluids.tank.CreativeFluidTankTileEntity.CreativeSmartFluidTank;
 import com.simibubi.create.foundation.utility.Iterate;
+import com.simibubi.create.lib.lba.fluid.FluidAction;
+import com.simibubi.create.lib.lba.fluid.FluidStack;
+import com.simibubi.create.lib.lba.fluid.FluidTank;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.tileentity.TileEntity;

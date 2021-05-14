@@ -1,6 +1,7 @@
 package com.simibubi.create.content.contraptions.processing;
 
 import com.simibubi.create.foundation.item.SmartInventory;
+import com.simibubi.create.lib.lba.item.ItemHandlerHelper;
 
 import net.minecraft.item.ItemStack;
 
@@ -21,7 +22,7 @@ public class BasinInventory extends SmartInventory {
 				return stack;
 		return super.insertItem(slot, stack, simulate);
 	}
-	
+
 	@Override
 	public ItemStack extractItem(int slot, int amount, boolean simulate) {
 		ItemStack extractItem = super.extractItem(slot, amount, simulate);

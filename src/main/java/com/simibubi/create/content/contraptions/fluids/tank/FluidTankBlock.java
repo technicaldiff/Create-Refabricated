@@ -1,5 +1,6 @@
 package com.simibubi.create.content.contraptions.fluids.tank;
 
+
 import com.simibubi.create.AllTileEntities;
 import com.simibubi.create.content.contraptions.fluids.actors.GenericItemFilling;
 import com.simibubi.create.content.contraptions.fluids.tank.CreativeFluidTankTileEntity.CreativeSmartFluidTank;
@@ -10,6 +11,8 @@ import com.simibubi.create.foundation.fluid.FluidHelper;
 import com.simibubi.create.foundation.fluid.FluidHelper.FluidExchange;
 import com.simibubi.create.foundation.tileEntity.ComparatorUtil;
 import com.simibubi.create.foundation.utility.Lang;
+
+import com.simibubi.create.lib.lba.fluid.FluidStack;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;

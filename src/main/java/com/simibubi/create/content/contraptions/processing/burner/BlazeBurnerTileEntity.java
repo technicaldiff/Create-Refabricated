@@ -21,6 +21,7 @@ import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.vector.Vector3d;
+import net.fabricmc.fabric.api.registry.FuelRegistry;
 
 public class BlazeBurnerTileEntity extends SmartTileEntity {
 
@@ -113,7 +114,7 @@ public class BlazeBurnerTileEntity extends SmartTileEntity {
 	 */
 	boolean tryUpdateFuel(ItemStack itemStack, boolean forceOverflow, boolean simulate) {
 		FuelType newFuel = FuelType.NONE;
-		int newBurnTime = ForgeHooks.getBurnTime(itemStack);
+		int newBurnTime = FuelRegistry.INSTANCE.get(itemStack.getItem());
 
 		if (newBurnTime > 0)
 			newFuel = FuelType.NORMAL;

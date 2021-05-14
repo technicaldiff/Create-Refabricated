@@ -35,6 +35,7 @@ import net.minecraft.util.SoundEvents;
 import net.minecraft.util.WeightedSpawnerEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.vector.Vector3d;
+import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
 import net.minecraft.world.spawner.AbstractSpawner;
 
@@ -73,7 +74,7 @@ public class BlazeBurnerBlockItem extends BlockItem {
 
 	@Override
 	public String getTranslationKey() {
-		return hasCapturedBlaze() ? super.getTranslationKey() : "item.create." + getRegistryName().getPath();
+		return hasCapturedBlaze() ? super.getTranslationKey() : "item.create." + Registry.ITEM.getKey(this).getPath();
 	}
 
 	@Override
@@ -97,7 +98,7 @@ public class BlazeBurnerBlockItem extends BlockItem {
 				.add(AbstractSpawnerHelper.getSpawnData(spawner));
 		}
 
-		ResourceLocation blazeId = EntityType.BLAZE.getRegistryName();
+		ResourceLocation blazeId = Registry.ENTITY_TYPE.getKey(EntityType.BLAZE);
 		for (WeightedSpawnerEntity e : possibleSpawns) {
 			ResourceLocation spawnerEntityId = new ResourceLocation(e.getNbt()
 				.getString("id"));

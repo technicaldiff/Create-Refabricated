@@ -12,9 +12,8 @@ import com.simibubi.create.foundation.utility.AnimationTickHolder;
 import com.simibubi.create.foundation.utility.IntAttached;
 import com.simibubi.create.foundation.utility.MatrixStacker;
 import com.simibubi.create.foundation.utility.VecHelper;
-
+import com.simibubi.create.lib.lba.fluid.FluidStack;
 import com.simibubi.create.lib.lba.item.IItemHandlerModifiable;
-
 import com.simibubi.create.lib.lba.item.ItemStackHandler;
 
 import net.minecraft.block.BlockState;

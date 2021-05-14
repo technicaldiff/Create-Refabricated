@@ -2,6 +2,7 @@ package com.simibubi.create.content.contraptions.processing;
 
 import com.simibubi.create.AllRecipeTypes;
 import com.simibubi.create.content.contraptions.processing.ProcessingRecipeBuilder.ProcessingRecipeParams;
+import com.simibubi.create.lib.lba.fluid.FluidStack;
 
 import net.minecraft.world.World;
 

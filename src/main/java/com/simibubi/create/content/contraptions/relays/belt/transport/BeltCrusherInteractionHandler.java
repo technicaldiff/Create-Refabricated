@@ -56,7 +56,7 @@ public class BeltCrusherInteractionHandler {
             ItemStack toInsert = currentItem.stack.copy();
 
             ItemStack remainder = ItemHandlerHelper.insertItemStacked(crusherTE.inventory, toInsert, false);
-            if (toInsert.equals(remainder, false))
+            if (ItemStack.areItemStacksEqual(toInsert, remainder))
                 return true;
 
             int notFilled = currentItem.stack.getCount() - toInsert.getCount();

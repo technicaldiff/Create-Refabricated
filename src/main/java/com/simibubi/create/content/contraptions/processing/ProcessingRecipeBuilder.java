@@ -12,9 +12,11 @@ import com.simibubi.create.foundation.fluid.FluidHelper;
 import com.simibubi.create.foundation.fluid.FluidIngredient;
 import com.simibubi.create.foundation.utility.Lang;
 import com.simibubi.create.foundation.utility.Pair;
-
 import com.simibubi.create.lib.lba.fluid.FluidStack;
+import com.simibubi.create.lib.condition.ModLoadedCondition;
+import com.simibubi.create.lib.condition.NotCondition;
 
+import net.minecraft.client.renderer.model.multipart.ICondition;
 import net.minecraft.data.IFinishedRecipe;
 import net.minecraft.fluid.Fluid;
 import net.minecraft.item.Item;

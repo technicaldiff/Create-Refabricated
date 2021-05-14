@@ -1,8 +1,10 @@
 package com.simibubi.create.content.contraptions.relays.belt.transport;
 
-import net.minecraft.item.ItemStack;
-
 import org.jetbrains.annotations.NotNull;
+
+import com.simibubi.create.lib.lba.item.IItemHandler;
+
+import net.minecraft.item.ItemStack;
 
 public class ItemHandlerBeltSegment implements IItemHandler {
 

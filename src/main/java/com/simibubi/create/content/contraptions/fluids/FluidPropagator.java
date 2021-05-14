@@ -17,6 +17,8 @@ import com.simibubi.create.foundation.utility.BlockHelper;
 import com.simibubi.create.foundation.utility.Iterate;
 import com.simibubi.create.foundation.utility.Pair;
 
+import com.simibubi.create.lib.utility.LoadedCheckUtil;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.FlowingFluidBlock;
@@ -54,7 +56,7 @@ public class FluidPropagator {
 
 			for (Direction direction : getPipeConnections(currentState, pipe)) {
 				BlockPos target = currentPos.offset(direction);
-				if (!world.isAreaLoaded(target, 0))
+				if (!LoadedCheckUtil.isAreaLoaded(world, target, 0))
 					continue;
 
 				TileEntity tileEntity = world.getTileEntity(target);

@@ -20,7 +20,11 @@ import com.simibubi.create.foundation.tileEntity.behaviour.belt.TransportedItemS
 import com.simibubi.create.foundation.tileEntity.behaviour.belt.TransportedItemStackHandlerBehaviour.TransportedResult;
 import com.simibubi.create.foundation.tileEntity.behaviour.fluid.SmartFluidTankBehaviour;
 import com.simibubi.create.foundation.utility.VecHelper;
+import com.simibubi.create.lib.capabilities.Capability;
+import com.simibubi.create.lib.lba.fluid.FluidStack;
+import com.simibubi.create.lib.utility.LazyOptional;
 
+import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.block.BlockState;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.PotionItem;
@@ -38,11 +42,12 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 
 public class SpoutTileEntity extends SmartTileEntity implements IHaveGoggleInformation {
-	private static final boolean IS_TIC_LOADED = ModList.get().isLoaded("tconstruct");
+	private static final boolean IS_TIC_LOADED = FabricLoader.getInstance().isModLoaded("tconstruct"); // TODO may not be the modid of fabric port
 	private static final Class<?> CASTING_FLUID_HANDLER_CLASS;
 	static {
 		Class<?> testClass;
 		try {
+			// TODO Also may be different in fabric port
 			testClass = Class.forName("slimeknights.tconstruct.library.smeltery.CastingFluidHandler");
 		} catch (ClassNotFoundException e) {
 			testClass = null;

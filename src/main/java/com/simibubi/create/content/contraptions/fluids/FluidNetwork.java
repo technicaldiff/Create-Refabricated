@@ -18,6 +18,10 @@ import com.simibubi.create.foundation.tileEntity.TileEntityBehaviour;
 import com.simibubi.create.foundation.utility.BlockFace;
 import com.simibubi.create.foundation.utility.Iterate;
 import com.simibubi.create.foundation.utility.Pair;
+import com.simibubi.create.lib.lba.fluid.FluidAction;
+import com.simibubi.create.lib.lba.fluid.FluidStack;
+import com.simibubi.create.lib.utility.LazyOptional;
+import com.simibubi.create.lib.utility.LoadedCheckUtil;
 
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
@@ -268,7 +272,7 @@ public class FluidNetwork {
 	}
 
 	private boolean isPresent(BlockFace location) {
-		return world.isAreaLoaded(location.getPos(), 0);
+		return LoadedCheckUtil.isAreaLoaded(world, location.getPos(), 0);
 	}
 
 	@Nullable
