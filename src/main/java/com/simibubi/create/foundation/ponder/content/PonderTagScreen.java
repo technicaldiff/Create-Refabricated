@@ -4,6 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import net.minecraft.block.Blocks;
+import net.minecraft.item.Items;
+import net.minecraft.util.registry.Registry;
+
 import org.apache.commons.lang3.mutable.MutableBoolean;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
@@ -64,10 +68,10 @@ public class PonderTagScreen extends NavigatableSimiScreen {
 		PonderRegistry.tags.getItems(tag)
 			.stream()
 			.map(key -> {
-				Item item = ForgeRegistries.ITEMS.getValue(key);
-				if (item == null) {
-					Block b = ForgeRegistries.BLOCKS.getValue(key);
-					if (b != null)
+				Item item = Registry.ITEM.getOrDefault(key);
+				if (item == Items.AIR) {
+					Block b = Registry.BLOCK.getOrDefault(key);
+					if (b != Blocks.AIR)
 						item = b.asItem();
 				}
 				return item;
@@ -88,20 +92,16 @@ public class PonderTagScreen extends NavigatableSimiScreen {
 			PonderButton b = new PonderButton(itemCenterX + layout.getX() + 4, itemCenterY + layout.getY() + 4)
 					.showing(new ItemStack(i));
 
-			if (PonderRegistry.all.containsKey(i.getRegistryName())) {
+			if (PonderRegistry.all.containsKey(Registry.ITEM.getKey(i))) {
 				b.withCallback((mouseX, mouseY) -> {
 					centerScalingOn(mouseX, mouseY);
 					ScreenOpener.transitionTo(PonderUI.of(new ItemStack(i), tag));
 				});
 			} else {
-				if (i.getRegistryName()
-						.getNamespace()
-						.equals(Create.ID))
-					b.withBorderColors(Theme.p(Theme.Key.PONDER_MISSING_CREATE))
-							.animateColors(false);
+				if (Registry.ITEM.getKey(i).getNamespace().equals(Create.ID))
+					b.withBorderColors(Theme.p(Theme.Key.PONDER_MISSING_CREATE)).animateColors(false);
 				else
-					b.withBorderColors(Theme.p(Theme.Key.PONDER_MISSING_VANILLA))
-							.animateColors(false);
+					b.withBorderColors(Theme.p(Theme.Key.PONDER_MISSING_VANILLA)).animateColors(false);
 			}
 
 			widgets.add(b);
@@ -109,9 +109,7 @@ public class PonderTagScreen extends NavigatableSimiScreen {
 		}
 
 		if (!tag.getMainItem().isEmpty()) {
-			ResourceLocation registryName = tag.getMainItem()
-					.getItem()
-					.getRegistryName();
+			ResourceLocation registryName = Registry.ITEM.getKey(tag.getMainItem().getItem());
 
 			PonderButton b = new PonderButton(itemCenterX - layout.getTotalWidth() / 2 - 42, itemCenterY - 10)
 					.showing(tag.getMainItem());

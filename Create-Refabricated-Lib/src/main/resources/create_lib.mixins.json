@@ -61,6 +61,7 @@
     "accessor.GlStateManager$BooleanStateAccessor",
     "accessor.GlStateManagerAccessor",
     "accessor.ItemRendererAccessor",
+    "accessor.KeyBindingAccessor",
     "accessor.MinecraftAccessor"
   ],
   "server": [

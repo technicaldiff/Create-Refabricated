@@ -9,7 +9,11 @@ import java.util.List;
 import java.util.Random;
 import java.util.stream.IntStream;
 
+import com.simibubi.create.lib.helper.KeyBindingHelper;
+import com.simibubi.create.lib.mixin.accessor.KeyBindingAccessor;
 import com.simibubi.create.lib.utility.GuiUtils;
+
+import net.minecraft.util.registry.Registry;
 
 import org.apache.commons.lang3.mutable.MutableBoolean;
 import org.lwjgl.opengl.GL11;
@@ -114,13 +118,11 @@ public class PonderUI extends NavigatableSimiScreen {
 	}
 
 	public static PonderUI of(ItemStack item) {
-		return new PonderUI(PonderRegistry.compile(item.getItem()
-			.getRegistryName()));
+		return new PonderUI(PonderRegistry.compile(Registry.ITEM.getKey(item.getItem())));
 	}
 
 	public static PonderUI of(ItemStack item, PonderTag tag) {
-		PonderUI ponderUI = new PonderUI(PonderRegistry.compile(item.getItem()
-			.getRegistryName()));
+		PonderUI ponderUI = new PonderUI(PonderRegistry.compile(Registry.ITEM.getKey(item.getItem())));
 		ponderUI.referredToByTag = tag;
 		return ponderUI;
 	}
@@ -133,10 +135,10 @@ public class PonderUI extends NavigatableSimiScreen {
 
 	PonderUI(List<PonderScene> scenes) {
 		ResourceLocation component = scenes.get(0).component;
-		if (ForgeRegistries.ITEMS.containsKey(component))
-			stack = new ItemStack(ForgeRegistries.ITEMS.getValue(component));
+		if (Registry.ITEM.containsKey(component))
+			stack = new ItemStack(Registry.ITEM.getOrDefault(component));
 		else
-			stack = new ItemStack(ForgeRegistries.BLOCKS.getValue(component));
+			stack = new ItemStack(Registry.BLOCK.getOrDefault(component));
 
 		tags = new ArrayList<>(PonderRegistry.tags.getTags(component));
 		this.scenes = scenes;
@@ -777,14 +779,10 @@ public class PonderUI extends NavigatableSimiScreen {
 	@Override
 	public boolean keyPressed(int code, int p_keyPressed_2_, int p_keyPressed_3_) {
 		GameSettings settings = Minecraft.getInstance().gameSettings;
-		int sCode = settings.keyBindBack.getKey()
-			.getKeyCode();
-		int aCode = settings.keyBindLeft.getKey()
-			.getKeyCode();
-		int dCode = settings.keyBindRight.getKey()
-			.getKeyCode();
-		int qCode = settings.keyBindDrop.getKey()
-			.getKeyCode();
+		int sCode = KeyBindingHelper.getKeyCode(settings.keyBindBack).getKeyCode();
+		int aCode = KeyBindingHelper.getKeyCode(settings.keyBindLeft).getKeyCode();
+		int dCode = KeyBindingHelper.getKeyCode(settings.keyBindRight).getKeyCode();
+		int qCode = KeyBindingHelper.getKeyCode(settings.keyBindDrop).getKeyCode();
 
 		if (code == sCode) {
 			replay();

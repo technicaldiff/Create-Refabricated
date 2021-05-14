@@ -8,12 +8,15 @@ import com.simibubi.create.foundation.utility.ColorHelper;
 import com.simibubi.create.foundation.utility.Lang;
 import com.simibubi.create.foundation.utility.animation.LerpedFloat;
 
+import com.simibubi.create.lib.helper.KeyBindingHelper;
+
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.client.util.InputMappings;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.registry.Registry;
 import net.minecraft.util.text.IFormattableTextComponent;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
@@ -46,10 +49,8 @@ public class PonderTooltipHandler {
 		Minecraft instance = Minecraft.getInstance();
 		Screen currentScreen = instance.currentScreen;
 		float value = holdWProgress.getValue();
-		int keyCode = ponderKeybind().getKey()
-			.getKeyCode();
-		long window = instance.getWindow()
-			.getHandle();
+		int keyCode = KeyBindingHelper.getKeyCode(ponderKeybind()).getKeyCode();
+		long window = instance.getWindow().getHandle();
 
 		if (!subject && InputMappings.isKeyDown(window, keyCode)) {
 			if (value >= 1) {
@@ -101,8 +102,7 @@ public class PonderTooltipHandler {
 
 		if (stack.isEmpty())
 			return;
-		if (!PonderRegistry.all.containsKey(stack.getItem()
-			.getRegistryName()))
+		if (!PonderRegistry.all.containsKey(Registry.ITEM.getKey(stack.getItem())))
 			return;
 
 		if (prevStack.isEmpty() || !prevStack.isItemEqual(stack))

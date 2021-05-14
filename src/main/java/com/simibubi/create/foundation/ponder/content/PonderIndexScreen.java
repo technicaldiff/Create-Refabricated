@@ -4,6 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import net.minecraft.block.Blocks;
+import net.minecraft.item.Items;
+import net.minecraft.util.registry.Registry;
+
 import org.apache.commons.lang3.mutable.MutableBoolean;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
@@ -59,10 +63,10 @@ public class PonderIndexScreen extends NavigatableSimiScreen {
 		PonderRegistry.all.keySet()
 			.stream()
 			.map(key -> {
-				Item item = ForgeRegistries.ITEMS.getValue(key);
-				if (item == null) {
-					Block b = ForgeRegistries.BLOCKS.getValue(key);
-					if (b != null)
+				Item item = Registry.ITEM.getOrDefault(key);
+				if (item == Items.AIR) {
+					Block b = Registry.BLOCK.getOrDefault(key);
+					if (b != Blocks.AIR)
 						item = b.asItem();
 				}
 				return item;
@@ -109,7 +113,7 @@ public class PonderIndexScreen extends NavigatableSimiScreen {
 			PonderButton b = new PonderButton(itemCenterX + layout.getX() + 4, itemCenterY + layout.getY() + 4)
 					.showing(new ItemStack(item))
 					.withCallback((x, y) -> {
-						if (!PonderRegistry.all.containsKey(item.getRegistryName()))
+						if (!PonderRegistry.all.containsKey(Registry.ITEM.getKey(item)))
 							return;
 
 						centerScalingOn(x, y);

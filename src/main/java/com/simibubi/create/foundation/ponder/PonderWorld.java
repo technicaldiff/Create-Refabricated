@@ -43,6 +43,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.util.math.vector.Vector3d;
+import net.minecraft.util.registry.Registry;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.LightType;
 import net.minecraft.world.World;
@@ -218,7 +219,7 @@ public class PonderWorld extends SchematicWorld {
 	@SuppressWarnings("unchecked")
 	private <T extends IParticleData> Particle makeParticle(T data, double x, double y, double z, double mx, double my,
 		double mz) {
-		ResourceLocation key = ForgeRegistries.PARTICLE_TYPES.getKey(data.getType());
+		ResourceLocation key = Registry.PARTICLE_TYPE.getKey(data.getType());
 		IParticleFactory<T> iparticlefactory = (IParticleFactory<T>) particleFactories.get(key);
 		return iparticlefactory == null ? null
 			: iparticlefactory.makeParticle(data, asClientWorld.getValue(), x, y, z, mx, my, mz);
