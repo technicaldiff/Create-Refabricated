@@ -6,7 +6,6 @@ import com.simibubi.create.AllShapes;
 import com.simibubi.create.AllTileEntities;
 import com.simibubi.create.content.contraptions.wrench.IWrenchable;
 import com.simibubi.create.foundation.block.ITE;
-
 import com.simibubi.create.lib.annotation.MethodsReturnNonnullByDefault;
 
 import net.minecraft.block.Block;
@@ -79,7 +78,7 @@ public class DepotBlock extends Block implements ITE<DepotTileEntity>, IWrenchab
 	public int getComparatorInputOverride(BlockState blockState, World worldIn, BlockPos pos) {
 		return SharedDepotBlockMethods.getComparatorInputOverride(blockState, worldIn, pos);
 	}
-	
+
 	@Override
 	public boolean allowsMovement(BlockState state, IBlockReader reader, BlockPos pos, PathType type) {
 		return false;

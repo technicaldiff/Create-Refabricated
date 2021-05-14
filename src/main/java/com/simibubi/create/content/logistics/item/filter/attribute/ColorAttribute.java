@@ -16,6 +16,7 @@ import net.minecraft.item.FireworkStarItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.ListNBT;
+import net.minecraft.util.registry.Registry;
 import net.minecraft.util.text.TranslationTextComponent;
 
 public class ColorAttribute implements ItemAttribute {
@@ -56,7 +57,7 @@ public class ColorAttribute implements ItemAttribute {
 			colors.addAll(getFireworkStarColors(nbt.getCompound("Explosion")));
 		}
 
-		Arrays.stream(DyeColor.values()).filter(c -> stack.getItem().getRegistryName().getPath().startsWith(c.getTranslationKey() + "_")).forEach(colors::add);
+		Arrays.stream(DyeColor.values()).filter(c -> Registry.ITEM.getKey(stack.getItem()).getPath().startsWith(c.getTranslationKey() + "_")).forEach(colors::add);
 
 		return colors;
 	}

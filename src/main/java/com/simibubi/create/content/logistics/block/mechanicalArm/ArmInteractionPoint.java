@@ -4,8 +4,6 @@ import java.util.function.Supplier;
 
 import javax.annotation.Nullable;
 
-import com.simibubi.create.lib.lba.item.ItemHandlerHelper;
-
 import org.apache.commons.lang3.mutable.MutableBoolean;
 
 import com.google.common.collect.ImmutableMap;
@@ -37,6 +35,9 @@ import com.simibubi.create.foundation.tileEntity.behaviour.filtering.FilteringBe
 import com.simibubi.create.foundation.tileEntity.behaviour.inventory.InvManipulationBehaviour;
 import com.simibubi.create.foundation.utility.NBTHelper;
 import com.simibubi.create.foundation.utility.VecHelper;
+import com.simibubi.create.lib.lba.item.IItemHandler;
+import com.simibubi.create.lib.lba.item.ItemHandlerHelper;
+import com.simibubi.create.lib.utility.LazyOptional;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;

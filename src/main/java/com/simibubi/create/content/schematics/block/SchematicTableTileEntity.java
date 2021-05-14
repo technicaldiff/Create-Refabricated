@@ -14,6 +14,7 @@ import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.TileEntityType;
+import net.minecraft.util.registry.Registry;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 
@@ -117,7 +118,7 @@ public class SchematicTableTileEntity extends SyncedTileEntity implements ITicka
 
 	@Override
 	public ITextComponent getDisplayName() {
-		return new StringTextComponent(getType().getRegistryName().toString());
+		return new StringTextComponent(Registry.BLOCK_ENTITY_TYPE.getKey(getType()).toString());
 	}
 
 }

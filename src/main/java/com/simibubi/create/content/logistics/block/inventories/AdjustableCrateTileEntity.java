@@ -1,9 +1,10 @@
 package com.simibubi.create.content.logistics.block.inventories;
 
 import com.simibubi.create.AllBlocks;
-
+import com.simibubi.create.lib.capabilities.Capability;
 import com.simibubi.create.lib.lba.item.IItemHandler;
 import com.simibubi.create.lib.lba.item.ItemStackHandler;
+import com.simibubi.create.lib.utility.LazyOptional;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
@@ -17,6 +18,7 @@ import net.minecraft.network.PacketBuffer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.Direction;
+import net.minecraft.util.registry.Registry;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 
@@ -159,8 +161,7 @@ public class AdjustableCrateTileEntity extends CrateTileEntity implements INamed
 
 	@Override
 	public ITextComponent getDisplayName() {
-		return new StringTextComponent(getType().getRegistryName()
-			.toString());
+		return new StringTextComponent(Registry.BLOCK_ENTITY_TYPE.getKey(getType()).toString());
 	}
 
 	public void sendToContainer(PacketBuffer buffer) {

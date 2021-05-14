@@ -14,6 +14,9 @@ import com.simibubi.create.foundation.utility.ColorHelper;
 import com.simibubi.create.foundation.utility.VecHelper;
 import com.simibubi.create.foundation.utility.VirtualEmptyModelData;
 
+import com.simibubi.create.lib.helper.ItemRendererHelper;
+import com.simibubi.create.lib.lba.fluid.FluidStack;
+
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.FireBlock;
@@ -267,8 +270,8 @@ public class GuiGameElement {
 				.getItemRenderer();
 			IBakedModel bakedModel = renderer.getItemModelWithOverrides(stack, null, null);
 			matrixStack.push();
-			renderer.textureManager.bindTexture(AtlasTexture.LOCATION_BLOCKS_TEXTURE);
-			renderer.textureManager.getTexture(AtlasTexture.LOCATION_BLOCKS_TEXTURE)
+			ItemRendererHelper.getTextureManager(renderer).bindTexture(AtlasTexture.LOCATION_BLOCKS_TEXTURE);
+			ItemRendererHelper.getTextureManager(renderer).getTexture(AtlasTexture.LOCATION_BLOCKS_TEXTURE)
 				.setBlurMipmapDirect(false, false);
 			RenderSystem.enableRescaleNormal();
 			RenderSystem.enableAlphaTest();

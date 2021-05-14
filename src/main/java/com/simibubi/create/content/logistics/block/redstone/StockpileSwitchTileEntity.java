@@ -7,6 +7,7 @@ import com.simibubi.create.foundation.tileEntity.TileEntityBehaviour;
 import com.simibubi.create.foundation.tileEntity.behaviour.filtering.FilteringBehaviour;
 import com.simibubi.create.foundation.tileEntity.behaviour.inventory.InvManipulationBehaviour;
 import com.simibubi.create.foundation.tileEntity.behaviour.inventory.InvManipulationBehaviour.InterfaceProvider;
+import com.simibubi.create.lib.lba.item.IItemHandler;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.item.ItemStack;

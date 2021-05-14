@@ -8,6 +8,9 @@ import com.simibubi.create.foundation.tileEntity.TileEntityBehaviour;
 import com.simibubi.create.foundation.tileEntity.behaviour.ValueBoxTransform;
 import com.simibubi.create.foundation.tileEntity.behaviour.filtering.FilteringBehaviour;
 import com.simibubi.create.foundation.utility.MatrixStacker;
+import com.simibubi.create.lib.capabilities.Capability;
+import com.simibubi.create.lib.lba.item.IItemHandler;
+import com.simibubi.create.lib.utility.LazyOptional;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.item.ItemStack;

@@ -9,6 +9,8 @@ import com.simibubi.create.foundation.utility.ColorHelper;
 import com.simibubi.create.foundation.utility.Couple;
 import com.simibubi.create.foundation.utility.MatrixStacker;
 
+import com.simibubi.create.lib.helper.FontRendererHelper;
+
 import net.minecraft.block.BlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
@@ -89,12 +91,12 @@ public class NixieTubeRenderer extends SafeTileEntityRenderer<NixieTubeTileEntit
 		fontRenderer.draw(c, 0, 0, color, false, ms.peek()
 			.getModel(), buffer, false, 0, 15728880);
 		if (buffer instanceof Impl) {
-			TexturedGlyph texturedglyph = fontRenderer.getFontStorage(Style.DEFAULT_FONT_ID).getRectangleRenderer();
+			TexturedGlyph texturedglyph = FontRendererHelper.getFontStorage(fontRenderer, Style.DEFAULT_FONT_ID).getRectangleRenderer();
 			((Impl) buffer).draw(texturedglyph.getLayer(false));
 		}
 	}
 
 	private static float getCharWidth(char p_211125_1_, FontRenderer fontRenderer) {
-		return p_211125_1_ == 167 ? 0.0F : fontRenderer.getFontStorage(Style.DEFAULT_FONT_ID).getGlyph(p_211125_1_).getAdvance(false);
+		return p_211125_1_ == 167 ? 0.0F : FontRendererHelper.getFontStorage(fontRenderer, Style.DEFAULT_FONT_ID).getGlyph(p_211125_1_).getAdvance(false);
 	}
 }

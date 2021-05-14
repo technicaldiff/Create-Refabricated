@@ -39,6 +39,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.registry.Registry;
 import net.minecraft.util.text.IFormattableTextComponent;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
@@ -95,7 +96,7 @@ public class ItemDescription {
 		SpeedLevel minimumRequiredSpeedLevel =
 			isEngine ? SpeedLevel.NONE : ((IRotate) block).getMinimumRequiredSpeedLevel();
 		boolean hasSpeedRequirement = minimumRequiredSpeedLevel != SpeedLevel.NONE;
-		ResourceLocation id = block.getRegistryName();
+		ResourceLocation id = Registry.BLOCK.getKey(block);
 		Map<ResourceLocation, ConfigValue<Double>> impacts = config.stressValues.getImpacts();
 		Map<ResourceLocation, ConfigValue<Double>> capacities = config.stressValues.getCapacities();
 		boolean hasStressImpact = impacts.containsKey(id) && impacts.get(id)

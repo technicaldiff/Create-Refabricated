@@ -2,6 +2,8 @@ package com.simibubi.create.content.logistics.item.filter;
 
 import com.simibubi.create.AllContainerTypes;
 
+import com.simibubi.create.lib.lba.item.ItemStackHandler;
+
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;

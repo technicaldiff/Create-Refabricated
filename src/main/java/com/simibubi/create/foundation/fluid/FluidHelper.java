@@ -11,12 +11,13 @@ import com.simibubi.create.content.contraptions.fluids.actors.GenericItemFilling
 import com.simibubi.create.content.contraptions.processing.EmptyingByBasin;
 import com.simibubi.create.foundation.tileEntity.SmartTileEntity;
 import com.simibubi.create.foundation.utility.Pair;
-
+import com.simibubi.create.lib.lba.fluid.FluidAction;
 import com.simibubi.create.lib.lba.fluid.FluidStack;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.fluid.FlowingFluid;
 import net.minecraft.fluid.Fluid;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.item.ItemStack;
@@ -24,6 +25,7 @@ import net.minecraft.nbt.JsonToNBT;
 import net.minecraft.util.Hand;
 import net.minecraft.util.JSONUtils;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
 
 public class FluidHelper {
@@ -57,8 +59,8 @@ public class FluidHelper {
 			return Fluids.FLOWING_WATER;
 		if (fluid == Fluids.LAVA)
 			return Fluids.FLOWING_LAVA;
-		if (fluid instanceof ForgeFlowingFluid)
-			return ((ForgeFlowingFluid) fluid).getFlowingFluid();
+		if (fluid instanceof FlowingFluid)
+			return ((FlowingFluid) fluid).getFlowingFluid();
 		return fluid;
 	}
 
@@ -67,15 +69,14 @@ public class FluidHelper {
 			return Fluids.WATER;
 		if (fluid == Fluids.FLOWING_LAVA)
 			return Fluids.LAVA;
-		if (fluid instanceof ForgeFlowingFluid)
-			return ((ForgeFlowingFluid) fluid).getStillFluid();
+		if (fluid instanceof FlowingFluid)
+			return ((FlowingFluid) fluid).getStillFluid();
 		return fluid;
 	}
 
 	public static JsonElement serializeFluidStack(FluidStack stack) {
 		JsonObject json = new JsonObject();
-		json.addProperty("fluid", stack.getFluid()
-			.getRegistryName()
+		json.addProperty("fluid", Registry.FLUID.getKey(stack.getFluid())
 			.toString());
 		json.addProperty("amount", stack.getAmount());
 		if (stack.hasTag())
@@ -86,8 +87,8 @@ public class FluidHelper {
 
 	public static FluidStack deserializeFluidStack(JsonObject json) {
 		ResourceLocation id = new ResourceLocation(JSONUtils.getString(json, "fluid"));
-		Fluid fluid = ForgeRegistries.FLUIDS.getValue(id);
-		if (fluid == null)
+		Fluid fluid = Registry.FLUID.getOrDefault(id);
+		if (fluid == Fluids.WATER)
 			throw new JsonSyntaxException("Unknown fluid '" + id + "'");
 		int amount = JSONUtils.getInt(json, "amount");
 		FluidStack stack = new FluidStack(fluid, amount);

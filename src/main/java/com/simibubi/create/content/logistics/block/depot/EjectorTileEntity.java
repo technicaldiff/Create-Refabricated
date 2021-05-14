@@ -8,6 +8,11 @@ import javax.annotation.Nullable;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
 
+import com.simibubi.create.lib.capabilities.Capability;
+import com.simibubi.create.lib.lba.item.ItemStackHandler;
+
+import com.simibubi.create.lib.utility.LazyOptional;
+
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;

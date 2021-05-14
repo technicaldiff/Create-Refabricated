@@ -7,18 +7,6 @@ import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
 
-import com.simibubi.create.lib.lba.item.ItemHandlerHelper;
-
-import net.minecraft.block.BlockState;
-import net.minecraft.inventory.InventoryHelper;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.nbt.ListNBT;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.world.World;
-
 import com.simibubi.create.AllSoundEvents;
 import com.simibubi.create.content.contraptions.relays.belt.BeltHelper;
 import com.simibubi.create.content.contraptions.relays.belt.transport.TransportedItemStack;
@@ -34,7 +22,20 @@ import com.simibubi.create.foundation.tileEntity.behaviour.belt.TransportedItemS
 import com.simibubi.create.foundation.utility.NBTHelper;
 import com.simibubi.create.foundation.utility.VecHelper;
 import com.simibubi.create.lib.utility.Constants.NBT;
+import com.simibubi.create.lib.capabilities.Capability;
+import com.simibubi.create.lib.lba.item.ItemHandlerHelper;
+import com.simibubi.create.lib.lba.item.ItemStackHandler;
+import com.simibubi.create.lib.utility.LazyOptional;
 
+import net.minecraft.block.BlockState;
+import net.minecraft.inventory.InventoryHelper;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.nbt.ListNBT;
+import net.minecraft.util.Direction;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.vector.Vector3d;
+import net.minecraft.world.World;
 
 public class DepotBehaviour extends TileEntityBehaviour {
 
@@ -126,7 +127,7 @@ public class DepotBehaviour extends TileEntityBehaviour {
 		}
 
 		heldItem.locked = result == ProcessingResult.HOLD;
-		if (heldItem.locked != wasLocked || !previousItem.equals(heldItem.stack, false))
+		if (heldItem.locked != wasLocked || !ItemStack.areItemStacksEqual(previousItem, heldItem.stack))
 			tileEntity.sendData();
 	}
 

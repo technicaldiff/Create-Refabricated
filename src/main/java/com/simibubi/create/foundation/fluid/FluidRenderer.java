@@ -9,6 +9,7 @@ import com.simibubi.create.foundation.utility.AngleHelper;
 import com.simibubi.create.foundation.utility.ColorHelper;
 import com.simibubi.create.foundation.utility.Iterate;
 import com.simibubi.create.foundation.utility.MatrixStacker;
+import com.simibubi.create.lib.lba.fluid.FluidStack;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.IRenderTypeBuffer;
@@ -27,7 +28,7 @@ import net.minecraft.util.math.vector.Vector3i;
 public class FluidRenderer {
 
 	public static void renderFluidStream(FluidStack fluidStack, Direction direction, float radius, float progress,
-		boolean inbound, IRenderTypeBuffer buffer, MatrixStack ms, int light) {
+										 boolean inbound, IRenderTypeBuffer buffer, MatrixStack ms, int light) {
 		Fluid fluid = fluidStack.getFluid();
 		FluidAttributes fluidAttributes = fluid.getAttributes();
 		Function<ResourceLocation, TextureAtlasSprite> spriteAtlas = Minecraft.getInstance()

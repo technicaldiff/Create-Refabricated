@@ -1,6 +1,7 @@
 package com.simibubi.create.content.logistics.block.depot;
 
 import com.simibubi.create.content.contraptions.relays.belt.transport.TransportedItemStack;
+import com.simibubi.create.lib.lba.item.IItemHandler;
 
 import net.minecraft.item.ItemStack;
 

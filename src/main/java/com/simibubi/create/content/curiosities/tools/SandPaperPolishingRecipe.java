@@ -9,6 +9,8 @@ import com.simibubi.create.content.contraptions.processing.ProcessingRecipe;
 import com.simibubi.create.content.contraptions.processing.ProcessingRecipeBuilder.ProcessingRecipeParams;
 import com.simibubi.create.content.curiosities.tools.SandPaperPolishingRecipe.SandPaperInv;
 
+import com.simibubi.create.lib.lba.item.ItemStackHandler;
+
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.math.vector.Vector3d;

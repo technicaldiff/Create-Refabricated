@@ -2,7 +2,10 @@ package com.simibubi.create.lib.mixin.accessor;
 
 import java.util.List;
 
+import net.minecraft.client.renderer.texture.TextureManager;
+
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.gen.Accessor;
 import org.spongepowered.asm.mixin.gen.Invoker;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
@@ -19,6 +22,9 @@ import net.minecraft.item.ItemStack;
 @Environment(EnvType.CLIENT)
 @Mixin(ItemRenderer.class)
 public interface ItemRendererAccessor {
+	@Accessor("textureManager")
+	TextureManager create$getTextureManager();
+
 	@Invoker("renderBakedItemModel")
 	void create$renderBakedItemModel(IBakedModel model, ItemStack stack, int light, int overlay, MatrixStack matrices, IVertexBuilder vertices);
 
