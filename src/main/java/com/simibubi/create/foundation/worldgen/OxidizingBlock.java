@@ -8,6 +8,8 @@ import com.simibubi.create.content.curiosities.tools.SandPaperItem;
 import com.simibubi.create.foundation.utility.BlockHelper;
 import com.simibubi.create.foundation.utility.Iterate;
 
+import com.simibubi.create.lib.utility.LoadedCheckUtil;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
@@ -51,7 +53,7 @@ public class OxidizingBlock extends Block {
 			LinkedList<Integer> neighbors = new LinkedList<>();
 			for (Direction facing : Iterate.directions) {
 				BlockPos neighbourPos = pos.offset(facing);
-				if (!worldIn.isAreaLoaded(neighbourPos, 0))
+				if (!LoadedCheckUtil.isAreaLoaded(worldIn, neighbourPos, 0))
 					continue;
 				if (!worldIn.isBlockPresent(neighbourPos))
 					continue;
