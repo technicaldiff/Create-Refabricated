@@ -18,6 +18,7 @@ import net.minecraft.particles.ParticleType;
 import net.minecraft.util.ResourceLocation;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
+import net.minecraft.util.registry.Registry;
 
 public enum AllParticleTypes {
 
@@ -39,9 +40,11 @@ public enum AllParticleTypes {
 		entry = new ParticleEntry<>(new ResourceLocation(Create.ID, asId), typeFactory);
 	}
 
-	public static void register(RegistryEvent.Register<ParticleType<?>> event) {
+	public static void register() {
 		for (AllParticleTypes particle : values())
-			particle.entry.register(event.getRegistry());
+			Registry.register(Registry.PARTICLE_TYPE, particle.entry.id, particle.entry.type);
+//			particle.entry.register(Registry.PARTICLE_TYPE);
+
 	}
 
 	@Environment(EnvType.CLIENT)
@@ -69,8 +72,8 @@ public enum AllParticleTypes {
 			this.typeFactory = typeFactory;
 		}
 
-		void register(IForgeRegistry<ParticleType<?>> registry) {
-			registry.register(getOrCreateType());
+		void register(Registry<ParticleType<?>> registry) {
+//			registry.register(getOrCreateType());
 		}
 
 		ParticleType<D> getOrCreateType() {
@@ -78,7 +81,7 @@ public enum AllParticleTypes {
 				return type;
 			type = typeFactory.get()
 				.createType();
-			type.setRegistryName(id);
+//			type.setRegistryName(id);
 			return type;
 		}
 

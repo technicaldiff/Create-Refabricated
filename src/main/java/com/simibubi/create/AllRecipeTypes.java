@@ -21,12 +21,12 @@ import com.simibubi.create.content.contraptions.processing.ProcessingRecipeBuild
 import com.simibubi.create.content.contraptions.processing.ProcessingRecipeSerializer;
 import com.simibubi.create.content.curiosities.tools.SandPaperPolishingRecipe;
 import com.simibubi.create.foundation.utility.Lang;
+import com.simibubi.create.lib.utility.ShapedRecipeUtil;
 
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.item.crafting.IRecipeSerializer;
 import net.minecraft.item.crafting.IRecipeType;
-import net.minecraft.item.crafting.ShapedRecipe;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
@@ -65,6 +65,7 @@ public enum AllRecipeTypes {
 	}
 
 	public static void register() {
+		ShapedRecipeUtil.setCraftingSize(9, 9);
 
 		for (AllRecipeTypes r : AllRecipeTypes.values()) {
 			if (r.type == null)

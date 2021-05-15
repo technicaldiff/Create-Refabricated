@@ -21,6 +21,8 @@
     "PlayerControllerMixin",
     "PlayerEntityMixin",
     "RailStateMixin",
+    "ShapedRecipeMixin",
+    "ShapelessRecipe$SerializerMixin",
     "SSpawnObjectPacketMixin",
     "TrackedEntityMixin",
     "WalkNodeProcessorMixin",

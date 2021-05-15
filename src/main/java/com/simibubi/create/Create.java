@@ -20,21 +20,15 @@ import com.simibubi.create.content.palettes.PalettesItemGroup;
 import com.simibubi.create.content.schematics.SchematicProcessor;
 import com.simibubi.create.content.schematics.ServerSchematicLoader;
 import com.simibubi.create.content.schematics.filtering.SchematicInstances;
-import com.simibubi.create.foundation.advancement.AllAdvancements;
 import com.simibubi.create.foundation.advancement.AllTriggers;
 import com.simibubi.create.foundation.command.ChunkUtil;
 import com.simibubi.create.foundation.command.ServerLagger;
 import com.simibubi.create.foundation.config.AllConfigs;
 import com.simibubi.create.foundation.data.CreateRegistrate;
-import com.simibubi.create.foundation.data.LangMerger;
-import com.simibubi.create.foundation.data.recipe.MechanicalCraftingRecipeGen;
-import com.simibubi.create.foundation.data.recipe.ProcessingRecipeGen;
-import com.simibubi.create.foundation.data.recipe.StandardRecipeGen;
 import com.simibubi.create.foundation.networking.AllPackets;
 import com.simibubi.create.foundation.worldgen.AllWorldFeatures;
 import com.tterrag.registrate.util.NonNullLazyValue;
 
-import net.minecraft.data.DataGenerator;
 import net.minecraft.inventory.container.ContainerType;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.crafting.IRecipeSerializer;
@@ -89,13 +83,21 @@ public class Create implements ModInitializer {
 		MinecraftForge.EVENT_BUS.addListener(EventPriority.HIGH, Create::onBiomeLoad);
 		modEventBus.addGenericListener(Feature.class, AllWorldFeatures::registerOreFeatures);
 		modEventBus.addGenericListener(Placement.class, AllWorldFeatures::registerDecoratorFeatures);
-		modEventBus.addGenericListener(IRecipeSerializer.class, AllRecipeTypes::register);
-		modEventBus.addGenericListener(ContainerType.class, AllContainerTypes::register);
-		modEventBus.addGenericListener(ParticleType.class, AllParticleTypes::register);
-		modEventBus.addGenericListener(SoundEvent.class, AllSoundEvents::register);
-		modEventBus.addListener(AllConfigs::onLoad);
-		modEventBus.addListener(AllConfigs::onReload);
+//		modEventBus.addGenericListener(IRecipeSerializer.class, AllRecipeTypes::register);
+//		modEventBus.addGenericListener(ContainerType.class, AllContainerTypes::register);
+//		modEventBus.addGenericListener(ParticleType.class, AllParticleTypes::register);
+//		modEventBus.addGenericListener(SoundEvent.class, AllSoundEvents::register);
+//		modEventBus.addListener(AllConfigs::onLoad);
+//		modEventBus.addListener(AllConfigs::onReload);
 //		modEventBus.addListener(EventPriority.LOWEST, this::gatherData); // method commented, don't need datagen
+
+		// fabric events
+		// register events are painful, hopefully these just work fine here
+		// if they don't, that's a problem for when we can actually debug
+		AllRecipeTypes.register();
+		AllContainerTypes.register();
+		AllParticleTypes.register();
+		AllSoundEvents.register();
 
 		AllConfigs.register();
 		random = new Random();
