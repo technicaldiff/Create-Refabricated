@@ -11,6 +11,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import com.simibubi.create.lib.event.BeforeFirstReloadCallback;
 import com.simibubi.create.lib.event.ClientWorldEvents;
 import com.simibubi.create.lib.event.LeftClickAirCallback;
+import com.simibubi.create.lib.event.ParticleManagerRegistrationCallback;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -27,6 +28,11 @@ public abstract class MinecraftMixin {
 	public ClientWorld world;
 	@Shadow
 	public ClientPlayerEntity player;
+
+	@Inject(at = @At(value = "NEW", target = "Lnet/minecraft/client/particle/ParticleManager", shift = Shift.AFTER), method = "<init>")
+	public void create$registerParticleManagers(GameConfiguration gameConfiguration, CallbackInfo ci) {
+		ParticleManagerRegistrationCallback.EVENT.invoker().onParticleManagerRegistration();
+	}
 
 	@Inject(at = @At(value = "INVOKE", target = "Lnet/minecraft/client/Minecraft;setLoadingGui(Lnet/minecraft/client/gui/LoadingGui;)V"), method = "<init>(Lnet/minecraft/client/GameConfiguration;)V")
 	public void create$beforeFirstReload(GameConfiguration args, CallbackInfo ci) {
