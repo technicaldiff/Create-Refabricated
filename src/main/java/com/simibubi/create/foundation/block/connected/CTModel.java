@@ -9,6 +9,8 @@ import com.simibubi.create.foundation.block.connected.ConnectedTextureBehaviour.
 import com.simibubi.create.foundation.block.render.QuadHelper;
 import com.simibubi.create.foundation.utility.Iterate;
 
+import com.simibubi.create.lib.helper.BakedQuadHelper;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.renderer.model.BakedQuad;
@@ -81,7 +83,7 @@ public class CTModel extends BakedModelWrapperWithData {
 			CTSpriteShiftEntry spriteShift = behaviour.get(state, quad.getFace());
 			if (spriteShift == null)
 				continue;
-			if (quad.getSprite() != spriteShift.getOriginal())
+			if (BakedQuadHelper.getSprite(quad) != spriteShift.getOriginal())
 				continue;
 			int index = data.get(quad.getFace());
 			if (index == -1)

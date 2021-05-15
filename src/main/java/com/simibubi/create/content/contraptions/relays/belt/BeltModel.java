@@ -12,6 +12,8 @@ import com.simibubi.create.foundation.block.render.QuadHelper;
 import com.simibubi.create.foundation.block.render.SpriteShiftEntry;
 import com.simibubi.create.foundation.render.SuperByteBuffer;
 
+import com.simibubi.create.lib.helper.BakedQuadHelper;
+
 import net.minecraft.block.BlockState;
 import net.minecraft.client.renderer.model.BakedQuad;
 import net.minecraft.client.renderer.model.IBakedModel;
@@ -43,10 +45,10 @@ public class BeltModel extends BakedModelWrapper<IBakedModel> {
 			BakedQuad quad = quads.get(i);
 			if (spriteShift == null)
 				continue;
-			if (quad.getSprite() != spriteShift.getOriginal())
+			if (BakedQuadHelper.getSprite(quad) != spriteShift.getOriginal())
 				continue;
 
-			TextureAtlasSprite original = quad.getSprite();
+			TextureAtlasSprite original = BakedQuadHelper.getSprite(quad);
 			TextureAtlasSprite target = spriteShift.getTarget();
 			BakedQuad newQuad = QuadHelper.clone(quad);
 			int[] vertexData = newQuad.getVertexData();

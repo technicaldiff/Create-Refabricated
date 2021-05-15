@@ -202,8 +202,8 @@ public class BlockHelper {
 				return;
 
 			if (event.getExpToDrop() > 0 && world instanceof ServerWorld)
-				state.getBlock()
-					.dropXpOnBlockBreak((ServerWorld) world, pos, event.getExpToDrop());
+				com.simibubi.create.lib.helper.BlockHelper.dropXpOnBlockBreak(state.getBlock(),
+					(ServerWorld) world, pos, event.getExpToDrop());
 
 			usedTool.onBlockDestroyed(world, state, pos, player);
 			player.addStat(Stats.BLOCK_MINED.get(state.getBlock()));

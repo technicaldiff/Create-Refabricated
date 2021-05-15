@@ -8,6 +8,8 @@ import java.util.Random;
 
 import javax.annotation.Nullable;
 
+import com.simibubi.create.lib.utility.VertexBuilderUtil;
+
 import org.lwjgl.system.MemoryStack;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
@@ -186,12 +188,12 @@ public abstract class GhostBlockRenderer {
 					g = p_227890_3_[k] * p_227890_5_;
 					b = p_227890_3_[k] * p_227890_6_;
 
-					int l = vb.applyBakedLighting(p_227890_7_[k], bytebuffer);
+					int l = VertexBuilderUtil.applyBakedLighting(p_227890_7_[k], bytebuffer);
 					float f9 = bytebuffer.getFloat(16);
 					float f10 = bytebuffer.getFloat(20);
 					Vector4f vector4f = new Vector4f(f, f1, f2, 1.0F);
 					vector4f.transform(matrix4f);
-					vb.applyBakedNormals(vector3f, bytebuffer, p_227890_1_.getNormal());
+					VertexBuilderUtil.applyBakedNormals(vector3f, bytebuffer, p_227890_1_.getNormal());
 					vb.vertex(vector4f.getX(), vector4f.getY(), vector4f.getZ(), r, g, b, alpha, f9, f10, p_227890_8_,
 						l, vector3f.getX(), vector3f.getY(), vector3f.getZ());
 				}

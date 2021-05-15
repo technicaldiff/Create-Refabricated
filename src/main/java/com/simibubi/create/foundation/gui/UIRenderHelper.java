@@ -1,6 +1,6 @@
 package com.simibubi.create.foundation.gui;
 
-import java.awt.Color;
+import java.awt.*;
 
 import javax.annotation.Nonnull;
 
@@ -10,6 +10,7 @@ import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.simibubi.create.foundation.utility.ColorHelper;
 import com.simibubi.create.foundation.utility.Couple;
+import com.simibubi.create.lib.utility.FrameBufferUtil;
 import com.simibubi.create.lib.utility.GuiUtils;
 
 import net.minecraft.client.MainWindow;
@@ -25,7 +26,7 @@ import net.minecraft.util.math.vector.Vector3f;
 public class UIRenderHelper {
 
 	public static void enableStencil() {
-		RenderSystem.recordRenderCall(() -> Minecraft.getInstance().getFramebuffer().enableStencil());
+		RenderSystem.recordRenderCall(() -> FrameBufferUtil.enableStencil(Minecraft.getInstance().getFramebuffer()));
 	}
 
 	public static Framebuffer framebuffer;
@@ -37,7 +38,7 @@ public class UIRenderHelper {
 			framebuffer = new Framebuffer(mainWindow.getFramebufferWidth(), mainWindow.getFramebufferHeight(), true,
 					Minecraft.IS_RUNNING_ON_MAC);
 			framebuffer.setFramebufferColor(0, 0, 0, 0);
-			framebuffer.enableStencil();
+			FrameBufferUtil.enableStencil(framebuffer);
 		});
 	}
 

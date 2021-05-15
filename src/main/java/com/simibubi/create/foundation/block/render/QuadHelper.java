@@ -2,6 +2,8 @@ package com.simibubi.create.foundation.block.render;
 
 import java.util.Arrays;
 
+import com.simibubi.create.lib.helper.BakedQuadHelper;
+
 import net.minecraft.client.renderer.model.BakedQuad;
 
 public final class QuadHelper {
@@ -10,7 +12,7 @@ public final class QuadHelper {
 
 	public static BakedQuad clone(BakedQuad quad) {
 		return new BakedQuad(Arrays.copyOf(quad.getVertexData(), quad.getVertexData().length),
-			quad.getTintIndex(), quad.getFace(), quad.getSprite(), quad.hasShade());
+			quad.getTintIndex(), quad.getFace(), BakedQuadHelper.getSprite(quad), quad.hasShade());
 	}
 
 }
