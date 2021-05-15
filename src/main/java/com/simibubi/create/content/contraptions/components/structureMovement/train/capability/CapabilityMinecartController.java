@@ -224,8 +224,7 @@ public class CapabilityMinecartController implements ICapabilitySerializable<Com
 			.add((AbstractMinecartEntity) entity);
 	}
 
-	public static void startTracking(PlayerEvent.StartTracking event) {
-		Entity entity = event.getTarget();
+	public static void startTracking(Entity entity) {
 		if (!(entity instanceof AbstractMinecartEntity))
 			return;
 		((CapabilityProvider) entity).getCapability(MINECART_CONTROLLER_CAPABILITY) // I don't understand why, but I couldn't use a util class for this. Errors.

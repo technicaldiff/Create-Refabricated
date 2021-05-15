@@ -22,6 +22,7 @@
     "PlayerEntityMixin",
     "RailStateMixin",
     "SSpawnObjectPacketMixin",
+    "TrackedEntityMixin",
     "WalkNodeProcessorMixin",
     "WorldMixin",
     "accessor.AbstractMinecartEntityAccessor",

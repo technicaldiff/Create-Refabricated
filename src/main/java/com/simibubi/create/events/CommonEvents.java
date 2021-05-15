@@ -4,16 +4,13 @@ import com.simibubi.create.content.contraptions.components.deployer.DeployerFake
 import com.simibubi.create.content.curiosities.armor.DivingBootsItem;
 import com.simibubi.create.content.curiosities.armor.DivingHelmetItem;
 import com.simibubi.create.content.curiosities.tools.ExtendoGripItem;
-import com.simibubi.create.content.curiosities.tools.SandPaperItem;
 import com.simibubi.create.lib.event.FluidPlaceBlockCallback;
 
-import com.simibubi.create.lib.event.ItemEnchantabilityCallback;
 import com.simibubi.create.lib.event.LivingEntityEvents;
-import com.simibubi.create.lib.event.LivingEntityExperienceDropCallback;
-import com.simibubi.create.lib.event.LivingEntityKnockbackStrengthCallback;
-import com.simibubi.create.lib.event.LivingEntityTickCallback;
 
 import com.simibubi.create.lib.event.MobEntitySetTargetCallback;
+
+import com.simibubi.create.lib.event.PlayerStartTrackingCallback;
 
 import net.fabricmc.fabric.api.event.player.AttackBlockCallback;
 
@@ -147,8 +144,8 @@ public class CommonEvents {
 		CapabilityMinecartController.attach(event);
 	}
 
-	public static void startTracking(PlayerEvent.StartTracking event) {
-		CapabilityMinecartController.startTracking(event);
+	public static void startTracking(PlayerEntity player, Entity target) {
+		CapabilityMinecartController.startTracking(target);
 	}
 
 	public static void leftClickEmpty(PlayerEntity player) {
@@ -170,6 +167,7 @@ public class CommonEvents {
 		ServerWorldEvents.UNLOAD.register((server, world) -> CommonEvents.onUnloadWorld(world));
 		FluidPlaceBlockCallback.EVENT.register(CommonEvents::whenFluidsMeet);
 		LivingEntityEvents.TICK.register(CommonEvents::onUpdateLivingEntity);
+		PlayerStartTrackingCallback.EVENT.register(CommonEvents::startTracking);
 
 		// External Events
 

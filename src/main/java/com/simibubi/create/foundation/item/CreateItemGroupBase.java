@@ -1,5 +1,7 @@
 package com.simibubi.create.foundation.item;
 
+import static com.simibubi.create.lib.utility.ItemGroupUtil.getGroupCountSafe;
+
 import java.util.Collection;
 import java.util.EnumSet;
 import java.util.stream.Collectors;
@@ -8,6 +10,8 @@ import com.simibubi.create.Create;
 import com.simibubi.create.content.AllSections;
 import com.tterrag.registrate.util.entry.RegistryEntry;
 
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.ItemRenderer;
@@ -19,8 +23,6 @@ import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.util.NonNullList;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
 
 public abstract class CreateItemGroupBase extends ItemGroup {
 
