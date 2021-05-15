@@ -2,6 +2,8 @@ package com.simibubi.create.content.curiosities.tools;
 
 import java.util.UUID;
 
+import org.jetbrains.annotations.Nullable;
+
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
 import com.jamieswhiteshirt.reachentityattributes.ReachEntityAttributes;
@@ -9,10 +11,10 @@ import com.simibubi.create.AllItems;
 import com.simibubi.create.foundation.advancement.AllTriggers;
 import com.simibubi.create.foundation.networking.AllPackets;
 import com.simibubi.create.foundation.utility.AnimationTickHolder;
+import com.simibubi.create.lib.utility.ExtraDataUtil;
 
-import com.simibubi.create.lib.helper.EntityHelper;
-
-import net.fabricmc.fabric.api.event.player.AttackEntityCallback;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.player.ClientPlayerEntity;
 import net.minecraft.entity.Entity;
@@ -35,11 +37,7 @@ import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.EntityRayTraceResult;
 import net.minecraft.util.math.RayTraceResult.Type;
 import net.minecraft.util.math.vector.Vector3d;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
 import net.minecraft.world.World;
-
-import org.jetbrains.annotations.Nullable;
 
 public class ExtendoGripItem extends Item {
 	private static DamageSource lastActiveDamageSource;
@@ -72,7 +70,7 @@ public class ExtendoGripItem extends Item {
 		String marker = "createExtendo";
 		String dualMarker = "createDualExtendo";
 
-		CompoundNBT persistentData = EntityHelper.getExtraCustomData(player);
+		CompoundNBT persistentData = ExtraDataUtil.getExtraData(player);
 		boolean inOff = AllItems.EXTENDO_GRIP.isIn(player.getHeldItemOffhand());
 		boolean inMain = AllItems.EXTENDO_GRIP.isIn(player.getHeldItemMainhand());
 		boolean holdingDualExtendo = inOff && inMain;

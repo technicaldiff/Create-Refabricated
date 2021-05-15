@@ -9,7 +9,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.nbt.CompoundNBT;
 
 public final class EntityHelper {
-	public static final String EXTRA_DATA_KEY = "create_ExtraData";
+	public static final String EXTRA_DATA_KEY = "create_ExtraEntityData";
 
 	public static CompoundNBT getExtraCustomData(Entity entity) {
 		return ((EntityExtensions) entity).create$getExtraCustomData();

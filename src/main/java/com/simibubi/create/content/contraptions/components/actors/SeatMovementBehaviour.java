@@ -8,8 +8,7 @@ import com.simibubi.create.content.contraptions.components.structureMovement.Abs
 import com.simibubi.create.content.contraptions.components.structureMovement.MovementBehaviour;
 import com.simibubi.create.content.contraptions.components.structureMovement.MovementContext;
 import com.simibubi.create.foundation.utility.VecHelper;
-
-import com.simibubi.create.lib.helper.EntityHelper;
+import com.simibubi.create.lib.utility.ExtraDataUtil;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.block.SlabBlock;
@@ -65,7 +64,7 @@ public class SeatMovementBehaviour extends MovementBehaviour {
 				Vector3d position = VecHelper.getCenterOf(pos)
 					.add(0, slab ? .5f : 1f, 0);
 				toDismount.setPositionAndUpdate(position.x, position.y, position.z);
-				EntityHelper.getExtraCustomData(toDismount)
+				ExtraDataUtil.getExtraData(toDismount)
 						.remove("ContraptionDismountLocation");
 			}
 			return;

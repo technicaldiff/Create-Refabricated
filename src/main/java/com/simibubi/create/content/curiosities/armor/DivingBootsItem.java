@@ -2,10 +2,8 @@ package com.simibubi.create.content.curiosities.armor;
 
 import com.simibubi.create.AllItems;
 import com.simibubi.create.foundation.utility.NBTHelper;
-
-import com.simibubi.create.lib.helper.EntityHelper;
-
 import com.simibubi.create.lib.helper.LivingEntityHelper;
+import com.simibubi.create.lib.utility.ExtraDataUtil;
 
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.Pose;
@@ -44,13 +42,13 @@ public class DivingBootsItem extends CopperArmorItem {
 	protected static boolean affects(LivingEntity entity) {
 		if (!AllItems.DIVING_BOOTS.get()
 			.isWornBy(entity)) {
-			EntityHelper.getExtraCustomData(entity)
+			ExtraDataUtil.getExtraData(entity)
 				.remove("HeavyBoots");
 
 			return false;
 		}
 
-		NBTHelper.putMarker(EntityHelper.getExtraCustomData(entity), "HeavyBoots");
+		NBTHelper.putMarker(ExtraDataUtil.getExtraData(entity), "HeavyBoots");
 		if (!entity.isInWater())
 			return false;
 		if (entity.getPose() == Pose.SWIMMING)

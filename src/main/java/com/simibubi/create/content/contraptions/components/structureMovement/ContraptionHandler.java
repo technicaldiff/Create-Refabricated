@@ -7,20 +7,18 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import com.simibubi.create.lib.helper.EntityHelper;
+import com.simibubi.create.foundation.utility.VecHelper;
+import com.simibubi.create.foundation.utility.WorldAttached;
+import com.simibubi.create.lib.utility.Constants.NBT;
+import com.simibubi.create.lib.utility.ExtraDataUtil;
 
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import it.unimi.dsi.fastutil.objects.ObjectLists;
-
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
-
-import com.simibubi.create.foundation.utility.VecHelper;
-import com.simibubi.create.foundation.utility.WorldAttached;
-import com.simibubi.create.lib.utility.Constants.NBT;
 
 public class ContraptionHandler {
 
@@ -63,7 +61,7 @@ public class ContraptionHandler {
 	public static void entitiesWhoJustDismountedGetSentToTheRightLocation(LivingEntity entityLiving, World world) {
 		if (world.isRemote)
 			return;
-		CompoundNBT data = EntityHelper.getExtraCustomData(entityLiving);
+		CompoundNBT data = ExtraDataUtil.getExtraData(entityLiving);
 		if (!data.contains("ContraptionDismountLocation"))
 			return;
 		Vector3d position = VecHelper.readNBT(data.getList("ContraptionDismountLocation", NBT.TAG_DOUBLE));

@@ -1,6 +1,6 @@
 package com.simibubi.create.content.contraptions.components.structureMovement.sync;
 
-import com.simibubi.create.lib.helper.EntityHelper;
+import com.simibubi.create.lib.utility.ExtraDataUtil;
 
 import me.pepperbell.simplenetworking.S2CPacket;
 import me.pepperbell.simplenetworking.SimpleChannel.ResponseTarget;
@@ -51,7 +51,7 @@ public class LimbSwingUpdatePacket implements S2CPacket {
 				Entity entity = world.getEntityByID(entityId);
 				if (entity == null)
 					return;
-				CompoundNBT data = EntityHelper.getExtraCustomData(entity);
+				CompoundNBT data = ExtraDataUtil.getExtraData(entity);
 				data.putInt("LastOverrideLimbSwingUpdate", 0);
 				data.putFloat("OverrideLimbSwing", limbSwing);
 				entity.setPositionAndRotationDirect(position.x, position.y, position.z, entity.rotationYaw,

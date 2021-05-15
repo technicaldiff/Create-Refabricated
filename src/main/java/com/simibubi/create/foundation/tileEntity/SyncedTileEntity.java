@@ -4,6 +4,11 @@ import javax.annotation.ParametersAreNonnullByDefault;
 
 import com.simibubi.create.lib.annotation.MethodsReturnNonnullByDefault;
 
+import com.simibubi.create.lib.block.CustomDataPacketHandlingTileEntity;
+import com.simibubi.create.lib.extensions.TileEntityExtensions;
+
+import com.simibubi.create.lib.utility.MixinHelper;
+
 import net.minecraft.block.BlockState;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.NetworkManager;
@@ -15,15 +20,15 @@ import net.minecraft.world.chunk.Chunk;
 
 @MethodsReturnNonnullByDefault
 @ParametersAreNonnullByDefault
-public abstract class SyncedTileEntity extends TileEntity {
+public abstract class SyncedTileEntity extends TileEntity implements TileEntityExtensions, CustomDataPacketHandlingTileEntity {
 
 	public SyncedTileEntity(TileEntityType<?> tileEntityTypeIn) {
 		super(tileEntityTypeIn);
 	}
 
 	@Override
-	public CompoundNBT getTileData() {
-		return super.getTileData();
+	public CompoundNBT create$getExtraCustomData() {
+		return ((TileEntityExtensions) ((TileEntity) this)).create$getExtraCustomData();
 	}
 
 	@Override
@@ -31,10 +36,10 @@ public abstract class SyncedTileEntity extends TileEntity {
 		return write(new CompoundNBT());
 	}
 
-	@Override
-	public void handleUpdateTag(BlockState state, CompoundNBT tag) {
-		fromTag(state, tag);
-	}
+//	@Override
+//	public void handleUpdateTag(BlockState state, CompoundNBT tag) {
+//		fromTag(state, tag);
+//	}
 
 	public void sendData() {
 		if (world != null)

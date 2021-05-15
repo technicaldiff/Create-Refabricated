@@ -9,10 +9,9 @@ import com.simibubi.create.content.contraptions.base.KineticTileEntity;
 import com.simibubi.create.foundation.block.ITE;
 import com.simibubi.create.foundation.item.ItemHelper;
 import com.simibubi.create.foundation.utility.Iterate;
-
 import com.simibubi.create.lib.helper.EntityHelper;
-
 import com.simibubi.create.lib.helper.EntitySelectionContextHelper;
+import com.simibubi.create.lib.utility.ExtraDataUtil;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -103,7 +102,7 @@ public class CrushingWheelControllerBlock extends DirectionalBlock
 				return;
 			if (entityIn instanceof ItemEntity)
 				((ItemEntity) entityIn).setPickupDelay(10);
-			CompoundNBT data = EntityHelper.getExtraCustomData(entityIn);
+			CompoundNBT data = ExtraDataUtil.getExtraData(entityIn);
 			if (data.contains("BypassCrushingWheel")) {
 				if (pos.equals(NBTUtil.readBlockPos(data.getCompound("BypassCrushingWheel"))))
 					return;
@@ -178,7 +177,7 @@ public class CrushingWheelControllerBlock extends DirectionalBlock
 		Entity entity = EntitySelectionContextHelper.getEntity(context);
 		if (entity != null) {
 
-			CompoundNBT data = EntityHelper.getExtraCustomData(entity);
+			CompoundNBT data = ExtraDataUtil.getExtraData(entity);
 			if (data.contains("BypassCrushingWheel")) {
 				if (pos.equals(NBTUtil.readBlockPos(data.getCompound("BypassCrushingWheel"))))
 					if (state.get(FACING) != Direction.UP) //Allow output items to land on top of the block rather than falling back through.

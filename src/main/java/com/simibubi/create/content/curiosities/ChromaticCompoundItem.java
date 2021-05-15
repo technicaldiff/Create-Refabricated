@@ -8,10 +8,10 @@ import com.simibubi.create.foundation.config.CRecipes;
 import com.simibubi.create.foundation.utility.ColorHelper;
 import com.simibubi.create.foundation.utility.VecHelper;
 import com.simibubi.create.lib.helper.BeaconTileEntityHelper;
-import com.simibubi.create.lib.helper.EntityHelper;
 import com.simibubi.create.lib.item.CustomDurabilityBarItem;
 import com.simibubi.create.lib.item.CustomMaxCountItem;
 import com.simibubi.create.lib.item.EntityTickListenerItem;
+import com.simibubi.create.lib.utility.ExtraDataUtil;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -72,7 +72,7 @@ public class ChromaticCompoundItem extends Item implements CustomDurabilityBarIt
 		double y = entity.getY();
 		double yMotion = entity.getMotion().y;
 		World world = entity.world;
-		CompoundNBT data = EntityHelper.getExtraCustomData(entity);
+		CompoundNBT data = ExtraDataUtil.getExtraData(entity);
 		CompoundNBT itemData = entity.getItem()
 			.getOrCreateTag();
 
@@ -106,7 +106,7 @@ public class ChromaticCompoundItem extends Item implements CustomDurabilityBarIt
 			ItemStack newStack = AllItems.REFINED_RADIANCE.asStack();
 			ItemEntity newEntity = new ItemEntity(world, entity.getX(), entity.getY(), entity.getZ(), newStack);
 			newEntity.setMotion(entity.getMotion());
-			EntityHelper.getExtraCustomData(newEntity)
+			ExtraDataUtil.getExtraData(newEntity)
 					.putBoolean("JustCreated", true);
 			itemData.remove("CollectingLight");
 			world.addEntity(newEntity);

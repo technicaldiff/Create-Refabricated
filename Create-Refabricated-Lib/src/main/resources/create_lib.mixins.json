@@ -24,6 +24,7 @@
     "ShapedRecipeMixin",
     "ShapelessRecipe$SerializerMixin",
     "SSpawnObjectPacketMixin",
+    "TileEntityMixin",
     "TrackedEntityMixin",
     "WalkNodeProcessorMixin",
     "WorldMixin",

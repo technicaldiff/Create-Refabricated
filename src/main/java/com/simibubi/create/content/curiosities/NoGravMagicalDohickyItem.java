@@ -1,10 +1,8 @@
 package com.simibubi.create.content.curiosities;
 
 import com.simibubi.create.foundation.utility.VecHelper;
-
-import com.simibubi.create.lib.helper.EntityHelper;
-
 import com.simibubi.create.lib.item.EntityTickListenerItem;
+import com.simibubi.create.lib.utility.ExtraDataUtil;
 
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.item.Item;
@@ -25,7 +23,7 @@ public class NoGravMagicalDohickyItem extends Item implements EntityTickListener
 	public boolean onEntityItemUpdate(ItemStack stack, ItemEntity entity) {
 		World world = entity.world;
 		Vector3d pos = entity.getPositionVec();
-		CompoundNBT persistentData = EntityHelper.getExtraCustomData(entity);
+		CompoundNBT persistentData = ExtraDataUtil.getExtraData(entity);
 
 		if (world.isRemote) {
 			if (world.rand.nextFloat() < getIdleParticleChance(entity)) {

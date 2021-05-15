@@ -1,5 +1,7 @@
 package com.simibubi.create.lib.mixin;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
@@ -17,11 +19,12 @@ import net.minecraft.nbt.CompoundNBT;
 public abstract class EntityMixin implements EntityExtensions {
 	@Unique
 	private CompoundNBT create$extraCustomData;
-
-	@Inject(at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/Entity;writeAdditional(Lnet/minecraft/nbt/CompoundNBT;)V"), method = "writeWithoutTypeId(Lnet/minecraft/nbt/CompoundNBT;)Lnet/minecraft/nbt/CompoundNBT;")
+	@Unique private static final Logger LOGGER = LogManager.getLogger();
+	@Inject(at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/Entity;writeAdditional(Lnet/minecraft/nbt/CompoundNBT;)V"),
+			method = "writeWithoutTypeId(Lnet/minecraft/nbt/CompoundNBT;)Lnet/minecraft/nbt/CompoundNBT;")
 	public void create$beforeWriteCustomData(CompoundNBT tag, CallbackInfoReturnable<CompoundNBT> cir) {
 		if (create$extraCustomData != null && !create$extraCustomData.isEmpty()) {
-			System.out.println("writing custom data");
+			LOGGER.debug("writing custom data");
 			tag.put(EntityHelper.EXTRA_DATA_KEY, create$extraCustomData);
 		}
 	}

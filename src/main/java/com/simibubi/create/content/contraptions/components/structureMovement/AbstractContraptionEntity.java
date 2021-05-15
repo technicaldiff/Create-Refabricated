@@ -8,10 +8,6 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.UUID;
 
-import com.simibubi.create.lib.entity.ExtraSpawnDataEntity;
-
-import com.simibubi.create.lib.helper.EntityHelper;
-
 import org.apache.commons.lang3.mutable.MutableInt;
 import org.apache.commons.lang3.tuple.MutablePair;
 
@@ -28,6 +24,8 @@ import com.simibubi.create.foundation.collision.Matrix3d;
 import com.simibubi.create.foundation.networking.AllPackets;
 import com.simibubi.create.foundation.utility.AngleHelper;
 import com.simibubi.create.foundation.utility.VecHelper;
+import com.simibubi.create.lib.entity.ExtraSpawnDataEntity;
+import com.simibubi.create.lib.utility.ExtraDataUtil;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -114,7 +112,7 @@ public abstract class AbstractContraptionEntity extends Entity implements ExtraS
 		if (world.isRemote)
 			return;
 		if (transformedVector != null)
-			EntityHelper.getExtraCustomData(passenger)
+			ExtraDataUtil.getExtraData(passenger)
 				.put("ContraptionDismountLocation", VecHelper.writeNBT(transformedVector));
 		contraption.getSeatMapping()
 			.remove(passenger.getUniqueID());

@@ -22,6 +22,7 @@ import com.simibubi.create.foundation.utility.ColorHelper;
 import com.simibubi.create.lib.helper.EntityHelper;
 import com.simibubi.create.lib.lba.item.ItemHandlerHelper;
 import com.simibubi.create.lib.lba.item.ItemStackHandler;
+import com.simibubi.create.lib.utility.ExtraDataUtil;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -80,9 +81,9 @@ public class InWorldProcessing {
 	}
 
 	public static boolean canProcess(ItemEntity entity, Type type) {
-		if (EntityHelper.getExtraCustomData(entity)
+		if (ExtraDataUtil.getExtraData(entity)
 			.contains("CreateData")) {
-			CompoundNBT compound = EntityHelper.getExtraCustomData(entity)
+			CompoundNBT compound = ExtraDataUtil.getExtraData(entity)
 				.getCompound("CreateData");
 			if (compound.contains("Processing")) {
 				CompoundNBT processing = compound.getCompound("Processing");
@@ -226,7 +227,7 @@ public class InWorldProcessing {
 	}
 
 	private static int decrementProcessingTime(ItemEntity entity, Type type) {
-		CompoundNBT nbt = EntityHelper.getExtraCustomData(entity);
+		CompoundNBT nbt = ExtraDataUtil.getExtraData(entity);
 
 		if (!nbt.contains("CreateData"))
 			nbt.put("CreateData", new CompoundNBT());

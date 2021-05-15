@@ -1,7 +1,7 @@
 package com.simibubi.create.content.curiosities.armor;
 
 import com.simibubi.create.AllItems;
-import com.simibubi.create.lib.helper.EntityHelper;
+import com.simibubi.create.lib.utility.ExtraDataUtil;
 
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.inventory.EquipmentSlotType;
@@ -23,7 +23,7 @@ public class DivingHelmetItem extends CopperArmorItem {
 		boolean drowning = entity.getAir() == 0;
 
 		if (world.isRemote)
-			EntityHelper.getExtraCustomData(entity)
+			ExtraDataUtil.getExtraData(entity)
 				.remove("VisualBacktankAir");
 
 		if (!AllItems.DIVING_HELMET.get()
@@ -52,7 +52,7 @@ public class DivingHelmetItem extends CopperArmorItem {
 			entity.setAir(10);
 
 		if (world.isRemote)
-			EntityHelper.getExtraCustomData(entity)
+			ExtraDataUtil.getExtraData(entity)
 				.putInt("VisualBacktankAir", airRemaining);
 
 		if (!second)

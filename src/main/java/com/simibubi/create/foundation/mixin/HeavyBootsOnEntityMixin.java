@@ -6,7 +6,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import com.simibubi.create.lib.capabilities.CapabilityProvider;
-import com.simibubi.create.lib.helper.EntityHelper;
+import com.simibubi.create.lib.utility.ExtraDataUtil;
 import com.simibubi.create.lib.utility.MixinHelper;
 
 import net.minecraft.entity.Entity;
@@ -20,7 +20,7 @@ public abstract class HeavyBootsOnEntityMixin implements CapabilityProvider {
 
 	@Inject(at = @At("HEAD"), method = "canSwim", cancellable = true)
 	public void noSwimmingWithHeavyBootsOn(CallbackInfoReturnable<Boolean> cir) {
-		CompoundNBT persistentData = EntityHelper.getExtraCustomData(MixinHelper.cast(this));
+		CompoundNBT persistentData = ExtraDataUtil.getExtraData(MixinHelper.cast(this));
 		if (persistentData.contains("HeavyBoots"))
 			cir.setReturnValue(false);
 	}
