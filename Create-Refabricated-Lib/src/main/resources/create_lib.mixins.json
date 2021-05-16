@@ -6,6 +6,8 @@
   "mixins": [
     "AbstractMinecartEntityMixin",
     "AbstractRailBlockMixin",
+    "BlockParticleDataMixin",
+    "BlockStateMixin",
     "EnchantmentHelperMixin",
     "EntityMixin",
     "EntitySelectionContextMixin",
@@ -56,6 +58,8 @@
     "AtlasTextureMixin",
     "ClientPlayNetHandlerMixin",
     "ClientWorldMixin",
+    "DiggingParticle$FactoryMixin",
+    "DiggingParticleMixin",
     "FirstPersonRendererMixin",
     "GameRendererMixin",
     "ItemRendererMixin",

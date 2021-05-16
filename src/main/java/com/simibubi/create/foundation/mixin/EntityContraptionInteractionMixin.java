@@ -19,6 +19,8 @@ import com.simibubi.create.content.contraptions.components.structureMovement.Con
 import com.simibubi.create.content.contraptions.components.structureMovement.ContraptionCollider;
 import com.simibubi.create.content.contraptions.components.structureMovement.ContraptionHandler;
 import com.simibubi.create.lib.capabilities.CapabilityProvider;
+import com.simibubi.create.lib.extensions.BlockParticleDataExtensions;
+import com.simibubi.create.lib.extensions.BlockStateExtensions;
 
 import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
@@ -111,10 +113,10 @@ public abstract class EntityContraptionInteractionMixin implements CapabilityPro
 		BlockPos pos = new BlockPos(worldPos); // pos where particles are spawned
 
 		forCollision(worldPos, (contraption, blockstate, blockpos) -> {
-			if (!blockstate.addRunningEffects(self.world, blockpos, self)
+			if (!((BlockStateExtensions) blockstate).addRunningEffects(self.world, blockpos, self)
 				&& blockstate.getRenderType() != BlockRenderType.INVISIBLE) {
 				Vector3d vec3d = self.getMotion();
-				self.world.addParticle(new BlockParticleData(ParticleTypes.BLOCK, blockstate).setPos(pos),
+				self.world.addParticle(((BlockParticleDataExtensions) new BlockParticleData(ParticleTypes.BLOCK, blockstate)).setPos(pos),
 					self.getX() + ((double) rand.nextFloat() - 0.5D) * (double) self.getWidth(), self.getY() + 0.1D,
 					self.getZ() + ((double) rand.nextFloat() - 0.5D) * (double) self.getWidth(), vec3d.x * -4.0D, 1.5D,
 					vec3d.z * -4.0D);
