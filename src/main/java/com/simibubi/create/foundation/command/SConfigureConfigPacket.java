@@ -36,7 +36,7 @@ public class SConfigureConfigPacket implements S2CPacket {
 	private String option;
 	private String value;
 
-	protected ConfigureConfigPacket() {}
+	protected SConfigureConfigPacket() {}
 
 	public SConfigureConfigPacket(String option, String value) {
 		this.option = option;

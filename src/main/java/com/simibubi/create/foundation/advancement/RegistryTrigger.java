@@ -1,5 +1,7 @@
 package com.simibubi.create.foundation.advancement;
 
+import java.util.Optional;
+
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 
@@ -8,11 +10,9 @@ import com.simibubi.create.lib.annotation.MethodsReturnNonnullByDefault;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.registry.Registry;
 
-import java.util.Optional;
-
 @ParametersAreNonnullByDefault
 @MethodsReturnNonnullByDefault
-public class RegistryTrigger<T extends /* IForgeRegistryEntry<T>> Still not sure what goes here */ extends StringSerializableTrigger<T> {
+public class RegistryTrigger<T> extends StringSerializableTrigger<T> {
 	private final Registry<T> registry;
 
 	public RegistryTrigger(String id, Registry<T> registry) {
