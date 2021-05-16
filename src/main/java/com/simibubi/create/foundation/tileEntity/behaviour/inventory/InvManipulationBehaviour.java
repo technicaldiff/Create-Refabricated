@@ -14,6 +14,7 @@ import com.simibubi.create.foundation.tileEntity.behaviour.filtering.FilteringBe
 import com.simibubi.create.foundation.utility.BlockFace;
 import com.simibubi.create.lib.lba.item.IItemHandler;
 import com.simibubi.create.lib.lba.item.ItemHandlerHelper;
+import com.simibubi.create.lib.utility.CapabilityUtil;
 import com.simibubi.create.lib.utility.LazyOptional;
 
 import net.minecraft.block.BlockState;
@@ -186,8 +187,8 @@ public class InvManipulationBehaviour extends TileEntityBehaviour {
 		TileEntity invTE = world.getTileEntity(pos);
 		if (invTE == null)
 			return;
-		targetCapability = bypassSided ? invTE.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY)
-			: invTE.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, targetBlockFace.getFace());
+		targetCapability = bypassSided ? CapabilityUtil.getCapability(invTE, CapabilityItemHandler.ITEM_HANDLER_CAPABILITY)
+			: CapabilityUtil.getCapability(invTE, CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, targetBlockFace.getFace());
 		if (targetCapability.isPresent())
 			targetCapability.addListener(this::onHandlerInvalidated);
 	}

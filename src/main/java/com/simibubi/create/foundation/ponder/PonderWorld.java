@@ -16,13 +16,14 @@ import com.simibubi.create.foundation.ponder.elements.WorldSectionElement;
 import com.simibubi.create.foundation.renderState.SuperRenderTypeBuffer;
 import com.simibubi.create.foundation.tileEntity.SmartTileEntity;
 import com.simibubi.create.foundation.utility.worldWrappers.WrappedClientWorld;
+import com.simibubi.create.lib.helper.ParticleManagerHelper;
+import com.simibubi.create.lib.utility.NBTSerializer;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.particle.IParticleFactory;
 import net.minecraft.client.particle.Particle;
-import net.minecraft.client.particle.ParticleManager;
 import net.minecraft.client.renderer.ActiveRenderInfo;
 import net.minecraft.client.renderer.IRenderTypeBuffer;
 import net.minecraft.client.renderer.RenderType;
@@ -73,8 +74,9 @@ public class PonderWorld extends SchematicWorld {
 		particles = new PonderWorldParticles(this);
 
 		// ParticleManager.factories - ATs don't seem to like this one
-		particleFactories = ObfuscationReflectionHelper.getPrivateValue(ParticleManager.class,
-			Minecraft.getInstance().particles, "field_178932_g");
+		particleFactories = ParticleManagerHelper.getFactories(Minecraft.getInstance().particles);
+//		particleFactories = ObfuscationReflectionHelper.getPrivateValue(ParticleManager.class,
+//			Minecraft.getInstance().particles, "field_178932_g");
 	}
 
 	public void createBackup() {
@@ -83,8 +85,9 @@ public class PonderWorld extends SchematicWorld {
 		blocks.forEach((k, v) -> originalBlocks.put(k, v));
 		tileEntities.forEach(
 			(k, v) -> originalTileEntities.put(k, TileEntity.createFromTag(blocks.get(k), v.write(new CompoundNBT()))));
-		entities.forEach(e -> EntityType.loadEntityUnchecked(e.serializeNBT(), this)
+		entities.forEach(e -> EntityType.loadEntityUnchecked(NBTSerializer.serializeEntityNBT(e), this)
 			.ifPresent(originalEntities::add));
+
 	}
 
 	public void restore() {
@@ -100,7 +103,7 @@ public class PonderWorld extends SchematicWorld {
 			tileEntities.put(k, te);
 			renderedTileEntities.add(te);
 		});
-		originalEntities.forEach(e -> EntityType.loadEntityUnchecked(e.serializeNBT(), this)
+		originalEntities.forEach(e -> EntityType.loadEntityUnchecked(NBTSerializer.serializeEntityNBT(e), this)
 			.ifPresent(entities::add));
 		particles.clearEffects();
 		fixBeltTileEntities();

@@ -13,6 +13,8 @@ import com.simibubi.create.foundation.utility.VecHelper;
 import com.simibubi.create.lib.lba.fluid.FluidStack;
 import com.simibubi.create.lib.lba.item.ItemHandlerHelper;
 
+import com.simibubi.create.lib.utility.NBTSerializer;
+
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.item.ItemStack;
@@ -59,7 +61,8 @@ public class FilteringBehaviour extends TileEntityBehaviour {
 
 	@Override
 	public void write(CompoundNBT nbt, boolean clientPacket) {
-		nbt.put("Filter", getFilter().serializeNBT());
+		nbt.put("Filter", NBTSerializer.serializeItemStackNBT(getFilter()));
+
 		nbt.putInt("FilterAmount", count);
 
 		if (clientPacket && forceClientState) {

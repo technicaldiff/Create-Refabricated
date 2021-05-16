@@ -2,20 +2,13 @@ package com.simibubi.create.foundation.ponder;
 
 import static com.simibubi.create.foundation.ponder.PonderLocalization.LANG_PREFIX;
 
-import java.awt.Color;
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 import java.util.stream.IntStream;
 
-import com.simibubi.create.lib.helper.KeyBindingHelper;
-import com.simibubi.create.lib.mixin.accessor.KeyBindingAccessor;
-import com.simibubi.create.lib.utility.GuiUtils;
-
-import net.minecraft.util.registry.Registry;
-
-import org.apache.commons.lang3.mutable.MutableBoolean;
 import org.lwjgl.opengl.GL11;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
@@ -46,6 +39,8 @@ import com.simibubi.create.foundation.utility.Pair;
 import com.simibubi.create.foundation.utility.Pointing;
 import com.simibubi.create.foundation.utility.animation.LerpedFloat;
 import com.simibubi.create.foundation.utility.animation.LerpedFloat.Chaser;
+import com.simibubi.create.lib.helper.KeyBindingHelper;
+import com.simibubi.create.lib.utility.GuiUtils;
 
 import net.minecraft.client.ClipboardHelper;
 import net.minecraft.client.GameSettings;
@@ -61,7 +56,9 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.MutableBoundingBox;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.util.math.vector.Vector3f;
+import net.minecraft.util.registry.Registry;
 import net.minecraft.util.text.IFormattableTextComponent;
+import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.Style;
 import net.minecraft.util.text.TextFormatting;
@@ -615,7 +612,8 @@ public class PonderUI extends NavigatableSimiScreen {
 					).formatted(TextFormatting.GRAY);
 
 					//renderOrderedTooltip(ms, textRenderer.wrapLines(text, width / 3), 0, 0);
-					renderWrappedToolTip(ms, textRenderer.getTextHandler().wrapLines(text, width / 3, Style.EMPTY), 0, 0, textRenderer);
+//					renderWrappedToolTip(ms, textRenderer.getTextHandler().wrapLines(text, width / 3, Style.EMPTY), 0, 0, textRenderer);
+					renderTooltip(ms, (ITextComponent) textRenderer.getTextHandler().wrapLines(text, width / 3, Style.EMPTY), 0, 0/*, textRenderer*/); // fixme
 					/*String tooltip = Lang
 						.createTranslationTextComponent(IDENTIFY_MODE, client.gameSettings.keyBindDrop.getBoundKeyLocalizedText().applyTextStyle(TextFormatting.WHITE))
 						.applyTextStyle(TextFormatting.GRAY)

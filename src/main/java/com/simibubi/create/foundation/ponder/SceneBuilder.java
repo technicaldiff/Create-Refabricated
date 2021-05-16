@@ -62,6 +62,8 @@ import com.simibubi.create.foundation.utility.ColorHelper;
 import com.simibubi.create.foundation.utility.NBTHelper;
 import com.simibubi.create.foundation.utility.VecHelper;
 
+import com.simibubi.create.lib.utility.NBTSerializer;
+
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.RedstoneTorchBlock;
@@ -130,7 +132,7 @@ public class SceneBuilder {
 	 * Assign a unique translation key, as well as the standard english translation
 	 * for this scene's title using this method, anywhere inside the program
 	 * function.
-	 * 
+	 *
 	 * @param sceneId
 	 * @param title
 	 */
@@ -145,7 +147,7 @@ public class SceneBuilder {
 	 * the the base plate. <br>
 	 * As a result, showBasePlate() will only show the configured size, and the
 	 * scene's scaling inside the UI will be consistent with its base size.
-	 * 
+	 *
 	 * @param xOffset       Block spaces between the base plate and the schematic
 	 *                      boundary on the Western side.
 	 * @param zOffset       Block spaces between the base plate and the schematic
@@ -162,7 +164,7 @@ public class SceneBuilder {
 	/**
 	 * Use this in case you are not happy with the scale of the scene relative to
 	 * the overlay
-	 * 
+	 *
 	 * @param factor >1 will make the scene appear larger, smaller otherwise
 	 */
 	public void scaleSceneView(float factor) {
@@ -172,7 +174,7 @@ public class SceneBuilder {
 	/**
 	 * Use this in case you are not happy with the vertical alignment of the scene
 	 * relative to the overlay
-	 * 
+	 *
 	 * @param yOffset >0 moves the scene up, down otherwise
 	 */
 	public void setSceneOffsetY(float yOffset) {
@@ -195,7 +197,7 @@ public class SceneBuilder {
 	 * actions play out. <br>
 	 * Idle does not stall any animations, only schedules a time gap between
 	 * instructions.
-	 * 
+	 *
 	 * @param ticks Duration to wait for
 	 */
 	public void idle(int ticks) {
@@ -207,7 +209,7 @@ public class SceneBuilder {
 	 * actions play out. <br>
 	 * Idle does not stall any animations, only schedules a time gap between
 	 * instructions.
-	 * 
+	 *
 	 * @param seconds Duration to wait for
 	 */
 	public void idleSeconds(int seconds) {
@@ -227,7 +229,7 @@ public class SceneBuilder {
 
 	/**
 	 * Pans the scene's camera view around the vertical axis by the given amount
-	 * 
+	 *
 	 * @param degrees
 	 */
 	public void rotateCameraY(float degrees) {
@@ -741,7 +743,8 @@ public class SceneBuilder {
 
 		public void setFilterData(Selection selection, Class<? extends TileEntity> teType, ItemStack filter) {
 			modifyTileNBT(selection, teType, nbt -> {
-				nbt.put("Filter", filter.serializeNBT());
+				nbt.put("Filter", NBTSerializer.serializeItemStackNBT(filter));
+
 			});
 		}
 
@@ -770,7 +773,7 @@ public class SceneBuilder {
 			int targetedPoint) {
 			modifyTileNBT(scene.getSceneBuildingUtil().select.position(armLocation), ArmTileEntity.class, compound -> {
 				NBTHelper.writeEnum(compound, "Phase", phase);
-				compound.put("HeldItem", heldItem.serializeNBT());
+				compound.put("HeldItem", NBTSerializer.serializeItemStackNBT(heldItem));
 				compound.putInt("TargetPointIndex", targetedPoint);
 				compound.putFloat("MovementProgress", 0);
 			});

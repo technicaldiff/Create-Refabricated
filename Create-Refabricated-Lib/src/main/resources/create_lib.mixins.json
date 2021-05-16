@@ -43,7 +43,6 @@
     "accessor.LivingEntityAccessor",
     "accessor.LivingRendererAccessor",
     "accessor.MinecraftServerAccessor",
-    "accessor.ParticleAccessor",
     "accessor.PlayerEntityAccessor",
     "accessor.RailStateAccessor",
     "accessor.ScreenAccessor",
@@ -75,7 +74,9 @@
     "accessor.GlStateManagerAccessor",
     "accessor.ItemRendererAccessor",
     "accessor.KeyBindingAccessor",
-    "accessor.MinecraftAccessor"
+    "accessor.MinecraftAccessor",
+    "accessor.ParticleAccessor",
+    "accessor.ParticleManagerAccessor"
   ],
   "server": [
     "Vector3dMixin",
