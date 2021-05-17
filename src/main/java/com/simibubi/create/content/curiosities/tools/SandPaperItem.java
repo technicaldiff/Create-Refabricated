@@ -114,11 +114,6 @@ public class SandPaperItem extends Item implements CustomItemEnchantabilityItem 
 	}
 
 	@Override
-	public boolean canApplyAtEnchantingTable(ItemStack stack, Enchantment enchantment) {
-		return super.canApplyAtEnchantingTable(stack, enchantment);
-	}
-
-	@Override
 	public int getItemEnchantability(ItemStack stack) {
 		return 1;
 	}
