@@ -24,8 +24,10 @@ import com.simibubi.create.content.logistics.item.filter.attribute.astralsorcery
 import com.simibubi.create.content.logistics.item.filter.attribute.astralsorcery.AstralSorceryCrystalAttribute;
 import com.simibubi.create.content.logistics.item.filter.attribute.astralsorcery.AstralSorceryPerkGemAttribute;
 import com.simibubi.create.foundation.utility.Lang;
+import com.simibubi.create.lib.lba.item.ItemStackHandler;
 
 import net.minecraft.enchantment.EnchantmentHelper;
+import net.minecraft.enchantment.IArmorVanishable;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
@@ -131,7 +133,7 @@ public interface ItemAttribute {
 		DAMAGED(ItemStack::isDamaged),
 		BADLY_DAMAGED(s -> s.isDamaged() && s.getDamage() / s.getMaxDamage() > 3 / 4f),
 		NOT_STACKABLE(((Predicate<ItemStack>) ItemStack::isStackable).negate()),
-		EQUIPABLE(s -> s.getEquipmentSlot() != null),
+		EQUIPABLE(s -> s.getItem() instanceof IArmorVanishable),
 		MAX_ENCHANTED(StandardTraits::maxEnchanted),
 		FURNACE_FUEL(AbstractFurnaceTileEntity::isFuel),
 		WASHABLE(InWorldProcessing::isWashable),
