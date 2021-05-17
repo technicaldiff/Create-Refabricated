@@ -293,7 +293,6 @@ public class BlazeBurnerBlock extends Block implements ITE<BlazeBurnerTileEntity
 			heater.updateBlockState();
 			heater.notifyUpdate();
 		}
-		// changed to AllSoundEvents.BLAZE_MUNCH.playOnServer(world, heater.getPos()); upstream
-		world.playSound(null, heater.getPos(), AllSoundEvents.BLAZE_MUNCH.get(), SoundCategory.BLOCKS, .5F, 1F);
+		AllSoundEvents.BLAZE_MUNCH.playOnServer(world, heater.getPos());
 	}
 }
