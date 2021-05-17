@@ -94,7 +94,7 @@ public class MechanicalCraftingRecipeBuilder {
 	 * Builds this recipe into an {@link IFinishedRecipe}.
 	 */
 	public void build(Consumer<IFinishedRecipe> p_200464_1_) {
-		this.build(p_200464_1_, ForgeRegistries.ITEMS.getKey(this.result));
+//		this.build(p_200464_1_, ForgeRegistries.ITEMS.getKey(this.result));
 	}
 
 	/**
@@ -102,12 +102,12 @@ public class MechanicalCraftingRecipeBuilder {
 	 * {@link #build(Consumer)} if save is the same as the ID for the result.
 	 */
 	public void build(Consumer<IFinishedRecipe> p_200466_1_, String p_200466_2_) {
-		ResourceLocation resourcelocation = ForgeRegistries.ITEMS.getKey(this.result);
-		if ((new ResourceLocation(p_200466_2_)).equals(resourcelocation)) {
-			throw new IllegalStateException("Shaped Recipe " + p_200466_2_ + " should remove its 'save' argument");
-		} else {
-			this.build(p_200466_1_, new ResourceLocation(p_200466_2_));
-		}
+//		ResourceLocation resourcelocation = ForgeRegistries.ITEMS.getKey(this.result);
+//		if ((new ResourceLocation(p_200466_2_)).equals(resourcelocation)) {
+//			throw new IllegalStateException("Shaped Recipe " + p_200466_2_ + " should remove its 'save' argument");
+//		} else {
+//			this.build(p_200466_1_, new ResourceLocation(p_200466_2_));
+//		}
 	}
 
 	/**
@@ -173,8 +173,8 @@ public class MechanicalCraftingRecipeBuilder {
 
 			p_218610_1_.add("key", jsonobject);
 			JsonObject jsonobject1 = new JsonObject();
-			jsonobject1.addProperty("item", ForgeRegistries.ITEMS.getKey(this.result)
-				.toString());
+//			jsonobject1.addProperty("item", ForgeRegistries.ITEMS.getKey(this.result)
+//				.toString());
 			if (this.count > 1)
 				jsonobject1.addProperty("count", this.count);
 

@@ -7,7 +7,6 @@ import java.util.function.Consumer;
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.AllItems;
 import com.simibubi.create.AllTags;
-import com.simibubi.create.Create;
 
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.IFinishedRecipe;
@@ -25,11 +24,11 @@ public abstract class CreateRecipeProvider extends RecipeProvider {
 		super(p_i48262_1_);
 	}
 
-	@Override
-	protected void registerRecipes(Consumer<IFinishedRecipe> p_200404_1_) {
-		all.forEach(c -> c.register(p_200404_1_));
-		Create.logger.info(getName() + " registered " + all.size() + " recipe" + (all.size() == 1 ? "" : "s"));
-	}
+//	@Override
+//	protected void registerRecipes(Consumer<IFinishedRecipe> p_200404_1_) {
+//		all.forEach(c -> c.register(p_200404_1_));
+//		Create.logger.info(getName() + " registered " + all.size() + " recipe" + (all.size() == 1 ? "" : "s"));
+//	}
 
 	@FunctionalInterface
 	interface GeneratedRecipe {
@@ -46,9 +45,9 @@ public abstract class CreateRecipeProvider extends RecipeProvider {
 
 	protected static class I {
 
-		static ITag.INamedTag<Item> redstone() {
-			return Tags.Items.DUSTS_REDSTONE;
-		}
+//		static ITag.INamedTag<Item> redstone() {
+//			return Tags.Items.DUSTS_REDSTONE;
+//		}
 
 		static ITag.INamedTag<Item> planks() {
 			return ItemTags.PLANKS;
@@ -62,9 +61,9 @@ public abstract class CreateRecipeProvider extends RecipeProvider {
 			return AllTags.forgeItemTag("plates/gold");
 		}
 
-		static ITag.INamedTag<Item> stone() {
-			return Tags.Items.STONE;
-		}
+//		static ITag.INamedTag<Item> stone() {
+//			return Tags.Items.STONE;
+//		}
 
 		static IItemProvider andesite() {
 			return AllItems.ANDESITE_ALLOY.get();
@@ -90,9 +89,9 @@ public abstract class CreateRecipeProvider extends RecipeProvider {
 			return AllTags.forgeItemTag("plates/brass");
 		}
 
-		static ITag.INamedTag<Item> iron() {
-			return Tags.Items.INGOTS_IRON;
-		}
+//		static ITag.INamedTag<Item> iron() {
+//			return Tags.Items.INGOTS_IRON;
+//		}
 
 		static ITag.INamedTag<Item> zinc() {
 			return AllTags.forgeItemTag("ingots/zinc");

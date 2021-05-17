@@ -19,6 +19,8 @@ import com.simibubi.create.foundation.block.IBlockVertexColor;
 import com.simibubi.create.foundation.block.connected.CTModel;
 import com.simibubi.create.foundation.block.connected.ConnectedTextureBehaviour;
 import com.simibubi.create.foundation.block.render.CustomRenderedItemModel;
+import com.simibubi.create.lib.extensions.ItemExtensions;
+import com.simibubi.create.lib.helper.ItemSupplierHelper;
 import com.tterrag.registrate.AbstractRegistrate;
 import com.tterrag.registrate.builders.BlockBuilder;
 import com.tterrag.registrate.builders.Builder;
@@ -243,9 +245,8 @@ public class CreateRegistrate extends AbstractRegistrate<CreateRegistrate> {
 	@Environment(EnvType.CLIENT)
 	private static void registerCustomRenderedItem(Item entry,
 		Supplier<NonNullFunction<IBakedModel, ? extends CustomRenderedItemModel>> func) {
-		BuiltinItemRendererRegistry.INSTANCE.register(entry, func.get().apply(null).createRenderer());
 		CreateClient.getCustomRenderedItems()
-			.register(() -> entry, func.get());
+				.register(ItemSupplierHelper.getSupplier(entry), func.get());
 	}
 
 	@Environment(EnvType.CLIENT)

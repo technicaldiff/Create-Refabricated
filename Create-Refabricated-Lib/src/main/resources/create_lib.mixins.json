@@ -13,6 +13,7 @@
     "EntitySelectionContextMixin",
     "FlowingFluidBlockMixin",
     "ItemEntityMixin",
+    "ItemMixin",
     "ItemStackMixin",
     "LanguageMixin",
     "LavaFluidMixin",
