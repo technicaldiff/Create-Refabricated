@@ -357,8 +357,6 @@ public class ClientEvents {
 		UseBlockCallback.EVENT.register(EjectorTargetHandler::rightClickingBlocksSelectsThem);
 		AttackBlockCallback.EVENT.register(ArmInteractionPointHandler::leftClickingBlocksDeselectsThem);
 		AttackBlockCallback.EVENT.register(EjectorTargetHandler::leftClickingBlocksDeselectsThem);
-		AttackEntityCallback.EVENT.register(ExtendoGripItem::notifyServerOfLongRangeAttacks);
-		UseEntityCallback.EVENT.register(ExtendoGripItem::notifyServerOfLongRangeInteractions);
 		RenderWorldLastCallback.EVENT.register(SymmetryHandler::render);
 	}
 
