@@ -11,13 +11,12 @@ import net.minecraft.util.Hand;
 
 public interface RenderHandCallback {
 	public static final Event<RenderHandCallback> EVENT = EventFactory.createArrayBacked(RenderHandCallback.class, callbacks -> (player, hand, stack, matrices, vertexConsumers, tickDelta, pitch, swingProgress, equipProgress, light) -> {
-		boolean cancelled = false;
 		for (RenderHandCallback callback : callbacks) {
 			if (callback.onRenderHand(player, hand, stack, matrices, vertexConsumers, tickDelta, pitch, swingProgress, equipProgress, light)) {
-				cancelled = true;
+				return true;
 			}
 		}
-		return cancelled;
+		return false;
 	});
 
 	boolean onRenderHand(AbstractClientPlayerEntity player, Hand hand, ItemStack stack, MatrixStack matrices, IRenderTypeBuffer vertexConsumers, float tickDelta, float pitch, float swingProgress, float equipProgress, int light);
