@@ -61,6 +61,7 @@ import com.simibubi.create.foundation.utility.worldWrappers.WrappedClientWorld;
 import com.simibubi.create.lib.event.ClientWorldEvents;
 import com.simibubi.create.lib.event.LeftClickAirCallback;
 import com.simibubi.create.lib.event.RenderHandCallback;
+import com.simibubi.create.lib.event.RenderTooltipBorderColorCallback;
 import com.simibubi.create.lib.event.RenderWorldLastCallback;
 
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientChunkEvents;
@@ -72,9 +73,7 @@ import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
 import net.fabricmc.fabric.api.client.rendering.v1.WorldRenderContext;
 import net.fabricmc.fabric.api.client.rendering.v1.WorldRenderEvents;
 import net.fabricmc.fabric.api.event.player.AttackBlockCallback;
-import net.fabricmc.fabric.api.event.player.AttackEntityCallback;
 import net.fabricmc.fabric.api.event.player.UseBlockCallback;
-import net.fabricmc.fabric.api.event.player.UseEntityCallback;
 import net.fabricmc.fabric.api.networking.v1.PacketSender;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.player.ClientPlayerEntity;
@@ -226,8 +225,9 @@ public class ClientEvents {
 		CreateClient.schematicHandler.renderOverlay(ms, buffer, light, overlay, partialTicks);
 	}
 
-	public static void getItemTooltipColor(RenderTooltipEvent.Color event) {
-		PonderTooltipHandler.handleTooltipColor(event);
+	public static RenderTooltipBorderColorCallback.BorderColorEntry getItemTooltipColor(ItemStack stack,
+			int originalBorderColorStart, int originalBorderColorEnd) {
+		return PonderTooltipHandler.handleTooltipColor(stack, originalBorderColorStart, originalBorderColorEnd);
 	}
 
 	public static void addToItemTooltip(ItemStack stack, ITooltipFlag iTooltipFlag, List<ITextComponent> itemTooltip) {
@@ -336,6 +336,7 @@ public class ClientEvents {
 		ClientWorldEvents.UNLOAD.register(ClientEvents::onUnloadWorld);
 		WorldRenderEvents.END.register(ClientEvents::onRenderWorld);
 		ItemTooltipCallback.EVENT.register(ClientEvents::addToItemTooltip);
+		RenderTooltipBorderColorCallback.EVENT.register(ClientEvents::getItemTooltipColor);
 		LeftClickAirCallback.EVENT.register(ClientEvents::leftClickEmpty);
 
 		ClientChunkEvents.CHUNK_UNLOAD.register(CommonEvents::onChunkUnloaded);

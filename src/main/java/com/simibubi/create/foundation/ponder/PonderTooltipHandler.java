@@ -8,6 +8,7 @@ import com.simibubi.create.foundation.utility.ColorHelper;
 import com.simibubi.create.foundation.utility.Lang;
 import com.simibubi.create.foundation.utility.animation.LerpedFloat;
 
+import com.simibubi.create.lib.event.RenderTooltipBorderColorCallback;
 import com.simibubi.create.lib.helper.KeyBindingHelper;
 
 import net.minecraft.client.Minecraft;
@@ -112,22 +113,21 @@ public class PonderTooltipHandler {
 		trackingStack = stack;
 	}
 
-	public static void handleTooltipColor(RenderTooltipEvent.Color event) {
-		if (trackingStack != event.getStack())
-			return;
+	public static RenderTooltipBorderColorCallback.BorderColorEntry handleTooltipColor(ItemStack stack, int originalBorderColorStart, int originalBorderColorEnd) {
+		if (trackingStack != stack)
+			return null;
 		if (holdWProgress.getValue() == 0)
-			return;
+			return null;
 		float renderPartialTicks = Minecraft.getInstance()
 			.getRenderPartialTicks();
-		int start = event.getOriginalBorderStart();
-		int end = event.getOriginalBorderEnd();
+		int start = originalBorderColorStart;
+		int end = originalBorderColorEnd;
 		float progress = Math.min(1, holdWProgress.getValue(renderPartialTicks) * 8 / 7f);
 
 		start = getSmoothColorForProgress(progress);
-		end = getSmoothColorForProgress((progress));
+		end = getSmoothColorForProgress(progress);
 
-		event.setBorderStart(start | 0xa0000000);
-		event.setBorderEnd(end | 0xa0000000);
+		return new RenderTooltipBorderColorCallback.BorderColorEntry(start | 0xa0000000, end | 0xa0000000);
 	}
 
 	private static int getSmoothColorForProgress(float progress) {
