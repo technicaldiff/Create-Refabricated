@@ -8,6 +8,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.AllItems;
 import com.simibubi.create.AllShapes;
+import com.simibubi.create.AllSoundEvents;
 import com.simibubi.create.AllTileEntities;
 import com.simibubi.create.content.contraptions.processing.BasinTileEntity;
 import com.simibubi.create.foundation.block.ITE;
@@ -19,6 +20,8 @@ import net.minecraft.advancements.criterion.StatePropertiesPredicate;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.projectile.EggEntity;
+import net.minecraft.entity.projectile.ProjectileEntity;
 import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.item.FlintAndSteelItem;
 import net.minecraft.item.Item;
@@ -49,6 +52,7 @@ import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 import net.fabricmc.api.EnvType;
@@ -256,10 +260,40 @@ public class BlazeBurnerBlock extends Block implements ITE<BlazeBurnerTileEntity
 			return this.ordinal() >= heatLevel.ordinal();
 		}
 	}
-	
+
 	@Override
 	public boolean allowsMovement(BlockState state, IBlockReader reader, BlockPos pos, PathType type) {
 		return false;
 	}
-	
+
+	/**
+	 * @author Platymemo
+	 * Replaces the need for {@link BlazeBurnerHandler}
+	 */
+	@Override
+	public void onProjectileCollision(World world, BlockState blockState, BlockRayTraceResult blockRayTraceResult, ProjectileEntity projectileEntity) {
+		super.onProjectileCollision(world, blockState, blockRayTraceResult, projectileEntity);
+
+		if (!(projectileEntity instanceof EggEntity))
+			return;
+
+		TileEntity tile = world.getTileEntity(blockRayTraceResult.getPos());
+		if (!(tile instanceof BlazeBurnerTileEntity)) {
+			return;
+		}
+
+		projectileEntity.setMotion(Vector3d.ZERO);
+		projectileEntity.remove();
+
+		BlazeBurnerTileEntity heater = (BlazeBurnerTileEntity) tile;
+		if (heater.activeFuel != BlazeBurnerTileEntity.FuelType.SPECIAL) {
+			heater.activeFuel = BlazeBurnerTileEntity.FuelType.NORMAL;
+			heater.remainingBurnTime =
+					MathHelper.clamp(heater.remainingBurnTime + 80, 0, BlazeBurnerTileEntity.maxHeatCapacity);
+			heater.updateBlockState();
+			heater.notifyUpdate();
+		}
+		// changed to AllSoundEvents.BLAZE_MUNCH.playOnServer(world, heater.getPos()); upstream
+		world.playSound(null, heater.getPos(), AllSoundEvents.BLAZE_MUNCH.get(), SoundCategory.BLOCKS, .5F, 1F);
+	}
 }
