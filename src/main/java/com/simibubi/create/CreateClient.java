@@ -44,6 +44,7 @@ import com.simibubi.create.lib.utility.SpecialModelUtil;
 import com.simibubi.create.lib.utility.TextureStitchUtil;
 
 import net.fabricmc.api.ClientModInitializer;
+import net.fabricmc.fabric.api.client.rendering.v1.ArmorRenderingRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.BlockModelShapes;
@@ -136,6 +137,10 @@ public class CreateClient implements ClientModInitializer {
 		OnModelRegistryCallback.EVENT.register(CreateClient::onModelRegistry);
 		OnTextureStitchCallback.EVENT.register(CreateClient::onTextureStitch);
 		ParticleManagerRegistrationCallback.EVENT.register(AllParticleTypes::registerFactories);
+
+		// Replaces ArmorItem#getArmorTexture from a Forge patch
+		ArmorRenderingRegistry.registerSimpleTexture(new ResourceLocation(Create.ID, "copper"),
+				AllItems.COPPER_BACKTANK.get(), AllItems.DIVING_HELMET.get(), AllItems.DIVING_BOOTS.get());
 
 //		event.enqueueWork(() -> { // I think this can just be run on initialize
 			CopperBacktankArmorLayer.register();

@@ -1,7 +1,5 @@
 package com.simibubi.create.content.curiosities.armor;
 
-import com.simibubi.create.Create;
-
 import net.minecraft.entity.Entity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ArmorItem;
@@ -18,11 +16,6 @@ public class CopperArmorItem extends ArmorItem {
 			if (itemStack.getItem() == this)
 				return true;
 		return false;
-	}
-
-	@Override
-	public String getArmorTexture(ItemStack stack, Entity entity, EquipmentSlotType slot, String type) {
-		return String.format("%s:textures/models/armor/copper.png", Create.ID);
 	}
 
 }
