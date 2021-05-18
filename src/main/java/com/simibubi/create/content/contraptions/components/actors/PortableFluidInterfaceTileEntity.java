@@ -3,9 +3,6 @@ package com.simibubi.create.content.contraptions.components.actors;
 import com.simibubi.create.content.contraptions.components.structureMovement.Contraption;
 import com.simibubi.create.lib.capabilities.Capability;
 import com.simibubi.create.lib.capabilities.CapabilityProvider;
-import com.simibubi.create.lib.lba.fluid.FluidAction;
-import com.simibubi.create.lib.lba.fluid.FluidStack;
-import com.simibubi.create.lib.lba.fluid.FluidTank;
 import com.simibubi.create.lib.utility.LazyOptional;
 
 import net.minecraft.tileentity.TileEntityType;

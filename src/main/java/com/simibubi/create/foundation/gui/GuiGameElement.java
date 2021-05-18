@@ -13,7 +13,6 @@ import com.simibubi.create.foundation.render.backend.core.PartialModel;
 import com.simibubi.create.foundation.utility.ColorHelper;
 import com.simibubi.create.foundation.utility.VecHelper;
 import com.simibubi.create.lib.helper.ItemRendererHelper;
-import com.simibubi.create.lib.lba.fluid.FluidStack;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;

@@ -15,7 +15,7 @@ import com.simibubi.create.lib.extensions.ShapedRecipeExtensions;
 import net.minecraft.item.crafting.ShapedRecipe;
 
 @Mixin(ShapedRecipe.class)
-public class ShapedRecipeMixin implements ShapedRecipeExtensions {
+public abstract class ShapedRecipeMixin implements ShapedRecipeExtensions {
 	private static final Logger LOGGER = LogManager.getLogger();
 	static int MAX_WIDTH = 3;
 	static int MAX_HEIGHT = 3;

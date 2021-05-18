@@ -15,7 +15,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.JsonSyntaxException;
 
-import com.simibubi.create.lib.lba.fluid.FluidStack;
+import com.simibubi.create.lib.extensions.PacketBufferExtensions;
 
 import net.minecraft.fluid.FlowingFluid;
 import net.minecraft.fluid.Fluid;
@@ -25,6 +25,7 @@ import net.minecraft.tags.FluidTags;
 import net.minecraft.tags.ITag;
 import net.minecraft.util.JSONUtils;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.registry.Registry;
 
 public abstract class FluidIngredient implements Predicate<FluidStack> {
 
@@ -165,13 +166,13 @@ public abstract class FluidIngredient implements Predicate<FluidStack> {
 
 		@Override
 		protected void readInternal(PacketBuffer buffer) {
-			fluid = buffer.readRegistryId();
+			fluid = Registry.FLUID.getOrDefault(buffer.readResourceLocation());
 			tagToMatch = buffer.readCompoundTag();
 		}
 
 		@Override
 		protected void writeInternal(PacketBuffer buffer) {
-			buffer.writeRegistryId(fluid);
+			buffer.writeResourceLocation(Registry.FLUID_KEY.getValue());
 			buffer.writeCompoundTag(tagToMatch);
 		}
 
@@ -184,7 +185,7 @@ public abstract class FluidIngredient implements Predicate<FluidStack> {
 
 		@Override
 		protected void writeInternal(JsonObject json) {
-			json.addProperty("fluid", fluid.getRegistryName()
+			json.addProperty("fluid", Registry.FLUID_KEY.getValue()
 				.toString());
 			json.add("nbt", new JsonParser().parse(tagToMatch.toString()));
 		}
@@ -217,7 +218,7 @@ public abstract class FluidIngredient implements Predicate<FluidStack> {
 			int size = buffer.readVarInt();
 			matchingFluidStacks = new ArrayList<>(size);
 			for (int i = 0; i < size; i++)
-				matchingFluidStacks.add(buffer.readFluidStack());
+				matchingFluidStacks.add(((PacketBufferExtensions) buffer).readFluidStack());
 		}
 
 		@Override
@@ -226,7 +227,7 @@ public abstract class FluidIngredient implements Predicate<FluidStack> {
 			List<FluidStack> matchingFluidStacks = getMatchingFluidStacks();
 			buffer.writeVarInt(matchingFluidStacks.size());
 			matchingFluidStacks.stream()
-				.forEach(buffer::writeFluidStack);
+				.forEach(((PacketBufferExtensions) buffer)::writeFluidStack);
 		}
 
 		@Override

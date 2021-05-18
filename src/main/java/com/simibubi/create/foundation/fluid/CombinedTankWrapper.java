@@ -1,8 +1,6 @@
 package com.simibubi.create.foundation.fluid;
 
 import com.simibubi.create.foundation.utility.Iterate;
-import com.simibubi.create.lib.lba.fluid.FluidAction;
-import com.simibubi.create.lib.lba.fluid.FluidStack;
 import com.simibubi.create.lib.lba.item.EmptyHandler;
 
 

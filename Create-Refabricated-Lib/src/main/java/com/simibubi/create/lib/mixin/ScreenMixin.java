@@ -1,12 +1,6 @@
 package com.simibubi.create.lib.mixin;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
-import com.simibubi.create.lib.event.RenderTooltipBorderColorCallback;
-
-import net.minecraft.client.gui.screen.Screen;
-
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.IReorderingProcessor;
+import java.util.List;
 
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
@@ -16,10 +10,15 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyConstant;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import java.util.List;
+import com.mojang.blaze3d.matrix.MatrixStack;
+import com.simibubi.create.lib.event.RenderTooltipBorderColorCallback;
+
+import net.minecraft.client.gui.screen.Screen;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.IReorderingProcessor;
 
 @Mixin(Screen.class)
-public class ScreenMixin {
+public abstract class ScreenMixin {
 
 	private static final int DEFAULT_BORDER_COLOR_START = 1347420415;
 	private static final int DEFAULT_BORDER_COLOR_END = 1344798847;

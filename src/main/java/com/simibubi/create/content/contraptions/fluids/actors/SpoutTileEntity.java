@@ -21,7 +21,6 @@ import com.simibubi.create.foundation.tileEntity.behaviour.belt.TransportedItemS
 import com.simibubi.create.foundation.tileEntity.behaviour.fluid.SmartFluidTankBehaviour;
 import com.simibubi.create.foundation.utility.VecHelper;
 import com.simibubi.create.lib.capabilities.Capability;
-import com.simibubi.create.lib.lba.fluid.FluidStack;
 import com.simibubi.create.lib.utility.LazyOptional;
 
 import net.fabricmc.loader.api.FabricLoader;

@@ -11,8 +11,9 @@ import com.simibubi.create.content.contraptions.fluids.actors.GenericItemFilling
 import com.simibubi.create.content.contraptions.processing.EmptyingByBasin;
 import com.simibubi.create.foundation.tileEntity.SmartTileEntity;
 import com.simibubi.create.foundation.utility.Pair;
-import com.simibubi.create.lib.lba.fluid.FluidAction;
 import com.simibubi.create.lib.lba.fluid.FluidStack;
+
+import com.simibubi.create.lib.utility.FluidUtil;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -51,7 +52,8 @@ public class FluidHelper {
 	public static FluidStack copyStackWithAmount(FluidStack fs, int amount) {
 		if (fs.isEmpty())
 			return FluidStack.EMPTY;
-		return fs.withAmount(amount);
+		return (FluidStack) fs.withAmount(FluidUtil.millibucketsToFluidAmount(amount));
+
 	}
 
 	public static Fluid convertToFlowing(Fluid fluid) {
@@ -76,11 +78,11 @@ public class FluidHelper {
 
 	public static JsonElement serializeFluidStack(FluidStack stack) {
 		JsonObject json = new JsonObject();
-		json.addProperty("fluid", Registry.FLUID.getKey(stack.getFluid())
+		json.addProperty("fluid", Registry.FLUID.getKey(stack.getRawFluid())
 			.toString());
 		json.addProperty("amount", stack.getAmount());
-		if (stack.hasTag())
-			json.addProperty("nbt", stack.getTag()
+//		if (stack.hasTag())
+			json.addProperty("nbt", stack.toTag()
 				.toString());
 		return json;
 	}
@@ -98,7 +100,7 @@ public class FluidHelper {
 
 		try {
 			JsonElement element = json.get("nbt");
-			stack.setTag(JsonToNBT.getTagFromJson(
+			stack.toTag(JsonToNBT.getTagFromJson(
 				element.isJsonObject() ? Create.GSON.toJson(element) : JSONUtils.getString(element, "nbt")));
 
 		} catch (CommandSyntaxException e) {

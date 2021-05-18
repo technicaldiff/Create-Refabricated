@@ -6,7 +6,6 @@ import java.util.List;
 
 import javax.annotation.Nonnull;
 
-import com.simibubi.create.lib.lba.fluid.FluidStack;
 import com.simibubi.create.lib.lba.item.ItemStackHandler;
 
 import com.simibubi.create.lib.lba.item.ItemHandlerHelper;

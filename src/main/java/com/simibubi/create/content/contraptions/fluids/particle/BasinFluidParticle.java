@@ -4,7 +4,6 @@ import com.mojang.blaze3d.vertex.IVertexBuilder;
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.content.contraptions.processing.BasinTileEntity;
 import com.simibubi.create.foundation.utility.VecHelper;
-import com.simibubi.create.lib.lba.fluid.FluidStack;
 
 import net.minecraft.client.renderer.ActiveRenderInfo;
 import net.minecraft.client.world.ClientWorld;

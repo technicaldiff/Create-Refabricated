@@ -4,7 +4,6 @@ import com.simibubi.create.AllFluids;
 import com.simibubi.create.foundation.advancement.AllTriggers;
 import com.simibubi.create.foundation.fluid.FluidHelper;
 import com.simibubi.create.foundation.utility.BlockHelper;
-import com.simibubi.create.lib.lba.fluid.FluidStack;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;

@@ -12,9 +12,6 @@ import com.simibubi.create.content.contraptions.fluids.potion.PotionFluidHandler
 import com.simibubi.create.foundation.advancement.AllTriggers;
 import com.simibubi.create.foundation.fluid.FluidHelper;
 import com.simibubi.create.foundation.utility.BlockFace;
-import com.simibubi.create.lib.lba.fluid.FluidAction;
-import com.simibubi.create.lib.lba.fluid.FluidStack;
-import com.simibubi.create.lib.lba.fluid.FluidTank;
 import com.simibubi.create.lib.utility.LazyOptional;
 import com.simibubi.create.lib.utility.LoadedCheckUtil;
 

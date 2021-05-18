@@ -17,8 +17,6 @@ import com.simibubi.create.foundation.utility.Iterate;
 import com.simibubi.create.foundation.utility.Pair;
 import com.simibubi.create.foundation.utility.VecHelper;
 import com.simibubi.create.lib.capabilities.Capability;
-import com.simibubi.create.lib.lba.fluid.FluidAction;
-import com.simibubi.create.lib.lba.fluid.FluidStack;
 import com.simibubi.create.lib.lba.item.ItemHandlerHelper;
 import com.simibubi.create.lib.utility.LazyOptional;
 

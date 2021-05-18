@@ -22,53 +22,8 @@ import java.util.stream.Collectors;
 
 import javax.annotation.Nullable;
 
-import com.simibubi.create.lib.lba.item.CombinedInvWrapper;
-import com.simibubi.create.lib.lba.fluid.FluidStack;
-import com.simibubi.create.lib.lba.item.IItemHandlerModifiable;
-import com.simibubi.create.lib.utility.StickinessUtil;
-
 import org.apache.commons.lang3.tuple.MutablePair;
 import org.apache.commons.lang3.tuple.Pair;
-
-import net.minecraft.block.AbstractButtonBlock;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.ChestBlock;
-import net.minecraft.block.DoorBlock;
-import net.minecraft.block.IWaterLoggable;
-import net.minecraft.block.PressurePlateBlock;
-import net.minecraft.block.material.PushReaction;
-import net.minecraft.entity.Entity;
-import net.minecraft.fluid.FluidState;
-import net.minecraft.fluid.Fluids;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.nbt.INBT;
-import net.minecraft.nbt.ListNBT;
-import net.minecraft.nbt.NBTUtil;
-import net.minecraft.state.properties.BlockStateProperties;
-import net.minecraft.state.properties.ChestType;
-import net.minecraft.state.properties.DoubleBlockHalf;
-import net.minecraft.state.properties.PistonType;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.Direction;
-import net.minecraft.util.Direction.Axis;
-import net.minecraft.util.Rotation;
-import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.shapes.IBooleanFunction;
-import net.minecraft.util.math.shapes.VoxelShape;
-import net.minecraft.util.math.shapes.VoxelShapes;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.util.palette.HashMapPalette;
-import net.minecraft.village.PointOfInterestType;
-import net.minecraft.world.IWorld;
-import net.minecraft.world.World;
-import net.minecraft.world.gen.feature.template.Template.BlockInfo;
-
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
 
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.AllMovementBehaviours;
@@ -112,8 +67,50 @@ import com.simibubi.create.foundation.utility.NBTHelper;
 import com.simibubi.create.foundation.utility.NBTProcessors;
 import com.simibubi.create.foundation.utility.UniqueLinkedList;
 import com.simibubi.create.foundation.utility.worldWrappers.WrappedWorld;
+import com.simibubi.create.lib.lba.item.CombinedInvWrapper;
+import com.simibubi.create.lib.lba.item.IItemHandlerModifiable;
 import com.simibubi.create.lib.utility.Constants.BlockFlags;
 import com.simibubi.create.lib.utility.Constants.NBT;
+import com.simibubi.create.lib.utility.StickinessUtil;
+
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
+import net.minecraft.block.AbstractButtonBlock;
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
+import net.minecraft.block.ChestBlock;
+import net.minecraft.block.DoorBlock;
+import net.minecraft.block.IWaterLoggable;
+import net.minecraft.block.PressurePlateBlock;
+import net.minecraft.block.material.PushReaction;
+import net.minecraft.entity.Entity;
+import net.minecraft.fluid.FluidState;
+import net.minecraft.fluid.Fluids;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.nbt.INBT;
+import net.minecraft.nbt.ListNBT;
+import net.minecraft.nbt.NBTUtil;
+import net.minecraft.state.properties.BlockStateProperties;
+import net.minecraft.state.properties.ChestType;
+import net.minecraft.state.properties.DoubleBlockHalf;
+import net.minecraft.state.properties.PistonType;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.Direction;
+import net.minecraft.util.Direction.Axis;
+import net.minecraft.util.Rotation;
+import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.shapes.IBooleanFunction;
+import net.minecraft.util.math.shapes.VoxelShape;
+import net.minecraft.util.math.shapes.VoxelShapes;
+import net.minecraft.util.math.vector.Vector3d;
+import net.minecraft.util.palette.HashMapPalette;
+import net.minecraft.village.PointOfInterestType;
+import net.minecraft.world.IWorld;
+import net.minecraft.world.World;
+import net.minecraft.world.gen.feature.template.Template.BlockInfo;
 
 
 public abstract class Contraption {
@@ -342,7 +339,7 @@ public abstract class Contraption {
 		// Bearings potentially create stabilized sub-contraptions
 		if (AllBlocks.MECHANICAL_BEARING.has(state))
 			moveBearing(pos, frontier, visited, state);
-		
+
 		// WM Bearings attach their structure when moved
 		if (AllBlocks.WINDMILL_BEARING.has(state))
 			moveWindmillBearing(pos, frontier, visited, state);

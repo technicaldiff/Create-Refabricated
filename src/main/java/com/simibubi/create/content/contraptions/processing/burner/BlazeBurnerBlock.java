@@ -16,9 +16,14 @@ import com.simibubi.create.foundation.utility.Lang;
 
 import com.simibubi.create.lib.annotation.MethodsReturnNonnullByDefault;
 
+import com.simibubi.create.lib.extensions.BlockExtensions;
+
 import net.minecraft.advancements.criterion.StatePropertiesPredicate;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.ITileEntityProvider;
+import net.minecraft.block.SoundType;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.EggEntity;
 import net.minecraft.entity.projectile.ProjectileEntity;
@@ -54,13 +59,14 @@ import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.IBlockReader;
+import net.minecraft.world.IWorldReader;
 import net.minecraft.world.World;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 
 @MethodsReturnNonnullByDefault
 @ParametersAreNonnullByDefault
-public class BlazeBurnerBlock extends Block implements ITE<BlazeBurnerTileEntity> {
+public class BlazeBurnerBlock extends Block implements ITE<BlazeBurnerTileEntity>, ITileEntityProvider, BlockExtensions {
 
 	public static final Property<HeatLevel> HEAT_LEVEL = EnumProperty.create("blaze", HeatLevel.class);
 
@@ -86,11 +92,11 @@ public class BlazeBurnerBlock extends Block implements ITE<BlazeBurnerTileEntity
 		basin.notifyChangeOfContents();
 	}
 
-	@Override
-	public boolean hasTileEntity(BlockState state) {
-		return state.get(HEAT_LEVEL)
-			.isAtLeast(HeatLevel.SMOULDERING);
-	}
+//	@Override
+//	public boolean hasTileEntity(BlockState state) {
+//		return state.get(HEAT_LEVEL)
+//			.isAtLeast(HeatLevel.SMOULDERING);
+//	}
 
 	@Override
 	public void fillItemGroup(ItemGroup p_149666_1_, NonNullList<ItemStack> p_149666_2_) {
@@ -100,7 +106,7 @@ public class BlazeBurnerBlock extends Block implements ITE<BlazeBurnerTileEntity
 
 	@Nullable
 	@Override
-	public TileEntity createTileEntity(BlockState state, IBlockReader world) {
+	public TileEntity createNewTileEntity(IBlockReader world) {
 		return AllTileEntities.HEATER.create();
 	}
 
@@ -155,7 +161,7 @@ public class BlazeBurnerBlock extends Block implements ITE<BlazeBurnerTileEntity
 		if (!burnerTE.tryUpdateFuel(stack, forceOverflow, simulate))
 			return ActionResult.fail(ItemStack.EMPTY);
 
-		ItemStack container = stack.getContainerItem();
+		ItemStack container = new ItemStack(stack.getItem().getContainerItem());
 		if (!simulate && !world.isRemote) {
 			world.playSound(null, pos, SoundEvents.ENTITY_BLAZE_SHOOT, SoundCategory.BLOCKS,
 				.125f + world.rand.nextFloat() * .125f, .75f - world.rand.nextFloat() * .25f);
@@ -190,6 +196,12 @@ public class BlazeBurnerBlock extends Block implements ITE<BlazeBurnerTileEntity
 		if (p_220071_4_ == ISelectionContext.dummy())
 			return AllShapes.HEATER_BLOCK_SPECIAL_COLLISION_SHAPE;
 		return getShape(p_220071_1_, p_220071_2_, p_220071_3_, p_220071_4_);
+	}
+
+	// java yells at me if I don't put this method here
+	@Override
+	public SoundType getSoundType(BlockState state, IWorldReader world, BlockPos pos, @Nullable Entity entity) {
+		return SoundType.METAL;
 	}
 
 	@Override

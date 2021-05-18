@@ -4,7 +4,6 @@ import java.util.List;
 
 import com.simibubi.create.AllRecipeTypes;
 import com.simibubi.create.foundation.fluid.FluidIngredient;
-import com.simibubi.create.lib.lba.fluid.FluidStack;
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;

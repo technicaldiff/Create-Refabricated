@@ -6,7 +6,6 @@ import java.util.Locale;
 import java.util.Optional;
 
 import com.simibubi.create.foundation.utility.Lang;
-import com.simibubi.create.lib.lba.fluid.FluidStack;
 import com.simibubi.create.lib.utility.LazyOptional;
 import com.simibubi.create.lib.utility.MinecraftClientUtil;
 

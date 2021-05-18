@@ -1,76 +1,52 @@
 package com.simibubi.create.lib.lba.fluid;
 
-import java.io.IOException;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonSyntaxException;
+import com.simibubi.create.lib.utility.FluidUtil;
 
-import alexiil.mc.lib.attributes.fluid.FluidVolumeUtil;
 import alexiil.mc.lib.attributes.fluid.amount.FluidAmount;
+import alexiil.mc.lib.attributes.fluid.volume.FluidKey;
 import alexiil.mc.lib.attributes.fluid.volume.FluidKeys;
 import alexiil.mc.lib.attributes.fluid.volume.FluidVolume;
 import net.minecraft.fluid.Fluid;
 import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.network.PacketBuffer;
 
-public class FluidStack {
+/**
+ * Wrapper for FluidVolume to minimize needed changes
+ */
+public class FluidStack extends FluidVolume {
+	public static final FluidStack EMPTY = new FluidStack(FluidKeys.EMPTY, FluidAmount.ZERO);
 
-	public static FluidStack EMPTY = new FluidStack(FluidVolumeUtil.EMPTY);
-
-	private FluidVolume volume;
-
-	public FluidStack(FluidVolume v) {
-		volume = v;
+	public FluidStack(FluidKey key, FluidAmount amount) {
+		super(key, amount);
 	}
 
-	public FluidStack(Fluid fluid, int amount) {
-		volume = FluidKeys.get(fluid).withAmount(FluidAmount.of1620(amount));
+	public FluidStack(FluidKey key, CompoundNBT tag) {
+		super(key, tag);
 	}
 
+	public FluidStack(FluidKey key, int amount) {
+		super(key, FluidUtil.millibucketsToFluidAmount(amount));
+	}
+
+	public FluidStack(Fluid key, int amount) {
+		super(FluidKeys.get(key), FluidUtil.millibucketsToFluidAmount(amount));
+	}
+
+	public FluidStack(FluidKey key, JsonObject json) throws JsonSyntaxException {
+		super(key, json);
+	}
+
+	// simple method wrapper for minimal changes
 	public Fluid getFluid() {
-		return volume.getRawFluid();
+		return getRawFluid();
 	}
 
-	public int getAmount() {
-		return volume.getAmount_F().as1620();
+	public boolean isLighterThanAir() {
+		return FluidUtil.isLighterThanAir(this);
 	}
 
-	public FluidStack withAmount(int amount) {
-		return new FluidStack(volume.withAmount(FluidAmount.of1620(amount)));
-	}
-
-	public boolean isEmpty() {
-		return volume.isEmpty();
-	}
-
-	public void shrink(int amount) {
-		volume = volume.withAmount(FluidAmount.of1620(getAmount() - amount));
-	}
-
-	public FluidStack copy() {
-		return new FluidStack(volume.copy());
-	}
-
-	public void setTag(CompoundNBT nbt) {
-		volume = FluidVolume.fromTag(nbt); // I have doubts. About this whole class actually.
-	}
-
-	public CompoundNBT getTag() {
-		return volume.toTag();
-	}
-
-	public static FluidStack readFromPacket(PacketBuffer buffer) {
-		try {
-			return new FluidStack(FluidVolume.fromMcBuffer(buffer));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-
-		return null;
-	}
-
-	public void writeToPacket(PacketBuffer buffer) {
-		volume.toMcBuffer(buffer);
-	}
-
-	public boolean isFluidEqual(FluidStack other) {
-		return getFluid() == other.getFluid();
+	public boolean isFluidStackIdentical(FluidStack other) {
+		return this.getRawFluid() == other.getRawFluid() && this.amount() == other.amount();
 	}
 }

@@ -6,6 +6,7 @@
   "mixins": [
     "AbstractMinecartEntityMixin",
     "AbstractRailBlockMixin",
+    "BlockMixin",
     "BlockParticleDataMixin",
     "BlockStateMixin",
     "EnchantmentHelperMixin",
@@ -21,6 +22,7 @@
     "Matrix3fMixin",
     "Matrix4fMixin",
     "MobEntityMixin",
+    "PacketBufferMixin",
     "PlayerControllerMixin",
     "PlayerEntityMixin",
     "RailStateMixin",

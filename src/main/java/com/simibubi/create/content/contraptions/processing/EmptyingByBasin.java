@@ -6,9 +6,7 @@ import java.util.Optional;
 import com.simibubi.create.AllRecipeTypes;
 import com.simibubi.create.content.contraptions.fluids.potion.PotionFluidHandler;
 import com.simibubi.create.foundation.utility.Pair;
-
 import com.simibubi.create.lib.lba.fluid.FluidStack;
-
 import com.simibubi.create.lib.lba.item.ItemStackHandler;
 
 import net.minecraft.item.ItemStack;

@@ -11,11 +11,18 @@ import com.simibubi.create.foundation.fluid.FluidHelper;
 import com.simibubi.create.foundation.fluid.FluidHelper.FluidExchange;
 import com.simibubi.create.foundation.tileEntity.ComparatorUtil;
 import com.simibubi.create.foundation.utility.Lang;
-
+import com.simibubi.create.lib.extensions.BlockExtensions;
 import com.simibubi.create.lib.lba.fluid.FluidStack;
+import com.simibubi.create.lib.utility.ExtraDataUtil;
+import com.simibubi.create.lib.utility.FluidUtil;
 
+import alexiil.mc.lib.attributes.AttributeList;
+import alexiil.mc.lib.attributes.fluid.FixedFluidInvView;
+import alexiil.mc.lib.attributes.fluid.FluidAttributes;
+import alexiil.mc.lib.attributes.fluid.volume.FluidKey;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.SoundType;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -45,7 +52,7 @@ import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorldReader;
 import net.minecraft.world.World;
 
-public class FluidTankBlock extends Block implements IWrenchable, ITE<FluidTankTileEntity> {
+public class FluidTankBlock extends Block implements IWrenchable, ITE<FluidTankTileEntity>, ITileEntityProvider, BlockExtensions {
 
 	public static final BooleanProperty TOP = BooleanProperty.create("top");
 	public static final BooleanProperty BOTTOM = BooleanProperty.create("bottom");
@@ -119,13 +126,13 @@ public class FluidTankBlock extends Block implements IWrenchable, ITE<FluidTankT
 		FluidTankTileEntity te = FluidTankConnectivityHandler.anyTankAt(world, pos);
 		if (te == null)
 			return ActionResultType.FAIL;
-
-		LazyOptional<IFluidHandler> tankCapability = te.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY);
-		if (!tankCapability.isPresent())
+//		LazyOptional<IFluidHandler> tankCapability = te.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY);
+		AttributeList<FixedFluidInvView> attributes = FluidUtil.getAttributeProvidersAtPos(world, pos, null, FluidAttributes.FIXED_INV_VIEW);
+		if (attributes.getCount() == 0)
 			return ActionResultType.PASS;
-		IFluidHandler fluidTank = tankCapability.orElse(null);
-		FluidStack prevFluidInTank = fluidTank.getFluidInTank(0)
-			.copy();
+		FixedFluidInvView fluidTank = attributes.get(0); // just get the first one, I'm not sure why there would be more than one, but this can be changed when needed
+		FluidStack prevFluidInTank = (FluidStack) fluidTank.getInvFluid(0) // assume the first tank, what could possibly go wrong
+				.copy();
 
 		if (FluidHelper.tryEmptyItemIntoTE(world, player, hand, heldItem, te))
 			exchange = FluidExchange.ITEM_TO_TANK;
@@ -141,8 +148,8 @@ public class FluidTankBlock extends Block implements IWrenchable, ITE<FluidTankT
 
 		SoundEvent soundevent = null;
 		BlockState fluidState = null;
-		FluidStack fluidInTank = tankCapability.map(fh -> fh.getFluidInTank(0))
-			.orElse(FluidStack.EMPTY);
+		FluidStack fluidInTank = (FluidStack) fluidTank.getInvFluid(0);
+//			.orElse(FluidStack.EMPTY);
 
 		if (exchange == FluidExchange.ITEM_TO_TANK) {
 			if (creative && !onClient) {
@@ -155,9 +162,9 @@ public class FluidTankBlock extends Block implements IWrenchable, ITE<FluidTankT
 			Fluid fluid = fluidInTank.getFluid();
 			fluidState = fluid.getDefaultState()
 				.getBlockState();
-			FluidAttributes attributes = fluid.getAttributes();
-			soundevent = attributes.getEmptySound();
-			if (soundevent == null)
+			FluidKey key = fluidInTank.fluidKey;
+//			soundevent = attributes.getEmptySound();
+//			if (soundevent == null)
 				soundevent =
 					fluid.isIn(FluidTags.LAVA) ? SoundEvents.ITEM_BUCKET_EMPTY_LAVA : SoundEvents.ITEM_BUCKET_EMPTY;
 		}
@@ -169,8 +176,8 @@ public class FluidTankBlock extends Block implements IWrenchable, ITE<FluidTankT
 			Fluid fluid = prevFluidInTank.getFluid();
 			fluidState = fluid.getDefaultState()
 				.getBlockState();
-			soundevent = fluid.getAttributes()
-				.getFillSound();
+//			soundevent = fluid.getAttributes()
+//				.getFillSound();
 			if (soundevent == null)
 				soundevent =
 					fluid.isIn(FluidTags.LAVA) ? SoundEvents.ITEM_BUCKET_FILL_LAVA : SoundEvents.ITEM_BUCKET_FILL;
@@ -191,10 +198,10 @@ public class FluidTankBlock extends Block implements IWrenchable, ITE<FluidTankT
 				if (controllerTE != null) {
 					if (fluidState != null && onClient) {
 						BlockParticleData blockParticleData = new BlockParticleData(ParticleTypes.BLOCK, fluidState);
-						float level = (float) fluidInTank.getAmount() / fluidTank.getTankCapacity(0);
+						float level = FluidUtil.fluidAmountToMillibuckets(FluidUtil.divideFluidAmounts(fluidInTank.amount(), fluidTank.getMaxAmount_F(0)));
 
-						boolean reversed = fluidInTank.getFluid()
-							.getAttributes()
+						boolean reversed = fluidInTank//.getFluid()
+//							.getAttributes()
 							.isLighterThanAir();
 						if (reversed)
 							level = 1 - level;
@@ -219,10 +226,10 @@ public class FluidTankBlock extends Block implements IWrenchable, ITE<FluidTankT
 		return ActionResultType.SUCCESS;
 	}
 
-	@Override
-	public boolean hasTileEntity(BlockState state) {
-		return true;
-	}
+//	@Override
+//	public boolean hasTileEntity(BlockState state) {
+//		return true;
+//	}
 
 	@Override
 	public void onReplaced(BlockState state, World world, BlockPos pos, BlockState newState, boolean isMoving) {
@@ -237,7 +244,7 @@ public class FluidTankBlock extends Block implements IWrenchable, ITE<FluidTankT
 	}
 
 	@Override
-	public TileEntity createTileEntity(BlockState state, IBlockReader world) {
+	public TileEntity createNewTileEntity(IBlockReader world) {
 		return creative ? AllTileEntities.CREATIVE_FLUID_TANK.create() : AllTileEntities.FLUID_TANK.create();
 	}
 
@@ -303,10 +310,11 @@ public class FluidTankBlock extends Block implements IWrenchable, ITE<FluidTankT
 
 	@Override
 	public SoundType getSoundType(BlockState state, IWorldReader world, BlockPos pos, Entity entity) {
-		SoundType soundType = super.getSoundType(state, world, pos, entity);
-		if (entity != null && entity.getPersistentData()
+		SoundType soundType = ((BlockExtensions) ((Block) this)).getSoundType(state, world, pos, entity);
+		if (entity != null && ExtraDataUtil.getExtraData(entity)
 			.contains("SilenceTankSound"))
 			return SILENCED_METAL;
+
 		return soundType;
 	}
 

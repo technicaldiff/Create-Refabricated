@@ -8,8 +8,6 @@ import javax.annotation.ParametersAreNonnullByDefault;
 
 import com.simibubi.create.lib.annotation.MethodsReturnNonnullByDefault;
 
-import com.simibubi.create.lib.lba.fluid.FluidStack;
-
 import org.apache.logging.log4j.Logger;
 
 import com.google.gson.JsonObject;

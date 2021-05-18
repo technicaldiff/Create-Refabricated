@@ -8,7 +8,6 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.simibubi.create.AllParticleTypes;
 import com.simibubi.create.content.contraptions.particle.ICustomParticleData;
-import com.simibubi.create.lib.lba.fluid.FluidStack;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;

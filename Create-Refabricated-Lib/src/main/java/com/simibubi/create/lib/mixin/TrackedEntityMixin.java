@@ -14,7 +14,7 @@ import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.world.TrackedEntity;
 
 @Mixin(TrackedEntity.class)
-public class TrackedEntityMixin {
+public abstract class TrackedEntityMixin {
 	@Shadow
 	@Final
 	private Entity trackedEntity;

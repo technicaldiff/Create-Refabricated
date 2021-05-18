@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.function.Consumer;
 
 import com.simibubi.create.foundation.fluid.SmartFluidTank;
-import com.simibubi.create.lib.lba.fluid.FluidAction;
 import com.simibubi.create.lib.lba.fluid.FluidStack;
 
 import net.minecraft.tileentity.TileEntityType;

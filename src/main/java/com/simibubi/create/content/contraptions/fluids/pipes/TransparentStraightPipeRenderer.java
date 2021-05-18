@@ -8,7 +8,6 @@ import com.simibubi.create.foundation.tileEntity.TileEntityBehaviour;
 import com.simibubi.create.foundation.tileEntity.renderer.SafeTileEntityRenderer;
 import com.simibubi.create.foundation.utility.Iterate;
 import com.simibubi.create.foundation.utility.animation.LerpedFloat;
-import com.simibubi.create.lib.lba.fluid.FluidStack;
 
 import net.minecraft.client.renderer.IRenderTypeBuffer;
 import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;

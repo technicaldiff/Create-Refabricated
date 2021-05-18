@@ -7,6 +7,9 @@ import java.util.List;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import alexiil.mc.lib.attributes.fluid.volume.FluidKey;
+import alexiil.mc.lib.attributes.fluid.volume.FluidVolume;
+
 import com.simibubi.create.content.contraptions.fluids.tank.FluidTankBlock.Shape;
 import com.simibubi.create.content.contraptions.goggles.IHaveGoggleInformation;
 import com.simibubi.create.foundation.config.AllConfigs;
@@ -15,11 +18,12 @@ import com.simibubi.create.foundation.gui.widgets.InterpolatedChasingValue;
 import com.simibubi.create.foundation.tileEntity.SmartTileEntity;
 import com.simibubi.create.foundation.tileEntity.TileEntityBehaviour;
 import com.simibubi.create.lib.capabilities.Capability;
-import com.simibubi.create.lib.lba.fluid.FluidAction;
-import com.simibubi.create.lib.lba.fluid.FluidStack;
-import com.simibubi.create.lib.lba.fluid.FluidTank;
+import com.simibubi.create.lib.lba.fluid.SimpleFluidTank;
 import com.simibubi.create.lib.utility.LazyOptional;
 
+import alexiil.mc.lib.attributes.fluid.FluidAttributes;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.block.BlockState;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.NBTUtil;
@@ -29,16 +33,14 @@ import net.minecraft.util.Direction;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
 
 public class FluidTankTileEntity extends SmartTileEntity implements IHaveGoggleInformation {
 
 	private static final int MAX_SIZE = 3;
 
-	protected LazyOptional<IFluidHandler> fluidCapability;
+//	protected LazyOptional<IFluidHandler> fluidCapability;
 	protected boolean forceFluidLevelUpdate;
-	protected FluidTank tankInventory;
+	protected SimpleFluidTank tankInventory;
 	protected BlockPos controller;
 	protected BlockPos lastKnownPos;
 	protected boolean updateConnectivity;
@@ -57,7 +59,7 @@ public class FluidTankTileEntity extends SmartTileEntity implements IHaveGoggleI
 	public FluidTankTileEntity(TileEntityType<?> tileEntityTypeIn) {
 		super(tileEntityTypeIn);
 		tankInventory = createInventory();
-		fluidCapability = LazyOptional.of(() -> tankInventory);
+//		fluidCapability = LazyOptional.of(() -> tankInventory);
 		forceFluidLevelUpdate = true;
 		updateConnectivity = false;
 		window = true;
@@ -117,18 +119,18 @@ public class FluidTankTileEntity extends SmartTileEntity implements IHaveGoggleI
 		lastKnownPos = pos;
 	}
 
-	protected void onFluidStackChanged(FluidStack newFluidStack) {
+	protected void onFluidStackChanged(FluidVolume newVolume) {
 		if (!hasWorld())
 			return;
 
-		FluidAttributes attributes = newFluidStack.getFluid()
-			.getAttributes();
-		int luminosity = (int) (attributes.getLuminosity(newFluidStack) / 1.2f);
-		boolean reversed = attributes.isLighterThanAir();
+		FluidKey key = newVolume.fluidKey;
+
+		int luminosity = (int) (key.luminosity / 1.2f);
+//		boolean reversed = attributes.isLighterThanAir();
 		int maxY = (int) ((getFillState() * height) + 1);
 
 		for (int yOffset = 0; yOffset < height; yOffset++) {
-			boolean isBright = reversed ? (height - yOffset <= maxY) : (yOffset < maxY);
+			boolean isBright = /*reversed ? (height - yOffset <= maxY) :*/ (yOffset < maxY);
 			int actualLuminosity = isBright ? luminosity : luminosity > 0 ? 1 : 0;
 
 			for (int xOffset = 0; xOffset < width; xOffset++) {
@@ -427,7 +429,7 @@ public class FluidTankTileEntity extends SmartTileEntity implements IHaveGoggleI
 	@Override
 	public void addBehaviours(List<TileEntityBehaviour> behaviours) {}
 
-	public IFluidTank getTankInventory() {
+	public SimpleFluidTank getTankInventory() {
 		return tankInventory;
 	}
 

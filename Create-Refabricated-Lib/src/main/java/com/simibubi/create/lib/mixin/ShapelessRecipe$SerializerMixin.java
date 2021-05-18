@@ -10,7 +10,7 @@ import org.spongepowered.asm.mixin.injection.ModifyConstant;
 import net.minecraft.item.crafting.ShapelessRecipe;
 
 @Mixin(ShapelessRecipe.Serializer.class)
-public class ShapelessRecipe$SerializerMixin {
+public abstract class ShapelessRecipe$SerializerMixin {
 	@ModifyConstant(method = "Lnet/minecraft/item/crafting/ShapelessRecipe$Serializer;read(Lnet/minecraft/util/ResourceLocation;Lcom/google/gson/JsonObject;)Lnet/minecraft/item/crafting/ShapelessRecipe;",
 			constant = @Constant(intValue = 9))
 	private static int modifyMaxItemsInRecipe() {

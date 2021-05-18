@@ -5,7 +5,6 @@ import java.util.List;
 
 import com.simibubi.create.AllFluids;
 import com.simibubi.create.content.contraptions.fluids.VirtualFluid;
-import com.simibubi.create.lib.lba.fluid.FluidStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.ListNBT;
 import net.minecraft.potion.EffectInstance;
