@@ -30,5 +30,4 @@ public class SmartFluidTank extends SimpleFluidTank {
 		super.setFluid(stack);
 		updateCallback.accept(stack);
 	}
-
 }

@@ -4,6 +4,8 @@ import com.mojang.blaze3d.matrix.MatrixStack;
 import com.simibubi.create.foundation.fluid.FluidRenderer;
 import com.simibubi.create.foundation.gui.widgets.InterpolatedChasingValue;
 import com.simibubi.create.foundation.tileEntity.renderer.SafeTileEntityRenderer;
+import com.simibubi.create.lib.lba.fluid.FluidStack;
+import com.simibubi.create.lib.lba.fluid.SimpleFluidTank;
 
 import net.minecraft.client.renderer.IRenderTypeBuffer;
 import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
@@ -37,14 +39,14 @@ public class FluidTankRenderer extends SafeTileEntityRenderer<FluidTankTileEntit
 			return;
 		float clampedLevel = MathHelper.clamp(level * totalHeight, 0, totalHeight);
 
-		FluidTank tank = te.tankInventory;
-		FluidStack fluidStack = tank.getFluid();
+		SimpleFluidTank tank = te.tankInventory;
+		FluidStack fluidStack = (FluidStack) tank.getInvFluid();
 
 		if (fluidStack.isEmpty())
 			return;
 
-		boolean top = fluidStack.getFluid()
-			.getAttributes()
+		boolean top = fluidStack//.getFluid()
+//			.getAttributes()
 			.isLighterThanAir();
 
 		float xMin = tankHullWidth;

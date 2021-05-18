@@ -5,7 +5,9 @@ import java.util.function.Consumer;
 
 import com.simibubi.create.foundation.fluid.SmartFluidTank;
 import com.simibubi.create.lib.lba.fluid.FluidStack;
+import com.simibubi.create.lib.utility.FluidUtil;
 
+import alexiil.mc.lib.attributes.Simulation;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.text.ITextComponent;
 
@@ -26,6 +28,10 @@ public class CreativeFluidTankTileEntity extends FluidTankTileEntity {
 	}
 
 	public static class CreativeSmartFluidTank extends SmartFluidTank {
+		// helper method
+		public int getTankCapacity(int tank) {
+			return (int) FluidUtil.fluidAmountToMillibuckets(getMaxAmount_F());
+		}
 
 		public CreativeSmartFluidTank(int capacity, Consumer<FluidStack> updateCallback) {
 			super(capacity, updateCallback);
@@ -33,29 +39,31 @@ public class CreativeFluidTankTileEntity extends FluidTankTileEntity {
 
 		@Override
 		public int getFluidAmount() {
-			return getFluid().isEmpty() ? 0 : getTankCapacity(0);
+			return getInvFluid().isEmpty() ? 0 : getTankCapacity(0);
 		}
 
 		public void setContainedFluid(FluidStack fluidStack) {
-			fluid = fluidStack.copy();
-			if (!fluidStack.isEmpty())
-				fluid.setAmount(getTankCapacity(0));
+			setFluid((FluidStack) fluidStack.copy());
+			if (!fluidStack.isEmpty()) {
+				FluidStack newStack = new FluidStack(getFluid().fluidKey, getTankCapacity(0));
+				setFluid(newStack);
+			}
 			onContentsChanged();
 		}
 
 		@Override
-		public int fill(FluidStack resource, FluidAction action) {
+		public int fill(FluidStack resource, Simulation action) {
 			return resource.getAmount();
 		}
 
 		@Override
-		public FluidStack drain(FluidStack resource, FluidAction action) {
-			return super.drain(resource, FluidAction.SIMULATE);
+		public FluidStack drain(FluidStack resource, Simulation action) {
+			return super.drain(resource, Simulation.SIMULATE);
 		}
 
 		@Override
-		public FluidStack drain(int maxDrain, FluidAction action) {
-			return super.drain(maxDrain, FluidAction.SIMULATE);
+		public FluidStack drain(int maxDrain, Simulation action) {
+			return super.drain(maxDrain, Simulation.SIMULATE);
 		}
 
 	}
