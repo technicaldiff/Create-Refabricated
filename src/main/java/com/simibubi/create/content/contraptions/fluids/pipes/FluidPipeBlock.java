@@ -18,6 +18,7 @@ import com.simibubi.create.foundation.utility.Iterate;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
+import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.IWaterLoggable;
 import net.minecraft.block.SixWayBlock;
 import net.minecraft.entity.player.PlayerEntity;
@@ -45,7 +46,7 @@ import net.minecraft.world.TickPriority;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 
-public class FluidPipeBlock extends SixWayBlock implements IWaterLoggable, IWrenchableWithBracket {
+public class FluidPipeBlock extends SixWayBlock implements IWaterLoggable, IWrenchableWithBracket, ITileEntityProvider {
 
 	public FluidPipeBlock(Properties properties) {
 		super(4 / 16f, properties);
@@ -88,13 +89,13 @@ public class FluidPipeBlock extends SixWayBlock implements IWaterLoggable, IWren
 		return FluidPropagator.getStraightPipeAxis(state);
 	}
 
-	@Override
-	public boolean hasTileEntity(BlockState state) {
-		return true;
-	}
+//	@Override
+//	public boolean hasTileEntity(BlockState state) {
+//		return true;
+//	}
 
 	@Override
-	public TileEntity createTileEntity(BlockState state, IBlockReader world) {
+	public TileEntity createNewTileEntity(IBlockReader world) {
 		return AllTileEntities.FLUID_PIPE.create();
 	}
 
@@ -275,10 +276,10 @@ public class FluidPipeBlock extends SixWayBlock implements IWaterLoggable, IWren
 			return Optional.empty();
 		return Optional.of(new ItemStack(bracket.getBlock()));
 	}
-	
+
 	@Override
 	public boolean allowsMovement(BlockState state, IBlockReader reader, BlockPos pos, PathType type) {
 		return false;
 	}
-	
+
 }

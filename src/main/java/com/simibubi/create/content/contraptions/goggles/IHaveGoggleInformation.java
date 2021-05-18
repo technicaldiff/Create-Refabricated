@@ -6,7 +6,8 @@ import java.util.Locale;
 import java.util.Optional;
 
 import com.simibubi.create.foundation.utility.Lang;
-import com.simibubi.create.lib.utility.LazyOptional;
+import com.simibubi.create.lib.lba.fluid.FluidStack;
+import com.simibubi.create.lib.lba.fluid.IFluidHandler;
 import com.simibubi.create.lib.utility.MinecraftClientUtil;
 
 import net.minecraft.util.text.ITextComponent;
@@ -39,10 +40,10 @@ public interface IHaveGoggleInformation {
 			.format(d).replace("\u00A0", " ");
 	}
 
-	default boolean containedFluidTooltip(List<ITextComponent> tooltip, boolean isPlayerSneaking, LazyOptional<IFluidHandler> handler) {
+	default boolean containedFluidTooltip(List<ITextComponent> tooltip, boolean isPlayerSneaking, IFluidHandler handler) {
 		tooltip.add(componentSpacing.copy().append(Lang.translate("gui.goggles.fluid_container")));
 		TranslationTextComponent mb = Lang.translate("generic.unit.millibuckets");
-		Optional<IFluidHandler> resolve = handler.resolve();
+		Optional<IFluidHandler> resolve = Optional.ofNullable(handler);
 		if (!resolve.isPresent())
 			return false;
 

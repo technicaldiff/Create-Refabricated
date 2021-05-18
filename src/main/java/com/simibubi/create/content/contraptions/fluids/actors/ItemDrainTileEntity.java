@@ -16,10 +16,11 @@ import com.simibubi.create.foundation.utility.BlockHelper;
 import com.simibubi.create.foundation.utility.Iterate;
 import com.simibubi.create.foundation.utility.Pair;
 import com.simibubi.create.foundation.utility.VecHelper;
-import com.simibubi.create.lib.capabilities.Capability;
+import com.simibubi.create.lib.lba.fluid.FluidStack;
 import com.simibubi.create.lib.lba.item.ItemHandlerHelper;
 import com.simibubi.create.lib.utility.LazyOptional;
 
+import alexiil.mc.lib.attributes.Simulation;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.item.ItemStack;
@@ -216,7 +217,7 @@ public class ItemDrainTileEntity extends SmartTileEntity implements IHaveGoggleI
 		if (processingTicks > 5) {
 			internalTank.allowInsertion();
 			if (internalTank.getPrimaryHandler()
-				.fill(fluidFromItem, FluidAction.SIMULATE) != fluidFromItem.getAmount()) {
+				.fill(fluidFromItem, Simulation.SIMULATE) != fluidFromItem.getAmount()) {
 				internalTank.forbidInsertion();
 				processingTicks = FILLING_TIME;
 				return true;
@@ -236,7 +237,7 @@ public class ItemDrainTileEntity extends SmartTileEntity implements IHaveGoggleI
 			heldItem = null;
 		internalTank.allowInsertion();
 		internalTank.getPrimaryHandler()
-			.fill(fluidFromItem, FluidAction.EXECUTE);
+			.fill(fluidFromItem, Simulation.ACTION);
 		internalTank.forbidInsertion();
 		notifyUpdate();
 		return true;
@@ -275,23 +276,23 @@ public class ItemDrainTileEntity extends SmartTileEntity implements IHaveGoggleI
 		super.fromTag(state, compound, clientPacket);
 	}
 
-	@Override
-	public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
-		if (side != null && side.getAxis()
-			.isHorizontal() && isItemHandlerCap(cap))
-			return itemHandlers.get(side)
-				.cast();
-
-		if (side != Direction.UP && isFluidHandlerCap(cap))
-			return internalTank.getCapability()
-				.cast();
-
-		return super.getCapability(cap, side);
-	}
+//	@Override
+//	public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
+//		if (side != null && side.getAxis()
+//			.isHorizontal() && isItemHandlerCap(cap))
+//			return itemHandlers.get(side)
+//				.cast();
+//
+//		if (side != Direction.UP && isFluidHandlerCap(cap))
+//			return internalTank.getCapability()
+//				.cast();
+//
+//		return super.getCapability(cap, side);
+//	}
 
 	@Override
 	public boolean addToGoggleTooltip(List<ITextComponent> tooltip, boolean isPlayerSneaking) {
-		return containedFluidTooltip(tooltip, isPlayerSneaking, getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY));
+		return false;//containedFluidTooltip(tooltip, isPlayerSneaking, getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY));
 	}
 
 }

@@ -14,6 +14,7 @@ import com.simibubi.create.foundation.utility.Lang;
 import com.simibubi.create.foundation.utility.Pair;
 import com.simibubi.create.lib.condition.ModLoadedCondition;
 import com.simibubi.create.lib.condition.NotCondition;
+import com.simibubi.create.lib.lba.fluid.FluidStack;
 
 import net.minecraft.client.renderer.model.multipart.ICondition;
 import net.minecraft.data.IFinishedRecipe;

@@ -52,6 +52,7 @@
     "accessor.RailStateAccessor",
     "accessor.ScreenAccessor",
     "accessor.ServerPlayNetHandlerAccessor",
+    "accessor.ServerTickListAccessor",
     "accessor.SPlayerAbilitiesPacketAccessor",
     "accessor.StairsBlockAccessor",
     "accessor.Vector3fAccessor",

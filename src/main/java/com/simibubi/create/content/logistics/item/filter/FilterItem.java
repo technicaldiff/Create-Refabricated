@@ -6,10 +6,19 @@ import java.util.List;
 
 import javax.annotation.Nonnull;
 
-import com.simibubi.create.lib.lba.item.ItemStackHandler;
-
+import com.simibubi.create.AllItems;
+import com.simibubi.create.AllKeys;
+import com.simibubi.create.content.contraptions.processing.EmptyingByBasin;
+import com.simibubi.create.content.logistics.item.filter.AttributeFilterContainer.WhitelistMode;
+import com.simibubi.create.foundation.item.ItemDescription;
+import com.simibubi.create.foundation.utility.Lang;
+import com.simibubi.create.lib.lba.fluid.FluidStack;
 import com.simibubi.create.lib.lba.item.ItemHandlerHelper;
+import com.simibubi.create.lib.lba.item.ItemStackHandler;
+import com.simibubi.create.lib.utility.Constants.NBT;
 
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
@@ -29,17 +38,6 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
-
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
-
-import com.simibubi.create.AllItems;
-import com.simibubi.create.AllKeys;
-import com.simibubi.create.content.contraptions.processing.EmptyingByBasin;
-import com.simibubi.create.content.logistics.item.filter.AttributeFilterContainer.WhitelistMode;
-import com.simibubi.create.foundation.item.ItemDescription;
-import com.simibubi.create.foundation.utility.Lang;
-import com.simibubi.create.lib.utility.Constants.NBT;
 
 
 public class FilterItem extends Item implements INamedContainerProvider {

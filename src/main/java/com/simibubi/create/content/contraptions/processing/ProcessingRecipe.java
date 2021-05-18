@@ -6,8 +6,6 @@ import java.util.stream.Collectors;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 
-import com.simibubi.create.lib.annotation.MethodsReturnNonnullByDefault;
-
 import org.apache.logging.log4j.Logger;
 
 import com.google.gson.JsonObject;
@@ -16,6 +14,8 @@ import com.simibubi.create.Create;
 import com.simibubi.create.content.contraptions.processing.ProcessingRecipeBuilder.ProcessingRecipeParams;
 import com.simibubi.create.foundation.fluid.FluidIngredient;
 import com.simibubi.create.foundation.utility.Lang;
+import com.simibubi.create.lib.annotation.MethodsReturnNonnullByDefault;
+import com.simibubi.create.lib.lba.fluid.FluidStack;
 
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;

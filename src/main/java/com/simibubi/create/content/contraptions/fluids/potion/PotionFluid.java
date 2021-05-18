@@ -5,6 +5,8 @@ import java.util.List;
 
 import com.simibubi.create.AllFluids;
 import com.simibubi.create.content.contraptions.fluids.VirtualFluid;
+import com.simibubi.create.lib.lba.fluid.FluidStack;
+
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.ListNBT;
 import net.minecraft.potion.EffectInstance;
@@ -63,10 +65,10 @@ public class PotionFluid extends VirtualFluid {
 	public static FluidStack addPotionToFluidStack(FluidStack fs, Potion potion) {
 		ResourceLocation resourcelocation = Registry.POTION.getKey(potion);
 		if (potion == Potions.EMPTY) {
-			fs.removeChildTag("Potion");
+//			fs.removeChildTag("Potion");
 			return fs;
 		}
-		fs.getOrCreateTag()
+		fs.toTag()//.getOrCreateTag()
 			.putString("Potion", resourcelocation.toString());
 		return fs;
 	}
@@ -74,7 +76,7 @@ public class PotionFluid extends VirtualFluid {
 	public static FluidStack appendEffects(FluidStack fs, Collection<EffectInstance> customEffects) {
 		if (customEffects.isEmpty())
 			return fs;
-		CompoundNBT compoundnbt = fs.getOrCreateTag();
+		CompoundNBT compoundnbt = fs.toTag();//.getOrCreateTag();
 		ListNBT listnbt = compoundnbt.getList("CustomPotionEffects", 9);
 		for (EffectInstance effectinstance : customEffects)
 			listnbt.add(effectinstance.write(new CompoundNBT()));

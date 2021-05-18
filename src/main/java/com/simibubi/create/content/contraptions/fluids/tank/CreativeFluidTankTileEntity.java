@@ -5,13 +5,15 @@ import java.util.function.Consumer;
 
 import com.simibubi.create.foundation.fluid.SmartFluidTank;
 import com.simibubi.create.lib.lba.fluid.FluidStack;
+import com.simibubi.create.lib.lba.fluid.IFluidHandler;
 import com.simibubi.create.lib.utility.FluidUtil;
 
 import alexiil.mc.lib.attributes.Simulation;
+import alexiil.mc.lib.attributes.fluid.FixedFluidInvView;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.text.ITextComponent;
 
-public class CreativeFluidTankTileEntity extends FluidTankTileEntity {
+public class CreativeFluidTankTileEntity extends FluidTankTileEntity implements IFluidHandler {
 
 	public CreativeFluidTankTileEntity(TileEntityType<?> tileEntityTypeIn) {
 		super(tileEntityTypeIn);
@@ -27,10 +29,15 @@ public class CreativeFluidTankTileEntity extends FluidTankTileEntity {
 		return false;
 	}
 
+	@Override
+	public FixedFluidInvView getFluidStorage() {
+		return tankInventory;
+	}
+
 	public static class CreativeSmartFluidTank extends SmartFluidTank {
 		// helper method
 		public int getTankCapacity(int tank) {
-			return (int) FluidUtil.fluidAmountToMillibuckets(getMaxAmount_F());
+			return FluidUtil.fluidAmountToMillibuckets(getMaxAmount_F());
 		}
 
 		public CreativeSmartFluidTank(int capacity, Consumer<FluidStack> updateCallback) {

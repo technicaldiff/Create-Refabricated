@@ -12,6 +12,7 @@ import com.simibubi.create.foundation.advancement.AllTriggers;
 import com.simibubi.create.foundation.fluid.FluidHelper;
 import com.simibubi.create.foundation.tileEntity.SmartTileEntity;
 import com.simibubi.create.foundation.tileEntity.behaviour.BehaviourType;
+import com.simibubi.create.lib.lba.fluid.FluidStack;
 
 import it.unimi.dsi.fastutil.PriorityQueue;
 import it.unimi.dsi.fastutil.objects.ObjectHeapPriorityQueue;
@@ -91,9 +92,9 @@ public class FluidDrainingBehaviour extends FluidManipulationBehaviour {
 			} else if (blockState.getBlock() instanceof FlowingFluidBlock) {
 				FlowingFluidBlock flowingFluid = (FlowingFluidBlock) blockState.getBlock();
 				emptied = Blocks.AIR.getDefaultState();
-				if (blockState.get(FlowingFluidBlock.LEVEL) == 0)
-					fluid = flowingFluid.getFluid();
-				else {
+//				if (blockState.get(FlowingFluidBlock.LEVEL) == 0)
+//					fluid = flowingFluid.getFluid();
+//				else {
 					affectedArea.expandTo(new MutableBoundingBox(currentPos, currentPos));
 					world.setBlockState(currentPos, emptied, 2 | 16);
 					queue.dequeue();
@@ -102,7 +103,7 @@ public class FluidDrainingBehaviour extends FluidManipulationBehaviour {
 						reset();
 					}
 					continue;
-				}
+//				}
 			} else if (blockState.getFluidState()
 				.getFluid() != Fluids.EMPTY
 				&& blockState.getCollisionShape(world, currentPos, ISelectionContext.dummy())

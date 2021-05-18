@@ -6,7 +6,11 @@ import javax.annotation.Nullable;
 
 import com.simibubi.create.foundation.fluid.FluidHelper;
 import com.simibubi.create.foundation.fluid.SmartFluidTank;
+import com.simibubi.create.lib.lba.fluid.FluidStack;
+import com.simibubi.create.lib.lba.fluid.IFluidHandler;
 
+import alexiil.mc.lib.attributes.Simulation;
+import alexiil.mc.lib.attributes.fluid.FixedFluidInvView;
 import net.minecraft.util.math.BlockPos;
 
 public class HosePulleyFluidHandler implements IFluidHandler {
@@ -14,28 +18,28 @@ public class HosePulleyFluidHandler implements IFluidHandler {
 	// The dynamic interface
 
 	@Override
-	public int fill(FluidStack resource, FluidAction action) {
-		if (!internalTank.isEmpty() && !resource.isFluidEqual(internalTank.getFluid()))
-			return 0;
+	public int fill(FluidStack resource, Simulation action) {
+//		if (!internalTank.isEmpty() && !resource.isFluidEqual(internalTank.getFluid()))
+//			return 0;
 		if (resource.isEmpty() || !FluidHelper.hasBlockState(resource.getFluid()))
 			return 0;
 
 		int diff = resource.getAmount();
 		int totalAmountAfterFill = diff + internalTank.getFluidAmount();
-		FluidStack remaining = resource.copy();
+		FluidStack remaining = (FluidStack) resource.copy();
 
 		if (predicate.get() && totalAmountAfterFill >= 1000) {
-			if (filler.tryDeposit(resource.getFluid(), rootPosGetter.get(), action.simulate())) {
+			if (filler.tryDeposit(resource.getFluid(), rootPosGetter.get(), (action == Simulation.SIMULATE))) {
 				drainer.counterpartActed();
-				remaining.shrink(1000);
+//				remaining.shrink(1000);
 				diff -= 1000;
 			}
 		}
 
-		if (action.simulate())
+		if (action == Simulation.SIMULATE)
 			return diff <= 0 ? resource.getAmount() : internalTank.fill(remaining, action);
 		if (diff <= 0) {
-			internalTank.drain(-diff, FluidAction.EXECUTE);
+			internalTank.drain(-diff, Simulation.ACTION);
 			return resource.getAmount();
 		}
 
@@ -44,39 +48,39 @@ public class HosePulleyFluidHandler implements IFluidHandler {
 
 	@Override
 	public FluidStack getFluidInTank(int tank) {
-		if (internalTank.isEmpty())
+//		if (internalTank.isEmpty())
 			return drainer.getDrainableFluid(rootPosGetter.get());
-		return internalTank.getFluidInTank(tank);
+//		return internalTank.getFluidInTank(tank);
 	}
 
 	@Override
-	public FluidStack drain(FluidStack resource, FluidAction action) {
+	public FluidStack drain(FluidStack resource, Simulation action) {
 		return drainInternal(resource.getAmount(), resource, action);
 	}
 
 	@Override
-	public FluidStack drain(int maxDrain, FluidAction action) {
+	public FluidStack drain(int maxDrain, Simulation action) {
 		return drainInternal(maxDrain, null, action);
 	}
 
-	private FluidStack drainInternal(int maxDrain, @Nullable FluidStack resource, FluidAction action) {
-		if (resource != null && !internalTank.isEmpty() && !resource.isFluidEqual(internalTank.getFluid()))
-			return FluidStack.EMPTY;
+	private FluidStack drainInternal(int maxDrain, @Nullable FluidStack resource, Simulation action) {
+//		if (resource != null && !internalTank.isEmpty() && !resource.isFluidEqual(internalTank.getFluid()))
+//			return FluidStack.EMPTY;
 		if (internalTank.getFluidAmount() >= 1000)
 			return internalTank.drain(maxDrain, action);
 		BlockPos pos = rootPosGetter.get();
 		FluidStack returned = drainer.getDrainableFluid(pos);
-		if (!predicate.get() || !drainer.pullNext(pos, action.simulate()))
+		if (!predicate.get() || !drainer.pullNext(pos, (action == Simulation.SIMULATE)))
 			return internalTank.drain(maxDrain, action);
 
 		filler.counterpartActed();
-		FluidStack leftover = returned.copy();
+		FluidStack leftover = (FluidStack) returned.copy();
 		int available = 1000 + internalTank.getFluidAmount();
 		int drained;
 
-		if (!internalTank.isEmpty() && !internalTank.getFluid()
-			.isFluidEqual(returned) || returned.isEmpty())
-			return internalTank.drain(maxDrain, action);
+//		if (!internalTank.isEmpty() && !internalTank.getFluid()
+//			.isFluidEqual(returned) || returned.isEmpty())
+//			return internalTank.drain(maxDrain, action);
 
 		if (resource != null && !returned.isFluidEqual(resource))
 			return FluidStack.EMPTY;
@@ -84,8 +88,8 @@ public class HosePulleyFluidHandler implements IFluidHandler {
 		drained = Math.min(maxDrain, available);
 		returned.setAmount(drained);
 		leftover.setAmount(available - drained);
-		if (action.execute() && !leftover.isEmpty())
-			internalTank.setFluid(leftover);
+//		if (action.execute() && !leftover.isEmpty())
+//			internalTank.setFluid(leftover);
 		return returned;
 	}
 
@@ -107,18 +111,23 @@ public class HosePulleyFluidHandler implements IFluidHandler {
 	}
 
 	@Override
+	public FixedFluidInvView getFluidStorage() {
+		return null;
+	}
+
+	@Override
 	public int getTanks() {
-		return internalTank.getTanks();
+		return 1;//internalTank.getTanks();
 	}
 
 	@Override
 	public int getTankCapacity(int tank) {
-		return internalTank.getTankCapacity(tank);
+		return 0;//internalTank.getTankCapacity(tank);
 	}
 
-	@Override
-	public boolean isFluidValid(int tank, FluidStack stack) {
-		return internalTank.isFluidValid(tank, stack);
-	}
+//	@Override
+//	public boolean isFluidValid(int tank, FluidStack stack) {
+//		return internalTank.isFluidValid(tank, stack);
+//	}
 
 }

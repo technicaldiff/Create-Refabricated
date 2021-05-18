@@ -8,6 +8,8 @@ import java.util.List;
 
 import javax.annotation.Nullable;
 
+import alexiil.mc.lib.attributes.Simulation;
+
 import com.simibubi.create.content.contraptions.fluids.FluidFX;
 import com.simibubi.create.content.contraptions.goggles.IHaveGoggleInformation;
 import com.simibubi.create.content.contraptions.relays.belt.transport.TransportedItemStack;
@@ -20,9 +22,12 @@ import com.simibubi.create.foundation.tileEntity.behaviour.belt.TransportedItemS
 import com.simibubi.create.foundation.tileEntity.behaviour.belt.TransportedItemStackHandlerBehaviour.TransportedResult;
 import com.simibubi.create.foundation.tileEntity.behaviour.fluid.SmartFluidTankBehaviour;
 import com.simibubi.create.foundation.utility.VecHelper;
-import com.simibubi.create.lib.capabilities.Capability;
+import com.simibubi.create.lib.lba.fluid.FluidStack;
+import com.simibubi.create.lib.lba.fluid.IFluidHandler;
 import com.simibubi.create.lib.utility.LazyOptional;
 
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.block.BlockState;
 import net.minecraft.item.ItemStack;
@@ -37,8 +42,6 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.util.text.ITextComponent;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
 
 public class SpoutTileEntity extends SmartTileEntity implements IHaveGoggleInformation {
 	private static final boolean IS_TIC_LOADED = FabricLoader.getInstance().isModLoaded("tconstruct"); // TODO may not be the modid of fabric port
@@ -110,7 +113,7 @@ public class SpoutTileEntity extends SmartTileEntity implements IHaveGoggleInfor
 		if (tank.isEmpty())
 			return HOLD;
 		FluidStack fluid = getCurrentFluidInTank();
-		int requiredAmountForItem = FillingBySpout.getRequiredAmountForItem(world, transported.stack, fluid.copy());
+		int requiredAmountForItem = FillingBySpout.getRequiredAmountForItem(world, transported.stack, (FluidStack) fluid.copy());
 		if (requiredAmountForItem == -1)
 			return PASS;
 		if (requiredAmountForItem > fluid.getAmount())
@@ -167,8 +170,8 @@ public class SpoutTileEntity extends SmartTileEntity implements IHaveGoggleInfor
 			return;
 		if (handler.getTanks() != 1)
 			return;
-		if (!handler.isFluidValid(0, this.getCurrentFluidInTank()))
-			return;
+//		if (!handler.isFluidValid(0, this.getCurrentFluidInTank()))
+//			return;
 		FluidStack containedFluid = handler.getFluidInTank(0);
 		if (!(containedFluid.isEmpty() || containedFluid.isFluidEqual(fluid)))
 			return;
@@ -177,20 +180,20 @@ public class SpoutTileEntity extends SmartTileEntity implements IHaveGoggleInfor
 			notifyUpdate();
 			return;
 		}
-		FluidStack drained = localTank.drain(144, IFluidHandler.FluidAction.SIMULATE);
+		FluidStack drained = localTank.drain(144, Simulation.SIMULATE);
 		if (!drained.isEmpty()) {
-			int filled = handler.fill(drained, IFluidHandler.FluidAction.SIMULATE);
+			int filled = handler.fill(drained, Simulation.SIMULATE);
 			shouldAnimate = filled > 0;
 			sendSplash = shouldAnimate;
 			if (processingTicks == 5) {
 				if (filled > 0) {
-					drained = localTank.drain(filled, IFluidHandler.FluidAction.EXECUTE);
+					drained = localTank.drain(filled, Simulation.ACTION);
 					if (!drained.isEmpty()) {
-						FluidStack fillStack = drained.copy();
+						FluidStack fillStack = (FluidStack) drained.copy();
 						fillStack.setAmount(Math.min(drained.getAmount(), 6));
-						drained.shrink(filled);
+//						drained.shrink(filled);
 						fillStack.setAmount(filled);
-						handler.fill(fillStack, IFluidHandler.FluidAction.EXECUTE);
+						handler.fill(fillStack, Simulation.ACTION);
 					}
 				}
 				tank.getPrimaryHandler()
@@ -227,13 +230,13 @@ public class SpoutTileEntity extends SmartTileEntity implements IHaveGoggleInfor
 				.getRenderedFluid());
 	}
 
-	@Override
-	public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
-		if (cap == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY && side != Direction.DOWN)
-			return tank.getCapability()
-				.cast();
-		return super.getCapability(cap, side);
-	}
+//	@Override
+//	public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
+//		if (cap == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY && side != Direction.DOWN)
+//			return tank.getCapability()
+//				.cast();
+//		return super.getCapability(cap, side);
+//	}
 
 	public void tick() {
 		super.tick();
@@ -271,8 +274,9 @@ public class SpoutTileEntity extends SmartTileEntity implements IHaveGoggleInfor
 			return null;
 		} else {
 			TileEntity te = this.world.getTileEntity(pos);
-			return te != null ? te.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, direction)
-				.orElse(null) : null;
+//			return te != null ? te.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, direction)
+//				.orElse(null) : null;
+			return null;
 		}
 	}
 
@@ -284,6 +288,6 @@ public class SpoutTileEntity extends SmartTileEntity implements IHaveGoggleInfor
 
 	@Override
 	public boolean addToGoggleTooltip(List<ITextComponent> tooltip, boolean isPlayerSneaking) {
-		return containedFluidTooltip(tooltip, isPlayerSneaking, getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY));
+		return false;//containedFluidTooltip(tooltip, isPlayerSneaking, getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY));
 	}
 }

@@ -12,6 +12,8 @@ import com.simibubi.create.foundation.tileEntity.SmartTileEntity;
 import com.simibubi.create.foundation.tileEntity.behaviour.BehaviourType;
 import com.simibubi.create.foundation.utility.Iterate;
 
+import com.simibubi.create.lib.helper.ServerTickListHelper;
+
 import it.unimi.dsi.fastutil.PriorityQueue;
 import it.unimi.dsi.fastutil.objects.ObjectHeapPriorityQueue;
 import net.minecraft.block.Block;
@@ -189,15 +191,15 @@ public class FluidFillingBehaviour extends FluidManipulationBehaviour {
 					if (pendingFluidTicks instanceof ServerTickList) {
 						ServerTickList<Fluid> serverTickList = (ServerTickList<Fluid>) pendingFluidTicks;
 						NextTickListEntry<Fluid> removedEntry = null;
-						for (NextTickListEntry<Fluid> nextTickListEntry : serverTickList.pendingTickListEntriesHashSet) {
+						for (NextTickListEntry<Fluid> nextTickListEntry : ServerTickListHelper.getPendingTickListEntries(serverTickList)) {
 							if (nextTickListEntry.position.equals(currentPos)) {
 								removedEntry = nextTickListEntry;
 								break;
 							}
 						}
 						if (removedEntry != null) {
-							serverTickList.pendingTickListEntriesHashSet.remove(removedEntry);
-							serverTickList.pendingTickListEntriesTreeSet.remove(removedEntry);
+							ServerTickListHelper.getPendingTickListEntries(serverTickList).remove(removedEntry);
+							ServerTickListHelper.getPendingTickListEntries(serverTickList).remove(removedEntry);
 						}
 					}
 
@@ -269,7 +271,7 @@ public class FluidFillingBehaviour extends FluidManipulationBehaviour {
 
 	protected void replaceBlock(World world, BlockPos pos, BlockState state) {
 		TileEntity tileentity = state.getBlock()
-			.hasTileEntity(state) ? world.getTileEntity(pos) : null;
+			.hasBlockEntity() ? world.getTileEntity(pos) : null;
 		Block.spawnDrops(state, world, pos, tileentity);
 	}
 

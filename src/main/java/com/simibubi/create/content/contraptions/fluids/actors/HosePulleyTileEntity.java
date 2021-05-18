@@ -8,17 +8,17 @@ import com.simibubi.create.foundation.item.TooltipHelper;
 import com.simibubi.create.foundation.tileEntity.TileEntityBehaviour;
 import com.simibubi.create.foundation.utility.ServerSpeedProvider;
 import com.simibubi.create.foundation.utility.animation.LerpedFloat;
-import com.simibubi.create.lib.capabilities.Capability;
+import com.simibubi.create.lib.lba.fluid.FluidStack;
+import com.simibubi.create.lib.lba.fluid.IFluidHandler;
 import com.simibubi.create.lib.utility.LazyOptional;
 
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.block.BlockState;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntityType;
-import net.minecraft.util.Direction;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.text.ITextComponent;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
 
 public class HosePulleyTileEntity extends KineticTileEntity {
 
@@ -183,13 +183,13 @@ public class HosePulleyTileEntity extends KineticTileEntity {
 		return offset.getValue(pt);
 	}
 
-	@Override
-	public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
-		if (isFluidHandlerCap(cap)
-			&& (side == null || HosePulleyBlock.hasPipeTowards(world, pos, getBlockState(), side)))
-			return this.capability.cast();
-		return super.getCapability(cap, side);
-	}
+//	@Override
+//	public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
+//		if (isFluidHandlerCap(cap)
+//			&& (side == null || HosePulleyBlock.hasPipeTowards(world, pos, getBlockState(), side)))
+//			return this.capability.cast();
+//		return super.getCapability(cap, side);
+//	}
 
 	@Override
 	public boolean shouldRenderAsTE() {

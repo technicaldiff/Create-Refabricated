@@ -12,10 +12,13 @@ import com.simibubi.create.foundation.utility.Couple;
 import com.simibubi.create.foundation.utility.Iterate;
 import com.simibubi.create.foundation.utility.VecHelper;
 import com.simibubi.create.foundation.utility.animation.LerpedFloat;
+import com.simibubi.create.lib.lba.fluid.FluidStack;
 import com.simibubi.create.lib.utility.Constants.NBT;
 import com.simibubi.create.lib.utility.LoadedCheckUtil;
 import com.tterrag.registrate.fabric.EnvExecutor;
 
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 import net.minecraft.nbt.CompoundNBT;
@@ -27,8 +30,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
 
 public class PipeConnection {
 
@@ -143,10 +144,10 @@ public class PipeConnection {
 
 		// Layer III
 		network = retainedNetwork;
-		if (!hasNetwork())
-			network = Optional.of(new FluidNetwork(world, new BlockFace(pos, side), flowSource::provideHandler));
-		network.get()
-			.tick();
+//		if (!hasNetwork())
+//			network = Optional.of(new FluidNetwork(world, new BlockFace(pos, side), flowSource::provideHandler));
+//		network.get()
+//			.tick();
 
 		return false;
 	}

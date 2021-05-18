@@ -13,6 +13,7 @@ import com.simibubi.create.foundation.tileEntity.SmartTileEntity;
 import com.simibubi.create.foundation.tileEntity.TileEntityBehaviour;
 import com.simibubi.create.foundation.utility.Iterate;
 import com.simibubi.create.foundation.utility.VecHelper;
+import com.simibubi.create.lib.lba.fluid.FluidStack;
 
 import net.minecraft.fluid.Fluid;
 import net.minecraft.fluid.FluidState;
@@ -183,10 +184,10 @@ public abstract class FluidManipulationBehaviour extends TileEntityBehaviour {
 	protected void playEffect(World world, BlockPos pos, Fluid fluid, boolean fillSound) {
 		BlockPos splooshPos = pos == null ? tileEntity.getPos() : pos;
 
-		SoundEvent soundevent = fillSound ? fluid.getAttributes()
-			.getFillSound()
-			: fluid.getAttributes()
-				.getEmptySound();
+		SoundEvent soundevent = SoundEvents.ITEM_BUCKET_EMPTY;//fillSound ? fluid.getAttributes()
+//			.getFillSound()
+//			: fluid.getAttributes()
+//				.getEmptySound();
 		if (soundevent == null)
 			soundevent = fluid.isIn(FluidTags.LAVA)
 				? fillSound ? SoundEvents.ITEM_BUCKET_FILL_LAVA : SoundEvents.ITEM_BUCKET_EMPTY_LAVA
@@ -194,7 +195,7 @@ public abstract class FluidManipulationBehaviour extends TileEntityBehaviour {
 
 		world.playSound(null, splooshPos, soundevent, SoundCategory.BLOCKS, 0.3F, 1.0F);
 		if (world instanceof ServerWorld)
-			AllPackets.sendToNear(world, splooshPos, 10, new FluidSplashPacket(splooshPos, new FluidStack(fluid, 1)));
+			AllPackets.sendToNear((ServerWorld) world, splooshPos, 10, new FluidSplashPacket(splooshPos, new FluidStack(fluid, 1)));
 	}
 
 	protected boolean canDrainInfinitely(Fluid fluid) {

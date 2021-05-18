@@ -18,9 +18,12 @@ import com.simibubi.create.foundation.tileEntity.TileEntityBehaviour;
 import com.simibubi.create.foundation.utility.BlockFace;
 import com.simibubi.create.foundation.utility.Iterate;
 import com.simibubi.create.foundation.utility.Pair;
+import com.simibubi.create.lib.lba.fluid.FluidStack;
+import com.simibubi.create.lib.lba.fluid.IFluidHandler;
 import com.simibubi.create.lib.utility.LazyOptional;
 import com.simibubi.create.lib.utility.LoadedCheckUtil;
 
+import alexiil.mc.lib.attributes.Simulation;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -41,7 +44,7 @@ public class FluidNetwork {
 	Set<Pair<BlockFace, PipeConnection>> frontier;
 	Set<BlockPos> visited;
 	FluidStack fluid;
-	List<Pair<BlockFace, LazyOptional<IFluidHandler>>> targets;
+	List<Pair<BlockFace, IFluidHandler>> targets;
 	Map<BlockPos, WeakReference<FluidTransportBehaviour>> cache;
 
 	public FluidNetwork(World world, BlockFace location, Supplier<LazyOptional<IFluidHandler>> sourceSupplier) {
@@ -157,9 +160,9 @@ public class FluidNetwork {
 			return;
 		if (targets.isEmpty())
 			return;
-		for (Pair<BlockFace, LazyOptional<IFluidHandler>> pair : targets) {
+		for (Pair<BlockFace, IFluidHandler> pair : targets) {
 			if (pair.getSecond()
-				.isPresent())
+				!= null)
 				continue;
 			PipeConnection pipeConnection = get(pair.getFirst());
 			if (pipeConnection == null)
@@ -172,7 +175,7 @@ public class FluidNetwork {
 
 		int flowSpeed = transferSpeed;
 		for (boolean simulate : Iterate.trueAndFalse) {
-			FluidAction action = simulate ? FluidAction.SIMULATE : FluidAction.EXECUTE;
+			Simulation action = simulate ? Simulation.SIMULATE : Simulation.ACTION;
 
 			IFluidHandler handler = source.orElse(null);
 			if (handler == null)
@@ -198,14 +201,14 @@ public class FluidNetwork {
 			if (transfer.isEmpty())
 				return;
 
-			List<Pair<BlockFace, LazyOptional<IFluidHandler>>> availableOutputs = new ArrayList<>(targets);
+			List<Pair<BlockFace, IFluidHandler>> availableOutputs = new ArrayList<>(targets);
 			while (!availableOutputs.isEmpty() && transfer.getAmount() > 0) {
 				int dividedTransfer = transfer.getAmount() / availableOutputs.size();
 				int remainder = transfer.getAmount() % availableOutputs.size();
 
-				for (Iterator<Pair<BlockFace, LazyOptional<IFluidHandler>>> iterator =
+				for (Iterator<Pair<BlockFace, IFluidHandler>> iterator =
 					availableOutputs.iterator(); iterator.hasNext();) {
-					Pair<BlockFace, LazyOptional<IFluidHandler>> pair = iterator.next();
+					Pair<BlockFace, IFluidHandler> pair = iterator.next();
 					int toTransfer = dividedTransfer;
 					if (remainder > 0) {
 						toTransfer++;
@@ -215,13 +218,13 @@ public class FluidNetwork {
 					if (transfer.isEmpty())
 						break;
 					IFluidHandler targetHandler = pair.getSecond()
-						.orElse(null);
+							;
 					if (targetHandler == null) {
 						iterator.remove();
 						continue;
 					}
 
-					FluidStack divided = transfer.copy();
+					FluidStack divided = (FluidStack) transfer.copy();
 					divided.setAmount(toTransfer);
 					int fill = targetHandler.fill(divided, action);
 					transfer.setAmount(transfer.getAmount() - fill);

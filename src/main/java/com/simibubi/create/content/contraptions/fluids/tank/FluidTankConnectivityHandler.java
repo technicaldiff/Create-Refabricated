@@ -17,6 +17,7 @@ import org.apache.commons.lang3.tuple.Pair;
 import com.simibubi.create.content.contraptions.fluids.tank.CreativeFluidTankTileEntity.CreativeSmartFluidTank;
 import com.simibubi.create.foundation.utility.Iterate;
 import com.simibubi.create.lib.lba.fluid.FluidStack;
+import com.simibubi.create.lib.lba.fluid.SimpleFluidTank;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.tileentity.TileEntity;
@@ -147,10 +148,10 @@ public class FluidTankConnectivityHandler {
 		TileEntityType<?> type = te.getType();
 		World world = te.getWorld();
 		BlockPos origin = te.getPos();
-		LazyOptional<IFluidHandler> capability = te.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY);
-		FluidTank teTank = (FluidTank) capability.orElse(null);
-		FluidStack fluid = capability.map(ifh -> ifh.getFluidInTank(0))
-			.orElse(FluidStack.EMPTY);
+//		LazyOptional<IFluidHandler> capability = te.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY);
+//		FluidTank teTank = (FluidTank) capability.orElse(null);
+//		FluidStack fluid = capability.map(ifh -> ifh.getFluidInTank(0))
+//			.orElse(FluidStack.EMPTY);
 
 		Search:
 
@@ -182,7 +183,7 @@ public class FluidTankConnectivityHandler {
 
 					FluidStack otherFluid = controller.getTankInventory()
 						.getFluid();
-					if (!fluid.isEmpty() && !otherFluid.isEmpty() && !fluid.isFluidEqual(otherFluid))
+//					if (!fluid.isEmpty() && !otherFluid.isEmpty() && !fluid.isFluidEqual(otherFluid))
 						break Search;
 
 				}
@@ -206,12 +207,12 @@ public class FluidTankConnectivityHandler {
 						continue;
 
 					opaque |= !tank.window;
-					FluidTank tankTank = tank.tankInventory;
+					SimpleFluidTank tankTank = tank.tankInventory;
 					FluidStack fluidInTank = tankTank.getFluid();
 					if (!fluidInTank.isEmpty()) {
-						if (teTank.isEmpty() && teTank instanceof CreativeSmartFluidTank)
-							((CreativeSmartFluidTank) teTank).setContainedFluid(fluidInTank);
-						teTank.fill(fluidInTank, FluidAction.EXECUTE);
+//						if (teTank.isEmpty() && teTank instanceof CreativeSmartFluidTank)
+//							((CreativeSmartFluidTank) teTank).setContainedFluid(fluidInTank);
+//						teTank.fill(fluidInTank, FluidAction.EXECUTE);
 					}
 					tankTank.setFluid(FluidStack.EMPTY);
 
@@ -251,11 +252,11 @@ public class FluidTankConnectivityHandler {
 		World world = te.getWorld();
 		BlockPos origin = te.getPos();
 		List<FluidTankTileEntity> frontier = new ArrayList<>();
-		FluidStack toDistribute = te.tankInventory.getFluid()
+		FluidStack toDistribute = (FluidStack) te.tankInventory.getFluid()
 			.copy();
 		int maxCapacity = FluidTankTileEntity.getCapacityMultiplier();
-		if (!toDistribute.isEmpty() && !te.isRemoved())
-			toDistribute.shrink(maxCapacity);
+//		if (!toDistribute.isEmpty() && !te.isRemoved())
+//			toDistribute.shrink(maxCapacity);
 		te.applyFluidTankSize(1);
 
 		for (int yOffset = 0; yOffset < height; yOffset++) {
@@ -274,15 +275,15 @@ public class FluidTankConnectivityHandler {
 					tankAt.removeController(true);
 
 					if (!toDistribute.isEmpty() && tankAt != te) {
-						FluidStack copy = toDistribute.copy();
-						FluidTank tankInventory = tankAt.tankInventory;
-						if (tankInventory.isEmpty() && tankInventory instanceof CreativeSmartFluidTank)
+						FluidStack copy = (FluidStack) toDistribute.copy();
+						SimpleFluidTank tankInventory = tankAt.tankInventory;
+						if (/*tankInventory.isEmpty() &&*/ tankInventory instanceof CreativeSmartFluidTank)
 							((CreativeSmartFluidTank) tankInventory).setContainedFluid(toDistribute);
 						else {
 							int split = Math.min(maxCapacity, toDistribute.getAmount());
 							copy.setAmount(split);
-							toDistribute.shrink(split);
-							tankInventory.fill(copy, FluidAction.EXECUTE);
+//							toDistribute.shrink(split);
+//							tankInventory.fill(copy, FluidAction.EXECUTE);
 						}
 					}
 
@@ -296,7 +297,7 @@ public class FluidTankConnectivityHandler {
 			}
 		}
 
-		te.fluidCapability.invalidate();
+//		te.fluidCapability.invalidate();
 		if (tryReconnect)
 			formTanks(te.getType(), world, cache == null ? new TankSearchCache() : cache, frontier);
 	}

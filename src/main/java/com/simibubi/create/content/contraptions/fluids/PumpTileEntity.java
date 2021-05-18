@@ -11,8 +11,6 @@ import java.util.Set;
 
 import javax.annotation.Nullable;
 
-import com.simibubi.create.lib.utility.LoadedCheckUtil;
-
 import org.apache.commons.lang3.mutable.MutableBoolean;
 
 import com.simibubi.create.content.contraptions.base.KineticTileEntity;
@@ -24,6 +22,7 @@ import com.simibubi.create.foundation.utility.Iterate;
 import com.simibubi.create.foundation.utility.Pair;
 import com.simibubi.create.foundation.utility.animation.LerpedFloat;
 import com.simibubi.create.foundation.utility.animation.LerpedFloat.Chaser;
+import com.simibubi.create.lib.utility.LoadedCheckUtil;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.nbt.CompoundNBT;
@@ -282,9 +281,9 @@ public class PumpTileEntity extends KineticTileEntity {
 
 		// fluid handler endpoint
 		if (tileEntity != null) {
-			LazyOptional<IFluidHandler> capability =
-				tileEntity.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, face.getOpposite());
-			if (capability.isPresent())
+//			LazyOptional<IFluidHandler> capability =
+//				tileEntity.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, face.getOpposite());
+//			if (capability.isPresent())
 				return true;
 		}
 

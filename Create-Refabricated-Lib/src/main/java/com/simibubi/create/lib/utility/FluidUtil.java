@@ -28,8 +28,8 @@ public class FluidUtil {
 		return FluidAmount.of(wholeBuckets, (long) buckets * 100, 100);
 	}
 
-	public static float fluidAmountToMillibuckets(FluidAmount amount) {
-		return ((float) amount.numerator / (float) amount.denominator) * 1000;
+	public static int fluidAmountToMillibuckets(FluidAmount amount) {
+		return (int) ((float) amount.numerator / (float) amount.denominator) * 1000;
 	}
 
 	public static <T> AttributeList<T> getAttributeProvidersAtPos(World world, BlockPos pos, @Nullable Direction direction, Attribute attribute) {

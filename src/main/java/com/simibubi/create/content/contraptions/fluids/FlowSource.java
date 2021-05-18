@@ -5,8 +5,11 @@ import java.util.function.Predicate;
 
 import com.simibubi.create.foundation.tileEntity.TileEntityBehaviour;
 import com.simibubi.create.foundation.utility.BlockFace;
+import com.simibubi.create.lib.lba.fluid.FluidStack;
+import com.simibubi.create.lib.lba.fluid.IFluidHandler;
 import com.simibubi.create.lib.utility.LazyOptional;
 
+import alexiil.mc.lib.attributes.Simulation;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 
@@ -21,10 +24,10 @@ public abstract class FlowSource {
 	}
 
 	public FluidStack provideFluid(Predicate<FluidStack> extractionPredicate) {
-		IFluidHandler tank = provideHandler().orElse(null);
+		IFluidHandler tank = provideHandler();
 		if (tank == null)
 			return FluidStack.EMPTY;
-		FluidStack immediateFluid = tank.drain(1, FluidAction.SIMULATE);
+		FluidStack immediateFluid = tank.drain(1, Simulation.SIMULATE);
 		if (extractionPredicate.test(immediateFluid))
 			return immediateFluid;
 
@@ -34,9 +37,9 @@ public abstract class FlowSource {
 				continue;
 			if (!extractionPredicate.test(contained))
 				continue;
-			FluidStack toExtract = contained.copy();
+			FluidStack toExtract = (FluidStack) contained.copy();
 			toExtract.setAmount(1);
-			return tank.drain(toExtract, FluidAction.SIMULATE);
+			return tank.drain(toExtract, Simulation.SIMULATE);
 		}
 
 		return FluidStack.EMPTY;
@@ -51,29 +54,31 @@ public abstract class FlowSource {
 
 	public void whileFlowPresent(World world, boolean pulling) {}
 
-	public LazyOptional<IFluidHandler> provideHandler() {
-		return EMPTY;
+	public IFluidHandler provideHandler() {
+		return null;
 	}
 
 	public static class FluidHandler extends FlowSource {
-		LazyOptional<IFluidHandler> fluidHandler;
+		IFluidHandler fluidHandler;
 
 		public FluidHandler(BlockFace location) {
 			super(location);
-			fluidHandler = EMPTY;
+			fluidHandler = null;
 		}
 
 		public void manageSource(World world) {
-			if (fluidHandler.isPresent())
+			if (fluidHandler!= null)
 				return;
 			TileEntity tileEntity = world.getTileEntity(location.getConnectedPos());
 			if (tileEntity != null)
-				fluidHandler = tileEntity.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY,
-					location.getOppositeFace());
+				if (tileEntity instanceof IFluidHandler)
+					fluidHandler = (IFluidHandler) tileEntity;
+				else
+					fluidHandler = null;
 		}
 
 		@Override
-		public LazyOptional<IFluidHandler> provideHandler() {
+		public IFluidHandler provideHandler() {
 			return fluidHandler;
 		}
 

@@ -10,6 +10,7 @@ import com.simibubi.create.foundation.tileEntity.ComparatorUtil;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.item.ItemStack;
@@ -25,7 +26,7 @@ import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 
-public class ItemDrainBlock extends Block implements IWrenchable, ITE<ItemDrainTileEntity> {
+public class ItemDrainBlock extends Block implements IWrenchable, ITE<ItemDrainTileEntity>, ITileEntityProvider {
 
 	public ItemDrainBlock(Properties p_i48440_1_) {
 		super(p_i48440_1_);
@@ -45,7 +46,7 @@ public class ItemDrainBlock extends Block implements IWrenchable, ITE<ItemDrainT
 				if (tryExchange.isAccepted())
 					return tryExchange;
 			}
-			
+
 			ItemStack heldItemStack = te.getHeldItemStack();
 			if (!worldIn.isRemote && !heldItemStack.isEmpty()) {
 				player.inventory.placeItemBackInInventory(worldIn, heldItemStack);
@@ -86,13 +87,13 @@ public class ItemDrainBlock extends Block implements IWrenchable, ITE<ItemDrainT
 		worldIn.removeTileEntity(pos);
 	}
 
-	@Override
-	public boolean hasTileEntity(BlockState state) {
-		return true;
-	}
+//	@Override
+//	public boolean hasTileEntity(BlockState state) {
+//		return true;
+//	}
 
 	@Override
-	public TileEntity createTileEntity(BlockState state, IBlockReader world) {
+	public TileEntity createNewTileEntity(IBlockReader world) {
 		return AllTileEntities.ITEM_DRAIN.create();
 	}
 
@@ -110,7 +111,7 @@ public class ItemDrainBlock extends Block implements IWrenchable, ITE<ItemDrainT
 	public int getComparatorInputOverride(BlockState blockState, World worldIn, BlockPos pos) {
 		return ComparatorUtil.levelOfSmartFluidTank(worldIn, pos);
 	}
-	
+
 	@Override
 	public boolean allowsMovement(BlockState state, IBlockReader reader, BlockPos pos, PathType type) {
 		return false;

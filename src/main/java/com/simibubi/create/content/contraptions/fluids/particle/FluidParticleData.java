@@ -8,7 +8,9 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.simibubi.create.AllParticleTypes;
 import com.simibubi.create.content.contraptions.particle.ICustomParticleData;
+import com.simibubi.create.lib.lba.fluid.FluidStack;
 
+import alexiil.mc.lib.attributes.fluid.volume.FluidKey;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.particle.IParticleFactory;
@@ -46,7 +48,7 @@ public class FluidParticleData implements IParticleData, ICustomParticleData<Flu
 
 	@Override
 	public void write(PacketBuffer buffer) {
-		buffer.writeFluidStack(fluid);
+//		buffer.writeFluidStack(fluid);
 	}
 
 	@Override
@@ -61,9 +63,9 @@ public class FluidParticleData implements IParticleData, ICustomParticleData<Flu
 			.forGetter(FluidStack::getAmount),
 		CompoundNBT.CODEC.optionalFieldOf("tag")
 			.forGetter((fs) -> {
-				return Optional.ofNullable(fs.getTag());
+				return Optional.ofNullable(/*fs.getTag()*/null);
 			}))
-		.apply(i, (f, a, t) -> new FluidStack(f, a, t.orElse(null))));
+		.apply(i, (f, a, t) -> new FluidStack(f, a/*, t.orElse(null)*/)));
 
 	public static final Codec<FluidParticleData> CODEC = RecordCodecBuilder.create(i -> i
 		.group(FLUID_CODEC.fieldOf("fluid")
@@ -90,7 +92,7 @@ public class FluidParticleData implements IParticleData, ICustomParticleData<Flu
 			}
 
 			public FluidParticleData read(ParticleType<FluidParticleData> particleTypeIn, PacketBuffer buffer) {
-				return new FluidParticleData(particleTypeIn, buffer.readFluidStack());
+				return new FluidParticleData(particleTypeIn, /*buffer.readFluidStack()*/new FluidStack((FluidKey) null, 0));
 			}
 		};
 

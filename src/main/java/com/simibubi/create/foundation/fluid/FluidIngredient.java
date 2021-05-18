@@ -14,8 +14,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.JsonSyntaxException;
-
-import com.simibubi.create.lib.extensions.PacketBufferExtensions;
+import com.simibubi.create.lib.lba.fluid.FluidStack;
 
 import net.minecraft.fluid.FlowingFluid;
 import net.minecraft.fluid.Fluid;
@@ -53,8 +52,8 @@ public abstract class FluidIngredient implements Predicate<FluidStack> {
 		ingredient.fluid = fluidStack.getFluid();
 		ingredient.amountRequired = fluidStack.getAmount();
 		ingredient.fixFlowing();
-		if (fluidStack.hasTag())
-			ingredient.tagToMatch = fluidStack.getTag();
+//		if (fluidStack.hasTag())
+//			ingredient.tagToMatch = fluidStack.getTag();
 		return ingredient;
 	}
 
@@ -158,7 +157,7 @@ public abstract class FluidIngredient implements Predicate<FluidStack> {
 				return false;
 			if (tagToMatch.isEmpty())
 				return true;
-			CompoundNBT tag = t.getOrCreateTag();
+			CompoundNBT tag = t.toTag();
 			return tag.copy()
 				.merge(tagToMatch)
 				.equals(tag);
@@ -180,7 +179,7 @@ public abstract class FluidIngredient implements Predicate<FluidStack> {
 		protected void readInternal(JsonObject json) {
 			FluidStack stack = FluidHelper.deserializeFluidStack(json);
 			fluid = stack.getFluid();
-			tagToMatch = stack.getOrCreateTag();
+//			tagToMatch = stack.getOrCreateTag();
 		}
 
 		@Override
@@ -193,7 +192,7 @@ public abstract class FluidIngredient implements Predicate<FluidStack> {
 		@Override
 		protected List<FluidStack> determineMatchingFluidStacks() {
 			return ImmutableList.of(tagToMatch.isEmpty() ? new FluidStack(fluid, amountRequired)
-				: new FluidStack(fluid, amountRequired, tagToMatch));
+				: new FluidStack(fluid, amountRequired/*, tagToMatch*/));
 		}
 
 	}
@@ -217,8 +216,8 @@ public abstract class FluidIngredient implements Predicate<FluidStack> {
 		protected void readInternal(PacketBuffer buffer) {
 			int size = buffer.readVarInt();
 			matchingFluidStacks = new ArrayList<>(size);
-			for (int i = 0; i < size; i++)
-				matchingFluidStacks.add(((PacketBufferExtensions) buffer).readFluidStack());
+//			for (int i = 0; i < size; i++)
+//				matchingFluidStacks.add(((PacketBufferExtensions) buffer).readFluidStack());
 		}
 
 		@Override
@@ -226,8 +225,8 @@ public abstract class FluidIngredient implements Predicate<FluidStack> {
 			// Tag has to be resolved on the server before sending
 			List<FluidStack> matchingFluidStacks = getMatchingFluidStacks();
 			buffer.writeVarInt(matchingFluidStacks.size());
-			matchingFluidStacks.stream()
-				.forEach(((PacketBufferExtensions) buffer)::writeFluidStack);
+//			matchingFluidStacks.stream()
+//				.forEach(((PacketBufferExtensions) buffer)::writeFluidStack);
 		}
 
 		@Override

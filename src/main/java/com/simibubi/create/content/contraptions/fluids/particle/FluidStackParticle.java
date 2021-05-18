@@ -2,16 +2,12 @@ package com.simibubi.create.content.contraptions.fluids.particle;
 
 import com.simibubi.create.AllParticleTypes;
 import com.simibubi.create.content.contraptions.fluids.potion.PotionFluid;
-import com.simibubi.create.foundation.utility.ColorHelper;
+import com.simibubi.create.lib.lba.fluid.FluidStack;
 
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.particle.IParticleRenderType;
 import net.minecraft.client.particle.SpriteTexturedParticle;
 import net.minecraft.client.world.ClientWorld;
-import net.minecraft.inventory.container.PlayerContainer;
 import net.minecraft.particles.ParticleType;
-import net.minecraft.particles.ParticleTypes;
-import net.minecraft.util.math.vector.Vector3d;
 
 public class FluidStackParticle extends SpriteTexturedParticle {
 	private final float field_217587_G;
@@ -29,19 +25,19 @@ public class FluidStackParticle extends SpriteTexturedParticle {
 							  double vz) {
 		super(world, x, y, z, vx, vy, vz);
 		this.fluid = fluid;
-		this.setSprite(Minecraft.getInstance()
-			.getSpriteAtlas(PlayerContainer.BLOCK_ATLAS_TEXTURE)
-			.apply(fluid.getFluid()
-				.getAttributes()
-				.getStillTexture()));
+//		this.setSprite(Minecraft.getInstance()
+//			.getSpriteAtlas(PlayerContainer.BLOCK_ATLAS_TEXTURE)
+//			.apply(fluid.getFluid()
+//				.getAttributes()
+//				.getStillTexture()));
 
 		this.particleGravity = 1.0F;
 		this.particleRed = 0.8F;
 		this.particleGreen = 0.8F;
 		this.particleBlue = 0.8F;
-		this.multiplyColor(fluid.getFluid()
-			.getAttributes()
-			.getColor(fluid));
+//		this.multiplyColor(fluid.getFluid()
+//			.getAttributes()
+//			.getColor(fluid));
 
 		this.motionX = vx;
 		this.motionY = vy;
@@ -57,9 +53,9 @@ public class FluidStackParticle extends SpriteTexturedParticle {
 		int brightnessForRender = super.getBrightnessForRender(p_189214_1_);
 		int skyLight = brightnessForRender >> 20;
 		int blockLight = (brightnessForRender >> 4) & 0xf;
-		blockLight = Math.max(blockLight, fluid.getFluid()
-			.getAttributes()
-			.getLuminosity(fluid));
+//		blockLight = Math.max(blockLight, fluid.getFluid()
+//			.getAttributes()
+//			.getLuminosity(fluid));
 		return (skyLight << 20) | (blockLight << 4);
 	}
 
@@ -97,10 +93,10 @@ public class FluidStackParticle extends SpriteTexturedParticle {
 		if (!onGround && world.rand.nextFloat() < 1 / 8f)
 			return;
 
-		Vector3d rgb = ColorHelper.getRGB(fluid.getFluid()
-			.getAttributes()
-			.getColor(fluid));
-		world.addParticle(ParticleTypes.ENTITY_EFFECT, posX, posY, posZ, rgb.x, rgb.y, rgb.z);
+//		Vector3d rgb = ColorHelper.getRGB(fluid.getFluid()
+//			.getAttributes()
+//			.getColor(fluid));
+//		world.addParticle(ParticleTypes.ENTITY_EFFECT, posX, posY, posZ, rgb.x, rgb.y, rgb.z);
 	}
 
 	protected boolean canEvaporate() {

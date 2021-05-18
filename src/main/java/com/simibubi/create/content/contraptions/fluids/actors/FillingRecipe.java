@@ -5,18 +5,19 @@ import com.simibubi.create.content.contraptions.processing.ProcessingRecipe;
 import com.simibubi.create.content.contraptions.processing.ProcessingRecipeBuilder.ProcessingRecipeParams;
 import com.simibubi.create.foundation.fluid.FluidIngredient;
 
+import net.minecraft.inventory.IInventory;
 import net.minecraft.world.World;
 
-public class FillingRecipe extends ProcessingRecipe<RecipeWrapper> {
+public class FillingRecipe extends ProcessingRecipe/*<RecipeWrapper>*/ {
 
 	public FillingRecipe(ProcessingRecipeParams params) {
 		super(AllRecipeTypes.FILLING, params);
 	}
 
-	@Override
-	public boolean matches(RecipeWrapper inv, World p_77569_2_) {
-		return ingredients.get(0).test(inv.getStackInSlot(0));
-	}
+//	@Override
+//	public boolean matches(RecipeWrapper inv, World p_77569_2_) {
+//		return ingredients.get(0).test(inv.getStackInSlot(0));
+//	}
 
 	@Override
 	protected int getMaxInputCount() {
@@ -36,7 +37,11 @@ public class FillingRecipe extends ProcessingRecipe<RecipeWrapper> {
 	public FluidIngredient getRequiredFluid() {
 		if (fluidIngredients.isEmpty())
 			throw new IllegalStateException("Filling Recipe: " + id.toString() + " has no fluid ingredient!");
-		return fluidIngredients.get(0);
+		return (FluidIngredient) fluidIngredients.get(0);
 	}
 
+	@Override
+	public boolean matches(IInventory iInventory, World world) {
+		return false;
+	}
 }

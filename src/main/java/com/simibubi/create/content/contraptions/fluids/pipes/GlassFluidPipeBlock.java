@@ -11,6 +11,7 @@ import com.simibubi.create.lib.annotation.MethodsReturnNonnullByDefault;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.IWaterLoggable;
 import net.minecraft.fluid.FluidState;
 import net.minecraft.fluid.Fluids;
@@ -29,7 +30,7 @@ import net.minecraft.world.World;
 
 @MethodsReturnNonnullByDefault
 @ParametersAreNonnullByDefault
-public class GlassFluidPipeBlock extends AxisPipeBlock implements IWaterLoggable, ISpecialBlockItemRequirement {
+public class GlassFluidPipeBlock extends AxisPipeBlock implements IWaterLoggable, ISpecialBlockItemRequirement, ITileEntityProvider {
 
 	public static final BooleanProperty ALT = BooleanProperty.create("alt");
 
@@ -43,13 +44,13 @@ public class GlassFluidPipeBlock extends AxisPipeBlock implements IWaterLoggable
 		super.fillStateContainer(p_206840_1_.add(ALT, BlockStateProperties.WATERLOGGED));
 	}
 
-	@Override
-	public boolean hasTileEntity(BlockState state) {
-		return true;
-	}
+//	@Override
+//	public boolean hasTileEntity(BlockState state) {
+//		return true;
+//	}
 
 	@Override
-	public TileEntity createTileEntity(BlockState state, IBlockReader world) {
+	public TileEntity createNewTileEntity(IBlockReader world) {
 		return AllTileEntities.GLASS_FLUID_PIPE.create();
 	}
 
@@ -84,10 +85,10 @@ public class GlassFluidPipeBlock extends AxisPipeBlock implements IWaterLoggable
 	public ItemRequirement getRequiredItems(BlockState state) {
 		return ItemRequirement.of(AllBlocks.FLUID_PIPE.getDefaultState());
 	}
-	
+
 	@Override
 	public boolean allowsMovement(BlockState state, IBlockReader reader, BlockPos pos, PathType type) {
 		return false;
 	}
-	
+
 }

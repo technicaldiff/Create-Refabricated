@@ -1,5 +1,9 @@
 package com.simibubi.create.content.contraptions.fluids.tank;
 
+import com.simibubi.create.lib.lba.fluid.FluidStack;
+
+import com.simibubi.create.lib.utility.ExtraDataUtil;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
@@ -113,10 +117,10 @@ public class FluidTankItem extends BlockItem {
 				if (FluidTankBlock.isTank(blockState))
 					continue;
 				BlockItemUseContext context = BlockItemUseContext.func_221536_a(ctx, offsetPos, face);
-				player.getPersistentData()
+				ExtraDataUtil.getExtraData(player)
 					.putBoolean("SilenceTankSound", true);
 				super.tryPlace(context);
-				player.getPersistentData()
+				ExtraDataUtil.getExtraData(player)
 					.remove("SilenceTankSound");
 			}
 		}

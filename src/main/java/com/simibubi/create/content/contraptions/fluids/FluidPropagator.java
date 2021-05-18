@@ -204,8 +204,9 @@ public class FluidPropagator {
 
 	public static boolean hasFluidCapability(IBlockReader world, BlockPos pos, Direction side) {
 		TileEntity tileEntity = world.getTileEntity(pos);
-		return tileEntity != null && tileEntity.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, side)
-			.isPresent();
+//		return tileEntity != null && tileEntity.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, side)
+//			.isPresent();
+		return false;
 	}
 
 	@Nullable

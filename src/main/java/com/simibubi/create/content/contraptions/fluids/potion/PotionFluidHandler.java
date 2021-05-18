@@ -10,7 +10,10 @@ import com.simibubi.create.foundation.fluid.FluidHelper;
 import com.simibubi.create.foundation.fluid.FluidIngredient;
 import com.simibubi.create.foundation.utility.NBTHelper;
 import com.simibubi.create.foundation.utility.Pair;
+import com.simibubi.create.lib.lba.fluid.FluidStack;
 
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.entity.ai.attributes.Attribute;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.fluid.Fluids;
@@ -30,8 +33,6 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
 
 public class PotionFluidHandler {
 
@@ -54,7 +55,7 @@ public class PotionFluidHandler {
 		BottleType bottleTypeFromItem = bottleTypeFromItem(stack);
 		if (potion == Potions.WATER && list.isEmpty() && bottleTypeFromItem == BottleType.REGULAR)
 			return new FluidStack(Fluids.WATER, fluid.getAmount());
-		NBTHelper.writeEnum(fluid.getOrCreateTag(), "Bottle", bottleTypeFromItem);
+		NBTHelper.writeEnum(fluid.toTag()/*.getOrCreateTag()*/, "Bottle", bottleTypeFromItem);
 		return fluid;
 	}
 
@@ -84,7 +85,7 @@ public class PotionFluidHandler {
 	}
 
 	public static ItemStack fillBottle(ItemStack stack, FluidStack availableFluid) {
-		CompoundNBT tag = availableFluid.getOrCreateTag();
+		CompoundNBT tag = availableFluid.toTag();//.getOrCreateTag();
 		ItemStack potionStack = new ItemStack(itemFromBottleType(NBTHelper.readEnum(tag, "Bottle", BottleType.class)));
 		PotionUtils.addPotionToItemStack(potionStack, PotionUtils.getPotionTypeFromNBT(tag));
 		PotionUtils.appendEffects(potionStack, PotionUtils.getFullEffectsFromTag(tag));
@@ -94,7 +95,7 @@ public class PotionFluidHandler {
 	// Modified version of PotionUtils#addPotionTooltip
 	@Environment(EnvType.CLIENT)
 	public static void addPotionTooltip(FluidStack fs, List<ITextComponent> tooltip, float p_185182_2_) {
-		List<EffectInstance> list = PotionUtils.getEffectsFromTag(fs.getOrCreateTag());
+		List<EffectInstance> list = PotionUtils.getEffectsFromTag(fs.toTag() );//.getOrCreateTag());
 		List<Tuple<String, AttributeModifier>> list1 = Lists.newArrayList();
 		if (list.isEmpty()) {
 			tooltip.add((new TranslationTextComponent("effect.none")).formatted(TextFormatting.GRAY));

@@ -11,6 +11,7 @@ import com.simibubi.create.foundation.utility.VoxelShaper;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.HorizontalFaceBlock;
+import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.network.DebugPacketSender;
 import net.minecraft.pathfinding.PathType;
@@ -28,7 +29,7 @@ import net.minecraft.world.TickPriority;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 
-public class SmartFluidPipeBlock extends HorizontalFaceBlock implements IAxisPipe {
+public class SmartFluidPipeBlock extends HorizontalFaceBlock implements IAxisPipe, ITileEntityProvider {
 
 	public SmartFluidPipeBlock(Properties p_i48339_1_) {
 		super(p_i48339_1_);
@@ -118,7 +119,7 @@ public class SmartFluidPipeBlock extends HorizontalFaceBlock implements IAxisPip
 	public static boolean isOpenAt(BlockState state, Direction d) {
 		return d.getAxis() == getPipeAxis(state);
 	}
-	
+
 	@Override
 	public void scheduledTick(BlockState state, ServerWorld world, BlockPos pos, Random r) {
 		FluidPropagator.propagateChangedPipe(world, pos, state);
@@ -130,13 +131,13 @@ public class SmartFluidPipeBlock extends HorizontalFaceBlock implements IAxisPip
 				.getAxis();
 	}
 
-	@Override
-	public boolean hasTileEntity(BlockState state) {
-		return true;
-	}
+//	@Override
+//	public boolean hasTileEntity(BlockState state) {
+//		return true;
+//	}
 
 	@Override
-	public TileEntity createTileEntity(BlockState state, IBlockReader world) {
+	public TileEntity createNewTileEntity(IBlockReader world) {
 		return AllTileEntities.SMART_FLUID_PIPE.create();
 	}
 
@@ -153,7 +154,7 @@ public class SmartFluidPipeBlock extends HorizontalFaceBlock implements IAxisPip
 	public Axis getAxis(BlockState state) {
 		return getPipeAxis(state);
 	}
-	
+
 	@Override
 	public boolean allowsMovement(BlockState state, IBlockReader reader, BlockPos pos, PathType type) {
 		return false;

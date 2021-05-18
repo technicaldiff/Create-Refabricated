@@ -37,7 +37,6 @@ public class FluidStack extends FluidVolume {
 		super(key, json);
 	}
 
-	// simple method wrapper for minimal changes
 	public Fluid getFluid() {
 		return getRawFluid();
 	}
@@ -48,5 +47,25 @@ public class FluidStack extends FluidVolume {
 
 	public boolean isFluidStackIdentical(FluidStack other) {
 		return this.getRawFluid() == other.getRawFluid() && this.amount() == other.amount();
+	}
+
+	public static FluidStack loadFluidStackFromNBT(CompoundNBT nbt) {
+		return (FluidStack) fromTag(nbt);
+	}
+
+	public void setAmount(int amount, String... parameterToPreventOverriding) {
+		this.setAmount(FluidUtil.millibucketsToFluidAmount(amount));
+	}
+
+	public CompoundNBT writeToNBT(CompoundNBT nbt) {
+		return toTag(nbt);
+	}
+
+	public String getTranslationKey() {
+		return "todo"; // todo
+	}
+
+	public boolean isFluidEqual(FluidStack other) {
+		return getRawFluid() == other.getRawFluid() && toTag() == other.toTag();
 	}
 }

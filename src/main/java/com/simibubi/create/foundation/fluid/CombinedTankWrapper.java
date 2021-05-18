@@ -1,7 +1,12 @@
 package com.simibubi.create.foundation.fluid;
 
 import com.simibubi.create.foundation.utility.Iterate;
+import com.simibubi.create.lib.lba.fluid.FluidStack;
+import com.simibubi.create.lib.lba.fluid.IFluidHandler;
 import com.simibubi.create.lib.lba.item.EmptyHandler;
+
+import alexiil.mc.lib.attributes.Simulation;
+import alexiil.mc.lib.attributes.fluid.FixedFluidInvView;
 
 
 /**
@@ -32,6 +37,11 @@ public class CombinedTankWrapper implements IFluidHandler {
 	}
 
 	@Override
+	public FixedFluidInvView getFluidStorage() {
+		return null;
+	}
+
+	@Override
 	public int getTanks() {
 		return tankCount;
 	}
@@ -52,21 +62,21 @@ public class CombinedTankWrapper implements IFluidHandler {
 		return handler.getTankCapacity(localSlot);
 	}
 
-	@Override
-	public boolean isFluidValid(int tank, FluidStack stack) {
-		int index = getIndexForSlot(tank);
-		IFluidHandler handler = getHandlerFromIndex(index);
-		int localSlot = getSlotFromIndex(tank, index);
-		return handler.isFluidValid(localSlot, stack);
-	}
+//	@Override
+//	public boolean isFluidValid(int tank, FluidStack stack) {
+//		int index = getIndexForSlot(tank);
+//		IFluidHandler handler = getHandlerFromIndex(index);
+//		int localSlot = getSlotFromIndex(tank, index);
+//		return handler.isFluidValid(localSlot, stack);
+//	}
 
 	@Override
-	public int fill(FluidStack resource, FluidAction action) {
+	public int fill(FluidStack resource, Simulation action) {
 		if (resource.isEmpty())
 			return 0;
 
 		int filled = 0;
-		resource = resource.copy();
+//		resource = resource.copy();
 
 		boolean fittingHandlerFound = false;
 		Outer: for (boolean searchPass : Iterate.trueAndFalse) {
@@ -81,7 +91,7 @@ public class CombinedTankWrapper implements IFluidHandler {
 					continue;
 
 				int filledIntoCurrent = iFluidHandler.fill(resource, action);
-				resource.shrink(filledIntoCurrent);
+//				resource.shrink(filledIntoCurrent);
 				filled += filledIntoCurrent;
 
 				if (resource.isEmpty() || fittingHandlerFound || enforceVariety && filledIntoCurrent != 0)
@@ -93,21 +103,21 @@ public class CombinedTankWrapper implements IFluidHandler {
 	}
 
 	@Override
-	public FluidStack drain(FluidStack resource, FluidAction action) {
+	public FluidStack drain(FluidStack resource, Simulation action) {
 		if (resource.isEmpty())
 			return resource;
 
 		FluidStack drained = FluidStack.EMPTY;
-		resource = resource.copy();
+		resource = (FluidStack) resource.copy();
 
 		for (IFluidHandler iFluidHandler : itemHandler) {
 			FluidStack drainedFromCurrent = iFluidHandler.drain(resource, action);
 			int amount = drainedFromCurrent.getAmount();
-			resource.shrink(amount);
+//			resource.shrink(amount);
 
 			if (!drainedFromCurrent.isEmpty() && (drained.isEmpty() || drainedFromCurrent.isFluidEqual(drained)))
-				drained = new FluidStack(drainedFromCurrent.getFluid(), amount + drained.getAmount(),
-					drainedFromCurrent.getTag());
+//				drained = new FluidStack(drainedFromCurrent.getFluid(), amount + drained.getAmount(),
+//					drainedFromCurrent.getTag());
 			if (resource.isEmpty())
 				break;
 		}
@@ -116,7 +126,7 @@ public class CombinedTankWrapper implements IFluidHandler {
 	}
 
 	@Override
-	public FluidStack drain(int maxDrain, FluidAction action) {
+	public FluidStack drain(int maxDrain, Simulation action) {
 		FluidStack drained = FluidStack.EMPTY;
 
 		for (IFluidHandler iFluidHandler : itemHandler) {
@@ -125,8 +135,8 @@ public class CombinedTankWrapper implements IFluidHandler {
 			maxDrain -= amount;
 
 			if (!drainedFromCurrent.isEmpty() && (drained.isEmpty() || drainedFromCurrent.isFluidEqual(drained)))
-				drained = new FluidStack(drainedFromCurrent.getFluid(), amount + drained.getAmount(),
-					drainedFromCurrent.getTag());
+//				drained = new FluidStack(drainedFromCurrent.getFluid(), amount + drained.getAmount(),
+//					drainedFromCurrent.getTag());
 			if (maxDrain == 0)
 				break;
 		}

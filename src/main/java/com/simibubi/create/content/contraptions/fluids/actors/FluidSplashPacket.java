@@ -1,6 +1,7 @@
 package com.simibubi.create.content.contraptions.fluids.actors;
 
 import com.simibubi.create.content.contraptions.fluids.FluidFX;
+import com.simibubi.create.lib.lba.fluid.FluidStack;
 
 import me.pepperbell.simplenetworking.S2CPacket;
 import me.pepperbell.simplenetworking.SimpleChannel.ResponseTarget;
@@ -24,12 +25,12 @@ public class FluidSplashPacket implements S2CPacket {
 
 	public void read(PacketBuffer buffer) {
 		pos = buffer.readBlockPos();
-		fluid = buffer.readFluidStack();
+//		fluid = buffer.readFluidStack();
 	}
 
 	public void write(PacketBuffer buffer) {
 		buffer.writeBlockPos(pos);
-		buffer.writeFluidStack(fluid);
+//		buffer.writeFluidStack(fluid);
 	}
 
 	public void handle(Minecraft client, ClientPlayNetHandler handler, ResponseTarget responseTarget) {
