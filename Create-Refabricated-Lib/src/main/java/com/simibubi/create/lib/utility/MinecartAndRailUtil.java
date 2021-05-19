@@ -59,6 +59,6 @@ public class MinecartAndRailUtil {
 	}
 
 	public static MinecartController getController(AbstractMinecartEntity cart) {
-		return ((AbstractMinecartEntityExtensions) cart).getController();
+		return ((AbstractMinecartEntityExtensions) cart).create$getController();
 	}
 }

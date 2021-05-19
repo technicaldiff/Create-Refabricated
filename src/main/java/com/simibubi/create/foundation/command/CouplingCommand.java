@@ -13,7 +13,7 @@ import com.simibubi.create.content.contraptions.components.structureMovement.tra
 import com.simibubi.create.content.contraptions.components.structureMovement.train.capability.CapabilityMinecartController;
 import com.simibubi.create.content.contraptions.components.structureMovement.train.capability.MinecartController;
 import com.simibubi.create.foundation.utility.Iterate;
-import com.simibubi.create.lib.utility.LazyOptional;
+import com.simibubi.create.lib.utility.MinecartAndRailUtil;
 
 import net.minecraft.command.CommandSource;
 import net.minecraft.command.Commands;
@@ -101,15 +101,14 @@ public class CouplingCommand {
 							if (!(cart2 instanceof AbstractMinecartEntity))
 								throw ONLY_MINECARTS_ALLOWED.create();
 
-							LazyOptional<MinecartController> cart1Capability =
-									CapabilityUtil.getCapability(cart1, CapabilityMinecartController.MINECART_CONTROLLER_CAPABILITY);
-							if (!cart1Capability.isPresent()) {
+							MinecartController cart1Controller = (MinecartController) MinecartAndRailUtil.getController((AbstractMinecartEntity) cart1);
+							if (cart1Controller == null) {
 								ctx.getSource()
 									.sendFeedback(new StringTextComponent("Minecart has no Couplings Attached"), true);
 								return 0;
 							}
 
-							MinecartController cart1Controller = cart1Capability.orElse(null);
+//							MinecartController cart1Controller = cart1Capability.orElse(null);
 
 							int cart1Couplings = (cart1Controller.isConnectedToCoupling() ? 1 : 0)
 								+ (cart1Controller.isLeadingCoupling() ? 1 : 0);
@@ -149,15 +148,14 @@ public class CouplingCommand {
 						if (!(cart instanceof AbstractMinecartEntity))
 							throw ONLY_MINECARTS_ALLOWED.create();
 
-						LazyOptional<MinecartController> capability =
-								CapabilityUtil.getCapability(cart, CapabilityMinecartController.MINECART_CONTROLLER_CAPABILITY);
-						if (!capability.isPresent()) {
+						MinecartController controller = (MinecartController) MinecartAndRailUtil.getController((AbstractMinecartEntity) cart);
+						if (controller == null) {
 							ctx.getSource()
 								.sendFeedback(new StringTextComponent("Minecart has no Couplings Attached"), true);
 							return 0;
 						}
 
-						MinecartController controller = capability.orElse(null);
+//						MinecartController controller = capability.orElse(null);
 
 						int couplings =
 							(controller.isConnectedToCoupling() ? 1 : 0) + (controller.isLeadingCoupling() ? 1 : 0);

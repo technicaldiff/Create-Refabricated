@@ -2,6 +2,7 @@ package com.simibubi.create.foundation.command;
 
 import java.util.Collection;
 
+import com.jamieswhiteshirt.reachentityattributes.ReachEntityAttributes;
 import com.mojang.brigadier.Command;
 import com.mojang.brigadier.builder.ArgumentBuilder;
 import com.simibubi.create.content.contraptions.components.structureMovement.AssemblyException;
@@ -65,7 +66,7 @@ public class HighlightCommand {
 	}
 
 	private static int highlightAssemblyExceptionFor(ServerPlayerEntity player, CommandSource source) {
-		double distance = player.getAttribute(ForgeMod.REACH_DISTANCE.get())
+		double distance = player.getAttribute(ReachEntityAttributes.REACH)
 			.getValue();
 		Vector3d start = player.getEyePosition(1);
 		Vector3d look = player.getLook(1);
