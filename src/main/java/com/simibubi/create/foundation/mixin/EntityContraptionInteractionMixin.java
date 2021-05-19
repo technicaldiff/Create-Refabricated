@@ -112,10 +112,10 @@ public abstract class EntityContraptionInteractionMixin {
 		BlockPos pos = new BlockPos(worldPos); // pos where particles are spawned
 
 		forCollision(worldPos, (contraption, blockstate, blockpos) -> {
-			if (!((BlockStateExtensions) blockstate).addRunningEffects(self.world, blockpos, self)
+			if (!((BlockStateExtensions) blockstate).create$addRunningEffects(self.world, blockpos, self)
 				&& blockstate.getRenderType() != BlockRenderType.INVISIBLE) {
 				Vector3d vec3d = self.getMotion();
-				self.world.addParticle(((BlockParticleDataExtensions) new BlockParticleData(ParticleTypes.BLOCK, blockstate)).setPos(pos),
+				self.world.addParticle(((BlockParticleDataExtensions) new BlockParticleData(ParticleTypes.BLOCK, blockstate)).create$setPos(pos),
 					self.getX() + ((double) rand.nextFloat() - 0.5D) * (double) self.getWidth(), self.getY() + 0.1D,
 					self.getZ() + ((double) rand.nextFloat() - 0.5D) * (double) self.getWidth(), vec3d.x * -4.0D, 1.5D,
 					vec3d.z * -4.0D);

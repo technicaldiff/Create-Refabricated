@@ -34,7 +34,8 @@ public class HighlightCommand {
 						BlockPos pos = BlockPosArgument.getBlockPos(ctx, "pos");
 
 						for (ServerPlayerEntity p : players) {
-							AllPackets.channel.send(PacketDistributor.PLAYER.with(() -> p), new HighlightPacket(pos));
+							AllPackets.channel.sendToClient(new HighlightPacket(pos), p);
+//							AllPackets.channel.send(PacketDistributor.PLAYER.with(() -> p), new HighlightPacket(pos));
 						}
 
 						return players.size();
@@ -42,9 +43,9 @@ public class HighlightCommand {
 				// .requires(AllCommands.sourceIsPlayer)
 				.executes(ctx -> {
 					BlockPos pos = BlockPosArgument.getLoadedBlockPos(ctx, "pos");
-
-					AllPackets.channel.send(PacketDistributor.PLAYER.with(() -> (ServerPlayerEntity) ctx.getSource()
-						.getEntity()), new HighlightPacket(pos));
+					AllPackets.channel.sendToClient(new HighlightPacket(pos), (ServerPlayerEntity) ctx.getSource().getEntity());
+//					AllPackets.channel.send(PacketDistributor.PLAYER.with(() -> (ServerPlayerEntity) ctx.getSource()
+//						.getEntity()), new HighlightPacket(pos));
 
 					return Command.SINGLE_SUCCESS;
 				}))

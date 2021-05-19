@@ -17,10 +17,11 @@ import net.minecraft.particles.BlockParticleData;
 @Environment(EnvType.CLIENT)
 @Mixin(DiggingParticle.Factory.class)
 public abstract class DiggingParticle$FactoryMixin implements DiggingParticle$FactoryExtensions {
-	@Override @Unique
-	public Particle makeParticleAtPos(BlockParticleData blockParticleData, ClientWorld clientWorld, double d, double e, double f, double g, double h, double i) {
+	@Override
+	@Unique
+	public Particle create$makeParticleAtPos(BlockParticleData blockParticleData, ClientWorld clientWorld, double d, double e, double f, double g, double h, double i) {
 		return !blockParticleData.getBlockState().isAir() && !blockParticleData.getBlockState().isIn(Blocks.MOVING_PISTON)
-				? ((DiggingParticle$FactoryExtensions) (new DiggingParticle(clientWorld, d, e, f, g, h, i, blockParticleData.getBlockState())).init()).updateSprite(((BlockParticleDataExtensions) blockParticleData).getPos())
+				? ((DiggingParticle$FactoryExtensions) (new DiggingParticle(clientWorld, d, e, f, g, h, i, blockParticleData.getBlockState())).init()).create$updateSprite(((BlockParticleDataExtensions) blockParticleData).create$getPos())
 				: null;
 	}
 }

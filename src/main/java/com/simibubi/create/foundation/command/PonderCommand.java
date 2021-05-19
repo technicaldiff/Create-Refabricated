@@ -9,6 +9,8 @@ import com.mojang.brigadier.suggestion.SuggestionProvider;
 import com.simibubi.create.foundation.networking.AllPackets;
 import com.simibubi.create.foundation.ponder.PonderRegistry;
 
+import com.simibubi.create.lib.helper.FakePlayerHelper;
+
 import net.minecraft.command.CommandSource;
 import net.minecraft.command.Commands;
 import net.minecraft.command.ISuggestionProvider;
@@ -42,12 +44,12 @@ public class PonderCommand {
 
 	private static int openScene(String sceneId, Collection<? extends ServerPlayerEntity> players) {
 		for (ServerPlayerEntity player : players) {
-			if (player instanceof FakePlayer)
+			if (FakePlayerHelper.isFakePlayer(player))
 				continue;
-
-			AllPackets.channel.send(
-					PacketDistributor.PLAYER.with(() -> player),
-					new SConfigureConfigPacket(SConfigureConfigPacket.Actions.openPonder.name(), sceneId));
+			AllPackets.channel.sendToClient(new SConfigureConfigPacket(SConfigureConfigPacket.Actions.openPonder.name(), sceneId), player);
+//			AllPackets.channel.send(
+//					PacketDistributor.PLAYER.with(() -> player),
+//					new SConfigureConfigPacket(SConfigureConfigPacket.Actions.openPonder.name(), sceneId));
 		}
 		return Command.SINGLE_SUCCESS;
 	}

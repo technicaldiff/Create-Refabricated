@@ -10,7 +10,7 @@ import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorldReader;
 
 public interface BlockExtensions {
-	SoundType getSoundType(BlockState state, IWorldReader world, BlockPos pos, @Nullable Entity entity);
+	SoundType create$getSoundType(BlockState state, IWorldReader world, BlockPos pos, @Nullable Entity entity);
 
-	int getLightValue(BlockState state, IBlockReader world, BlockPos pos);
+	int create$getLightValue(BlockState state, IBlockReader world, BlockPos pos);
 }

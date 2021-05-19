@@ -9,6 +9,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockReader;
 
 public interface AbstractRailBlockExtensions {
-	RailShape getRailDirection(BlockState state, IBlockReader world, BlockPos pos, @Nullable AbstractMinecartEntity cart);
-	RailShape getRailDirection(BlockState state);
+	RailShape create$getRailDirection(BlockState state, IBlockReader world, BlockPos pos, @Nullable AbstractMinecartEntity cart);
+
+	RailShape create$getRailDirection(BlockState state);
 }

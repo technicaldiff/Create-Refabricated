@@ -23,8 +23,8 @@ public abstract class LanguageMixin implements LanguageExtensions {
 	@Unique
 	private Locale create$javaLocale;
 
-	@Inject(at=@At("TAIL"), method = "<init>")
-	private void addLocale(String string, String string2, String string3, boolean bl, CallbackInfo ci) {
+	@Inject(at = @At("TAIL"), method = "<init>")
+	private void create$addLocale(String string, String string2, String string3, boolean bl, CallbackInfo ci) {
 		String[] splitLangCode = languageCode.split("_", 2);
 		if (splitLangCode.length == 1) { // Vanilla has some languages without underscores
 			this.create$javaLocale = new Locale(languageCode);

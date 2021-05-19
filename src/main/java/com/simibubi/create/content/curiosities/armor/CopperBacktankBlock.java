@@ -7,12 +7,14 @@ import com.simibubi.create.AllShapes;
 import com.simibubi.create.AllTileEntities;
 import com.simibubi.create.content.contraptions.base.HorizontalKineticBlock;
 import com.simibubi.create.foundation.block.ITE;
+import com.simibubi.create.lib.helper.FakePlayerHelper;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.IWaterLoggable;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.fluid.FluidState;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.inventory.EquipmentSlotType;
@@ -107,7 +109,7 @@ public class CopperBacktankBlock extends HorizontalKineticBlock
 		BlockRayTraceResult p_225533_6_) {
 		if (player == null)
 			return ActionResultType.PASS;
-		if (player instanceof FakePlayer)
+		if (FakePlayerHelper.isFakePlayer((ServerPlayerEntity) player))
 			return ActionResultType.PASS;
 		if (player.isSneaking())
 			return ActionResultType.PASS;

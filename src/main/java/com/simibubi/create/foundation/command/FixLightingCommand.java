@@ -14,9 +14,11 @@ public class FixLightingCommand {
 		return Commands.literal("fixLighting")
 			.requires(cs -> cs.hasPermissionLevel(0))
 			.executes(ctx -> {
-				AllPackets.channel.send(PacketDistributor.PLAYER.with(() -> (ServerPlayerEntity) ctx.getSource()
-					.getEntity()),
-					new SConfigureConfigPacket(SConfigureConfigPacket.Actions.fixLighting.name(), String.valueOf(true)));
+				AllPackets.channel.sendToClient(new SConfigureConfigPacket(SConfigureConfigPacket.Actions.fixLighting.name(), String.valueOf(true)),
+						(ServerPlayerEntity) ctx.getSource().getEntity());
+//				AllPackets.channel.send(PacketDistributor.PLAYER.with(() -> (ServerPlayerEntity) ctx.getSource()
+//					.getEntity()),
+//					new SConfigureConfigPacket(SConfigureConfigPacket.Actions.fixLighting.name(), String.valueOf(true)));
 
 				ctx.getSource()
 					.sendFeedback(

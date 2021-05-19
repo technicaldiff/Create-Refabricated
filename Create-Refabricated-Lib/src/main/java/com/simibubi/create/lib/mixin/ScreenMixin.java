@@ -19,9 +19,10 @@ import net.minecraft.util.IReorderingProcessor;
 
 @Mixin(Screen.class)
 public abstract class ScreenMixin {
-
-	private static final int DEFAULT_BORDER_COLOR_START = 1347420415;
-	private static final int DEFAULT_BORDER_COLOR_END = 1344798847;
+	@Unique
+	private static final int CREATE$DEFAULT_BORDER_COLOR_START = 1347420415;
+	@Unique
+	private static final int CREATE$DEFAULT_BORDER_COLOR_END = 1344798847;
 
 	@Unique
 	private ItemStack create$cachedStack = ItemStack.EMPTY;
@@ -30,35 +31,35 @@ public abstract class ScreenMixin {
 	private RenderTooltipBorderColorCallback.BorderColorEntry create$borderColorEntry = null;
 
 	@Inject(method = "renderTooltip(Lcom/mojang/blaze3d/matrix/MatrixStack;Lnet/minecraft/item/ItemStack;II)V", at = @At("HEAD"))
-	private void cacheItemStack(MatrixStack matrixStack, ItemStack itemStack, int i, int j, CallbackInfo ci) {
+	private void create$cacheItemStack(MatrixStack matrixStack, ItemStack itemStack, int i, int j, CallbackInfo ci) {
 		create$cachedStack = itemStack;
 	}
 
 	@Inject(method = "renderTooltip(Lcom/mojang/blaze3d/matrix/MatrixStack;Lnet/minecraft/item/ItemStack;II)V", at = @At("RETURN"))
-	private void wipeCachedItemStack(MatrixStack matrixStack, ItemStack itemStack, int i, int j, CallbackInfo ci) {
+	private void create$wipeCachedItemStack(MatrixStack matrixStack, ItemStack itemStack, int i, int j, CallbackInfo ci) {
 		create$cachedStack = ItemStack.EMPTY;
 	}
 
 	@Inject(method = "renderOrderedTooltip", at = @At("HEAD"))
-	private void getBorderColors(MatrixStack matrixStack, List<? extends IReorderingProcessor> list, int i, int j, CallbackInfo ci) {
+	private void create$getBorderColors(MatrixStack matrixStack, List<? extends IReorderingProcessor> list, int i, int j, CallbackInfo ci) {
 		create$borderColorEntry = RenderTooltipBorderColorCallback.EVENT.invoker()
-				.onTooltipBorderColor(create$cachedStack, DEFAULT_BORDER_COLOR_START, DEFAULT_BORDER_COLOR_END);
+				.onTooltipBorderColor(create$cachedStack, CREATE$DEFAULT_BORDER_COLOR_START, CREATE$DEFAULT_BORDER_COLOR_END);
 	}
 
 	@ModifyConstant(method = "renderOrderedTooltip",
-					constant = {@Constant(intValue = DEFAULT_BORDER_COLOR_START),
-								@Constant(intValue = DEFAULT_BORDER_COLOR_END)}
+			constant = {@Constant(intValue = CREATE$DEFAULT_BORDER_COLOR_START),
+					@Constant(intValue = CREATE$DEFAULT_BORDER_COLOR_END)}
 	)
-	private int changeBorderColors(int color) {
-		if (create$borderColorEntry!= null) {
-			return color == DEFAULT_BORDER_COLOR_START ?
+	private int create$changeBorderColors(int color) {
+		if (create$borderColorEntry != null) {
+			return color == CREATE$DEFAULT_BORDER_COLOR_START ?
 					create$borderColorEntry.getBorderColorStart() : create$borderColorEntry.getBorderColorEnd();
 		}
 		return color;
 	}
 
 	@Inject(method = "renderOrderedTooltip", at = @At("RETURN"))
-	private void wipeBorderColors(MatrixStack matrixStack, List<? extends IReorderingProcessor> list, int i, int j, CallbackInfo ci) {
+	private void create$wipeBorderColors(MatrixStack matrixStack, List<? extends IReorderingProcessor> list, int i, int j, CallbackInfo ci) {
 		create$borderColorEntry = null;
 	}
 }

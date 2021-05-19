@@ -13,14 +13,16 @@ import net.minecraft.util.math.BlockPos;
 public abstract class BlockParticleDataMixin implements BlockParticleDataExtensions {
 	private BlockPos pos;
 
-	@Override @Unique
-	public BlockParticleData setPos(BlockPos pos) {
+	@Override
+	@Unique
+	public BlockParticleData create$setPos(BlockPos pos) {
 		this.pos = pos;
 		return MixinHelper.cast(this);
 	}
 
-	@Override @Unique
-	public BlockPos getPos() {
+	@Override
+	@Unique
+	public BlockPos create$getPos() {
 		return pos;
 	}
 }

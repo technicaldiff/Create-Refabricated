@@ -4,10 +4,10 @@ import net.minecraft.nbt.CompoundNBT;
 
 public class NBTSerializer {
 	public static void deserializeNBT(Object o, CompoundNBT nbt) {
-		((NBTSerializable) o).deserializeNBT(nbt);
+		((NBTSerializable) o).create$deserializeNBT(nbt);
 	}
 
 	public static CompoundNBT serializeNBT(Object o) {
-		return ((NBTSerializable) o).serializeNBT();
+		return ((NBTSerializable) o).create$serializeNBT();
 	}
 }

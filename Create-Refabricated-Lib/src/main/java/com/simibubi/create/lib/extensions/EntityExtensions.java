@@ -1,14 +1,14 @@
 package com.simibubi.create.lib.extensions;
 
+import java.util.Collection;
+
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.nbt.CompoundNBT;
-
-import java.util.Collection;
 
 public interface EntityExtensions {
 	CompoundNBT create$getExtraCustomData();
 
-	Collection<ItemEntity> captureDrops();
+	Collection<ItemEntity> create$captureDrops();
 
-	Collection<ItemEntity> captureDrops(Collection<ItemEntity> value);
+	Collection<ItemEntity> create$captureDrops(Collection<ItemEntity> value);
 }

@@ -80,7 +80,7 @@ public abstract class AbstractMinecartEntityMixin extends Entity implements Abst
 	}
 
 	@Override
-	public BlockPos getCurrentRailPos() {
+	public BlockPos create$getCurrentRailPos() {
 		BlockPos pos = new BlockPos(MathHelper.floor(getX()), MathHelper.floor(getY()), MathHelper.floor(getZ()));
 		if (world.getBlockState(pos.down()).isIn(BlockTags.RAILS)) {
 			pos = pos.down();
@@ -90,7 +90,7 @@ public abstract class AbstractMinecartEntityMixin extends Entity implements Abst
 	}
 
 	@Override
-	public MinecartController getController() {
+	public MinecartController create$getController() {
 		return create$controller;
 	}
 }

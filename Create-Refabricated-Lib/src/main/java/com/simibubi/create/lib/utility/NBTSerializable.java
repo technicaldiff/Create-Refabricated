@@ -3,7 +3,7 @@ package com.simibubi.create.lib.utility;
 import net.minecraft.nbt.CompoundNBT;
 
 public interface NBTSerializable {
-	CompoundNBT serializeNBT();
+	CompoundNBT create$serializeNBT();
 
-	void deserializeNBT(CompoundNBT nbt);
+	void create$deserializeNBT(CompoundNBT nbt);
 }

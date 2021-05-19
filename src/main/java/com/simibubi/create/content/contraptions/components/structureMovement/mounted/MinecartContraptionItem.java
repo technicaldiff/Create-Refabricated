@@ -15,6 +15,12 @@ import com.simibubi.create.content.contraptions.components.structureMovement.Ori
 import com.simibubi.create.foundation.utility.Lang;
 import com.simibubi.create.foundation.utility.NBTHelper;
 
+import com.simibubi.create.lib.extensions.AbstractRailBlockExtensions;
+
+import com.simibubi.create.lib.helper.AbstractRailBlockHelper;
+
+import com.simibubi.create.lib.utility.NBTSerializer;
+
 import net.minecraft.block.AbstractRailBlock;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.DispenserBlock;
@@ -80,7 +86,7 @@ public class MinecartContraptionItem extends Item {
 				.offset(direction);
 			BlockState blockstate = world.getBlockState(blockpos);
 			RailShape railshape = blockstate.getBlock() instanceof AbstractRailBlock
-				? ((AbstractRailBlock) blockstate.getBlock()).getRailDirection(blockstate, world, blockpos, null)
+				? AbstractRailBlockHelper.getDirectionOfRail(blockstate, world, blockpos.down(), null)
 				: RailShape.NORTH_SOUTH;
 			double d3;
 			if (blockstate.isIn(BlockTags.RAILS)) {
@@ -97,9 +103,10 @@ public class MinecartContraptionItem extends Item {
 
 				BlockState blockstate1 = world.getBlockState(blockpos.down());
 				RailShape railshape1 = blockstate1.getBlock() instanceof AbstractRailBlock
-					? ((AbstractRailBlock) blockstate1.getBlock()).getRailDirection(blockstate1, world, blockpos.down(),
+					? AbstractRailBlockHelper.getDirectionOfRail(blockstate1, world, blockpos.down(),
 						null)
 					: RailShape.NORTH_SOUTH;
+
 				if (direction != Direction.DOWN && railshape1.isAscending()) {
 					d3 = -0.4D;
 				} else {
@@ -137,7 +144,7 @@ public class MinecartContraptionItem extends Item {
 			ItemStack itemstack = context.getItem();
 			if (!world.isRemote) {
 				RailShape railshape = blockstate.getBlock() instanceof AbstractRailBlock
-					? ((AbstractRailBlock) blockstate.getBlock()).getRailDirection(blockstate, world, blockpos, null)
+					? ((AbstractRailBlockExtensions) ((AbstractRailBlock) blockstate.getBlock())).create$getRailDirection(blockstate, world, blockpos, null)
 					: RailShape.NORTH_SOUTH;
 				double d0 = 0.0D;
 				if (railshape.isAscending()) {
@@ -223,7 +230,8 @@ public class MinecartContraptionItem extends Item {
 
 		try {
 			ByteArrayDataOutput dataOutput = ByteStreams.newDataOutput();
-			CompressedStreamTools.write(generatedStack.serializeNBT(), dataOutput);
+			CompressedStreamTools.write(NBTSerializer.serializeNBT(generatedStack), dataOutput);
+
 			int estimatedPacketSize = dataOutput.toByteArray().length;
 			if (estimatedPacketSize > 2_000_000) {
 				player.sendStatusMessage(Lang.translate("contraption.minecart_contraption_too_big")

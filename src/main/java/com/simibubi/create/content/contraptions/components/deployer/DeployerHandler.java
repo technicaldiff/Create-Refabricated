@@ -144,13 +144,13 @@ public class DeployerHandler {
 			Entity entity = entities.get(world.rand.nextInt(entities.size()));
 			List<ItemEntity> capturedDrops = new ArrayList<>();
 			boolean success = false;
-			entity.captureDrops(capturedDrops);
+			entity.create$captureDrops(capturedDrops);
 
 			// Use on entity
 			if (mode == Mode.USE) {
 				ActionResultType cancelResult = ForgeHooks.onInteractEntity(player, entity, hand);
 				if (cancelResult == ActionResultType.FAIL) {
-					entity.captureDrops(null);
+					entity.create$captureDrops(null);
 					return;
 				}
 				if (cancelResult == null) {
@@ -179,7 +179,7 @@ public class DeployerHandler {
 				success = true;
 			}
 
-			entity.captureDrops(null);
+			entity.create$captureDrops(null);
 			capturedDrops.forEach(e -> player.inventory.placeItemBackInInventory(world, e.getItem()));
 			if (success)
 				return;

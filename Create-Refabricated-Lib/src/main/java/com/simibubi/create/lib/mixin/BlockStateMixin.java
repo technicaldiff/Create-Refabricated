@@ -13,8 +13,9 @@ import net.minecraft.world.World;
 @Mixin(BlockState.class)
 public abstract class BlockStateMixin implements BlockStateExtensions {
 
-	@Override @Unique
-	public boolean addRunningEffects(World world, BlockPos pos, Entity entity) {
+	@Override
+	@Unique
+	public boolean create$addRunningEffects(World world, BlockPos pos, Entity entity) {
 		return true;
 	}
 }

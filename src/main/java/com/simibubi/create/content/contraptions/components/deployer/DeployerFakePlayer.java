@@ -4,26 +4,25 @@ import java.util.Collection;
 import java.util.OptionalInt;
 import java.util.UUID;
 
-import net.minecraft.entity.item.ItemEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.server.management.PlayerInteractionManager;
-
-import net.minecraft.util.DamageSource;
-
 import org.apache.commons.lang3.tuple.Pair;
 
 import com.mojang.authlib.GameProfile;
 import com.simibubi.create.foundation.config.AllConfigs;
 import com.simibubi.create.foundation.config.CKinetics;
 import com.simibubi.create.foundation.utility.Lang;
+import com.simibubi.create.lib.helper.FakePlayerHelper;
 
 import io.netty.util.concurrent.Future;
 import io.netty.util.concurrent.GenericFutureListener;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.MobEntity;
 import net.minecraft.entity.Pose;
+import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.monster.CreeperEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.item.ItemStack;
@@ -32,14 +31,14 @@ import net.minecraft.network.NetworkManager;
 import net.minecraft.network.PacketDirection;
 import net.minecraft.network.play.ServerPlayNetHandler;
 import net.minecraft.server.MinecraftServer;
+import net.minecraft.server.management.PlayerInteractionManager;
+import net.minecraft.util.DamageSource;
 import net.minecraft.util.EntityDamageSource;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
 
 public class DeployerFakePlayer extends ServerPlayerEntity {
 
@@ -52,6 +51,7 @@ public class DeployerFakePlayer extends ServerPlayerEntity {
 	public DeployerFakePlayer(ServerWorld world) {
 		super(world.getServer(), world, DEPLOYER_PROFILE, new PlayerInteractionManager(world));
 		connection = new FakePlayNetHandler(world.getServer(), this);
+		FakePlayerHelper.setFake(this, true);
 	}
 
 	@Override
@@ -162,5 +162,4 @@ public class DeployerFakePlayer extends ServerPlayerEntity {
 		public void sendPacket(IPacket<?> packetIn,
 			GenericFutureListener<? extends Future<? super Void>> futureListeners) {}
 	}
-
 }

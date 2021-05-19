@@ -17,20 +17,20 @@ import net.minecraft.world.IWorldReader;
 
 @Mixin(Block.class)
 public abstract class BlockMixin extends AbstractBlock implements BlockExtensions {
-	@Shadow
-	public abstract SoundType getSoundType(BlockState blockState);
-
 	private BlockMixin(Properties properties) {
 		super(properties);
 	}
 
+	@Shadow
+	public abstract SoundType getSoundType(BlockState blockState);
+
 	@Override
-	public SoundType getSoundType(BlockState state, IWorldReader world, BlockPos pos, @Nullable Entity entity) {
+	public SoundType create$getSoundType(BlockState state, IWorldReader world, BlockPos pos, @Nullable Entity entity) {
 		return getSoundType(state);
 	}
 
 	@Override
-	public int getLightValue(BlockState state, IBlockReader world, BlockPos pos) {
+	public int create$getLightValue(BlockState state, IBlockReader world, BlockPos pos) {
 		return state.getLightValue();
 	}
 }

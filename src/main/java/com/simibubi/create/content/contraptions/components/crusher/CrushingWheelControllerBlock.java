@@ -61,7 +61,7 @@ public class CrushingWheelControllerBlock extends DirectionalBlock
 	}
 
 	@Override
-	public boolean addRunningEffects(World world, BlockPos pos, Entity entity) {
+	public boolean create$addRunningEffects(World world, BlockPos pos, Entity entity) {
 		return true;
 	}
 

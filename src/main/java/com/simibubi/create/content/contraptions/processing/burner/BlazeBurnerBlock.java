@@ -13,11 +13,12 @@ import com.simibubi.create.AllTileEntities;
 import com.simibubi.create.content.contraptions.processing.BasinTileEntity;
 import com.simibubi.create.foundation.block.ITE;
 import com.simibubi.create.foundation.utility.Lang;
-
 import com.simibubi.create.lib.annotation.MethodsReturnNonnullByDefault;
-
 import com.simibubi.create.lib.extensions.BlockExtensions;
+import com.simibubi.create.lib.helper.FakePlayerHelper;
 
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.advancements.criterion.StatePropertiesPredicate;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -25,6 +26,7 @@ import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.SoundType;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.entity.projectile.EggEntity;
 import net.minecraft.entity.projectile.ProjectileEntity;
 import net.minecraft.item.BlockItemUseContext;
@@ -38,8 +40,8 @@ import net.minecraft.loot.LootPool;
 import net.minecraft.loot.LootTable;
 import net.minecraft.loot.conditions.BlockStateProperty;
 import net.minecraft.loot.conditions.ILootCondition.IBuilder;
-import net.minecraft.pathfinding.PathType;
 import net.minecraft.loot.conditions.SurvivesExplosion;
+import net.minecraft.pathfinding.PathType;
 import net.minecraft.state.EnumProperty;
 import net.minecraft.state.Property;
 import net.minecraft.state.StateContainer.Builder;
@@ -61,8 +63,6 @@ import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorldReader;
 import net.minecraft.world.World;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
 
 @MethodsReturnNonnullByDefault
 @ParametersAreNonnullByDefault
@@ -120,7 +120,7 @@ public class BlazeBurnerBlock extends Block implements ITE<BlazeBurnerTileEntity
 		BlockRayTraceResult blockRayTraceResult) {
 		ItemStack heldItem = player.getHeldItem(hand);
 		boolean dontConsume = player.isCreative();
-		boolean forceOverflow = !(player instanceof FakePlayer);
+		boolean forceOverflow = !(FakePlayerHelper.isFakePlayer((ServerPlayerEntity) player));
 
 		if (!state.getBlock().hasBlockEntity()) {
 			if (heldItem.getItem() instanceof FlintAndSteelItem) {
@@ -200,12 +200,12 @@ public class BlazeBurnerBlock extends Block implements ITE<BlazeBurnerTileEntity
 
 	// java yells at me if I don't put this method here
 	@Override
-	public SoundType getSoundType(BlockState state, IWorldReader world, BlockPos pos, @Nullable Entity entity) {
+	public SoundType create$getSoundType(BlockState state, IWorldReader world, BlockPos pos, @Nullable Entity entity) {
 		return SoundType.METAL;
 	}
 
 	@Override
-	public int getLightValue(BlockState state, IBlockReader world, BlockPos pos) {
+	public int create$getLightValue(BlockState state, IBlockReader world, BlockPos pos) {
 		return MathHelper.clamp(state.get(HEAT_LEVEL)
 			.ordinal() * 4 - 1, 0, 15);
 	}

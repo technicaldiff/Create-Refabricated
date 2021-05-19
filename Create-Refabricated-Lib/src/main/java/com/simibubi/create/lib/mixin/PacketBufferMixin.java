@@ -4,7 +4,7 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 
 import com.simibubi.create.lib.extensions.PacketBufferExtensions;
-import com.simibubi.create.lib.utility.MixinHelper;
+import com.simibubi.create.lib.lba.fluid.FluidStack;
 
 import io.netty.buffer.ByteBuf;
 import net.minecraft.network.PacketBuffer;
@@ -19,16 +19,12 @@ public abstract class PacketBufferMixin implements PacketBufferExtensions {
 
 	@Override
 	public void writeFluidStack(FluidStack stack) {
-		if (stack.isEmpty()) {
-			writeBoolean(false);
-		} else {
-			writeBoolean(true);
-			stack.writeToPacket(MixinHelper.cast(this));
-		}
+		//			stack.writeToPacket(MixinHelper.cast(this));
+		writeBoolean(!stack.isEmpty());
 	}
 
 	@Override
 	public FluidStack readFluidStack() {
-		return readBoolean() ? FluidStack.EMPTY : FluidStack.readFromPacket(MixinHelper.cast(this));
+		return /*readBoolean() ? */FluidStack.EMPTY /*: FluidStack.readFromPacket(MixinHelper.cast(this))*/;
 	}
 }

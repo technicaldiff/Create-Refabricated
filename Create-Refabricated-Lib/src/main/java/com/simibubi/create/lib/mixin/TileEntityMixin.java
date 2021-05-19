@@ -43,14 +43,14 @@ public abstract class TileEntityMixin implements TileEntityExtensions, NBTSerial
 	}
 
 	@Override
-	public CompoundNBT serializeNBT() {
+	public CompoundNBT create$serializeNBT() {
 		CompoundNBT nbt = new CompoundNBT();
 		MixinHelper.<TileEntity>cast(this).write(nbt);
 		return nbt;
 	}
 
 	@Override
-	public void deserializeNBT(CompoundNBT nbt) {
+	public void create$deserializeNBT(CompoundNBT nbt) {
 		deserializeNBT(null, nbt);
 	}
 

@@ -7,6 +7,7 @@ import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
@@ -25,24 +26,45 @@ import net.minecraft.world.World;
 @Mixin(value = RailState.class, priority = 1501) // bigger number is applied first right?
 public abstract class RailStateMixin {
 	// I hate everything about this file so much
-	public boolean canMakeSlopes;
-	@Final @Shadow private World world;
-	@Final @Shadow private AbstractRailBlock block;
-	@Final @Shadow private BlockPos pos;
-	@Final @Shadow private boolean disableCorners;
-	@Shadow private BlockState newState;
-	@Shadow protected abstract boolean func_208512_d(BlockPos blockPos);
-	@Shadow protected abstract void reset(RailShape railShape);
-	@Final @Shadow private List<BlockPos> connectedRails;
-	@Shadow @Nullable protected abstract RailState createForAdjacent(BlockPos blockPos);
-	@Shadow protected abstract boolean isConnectedTo(BlockPos blockPos);
+	@Unique
+	public boolean create$canMakeSlopes;
+	@Final
+	@Shadow
+	private World world;
+	@Final
+	@Shadow
+	private AbstractRailBlock block;
+	@Final
+	@Shadow
+	private BlockPos pos;
+	@Final
+	@Shadow
+	private boolean disableCorners;
+	@Shadow
+	private BlockState newState;
+	@Final
+	@Shadow
+	private List<BlockPos> connectedRails;
+
+	@Shadow
+	protected abstract boolean func_208512_d(BlockPos blockPos);
+
+	@Shadow
+	protected abstract void reset(RailShape railShape);
+
+	@Shadow
+	@Nullable
+	protected abstract RailState createForAdjacent(BlockPos blockPos);
+
+	@Shadow
+	protected abstract boolean isConnectedTo(BlockPos blockPos);
 
 	@Inject(at = @At(value = "INVOKE", target = "Lnet/minecraft/block/RailState;reset(Lnet/minecraft/state/properties/RailShape;)V", shift = At.Shift.BEFORE),
 			method = "<init>(Lnet/minecraft/world/World;Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/block/BlockState;)V")
-	public void RailState(World world, BlockPos blockPos, BlockState blockState, CallbackInfo ci) {
-		canMakeSlopes = true;
+	public void create$RailState(World world, BlockPos blockPos, BlockState blockState, CallbackInfo ci) {
+		create$canMakeSlopes = true;
 		if (block instanceof SlopeCreationCheckingRail) {
-			canMakeSlopes = ((SlopeCreationCheckingRail) block).canMakeSlopes(blockState, world, pos);
+			create$canMakeSlopes = ((SlopeCreationCheckingRail) block).canMakeSlopes(blockState, world, pos);
 		}
 	}
 
@@ -50,6 +72,7 @@ public abstract class RailStateMixin {
 	 * In the event of catastrophic failure, look here first. <br>
 	 * I don't see any other way to do a change like this. If you figure out another way, please fix it. <br>
 	 * This is hopefully pretty much identical to the original, so ideally this won't conflict.
+	 *
 	 * @author Tropheus Jay
 	 */
 	@Overwrite
@@ -90,7 +113,7 @@ public abstract class RailStateMixin {
 			}
 		}
 
-		if (railShape == RailShape.NORTH_SOUTH && canMakeSlopes) {
+		if (railShape == RailShape.NORTH_SOUTH && create$canMakeSlopes) {
 			if (AbstractRailBlock.isRail(this.world, blockPos.up())) {
 				railShape = RailShape.ASCENDING_NORTH;
 			}
@@ -100,7 +123,7 @@ public abstract class RailStateMixin {
 			}
 		}
 
-		if (railShape == RailShape.EAST_WEST && canMakeSlopes) {
+		if (railShape == RailShape.EAST_WEST && create$canMakeSlopes) {
 			if (AbstractRailBlock.isRail(this.world, blockPos4.up())) {
 				railShape = RailShape.ASCENDING_EAST;
 			}
@@ -114,12 +137,13 @@ public abstract class RailStateMixin {
 			railShape = RailShape.NORTH_SOUTH;
 		}
 
-		this.newState = (BlockState)this.newState.with(this.block.getShapeProperty(), railShape);
+		this.newState = this.newState.with(this.block.getShapeProperty(), railShape);
 		this.world.setBlockState(this.pos, this.newState, 3);
 	}
 
 	/**
 	 * See method above
+	 *
 	 * @author Tropheus Jay
 	 */
 	@Overwrite
@@ -211,7 +235,7 @@ public abstract class RailStateMixin {
 			}
 		}
 
-		if (railShape2 == RailShape.NORTH_SOUTH && canMakeSlopes) {
+		if (railShape2 == RailShape.NORTH_SOUTH && create$canMakeSlopes) {
 			if (AbstractRailBlock.isRail(this.world, blockPos.up())) {
 				railShape2 = RailShape.ASCENDING_NORTH;
 			}
@@ -221,7 +245,7 @@ public abstract class RailStateMixin {
 			}
 		}
 
-		if (railShape2 == RailShape.EAST_WEST && canMakeSlopes) {
+		if (railShape2 == RailShape.EAST_WEST && create$canMakeSlopes) {
 			if (AbstractRailBlock.isRail(this.world, blockPos4.up())) {
 				railShape2 = RailShape.ASCENDING_EAST;
 			}
@@ -236,12 +260,12 @@ public abstract class RailStateMixin {
 		}
 
 		this.reset(railShape2);
-		this.newState = (BlockState)this.newState.with(this.block.getShapeProperty(), railShape2);
+		this.newState = this.newState.with(this.block.getShapeProperty(), railShape2);
 		if (bl2 || this.world.getBlockState(this.pos) != this.newState) {
 			this.world.setBlockState(this.pos, this.newState, 3);
 
-			for(int i = 0; i < this.connectedRails.size(); ++i) {
-				RailState railState = this.createForAdjacent((BlockPos)this.connectedRails.get(i));
+			for (int i = 0; i < this.connectedRails.size(); ++i) {
+				RailState railState = this.createForAdjacent(this.connectedRails.get(i));
 				if (railState != null) {
 					((RailStateAccessor) railState).create$checkConnected();
 					if (((RailStateAccessor) railState).create$func_196905_c(MixinHelper.cast(this))) {

@@ -41,7 +41,8 @@ public abstract class MinecraftMixin {
 	}
 
 	@Inject(at = @At(value = "INVOKE", target = "Lnet/minecraft/resources/SimpleReloadableResourceManager;<init>(Lnet/minecraft/resources/ResourcePackType;)V"),
-			method = "<init>(Lnet/minecraft/client/GameConfiguration;)V") // should inject to right after the initialization of resourceManager
+			method = "<init>(Lnet/minecraft/client/GameConfiguration;)V")
+	// should inject to right after the initialization of resourceManager
 	public void create$instanceRegistration(GameConfiguration args, CallbackInfo ci) {
 		InstanceRegistrationCallback.EVENT.invoker().registerInstance();
 	}

@@ -21,14 +21,17 @@ import net.minecraft.util.math.BlockPos;
 @Environment(EnvType.CLIENT)
 @Mixin(DiggingParticle.class)
 public abstract class DiggingParticleMixin extends SpriteTexturedParticle implements DiggingParticleExtensions {
+	@Final
+	@Shadow
+	private final BlockState sourceState = null;
+
 	private DiggingParticleMixin(ClientWorld clientWorld, double d, double e, double f) {
 		super(clientWorld, d, e, f);
 	}
 
-	@Final @Shadow private final BlockState sourceState = null;
-
-	@Override @Unique
-	public Particle updateSprite(BlockPos pos) {
+	@Override
+	@Unique
+	public Particle create$updateSprite(BlockPos pos) {
 		if (pos != null)
 			this.setSprite(Minecraft.getInstance().getBlockRendererDispatcher().getBlockModelShapes().getTexture(sourceState));
 		return MixinHelper.cast(this);

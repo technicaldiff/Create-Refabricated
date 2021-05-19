@@ -140,30 +140,30 @@ public class StickerBlock extends ProperDirectionalBlock implements ITE<StickerT
 	}
 
 	@Override
-	public boolean addLandingEffects(BlockState state1, ServerWorld worldserver, BlockPos pos, BlockState state2,
+	public boolean create$addLandingEffects(BlockState state1, ServerWorld worldserver, BlockPos pos, BlockState state2,
 		LivingEntity entity, int numberOfParticles) {
 		if (isUprightSticker(worldserver, pos)) {
 			worldserver.spawnParticle(new BlockParticleData(ParticleTypes.BLOCK, Blocks.SLIME_BLOCK.getDefaultState()),
 				entity.getX(), entity.getY(), entity.getZ(), numberOfParticles, 0.0D, 0.0D, 0.0D, (double) 0.15F);
 			return true;
 		}
-		return BlockStateExtensions.super.addLandingEffects(state1, worldserver, pos, state2, entity, numberOfParticles);
+		return BlockStateExtensions.super.create$addLandingEffects(state1, worldserver, pos, state2, entity, numberOfParticles);
 	}
 
 	@Override
-	public boolean addRunningEffects(World world, BlockPos pos, Entity entity) {
+	public boolean create$addRunningEffects(World world, BlockPos pos, Entity entity) {
 		BlockState state = world.getBlockState(pos);
 		if (state.get(FACING) == Direction.UP) {
 			Vector3d Vector3d = entity.getMotion();
 			world.addParticle(
-				((BlockParticleDataExtensions) new BlockParticleData(ParticleTypes.BLOCK, Blocks.SLIME_BLOCK.getDefaultState())).setPos(pos),
+				((BlockParticleDataExtensions) new BlockParticleData(ParticleTypes.BLOCK, Blocks.SLIME_BLOCK.getDefaultState())).create$setPos(pos),
 				entity.getX() + ((double) world.rand.nextFloat() - 0.5D) * (double) entity.getWidth(),
 				entity.getY() + 0.1D,
 				entity.getZ() + ((double) world.rand.nextFloat() - 0.5D) * (double) entity.getWidth(), Vector3d.x * -4.0D,
 				1.5D, Vector3d.z * -4.0D);
 			return true;
 		}
-		return BlockStateExtensions.super.addRunningEffects(state, world, pos, entity);
+		return BlockStateExtensions.super.create$addRunningEffects(state, world, pos, entity);
 	}
 
 }

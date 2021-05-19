@@ -34,14 +34,21 @@ import net.minecraft.world.World;
 
 @Mixin(Entity.class)
 public abstract class EntityMixin implements EntityExtensions, NBTSerializable {
-	@Shadow public World world;
-	@Shadow private BlockPos blockPos;
-	@Shadow private float eyeHeight;
-	@Shadow public abstract void read(CompoundNBT compoundNBT);
-	@Unique private CompoundNBT create$extraCustomData;
-	@Unique private static final Logger LOGGER = LogManager.getLogger();
+	@Unique
+	private static final Logger CREATE$LOGGER = LogManager.getLogger();
+	@Shadow
+	public World world;
+	@Shadow
+	private BlockPos blockPos;
+	@Shadow
+	private float eyeHeight;
+	@Unique
+	private CompoundNBT create$extraCustomData;
+	@Unique
+	private Collection<ItemEntity> create$captureDrops = null;
 
-	@Unique private Collection<ItemEntity> create$captureDrops = null;
+	@Shadow
+	public abstract void read(CompoundNBT compoundNBT);
 
 	@Inject(at = @At("TAIL"), method = "<init>(Lnet/minecraft/entity/EntityType;Lnet/minecraft/world/World;)V")
 	public void create$entityInit(EntityType<?> entityType, World world, CallbackInfo ci) {
@@ -61,12 +68,12 @@ public abstract class EntityMixin implements EntityExtensions, NBTSerializable {
 	}
 
 	@Override
-	public Collection<ItemEntity> captureDrops() {
+	public Collection<ItemEntity> create$captureDrops() {
 		return create$captureDrops;
 	}
 
 	@Override
-	public Collection<ItemEntity> captureDrops(Collection<ItemEntity> value) {
+	public Collection<ItemEntity> create$captureDrops(Collection<ItemEntity> value) {
 		Collection<ItemEntity> ret = create$captureDrops;
 		create$captureDrops = value;
 		return ret;
@@ -78,7 +85,7 @@ public abstract class EntityMixin implements EntityExtensions, NBTSerializable {
 			method = "writeWithoutTypeId(Lnet/minecraft/nbt/CompoundNBT;)Lnet/minecraft/nbt/CompoundNBT;")
 	public void create$beforeWriteCustomData(CompoundNBT tag, CallbackInfoReturnable<CompoundNBT> cir) {
 		if (create$extraCustomData != null && !create$extraCustomData.isEmpty()) {
-			LOGGER.debug("writing custom data");
+			CREATE$LOGGER.debug("Create: writing custom data to entity [{}]", MixinHelper.<Entity>cast(this).toString());
 			tag.put(EntityHelper.EXTRA_DATA_KEY, create$extraCustomData);
 		}
 	}
@@ -93,7 +100,7 @@ public abstract class EntityMixin implements EntityExtensions, NBTSerializable {
 	@Inject(at = @At(value = "INVOKE", target = "Lnet/minecraft/world/World;getBlockState(Lnet/minecraft/util/math/BlockPos;)Lnet/minecraft/block/BlockState;", shift = At.Shift.AFTER)
 			, method = "spawnSprintingParticles()V", cancellable = true)
 	public void create$spawnSprintingParticles(CallbackInfo ci, BlockState blockstate) {
-		if (((BlockStateExtensions) blockstate).addRunningEffects(world, blockPos, MixinHelper.cast(this))) {
+		if (((BlockStateExtensions) blockstate).create$addRunningEffects(world, blockPos, MixinHelper.cast(this))) {
 			ci.cancel();
 		}
 	}
@@ -109,7 +116,7 @@ public abstract class EntityMixin implements EntityExtensions, NBTSerializable {
 
 	@Inject(at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/Entity;canBeRidden(Lnet/minecraft/entity/Entity;)Z", shift = At.Shift.BEFORE),
 			method = "startRiding(Lnet/minecraft/entity/Entity;Z)Z", cancellable = true)
-	public void startRiding(Entity entity, boolean bl, CallbackInfoReturnable<Boolean> cir) {
+	public void create$startRiding(Entity entity, boolean bl, CallbackInfoReturnable<Boolean> cir) {
 		if (StartRidingCallback.EVENT.invoker().onStartRiding(MixinHelper.cast(this), entity) == ActionResultType.FAIL) {
 			cir.setReturnValue(false);
 		}
@@ -124,7 +131,7 @@ public abstract class EntityMixin implements EntityExtensions, NBTSerializable {
 	}
 
 	@Override
-	public CompoundNBT serializeNBT() {
+	public CompoundNBT create$serializeNBT() {
 		CompoundNBT nbt = new CompoundNBT();
 		String id = EntityHelper.getEntityString(MixinHelper.cast(this));
 
@@ -136,7 +143,7 @@ public abstract class EntityMixin implements EntityExtensions, NBTSerializable {
 	}
 
 	@Override
-	public void deserializeNBT(CompoundNBT nbt) {
+	public void create$deserializeNBT(CompoundNBT nbt) {
 		read(nbt);
 	}
 }

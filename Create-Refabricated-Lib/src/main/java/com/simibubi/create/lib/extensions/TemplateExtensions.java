@@ -22,12 +22,12 @@ import net.minecraft.world.gen.feature.template.StructureProcessor;
 import net.minecraft.world.gen.feature.template.Template;
 
 public interface TemplateExtensions {
-	List<Template.EntityInfo> getEntities();
+	List<Template.EntityInfo> create$getEntities();
 	default Vector3d transformedVec3d(PlacementSettings placementIn, Vector3d pos) {
 		return Template.getTransformedPos(pos, placementIn.getMirror(), placementIn.getRotation(), placementIn.getCenterOffset());
 	}
 
-	default List<Template.EntityInfo> processEntityInfos(@Nullable Template template, IWorld world, BlockPos blockPos, PlacementSettings settings, List<Template.EntityInfo> infos) {
+	default List<Template.EntityInfo> create$processEntityInfos(@Nullable Template template, IWorld world, BlockPos blockPos, PlacementSettings settings, List<Template.EntityInfo> infos) {
 		List<Template.EntityInfo> list = Lists.newArrayList();
 		for(Template.EntityInfo entityInfo : infos) {
 			Vector3d pos = transformedVec3d(settings, entityInfo.pos).add(Vector3d.of(blockPos));
@@ -44,8 +44,8 @@ public interface TemplateExtensions {
 		return list;
 	}
 
-	default void addEntitiesToWorld(IServerWorld world, BlockPos blockPos, PlacementSettings settings) {
-		for(Template.EntityInfo template$entityinfo : processEntityInfos((Template) this, world, blockPos, settings, this.getEntities())) {
+	default void create$addEntitiesToWorld(IServerWorld world, BlockPos blockPos, PlacementSettings settings) {
+		for(Template.EntityInfo template$entityinfo : create$processEntityInfos((Template) this, world, blockPos, settings, this.create$getEntities())) {
 			BlockPos blockpos = Template.getTransformedPos(template$entityinfo.blockPos, settings.getMirror(), settings.getRotation(), settings.getCenterOffset()).add(blockPos);
 			blockpos = template$entityinfo.blockPos;
 			if (settings.getBoundingBox() == null || settings.getBoundingBox().isVecInside(blockpos)) {

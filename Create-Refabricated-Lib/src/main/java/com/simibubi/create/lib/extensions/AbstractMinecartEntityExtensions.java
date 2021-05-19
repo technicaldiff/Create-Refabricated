@@ -12,11 +12,11 @@ public interface AbstractMinecartEntityExtensions {
 
 	boolean create$canUseRail();
 
-	BlockPos getCurrentRailPos();
+	BlockPos create$getCurrentRailPos();
 
-	default float getMaxSpeedOnRail() {
+	default float create$getMaxSpeedOnRail() {
 		return 1.2f; // default in Forge
 	}
 
-	MinecartController getController();
+	MinecartController create$getController();
 }

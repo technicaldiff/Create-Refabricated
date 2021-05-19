@@ -7,6 +7,6 @@ import com.simibubi.create.lib.extensions.StructureProcessorExtensions;
 import net.minecraft.world.gen.feature.template.StructureProcessor;
 
 @Mixin(StructureProcessor.class)
-public class StructureProcessorMixin implements StructureProcessorExtensions {
+public abstract class StructureProcessorMixin implements StructureProcessorExtensions {
 
 }

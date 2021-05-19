@@ -313,7 +313,7 @@ public class MinecartController implements NBTSerializable, ListenerProvider, co
 	}
 
 	@Override
-	public CompoundNBT serializeNBT() {
+	public CompoundNBT create$serializeNBT() {
 		CompoundNBT compoundNBT = new CompoundNBT();
 
 		stallData.forEachWithContext((opt, internal) -> opt
@@ -325,7 +325,7 @@ public class MinecartController implements NBTSerializable, ListenerProvider, co
 	}
 
 	@Override
-	public void deserializeNBT(CompoundNBT nbt) {
+	public void create$deserializeNBT(CompoundNBT nbt) {
 		Optional<StallData> internalSD = Optional.empty();
 		Optional<StallData> externalSD = Optional.empty();
 		Optional<CouplingData> mainCD = Optional.empty();

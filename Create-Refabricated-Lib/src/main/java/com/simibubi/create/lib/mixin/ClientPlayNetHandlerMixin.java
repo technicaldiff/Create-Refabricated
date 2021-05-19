@@ -3,6 +3,7 @@ package com.simibubi.create.lib.mixin;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.objectweb.asm.Opcodes;
+import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
@@ -36,10 +37,13 @@ import net.minecraft.tileentity.TileEntity;
 @Environment(EnvType.CLIENT)
 @Mixin(ClientPlayNetHandler.class)
 public abstract class ClientPlayNetHandlerMixin {
-	@Shadow private ClientWorld world;
-	@Shadow private final NetworkManager netManager = null;
-
-	@Unique private static final Logger LOGGER = LogManager.getLogger();
+	@Unique
+	private static final Logger CREATE$LOGGER = LogManager.getLogger();
+	@Final
+	@Shadow
+	private final NetworkManager netManager = null;
+	@Shadow
+	private ClientWorld world;
 
 	@ModifyVariable(at = @At(value = "JUMP", opcode = Opcodes.IFNULL, ordinal = 3, shift = Shift.BEFORE), method = "handleSpawnObject(Lnet/minecraft/network/play/server/SSpawnObjectPacket;)V")
 	public Entity create$replaceNullEntity(Entity entity, SSpawnObjectPacket packet) {
@@ -69,8 +73,8 @@ public abstract class ClientPlayNetHandlerMixin {
 			method = "Lnet/minecraft/client/network/play/ClientPlayNetHandler;handleUpdateTileEntity(Lnet/minecraft/network/play/server/SUpdateTileEntityPacket;)V", cancellable = true)
 	public void handleUpdateTileEntity(SUpdateTileEntityPacket sUpdateTileEntityPacket, CallbackInfo ci, TileEntity tileEntity, boolean bl) {
 		if (!(bl && ((ClientPlayNetHandlerAccessor) MixinHelper.<ClientPlayNetHandler>cast(this)).create$getClient().currentScreen instanceof CommandBlockScreen)) {
-			if(tileEntity == null) {
-				LOGGER.error("Received invalid update packet for null TileEntity");
+			if (tileEntity == null) {
+				CREATE$LOGGER.error("Received invalid update packet for null TileEntity");
 				ci.cancel();
 			}
 		}

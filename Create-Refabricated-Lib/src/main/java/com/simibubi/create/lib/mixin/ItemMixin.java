@@ -3,6 +3,7 @@ package com.simibubi.create.lib.mixin;
 import java.util.function.Supplier;
 
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
@@ -15,15 +16,17 @@ import net.minecraft.item.Item;
 
 @Mixin(Item.class)
 public abstract class ItemMixin implements ItemExtensions {
-	private Supplier<Item> supplier;
+	@Unique
+	private Supplier<Item> create$supplier;
 
 	@Override
-	public Supplier<Item> getSupplier() {
-		return supplier;
+	@Unique
+	public Supplier<Item> create$getSupplier() {
+		return create$supplier;
 	}
 
 	@Inject(method = "<init>", at = @At("TAIL"))
-	public void item(Item.Properties properties, CallbackInfo ci) {
-		supplier = new ItemSupplier(MixinHelper.cast(this));
+	public void create$item(Item.Properties properties, CallbackInfo ci) {
+		create$supplier = new ItemSupplier(MixinHelper.cast(this));
 	}
 }

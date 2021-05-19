@@ -30,7 +30,7 @@ public final class AbstractMinecartEntityHelper {
 	}
 
 	public static BlockPos getCurrentRailPos(AbstractMinecartEntity cart) {
-		return ((AbstractMinecartEntityExtensions) cart).getCurrentRailPos();
+		return ((AbstractMinecartEntityExtensions) cart).create$getCurrentRailPos();
 	}
 
 	private AbstractMinecartEntityHelper() {}

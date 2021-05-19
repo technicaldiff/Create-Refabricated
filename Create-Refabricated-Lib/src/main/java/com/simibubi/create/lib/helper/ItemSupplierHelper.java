@@ -8,6 +8,6 @@ import net.minecraft.item.Item;
 
 public class ItemSupplierHelper {
 	public static Supplier<Item> getSupplier(Item item) {
-		return ((ItemExtensions) item).getSupplier();
+		return ((ItemExtensions) item).create$getSupplier();
 	}
 }

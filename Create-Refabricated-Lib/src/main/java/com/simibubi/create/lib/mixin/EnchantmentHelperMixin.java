@@ -15,15 +15,15 @@ import net.minecraft.item.ItemStack;
 public abstract class EnchantmentHelperMixin {
 	@ModifyVariable(method = "calcItemStackEnchantability(Ljava/util/Random;IILnet/minecraft/item/ItemStack;)I", at = @At("STORE"), ordinal = 1)
 	private static int create$calcItemStackEnchantability(int i, Random random, int slotIndex, int bookshelfCount, ItemStack stack) {
-		return customItemEnchantment(i, stack);
+		return create$customItemEnchantment(i, stack);
 	}
 
 	@ModifyVariable(method = "buildEnchantmentList(Ljava/util/Random;Lnet/minecraft/item/ItemStack;IZ)Ljava/util/List;", at = @At("STORE"), ordinal = 0)
 	private static int create$buildEnchantmentList(int i, Random random, ItemStack stack, int level, boolean treasureAllowed) {
-		return customItemEnchantment(i, stack);
+		return create$customItemEnchantment(i, stack);
 	}
 
-	static int customItemEnchantment(int i, ItemStack stack) {
+	static int create$customItemEnchantment(int i, ItemStack stack) {
 		if (stack.getItem() instanceof CustomItemEnchantabilityItem) {
 			int e = ((CustomItemEnchantabilityItem) stack.getItem()).getItemEnchantability(stack);
 			if (e == 0) e = i;

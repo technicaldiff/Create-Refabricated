@@ -1,6 +1,7 @@
 package com.simibubi.create.lib.mixin;
 
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
@@ -18,6 +19,7 @@ import net.minecraft.util.math.BlockPos;
 
 @Mixin(SSpawnObjectPacket.class)
 public abstract class SSpawnObjectPacketMixin implements SSpawnObjectPacketExtensions {
+	@Unique
 	private PacketBuffer create$extraDataBuf;
 
 	@Inject(at = @At("TAIL"), method = "<init>(Lnet/minecraft/entity/Entity;I)V")
@@ -30,6 +32,7 @@ public abstract class SSpawnObjectPacketMixin implements SSpawnObjectPacketExten
 		create$setExtraData(entity);
 	}
 
+	@Unique
 	private void create$setExtraData(Entity entity) {
 		if (entity instanceof ExtraSpawnDataEntity) {
 			create$extraDataBuf = new PacketBuffer(Unpooled.buffer());
@@ -59,6 +62,7 @@ public abstract class SSpawnObjectPacketMixin implements SSpawnObjectPacketExten
 		}
 	}
 
+	@Unique
 	@Override
 	public PacketBuffer create$getExtraDataBuf() {
 		return create$extraDataBuf;

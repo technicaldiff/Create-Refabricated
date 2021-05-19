@@ -262,12 +262,12 @@ public class CapabilityMinecartController implements NBTSerializable/*ICapabilit
 //	}
 
 	@Override
-	public CompoundNBT serializeNBT() {
+	public CompoundNBT create$serializeNBT() {
 		return handler.serializeNBT();
 	}
 
 	@Override
-	public void deserializeNBT(CompoundNBT nbt) {
+	public void create$deserializeNBT(CompoundNBT nbt) {
 		handler.deserializeNBT(nbt);
 	}
 

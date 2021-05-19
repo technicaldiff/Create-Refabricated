@@ -12,10 +12,10 @@ import net.minecraft.world.IBlockReader;
 
 public class AbstractRailBlockHelper {
 	public static RailShape getDirectionOfRail(BlockState state, IBlockReader world, BlockPos pos, @Nullable AbstractMinecartEntity cart) {
-		return ((AbstractRailBlockExtensions) cart).getRailDirection(state, world, pos, cart);
+		return ((AbstractRailBlockExtensions) cart).create$getRailDirection(state, world, pos, cart);
 	}
 
 	public static RailShape getDirectionOfRail(BlockState state, @Nullable AbstractMinecartEntity cart) {
-		return ((AbstractRailBlockExtensions) cart).getRailDirection(state);
+		return ((AbstractRailBlockExtensions) cart).create$getRailDirection(state);
 	}
 }

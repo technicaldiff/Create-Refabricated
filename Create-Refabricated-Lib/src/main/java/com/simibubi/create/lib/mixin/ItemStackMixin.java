@@ -25,14 +25,14 @@ public abstract class ItemStackMixin implements NBTSerializable {
 	}
 
 	@Override
-	public CompoundNBT serializeNBT() {
+	public CompoundNBT create$serializeNBT() {
 		CompoundNBT nbt = new CompoundNBT();
 		MixinHelper.<ItemStack>cast(this).write(nbt);
 		return nbt;
 	}
 
 	@Override
-	public void deserializeNBT(CompoundNBT nbt) {
+	public void create$deserializeNBT(CompoundNBT nbt) {
 		MixinHelper.<ItemStack>cast(this).setTag(ItemStack.read(nbt).getTag());
 	}
 }

@@ -20,12 +20,12 @@ public abstract class AbstractRailBlockMixin implements AbstractRailBlockExtensi
 	public abstract Property<RailShape> getShapeProperty();
 
 	@Override
-	public RailShape getRailDirection(BlockState state, IBlockReader world, BlockPos pos, @Nullable AbstractMinecartEntity cart) {
+	public RailShape create$getRailDirection(BlockState state, IBlockReader world, BlockPos pos, @Nullable AbstractMinecartEntity cart) {
 		return state.get(getShapeProperty());
 	}
 
 	@Override
-	public RailShape getRailDirection(BlockState state) {
+	public RailShape create$getRailDirection(BlockState state) {
 		return state.get(getShapeProperty());
 	}
 }
