@@ -75,6 +75,7 @@
     "MouseHelperMixin",
     "ParticleManagerMixin",
     "ScreenMixin",
+    "WorldRendererMixin",
     "accessor.BakedQuadAccessor",
     "accessor.BufferBuilderAccessor",
     "accessor.ClientPlayNetHandlerAccessor",

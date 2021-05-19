@@ -31,11 +31,14 @@ import com.simibubi.create.foundation.tileEntity.TileEntityBehaviour;
 import com.simibubi.create.foundation.utility.BlockHelper;
 import com.simibubi.create.foundation.utility.Iterate;
 import com.simibubi.create.foundation.utility.NBTProcessors;
+import com.simibubi.create.lib.block.CustomRenderBoundingBox;
 import com.simibubi.create.lib.lba.item.EmptyHandler;
 import com.simibubi.create.lib.lba.item.IItemHandler;
 import com.simibubi.create.lib.lba.item.ItemHandlerHelper;
 import com.simibubi.create.lib.utility.LazyOptional;
 import com.simibubi.create.lib.utility.LoadedCheckUtil;
+
+import com.simibubi.create.lib.utility.NBTSerializer;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -71,7 +74,7 @@ import net.minecraft.world.gen.feature.template.Template;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 
-public class SchematicannonTileEntity extends SmartTileEntity implements INamedContainerProvider, IInstanceRendered {
+public class SchematicannonTileEntity extends SmartTileEntity implements INamedContainerProvider, IInstanceRendered, CustomRenderBoundingBox {
 
 	public static final int NEIGHBOUR_CHECKING = 100;
 	public static final int MAX_ANCHOR_DISTANCE = 256;
@@ -124,10 +127,10 @@ public class SchematicannonTileEntity extends SmartTileEntity implements INamedC
 	// Render
 	public boolean firstRenderTick;
 
-	@Override
-	public AxisAlignedBB getRenderBoundingBox() {
-		return INFINITE_EXTENT_AABB;
-	}
+//	@Override
+//	public AxisAlignedBB getRenderBoundingBox() {
+//		return new AxisAlignedBB(Double.NEGATIVE_INFINITY, Double.NEGATIVE_INFINITY, Double.NEGATIVE_INFINITY, Double.POSITIVE_INFINITY, Double.POSITIVE_INFINITY, Double.POSITIVE_INFINITY);
+//	}
 
 	@Override
 	@Environment(EnvType.CLIENT)
@@ -264,7 +267,8 @@ public class SchematicannonTileEntity extends SmartTileEntity implements INamedC
 		compound.putInt("EntityProgress", printingEntityIndex);
 
 		if (missingItem != null)
-			compound.put("MissingItem", missingItem.serializeNBT());
+			compound.put("MissingItem", NBTSerializer.serializeItemStackNBT(missingItem));
+
 
 		// Settings
 		CompoundNBT options = new CompoundNBT();

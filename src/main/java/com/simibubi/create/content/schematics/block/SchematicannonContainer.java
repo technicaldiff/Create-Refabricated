@@ -1,6 +1,7 @@
 package com.simibubi.create.content.schematics.block;
 
 import com.simibubi.create.AllContainerTypes;
+import com.simibubi.create.lib.lba.item.SlotItemHandler;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.world.ClientWorld;
@@ -40,11 +41,11 @@ public class SchematicannonContainer extends Container {
 		int x = 20;
 		int y = 0;
 
-		addSlot(new SlotItemHandler(te.inventory, 0, x + 15, y + 65));
-		addSlot(new SlotItemHandler(te.inventory, 1, x + 171, y + 65));
-		addSlot(new SlotItemHandler(te.inventory, 2, x + 134, y + 19));
-		addSlot(new SlotItemHandler(te.inventory, 3, x + 174, y + 19));
-		addSlot(new SlotItemHandler(te.inventory, 4, x + 15, y + 19));
+		addSlot(SlotItemHandler.create(te.inventory, 0, x + 15, y + 65));
+		addSlot(SlotItemHandler.create(te.inventory, 1, x + 171, y + 65));
+		addSlot(SlotItemHandler.create(te.inventory, 2, x + 134, y + 19));
+		addSlot(SlotItemHandler.create(te.inventory, 3, x + 174, y + 19));
+		addSlot(SlotItemHandler.create(te.inventory, 4, x + 15, y + 19));
 
 		// player Slots
 		for (int row = 0; row < 3; ++row)

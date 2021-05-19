@@ -37,9 +37,9 @@ public abstract class SyncedTileEntity extends TileEntity implements TileEntityE
 	}
 
 //	@Override
-//	public void handleUpdateTag(BlockState state, CompoundNBT tag) {
-//		fromTag(state, tag);
-//	}
+	public void handleUpdateTag(BlockState state, CompoundNBT tag) {
+		fromTag(state, tag);
+	}
 
 	public void sendData() {
 		if (world != null)
