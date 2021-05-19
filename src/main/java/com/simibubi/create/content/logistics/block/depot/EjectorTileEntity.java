@@ -3,6 +3,7 @@ package com.simibubi.create.content.logistics.block.depot;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Nullable;
 
@@ -26,8 +27,6 @@ import com.simibubi.create.foundation.utility.Pair;
 import com.simibubi.create.foundation.utility.VecHelper;
 import com.simibubi.create.foundation.utility.animation.LerpedFloat;
 import com.simibubi.create.foundation.utility.animation.LerpedFloat.Chaser;
-import com.simibubi.create.lib.capabilities.Capability;
-import com.simibubi.create.lib.capabilities.CapabilityProvider;
 import com.simibubi.create.lib.lba.item.ItemStackHandler;
 import com.simibubi.create.lib.utility.Constants.NBT;
 import com.simibubi.create.lib.utility.LazyOptional;
@@ -64,6 +63,12 @@ import net.minecraft.world.World;
 
 
 public class EjectorTileEntity extends KineticTileEntity implements CapabilityProvider {
+	// fabric capabilities
+	public Map<String, Boolean> capabilities;
+	@Override
+	public Map<String, Boolean> getCapabilities() {
+		return capabilities;
+	}
 
 	List<IntAttached<ItemStack>> launchedItems;
 	ScrollValueBehaviour maxStackSize;

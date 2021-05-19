@@ -7,6 +7,9 @@ import com.simibubi.create.foundation.block.ProperDirectionalBlock;
 
 import com.simibubi.create.lib.block.WeakPowerCheckingBlock;
 
+import com.simibubi.create.lib.extensions.BlockParticleDataExtensions;
+import com.simibubi.create.lib.extensions.BlockStateExtensions;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -28,7 +31,7 @@ import net.minecraft.world.IWorldReader;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 
-public class StickerBlock extends ProperDirectionalBlock implements ITE<StickerTileEntity>, WeakPowerCheckingBlock, ITileEntityProvider {
+public class StickerBlock extends ProperDirectionalBlock implements ITE<StickerTileEntity>, WeakPowerCheckingBlock, ITileEntityProvider, BlockStateExtensions {
 
 	public static final BooleanProperty POWERED = BlockStateProperties.POWERED;
 	public static final BooleanProperty EXTENDED = BlockStateProperties.EXTENDED;
@@ -144,22 +147,23 @@ public class StickerBlock extends ProperDirectionalBlock implements ITE<StickerT
 				entity.getX(), entity.getY(), entity.getZ(), numberOfParticles, 0.0D, 0.0D, 0.0D, (double) 0.15F);
 			return true;
 		}
-		return super.addLandingEffects(state1, worldserver, pos, state2, entity, numberOfParticles);
+		return BlockStateExtensions.super.addLandingEffects(state1, worldserver, pos, state2, entity, numberOfParticles);
 	}
 
 	@Override
-	public boolean addRunningEffects(BlockState state, World world, BlockPos pos, Entity entity) {
+	public boolean addRunningEffects(World world, BlockPos pos, Entity entity) {
+		BlockState state = world.getBlockState(pos);
 		if (state.get(FACING) == Direction.UP) {
 			Vector3d Vector3d = entity.getMotion();
 			world.addParticle(
-				new BlockParticleData(ParticleTypes.BLOCK, Blocks.SLIME_BLOCK.getDefaultState()).setPos(pos),
+				((BlockParticleDataExtensions) new BlockParticleData(ParticleTypes.BLOCK, Blocks.SLIME_BLOCK.getDefaultState())).setPos(pos),
 				entity.getX() + ((double) world.rand.nextFloat() - 0.5D) * (double) entity.getWidth(),
 				entity.getY() + 0.1D,
 				entity.getZ() + ((double) world.rand.nextFloat() - 0.5D) * (double) entity.getWidth(), Vector3d.x * -4.0D,
 				1.5D, Vector3d.z * -4.0D);
 			return true;
 		}
-		return super.addRunningEffects(state, world, pos, entity);
+		return BlockStateExtensions.super.addRunningEffects(state, world, pos, entity);
 	}
 
 }

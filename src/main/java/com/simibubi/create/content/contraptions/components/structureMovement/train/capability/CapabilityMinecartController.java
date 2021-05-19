@@ -16,10 +16,11 @@ import com.simibubi.create.Create;
 import com.simibubi.create.content.contraptions.components.structureMovement.train.CouplingHandler;
 import com.simibubi.create.foundation.utility.Iterate;
 import com.simibubi.create.foundation.utility.WorldAttached;
-import com.simibubi.create.lib.capabilities.Capability;
-import com.simibubi.create.lib.capabilities.CapabilityProvider;
-import com.simibubi.create.lib.utility.CapabilityUtil;
+import com.simibubi.create.lib.extensions.AbstractMinecartEntityExtensions;
 import com.simibubi.create.lib.utility.LazyOptional;
+import com.simibubi.create.lib.utility.ListenerProvider;
+import com.simibubi.create.lib.utility.MinecartAndRailUtil;
+import com.simibubi.create.lib.utility.NBTSerializable;
 import com.tterrag.registrate.util.nullness.NonNullConsumer;
 
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
@@ -28,16 +29,13 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.item.minecart.AbstractMinecartEntity;
 import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.nbt.INBT;
-import net.minecraft.util.Direction;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.ChunkPos;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
 import net.minecraft.world.chunk.Chunk;
 
-
-public class CapabilityMinecartController implements ICapabilitySerializable<CompoundNBT> {
+public class CapabilityMinecartController implements NBTSerializable/*ICapabilitySerializable<CompoundNBT>*/ {
 
 	/* Global map of loaded carts */
 
@@ -109,16 +107,14 @@ public class CapabilityMinecartController implements ICapabilitySerializable<Com
 
 			cartsWithCoupling.remove(uniqueID);
 
-			LazyOptional<MinecartController> capability = CapabilityUtil.getCapability(cart, MINECART_CONTROLLER_CAPABILITY);
-
-			MinecartController controller = capability.orElse(null);
-			capability.addListener(new MinecartRemovalListener(world, cart));
+			MinecartController controller = (MinecartController) MinecartAndRailUtil.getController(cart);
+			controller.addListener(new MinecartRemovalListener(world, cart));
 			carts.put(uniqueID, controller);
 
-			capability.ifPresent(mc -> {
-				if (mc.isLeadingCoupling())
-					cartsWithCoupling.add(uniqueID);
-			});
+
+			if (controller.isLeadingCoupling())
+				cartsWithCoupling.add(uniqueID);
+
 			if (!world.isRemote && controller != null)
 				controller.sendData();
 		}
@@ -206,47 +202,46 @@ public class CapabilityMinecartController implements ICapabilitySerializable<Com
 	/* Capability management */
 
 //	@CapabilityInject(MinecartController.class)
-	public static Capability<MinecartController> MINECART_CONTROLLER_CAPABILITY = null;
+//	public static Capability<MinecartController> MINECART_CONTROLLER_CAPABILITY = null;
 
-	public static void attach(AttachCapabilitiesEvent<Entity> event) {
-		Entity entity = event.getObject();
-		if (!(entity instanceof AbstractMinecartEntity))
-			return;
+	public static void attach(AbstractMinecartEntity cart) {
+//		Entity entity = event.getObject();
+//		if (!(entity instanceof AbstractMinecartEntity))
+//			return;
 
-		CapabilityMinecartController capability = new CapabilityMinecartController((AbstractMinecartEntity) entity);
+		CapabilityMinecartController capability = new CapabilityMinecartController(cart);
 		ResourceLocation id = Create.asResource("minecart_controller");
-		event.addCapability(id, capability);
-		event.addListener(() -> {
+//		event.addCapability(id, capability);
+		((ListenerProvider) ((AbstractMinecartEntityExtensions) cart).getController()).addListener((controller) -> {
 			if (capability.cap.isPresent())
 				capability.cap.invalidate();
 		});
-		queuedAdditions.get(entity.getEntityWorld())
-			.add((AbstractMinecartEntity) entity);
+		queuedAdditions.get(cart.getEntityWorld())
+			.add(cart);
 	}
 
 	public static void startTracking(Entity entity) {
 		if (!(entity instanceof AbstractMinecartEntity))
 			return;
-		((CapabilityProvider) entity).getCapability(MINECART_CONTROLLER_CAPABILITY) // I don't understand why, but I couldn't use a util class for this. Errors.
-			.ifPresent(MinecartController::sendData);
+		((MinecartController) MinecartAndRailUtil.getController((AbstractMinecartEntity) entity)).sendData();
 	}
 
 	public static void register() {
-		CapabilityManager.INSTANCE.register(MinecartController.class, new Capability.IStorage<MinecartController>() {
-
-			@Override
-			public INBT writeNBT(Capability<MinecartController> capability, MinecartController instance,
-								 Direction side) {
-				return instance.serializeNBT();
-			}
-
-			@Override
-			public void readNBT(Capability<MinecartController> capability, MinecartController instance, Direction side,
-				INBT base) {
-				instance.deserializeNBT((CompoundNBT) base);
-			}
-
-		}, MinecartController::empty);
+//		CapabilityManager.INSTANCE.register(MinecartController.class, new Capability.IStorage<MinecartController>() {
+//
+//			@Override
+//			public INBT writeNBT(Capability<MinecartController> capability, MinecartController instance,
+//								 Direction side) {
+//				return instance.serializeNBT();
+//			}
+//
+//			@Override
+//			public void readNBT(Capability<MinecartController> capability, MinecartController instance, Direction side,
+//				INBT base) {
+//				instance.deserializeNBT((CompoundNBT) base);
+//			}
+//
+//		}, MinecartController::empty);
 	}
 
 	/* Capability provider */
@@ -259,12 +254,12 @@ public class CapabilityMinecartController implements ICapabilitySerializable<Com
 		cap = LazyOptional.of(() -> handler);
 	}
 
-	@Override
-	public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
-		if (cap == MINECART_CONTROLLER_CAPABILITY)
-			return this.cap.cast();
-		return LazyOptional.empty();
-	}
+//	@Override
+//	public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
+//		if (cap == MINECART_CONTROLLER_CAPABILITY)
+//			return this.cap.cast();
+//		return LazyOptional.empty();
+//	}
 
 	@Override
 	public CompoundNBT serializeNBT() {

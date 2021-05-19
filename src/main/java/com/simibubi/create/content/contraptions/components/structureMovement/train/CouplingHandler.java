@@ -15,31 +15,33 @@ import com.simibubi.create.foundation.config.AllConfigs;
 import com.simibubi.create.foundation.utility.Couple;
 import com.simibubi.create.foundation.utility.Iterate;
 import com.simibubi.create.foundation.utility.Lang;
-import com.simibubi.create.lib.utility.CapabilityUtil;
-import com.simibubi.create.lib.utility.LazyOptional;
+import com.simibubi.create.lib.utility.MinecartAndRailUtil;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.minecart.AbstractMinecartEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
 import net.minecraft.world.World;
 
 public class CouplingHandler {
 
-	public static void preventEntitiesFromMoutingOccupiedCart(EntityMountEvent event) {
-		Entity e = event.getEntityBeingMounted();
-		LazyOptional<MinecartController> optional = CapabilityUtil.getCapability(e, CapabilityMinecartController.MINECART_CONTROLLER_CAPABILITY);
-
-		if (!optional.isPresent())
-			return;
-		if (event.getEntityMounting() instanceof AbstractContraptionEntity)
-			return;
-		MinecartController controller = optional.orElse(null);
+	public static ActionResultType onStartRiding(Entity mounted, Entity mounting) {
+//		Entity e = event.getEntityBeingMounted();
+		if (!(mounted instanceof AbstractMinecartEntity)) return ActionResultType.PASS;
+		MinecartController controller = (MinecartController) MinecartAndRailUtil.getController((AbstractMinecartEntity) mounted);
+//		if (!optional.isPresent())
+//			return;
+		if (mounting instanceof AbstractContraptionEntity)
+			return ActionResultType.PASS;
+//		MinecartController controller = optional.orElse(null);
 		if (controller.isCoupledThroughContraption()) {
-			event.setCanceled(true);
-			event.setResult(Result.DENY);
+//			event.setCanceled(true);
+//			event.setResult(Result.DENY);
+			return ActionResultType.FAIL;
 		}
+		return ActionResultType.PASS;
 	}
 
 	public static void forEachLoadedCoupling(World world, Consumer<Couple<MinecartController>> consumer) {

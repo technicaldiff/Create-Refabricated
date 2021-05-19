@@ -18,7 +18,6 @@ import com.simibubi.create.content.contraptions.components.structureMovement.Abs
 import com.simibubi.create.content.contraptions.components.structureMovement.Contraption;
 import com.simibubi.create.content.contraptions.components.structureMovement.ContraptionCollider;
 import com.simibubi.create.content.contraptions.components.structureMovement.ContraptionHandler;
-import com.simibubi.create.lib.capabilities.CapabilityProvider;
 import com.simibubi.create.lib.extensions.BlockParticleDataExtensions;
 import com.simibubi.create.lib.extensions.BlockStateExtensions;
 
@@ -35,7 +34,7 @@ import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.gen.feature.template.Template;
 
 @Mixin(Entity.class)
-public abstract class EntityContraptionInteractionMixin implements CapabilityProvider {
+public abstract class EntityContraptionInteractionMixin {
 //	private EntityContraptionInteractionMixin(Class<Entity> baseClass) {
 //		super(baseClass);
 //	}

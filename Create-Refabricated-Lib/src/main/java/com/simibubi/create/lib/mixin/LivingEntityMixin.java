@@ -8,20 +8,30 @@ import org.spongepowered.asm.mixin.injection.ModifyVariable;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import com.simibubi.create.lib.event.LivingEntityEvents;
+import com.simibubi.create.lib.extensions.BlockStateExtensions;
 import com.simibubi.create.lib.item.EntitySwingListenerItem;
+import com.simibubi.create.lib.utility.MixinHelper;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
+import net.minecraft.block.BlockState;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Hand;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
+import net.minecraft.world.server.ServerWorld;
 
 @Mixin(LivingEntity.class)
-public abstract class LivingEntityMixin {
-	@Shadow
-	protected PlayerEntity attackingPlayer;
+public abstract class LivingEntityMixin extends Entity {
+	public LivingEntityMixin(EntityType<?> entityType, World world) {
+		super(entityType, world);
+	}
 
+	@Shadow protected PlayerEntity attackingPlayer;
 	@Shadow public abstract ItemStack getHeldItem(Hand hand);
 
 	@Environment(EnvType.CLIENT)
@@ -45,5 +55,13 @@ public abstract class LivingEntityMixin {
 	@ModifyVariable(method = "dropXp()V", at = @At("STORE"), ordinal = 0)
 	private int create$dropXp(int i) {
 		return LivingEntityEvents.EXPERIENCE_DROP.invoker().onLivingEntityExperienceDrop(i, attackingPlayer);
+	}
+	@Inject(at = @At(value = "INVOKE", target = "Lnet/minecraft/world/server/ServerWorld;spawnParticle(Lnet/minecraft/particles/IParticleData;DDDIDDDD)I", shift = At.Shift.BEFORE),
+			method = "Lnet/minecraft/entity/LivingEntity;updateFallState(DZLnet/minecraft/block/BlockState;Lnet/minecraft/util/math/BlockPos;)V", cancellable = true)
+	protected void updateFallState(double d, boolean bl, BlockState blockState, BlockPos blockPos, CallbackInfo ci, int i) {
+		if (((BlockStateExtensions) blockState).addLandingEffects((ServerWorld) world, blockPos, blockState, MixinHelper.cast(this), i)) {
+			super.updateFallState(d, bl, blockState, blockPos);
+			ci.cancel();
+		}
 	}
 }

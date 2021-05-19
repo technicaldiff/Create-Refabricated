@@ -14,7 +14,7 @@ public class ConfigDrivenDecorator extends SimplePlacement<ConfigDrivenOreFeatur
 
 	public ConfigDrivenDecorator() {
 		super(ConfigDrivenOreFeatureConfig.CODEC);
-		setRegistryName("create_config_driven_decorator");
+//		setRegistryName("create_config_driven_decorator");
 	}
 
 	@Override

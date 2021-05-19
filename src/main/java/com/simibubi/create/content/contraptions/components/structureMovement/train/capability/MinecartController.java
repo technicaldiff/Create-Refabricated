@@ -2,8 +2,10 @@ package com.simibubi.create.content.contraptions.components.structureMovement.tr
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.UUID;
 
 import javax.annotation.Nullable;
@@ -21,7 +23,10 @@ import com.simibubi.create.foundation.utility.NBTHelper;
 import com.simibubi.create.foundation.utility.VecHelper;
 import com.simibubi.create.lib.helper.AbstractMinecartEntityHelper;
 import com.simibubi.create.lib.utility.Constants.NBT;
+import com.simibubi.create.lib.utility.ListenerProvider;
 import com.simibubi.create.lib.utility.MinecartAndRailUtil;
+import com.simibubi.create.lib.utility.NBTSerializable;
+import com.tterrag.registrate.util.nullness.NonNullConsumer;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.block.PoweredRailBlock;
@@ -41,7 +46,17 @@ import net.minecraft.world.World;
  * Extended code for Minecarts, this allows for handling stalled carts and
  * coupled trains
  */
-public class MinecartController /*implements INBTSerializable<CompoundNBT>*/ {
+public class MinecartController implements NBTSerializable, ListenerProvider, com.simibubi.create.lib.utility.MinecartController {
+	public Set<NonNullConsumer> listeners = new HashSet<>();
+	@Override
+	public Set<NonNullConsumer> getListeners() {
+		return listeners;
+	}
+
+	@Override
+	public com.simibubi.create.lib.utility.MinecartController create(AbstractMinecartEntity cart) {
+		return new MinecartController(cart);
+	}
 
 	public static MinecartController EMPTY;
 	private boolean needsEntryRefresh;
@@ -297,7 +312,7 @@ public class MinecartController /*implements INBTSerializable<CompoundNBT>*/ {
 			new MinecartControllerUpdatePacket(this), this.cart());
 	}
 
-//	@Override
+	@Override
 	public CompoundNBT serializeNBT() {
 		CompoundNBT compoundNBT = new CompoundNBT();
 
@@ -309,7 +324,7 @@ public class MinecartController /*implements INBTSerializable<CompoundNBT>*/ {
 		return compoundNBT;
 	}
 
-//	@Override
+	@Override
 	public void deserializeNBT(CompoundNBT nbt) {
 		Optional<StallData> internalSD = Optional.empty();
 		Optional<StallData> externalSD = Optional.empty();

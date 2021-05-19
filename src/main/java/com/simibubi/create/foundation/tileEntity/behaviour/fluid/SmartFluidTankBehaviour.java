@@ -17,6 +17,7 @@ import com.simibubi.create.lib.lba.fluid.IFluidHandler;
 import com.simibubi.create.lib.utility.Constants.NBT;
 import com.simibubi.create.lib.utility.LazyOptional;
 
+import alexiil.mc.lib.attributes.Simulation;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.ListNBT;
 
@@ -53,7 +54,7 @@ public class SmartFluidTankBehaviour extends TileEntityBehaviour {
 		for (int i = 0; i < tanks; i++) {
 			TankSegment tankSegment = new TankSegment(tankCapacity);
 			this.tanks[i] = tankSegment;
-			handlers[i] = tankSegment.tank;
+//			handlers[i] = tankSegment.tank;
 		}
 		capability = LazyOptional.of(() -> new InternalFluidHandler(handlers, enforceVariety));
 		fluidUpdateCallback = () -> {
@@ -154,9 +155,9 @@ public class SmartFluidTankBehaviour extends TileEntityBehaviour {
 	}
 
 	public boolean isEmpty() {
-		for (TankSegment tankSegment : tanks)
-			if (!tankSegment.tank.isEmpty())
-				return false;
+//		for (TankSegment tankSegment : tanks)
+//			if (!tankSegment.tank.isEmpty())
+//				return false;
 		return true;
 	}
 
@@ -198,25 +199,25 @@ public class SmartFluidTankBehaviour extends TileEntityBehaviour {
 		}
 
 		@Override
-		public int fill(FluidStack resource, FluidAction action) {
+		public int fill(FluidStack resource, Simulation action) {
 			if (!insertionAllowed)
 				return 0;
 			return super.fill(resource, action);
 		}
 
-		public int forceFill(FluidStack resource, FluidAction action) {
+		public int forceFill(FluidStack resource, Simulation action) {
 			return super.fill(resource, action);
 		}
 
 		@Override
-		public FluidStack drain(FluidStack resource, FluidAction action) {
+		public FluidStack drain(FluidStack resource, Simulation action) {
 			if (!extractionAllowed)
 				return FluidStack.EMPTY;
 			return super.drain(resource, action);
 		}
 
 		@Override
-		public FluidStack drain(int maxDrain, FluidAction action) {
+		public FluidStack drain(int maxDrain, Simulation action) {
 			if (!extractionAllowed)
 				return FluidStack.EMPTY;
 			return super.drain(maxDrain, action);

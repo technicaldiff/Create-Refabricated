@@ -78,14 +78,14 @@ public class AllWorldFeatures {
 			});
 	}
 
-	public static void fillConfig(ForgeConfigSpec.Builder builder) {
-		entries.values()
-			.forEach(entry -> {
-				builder.push(entry.id);
-				entry.addToConfig(builder);
-				builder.pop();
-			});
-	}
+//	public static void fillConfig(ForgeConfigSpec.Builder builder) {
+//		entries.values()
+//			.forEach(entry -> {
+//				builder.push(entry.id);
+//				entry.addToConfig(builder);
+//				builder.pop();
+//			});
+//	}
 
 	public static void register() {}
 

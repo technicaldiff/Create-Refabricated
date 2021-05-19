@@ -55,9 +55,9 @@ public class ConfigDrivenFeatureEntry extends ConfigBase {
 			.decorate(ConfigDrivenDecorator.INSTANCE.configure(config));
 	}
 
-	public void addToConfig(ForgeConfigSpec.Builder builder) {
-		registerAll(builder);
-	}
+//	public void addToConfig(ForgeConfigSpec.Builder builder) {
+//		registerAll(builder);
+//	}
 
 	@Override
 	public String getName() {

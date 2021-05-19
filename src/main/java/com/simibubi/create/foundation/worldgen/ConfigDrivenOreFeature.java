@@ -17,7 +17,7 @@ public class ConfigDrivenOreFeature extends Feature<ConfigDrivenOreFeatureConfig
 
 	public ConfigDrivenOreFeature() {
 		super(ConfigDrivenOreFeatureConfig.CODEC);
-		setRegistryName("create_config_driven_ore");
+//		setRegistryName("create_config_driven_ore");
 	}
 
 	// From OreFeature, slight adjustments

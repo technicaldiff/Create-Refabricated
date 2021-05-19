@@ -2,6 +2,7 @@ package com.simibubi.create.lib.utility;
 
 import javax.annotation.Nullable;
 
+import com.simibubi.create.lib.extensions.AbstractMinecartEntityExtensions;
 import com.simibubi.create.lib.helper.AbstractMinecartEntityHelper;
 import com.simibubi.create.lib.helper.AbstractRailBlockHelper;
 
@@ -55,5 +56,9 @@ public class MinecartAndRailUtil {
 
 	public static double getSlopeAdjustment() {
 		return 0.0078125D;
+	}
+
+	public static MinecartController getController(AbstractMinecartEntity cart) {
+		return ((AbstractMinecartEntityExtensions) cart).getController();
 	}
 }

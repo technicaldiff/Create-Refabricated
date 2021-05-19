@@ -8,6 +8,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import com.simibubi.create.lib.block.MinecartPassHandlerBlock;
 import com.simibubi.create.lib.extensions.AbstractMinecartEntityExtensions;
+import com.simibubi.create.lib.utility.MinecartController;
 import com.simibubi.create.lib.utility.MixinHelper;
 
 import net.minecraft.block.BlockState;
@@ -32,7 +33,17 @@ public abstract class AbstractMinecartEntityMixin extends Entity implements Abst
 	@Shadow protected abstract double getMaximumSpeed();
 	@Shadow public abstract AbstractMinecartEntity.Type getMinecartType();
 
-	public boolean canUseRail = true;
+	public boolean create$canUseRail = true;
+	public MinecartController create$controller = null;
+
+	@Inject(at = @At("TAIL"), method = "Lnet/minecraft/entity/item/minecart/AbstractMinecartEntity;<init>(Lnet/minecraft/entity/EntityType;Lnet/minecraft/world/World;)V")
+	public void create$abstractMinecartEntity(EntityType<?> entityType, World world, CallbackInfo ci) {
+		create$controller = create$controller.create(MixinHelper.cast(this));
+	}
+	@Inject(at = @At("TAIL"), method = "Lnet/minecraft/entity/item/minecart/AbstractMinecartEntity;<init>(Lnet/minecraft/entity/EntityType;Lnet/minecraft/world/World;DDD)V")
+	public void create$bstractMinecartEntity(EntityType<?> entityType, World world, double d, double e, double f, CallbackInfo ci) {
+		create$controller = create$controller.create(MixinHelper.cast(this));
+	}
 
 	// this *should* inject into right before the 4th reference to bl, right in between the 2 if statements.
 	@Inject(at = @At(value = "FIELD", target = "Lnet/minecraft/entity/item/minecart/AbstractMinecartEntity;moveAlongTrack(Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/block/BlockState;)V", ordinal = 3),
@@ -65,7 +76,7 @@ public abstract class AbstractMinecartEntityMixin extends Entity implements Abst
 
 	@Override
 	public boolean create$canUseRail() {
-		return canUseRail;
+		return create$canUseRail;
 	}
 
 	@Override
@@ -76,5 +87,10 @@ public abstract class AbstractMinecartEntityMixin extends Entity implements Abst
 		}
 
 		return pos;
+	}
+
+	@Override
+	public MinecartController getController() {
+		return create$controller;
 	}
 }

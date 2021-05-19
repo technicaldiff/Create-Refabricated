@@ -5,7 +5,6 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-import com.simibubi.create.lib.capabilities.CapabilityProvider;
 import com.simibubi.create.lib.utility.ExtraDataUtil;
 import com.simibubi.create.lib.utility.MixinHelper;
 

@@ -6,12 +6,9 @@ import java.util.Map;
 
 import com.google.common.collect.Maps;
 import com.mojang.datafixers.util.Pair;
-import com.simibubi.create.content.contraptions.components.structureMovement.train.capability.CapabilityMinecartController;
 import com.simibubi.create.content.contraptions.components.structureMovement.train.capability.MinecartController;
 import com.simibubi.create.foundation.utility.VecHelper;
 import com.simibubi.create.lib.helper.AbstractMinecartEntityHelper;
-import com.simibubi.create.lib.utility.CapabilityUtil;
-import com.simibubi.create.lib.utility.LazyOptional;
 import com.simibubi.create.lib.utility.MinecartAndRailUtil;
 
 import net.minecraft.block.BlockState;
@@ -58,9 +55,8 @@ public class MinecartSim2020 {
 		if (c instanceof FurnaceMinecartEntity)
 			return MathHelper.epsilonEquals(((FurnaceMinecartEntity) c).pushX, 0)
 				&& MathHelper.epsilonEquals(((FurnaceMinecartEntity) c).pushZ, 0);
-		LazyOptional<MinecartController> capability =
-				CapabilityUtil.getCapability(c, CapabilityMinecartController.MINECART_CONTROLLER_CAPABILITY);
-		if (capability.isPresent() && capability.orElse(null)
+		MinecartController controller = (MinecartController) MinecartAndRailUtil.getController(c);
+		if (controller
 				.isStalled())
 			return false;
 		return true;

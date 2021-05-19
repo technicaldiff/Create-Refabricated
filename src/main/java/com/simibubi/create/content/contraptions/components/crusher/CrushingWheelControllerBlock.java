@@ -9,7 +9,7 @@ import com.simibubi.create.content.contraptions.base.KineticTileEntity;
 import com.simibubi.create.foundation.block.ITE;
 import com.simibubi.create.foundation.item.ItemHelper;
 import com.simibubi.create.foundation.utility.Iterate;
-import com.simibubi.create.lib.helper.EntityHelper;
+import com.simibubi.create.lib.extensions.BlockStateExtensions;
 import com.simibubi.create.lib.helper.EntitySelectionContextHelper;
 import com.simibubi.create.lib.utility.ExtraDataUtil;
 
@@ -42,7 +42,7 @@ import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 
 public class CrushingWheelControllerBlock extends DirectionalBlock
-		implements ITE<CrushingWheelControllerTileEntity>, ITileEntityProvider {
+		implements ITE<CrushingWheelControllerTileEntity>, ITileEntityProvider, BlockStateExtensions {
 
 	public CrushingWheelControllerBlock(Properties p_i48440_1_) {
 		super(p_i48440_1_);
@@ -61,7 +61,7 @@ public class CrushingWheelControllerBlock extends DirectionalBlock
 	}
 
 	@Override
-	public boolean addRunningEffects(BlockState state, World world, BlockPos pos, Entity entity) {
+	public boolean addRunningEffects(World world, BlockPos pos, Entity entity) {
 		return true;
 	}
 
