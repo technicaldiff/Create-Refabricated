@@ -743,7 +743,7 @@ public class SceneBuilder {
 
 		public void setFilterData(Selection selection, Class<? extends TileEntity> teType, ItemStack filter) {
 			modifyTileNBT(selection, teType, nbt -> {
-				nbt.put("Filter", NBTSerializer.serializeItemStackNBT(filter));
+				nbt.put("Filter", NBTSerializer.serializeNBT(filter));
 
 			});
 		}
@@ -773,7 +773,7 @@ public class SceneBuilder {
 			int targetedPoint) {
 			modifyTileNBT(scene.getSceneBuildingUtil().select.position(armLocation), ArmTileEntity.class, compound -> {
 				NBTHelper.writeEnum(compound, "Phase", phase);
-				compound.put("HeldItem", NBTSerializer.serializeItemStackNBT(heldItem));
+				compound.put("HeldItem", NBTSerializer.serializeNBT(heldItem));
 				compound.putInt("TargetPointIndex", targetedPoint);
 				compound.putFloat("MovementProgress", 0);
 			});

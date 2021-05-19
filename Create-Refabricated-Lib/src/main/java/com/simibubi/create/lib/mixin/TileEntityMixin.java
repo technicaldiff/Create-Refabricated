@@ -9,13 +9,15 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import com.simibubi.create.lib.extensions.TileEntityExtensions;
 import com.simibubi.create.lib.helper.TileEntityHelper;
+import com.simibubi.create.lib.utility.MixinHelper;
+import com.simibubi.create.lib.utility.NBTSerializable;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntity;
 
 @Mixin(TileEntity.class)
-public abstract class TileEntityMixin implements TileEntityExtensions {
+public abstract class TileEntityMixin implements TileEntityExtensions, NBTSerializable {
 	@Unique private CompoundNBT create$extraCustomData;
 
 	@Override
@@ -38,5 +40,21 @@ public abstract class TileEntityMixin implements TileEntityExtensions {
 		if (this.create$extraCustomData != null) {
 			compoundNBT.put(TileEntityHelper.EXTRA_DATA_KEY, this.create$extraCustomData);
 		}
+	}
+
+	@Override
+	public CompoundNBT serializeNBT() {
+		CompoundNBT nbt = new CompoundNBT();
+		MixinHelper.<TileEntity>cast(this).write(nbt);
+		return nbt;
+	}
+
+	@Override
+	public void deserializeNBT(CompoundNBT nbt) {
+		deserializeNBT(null, nbt);
+	}
+
+	public void deserializeNBT(BlockState state, CompoundNBT nbt) {
+		MixinHelper.<TileEntity>cast(this).fromTag(state, nbt);
 	}
 }

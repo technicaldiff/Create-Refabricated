@@ -481,7 +481,7 @@ public class EjectorTileEntity extends KineticTileEntity implements CapabilityPr
 		NBTHelper.writeEnum(compound, "State", state);
 		compound.put("Lid", lidProgress.writeNBT());
 		compound.put("LaunchedItems",
-			NBTHelper.writeCompoundList(launchedItems, ia -> ia.serializeNBT(NBTSerializer::serializeItemStackNBT)));
+			NBTHelper.writeCompoundList(launchedItems, ia -> ia.serializeNBT(NBTSerializer::serializeNBT)));
 
 		if (earlyTarget != null) {
 			compound.put("EarlyTarget", VecHelper.writeNBT(earlyTarget.getFirst()));

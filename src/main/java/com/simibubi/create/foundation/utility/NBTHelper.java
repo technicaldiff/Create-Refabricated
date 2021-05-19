@@ -56,7 +56,7 @@ public class NBTHelper {
 	}
 
 	public static ListNBT writeItemList(List<ItemStack> stacks) {
-		return writeCompoundList(stacks, NBTSerializer::serializeItemStackNBT);
+		return writeCompoundList(stacks, NBTSerializer::serializeNBT);
 	}
 
 	public static List<ItemStack> readItemList(ListNBT stacks) {

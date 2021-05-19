@@ -62,7 +62,7 @@ public abstract class LaunchedItem {
 		CompoundNBT c = new CompoundNBT();
 		c.putInt("TotalTicks", totalTicks);
 		c.putInt("TicksLeft", ticksRemaining);
-		c.put("Stack", NBTSerializer.serializeItemStackNBT(stack));
+		c.put("Stack", NBTSerializer.serializeNBT(stack));
 		c.put("Target", NBTUtil.writeBlockPos(target));
 		return c;
 	}
@@ -193,7 +193,7 @@ public abstract class LaunchedItem {
 		public CompoundNBT serializeNBT() {
 			CompoundNBT serializeNBT = super.serializeNBT();
 			if (entity != null)
-				serializeNBT.put("Entity", NBTSerializer.serializeEntityNBT(entity));
+				serializeNBT.put("Entity", NBTSerializer.serializeNBT(entity));
 			return serializeNBT;
 		}
 

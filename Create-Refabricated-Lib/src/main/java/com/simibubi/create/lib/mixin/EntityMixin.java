@@ -1,21 +1,6 @@
 package com.simibubi.create.lib.mixin;
 
-import com.simibubi.create.lib.event.EntityEyeHeightCallback;
-
-import com.simibubi.create.lib.event.StartRidingCallback;
-import com.simibubi.create.lib.extensions.BlockStateExtensions;
-
-import com.simibubi.create.lib.utility.ListenerProvider;
-import com.simibubi.create.lib.utility.MixinHelper;
-
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.item.ItemEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.math.BlockPos;
-
-import net.minecraft.world.World;
+import java.util.Collection;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -26,25 +11,36 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
-
-import com.simibubi.create.lib.extensions.EntityExtensions;
-import com.simibubi.create.lib.helper.EntityHelper;
-
-import net.minecraft.entity.Entity;
-import net.minecraft.nbt.CompoundNBT;
-
 import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
-import java.util.Collection;
+import com.simibubi.create.lib.event.EntityEyeHeightCallback;
+import com.simibubi.create.lib.event.StartRidingCallback;
+import com.simibubi.create.lib.extensions.BlockStateExtensions;
+import com.simibubi.create.lib.extensions.EntityExtensions;
+import com.simibubi.create.lib.helper.EntityHelper;
+import com.simibubi.create.lib.utility.ListenerProvider;
+import com.simibubi.create.lib.utility.MixinHelper;
+import com.simibubi.create.lib.utility.NBTSerializable;
+
+import net.minecraft.block.BlockState;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityType;
+import net.minecraft.entity.item.ItemEntity;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.util.ActionResultType;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
 
 @Mixin(Entity.class)
-public abstract class EntityMixin implements EntityExtensions {
+public abstract class EntityMixin implements EntityExtensions, NBTSerializable {
 	@Shadow public World world;
 	@Shadow private BlockPos blockPos;
+	@Shadow private float eyeHeight;
+	@Shadow public abstract void read(CompoundNBT compoundNBT);
 	@Unique private CompoundNBT create$extraCustomData;
 	@Unique private static final Logger LOGGER = LogManager.getLogger();
 
-	@Shadow private float eyeHeight;
 	@Unique private Collection<ItemEntity> create$captureDrops = null;
 
 	@Inject(at = @At("TAIL"), method = "<init>(Lnet/minecraft/entity/EntityType;Lnet/minecraft/world/World;)V")
@@ -125,5 +121,22 @@ public abstract class EntityMixin implements EntityExtensions {
 			create$extraCustomData = new CompoundNBT();
 		}
 		return create$extraCustomData;
+	}
+
+	@Override
+	public CompoundNBT serializeNBT() {
+		CompoundNBT nbt = new CompoundNBT();
+		String id = EntityHelper.getEntityString(MixinHelper.cast(this));
+
+		if (id != null) {
+			nbt.putString("id", id);
+		}
+
+		return nbt;
+	}
+
+	@Override
+	public void deserializeNBT(CompoundNBT nbt) {
+		read(nbt);
 	}
 }

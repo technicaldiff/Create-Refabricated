@@ -416,7 +416,7 @@ public class ProcessingScenes {
 		scene.idle(80);
 		scene.world.modifyTileNBT(util.select.position(basin), BasinTileEntity.class, nbt -> {
 			nbt.put("VisualizedItems",
-				NBTHelper.writeCompoundList(ImmutableList.of(IntAttached.with(1, purple)), ia -> NBTSerializer.serializeItemStackNBT(ia.getValue())));
+				NBTHelper.writeCompoundList(ImmutableList.of(IntAttached.with(1, purple)), ia -> NBTSerializer.serializeNBT(ia.getValue())));
 		});
 		scene.idle(4);
 		scene.world.createItemOnBelt(util.grid.at(1, 1, 1), Direction.UP, purple);
@@ -496,7 +496,7 @@ public class ProcessingScenes {
 			pte -> pte.makeCompactingParticleEffect(util.vector.centerOf(basin), copper));
 		scene.world.modifyTileNBT(util.select.position(basin), BasinTileEntity.class, nbt -> {
 			nbt.put("VisualizedItems",
-				NBTHelper.writeCompoundList(ImmutableList.of(IntAttached.with(1, copperBlock)), ia -> NBTSerializer.serializeItemStackNBT(ia.getValue())));
+				NBTHelper.writeCompoundList(ImmutableList.of(IntAttached.with(1, copperBlock)), ia -> NBTSerializer.serializeNBT(ia.getValue())));
 		});
 		scene.idle(4);
 		scene.world.createItemOnBelt(util.grid.at(1, 1, 1), Direction.UP, copperBlock);
@@ -520,7 +520,7 @@ public class ProcessingScenes {
 			pte -> pte.makeCompactingParticleEffect(util.vector.centerOf(basin), log));
 		scene.world.modifyTileNBT(util.select.position(basin), BasinTileEntity.class, nbt -> {
 			nbt.put("VisualizedItems",
-				NBTHelper.writeCompoundList(ImmutableList.of(IntAttached.with(1, bark)), ia -> NBTSerializer.serializeItemStackNBT(ia.getValue())));
+				NBTHelper.writeCompoundList(ImmutableList.of(IntAttached.with(1, bark)), ia -> NBTSerializer.serializeNBT(ia.getValue())));
 		});
 		scene.idle(4);
 		scene.world.createItemOnBelt(util.grid.at(1, 1, 1), Direction.UP, bark);
@@ -689,7 +689,7 @@ public class ProcessingScenes {
 
 		Class<DeployerTileEntity> teType = DeployerTileEntity.class;
 		scene.world.modifyTileNBT(util.select.position(4, 1, 2), teType,
-			nbt -> nbt.put("HeldItem", NBTSerializer.serializeItemStackNBT(AllItems.BLAZE_CAKE.asStack())));
+			nbt -> nbt.put("HeldItem", NBTSerializer.serializeNBT(AllItems.BLAZE_CAKE.asStack())));
 
 		scene.world.showSection(util.select.fromTo(3, 0, 5, 2, 0, 5), Direction.UP);
 		scene.idle(5);
@@ -810,7 +810,7 @@ public class ProcessingScenes {
 		scene.world.modifyTileNBT(util.select.position(basinPos), BasinTileEntity.class, nbt -> {
 			nbt.put("VisualizedItems",
 				NBTHelper.writeCompoundList(ImmutableList.of(IntAttached.with(1, new ItemStack(Blocks.BRICKS))),
-					ia -> NBTSerializer.serializeItemStackNBT(ia.getValue())));
+					ia -> NBTSerializer.serializeNBT(ia.getValue())));
 		});
 		scene.idle(4);
 		scene.overlay.showControls(new InputWindowElement(util.vector.topOf(basinPos.down()

@@ -67,7 +67,7 @@ public class TransportedItemStack implements Comparable<TransportedItemStack> {
 
 	public CompoundNBT serializeNBT() {
 		CompoundNBT nbt = new CompoundNBT();
-		nbt.put("Item", NBTSerializer.serializeItemStackNBT(stack));
+		nbt.put("Item", NBTSerializer.serializeNBT(stack));
 		nbt.putFloat("Pos", beltPosition);
 		nbt.putFloat("PrevPos", prevBeltPosition);
 		nbt.putFloat("Offset", sideOffset);

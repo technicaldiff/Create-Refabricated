@@ -267,7 +267,7 @@ public class SchematicannonTileEntity extends SmartTileEntity implements INamedC
 		compound.putInt("EntityProgress", printingEntityIndex);
 
 		if (missingItem != null)
-			compound.put("MissingItem", NBTSerializer.serializeItemStackNBT(missingItem));
+			compound.put("MissingItem", NBTSerializer.serializeNBT(missingItem));
 
 
 		// Settings

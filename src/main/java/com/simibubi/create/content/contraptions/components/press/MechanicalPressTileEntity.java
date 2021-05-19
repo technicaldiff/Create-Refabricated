@@ -100,7 +100,7 @@ public class MechanicalPressTileEntity extends BasinOperatingTileEntity {
 		super.write(compound, clientPacket);
 
 		if (clientPacket) {
-			compound.put("ParticleItems", NBTHelper.writeCompoundList(pressedItems, NBTSerializer::serializeItemStackNBT));
+			compound.put("ParticleItems", NBTHelper.writeCompoundList(pressedItems, NBTSerializer::serializeNBT));
 			pressedItems.clear();
 		}
 	}

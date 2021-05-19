@@ -108,7 +108,7 @@ public class DeployerScenes {
 			.withItem(pot), 40);
 		scene.idle(7);
 		Class<DeployerTileEntity> teType = DeployerTileEntity.class;
-		scene.world.modifyTileNBT(deployerSelection, teType, nbt -> nbt.put("HeldItem", NBTSerializer.serializeItemStackNBT(pot)));
+		scene.world.modifyTileNBT(deployerSelection, teType, nbt -> nbt.put("HeldItem", NBTSerializer.serializeNBT(pot)));
 		scene.idle(10);
 
 		scene.overlay.showText(40)
@@ -121,7 +121,7 @@ public class DeployerScenes {
 		scene.idle(26);
 		scene.world.restoreBlocks(util.select.position(potPosition));
 		scene.world.modifyTileNBT(deployerSelection, teType,
-			nbt -> nbt.put("HeldItem", NBTSerializer.serializeItemStackNBT(ItemStack.EMPTY)));
+			nbt -> nbt.put("HeldItem", NBTSerializer.serializeNBT(ItemStack.EMPTY)));
 		scene.world.moveDeployer(deployerPos, -1, 25);
 		scene.idle(20);
 
@@ -134,7 +134,7 @@ public class DeployerScenes {
 			scene.world.createItemEntity(entitySpawn, util.vector.of(0, 0.2, 0), tulip);
 		scene.idle(17);
 		scene.world.modifyEntity(entity1, Entity::remove);
-		scene.world.modifyTileNBT(deployerSelection, teType, nbt -> nbt.put("HeldItem", NBTSerializer.serializeItemStackNBT(tulip)));
+		scene.world.modifyTileNBT(deployerSelection, teType, nbt -> nbt.put("HeldItem", NBTSerializer.serializeNBT(tulip)));
 
 		scene.idle(10);
 		scene.overlay.showText(40)
@@ -146,7 +146,7 @@ public class DeployerScenes {
 		scene.idle(26);
 		scene.world.setBlock(potPosition, Blocks.POTTED_RED_TULIP.getDefaultState(), false);
 		scene.world.modifyTileNBT(deployerSelection, teType,
-			nbt -> nbt.put("HeldItem", NBTSerializer.serializeItemStackNBT(ItemStack.EMPTY)));
+			nbt -> nbt.put("HeldItem", NBTSerializer.serializeNBT(ItemStack.EMPTY)));
 		scene.world.moveDeployer(deployerPos, -1, 25);
 		scene.idle(25);
 		scene.world.hideSection(util.select.position(potPosition), Direction.UP);
@@ -194,7 +194,7 @@ public class DeployerScenes {
 		entity1 = scene.world.createItemEntity(entitySpawn, util.vector.of(0, 0.2, 0), shears);
 		scene.idle(17);
 		scene.world.modifyEntity(entity1, Entity::remove);
-		scene.world.modifyTileNBT(deployerSelection, teType, nbt -> nbt.put("HeldItem", NBTSerializer.serializeItemStackNBT(shears)));
+		scene.world.modifyTileNBT(deployerSelection, teType, nbt -> nbt.put("HeldItem", NBTSerializer.serializeNBT(shears)));
 		scene.idle(10);
 
 		scene.overlay.showText(60)
@@ -257,7 +257,7 @@ public class DeployerScenes {
 			30);
 		scene.idle(7);
 		scene.world.modifyTileNBT(deployerSelection, DeployerTileEntity.class,
-			nbt -> nbt.put("HeldItem", NBTSerializer.serializeItemStackNBT(tool)));
+			nbt -> nbt.put("HeldItem", NBTSerializer.serializeNBT(tool)));
 		scene.idle(45);
 
 		scene.world.setKineticSpeed(util.select.position(2, 0, 5), 16);

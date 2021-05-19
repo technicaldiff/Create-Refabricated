@@ -60,7 +60,7 @@ public class FilteringBehaviour extends TileEntityBehaviour {
 
 	@Override
 	public void write(CompoundNBT nbt, boolean clientPacket) {
-		nbt.put("Filter", NBTSerializer.serializeItemStackNBT(getFilter()));
+		nbt.put("Filter", NBTSerializer.serializeNBT(getFilter()));
 
 		nbt.putInt("FilterAmount", count);
 

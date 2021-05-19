@@ -66,7 +66,7 @@ public class SandPaperItem extends Item implements CustomItemEnchantabilityItem 
 			ItemStack toPolish = item.split(1);
 			playerIn.setActiveHand(handIn);
 			itemstack.getOrCreateTag()
-				.put("Polishing", NBTSerializer.serializeItemStackNBT(toPolish));
+				.put("Polishing", NBTSerializer.serializeNBT(toPolish));
 			playerIn.setHeldItem(otherHand, item);
 			return new ActionResult<>(ActionResultType.SUCCESS, itemstack);
 		}
@@ -103,7 +103,7 @@ public class SandPaperItem extends Item implements CustomItemEnchantabilityItem 
 
 		if (!worldIn.isRemote) {
 			itemstack.getOrCreateTag()
-				.put("Polishing", NBTSerializer.serializeItemStackNBT(toPolish));
+				.put("Polishing", NBTSerializer.serializeNBT(toPolish));
 			if (item.isEmpty())
 				pickUp.remove();
 			else

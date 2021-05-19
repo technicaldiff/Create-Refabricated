@@ -14,7 +14,7 @@ import com.simibubi.create.lib.utility.MixinHelper;
 import net.minecraft.item.Item;
 
 @Mixin(Item.class)
-public class ItemMixin implements ItemExtensions {
+public abstract class ItemMixin implements ItemExtensions {
 	private Supplier<Item> supplier;
 
 	@Override

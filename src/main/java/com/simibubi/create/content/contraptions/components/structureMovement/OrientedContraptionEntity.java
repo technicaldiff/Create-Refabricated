@@ -413,7 +413,7 @@ public class OrientedContraptionEntity extends AbstractContraptionEntity {
 
 		// Notify to not trigger serialization side-effects
 		isSerializingFurnaceCart = true;
-		CompoundNBT nbt = NBTSerializer.serializeEntityNBT(furnaceCart);
+		CompoundNBT nbt = NBTSerializer.serializeNBT(furnaceCart);
 
 		isSerializingFurnaceCart = false;
 
@@ -446,7 +446,7 @@ public class OrientedContraptionEntity extends AbstractContraptionEntity {
 			nbt.putInt("Fuel", fuel);
 			nbt.putDouble("PushX", 0);
 			nbt.putDouble("PushZ", 0);
-			NBTSerializer.deserializeEntityNBT(furnaceCart, nbt);
+			NBTSerializer.deserializeNBT(furnaceCart, nbt);
 		}
 	}
 

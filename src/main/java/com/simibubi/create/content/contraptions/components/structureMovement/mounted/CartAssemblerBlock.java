@@ -25,16 +25,12 @@ import com.simibubi.create.content.schematics.ItemRequirement.ItemUseType;
 import com.simibubi.create.foundation.block.ITE;
 import com.simibubi.create.foundation.utility.Couple;
 import com.simibubi.create.foundation.utility.Iterate;
-import com.simibubi.create.foundation.utility.NBTHelper;
 import com.simibubi.create.foundation.utility.VecHelper;
-
 import com.simibubi.create.lib.block.MinecartPassHandlerBlock;
-
 import com.simibubi.create.lib.block.SlopeCreationCheckingRail;
-
 import com.simibubi.create.lib.helper.EntityHelper;
 import com.simibubi.create.lib.helper.EntitySelectionContextHelper;
-
+import com.simibubi.create.lib.utility.LazyOptional;
 import com.simibubi.create.lib.utility.NBTSerializer;
 
 import net.minecraft.block.AbstractRailBlock;
@@ -310,10 +306,10 @@ public class CartAssemblerBlock extends AbstractRailBlock
 		entity.startRiding(cart);
 
 		if (cart instanceof FurnaceMinecartEntity) {
-			CompoundNBT nbt = NBTSerializer.serializeEntityNBT(cart);
+			CompoundNBT nbt = NBTSerializer.serializeNBT(cart);
 			nbt.putDouble("PushZ", 0);
 			nbt.putDouble("PushX", 0);
-			NBTSerializer.deserializeEntityNBT(cart, nbt);
+			NBTSerializer.deserializeNBT(cart, nbt);
 		}
 	}
 
@@ -360,10 +356,10 @@ public class CartAssemblerBlock extends AbstractRailBlock
 	protected void disassembleCart(AbstractMinecartEntity cart) {
 		cart.removePassengers();
 		if (cart instanceof FurnaceMinecartEntity) {
-			CompoundNBT nbt = NBTSerializer.serializeEntityNBT(cart);
+			CompoundNBT nbt = NBTSerializer.serializeNBT(cart);
 			nbt.putDouble("PushZ", cart.getMotion().x);
 			nbt.putDouble("PushX", cart.getMotion().z);
-			NBTSerializer.deserializeEntityNBT(cart, nbt);
+			NBTSerializer.deserializeNBT(cart, nbt);
 		}
 	}
 
