@@ -4,6 +4,8 @@ import com.simibubi.create.AllContainerTypes;
 
 import com.simibubi.create.lib.lba.item.ItemStackHandler;
 
+import com.simibubi.create.lib.lba.item.SlotItemHandler;
+
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
@@ -29,7 +31,7 @@ public class FilterContainer extends AbstractFilterContainer {
 
 		for (int row = 0; row < 2; ++row)
 			for (int col = 0; col < 9; ++col)
-				this.addSlot(new SlotItemHandler(filterInventory, col + row * 9, x + col * 18, y + row * 18));
+				this.addSlot(SlotItemHandler.create(filterInventory, col + row * 9, x + col * 18, y + row * 18));
 	}
 
 	@Override

@@ -3,6 +3,8 @@ package com.simibubi.create.content.schematics.block;
 import com.simibubi.create.AllContainerTypes;
 import com.simibubi.create.AllItems;
 
+import com.simibubi.create.lib.lba.item.SlotItemHandler;
+
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.world.ClientWorld;
 import net.minecraft.entity.player.PlayerEntity;
