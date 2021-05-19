@@ -1,10 +1,14 @@
 package com.simibubi.create.content.contraptions.components.deployer;
 
+import java.util.Collection;
 import java.util.OptionalInt;
 import java.util.UUID;
 
+import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.server.management.PlayerInteractionManager;
+
+import net.minecraft.util.DamageSource;
 
 import org.apache.commons.lang3.tuple.Pair;
 
@@ -87,33 +91,35 @@ public class DeployerFakePlayer extends ServerPlayerEntity {
 		return stack;
 	}
 
-	public static void deployerHasEyesOnHisFeet(EntityEvent.Size event) {
-		if (event.getEntity() instanceof DeployerFakePlayer)
-			event.setNewEyeHeight(0);
+	public static int deployerHasEyesOnHisFeet(Entity entity) {
+		if (entity instanceof DeployerFakePlayer)
+			return 0;
+		return -1;
 	}
 
-	@SubscribeEvent(priority = EventPriority.LOWEST)
-	public static void deployerCollectsDropsFromKilledEntities(LivingDropsEvent event) {
-		if (!(event.getSource() instanceof EntityDamageSource))
-			return;
-		EntityDamageSource source = (EntityDamageSource) event.getSource();
+	public static boolean deployerCollectsDropsFromKilledEntities(DamageSource s, Collection<ItemEntity> drops) {
+		if (!(s instanceof EntityDamageSource))
+			return false;
+		EntityDamageSource source = (EntityDamageSource) s;
 		Entity trueSource = source.getTrueSource();
 		if (trueSource != null && trueSource instanceof DeployerFakePlayer) {
 			DeployerFakePlayer fakePlayer = (DeployerFakePlayer) trueSource;
-			event.getDrops()
+			drops
 				.forEach(stack -> fakePlayer.inventory.placeItemBackInInventory(trueSource.world, stack.getItem()));
-			event.setCanceled(true);
+			return true;
 		}
+
+		return false;
 	}
 
 	@Override
 	protected void playEquipSound(ItemStack p_184606_1_) {}
 
 	@Override
-	public void remove(boolean keepData) {
+	public void remove() {
 		if (blockBreakingProgress != null && !world.isRemote)
 			world.sendBlockBreakProgress(getEntityId(), blockBreakingProgress.getKey(), -1);
-		super.remove(keepData);
+		super.remove();
 	}
 
 	public static int deployerKillsDoNotSpawnXP(int i, PlayerEntity player) {

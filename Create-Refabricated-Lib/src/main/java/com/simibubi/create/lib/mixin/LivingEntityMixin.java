@@ -1,5 +1,10 @@
 package com.simibubi.create.lib.mixin;
 
+import com.simibubi.create.lib.extensions.EntityExtensions;
+
+import net.minecraft.entity.item.ItemEntity;
+import net.minecraft.util.DamageSource;
+
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -25,6 +30,9 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 
+import java.util.ArrayList;
+import java.util.Collection;
+
 @Mixin(LivingEntity.class)
 public abstract class LivingEntityMixin extends Entity {
 	public LivingEntityMixin(EntityType<?> entityType, World world) {
@@ -33,6 +41,18 @@ public abstract class LivingEntityMixin extends Entity {
 
 	@Shadow protected PlayerEntity attackingPlayer;
 	@Shadow public abstract ItemStack getHeldItem(Hand hand);
+
+	@Inject(method = "spawnDrops(Lnet/minecraft/util/DamageSource;)V", at = @At("HEAD"))
+	private void create$spawnDropsHEAD(DamageSource source, CallbackInfo ci) {
+		((EntityExtensions) this).captureDrops(new ArrayList<>());
+	}
+
+	@Inject(method = "spawnDrops(Lnet/minecraft/util/DamageSource;)V", at = @At("TAIL"))
+	private void create$spawnDropsTAIL(DamageSource source, CallbackInfo ci) {
+		Collection<ItemEntity> drops = ((EntityExtensions) this).captureDrops(null);
+		if (!LivingEntityEvents.DROPS.invoker().onLivingEntityDrops(source, drops))
+			drops.forEach(e -> world.addEntity(e));
+	}
 
 	@Environment(EnvType.CLIENT)
 	@Inject(method = "swingHand(Lnet/minecraft/util/Hand;Z)V", at = @At("HEAD"), cancellable = true)

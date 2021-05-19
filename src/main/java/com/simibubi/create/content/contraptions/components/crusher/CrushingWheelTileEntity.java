@@ -12,6 +12,8 @@ import net.minecraft.util.Direction;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.vector.Vector3d;
 
+import java.util.Collection;
+
 public class CrushingWheelTileEntity extends KineticTileEntity {
 
 	public static DamageSource damageSource = DamageSourceHelper.create$createDamageSourceWhichBypassesArmor("create.crush").setDifficultyScaled();
@@ -50,13 +52,15 @@ public class CrushingWheelTileEntity extends KineticTileEntity {
 		event.setLootingLevel(2);		//This does not currently increase mob drops. It seems like this only works for damage done by an entity.
 	}
 
-	public static void handleCrushedMobDrops(LivingDropsEvent event) {
-		if (event.getSource() != CrushingWheelTileEntity.damageSource)
-			return;
+	public static boolean handleCrushedMobDrops(DamageSource source, Collection<ItemEntity> drops) {
+		if (source != CrushingWheelTileEntity.damageSource)
+			return false;
 		Vector3d outSpeed = Vector3d.ZERO;
-		for (ItemEntity outputItem : event.getDrops()) {
+		for (ItemEntity outputItem : drops) {
 			outputItem.setMotion(outSpeed);
 		}
+
+		return false;
 	}
 
 }

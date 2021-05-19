@@ -1,7 +1,24 @@
 package com.simibubi.create.events;
 
+import com.simibubi.create.content.contraptions.components.crusher.CrushingWheelTileEntity;
 import com.simibubi.create.content.contraptions.components.structureMovement.train.CouplingHandler;
 import com.simibubi.create.lib.event.StartRidingCallback;
+import com.simibubi.create.content.contraptions.components.deployer.DeployerFakePlayer;
+import com.simibubi.create.content.curiosities.armor.DivingBootsItem;
+import com.simibubi.create.content.curiosities.armor.DivingHelmetItem;
+import com.simibubi.create.content.curiosities.tools.ExtendoGripItem;
+import com.simibubi.create.lib.event.EntityEyeHeightCallback;
+import com.simibubi.create.lib.event.FluidPlaceBlockCallback;
+
+import com.simibubi.create.lib.event.LivingEntityEvents;
+
+import com.simibubi.create.lib.event.MobEntitySetTargetCallback;
+
+import com.simibubi.create.lib.event.PlayerStartTrackingCallback;
+
+import net.fabricmc.fabric.api.event.player.AttackBlockCallback;
+
+import net.minecraft.entity.item.minecart.AbstractMinecartEntity;
 
 import org.jetbrains.annotations.Nullable;
 
@@ -38,13 +55,11 @@ import net.fabricmc.fabric.api.event.lifecycle.v1.ServerEntityEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerWorldEvents;
-import net.fabricmc.fabric.api.event.player.AttackBlockCallback;
 import net.fabricmc.fabric.api.event.player.AttackEntityCallback;
 import net.minecraft.block.BlockState;
 import net.minecraft.command.CommandSource;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.item.minecart.AbstractMinecartEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.fluid.FluidState;
 import net.minecraft.item.ItemStack;
@@ -178,6 +193,9 @@ public class CommonEvents {
 		LivingEntityEvents.TICK.register(ExtendoGripItem::holdingExtendoGripIncreasesRange);
 		LivingEntityEvents.TICK.register(DivingBootsItem::accellerateDescentUnderwater);
 		LivingEntityEvents.TICK.register(DivingHelmetItem::breatheUnderwater);
+		EntityEyeHeightCallback.EVENT.register(DeployerFakePlayer::deployerHasEyesOnHisFeet);
+		LivingEntityEvents.DROPS.register(CrushingWheelTileEntity::handleCrushedMobDrops);
+		LivingEntityEvents.DROPS.register(DeployerFakePlayer::deployerCollectsDropsFromKilledEntities);
 	}
 
 }
