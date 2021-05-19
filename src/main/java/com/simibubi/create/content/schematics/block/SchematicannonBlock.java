@@ -4,6 +4,7 @@ import com.simibubi.create.AllShapes;
 import com.simibubi.create.AllTileEntities;
 import com.simibubi.create.foundation.block.ITE;
 import com.simibubi.create.foundation.item.ItemHelper;
+import com.simibubi.create.lib.utility.NetworkUtil;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -52,8 +53,7 @@ public class SchematicannonBlock extends Block implements ITE<SchematicannonTile
 			BlockRayTraceResult hit) {
 		if (worldIn.isRemote)
 			return ActionResultType.SUCCESS;
-		withTileEntityDo(worldIn, pos,
-				te -> NetworkHooks.openGui((ServerPlayerEntity) player, te, te::sendToContainer));
+		withTileEntityDo(worldIn, pos, te -> NetworkUtil.openGUI((ServerPlayerEntity) player, te, te::sendToContainer));
 		return ActionResultType.SUCCESS;
 	}
 

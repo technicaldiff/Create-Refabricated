@@ -7,6 +7,8 @@ import javax.annotation.Nullable;
 import com.mojang.serialization.Codec;
 import com.simibubi.create.foundation.utility.NBTProcessors;
 
+import com.simibubi.create.lib.extensions.StructureProcessorExtensions;
+
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
@@ -20,7 +22,7 @@ import net.minecraft.world.gen.feature.template.PlacementSettings;
 import net.minecraft.world.gen.feature.template.StructureProcessor;
 import net.minecraft.world.gen.feature.template.Template;
 
-public class SchematicProcessor extends StructureProcessor {
+public class SchematicProcessor extends StructureProcessor implements StructureProcessorExtensions {
 
 	public static final SchematicProcessor INSTANCE = new SchematicProcessor();
 	public static final Codec<SchematicProcessor> CODEC = Codec.unit(() -> {
