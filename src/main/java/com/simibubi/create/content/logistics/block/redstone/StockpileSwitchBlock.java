@@ -8,6 +8,7 @@ import com.simibubi.create.foundation.block.ITE;
 import com.simibubi.create.foundation.gui.ScreenOpener;
 import com.simibubi.create.foundation.utility.Iterate;
 
+import com.simibubi.create.lib.block.CanConnectRedstoneBlock;
 import com.tterrag.registrate.fabric.EnvExecutor;
 
 import net.minecraft.block.Block;
@@ -32,7 +33,7 @@ import net.minecraft.world.World;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 
-public class StockpileSwitchBlock extends HorizontalBlock implements ITE<StockpileSwitchTileEntity>, IWrenchable {
+public class StockpileSwitchBlock extends HorizontalBlock implements ITE<StockpileSwitchTileEntity>, IWrenchable, CanConnectRedstoneBlock {
 
 	public static final IntegerProperty INDICATOR = IntegerProperty.create("indicator", 0, 6);
 

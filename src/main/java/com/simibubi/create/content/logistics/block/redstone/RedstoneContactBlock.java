@@ -10,6 +10,8 @@ import com.simibubi.create.foundation.block.ProperDirectionalBlock;
 
 import com.simibubi.create.lib.annotation.MethodsReturnNonnullByDefault;
 
+import com.simibubi.create.lib.block.CanConnectRedstoneBlock;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.item.BlockItemUseContext;
@@ -25,7 +27,7 @@ import net.minecraft.world.server.ServerWorld;
 
 @ParametersAreNonnullByDefault
 @MethodsReturnNonnullByDefault
-public class RedstoneContactBlock extends ProperDirectionalBlock {
+public class RedstoneContactBlock extends ProperDirectionalBlock implements CanConnectRedstoneBlock {
 
 	public static final BooleanProperty POWERED = BlockStateProperties.POWERED;
 

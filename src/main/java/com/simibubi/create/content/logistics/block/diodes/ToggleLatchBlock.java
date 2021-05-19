@@ -4,6 +4,8 @@ import java.util.Random;
 
 import com.simibubi.create.AllItems;
 
+import com.simibubi.create.lib.block.CanConnectRedstoneBlock;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
@@ -18,7 +20,7 @@ import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 
-public class ToggleLatchBlock extends AbstractDiodeBlock {
+public class ToggleLatchBlock extends AbstractDiodeBlock implements CanConnectRedstoneBlock {
 
 	public static BooleanProperty POWERING = BooleanProperty.create("powering");
 

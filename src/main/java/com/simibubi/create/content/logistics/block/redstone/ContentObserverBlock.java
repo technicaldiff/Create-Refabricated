@@ -14,6 +14,8 @@ import com.simibubi.create.foundation.tileEntity.behaviour.filtering.FilteringBe
 import com.simibubi.create.foundation.tileEntity.behaviour.inventory.InvManipulationBehaviour;
 import com.simibubi.create.foundation.utility.Iterate;
 
+import com.simibubi.create.lib.block.CanConnectRedstoneBlock;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.HorizontalBlock;
@@ -31,7 +33,7 @@ import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 
-public class ContentObserverBlock extends HorizontalBlock implements ITE<ContentObserverTileEntity>, IWrenchable {
+public class ContentObserverBlock extends HorizontalBlock implements ITE<ContentObserverTileEntity>, IWrenchable, CanConnectRedstoneBlock {
 
 	public static final BooleanProperty POWERED = BlockStateProperties.POWERED;
 

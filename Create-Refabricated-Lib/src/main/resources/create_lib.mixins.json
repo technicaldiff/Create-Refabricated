@@ -26,6 +26,7 @@
     "PlayerControllerMixin",
     "PlayerEntityMixin",
     "RailStateMixin",
+    "RedstoneWireBlockMixin",
     "ShapedRecipeMixin",
     "ShapelessRecipe$SerializerMixin",
     "SSpawnObjectPacketMixin",

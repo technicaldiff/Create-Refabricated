@@ -2,6 +2,8 @@ package com.simibubi.create.content.logistics.block.diodes;
 
 import java.util.Random;
 
+import com.simibubi.create.lib.block.CanConnectRedstoneBlock;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.state.BooleanProperty;
@@ -12,7 +14,7 @@ import net.minecraft.world.IBlockReader;
 import net.minecraft.world.TickPriority;
 import net.minecraft.world.server.ServerWorld;
 
-public class PulseRepeaterBlock extends AbstractDiodeBlock {
+public class PulseRepeaterBlock extends AbstractDiodeBlock implements CanConnectRedstoneBlock {
 
 	public static BooleanProperty PULSING = BooleanProperty.create("pulsing");
 
@@ -25,14 +27,14 @@ public class PulseRepeaterBlock extends AbstractDiodeBlock {
 	protected int getDelay(BlockState state) {
 		return 1;
 	}
-	
+
 	@Override
 	public boolean canConnectRedstone(BlockState state, IBlockReader world, BlockPos pos, Direction side) {
 		if (side == null)
 			return false;
 		return side.getAxis() == state.get(HORIZONTAL_FACING).getAxis();
 	}
-	
+
 	@Override
 	public void scheduledTick(BlockState state, ServerWorld worldIn, BlockPos pos, Random random) {
 		boolean powered = state.get(POWERED);

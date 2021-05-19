@@ -3,6 +3,8 @@ package com.simibubi.create.content.logistics.block.diodes;
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.AllTileEntities;
 
+import com.simibubi.create.lib.block.CanConnectRedstoneBlock;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.state.BooleanProperty;
@@ -12,7 +14,7 @@ import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockReader;
 
-public class AdjustableRepeaterBlock extends AbstractDiodeBlock {
+public class AdjustableRepeaterBlock extends AbstractDiodeBlock implements CanConnectRedstoneBlock {
 
 	public static BooleanProperty POWERING = BooleanProperty.create("powering");
 
