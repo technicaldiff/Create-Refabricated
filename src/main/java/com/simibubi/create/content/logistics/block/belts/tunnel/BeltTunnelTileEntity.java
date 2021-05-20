@@ -7,6 +7,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import net.minecraft.world.server.ServerWorld;
+
 import org.apache.commons.lang3.tuple.Pair;
 
 import com.simibubi.create.AllBlocks;
@@ -169,7 +171,8 @@ public class BeltTunnelTileEntity extends SmartTileEntity implements IInstanceRe
 	}
 
 	private void sendFlaps() {
-		AllPackets.channel.send(packetTarget(), new TunnelFlapPacket(this, flapsToSend));
+		AllPackets.channel.sendToClientsTracking(new TunnelFlapPacket(this, flapsToSend), (ServerWorld) containedChunk().getWorld(), containedChunk().getPos());
+//		AllPackets.channel.send(packetTarget(), new TunnelFlapPacket(this, flapsToSend));
 
 		flapsToSend.clear();
 	}

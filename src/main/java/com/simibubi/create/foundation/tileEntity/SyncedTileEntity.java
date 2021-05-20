@@ -3,12 +3,8 @@ package com.simibubi.create.foundation.tileEntity;
 import javax.annotation.ParametersAreNonnullByDefault;
 
 import com.simibubi.create.lib.annotation.MethodsReturnNonnullByDefault;
-
 import com.simibubi.create.lib.block.CustomDataPacketHandlingTileEntity;
 import com.simibubi.create.lib.extensions.TileEntityExtensions;
-
-import com.simibubi.create.lib.utility.MixinHelper;
-
 import com.simibubi.create.lib.utility.NBTSerializable;
 
 import net.minecraft.block.BlockState;
@@ -78,9 +74,9 @@ public abstract class SyncedTileEntity extends TileEntity implements TileEntityE
 		sendData();
 	}
 
-	public PacketDistributor.PacketTarget packetTarget() {
-		return PacketDistributor.TRACKING_CHUNK.with(this::containedChunk);
-	}
+//	public PacketDistributor.PacketTarget packetTarget() {
+//		return PacketDistributor.TRACKING_CHUNK.with(this::containedChunk);
+//	}
 
 	public Chunk containedChunk() {
 		SectionPos sectionPos = SectionPos.from(pos);

@@ -36,6 +36,7 @@ import net.minecraft.util.Direction;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.vector.Vector3d;
 import net.fabricmc.api.EnvType;
+import net.minecraft.world.server.ServerWorld;
 
 public class FunnelTileEntity extends SmartTileEntity implements IHaveHoveringInformation, IInstanceRendered {
 
@@ -284,7 +285,8 @@ public class FunnelTileEntity extends SmartTileEntity implements IHaveHoveringIn
 
 	public void flap(boolean inward) {
 		if (!world.isRemote) {
-			AllPackets.channel.send(packetTarget(), new FunnelFlapPacket(this, inward));
+			AllPackets.channel.sendToClientsTracking(new FunnelFlapPacket(this, inward), (ServerWorld) containedChunk().getWorld(), containedChunk().getPos());
+//			AllPackets.channel.send(packetTarget(), new FunnelFlapPacket(this, inward));
 		} else {
 			flap.set(inward ? 1 : -1);
 			AllSoundEvents.FUNNEL_FLAP.playAt(world, pos, 1, 1, true);
