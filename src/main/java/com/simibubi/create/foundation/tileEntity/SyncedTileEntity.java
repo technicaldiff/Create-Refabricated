@@ -9,6 +9,8 @@ import com.simibubi.create.lib.extensions.TileEntityExtensions;
 
 import com.simibubi.create.lib.utility.MixinHelper;
 
+import com.simibubi.create.lib.utility.NBTSerializable;
+
 import net.minecraft.block.BlockState;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.NetworkManager;
@@ -20,7 +22,7 @@ import net.minecraft.world.chunk.Chunk;
 
 @MethodsReturnNonnullByDefault
 @ParametersAreNonnullByDefault
-public abstract class SyncedTileEntity extends TileEntity implements TileEntityExtensions, CustomDataPacketHandlingTileEntity {
+public abstract class SyncedTileEntity extends TileEntity implements TileEntityExtensions, CustomDataPacketHandlingTileEntity, NBTSerializable {
 
 	public SyncedTileEntity(TileEntityType<?> tileEntityTypeIn) {
 		super(tileEntityTypeIn);
@@ -83,5 +85,21 @@ public abstract class SyncedTileEntity extends TileEntity implements TileEntityE
 	public Chunk containedChunk() {
 		SectionPos sectionPos = SectionPos.from(pos);
 		return world.getChunk(sectionPos.getSectionX(), sectionPos.getSectionZ());
+	}
+
+	@Override
+	public CompoundNBT create$serializeNBT() {
+		CompoundNBT nbt = new CompoundNBT();
+		this.write(nbt);
+		return nbt;
+	}
+
+	@Override
+	public void create$deserializeNBT(CompoundNBT nbt) {
+		create$deserializeNBT(null, nbt);
+	}
+
+	public void create$deserializeNBT(BlockState state, CompoundNBT nbt) {
+		this.fromTag(state, nbt);
 	}
 }

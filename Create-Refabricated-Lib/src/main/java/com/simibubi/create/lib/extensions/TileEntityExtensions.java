@@ -6,5 +6,5 @@ import net.minecraft.nbt.CompoundNBT;
 public interface TileEntityExtensions {
 	CompoundNBT create$getExtraCustomData();
 
-	void deserializeNBT(BlockState state, CompoundNBT nbt);
+	void create$deserializeNBT(BlockState state, CompoundNBT nbt);
 }
