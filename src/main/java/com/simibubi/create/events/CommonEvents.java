@@ -14,27 +14,24 @@ import com.simibubi.create.lib.event.LivingEntityEvents;
 
 import com.simibubi.create.lib.event.MobEntitySetTargetCallback;
 
-import com.simibubi.create.lib.event.PlayerStartTrackingCallback;
-
 import net.fabricmc.fabric.api.event.player.AttackBlockCallback;
 
+import net.fabricmc.fabric.api.networking.v1.EntityTrackingEvents;
 import net.minecraft.entity.item.minecart.AbstractMinecartEntity;
+
+import net.minecraft.entity.player.ServerPlayerEntity;
 
 import org.jetbrains.annotations.Nullable;
 
 import com.mojang.brigadier.CommandDispatcher;
 import com.simibubi.create.AllFluids;
 import com.simibubi.create.Create;
-import com.simibubi.create.content.contraptions.components.deployer.DeployerFakePlayer;
 import com.simibubi.create.content.contraptions.components.structureMovement.ContraptionHandler;
 import com.simibubi.create.content.contraptions.components.structureMovement.train.CouplingPhysics;
 import com.simibubi.create.content.contraptions.components.structureMovement.train.capability.CapabilityMinecartController;
 import com.simibubi.create.content.contraptions.fluids.recipe.FluidTransferRecipes;
 import com.simibubi.create.content.contraptions.fluids.recipe.PotionMixingRecipeManager;
 import com.simibubi.create.content.contraptions.wrench.WrenchItem;
-import com.simibubi.create.content.curiosities.armor.DivingBootsItem;
-import com.simibubi.create.content.curiosities.armor.DivingHelmetItem;
-import com.simibubi.create.content.curiosities.tools.ExtendoGripItem;
 import com.simibubi.create.content.curiosities.zapper.ZapperInteractionHandler;
 import com.simibubi.create.content.curiosities.zapper.ZapperItem;
 import com.simibubi.create.content.schematics.ServerSchematicLoader;
@@ -44,10 +41,6 @@ import com.simibubi.create.foundation.utility.Iterate;
 import com.simibubi.create.foundation.utility.ServerSpeedProvider;
 import com.simibubi.create.foundation.utility.WorldAttached;
 import com.simibubi.create.foundation.utility.recipe.RecipeFinder;
-import com.simibubi.create.lib.event.FluidPlaceBlockCallback;
-import com.simibubi.create.lib.event.LivingEntityEvents;
-import com.simibubi.create.lib.event.MobEntitySetTargetCallback;
-import com.simibubi.create.lib.event.PlayerStartTrackingCallback;
 
 import net.fabricmc.fabric.api.command.v1.CommandRegistrationCallback;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerChunkEvents;
@@ -158,7 +151,7 @@ public class CommonEvents {
 		CapabilityMinecartController.attach(cart);
 	}
 
-	public static void startTracking(PlayerEntity player, Entity target) {
+	public static void startTracking(Entity target, ServerPlayerEntity player) {
 		CapabilityMinecartController.startTracking(target);
 	}
 
@@ -181,7 +174,7 @@ public class CommonEvents {
 		ServerWorldEvents.UNLOAD.register((server, world) -> CommonEvents.onUnloadWorld(world));
 		FluidPlaceBlockCallback.EVENT.register(CommonEvents::whenFluidsMeet);
 		LivingEntityEvents.TICK.register(CommonEvents::onUpdateLivingEntity);
-		PlayerStartTrackingCallback.EVENT.register(CommonEvents::startTracking);
+		EntityTrackingEvents.START_TRACKING.register(CommonEvents::startTracking);
 
 		// External Events
 

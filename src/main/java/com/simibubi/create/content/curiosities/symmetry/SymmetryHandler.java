@@ -9,6 +9,8 @@ import com.simibubi.create.content.curiosities.symmetry.mirror.EmptyMirror;
 import com.simibubi.create.content.curiosities.symmetry.mirror.SymmetryMirror;
 import com.simibubi.create.foundation.utility.AnimationTickHolder;
 
+import net.fabricmc.fabric.api.client.rendering.v1.WorldRenderContext;
+import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.player.ClientPlayerEntity;
@@ -22,17 +24,18 @@ import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.particles.ParticleTypes;
 import net.minecraft.particles.RedstoneParticleData;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.vector.Vector3d;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
+import net.minecraft.world.World;
 
 public class SymmetryHandler {
 
 	private static int tickCounter = 0;
 
-	@SubscribeEvent(priority = EventPriority.LOWEST)
 	public static void onBlockPlaced(EntityPlaceEvent event) {
 		if (event.getWorld()
 			.isRemote())
@@ -53,24 +56,20 @@ public class SymmetryHandler {
 		}
 	}
 
-	@SubscribeEvent(priority = EventPriority.LOWEST)
-	public static void onBlockDestroyed(BreakEvent event) {
-		if (event.getWorld()
-			.isRemote())
-			return;
-
-		PlayerEntity player = event.getPlayer();
+	public static void onBlockDestroyed(World world, PlayerEntity player, BlockPos pos, BlockState state, TileEntity te) {
 		PlayerInventory inv = player.inventory;
 		for (int i = 0; i < PlayerInventory.getHotbarSize(); i++) {
 			if (!inv.getStackInSlot(i)
 				.isEmpty() && AllItems.WAND_OF_SYMMETRY.isIn(inv.getStackInSlot(i))) {
-				SymmetryWandItem.remove(player.world, inv.getStackInSlot(i), player, event.getPos());
+				SymmetryWandItem.remove(player.world, inv.getStackInSlot(i), player, pos);
 			}
 		}
 	}
 
 	@Environment(EnvType.CLIENT)
-	public static void render(MatrixStack ms) {
+	public static void render(WorldRenderContext worldRenderContext) {
+		MatrixStack ms = worldRenderContext.matrixStack();
+
 		Minecraft mc = Minecraft.getInstance();
 		ClientPlayerEntity player = mc.player;
 
@@ -117,10 +116,7 @@ public class SymmetryHandler {
 	}
 
 	@Environment(EnvType.CLIENT)
-	public static void onClientTick(ClientTickEvent event) {
-		if (event.phase == Phase.START)
-			return;
-		Minecraft mc = Minecraft.getInstance();
+	public static void onClientTick(Minecraft mc) {
 		ClientPlayerEntity player = mc.player;
 
 		if (mc.world == null)

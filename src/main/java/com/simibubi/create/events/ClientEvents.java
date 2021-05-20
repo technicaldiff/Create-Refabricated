@@ -26,7 +26,6 @@ import com.simibubi.create.content.contraptions.goggles.IHaveGoggleInformation;
 import com.simibubi.create.content.contraptions.relays.belt.item.BeltConnectorHandler;
 import com.simibubi.create.content.curiosities.armor.CopperBacktankArmorLayer;
 import com.simibubi.create.content.curiosities.symmetry.SymmetryHandler;
-import com.simibubi.create.content.curiosities.tools.ExtendoGripItem;
 import com.simibubi.create.content.curiosities.tools.ExtendoGripRenderHandler;
 import com.simibubi.create.content.curiosities.zapper.ZapperItem;
 import com.simibubi.create.content.curiosities.zapper.ZapperRenderHandler;
@@ -62,7 +61,6 @@ import com.simibubi.create.lib.event.ClientWorldEvents;
 import com.simibubi.create.lib.event.LeftClickAirCallback;
 import com.simibubi.create.lib.event.RenderHandCallback;
 import com.simibubi.create.lib.event.RenderTooltipBorderColorCallback;
-import com.simibubi.create.lib.event.RenderWorldLastCallback;
 
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientChunkEvents;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientEntityEvents;
@@ -73,6 +71,7 @@ import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
 import net.fabricmc.fabric.api.client.rendering.v1.WorldRenderContext;
 import net.fabricmc.fabric.api.client.rendering.v1.WorldRenderEvents;
 import net.fabricmc.fabric.api.event.player.AttackBlockCallback;
+import net.fabricmc.fabric.api.event.player.PlayerBlockBreakEvents;
 import net.fabricmc.fabric.api.event.player.UseBlockCallback;
 import net.fabricmc.fabric.api.networking.v1.PacketSender;
 import net.minecraft.client.Minecraft;
@@ -358,7 +357,9 @@ public class ClientEvents {
 		UseBlockCallback.EVENT.register(EjectorTargetHandler::rightClickingBlocksSelectsThem);
 		AttackBlockCallback.EVENT.register(ArmInteractionPointHandler::leftClickingBlocksDeselectsThem);
 		AttackBlockCallback.EVENT.register(EjectorTargetHandler::leftClickingBlocksDeselectsThem);
-		RenderWorldLastCallback.EVENT.register(SymmetryHandler::render);
+		WorldRenderEvents.LAST.register(SymmetryHandler::render);
+		ClientTickEvents.END_CLIENT_TICK.register(SymmetryHandler::onClientTick);
+		PlayerBlockBreakEvents.AFTER.register(SymmetryHandler::onBlockDestroyed);
 	}
 
 //	public static void loadCompleted(FMLLoadCompleteEvent event) { config stuff, unnecessary for fabric
