@@ -7,6 +7,7 @@ import com.simibubi.create.foundation.block.ProperDirectionalBlock;
 
 import com.simibubi.create.lib.block.WeakPowerCheckingBlock;
 
+import com.simibubi.create.lib.extensions.BlockExtensions;
 import com.simibubi.create.lib.extensions.BlockParticleDataExtensions;
 import com.simibubi.create.lib.extensions.BlockStateExtensions;
 
@@ -31,7 +32,7 @@ import net.minecraft.world.IWorldReader;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 
-public class StickerBlock extends ProperDirectionalBlock implements ITE<StickerTileEntity>, WeakPowerCheckingBlock, ITileEntityProvider, BlockStateExtensions {
+public class StickerBlock extends ProperDirectionalBlock implements ITE<StickerTileEntity>, WeakPowerCheckingBlock, ITileEntityProvider, BlockExtensions {
 
 	public static final BooleanProperty POWERED = BlockStateProperties.POWERED;
 	public static final BooleanProperty EXTENDED = BlockStateProperties.EXTENDED;
@@ -147,12 +148,11 @@ public class StickerBlock extends ProperDirectionalBlock implements ITE<StickerT
 				entity.getX(), entity.getY(), entity.getZ(), numberOfParticles, 0.0D, 0.0D, 0.0D, (double) 0.15F);
 			return true;
 		}
-		return BlockStateExtensions.super.create$addLandingEffects(state1, worldserver, pos, state2, entity, numberOfParticles);
+		return BlockExtensions.super.create$addLandingEffects(state1, worldserver, pos, state2, entity, numberOfParticles);
 	}
 
 	@Override
-	public boolean create$addRunningEffects(World world, BlockPos pos, Entity entity) {
-		BlockState state = world.getBlockState(pos);
+	public boolean create$addRunningEffects(BlockState state, World world, BlockPos pos, Entity entity) {
 		if (state.get(FACING) == Direction.UP) {
 			Vector3d Vector3d = entity.getMotion();
 			world.addParticle(
@@ -163,7 +163,7 @@ public class StickerBlock extends ProperDirectionalBlock implements ITE<StickerT
 				1.5D, Vector3d.z * -4.0D);
 			return true;
 		}
-		return BlockStateExtensions.super.create$addRunningEffects(state, world, pos, entity);
+		return BlockExtensions.super.create$addRunningEffects(state, world, pos, entity);
 	}
 
 }

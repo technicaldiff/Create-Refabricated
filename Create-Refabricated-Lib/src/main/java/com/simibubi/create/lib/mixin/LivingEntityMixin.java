@@ -9,6 +9,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyVariable;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
 import com.simibubi.create.lib.event.LivingEntityEvents;
 import com.simibubi.create.lib.extensions.BlockStateExtensions;
@@ -75,8 +76,10 @@ public abstract class LivingEntityMixin extends Entity {
 		return LivingEntityEvents.EXPERIENCE_DROP.invoker().onLivingEntityExperienceDrop(i, attackingPlayer);
 	}
 	@Inject(at = @At(value = "INVOKE", target = "Lnet/minecraft/world/server/ServerWorld;spawnParticle(Lnet/minecraft/particles/IParticleData;DDDIDDDD)I", shift = At.Shift.BEFORE),
+			locals = LocalCapture.CAPTURE_FAILEXCEPTION,
 			method = "Lnet/minecraft/entity/LivingEntity;updateFallState(DZLnet/minecraft/block/BlockState;Lnet/minecraft/util/math/BlockPos;)V", cancellable = true)
-	protected void updateFallState(double d, boolean bl, BlockState blockState, BlockPos blockPos, CallbackInfo ci, int i) {
+	protected void create$updateFallState(double d, boolean bl, BlockState blockState, BlockPos blockPos, CallbackInfo ci,
+										  float f, double e, int i) {
 		if (((BlockStateExtensions) blockState).create$addLandingEffects((ServerWorld) world, blockPos, blockState, MixinHelper.cast(this), i)) {
 			super.updateFallState(d, bl, blockState, blockPos);
 			ci.cancel();

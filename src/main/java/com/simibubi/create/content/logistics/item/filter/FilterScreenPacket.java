@@ -16,10 +16,8 @@ public class FilterScreenPacket implements C2SPacket {
 		CLEAR, WHITELIST, WHITELIST2, BLACKLIST, RESPECT_DATA, IGNORE_DATA, UPDATE_FILTER_ITEM, ADD_TAG, ADD_INVERTED_TAG;
 	}
 
-	private final Option option;
-	private final CompoundNBT data;
-
-	protected FilterScreenPacket() {}
+	private Option option;
+	private CompoundNBT data;
 
 	public FilterScreenPacket(Option option) {
 		this(option, new CompoundNBT());

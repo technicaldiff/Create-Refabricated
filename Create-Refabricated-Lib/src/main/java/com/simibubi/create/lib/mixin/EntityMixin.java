@@ -97,6 +97,8 @@ public abstract class EntityMixin implements EntityExtensions, NBTSerializable {
 		}
 	}
 
+	// RUNNING EFFECTS
+
 	@Inject(at = @At(value = "INVOKE", target = "Lnet/minecraft/world/World;getBlockState(Lnet/minecraft/util/math/BlockPos;)Lnet/minecraft/block/BlockState;", shift = At.Shift.AFTER)
 			, method = "spawnSprintingParticles()V", cancellable = true)
 	public void create$spawnSprintingParticles(CallbackInfo ci, BlockState blockstate) {

@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
+import com.simibubi.create.lib.extensions.BlockExtensions;
+
 import org.apache.commons.lang3.mutable.MutableBoolean;
 
 import com.simibubi.create.AllBlocks;
@@ -77,7 +79,8 @@ import net.minecraft.world.World;
 import net.minecraft.world.gen.DebugChunkGenerator;
 import net.minecraft.world.server.ServerWorld;
 
-public class BeltBlock extends HorizontalKineticBlock implements ITE<BeltTileEntity>, ISpecialBlockItemRequirement, BlockPickInteractionAware, CustomPathNodeTypeBlock {
+public class BeltBlock extends HorizontalKineticBlock implements ITE<BeltTileEntity>, ISpecialBlockItemRequirement,
+		BlockPickInteractionAware, CustomPathNodeTypeBlock, BlockExtensions {
 
 	public static final Property<BeltSlope> SLOPE = EnumProperty.create("slope", BeltSlope.class);
 	public static final Property<BeltPart> PART = EnumProperty.create("part", BeltPart.class);
@@ -154,7 +157,7 @@ public class BeltBlock extends HorizontalKineticBlock implements ITE<BeltTileEnt
 	}
 
 	@Override
-	public boolean isFlammable(BlockState state, IBlockReader world, BlockPos pos, Direction face) {
+	public boolean create$isFlammable(BlockState state, IBlockReader world, BlockPos pos, Direction face) {
 		return false;
 	}
 
@@ -351,7 +354,7 @@ public class BeltBlock extends HorizontalKineticBlock implements ITE<BeltTileEnt
 
 	@Override
 	@Environment(EnvType.CLIENT)
-	public boolean addDestroyEffects(BlockState state, World world, BlockPos pos, ParticleManager manager) {
+	public boolean create$addDestroyEffects(BlockState state, World world, BlockPos pos, ParticleManager manager) {
 		BlockHelper.addReducedDestroyEffects(state, world, pos, manager);
 		return true;
 	}
