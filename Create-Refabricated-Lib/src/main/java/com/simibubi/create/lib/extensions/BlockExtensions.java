@@ -9,13 +9,17 @@ import net.fabricmc.api.Environment;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
+import net.minecraft.block.BreakableBlock;
 import net.minecraft.block.FireBlock;
+import net.minecraft.block.LeavesBlock;
 import net.minecraft.block.SoundType;
 import net.minecraft.client.particle.ParticleManager;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.fluid.FluidState;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.IBlockDisplayReader;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorldReader;
 import net.minecraft.world.World;
@@ -49,5 +53,9 @@ public interface BlockExtensions {
 
 	default int create$getLightValue(BlockState state, IBlockReader world, BlockPos pos) {
 		return state.getLightValue();
+	}
+
+	default boolean shouldDisplayFluidOverlay(BlockState state, IBlockDisplayReader world, BlockPos pos, FluidState fluidState) {
+		return state.getBlock() instanceof BreakableBlock || state.getBlock() instanceof LeavesBlock;
 	}
 }

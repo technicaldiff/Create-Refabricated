@@ -4,9 +4,20 @@ import java.util.List;
 
 import javax.annotation.Nonnull;
 
+import com.simibubi.create.AllSoundEvents;
+import com.simibubi.create.AllTags.AllBlockTags;
+import com.simibubi.create.foundation.item.ItemDescription;
+import com.simibubi.create.foundation.networking.AllPackets;
+import com.simibubi.create.foundation.utility.BlockHelper;
+import com.simibubi.create.foundation.utility.Lang;
+import com.simibubi.create.foundation.utility.NBTProcessors;
+import com.simibubi.create.lib.extensions.ItemExtensions;
 import com.simibubi.create.lib.item.EntitySwingListenerItem;
+import com.simibubi.create.lib.utility.Constants.NBT;
 import com.tterrag.registrate.fabric.EnvExecutor;
 
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.client.util.ITooltipFlag;
@@ -35,20 +46,8 @@ import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
 
-import com.simibubi.create.AllSoundEvents;
-import com.simibubi.create.AllTags.AllBlockTags;
-import com.simibubi.create.foundation.item.ItemDescription;
-import com.simibubi.create.foundation.networking.AllPackets;
-import com.simibubi.create.foundation.utility.BlockHelper;
-import com.simibubi.create.foundation.utility.Lang;
-import com.simibubi.create.foundation.utility.NBTProcessors;
-import com.simibubi.create.lib.utility.Constants.NBT;
-
-
-public abstract class ZapperItem extends Item implements EntitySwingListenerItem {
+public abstract class ZapperItem extends Item implements EntitySwingListenerItem, ItemExtensions {
 
 	public ZapperItem(Properties properties) {
 		super(properties.maxStackSize(1));
@@ -71,7 +70,7 @@ public abstract class ZapperItem extends Item implements EntitySwingListenerItem
 	}
 
 	@Override
-	public boolean shouldCauseReequipAnimation(ItemStack oldStack, ItemStack newStack, boolean slotChanged) {
+	public boolean create$shouldCauseReequipAnimation(ItemStack oldStack, ItemStack newStack, boolean slotChanged) {
 		boolean differentBlock = false;
 		if (oldStack.hasTag() && newStack.hasTag() && oldStack.getTag()
 			.contains("BlockUsed")
@@ -193,8 +192,9 @@ public abstract class ZapperItem extends Item implements EntitySwingListenerItem
 			applyCooldown(player, item, gunInOtherHand);
 			AllPackets.channel.sendToClientsTracking(
 				new ZapperBeamPacket(barrelPos, raytrace.getHitVec(), hand, false), player);
-			AllPackets.channel.send(PacketDistributor.PLAYER.with(() -> (ServerPlayerEntity) player),
-				new ZapperBeamPacket(barrelPos, raytrace.getHitVec(), hand, true));
+			AllPackets.channel.sendToClient(new ZapperBeamPacket(barrelPos, raytrace.getHitVec(), hand, true), (ServerPlayerEntity) player);
+//			AllPackets.channel.send(PacketDistributor.PLAYER.with(() -> (ServerPlayerEntity) player),
+//				new ZapperBeamPacket(barrelPos, raytrace.getHitVec(), hand, true));
 		}
 
 		return new ActionResult<>(ActionResultType.SUCCESS, item);

@@ -12,7 +12,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.Direction;
 
-public class PortableItemInterfaceTileEntity extends PortableStorageInterfaceTileEntity implements CapabilityProvider {
+public class PortableItemInterfaceTileEntity extends PortableStorageInterfaceTileEntity {
 
 	protected LazyOptional<IItemHandlerModifiable> capability;
 

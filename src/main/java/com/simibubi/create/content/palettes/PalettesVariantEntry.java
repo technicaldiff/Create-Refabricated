@@ -9,7 +9,6 @@ import com.simibubi.create.Create;
 import com.simibubi.create.foundation.data.CreateRegistrate;
 import com.simibubi.create.foundation.utility.Lang;
 import com.tterrag.registrate.builders.BlockBuilder;
-import com.tterrag.registrate.util.DataIngredient;
 import com.tterrag.registrate.util.entry.BlockEntry;
 import com.tterrag.registrate.util.nullness.NonNullSupplier;
 
@@ -32,25 +31,25 @@ public class PalettesVariantEntry {
 			CreateRegistrate registrate = Create.registrate();
 			BlockBuilder<? extends Block, CreateRegistrate> builder =
 				registrate.block(pattern.createName(name), pattern.getBlockFactory())
-					.initialProperties(initialProperties)
-					.blockstate(pattern.getBlockStateGenerator()
-						.apply(pattern)
-						.apply(name)::accept);
+					.initialProperties(initialProperties);
+//					.blockstate(pattern.getBlockStateGenerator()
+//						.apply(pattern)
+//						.apply(name)::accept);
 
 			if (pattern.isTranslucent())
 				builder.addLayer(() -> RenderType::getTranslucent);
 			if (pattern == PaletteBlockPatterns.COBBLESTONE)
 				builder.item().tag(AllTags.AllItemTags.COBBLESTONE.tag);
 			if (pattern.hasFoliage())
-				builder.onRegister(CreateRegistrate.blockColors(() -> AllColorHandlers::getGrassyBlock));
+				builder.onRegister(CreateRegistrate.blockColors(() -> AllColorHandlers::getGrassyBlock)); // these errors are from upstream
 			pattern.createCTBehaviour(variant)
 				.ifPresent(b -> builder.onRegister(connectedTextures(b)));
 
-			builder.recipe((c, p) -> {
-				p.stonecutting(DataIngredient.items(variant.getBaseBlock()
-					.get()), c::get);
-				pattern.addRecipes(variant, c, p);
-			});
+//			builder.recipe((c, p) -> {
+//				p.stonecutting(DataIngredient.items(variant.getBaseBlock()
+//					.get()), c::get);
+//				pattern.addRecipes(variant, c, p);
+//			});
 
 			if (pattern.hasFoliage())
 				builder.item()

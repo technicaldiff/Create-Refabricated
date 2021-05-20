@@ -13,10 +13,8 @@ import com.simibubi.create.Create;
 import com.simibubi.create.content.AllSections;
 import com.simibubi.create.foundation.block.connected.HorizontalCTBehaviour;
 import com.simibubi.create.foundation.block.connected.StandardCTBehaviour;
-import com.simibubi.create.foundation.data.BlockStateGen;
 import com.simibubi.create.foundation.data.CreateRegistrate;
 import com.simibubi.create.foundation.data.WindowGen;
-import com.tterrag.registrate.providers.DataGenContext;
 import com.tterrag.registrate.util.entry.BlockEntry;
 
 import net.minecraft.block.Block;
