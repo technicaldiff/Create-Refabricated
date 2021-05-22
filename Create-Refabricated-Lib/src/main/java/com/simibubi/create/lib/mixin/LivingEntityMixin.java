@@ -46,6 +46,14 @@ public abstract class LivingEntityMixin extends Entity {
 		((EntityExtensions) this).create$captureDrops(new ArrayList<>());
 	}
 
+	@Inject(method = "spawnDrops(Lnet/minecraft/util/DamageSource;)V",
+			at = @At(value = "INVOKE", target = "Lnet/minecraft/enchantment/EnchantmentHelper;getLootingModifier(Lnet/minecraft/entity/LivingEntity;)I"),
+			locals = LocalCapture.CAPTURE_FAILEXCEPTION)
+	private void create$spawnDropsBODY(DamageSource source, CallbackInfo ci,
+									  Entity entity, int j) {
+		j = LivingEntityEvents.LOOTING_LEVEL.invoker().modifyLootingLevel(source);
+	}
+
 	@Inject(method = "spawnDrops(Lnet/minecraft/util/DamageSource;)V", at = @At("TAIL"))
 	private void create$spawnDropsTAIL(DamageSource source, CallbackInfo ci) {
 		Collection<ItemEntity> drops = ((EntityExtensions) this).create$captureDrops(null);
@@ -77,7 +85,7 @@ public abstract class LivingEntityMixin extends Entity {
 	}
 	@Inject(at = @At(value = "INVOKE", target = "Lnet/minecraft/world/server/ServerWorld;spawnParticle(Lnet/minecraft/particles/IParticleData;DDDIDDDD)I", shift = At.Shift.BEFORE),
 			locals = LocalCapture.CAPTURE_FAILEXCEPTION,
-			method = "Lnet/minecraft/entity/LivingEntity;updateFallState(DZLnet/minecraft/block/BlockState;Lnet/minecraft/util/math/BlockPos;)V", cancellable = true)
+			method = "updateFallState(DZLnet/minecraft/block/BlockState;Lnet/minecraft/util/math/BlockPos;)V", cancellable = true)
 	protected void create$updateFallState(double d, boolean bl, BlockState blockState, BlockPos blockPos, CallbackInfo ci,
 										  float f, double e, int i) {
 		if (((BlockStateExtensions) blockState).create$addLandingEffects((ServerWorld) world, blockPos, blockState, MixinHelper.cast(this), i)) {

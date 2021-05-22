@@ -1,8 +1,9 @@
 package com.simibubi.create.content.contraptions.components.crusher;
 
+import java.util.Collection;
+
 import com.simibubi.create.content.contraptions.base.KineticTileEntity;
 import com.simibubi.create.foundation.utility.Iterate;
-
 import com.simibubi.create.lib.helper.DamageSourceHelper;
 
 import net.minecraft.entity.item.ItemEntity;
@@ -11,8 +12,6 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.vector.Vector3d;
-
-import java.util.Collection;
 
 public class CrushingWheelTileEntity extends KineticTileEntity {
 
@@ -46,10 +45,10 @@ public class CrushingWheelTileEntity extends KineticTileEntity {
 		fixControllers();
 	}
 
-	public static void crushingIsFortunate(LootingLevelEvent event) {
-		if (event.getDamageSource() != damageSource)
-			return;
-		event.setLootingLevel(2);		//This does not currently increase mob drops. It seems like this only works for damage done by an entity.
+	public static int crushingIsFortunate(DamageSource source) {
+		if (source != damageSource)
+			return 0;
+		return 2;		//This does not currently increase mob drops. It seems like this only works for damage done by an entity.
 	}
 
 	public static boolean handleCrushedMobDrops(DamageSource source, Collection<ItemEntity> drops) {

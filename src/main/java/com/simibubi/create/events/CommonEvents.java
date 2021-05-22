@@ -188,6 +188,7 @@ public class CommonEvents {
 		LivingEntityEvents.TICK.register(DivingHelmetItem::breatheUnderwater);
 		EntityEyeHeightCallback.EVENT.register(DeployerFakePlayer::deployerHasEyesOnHisFeet);
 		LivingEntityEvents.DROPS.register(CrushingWheelTileEntity::handleCrushedMobDrops);
+		LivingEntityEvents.LOOTING_LEVEL.register(CrushingWheelTileEntity::crushingIsFortunate);
 		LivingEntityEvents.DROPS.register(DeployerFakePlayer::deployerCollectsDropsFromKilledEntities);
 	}
 
