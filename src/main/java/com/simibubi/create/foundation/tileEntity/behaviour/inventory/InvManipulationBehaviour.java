@@ -186,8 +186,8 @@ public class InvManipulationBehaviour extends TileEntityBehaviour {
 		TileEntity invTE = world.getTileEntity(pos);
 		if (invTE == null)
 			return;
-		targetCapability = bypassSided ? CapabilityUtil.getCapability(invTE, CapabilityItemHandler.ITEM_HANDLER_CAPABILITY)
-			: CapabilityUtil.getCapability(invTE, CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, targetBlockFace.getFace());
+		targetCapability = bypassSided ? CapabilityUtil.getCapability(invTE, CapabilityUtil.ITEM_HANDLER_CAPABILITY)
+			: CapabilityUtil.getCapability(invTE, CapabilityUtil.ITEM_HANDLER_CAPABILITY);
 		if (targetCapability.isPresent())
 			targetCapability.addListener(this::onHandlerInvalidated);
 	}

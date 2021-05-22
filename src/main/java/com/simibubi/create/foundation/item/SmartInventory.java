@@ -6,11 +6,13 @@ import com.simibubi.create.foundation.tileEntity.SyncedTileEntity;
 
 import com.simibubi.create.lib.lba.item.ItemStackHandler;
 
+import com.simibubi.create.lib.utility.NBTSerializable;
+
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 
 public class SmartInventory extends RecipeWrapper
-	implements IItemHandlerModifiableIntermediate, INBTSerializable<CompoundNBT> {
+	implements IItemHandlerModifiableIntermediate, NBTSerializable {
 
 	protected boolean extractionAllowed;
 	protected boolean insertionAllowed;
@@ -111,12 +113,12 @@ public class SmartInventory extends RecipeWrapper
 	}
 
 	@Override
-	public CompoundNBT serializeNBT() {
+	public CompoundNBT create$serializeNBT() {
 		return getInv().serializeNBT();
 	}
 
 	@Override
-	public void deserializeNBT(CompoundNBT nbt) {
+	public void create$deserializeNBT(CompoundNBT nbt) {
 		getInv().deserializeNBT(nbt);
 	}
 

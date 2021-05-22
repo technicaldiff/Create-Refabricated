@@ -8,7 +8,6 @@ import com.simibubi.create.foundation.tileEntity.TileEntityBehaviour;
 import com.simibubi.create.foundation.tileEntity.behaviour.ValueBoxTransform;
 import com.simibubi.create.foundation.tileEntity.behaviour.filtering.FilteringBehaviour;
 import com.simibubi.create.foundation.utility.MatrixStacker;
-import com.simibubi.create.lib.capabilities.Capability;
 import com.simibubi.create.lib.lba.item.IItemHandler;
 import com.simibubi.create.lib.utility.LazyOptional;
 
@@ -16,7 +15,6 @@ import net.minecraft.block.BlockState;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityType;
-import net.minecraft.util.Direction;
 import net.minecraft.util.math.vector.Vector3d;
 
 public class CreativeCrateTileEntity extends CrateTileEntity {
@@ -83,12 +81,12 @@ public class CreativeCrateTileEntity extends CrateTileEntity {
 		filtering.withCallback(this::filterChanged);
 	}
 
-	@Override
-	public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
-		if (cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY)
-			return itemHandler.cast();
-		return super.getCapability(cap, side);
-	}
+//	@Override
+//	public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
+//		if (cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY)
+//			return itemHandler.cast();
+//		return super.getCapability(cap, side);
+//	}
 
 	public FilteringBehaviour createFilter() {
 		return new FilteringBehaviour(this, new ValueBoxTransform() {

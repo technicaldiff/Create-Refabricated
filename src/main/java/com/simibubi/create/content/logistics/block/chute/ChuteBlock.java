@@ -28,7 +28,7 @@ import net.minecraft.world.IWorldReader;
 import net.minecraft.world.World;
 
 public class ChuteBlock extends AbstractChuteBlock {
-	
+
 	public static final Property<Shape> SHAPE = EnumProperty.create("shape", Shape.class);
 	public static final DirectionProperty FACING = BlockStateProperties.FACING_EXCEPT_UP;
 
@@ -48,7 +48,7 @@ public class ChuteBlock extends AbstractChuteBlock {
 	}
 
 	@Override
-	public TileEntity createTileEntity(BlockState state, IBlockReader world) {
+	public TileEntity createNewTileEntity(IBlockReader world) {
 		return AllTileEntities.CHUTE.create();
 	}
 
@@ -146,7 +146,7 @@ public class ChuteBlock extends AbstractChuteBlock {
 			return state.with(SHAPE, Shape.NORMAL);
 		return state.with(SHAPE, Shape.INTERSECTION);
 	}
-	
+
 	@Override
 	public boolean allowsMovement(BlockState state, IBlockReader reader, BlockPos pos, PathType type) {
 		return false;

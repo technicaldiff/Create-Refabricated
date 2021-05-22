@@ -31,11 +31,11 @@ import com.simibubi.create.foundation.tileEntity.behaviour.belt.DirectBeltInputB
 import com.simibubi.create.foundation.tileEntity.behaviour.belt.TransportedItemStackHandlerBehaviour;
 import com.simibubi.create.foundation.tileEntity.behaviour.belt.TransportedItemStackHandlerBehaviour.TransportedResult;
 import com.simibubi.create.foundation.utility.NBTHelper;
-import com.simibubi.create.lib.capabilities.Capability;
-import com.simibubi.create.lib.lba.item.IItemHandler;
+import com.simibubi.create.lib.lba.item.ItemStackHandler;
 import com.simibubi.create.lib.utility.LazyOptional;
 import com.tterrag.registrate.fabric.EnvExecutor;
 
+import net.fabricmc.api.EnvType;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.Entity;
@@ -54,7 +54,6 @@ import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.util.math.vector.Vector3i;
 import net.minecraft.world.IBlockDisplayReader;
 import net.minecraft.world.LightType;
-import net.fabricmc.api.EnvType;
 
 public class BeltTileEntity extends KineticTileEntity implements LightUpdateListener {
 
@@ -67,7 +66,7 @@ public class BeltTileEntity extends KineticTileEntity implements LightUpdateList
 
 	protected BlockPos controller;
 	protected BeltInventory inventory;
-	protected LazyOptional<IItemHandler> itemHandler;
+	protected ItemStackHandler itemHandler;
 
 	public CompoundNBT trackerUpdateTag;
 
@@ -81,7 +80,7 @@ public class BeltTileEntity extends KineticTileEntity implements LightUpdateList
 	public BeltTileEntity(TileEntityType<? extends BeltTileEntity> type) {
 		super(type);
 		controller = BlockPos.ZERO;
-		itemHandler = LazyOptional.empty();
+		itemHandler = null;
 		casing = CasingType.NONE;
 		color = Optional.empty();
 	}
@@ -158,7 +157,7 @@ public class BeltTileEntity extends KineticTileEntity implements LightUpdateList
 	}
 
 	protected void initializeItemHandler() {
-		if (world.isRemote || itemHandler.isPresent())
+		if (world.isRemote || itemHandler != null)
 			return;
 		if (!world.isBlockPresent(controller))
 			return;
@@ -168,24 +167,23 @@ public class BeltTileEntity extends KineticTileEntity implements LightUpdateList
 		BeltInventory inventory = ((BeltTileEntity) te).getInventory();
 		if (inventory == null)
 			return;
-		IItemHandler handler = new ItemHandlerBeltSegment(inventory, index);
-		itemHandler = LazyOptional.of(() -> handler);
+		itemHandler = new ItemHandlerBeltSegment(inventory, index);
 	}
 
-	@Override
-	public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
-		if (cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
-			if (side == Direction.UP || BeltBlock.canAccessFromSide(side, getBlockState())) {
-				return itemHandler.cast();
-			}
-		}
-		return super.getCapability(cap, side);
-	}
+//	@Override
+//	public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
+//		if (cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
+//			if (side == Direction.UP || BeltBlock.canAccessFromSide(side, getBlockState())) {
+//				return itemHandler.cast();
+//			}
+//		}
+//		return super.getCapability(cap, side);
+//	}
 
 	@Override
 	public void remove() {
 		super.remove();
-		itemHandler.invalidate();
+		itemHandler = null;
 	}
 
 	@Override

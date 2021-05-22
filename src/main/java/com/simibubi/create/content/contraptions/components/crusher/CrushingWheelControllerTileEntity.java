@@ -8,6 +8,13 @@ import java.util.Optional;
 import java.util.Random;
 import java.util.UUID;
 
+import com.simibubi.create.lib.helper.EntityHelper;
+import com.simibubi.create.lib.lba.item.ItemStackHandler;
+
+import com.simibubi.create.lib.utility.ItemStackUtil;
+
+import org.jetbrains.annotations.NotNull;
+
 import com.simibubi.create.AllRecipeTypes;
 import com.simibubi.create.content.contraptions.processing.ProcessingInventory;
 import com.simibubi.create.content.contraptions.processing.ProcessingRecipe;
@@ -18,8 +25,8 @@ import com.simibubi.create.foundation.tileEntity.TileEntityBehaviour;
 import com.simibubi.create.foundation.tileEntity.behaviour.belt.DirectBeltInputBehaviour;
 import com.simibubi.create.foundation.utility.NBTHelper;
 import com.simibubi.create.foundation.utility.VecHelper;
-
 import com.simibubi.create.lib.lba.item.IItemHandlerModifiable;
+import com.simibubi.create.lib.utility.LazyOptional;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.Entity;
@@ -40,7 +47,6 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.vector.Vector3d;
-import org.jetbrains.annotations.NotNull;
 
 public class CrushingWheelControllerTileEntity extends SmartTileEntity {
 
@@ -49,7 +55,7 @@ public class CrushingWheelControllerTileEntity extends SmartTileEntity {
 	protected boolean searchForEntity;
 
 	public ProcessingInventory inventory;
-	protected LazyOptional<IItemHandlerModifiable> handler = LazyOptional.of(() -> inventory);
+	protected ItemStackHandler handler = inventory;
 	private RecipeWrapper wrapper;
 	public float crushingspeed;
 
@@ -149,7 +155,7 @@ public class CrushingWheelControllerTileEntity extends SmartTileEntity {
 						if (stack.isEmpty())
 							continue;
 						ItemStack remainder = behaviour.handleInsertion(stack, facing, false);
-						if (remainder.equals(stack, false))
+						if (ItemStackUtil.equals(remainder, stack, false))
 							continue;
 						inventory.setStackInSlot(slot, remainder);
 						changed = true;
@@ -169,9 +175,10 @@ public class CrushingWheelControllerTileEntity extends SmartTileEntity {
 					continue;
 				ItemEntity entityIn = new ItemEntity(world, outPos.x, outPos.y, outPos.z, stack);
 				entityIn.setMotion(outSpeed);
-				entityIn.getPersistentData()
+				EntityHelper.getExtraCustomData(entityIn)
 						.put("BypassCrushingWheel", NBTUtil.writeBlockPos(pos));
 				world.addEntity(entityIn);
+
 			}
 			inventory.clear();
 			world.notifyBlockUpdate(pos, getBlockState(), getBlockState(), 2 | 16);
@@ -328,12 +335,12 @@ public class CrushingWheelControllerTileEntity extends SmartTileEntity {
 		inventory.appliedRecipe = false;
 	}
 
-	@Override
-	public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
-		if (cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY)
-			return handler.cast();
-		return super.getCapability(cap, side);
-	}
+//	@Override
+//	public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
+//		if (cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY)
+//			return handler.cast();
+//		return super.getCapability(cap, side);
+//	}
 
 	public void clear() {
 		processingEntity = null;

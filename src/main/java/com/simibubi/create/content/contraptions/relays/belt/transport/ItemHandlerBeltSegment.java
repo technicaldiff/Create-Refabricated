@@ -2,11 +2,11 @@ package com.simibubi.create.content.contraptions.relays.belt.transport;
 
 import org.jetbrains.annotations.NotNull;
 
-import com.simibubi.create.lib.lba.item.IItemHandler;
+import com.simibubi.create.lib.lba.item.ItemStackHandler;
 
 import net.minecraft.item.ItemStack;
 
-public class ItemHandlerBeltSegment implements IItemHandler {
+public class ItemHandlerBeltSegment extends ItemStackHandler {
 
 	private final BeltInventory beltInventory;
 	int offset;

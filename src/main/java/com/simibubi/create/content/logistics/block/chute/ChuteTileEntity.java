@@ -30,10 +30,12 @@ import com.simibubi.create.foundation.utility.Iterate;
 import com.simibubi.create.foundation.utility.Lang;
 import com.simibubi.create.foundation.utility.VecHelper;
 import com.simibubi.create.lib.annotation.MethodsReturnNonnullByDefault;
-import com.simibubi.create.lib.capabilities.Capability;
 import com.simibubi.create.lib.lba.item.IItemHandler;
 import com.simibubi.create.lib.lba.item.ItemHandlerHelper;
+import com.simibubi.create.lib.utility.ItemStackUtil;
 import com.simibubi.create.lib.utility.LazyOptional;
+
+import com.simibubi.create.lib.utility.NBTSerializer;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -80,8 +82,8 @@ public class ChuteTileEntity extends SmartTileEntity implements IHaveGoggleInfor
 	int airCurrentUpdateCooldown;
 	int entitySearchCooldown;
 
-	LazyOptional<IItemHandler> capAbove;
-	LazyOptional<IItemHandler> capBelow;
+//	LazyOptional<IItemHandler> capAbove;
+//	LazyOptional<IItemHandler> capBelow;
 
 	public ChuteTileEntity(TileEntityType<?> tileEntityTypeIn) {
 		super(tileEntityTypeIn);
@@ -90,8 +92,8 @@ public class ChuteTileEntity extends SmartTileEntity implements IHaveGoggleInfor
 		itemHandler = new ChuteItemHandler(this);
 		lazyHandler = LazyOptional.of(() -> itemHandler);
 		canPickUpItems = false;
-		capAbove = LazyOptional.empty();
-		capBelow = LazyOptional.empty();
+//		capAbove = LazyOptional.empty();
+//		capBelow = LazyOptional.empty();
 		bottomPullDistance = 0;
 		//		airCurrent = new AirCurrent(this);
 		updateAirFlow = true;
@@ -125,7 +127,7 @@ public class ChuteTileEntity extends SmartTileEntity implements IHaveGoggleInfor
 		onAdded();
 	}
 
-	@Override
+//	@Override
 	public AxisAlignedBB getRenderBoundingBox() {
 		return new AxisAlignedBB(pos).expand(0, -3, 0);
 	}
@@ -274,7 +276,7 @@ public class ChuteTileEntity extends SmartTileEntity implements IHaveGoggleInfor
 
 	public void blockBelowChanged() {
 		updateAirFlow = true;
-		capBelow = LazyOptional.empty();
+//		capBelow = LazyOptional.empty();
 	}
 
 	private void spawnParticles(float itemMotion) {
@@ -471,19 +473,19 @@ public class ChuteTileEntity extends SmartTileEntity implements IHaveGoggleInfor
 		return true;
 	}
 
-	private LazyOptional<IItemHandler> grabCapability(Direction side) {
-		BlockPos pos = this.pos.offset(side);
-		if (world == null)
-			return LazyOptional.empty();
-		TileEntity te = world.getTileEntity(pos);
-		if (te == null)
-			return LazyOptional.empty();
-		if (te instanceof ChuteTileEntity) {
-			if (side != Direction.DOWN || !(te instanceof SmartChuteTileEntity) || getItemMotion() > 0)
-				return LazyOptional.empty();
-		}
-		return te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, side.getOpposite());
-	}
+//	private LazyOptional<IItemHandler> grabCapability(Direction side) {
+//		BlockPos pos = this.pos.offset(side);
+//		if (world == null)
+//			return LazyOptional.empty();
+//		TileEntity te = world.getTileEntity(pos);
+//		if (te == null)
+//			return LazyOptional.empty();
+//		if (te instanceof ChuteTileEntity) {
+//			if (side != Direction.DOWN || !(te instanceof SmartChuteTileEntity) || getItemMotion() > 0)
+//				return LazyOptional.empty();
+//		}
+//		te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, side.getOpposite());
+//	}
 
 	public void setItem(ItemStack stack) {
 		setItem(stack, getItemMotion() < 0 ? 1 : 0);
@@ -505,7 +507,7 @@ public class ChuteTileEntity extends SmartTileEntity implements IHaveGoggleInfor
 
 	@Override
 	public void write(CompoundNBT compound, boolean clientPacket) {
-		compound.put("Item", item.serializeNBT());
+		compound.put("Item", NBTSerializer.serializeNBT(item));
 		compound.putFloat("ItemPosition", itemPosition.value);
 		compound.putFloat("Pull", pull);
 		compound.putFloat("Push", push);
@@ -525,7 +527,8 @@ public class ChuteTileEntity extends SmartTileEntity implements IHaveGoggleInfor
 //		if (clientPacket)
 //			airCurrent.rebuild();
 
-		if (hasWorld() && world != null && world.isRemote && !previousItem.equals(item, false) && !item.isEmpty()) {
+		if (hasWorld() && world != null && world.isRemote && !ItemStackUtil.equals(previousItem, item, false) && !item.isEmpty()) {
+
 			if (world.rand.nextInt(3) != 0)
 				return;
 			Vector3d p = VecHelper.getCenterOf(pos);
@@ -713,12 +716,12 @@ public class ChuteTileEntity extends SmartTileEntity implements IHaveGoggleInfor
 		return true;
 	}
 
-	@Override
-	public <T> LazyOptional<T> getCapability(Capability<T> cap, @Nullable Direction side) {
-		if (cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY)
-			return lazyHandler.cast();
-		return super.getCapability(cap, side);
-	}
+//	@Override
+//	public <T> LazyOptional<T> getCapability(Capability<T> cap, @Nullable Direction side) {
+//		if (cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY)
+//			return lazyHandler.cast();
+//		return super.getCapability(cap, side);
+//	}
 
 	public ItemStack getItem() {
 		return item;

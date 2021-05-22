@@ -2,8 +2,8 @@ package com.simibubi.create.lib.lba.item;
 
 import net.minecraft.item.ItemStack;
 
-public class EmptyHandler implements IItemHandlerModifiable {
-	public static final IItemHandler INSTANCE = new EmptyHandler();
+public class EmptyHandler extends ItemStackHandler implements IItemHandlerModifiable {
+	public static final ItemStackHandler INSTANCE = new EmptyHandler();
 
 	@Override
 	public int getSlots() {

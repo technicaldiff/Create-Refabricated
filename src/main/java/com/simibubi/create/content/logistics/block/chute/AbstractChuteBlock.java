@@ -9,6 +9,7 @@ import com.simibubi.create.foundation.tileEntity.behaviour.belt.DirectBeltInputB
 import com.simibubi.create.foundation.tileEntity.behaviour.filtering.FilteringBehaviour;
 import com.simibubi.create.foundation.utility.BlockHelper;
 import com.simibubi.create.foundation.utility.Iterate;
+import com.simibubi.create.lib.extensions.BlockExtensions;
 import com.simibubi.create.lib.utility.LazyOptional;
 
 import net.minecraft.block.Block;
@@ -33,7 +34,7 @@ import net.minecraft.world.World;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 
-public abstract class AbstractChuteBlock extends Block implements IWrenchable, ITE<ChuteTileEntity>, ITileEntityProvider {
+public abstract class AbstractChuteBlock extends Block implements IWrenchable, ITE<ChuteTileEntity>, ITileEntityProvider, BlockExtensions {
 
 	public AbstractChuteBlock(Properties p_i48440_1_) {
 		super(p_i48440_1_);
@@ -175,7 +176,7 @@ public abstract class AbstractChuteBlock extends Block implements IWrenchable, I
 
 	@Override
 	@Environment(EnvType.CLIENT)
-	public boolean addDestroyEffects(BlockState state, World world, BlockPos pos, ParticleManager manager) {
+	public boolean create$addDestroyEffects(BlockState state, World world, BlockPos pos, ParticleManager manager) {
 		BlockHelper.addReducedDestroyEffects(state, world, pos, manager);
 		return true;
 	}
