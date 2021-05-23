@@ -15,6 +15,10 @@ import com.simibubi.create.foundation.utility.AngleHelper;
 import com.simibubi.create.foundation.utility.Iterate;
 import com.simibubi.create.foundation.utility.Pointing;
 import com.simibubi.create.foundation.utility.VecHelper;
+import com.simibubi.create.lib.lba.item.IItemHandler;
+import com.simibubi.create.lib.lba.item.ItemHandlerHelper;
+import com.simibubi.create.lib.lba.item.ItemStackHandler;
+import com.simibubi.create.lib.utility.LazyOptional;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;

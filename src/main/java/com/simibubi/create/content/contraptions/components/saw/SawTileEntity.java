@@ -10,7 +10,6 @@ import java.util.stream.Collectors;
 import javax.annotation.ParametersAreNonnullByDefault;
 
 import com.simibubi.create.AllRecipeTypes;
-import com.simibubi.create.AllTags;
 import com.simibubi.create.content.contraptions.components.actors.BlockBreakingKineticTileEntity;
 import com.simibubi.create.content.contraptions.processing.ProcessingInventory;
 import com.simibubi.create.foundation.config.AllConfigs;
@@ -22,8 +21,10 @@ import com.simibubi.create.foundation.utility.TreeCutter;
 import com.simibubi.create.foundation.utility.VecHelper;
 import com.simibubi.create.foundation.utility.recipe.RecipeConditions;
 import com.simibubi.create.foundation.utility.recipe.RecipeFinder;
-
 import com.simibubi.create.lib.annotation.MethodsReturnNonnullByDefault;
+import com.simibubi.create.lib.lba.item.IItemHandler;
+import com.simibubi.create.lib.utility.ItemStackUtil;
+import com.simibubi.create.lib.utility.LazyOptional;
 
 import net.minecraft.block.BambooBlock;
 import net.minecraft.block.Block;
@@ -164,7 +165,7 @@ public class SawTileEntity extends BlockBreakingKineticTileEntity {
 				if (stack.isEmpty())
 					continue;
 				ItemStack remainder = behaviour.handleInsertion(stack, itemMovementFacing, false);
-				if (remainder.equals(stack, false))
+				if (ItemStackUtil.equals(remainder, stack, false))
 					continue;
 				inventory.setStackInSlot(slot, remainder);
 				changed = true;
@@ -202,12 +203,12 @@ public class SawTileEntity extends BlockBreakingKineticTileEntity {
 		super.remove();
 	}
 
-	@Override
-	public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
-		if (cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY && side != Direction.DOWN)
-			return invProvider.cast();
-		return super.getCapability(cap, side);
-	}
+//	@Override
+//	public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
+//		if (cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY && side != Direction.DOWN)
+//			return invProvider.cast();
+//		return super.getCapability(cap, side);
+//	}
 
 	protected void spawnParticles(ItemStack stack) {
 		if (stack == null || stack.isEmpty())
@@ -382,7 +383,7 @@ public class SawTileEntity extends BlockBreakingKineticTileEntity {
 	}
 
 	public static boolean isSawable(BlockState stateToBreak) {
-		if (stateToBreak.isIn(BlockTags.LOGS) || AllTags.AllBlockTags.SLIMY_LOGS.matches(stateToBreak) || stateToBreak.isIn(BlockTags.LEAVES))
+		if (stateToBreak.isIn(BlockTags.LOGS) || /*AllTags.AllBlockTags.SLIMY_LOGS.matches(stateToBreak) ||*/ stateToBreak.isIn(BlockTags.LEAVES)) //todo: TC
 			return true;
 		Block block = stateToBreak.getBlock();
 		if (block instanceof BambooBlock)

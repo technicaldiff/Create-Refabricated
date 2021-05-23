@@ -18,6 +18,7 @@ import com.simibubi.create.foundation.tileEntity.behaviour.fluid.SmartFluidTankB
 import com.simibubi.create.foundation.utility.AnimationTickHolder;
 import com.simibubi.create.foundation.utility.Couple;
 import com.simibubi.create.foundation.utility.VecHelper;
+import com.simibubi.create.lib.lba.item.IItemHandler;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -37,8 +38,6 @@ import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.vector.Vector3d;
-import net.minecraftforge.items.CapabilityItemHandler;
-import net.minecraftforge.items.IItemHandler;
 
 public class MechanicalMixerTileEntity extends BasinOperatingTileEntity {
 

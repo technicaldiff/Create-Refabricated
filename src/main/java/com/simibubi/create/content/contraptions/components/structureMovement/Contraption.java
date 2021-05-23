@@ -22,6 +22,10 @@ import java.util.stream.Collectors;
 
 import javax.annotation.Nullable;
 
+import com.simibubi.create.lib.lba.fluid.SimpleFluidTank;
+
+import net.minecraft.util.registry.Registry;
+
 import org.apache.commons.lang3.tuple.MutablePair;
 import org.apache.commons.lang3.tuple.Pair;
 
@@ -67,12 +71,15 @@ import com.simibubi.create.foundation.utility.NBTHelper;
 import com.simibubi.create.foundation.utility.NBTProcessors;
 import com.simibubi.create.foundation.utility.UniqueLinkedList;
 import com.simibubi.create.foundation.utility.worldWrappers.WrappedWorld;
+import com.simibubi.create.lib.lba.fluid.FluidStack;
+import com.simibubi.create.lib.lba.fluid.IFluidHandler;
 import com.simibubi.create.lib.lba.item.CombinedInvWrapper;
 import com.simibubi.create.lib.lba.item.IItemHandlerModifiable;
 import com.simibubi.create.lib.utility.Constants.BlockFlags;
 import com.simibubi.create.lib.utility.Constants.NBT;
 import com.simibubi.create.lib.utility.StickinessUtil;
 
+import alexiil.mc.lib.attributes.Simulation;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.block.AbstractButtonBlock;
@@ -99,6 +106,7 @@ import net.minecraft.state.properties.PistonType;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
 import net.minecraft.util.Direction.Axis;
+import net.minecraft.util.ObjectIntIdentityMap;
 import net.minecraft.util.Rotation;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
@@ -726,9 +734,9 @@ public abstract class Contraption {
 				if (!(tileEntity instanceof FluidTankTileEntity))
 					return;
 				FluidTankTileEntity tank = (FluidTankTileEntity) tileEntity;
-				IFluidTank tankInventory = tank.getTankInventory();
-				if (tankInventory instanceof FluidTank)
-					((FluidTank) tankInventory).setFluid(mfs.tank.getFluid());
+				SimpleFluidTank tankInventory = tank.getTankInventory();
+				if (tankInventory instanceof SimpleFluidTank)
+					((SimpleFluidTank) tankInventory).setFluid(mfs.tank.getFluid());
 				tank.getFluidLevel()
 					.start(tank.getFillState());
 				mfs.assignTileEntity(tank);
@@ -839,9 +847,9 @@ public abstract class Contraption {
 
 	private CompoundNBT writeBlocksCompound() {
 		CompoundNBT compound = new CompoundNBT();
-		HashMapPalette<BlockState> palette = new HashMapPalette<>(GameData.getBlockStateIDMap(), 16, (i, s) -> {
-			throw new IllegalStateException("Palette Map index exceeded maximum");
-		}, NBTUtil::readBlockState, NBTUtil::writeBlockState);
+		HashMapPalette<BlockState> palette = new HashMapPalette<>(new ObjectIntIdentityMap(), 16, (i, s) -> { // fixme, this is very deeply
+			throw new IllegalStateException("Palette Map index exceeded maximum");								// integrated into forge and
+		}, NBTUtil::readBlockState, NBTUtil::writeBlockState);													// probably broken
 		ListNBT blockList = new ListNBT();
 
 		for (BlockInfo block : this.blocks.values()) {
@@ -867,7 +875,7 @@ public abstract class Contraption {
 		ListNBT blockList;
 		if (usePalettedDeserialization) {
 			CompoundNBT c = ((CompoundNBT) compound);
-			palette = new HashMapPalette<>(GameData.getBlockStateIDMap(), 16, (i, s) -> {
+			palette = new HashMapPalette<>(new ObjectIntIdentityMap(), 16, (i, s) -> { // see above comment
 				throw new IllegalStateException("Palette Map index exceeded maximum");
 			}, NBTUtil::readBlockState, NBTUtil::writeBlockState);
 			palette.read(c.getList("Palette", 10));
@@ -970,7 +978,7 @@ public abstract class Contraption {
 //				continue;
 			int flags = BlockFlags.IS_MOVING | BlockFlags.DEFAULT;
 			world.notifyBlockUpdate(add, block.state, Blocks.AIR.getDefaultState(), flags);
-			world.markAndNotifyBlock(add, world.getChunkAt(add), block.state, Blocks.AIR.getDefaultState(), flags, 512);
+			world.setBlockState(add, /*world.getChunkAt(add), block.state,*/ Blocks.AIR.getDefaultState(), flags, 512);
 			block.state.updateDiagonalNeighbors(world, add, flags & -2);
 //			world.markAndNotifyBlock(add, null, block.state, Blocks.AIR.getDefaultState(),
 //				BlockFlags.IS_MOVING | BlockFlags.DEFAULT); this method did strange logspamming with POI-related blocks
@@ -1057,14 +1065,14 @@ public abstract class Contraption {
 			if (!shouldUpdateAfterMovement(block))
 				continue;
 			BlockPos targetPos = transform.apply(block.pos);
-			world.markAndNotifyBlock(targetPos, world.getChunkAt(targetPos), block.state, block.state,
+			world.setBlockState(targetPos, /*world.getChunkAt(targetPos), block.state,*/ block.state,
 				BlockFlags.IS_MOVING | BlockFlags.DEFAULT, 512);
 		}
 
 		for (int i = 0; i < inventory.getSlots(); i++)
 			inventory.setStackInSlot(i, ItemStack.EMPTY);
 		for (int i = 0; i < fluidInventory.getTanks(); i++)
-			fluidInventory.drain(fluidInventory.getFluidInTank(i), FluidAction.EXECUTE);
+			fluidInventory.drain(fluidInventory.getFluidInTank(i), Simulation.ACTION);
 
 		for (Pair<BlockPos, Direction> pair : superglue) {
 			BlockPos targetPos = transform.apply(pair.getKey());

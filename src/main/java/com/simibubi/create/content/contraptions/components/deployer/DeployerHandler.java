@@ -1,12 +1,11 @@
 package com.simibubi.create.content.contraptions.components.deployer;
 
-import static net.minecraftforge.eventbus.api.Event.Result.DEFAULT;
-import static net.minecraftforge.eventbus.api.Event.Result.DENY;
-
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Nullable;
+
+import com.simibubi.create.lib.extensions.EntityExtensions;
 
 import org.apache.commons.lang3.tuple.Pair;
 
@@ -144,13 +143,13 @@ public class DeployerHandler {
 			Entity entity = entities.get(world.rand.nextInt(entities.size()));
 			List<ItemEntity> capturedDrops = new ArrayList<>();
 			boolean success = false;
-			entity.create$captureDrops(capturedDrops);
+			((EntityExtensions) entity).create$captureDrops(capturedDrops);
 
 			// Use on entity
 			if (mode == Mode.USE) {
 				ActionResultType cancelResult = ForgeHooks.onInteractEntity(player, entity, hand);
 				if (cancelResult == ActionResultType.FAIL) {
-					entity.create$captureDrops(null);
+					((EntityExtensions) entity).create$captureDrops(null);
 					return;
 				}
 				if (cancelResult == null) {
@@ -179,7 +178,7 @@ public class DeployerHandler {
 				success = true;
 			}
 
-			entity.create$captureDrops(null);
+			((EntityExtensions) entity).create$captureDrops(null);
 			capturedDrops.forEach(e -> player.inventory.placeItemBackInInventory(world, e.getItem()));
 			if (success)
 				return;

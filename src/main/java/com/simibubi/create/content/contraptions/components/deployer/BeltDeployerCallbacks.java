@@ -16,6 +16,7 @@ import com.simibubi.create.content.logistics.InWorldProcessing;
 import com.simibubi.create.foundation.tileEntity.behaviour.belt.BeltProcessingBehaviour.ProcessingResult;
 import com.simibubi.create.foundation.tileEntity.behaviour.belt.TransportedItemStackHandlerBehaviour;
 import com.simibubi.create.foundation.tileEntity.behaviour.belt.TransportedItemStackHandlerBehaviour.TransportedResult;
+import com.simibubi.create.lib.lba.item.ItemHandlerHelper;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.item.ItemStack;
@@ -26,7 +27,6 @@ import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraftforge.items.ItemHandlerHelper;
 
 public class BeltDeployerCallbacks {
 
@@ -68,10 +68,10 @@ public class BeltDeployerCallbacks {
 			activate(s, i, deployerTileEntity, recipe);
 			return ProcessingResult.HOLD;
 		}
-		
+
 		if (deployerTileEntity.state == State.WAITING) {
 			if (deployerTileEntity.redstoneLocked)
-				return ProcessingResult.PASS;			
+				return ProcessingResult.PASS;
 			deployerTileEntity.start();
 		}
 

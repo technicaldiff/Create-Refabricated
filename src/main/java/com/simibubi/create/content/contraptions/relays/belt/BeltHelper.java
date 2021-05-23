@@ -2,6 +2,7 @@ package com.simibubi.create.content.contraptions.relays.belt;
 
 import com.simibubi.create.AllTags.AllItemTags;
 import com.simibubi.create.foundation.utility.VecHelper;
+import com.simibubi.create.lib.utility.LoadedCheckUtil;
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
@@ -14,14 +15,14 @@ import net.minecraft.world.IWorld;
 public class BeltHelper {
 
 	public static boolean isItemUpright(ItemStack stack) {
-		return stack.getCapability(CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY)
-			.isPresent()
-			|| stack.getItem()
-				.isIn(AllItemTags.UPRIGHT_ON_BELT.tag);
+		return //stack.getCapability(CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY)
+//			.isPresent()
+//			|| stack.getItem()
+				stack.getItem().isIn(AllItemTags.UPRIGHT_ON_BELT.tag);
 	}
 
 	public static BeltTileEntity getSegmentTE(IWorld world, BlockPos pos) {
-		if (!world.isAreaLoaded(pos, 0))
+		if (!LoadedCheckUtil.isAreaLoaded(world, pos, 0))
 			return null;
 		TileEntity tileEntity = world.getTileEntity(pos);
 		if (!(tileEntity instanceof BeltTileEntity))

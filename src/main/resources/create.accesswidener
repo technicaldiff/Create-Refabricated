@@ -8,6 +8,8 @@ accessible class net/minecraft/world/chunk/ChunkStatus
 accessible class net/minecraft/world/chunk/ChunkStatus$IGenerationWorker
 accessible class net/minecraft/world/chunk/ChunkStatus$ILoadingWorker
 
+accessible class net/minecraft/util/palette/IResizeCallback
+
 accessible class net/minecraft/client/gui/ScreenManager$IScreenFactory
 accessible method net/minecraft/client/gui/ScreenManager registerFactory (Lnet/minecraft/inventory/container/ContainerType;Lnet/minecraft/client/gui/ScreenManager$IScreenFactory;)V
 

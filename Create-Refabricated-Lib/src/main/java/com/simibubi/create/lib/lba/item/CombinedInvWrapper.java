@@ -68,6 +68,25 @@ public class CombinedInvWrapper implements IItemHandlerModifiable {
 		return handler.insertItem(slot, stack, simulate);
 	}
 
+	/**
+	 * Iterates over all slots and finds first one that can be added to
+	 */
+	public ItemStack insertItem(ItemStack stack, boolean simulate) {
+		int targetStack = 0;
+		for (int i = 0; i < slotCount; i++) {
+			if (getStackInSlot(i).getItem().equals(stack.getItem())) {
+				targetStack = i;
+				break;
+			}
+
+			if (getStackInSlot(i) == ItemStack.EMPTY) {
+				targetStack = i;
+				break;
+			}
+		}
+		return insertItem(targetStack, stack, simulate);
+	}
+
 	@Override
 	public ItemStack extractItem(int slot, int amount, boolean simulate) {
 		int i = getIndexForSlot(slot);

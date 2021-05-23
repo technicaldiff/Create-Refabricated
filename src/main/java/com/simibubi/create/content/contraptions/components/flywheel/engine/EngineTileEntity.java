@@ -15,8 +15,6 @@ import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
 
 public class EngineTileEntity extends SmartTileEntity implements IInstanceRendered {
 
@@ -33,14 +31,14 @@ public class EngineTileEntity extends SmartTileEntity implements IInstanceRender
 	}
 
 	protected AxisAlignedBB cachedBoundingBox;
-	@Override
-	@Environment(EnvType.CLIENT)
-	public AxisAlignedBB getRenderBoundingBox() {
-		if (cachedBoundingBox == null) {
-			cachedBoundingBox = super.getRenderBoundingBox().grow(1.5f);
-		}
-		return cachedBoundingBox;
-	}
+//	@Override
+//	@Environment(EnvType.CLIENT)
+//	public AxisAlignedBB getRenderBoundingBox() {
+//		if (cachedBoundingBox == null) {
+//			cachedBoundingBox = super.getRenderBoundingBox().grow(1.5f);
+//		}
+//		return cachedBoundingBox;
+//	}
 
 	@Override
 	public void lazyTick() {

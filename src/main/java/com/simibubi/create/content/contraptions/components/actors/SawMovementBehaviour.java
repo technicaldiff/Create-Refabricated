@@ -7,7 +7,6 @@ import com.simibubi.create.content.contraptions.components.saw.SawTileEntity;
 import com.simibubi.create.content.contraptions.components.structureMovement.MovementContext;
 import com.simibubi.create.foundation.utility.TreeCutter;
 import com.simibubi.create.foundation.utility.VecHelper;
-import com.simibubi.create.lib.lba.item.ItemHandlerHelper;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -61,7 +60,7 @@ public class SawMovementBehaviour extends BlockBreakingMovementBehaviour {
 	}
 
 	public void dropItemFromCutTree(MovementContext context, BlockPos pos, ItemStack stack) {
-		ItemStack remainder = ItemHandlerHelper.insertItem(context.contraption.inventory, stack, false);
+		ItemStack remainder = context.contraption.inventory.insertItem(stack, false);
 		if (remainder.isEmpty())
 			return;
 

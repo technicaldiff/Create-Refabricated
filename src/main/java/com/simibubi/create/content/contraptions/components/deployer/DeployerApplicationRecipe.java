@@ -13,7 +13,6 @@ import com.simibubi.create.content.contraptions.processing.ProcessingRecipeBuild
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.world.World;
-import net.minecraftforge.items.wrapper.RecipeWrapper;
 
 public class DeployerApplicationRecipe extends ProcessingRecipe<RecipeWrapper> {
 

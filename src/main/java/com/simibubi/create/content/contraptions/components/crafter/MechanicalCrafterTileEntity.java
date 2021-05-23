@@ -23,6 +23,8 @@ import com.simibubi.create.foundation.tileEntity.behaviour.inventory.InvManipula
 import com.simibubi.create.foundation.utility.BlockFace;
 import com.simibubi.create.foundation.utility.Pointing;
 import com.simibubi.create.foundation.utility.VecHelper;
+import com.simibubi.create.lib.lba.item.IItemHandler;
+import com.simibubi.create.lib.utility.LazyOptional;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.item.ItemEntity;
@@ -282,7 +284,7 @@ public class MechanicalCrafterTileEntity extends KineticTileEntity {
 				Pointing pointing = getBlockState().get(MechanicalCrafterBlock.POINTING);
 				groupedItems.mergeOnto(targetingCrafter.groupedItems, pointing);
 				groupedItems = new GroupedItems();
-				
+
 				float pitch = targetingCrafter.groupedItems.grid.size() * 1/16f + .5f;
 				AllSoundEvents.CRAFTER_CLICK.playOnServer(world, pos, 1, pitch);
 
@@ -332,12 +334,12 @@ public class MechanicalCrafterTileEntity extends KineticTileEntity {
 
 			int prev = countDown;
 			countDown -= getCountDownSpeed();
-			
+
 			if (countDown < 1000 && prev >= 1000) {
 				AllSoundEvents.CRAFTER_CLICK.playOnServer(world, pos, 1, 2);
 				AllSoundEvents.CRAFTER_CRAFT.playOnServer(world, pos);
 			}
-			
+
 			if (countDown < 0) {
 				countDown = 0;
 				if (!runLogic)

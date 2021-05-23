@@ -14,8 +14,6 @@ import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.MathHelper;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
 
 public abstract class PortableStorageInterfaceTileEntity extends SmartTileEntity {
 
@@ -114,14 +112,14 @@ public abstract class PortableStorageInterfaceTileEntity extends SmartTileEntity
 
 	protected AxisAlignedBB cachedBoundingBox;
 
-	@Override
-	@Environment(EnvType.CLIENT)
-	public AxisAlignedBB getRenderBoundingBox() {
-		if (cachedBoundingBox == null) {
-			cachedBoundingBox = super.getRenderBoundingBox().grow(2);
-		}
-		return cachedBoundingBox;
-	}
+//	@Override
+//	@Environment(EnvType.CLIENT)
+//	public AxisAlignedBB getRenderBoundingBox() {
+//		if (cachedBoundingBox == null) {
+//			cachedBoundingBox = super.getRenderBoundingBox().grow(2);
+//		}
+//		return cachedBoundingBox;
+//	}
 
 	public boolean isTransferring() {
 		return transferTimer != 0;

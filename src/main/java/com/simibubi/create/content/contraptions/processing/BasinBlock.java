@@ -15,12 +15,16 @@ import com.simibubi.create.foundation.item.ItemHelper;
 import com.simibubi.create.foundation.tileEntity.TileEntityBehaviour;
 import com.simibubi.create.foundation.tileEntity.behaviour.belt.DirectBeltInputBehaviour;
 import com.simibubi.create.foundation.tileEntity.behaviour.filtering.FilteringBehaviour;
+import com.simibubi.create.lib.extensions.EntitySelectionContextExtensions;
+import com.simibubi.create.lib.lba.fluid.FluidStack;
+import com.simibubi.create.lib.lba.fluid.IFluidHandler;
 import com.simibubi.create.lib.lba.item.IItemHandlerModifiable;
 import com.simibubi.create.lib.lba.item.ItemHandlerHelper;
 import com.simibubi.create.lib.lba.item.ItemStackHandler;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -39,13 +43,14 @@ import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
+import net.minecraft.util.math.shapes.EntitySelectionContext;
 import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorldReader;
 import net.minecraft.world.World;
 
-public class BasinBlock extends Block implements ITE<BasinTileEntity>, IWrenchable {
+public class BasinBlock extends Block implements ITE<BasinTileEntity>, IWrenchable, ITileEntityProvider {
 
 	public static final DirectionProperty FACING = BlockStateProperties.FACING_EXCEPT_UP;
 
@@ -54,10 +59,10 @@ public class BasinBlock extends Block implements ITE<BasinTileEntity>, IWrenchab
 		setDefaultState(getDefaultState().with(FACING, Direction.DOWN));
 	}
 
-	@Override
-	public boolean hasTileEntity(BlockState state) {
-		return true;
-	}
+//	@Override
+//	public boolean hasTileEntity(BlockState state) {
+//		return true;
+//	}
 
 	@Override
 	protected void fillStateContainer(Builder<Block, BlockState> p_206840_1_) {
@@ -73,7 +78,7 @@ public class BasinBlock extends Block implements ITE<BasinTileEntity>, IWrenchab
 	}
 
 	@Override
-	public TileEntity createTileEntity(BlockState state, IBlockReader world) {
+	public TileEntity createNewTileEntity(IBlockReader world) {
 		return AllTileEntities.BASIN.create();
 	}
 
@@ -173,8 +178,10 @@ public class BasinBlock extends Block implements ITE<BasinTileEntity>, IWrenchab
 
 	@Override
 	public VoxelShape getCollisionShape(BlockState state, IBlockReader reader, BlockPos pos, ISelectionContext ctx) {
-		if (ctx.getEntity() instanceof ItemEntity)
-			return AllShapes.BASIN_COLLISION_SHAPE;
+		if (ctx instanceof EntitySelectionContext) {
+			if (((EntitySelectionContextExtensions) ((EntitySelectionContext) ctx)).create$getCachedEntity() instanceof ItemEntity)
+				return AllShapes.BASIN_COLLISION_SHAPE;
+		}
 		return getShape(state, reader, pos, ctx);
 	}
 

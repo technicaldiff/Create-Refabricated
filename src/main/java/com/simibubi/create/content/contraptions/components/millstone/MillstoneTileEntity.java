@@ -8,10 +8,11 @@ import com.simibubi.create.content.contraptions.base.KineticTileEntity;
 import com.simibubi.create.foundation.tileEntity.TileEntityBehaviour;
 import com.simibubi.create.foundation.tileEntity.behaviour.belt.DirectBeltInputBehaviour;
 import com.simibubi.create.foundation.utility.VecHelper;
-
 import com.simibubi.create.lib.lba.item.CombinedInvWrapper;
 import com.simibubi.create.lib.lba.item.IItemHandler;
+import com.simibubi.create.lib.lba.item.ItemHandlerHelper;
 import com.simibubi.create.lib.lba.item.ItemStackHandler;
+import com.simibubi.create.lib.utility.LazyOptional;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.item.ItemStack;
@@ -151,12 +152,12 @@ public class MillstoneTileEntity extends KineticTileEntity {
 		return MathHelper.clamp((int) Math.abs(getSpeed() / 16f), 1, 512);
 	}
 
-	@Override
-	public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
-		if (isItemHandlerCap(cap))
-			return capability.cast();
-		return super.getCapability(cap, side);
-	}
+//	@Override
+//	public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
+//		if (isItemHandlerCap(cap))
+//			return capability.cast();
+//		return super.getCapability(cap, side);
+//	}
 
 	private boolean canProcess(ItemStack stack) {
 		ItemStackHandler tester = new ItemStackHandler(1);

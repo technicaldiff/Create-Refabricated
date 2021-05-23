@@ -23,8 +23,10 @@ import com.simibubi.create.foundation.tileEntity.behaviour.filtering.FilteringBe
 import com.simibubi.create.foundation.utility.NBTHelper;
 import com.simibubi.create.foundation.utility.VecHelper;
 import com.simibubi.create.foundation.utility.animation.LerpedFloat;
-
 import com.simibubi.create.lib.lba.item.IItemHandlerModifiable;
+import com.simibubi.create.lib.lba.item.ItemStackHandler;
+import com.simibubi.create.lib.utility.Constants;
+import com.simibubi.create.lib.utility.LazyOptional;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.ServerPlayerEntity;
@@ -46,12 +48,6 @@ import net.minecraft.util.math.RayTraceContext.FluidMode;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.server.ServerWorld;
-import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.util.Constants.NBT;
-import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.items.IItemHandlerModifiable;
-import net.minecraftforge.items.ItemStackHandler;
-import net.minecraftforge.items.wrapper.RecipeWrapper;
 
 public class DeployerTileEntity extends KineticTileEntity {
 
@@ -305,8 +301,8 @@ public class DeployerTileEntity extends KineticTileEntity {
 		timer = compound.getInt("Timer");
 		redstoneLocked = compound.getBoolean("Powered");
 
-		deferredInventoryList = compound.getList("Inventory", NBT.TAG_COMPOUND);
-		overflowItems = NBTHelper.readItemList(compound.getList("Overflow", NBT.TAG_COMPOUND));
+		deferredInventoryList = compound.getList("Inventory", Constants.NBT.TAG_COMPOUND);
+		overflowItems = NBTHelper.readItemList(compound.getList("Overflow", Constants.NBT.TAG_COMPOUND));
 		if (compound.contains("HeldItem"))
 			heldItem = ItemStack.read(compound.getCompound("HeldItem"));
 		super.fromTag(blockState, compound, clientPacket);
@@ -389,12 +385,12 @@ public class DeployerTileEntity extends KineticTileEntity {
 		sendData();
 	}
 
-	@Override
-	public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
-		if (isItemHandlerCap(cap) && invHandler != null)
-			return invHandler.cast();
-		return super.getCapability(cap, side);
-	}
+//	@Override
+//	public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
+//		if (isItemHandlerCap(cap) && invHandler != null)
+//			return invHandler.cast();
+//		return super.getCapability(cap, side);
+//	}
 
 	@Override
 	public boolean addToTooltip(List<ITextComponent> tooltip, boolean isPlayerSneaking) {
