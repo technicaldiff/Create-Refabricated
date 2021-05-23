@@ -10,6 +10,7 @@
   "client": [
     "CancelTileEntityRenderMixin",
     "EntityContraptionInteractionMixin",
+    "FixNormalScalingMixin",
     "FogColorTrackerMixin",
     "HeavyBootsOnPlayerMixin",
     "LightUpdateMixin",

@@ -10,8 +10,6 @@ import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.simibubi.create.foundation.utility.ColorHelper;
 import com.simibubi.create.foundation.utility.Couple;
-import com.simibubi.create.lib.utility.FrameBufferUtil;
-import com.simibubi.create.lib.utility.GuiUtils;
 
 import net.minecraft.client.MainWindow;
 import net.minecraft.client.Minecraft;
@@ -258,4 +256,14 @@ public class UIRenderHelper {
 		RenderSystem.enableAlphaTest();
 		WorldVertexBufferUploader.draw(bufferbuilder);
 	}
+
+	public static void setupSimpleCustomLighting(float xRot, float yRot) {
+		Matrix4f lightingMatrix = new Matrix4f();
+		lightingMatrix.loadIdentity();
+		lightingMatrix.multiply(Vector3f.POSITIVE_Y.getDegreesQuaternion(yRot));
+		lightingMatrix.multiply(Vector3f.POSITIVE_X.getDegreesQuaternion(xRot));
+		lightingMatrix.multiply(Matrix4f.translate(0, 0, 1));
+		RenderSystem.setupLevelDiffuseLighting(VecHelper.ZERO_3F, VecHelper.ZERO_3F, lightingMatrix);
+	}
+
 }
