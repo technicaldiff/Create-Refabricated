@@ -418,29 +418,39 @@ public class ArmTileEntity extends KineticTileEntity {
 		markDirty();
 	}
 
+	public void writeInteractionPoints(CompoundNBT compound) {
+		if (updateInteractionPoints) {
+			compound.put("InteractionPoints", interactionPointTag);
+		} else {
+			ListNBT pointsNBT = new ListNBT();
+			inputs.stream()
+					.map(aip -> aip.serialize(pos))
+					.forEach(pointsNBT::add);
+			outputs.stream()
+					.map(aip -> aip.serialize(pos))
+					.forEach(pointsNBT::add);
+			compound.put("InteractionPoints", pointsNBT);
+		}
+	}
+
 	@Override
 	public void write(CompoundNBT compound, boolean clientPacket) {
 		super.write(compound, clientPacket);
 
-		if (updateInteractionPoints) {
-			compound.put("InteractionPoints", interactionPointTag);
-
-		} else {
-			ListNBT pointsNBT = new ListNBT();
-			inputs.stream()
-				.map(aip -> aip.serialize(pos))
-				.forEach(pointsNBT::add);
-			outputs.stream()
-				.map(aip -> aip.serialize(pos))
-				.forEach(pointsNBT::add);
-			compound.put("InteractionPoints", pointsNBT);
-		}
+		writeInteractionPoints(compound);
 
 		NBTHelper.writeEnum(compound, "Phase", phase);
 		compound.putBoolean("Powered", redstoneLocked);
 		compound.put("HeldItem", heldItem.serializeNBT());
 		compound.putInt("TargetPointIndex", chasedPointIndex);
 		compound.putFloat("MovementProgress", chasedPointProgress);
+	}
+
+	@Override
+	public void writeSafe(CompoundNBT compound, boolean clientPacket) {
+		super.writeSafe(compound, clientPacket);
+
+		writeInteractionPoints(compound);
 	}
 
 	@Override

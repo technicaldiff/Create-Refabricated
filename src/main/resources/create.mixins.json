@@ -20,7 +20,8 @@
     "StoreProjectionMatrixMixin",
     "TileRemoveMixin",
     "TileWorldHookMixin",
-    "WindowResizeMixin"
+    "WindowResizeMixin",
+    "ModelDataRefreshMixin"
   ],
   "injectors": {
     "defaultRequire": 1

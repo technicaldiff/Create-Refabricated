@@ -59,6 +59,9 @@ public class FilteringBehaviour extends TileEntityBehaviour {
 	}
 
 	@Override
+	public boolean isSafeNBT() { return true; }
+
+	@Override
 	public void write(CompoundNBT nbt, boolean clientPacket) {
 		nbt.put("Filter", NBTSerializer.serializeNBT(getFilter()));
 
