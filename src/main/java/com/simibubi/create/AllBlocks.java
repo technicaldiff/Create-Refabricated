@@ -3,7 +3,6 @@ package com.simibubi.create;
 import static com.simibubi.create.AllMovementBehaviours.addMovementBehaviour;
 import static com.simibubi.create.AllTags.tagBlockAndItem;
 import static com.simibubi.create.content.AllSections.SCHEMATICS;
-import static com.simibubi.create.foundation.data.BlockStateGen.oxidizedBlockstate;
 import static com.simibubi.create.foundation.data.CreateRegistrate.connectedTextures;
 import static com.simibubi.create.foundation.data.ModelGen.customItemModel;
 import static com.simibubi.create.foundation.data.ModelGen.oxidizedItemModel;
@@ -136,7 +135,6 @@ import com.simibubi.create.content.schematics.block.SchematicTableBlock;
 import com.simibubi.create.content.schematics.block.SchematicannonBlock;
 import com.simibubi.create.foundation.block.ItemUseOverrides;
 import com.simibubi.create.foundation.config.StressConfigDefaults;
-import com.simibubi.create.foundation.data.AssetLookup;
 import com.simibubi.create.foundation.data.BuilderTransformers;
 import com.simibubi.create.foundation.data.CreateRegistrate;
 import com.simibubi.create.foundation.data.ModelGen;
@@ -193,7 +191,7 @@ public class AllBlocks {
 //						.addEntry(ItemLootEntry.builder(AllBlocks.SCHEMATICANNON.get().asItem())
 //								.acceptFunction(CopyNbt.func_215881_a(CopyNbt.Source.BLOCK_ENTITY)
 //										.func_216056_a("Options", "BlockEntityTag.Options")))));
-			})
+//			})
 			.item()
 			.transform(customItemModel())
 			.register();
