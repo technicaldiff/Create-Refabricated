@@ -4,12 +4,12 @@ import com.simibubi.create.AllTileEntities;
 import com.simibubi.create.content.logistics.block.inventories.AdjustableCrateBlock;
 import com.simibubi.create.content.logistics.block.inventories.BottomlessItemHandler;
 import com.simibubi.create.foundation.utility.NBTHelper;
-
 import com.simibubi.create.lib.lba.item.IItemHandler;
-
 import com.simibubi.create.lib.lba.item.IItemHandlerModifiable;
-
 import com.simibubi.create.lib.lba.item.ItemStackHandler;
+import com.simibubi.create.lib.utility.LazyOptional;
+
+import com.simibubi.create.lib.utility.NBTSerializer;
 
 import net.minecraft.block.ChestBlock;
 import net.minecraft.item.ItemStack;
@@ -130,8 +130,7 @@ public class MountedStorage {
 
 		if (handler instanceof BottomlessItemHandler) {
 			NBTHelper.putMarker(tag, "Bottomless");
-			tag.put("ProvidedStack", handler.getStackInSlot(0)
-				.serializeNBT());
+			tag.put("ProvidedStack", NBTSerializer.serializeNBT(handler.getStackInSlot(0)));
 		}
 
 		return tag;

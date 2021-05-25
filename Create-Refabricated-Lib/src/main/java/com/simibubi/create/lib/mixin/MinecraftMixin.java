@@ -13,6 +13,7 @@ import com.simibubi.create.lib.event.ClientWorldEvents;
 import com.simibubi.create.lib.event.InstanceRegistrationCallback;
 import com.simibubi.create.lib.event.LeftClickAirCallback;
 import com.simibubi.create.lib.event.ParticleManagerRegistrationCallback;
+import com.simibubi.create.lib.event.RenderTickStartCallback;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -62,5 +63,10 @@ public abstract class MinecraftMixin {
 	@Inject(method = "clickMouse()V", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/network/ClientPlayerEntity;resetLastAttackedTicks()V"))
 	private void create$onClickMouse(CallbackInfo ci) {
 		LeftClickAirCallback.EVENT.invoker().onLeftClickAir(player);
+	}
+
+	@Inject(method = "runGameLoop(Z)V", at = @At(value = "INVOKE", shift = Shift.BEFORE, target = "Lnet/minecraft/client/gui/toasts/ToastGui;draw(Lcom/mojang/blaze3d/matrix/MatrixStack;)V"))
+	private void create$renderTickStart(CallbackInfo ci) {
+		RenderTickStartCallback.EVENT.invoker().tick();
 	}
 }

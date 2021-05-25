@@ -16,9 +16,11 @@ import com.simibubi.create.foundation.gui.ScreenOpener;
 import com.simibubi.create.foundation.networking.AllPackets;
 import com.simibubi.create.foundation.utility.BlockHelper;
 import com.simibubi.create.foundation.utility.Iterate;
-
+import com.simibubi.create.lib.utility.Constants.BlockFlags;
 import com.tterrag.registrate.fabric.EnvExecutor;
 
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -40,9 +42,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
-import com.simibubi.create.lib.utility.Constants.BlockFlags;
 
 public class SymmetryWandItem extends Item {
 
@@ -230,18 +229,19 @@ public class SymmetryWandItem extends Item {
 				if (BlockHelper.findAndRemoveInInventory(blockState, player, 1) == 0)
 					continue;
 
-				BlockSnapshot blocksnapshot = BlockSnapshot.create(world.getRegistryKey(), world, position);
+//				BlockSnapshot blocksnapshot = BlockSnapshot.create(world.getRegistryKey(), world, position);
+				BlockState cachedState = world.getBlockState(position);
 				FluidState ifluidstate = world.getFluidState(position);
 				world.setBlockState(position, ifluidstate.getBlockState(), BlockFlags.UPDATE_NEIGHBORS);
 				world.setBlockState(position, blockState);
 
 				CompoundNBT wandNbt = wand.getOrCreateTag();
 				wandNbt.putBoolean("Simulate", true);
-				boolean placeInterrupted = ForgeEventFactory.onBlockPlace(player, blocksnapshot, Direction.UP);
+				boolean placeInterrupted = !world.canPlace(cachedState, position, ISelectionContext.dummy());
 				wandNbt.putBoolean("Simulate", false);
 
 				if (placeInterrupted) {
-					blocksnapshot.restore(true, false);
+					world.setBlockState(position, cachedState);
 					continue;
 				}
 				targets.add(position);

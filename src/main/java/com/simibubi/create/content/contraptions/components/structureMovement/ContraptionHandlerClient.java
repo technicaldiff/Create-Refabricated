@@ -6,12 +6,17 @@ import com.simibubi.create.content.contraptions.components.structureMovement.syn
 import com.simibubi.create.foundation.networking.AllPackets;
 import com.simibubi.create.foundation.utility.RaycastHelper;
 import com.simibubi.create.foundation.utility.RaycastHelper.PredicateTraceResult;
+import com.simibubi.create.lib.helper.EntityHelper;
 
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.player.ClientPlayerEntity;
 import net.minecraft.client.entity.player.RemoteClientPlayerEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.AxisAlignedBB;
@@ -19,20 +24,19 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.util.math.vector.Vector3d;
+import net.minecraft.world.World;
 import net.minecraft.world.gen.feature.template.Template.BlockInfo;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
 
 public class ContraptionHandlerClient {
 
 	@Environment(EnvType.CLIENT)
-	public static void preventRemotePlayersWalkingAnimations(PlayerTickEvent event) {
-		if (event.phase == Phase.START)
+	public static void preventRemotePlayersWalkingAnimations(PlayerEntity player) {
+//		if (event.phase == Phase.START)
+//			return;
+		if (!(player instanceof RemoteClientPlayerEntity))
 			return;
-		if (!(event.player instanceof RemoteClientPlayerEntity))
-			return;
-		RemoteClientPlayerEntity remotePlayer = (RemoteClientPlayerEntity) event.player;
-		CompoundNBT data = remotePlayer.getPersistentData();
+		RemoteClientPlayerEntity remotePlayer = (RemoteClientPlayerEntity) player;
+		CompoundNBT data = EntityHelper.getExtraCustomData(remotePlayer);
 		if (!data.contains("LastOverrideLimbSwingUpdate"))
 			return;
 
@@ -50,17 +54,17 @@ public class ContraptionHandlerClient {
 	}
 
 	@Environment(EnvType.CLIENT)
-	public static void rightClickingOnContraptionsGetsHandledLocally(ClickInputEvent event) {
+	public static ActionResultType rightClickingOnContraptionsGetsHandledLocally(PlayerEntity player, World world, Hand hand, BlockRayTraceResult hitResult) {
 		Minecraft mc = Minecraft.getInstance();
-		ClientPlayerEntity player = mc.player;
+		ClientPlayerEntity clientPlayer = mc.player;
 		if (player == null)
-			return;
+			return ActionResultType.PASS;
 		if (player.isPassenger())
-			return;
+			return ActionResultType.PASS;
 		if (mc.world == null)
-			return;
-		if (!event.isUseItem())
-			return;
+			return ActionResultType.PASS;
+//		if (!event.isUseItem())
+//			return;
 		Vector3d origin = RaycastHelper.getTraceOrigin(player);
 
 		double reach = mc.playerController.getBlockReachDistance();
@@ -95,19 +99,20 @@ public class ContraptionHandlerClient {
 			});
 
 			if (predicateResult == null || predicateResult.missed())
-				return;
+				return ActionResultType.PASS;
 
 			BlockRayTraceResult rayTraceResult = mutableResult.getValue();
-			Hand hand = event.getHand();
+//			Hand hand = event.getHand();
 			Direction face = rayTraceResult.getFace();
 			BlockPos pos = rayTraceResult.getPos();
 
 			if (!contraptionEntity.handlePlayerInteraction(player, pos, face, hand))
-				return;
+				return ActionResultType.PASS;
 			AllPackets.channel.sendToServer(new ContraptionInteractionPacket(contraptionEntity, hand, pos, face));
-			event.setCanceled(true);
-			event.setSwingHand(false);
+//			event.setCanceled(true);
+//			event.setSwingHand(false);
+			return ActionResultType.SUCCESS;
 		}
+		return ActionResultType.PASS;
 	}
-
 }

@@ -7,10 +7,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
 
-import com.simibubi.create.lib.helper.ServerPlayNetHandlerHelper;
-
-import com.tterrag.registrate.fabric.EnvExecutor;
-
 import org.apache.commons.lang3.mutable.MutableBoolean;
 import org.apache.commons.lang3.mutable.MutableFloat;
 import org.apache.commons.lang3.mutable.MutableInt;
@@ -29,7 +25,11 @@ import com.simibubi.create.foundation.networking.AllPackets;
 import com.simibubi.create.foundation.utility.BlockHelper;
 import com.simibubi.create.foundation.utility.Iterate;
 import com.simibubi.create.foundation.utility.VecHelper;
+import com.simibubi.create.lib.helper.ServerPlayNetHandlerHelper;
+import com.tterrag.registrate.fabric.EnvExecutor;
 
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.CocoaBlock;
 import net.minecraft.client.entity.player.ClientPlayerEntity;
@@ -53,8 +53,6 @@ import net.minecraft.util.math.shapes.VoxelShapes;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
 import net.minecraft.world.gen.feature.template.Template.BlockInfo;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
 
 public class ContraptionCollider {
 
@@ -245,7 +243,7 @@ public class ContraptionCollider {
 					BlockState blockState = contraption.getBlocks()
 						.get(pos).state;
 					bounce = BlockHelper.getBounceMultiplier(blockState.getBlock());
-					slide = Math.max(0, blockState.getSlipperiness(contraption.world, pos, entity) - .6f);
+					slide = Math.max(0, blockState.getBlock().getSlipperiness(/*contraption.world, pos, entity*/) - .6f);
 				}
 			}
 

@@ -1,5 +1,6 @@
 package com.simibubi.create.events;
 
+import java.lang.annotation.ElementType;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,6 +16,7 @@ import com.simibubi.create.content.contraptions.components.fan.AirCurrent;
 import com.simibubi.create.content.contraptions.components.flywheel.engine.EngineBlock;
 import com.simibubi.create.content.contraptions.components.flywheel.engine.FurnaceEngineBlock;
 import com.simibubi.create.content.contraptions.components.structureMovement.ContraptionHandler;
+import com.simibubi.create.content.contraptions.components.structureMovement.ContraptionHandlerClient;
 import com.simibubi.create.content.contraptions.components.structureMovement.chassis.ChassisRangeDisplay;
 import com.simibubi.create.content.contraptions.components.structureMovement.render.ContraptionRenderDispatcher;
 import com.simibubi.create.content.contraptions.components.structureMovement.train.CouplingHandlerClient;
@@ -59,8 +61,10 @@ import com.simibubi.create.foundation.utility.ServerSpeedProvider;
 import com.simibubi.create.foundation.utility.placement.PlacementHelpers;
 import com.simibubi.create.foundation.utility.worldWrappers.WrappedClientWorld;
 import com.simibubi.create.lib.event.ClientWorldEvents;
+import com.simibubi.create.lib.event.PlayerTickEndCallback;
 import com.simibubi.create.lib.event.LeftClickAirCallback;
 import com.simibubi.create.lib.event.RenderHandCallback;
+import com.simibubi.create.lib.event.RenderTickStartCallback;
 import com.simibubi.create.lib.event.RenderTooltipBorderColorCallback;
 
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientChunkEvents;
@@ -91,27 +95,25 @@ import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.world.World;
-import net.minecraftforge.client.event.EntityViewRenderEvent;
-import net.minecraftforge.client.event.RenderGameOverlayEvent;
-import net.minecraftforge.client.event.RenderGameOverlayEvent.ElementType;
-import net.minecraftforge.client.event.RenderTooltipEvent;
-import net.minecraftforge.event.TickEvent.Phase;
-import net.minecraftforge.event.TickEvent.RenderTickEvent;
 
 public class ClientEvents {
 
 	private static final String itemPrefix = "item." + Create.ID;
 	private static final String blockPrefix = "block." + Create.ID;
 
+	public static void onTickStart(Minecraft client) {
+		AirCurrent.tickClientPlayerSounds();
+	}
+
 	public static void onTick(Minecraft client) {
 		World world = client.world;
 		if (!isGameActive())
 			return;
 
-		if (event.phase == Phase.START) {
-			AirCurrent.tickClientPlayerSounds();
-			return;
-		}
+//		if (event.phase == Phase.START) { // moved to onTickStart
+//			AirCurrent.tickClientPlayerSounds();
+//			return;
+//		}
 
 		SoundScapes.tick();
 		AnimationTickHolder.tick();
@@ -265,7 +267,7 @@ public class ClientEvents {
 		PonderTooltipHandler.addToTooltip(itemTooltip, stack);
 	}
 
-	public static void onRenderTick(RenderTickEvent event) {
+	public static void onRenderTick() {
 		if (!isGameActive())
 			return;
 		TurntableHandler.gameRenderTick();
@@ -331,6 +333,8 @@ public class ClientEvents {
 
 	public static void register() {
 		ClientTickEvents.END_CLIENT_TICK.register(ClientEvents::onTick);
+		ClientTickEvents.START_CLIENT_TICK.register(ClientEvents::onTickStart);
+		RenderTickStartCallback.EVENT.register(ClientEvents::onRenderTick);
 		ClientPlayConnectionEvents.JOIN.register(ClientEvents::onJoin);
 		ClientWorldEvents.LOAD.register(ClientEvents::onLoadWorld);
 		ClientWorldEvents.UNLOAD.register(ClientEvents::onUnloadWorld);
@@ -362,6 +366,8 @@ public class ClientEvents {
 		WorldRenderEvents.LAST.register(SymmetryHandler::render);
 		ClientTickEvents.END_CLIENT_TICK.register(SymmetryHandler::onClientTick);
 		PlayerBlockBreakEvents.AFTER.register(SymmetryHandler::onBlockDestroyed);
+		PlayerTickEndCallback.EVENT.register(ContraptionHandlerClient::preventRemotePlayersWalkingAnimations);
+		UseBlockCallback.EVENT.register(ContraptionHandlerClient::rightClickingOnContraptionsGetsHandledLocally);
 	}
 
 //	public static void loadCompleted(FMLLoadCompleteEvent event) { config stuff, unnecessary for fabric
