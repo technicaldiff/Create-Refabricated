@@ -9,6 +9,7 @@
     "BlockMixin",
     "BlockParticleDataMixin",
     "BlockStateMixin",
+    "DataPackRegistriesMixin",
     "EnchantmentHelperMixin",
     "EntityMixin",
     "EntitySelectionContextMixin",

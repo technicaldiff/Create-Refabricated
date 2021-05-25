@@ -1,5 +1,8 @@
 package com.simibubi.create.events;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.jetbrains.annotations.Nullable;
 
 import com.mojang.brigadier.CommandDispatcher;
@@ -19,13 +22,13 @@ import com.simibubi.create.content.curiosities.armor.DivingHelmetItem;
 import com.simibubi.create.content.curiosities.tools.ExtendoGripItem;
 import com.simibubi.create.content.curiosities.zapper.ZapperInteractionHandler;
 import com.simibubi.create.content.curiosities.zapper.ZapperItem;
-import com.simibubi.create.content.schematics.ServerSchematicLoader;
 import com.simibubi.create.foundation.command.AllCommands;
 import com.simibubi.create.foundation.fluid.FluidHelper;
 import com.simibubi.create.foundation.utility.Iterate;
 import com.simibubi.create.foundation.utility.ServerSpeedProvider;
 import com.simibubi.create.foundation.utility.WorldAttached;
 import com.simibubi.create.foundation.utility.recipe.RecipeFinder;
+import com.simibubi.create.lib.event.DataPackReloadCallback;
 import com.simibubi.create.lib.event.EntityEyeHeightCallback;
 import com.simibubi.create.lib.event.FluidPlaceBlockCallback;
 import com.simibubi.create.lib.event.LivingEntityEvents;
@@ -50,6 +53,8 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.fluid.FluidState;
 import net.minecraft.item.ItemStack;
+import net.minecraft.resources.DataPackRegistries;
+import net.minecraft.resources.IFutureReloadListener;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.util.ActionResultType;
@@ -64,8 +69,6 @@ import net.minecraft.world.chunk.Chunk;
 public class CommonEvents {
 
 	public static void onServerTick(MinecraftServer server) {
-		if (Create.SCHEMATIC_RECEIVER == null)
-			Create.SCHEMATIC_RECEIVER = new ServerSchematicLoader();
 		Create.SCHEMATIC_RECEIVER.tick();
 		Create.LAGGER.tick();
 		ServerSpeedProvider.serverTick(server);
@@ -120,10 +123,12 @@ public class CommonEvents {
 		AllCommands.register(dispatcher);
 	}
 
-	public static void registerReloadListeners(AddReloadListenerEvent event) {
-		event.addListener(RecipeFinder.LISTENER);
-		event.addListener(PotionMixingRecipeManager.LISTENER);
-		event.addListener(FluidTransferRecipes.LISTENER);
+	public static List<IFutureReloadListener> registerReloadListeners(DataPackRegistries dataPackRegistries) {
+		List<IFutureReloadListener> listeners = new ArrayList<>();
+		listeners.add(RecipeFinder.LISTENER);
+		listeners.add(PotionMixingRecipeManager.LISTENER);
+		listeners.add(FluidTransferRecipes.LISTENER);
+		return listeners;
 	}
 
 	public static void serverStopped(MinecraftServer server) {
@@ -169,6 +174,7 @@ public class CommonEvents {
 		FluidPlaceBlockCallback.EVENT.register(CommonEvents::whenFluidsMeet);
 		LivingEntityEvents.TICK.register(CommonEvents::onUpdateLivingEntity);
 		EntityTrackingEvents.START_TRACKING.register(CommonEvents::startTracking);
+		DataPackReloadCallback.EVENT.register(CommonEvents::registerReloadListeners);
 
 		// External Events
 
