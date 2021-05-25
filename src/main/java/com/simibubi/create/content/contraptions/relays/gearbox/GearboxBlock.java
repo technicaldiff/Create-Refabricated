@@ -31,7 +31,7 @@ public class GearboxBlock extends RotatedPillarKineticBlock implements BlockPick
 	}
 
 	@Override
-	public TileEntity createTileEntity(BlockState state, IBlockReader world) {
+	public TileEntity createNewTileEntity(IBlockReader world) {
 		return AllTileEntities.GEARBOX.create();
 	}
 
@@ -53,7 +53,7 @@ public class GearboxBlock extends RotatedPillarKineticBlock implements BlockPick
 			return super.getDrops(state, builder);
 		return Arrays.asList(new ItemStack(AllItems.VERTICAL_GEARBOX.get()));
 	}
-	
+
 	@Override
 	public ItemStack getPickedStack(BlockState state, IBlockReader world, BlockPos pos, PlayerEntity player, RayTraceResult target) {
 		if (state.get(AXIS).isVertical())

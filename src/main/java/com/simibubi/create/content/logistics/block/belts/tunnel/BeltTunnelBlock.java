@@ -14,6 +14,7 @@ import com.simibubi.create.foundation.utility.worldWrappers.WrappedWorld;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.item.ItemUseContext;
 import net.minecraft.state.EnumProperty;
@@ -35,7 +36,7 @@ import net.minecraft.world.IWorld;
 import net.minecraft.world.IWorldReader;
 import net.minecraft.world.World;
 
-public class BeltTunnelBlock extends Block implements ITE<BeltTunnelTileEntity>, IWrenchable {
+public class BeltTunnelBlock extends Block implements ITE<BeltTunnelTileEntity>, IWrenchable, ITileEntityProvider {
 
 	public static final Property<Shape> SHAPE = EnumProperty.create("shape", Shape.class);
 	public static final Property<Axis> HORIZONTAL_AXIS = BlockStateProperties.HORIZONTAL_AXIS;
@@ -54,10 +55,10 @@ public class BeltTunnelBlock extends Block implements ITE<BeltTunnelTileEntity>,
 		}
 	}
 
-	@Override
-	public boolean hasTileEntity(BlockState state) {
-		return true;
-	}
+//	@Override
+//	public boolean hasTileEntity(BlockState state) {
+//		return true;
+//	}
 
 	@Override
 	public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
@@ -65,7 +66,7 @@ public class BeltTunnelBlock extends Block implements ITE<BeltTunnelTileEntity>,
 	}
 
 	@Override
-	public TileEntity createTileEntity(BlockState state, IBlockReader world) {
+	public TileEntity createNewTileEntity(IBlockReader world) {
 		return AllTileEntities.ANDESITE_TUNNEL.create();
 	}
 
@@ -95,7 +96,7 @@ public class BeltTunnelBlock extends Block implements ITE<BeltTunnelTileEntity>,
 	public static boolean isStraight(BlockState state) {
 		return hasWindow(state) || state.get(SHAPE) == Shape.STRAIGHT;
 	}
-	
+
 	public static boolean isJunction(BlockState state) {
 		Shape shape = state.get(SHAPE);
 		return shape == Shape.CROSS || shape == Shape.T_LEFT || shape == Shape.T_RIGHT;
@@ -174,14 +175,14 @@ public class BeltTunnelBlock extends Block implements ITE<BeltTunnelTileEntity>,
 		Direction fw = Direction.getFacingFromAxis(AxisDirection.POSITIVE, axis);
 		BlockState blockState1 = reader.getBlockState(pos.offset(fw));
 		BlockState blockState2 = reader.getBlockState(pos.offset(fw.getOpposite()));
-		
+
 		boolean funnel1 = blockState1.getBlock() instanceof BeltFunnelBlock
 			&& blockState1.get(BeltFunnelBlock.SHAPE) == BeltFunnelBlock.Shape.EXTENDED
 			&& blockState1.get(BeltFunnelBlock.HORIZONTAL_FACING) == fw.getOpposite();
 		boolean funnel2 = blockState2.getBlock() instanceof BeltFunnelBlock
 			&& blockState2.get(BeltFunnelBlock.SHAPE) == BeltFunnelBlock.Shape.EXTENDED
 			&& blockState2.get(BeltFunnelBlock.HORIZONTAL_FACING) == fw;
-		
+
 		boolean valid1 = blockState1.getBlock() instanceof BeltTunnelBlock || funnel1;
 		boolean valid2 = blockState2.getBlock() instanceof BeltTunnelBlock || funnel2;
 		boolean canHaveWindow = valid1 && valid2 && !(funnel1 && funnel2);

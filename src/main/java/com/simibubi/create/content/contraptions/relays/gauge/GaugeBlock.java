@@ -57,7 +57,7 @@ public class GaugeBlock extends DirectionalAxisKineticBlock {
 	}
 
 	@Override
-	public TileEntity createTileEntity(BlockState state, IBlockReader world) {
+	public TileEntity createNewTileEntity(IBlockReader world) {
 		switch (type) {
 		case SPEED:
 			return AllTileEntities.SPEEDOMETER.create();
@@ -70,9 +70,9 @@ public class GaugeBlock extends DirectionalAxisKineticBlock {
 
 	/*
 	 * FIXME: Is there a new way of doing this in 1.16? Or cn we just delete it?
-	 * 
+	 *
 	 * @SuppressWarnings("deprecation")
-	 * 
+	 *
 	 * @Override
 	 * public MaterialColor getMaterialColor(BlockState state, IBlockReader worldIn, BlockPos pos) {
 	 * return Blocks.SPRUCE_PLANKS.getMaterialColor(state, worldIn, pos);

@@ -52,7 +52,7 @@ public class PulleyBlock extends HorizontalAxisKineticBlock implements ITE<Pulle
     }
 
     @Override
-    public TileEntity createTileEntity(BlockState state, IBlockReader world) {
+    public TileEntity createNewTileEntity(IBlockReader world) {
         return AllTileEntities.ROPE_PULLEY.create();
     }
 
@@ -99,7 +99,7 @@ public class PulleyBlock extends HorizontalAxisKineticBlock implements ITE<Pulle
             super(properties);
             setDefaultState(super.getDefaultState().with(BlockStateProperties.WATERLOGGED, false));
         }
-        
+
         @Override
     	public boolean allowsMovement(BlockState state, IBlockReader reader, BlockPos pos, PathType type) {
     		return false;

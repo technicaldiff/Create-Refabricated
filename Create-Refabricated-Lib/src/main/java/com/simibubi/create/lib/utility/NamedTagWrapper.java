@@ -1,6 +1,5 @@
 package com.simibubi.create.lib.utility;
 
-import net.minecraft.block.BlockState;
 import net.minecraft.tags.TagRegistry.NamedTag;
 import net.minecraft.util.ResourceLocation;
 
@@ -12,7 +11,7 @@ public class NamedTagWrapper<T> extends NamedTag<T> {
 		tag = this;
 	}
 
-	public boolean matches(BlockState block) {
-		return this.contains(block.getBlock());
+	public boolean matches(T obj) {
+		return this.contains(obj);
 	}
 }

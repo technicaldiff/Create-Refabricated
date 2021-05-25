@@ -11,6 +11,8 @@ import java.util.Set;
 
 import javax.annotation.Nullable;
 
+import com.simibubi.create.lib.utility.NBTSerializer;
+
 import org.apache.commons.lang3.tuple.Pair;
 
 import com.simibubi.create.AllBlocks;
@@ -31,7 +33,6 @@ import com.simibubi.create.foundation.utility.Iterate;
 import com.simibubi.create.foundation.utility.Lang;
 import com.simibubi.create.foundation.utility.NBTHelper;
 import com.simibubi.create.lib.utility.Constants.NBT;
-import com.simibubi.create.lib.capabilities.Capability;
 import com.simibubi.create.lib.lba.item.IItemHandler;
 import com.simibubi.create.lib.lba.item.ItemHandlerHelper;
 import com.simibubi.create.lib.utility.LazyOptional;
@@ -525,7 +526,8 @@ public class BrassTunnelTileEntity extends BeltTunnelTileEntity {
 		compound.putBoolean("SyncedOutput", syncedOutputActive);
 		compound.putBoolean("ConnectedLeft", connectedLeft);
 		compound.putBoolean("ConnectedRight", connectedRight);
-		compound.put("StackToDistribute", stackToDistribute.serializeNBT());
+		compound.put("StackToDistribute", NBTSerializer.serializeNBT(stackToDistribute));
+
 		compound.putFloat("DistributionProgress", distributionProgress);
 		compound.putInt("PreviousIndex", previousOutputIndex);
 		compound.putInt("DistanceLeft", distributionDistanceLeft);
@@ -658,19 +660,19 @@ public class BrassTunnelTileEntity extends BeltTunnelTileEntity {
 		super.remove();
 	}
 
-	@Override
-	public <T> LazyOptional<T> getCapability(Capability<T> capability, Direction side) {
-		if (capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY)
-			return tunnelCapability.cast();
-		return super.getCapability(capability, side);
-	}
+//	@Override
+//	public <T> LazyOptional<T> getCapability(Capability<T> capability, Direction side) {
+//		if (capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY)
+//			return tunnelCapability.cast();
+//		return super.getCapability(capability, side);
+//	}
 
 	public LazyOptional<IItemHandler> getBeltCapability() {
-		if (!beltCapability.isPresent()) {
-			TileEntity tileEntity = world.getTileEntity(pos.down());
-			if (tileEntity != null)
-				beltCapability = tileEntity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY);
-		}
+//		if (!beltCapability.isPresent()) {
+//			TileEntity tileEntity = world.getTileEntity(pos.down());
+//			if (tileEntity != null)
+//				beltCapability = tileEntity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY);
+//		}
 		return beltCapability;
 	}
 

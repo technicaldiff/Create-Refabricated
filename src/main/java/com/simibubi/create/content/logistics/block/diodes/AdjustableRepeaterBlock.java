@@ -7,6 +7,7 @@ import com.simibubi.create.lib.block.CanConnectRedstoneBlock;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.state.BooleanProperty;
 import net.minecraft.state.StateContainer.Builder;
 import net.minecraft.tileentity.TileEntity;
@@ -14,7 +15,7 @@ import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockReader;
 
-public class AdjustableRepeaterBlock extends AbstractDiodeBlock implements CanConnectRedstoneBlock {
+public class AdjustableRepeaterBlock extends AbstractDiodeBlock implements CanConnectRedstoneBlock, ITileEntityProvider {
 
 	public static BooleanProperty POWERING = BooleanProperty.create("powering");
 
@@ -30,13 +31,13 @@ public class AdjustableRepeaterBlock extends AbstractDiodeBlock implements CanCo
 		super.fillStateContainer(builder);
 	}
 
-	@Override
-	public boolean hasTileEntity(BlockState state) {
-		return true;
-	}
+//	@Override
+//	public boolean hasTileEntity(BlockState state) {
+//		return true;
+//	}
 
 	@Override
-	public TileEntity createTileEntity(BlockState state, IBlockReader world) {
+	public TileEntity createNewTileEntity(IBlockReader world) {
 		return AllBlocks.ADJUSTABLE_REPEATER.is(this) ? AllTileEntities.ADJUSTABLE_REPEATER.create()
 			: AllTileEntities.ADJUSTABLE_PULSE_REPEATER.create();
 	}

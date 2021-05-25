@@ -317,7 +317,7 @@ public class AllTags {
 		if (item.isIn(WHITE_DYES)) return DyeColor.WHITE;
 		if (item.isIn(YELLOW_DYES)) return DyeColor.YELLOW;
 
-		// item is not in color tags, default to black I guess
-		return DyeColor.BLACK;
+		// item is not in color tags, default to white I guess
+		return DyeColor.WHITE;
 	}
 }

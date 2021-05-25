@@ -5,6 +5,8 @@ import com.simibubi.create.AllTileEntities;
 import com.simibubi.create.foundation.block.ITE;
 import com.simibubi.create.foundation.item.ItemHelper;
 
+import com.simibubi.create.lib.utility.NetworkUtil;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.HorizontalBlock;
@@ -70,7 +72,8 @@ public class SchematicTableBlock extends HorizontalBlock implements ITE<Schemati
 			return ActionResultType.SUCCESS;
 
 		withTileEntityDo(worldIn, pos,
-				te -> NetworkHooks.openGui((ServerPlayerEntity) player, te, te::sendToContainer));
+				te -> NetworkUtil.openGUI((ServerPlayerEntity) player, te, te::sendToContainer));
+
 		return ActionResultType.SUCCESS;
 	}
 

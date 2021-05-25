@@ -19,6 +19,7 @@ import com.simibubi.create.lib.block.CanConnectRedstoneBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.HorizontalBlock;
+import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.item.ItemStack;
 import net.minecraft.state.BooleanProperty;
@@ -33,7 +34,7 @@ import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 
-public class ContentObserverBlock extends HorizontalBlock implements ITE<ContentObserverTileEntity>, IWrenchable, CanConnectRedstoneBlock {
+public class ContentObserverBlock extends HorizontalBlock implements ITE<ContentObserverTileEntity>, IWrenchable, CanConnectRedstoneBlock, ITileEntityProvider {
 
 	public static final BooleanProperty POWERED = BlockStateProperties.POWERED;
 
@@ -49,14 +50,14 @@ public class ContentObserverBlock extends HorizontalBlock implements ITE<Content
 	}
 
 	@Override
-	public TileEntity createTileEntity(BlockState state, IBlockReader world) {
+	public TileEntity createNewTileEntity(IBlockReader world) {
 		return AllTileEntities.CONTENT_OBSERVER.create();
 	}
 
-	@Override
-	public boolean hasTileEntity(BlockState state) {
-		return true;
-	}
+//	@Override
+//	public boolean hasTileEntity(BlockState state) {
+//		return true;
+//	}
 
 	@Override
 	protected void fillStateContainer(Builder<Block, BlockState> builder) {

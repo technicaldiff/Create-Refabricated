@@ -6,6 +6,7 @@ import com.simibubi.create.lib.block.HarvestableBlock;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.AxeItem;
@@ -20,7 +21,7 @@ import net.minecraft.world.IWorld;
 import net.minecraft.world.IWorldReader;
 import net.minecraft.world.World;
 
-public abstract class KineticBlock extends Block implements IRotate, HarvestableBlock {
+public abstract class KineticBlock extends Block implements IRotate, HarvestableBlock, ITileEntityProvider {
 
 	protected static final Palette color = Palette.Red;
 
@@ -66,15 +67,15 @@ public abstract class KineticBlock extends Block implements IRotate, Harvestable
 		return false;
 	}
 
-	public boolean hasTileEntity(BlockState state) {
-		return true;
-	}
+//	public boolean hasTileEntity(BlockState state) {
+//		return true;
+//	}
 
 	protected boolean areStatesKineticallyEquivalent(BlockState oldState, BlockState newState) {
 		return getRotationAxis(newState) == getRotationAxis(oldState);
 	}
 
-	public abstract TileEntity createTileEntity(BlockState state, IBlockReader world);
+	public abstract TileEntity createNewTileEntity(IBlockReader world);
 
 	@Override
 	public void updateDiagonalNeighbors(BlockState stateIn, IWorld worldIn, BlockPos pos, int flags, int count) {

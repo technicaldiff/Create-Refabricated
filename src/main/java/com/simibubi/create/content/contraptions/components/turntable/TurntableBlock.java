@@ -32,7 +32,7 @@ public class TurntableBlock extends KineticBlock implements ITE<TurntableTileEnt
 	}
 
 	@Override
-	public TileEntity createTileEntity(BlockState state, IBlockReader world) {
+	public TileEntity createNewTileEntity(IBlockReader world) {
 		return AllTileEntities.TURNTABLE.create();
 	}
 
@@ -107,7 +107,7 @@ public class TurntableBlock extends KineticBlock implements ITE<TurntableTileEnt
 	public Class<TurntableTileEntity> getTileEntityClass() {
 		return TurntableTileEntity.class;
 	}
-	
+
 	@Override
 	public boolean allowsMovement(BlockState state, IBlockReader reader, BlockPos pos, PathType type) {
 		return false;

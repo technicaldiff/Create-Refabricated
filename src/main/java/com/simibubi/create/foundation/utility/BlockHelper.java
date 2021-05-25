@@ -11,7 +11,6 @@ import net.minecraft.block.RailBlock;
 
 import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.chunk.ChunkSection;
-import net.minecraftforge.common.util.BlockSnapshot;
 
 import org.apache.commons.lang3.mutable.MutableInt;
 
@@ -219,7 +218,7 @@ public class BlockHelper {
 		}
 
 		if (world instanceof ServerWorld && world.getGameRules()
-			.getBoolean(GameRules.DO_TILE_DROPS) && !world.restoringBlockSnapshots
+			.getBoolean(GameRules.DO_TILE_DROPS) //&& !world.restoringBlockSnapshots
 			&& (player == null || !player.isCreative())) {
 			for (ItemStack itemStack : Block.getDrops(state, (ServerWorld) world, pos, tileentity, player, usedTool))
 				droppedItemCallback.accept(itemStack);

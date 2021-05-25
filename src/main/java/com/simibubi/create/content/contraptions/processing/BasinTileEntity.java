@@ -9,6 +9,8 @@ import java.util.Random;
 
 import javax.annotation.Nonnull;
 
+import alexiil.mc.lib.attributes.Simulation;
+
 import com.simibubi.create.AllParticleTypes;
 import com.simibubi.create.AllTags;
 import com.simibubi.create.content.contraptions.components.mixer.MechanicalMixerTileEntity;
@@ -35,6 +37,8 @@ import com.simibubi.create.foundation.utility.VecHelper;
 import com.simibubi.create.foundation.utility.animation.LerpedFloat;
 import com.simibubi.create.foundation.utility.animation.LerpedFloat.Chaser;
 import com.simibubi.create.lib.capabilities.Capability;
+import com.simibubi.create.lib.lba.fluid.FluidStack;
+import com.simibubi.create.lib.lba.fluid.IFluidHandler;
 import com.simibubi.create.lib.lba.item.CombinedInvWrapper;
 import com.simibubi.create.lib.lba.item.IItemHandler;
 import com.simibubi.create.lib.lba.item.IItemHandlerModifiable;
@@ -42,6 +46,10 @@ import com.simibubi.create.lib.lba.item.ItemHandlerHelper;
 import com.simibubi.create.lib.utility.Constants.NBT;
 import com.simibubi.create.lib.utility.LazyOptional;
 
+import com.simibubi.create.lib.utility.NBTSerializer;
+
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.item.ItemStack;
@@ -57,8 +65,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.util.text.ITextComponent;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
 
 public class BasinTileEntity extends SmartTileEntity implements IHaveGoggleInformation {
 
@@ -173,8 +179,7 @@ public class BasinTileEntity extends SmartTileEntity implements IHaveGoggleInfor
 		if (!clientPacket)
 			return;
 
-		compound.put("VisualizedItems", NBTHelper.writeCompoundList(visualizedOutputItems, ia -> ia.getValue()
-			.serializeNBT()));
+		compound.put("VisualizedItems", NBTHelper.writeCompoundList(visualizedOutputItems, ia -> NBTSerializer.serializeNBT(ia.getValue())));
 		compound.put("VisualizedFluids", NBTHelper.writeCompoundList(visualizedOutputFluids, ia -> ia.getValue()
 			.writeToNBT(new CompoundNBT())));
 		visualizedOutputItems.clear();
@@ -193,15 +198,15 @@ public class BasinTileEntity extends SmartTileEntity implements IHaveGoggleInfor
 		super.remove();
 	}
 
-	@Nonnull
-	@Override
-	public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, Direction side) {
-		if (cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY)
-			return itemCapability.cast();
-		if (cap == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY)
-			return fluidCapability.cast();
-		return super.getCapability(cap, side);
-	}
+//	@Nonnull
+//	@Override
+//	public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, Direction side) {
+//		if (cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY)
+//			return itemCapability.cast();
+//		if (cap == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY)
+//			return fluidCapability.cast();
+//		return super.getCapability(cap, side);
+//	}
 
 	@Override
 	public void notifyUpdate() {
@@ -452,10 +457,10 @@ public class BasinTileEntity extends SmartTileEntity implements IHaveGoggleInfor
 			return false;
 
 		for (FluidStack fluidStack : outputFluids) {
-			FluidAction action = simulate ? FluidAction.SIMULATE : FluidAction.EXECUTE;
+			Simulation action = simulate ? Simulation.SIMULATE : Simulation.ACTION;
 			int fill = targetTank instanceof SmartFluidTankBehaviour.InternalFluidHandler
-				? ((SmartFluidTankBehaviour.InternalFluidHandler) targetTank).forceFill(fluidStack.copy(), action)
-				: targetTank.fill(fluidStack.copy(), action);
+				? ((SmartFluidTankBehaviour.InternalFluidHandler) targetTank).forceFill((FluidStack) fluidStack.copy(), action)
+				: targetTank.fill((FluidStack) fluidStack.copy(), action);
 			if (fill != fluidStack.getAmount())
 				return false;
 			else if (!simulate)

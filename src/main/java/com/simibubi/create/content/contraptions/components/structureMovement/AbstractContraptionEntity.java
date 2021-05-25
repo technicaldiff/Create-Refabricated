@@ -8,6 +8,8 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.UUID;
 
+import net.minecraft.network.play.server.SSpawnObjectPacket;
+
 import org.apache.commons.lang3.mutable.MutableInt;
 import org.apache.commons.lang3.tuple.MutablePair;
 
@@ -378,7 +380,8 @@ public abstract class AbstractContraptionEntity extends Entity implements ExtraS
 
 	@Override
 	public IPacket<?> createSpawnPacket() {
-		return NetworkHooks.getEntitySpawningPacket(this);
+//		return NetworkHooks.getEntitySpawningPacket(this);
+		return new SSpawnObjectPacket(this, this == null ? 0 : getEntityId());
 	}
 
 	@Override
@@ -481,16 +484,16 @@ public abstract class AbstractContraptionEntity extends Entity implements ExtraS
 		}
 	}
 
-	@SuppressWarnings("deprecation")
 	@Override
-	public void remove(boolean keepData) {
+	public void remove(/*boolean keepData*/) {
 		if (!world.isRemote && !removed && contraption != null) {
 			if (!ticking)
 				contraption.stop(world);
 		}
 		if (contraption != null)
 			contraption.onEntityRemoved(this);
-		super.remove(keepData);
+		onRemovedFromWorld(); // onRemovedFromWorld is called right after remove, so I think this should be fine?
+		super.remove(/*keepData*/); // keepData is for capabilities
 	}
 
 	protected abstract StructureTransform makeStructureTransform();
@@ -507,9 +510,9 @@ public abstract class AbstractContraptionEntity extends Entity implements ExtraS
 		super.outOfWorld();
 	}
 
-	@Override
+//	@Override
 	public void onRemovedFromWorld() {
-		super.onRemovedFromWorld();
+//		super.onRemovedFromWorld();
 		if (world != null && world.isRemote)
 			return;
 		getPassengers().forEach(Entity::remove);

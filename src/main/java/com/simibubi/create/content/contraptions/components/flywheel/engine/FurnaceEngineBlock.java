@@ -12,10 +12,14 @@ import net.minecraft.block.AbstractFurnaceBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.ITileEntityProvider;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.ActionResultType;
+import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.world.IBlockReader;
@@ -61,18 +65,19 @@ public class FurnaceEngineBlock extends EngineBlock implements ITE<FurnaceEngine
 				withTileEntityDo(worldIn, pos, FurnaceEngineTileEntity::updateFurnace);
 	}
 
-	public static void usingFurnaceEngineOnFurnacePreventsGUI(RightClickBlock event) {
-		ItemStack item = event.getItemStack();
-		if (!(item.getItem() instanceof BlockItem))
-			return;
-		BlockItem blockItem = (BlockItem) item.getItem();
+	public static ActionResultType usingFurnaceEngineOnFurnacePreventsGUI(PlayerEntity player, World world, Hand hand, BlockRayTraceResult hitResult) {
+		ItemStack heldStack = player.getHeldItem(hand);
+		if (!(heldStack.getItem() instanceof BlockItem))
+			return ActionResultType.PASS;
+		BlockItem blockItem = (BlockItem) heldStack.getItem();
 		if (blockItem.getBlock() != AllBlocks.FURNACE_ENGINE.get())
-			return;
-		BlockState state = event.getWorld().getBlockState(event.getPos());
-		if (event.getFace().getAxis().isVertical())
-			return;
+			return ActionResultType.PASS;
+		BlockState state = world.getBlockState(hitResult.getPos());
+		if (hitResult.getFace().getAxis().isVertical())
+			return ActionResultType.PASS;
 		if (state.getBlock() instanceof AbstractFurnaceBlock)
-			event.setUseBlock(Result.DENY);
+			return ActionResultType.SUCCESS;
+		return ActionResultType.PASS;
 	}
 
 	@Override

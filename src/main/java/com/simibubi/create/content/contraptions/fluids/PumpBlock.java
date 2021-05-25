@@ -39,13 +39,13 @@ public class PumpBlock extends DirectionalKineticBlock implements IWaterLoggable
 		setDefaultState(super.getDefaultState().with(BlockStateProperties.WATERLOGGED, false));
 	}
 
-	@Override
-	public boolean hasTileEntity(BlockState state) {
-		return true;
-	}
+//	@Override
+//	public boolean hasTileEntity(BlockState state) {
+//		return true;
+//	}
 
 	@Override
-	public TileEntity createTileEntity(BlockState state, IBlockReader world) {
+	public TileEntity createNewTileEntity(IBlockReader world) {
 		return AllTileEntities.MECHANICAL_PUMP.create();
 	}
 
@@ -173,10 +173,10 @@ public class PumpBlock extends DirectionalKineticBlock implements IWaterLoggable
 		if (state.getBlock().hasBlockEntity() && (blockTypeChanged || !newState.getBlock().hasBlockEntity()))
 			world.removeTileEntity(pos);
 	}
-	
+
 	@Override
 	public boolean allowsMovement(BlockState state, IBlockReader reader, BlockPos pos, PathType type) {
 		return false;
 	}
-	
+
 }

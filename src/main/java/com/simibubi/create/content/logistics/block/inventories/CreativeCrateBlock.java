@@ -15,16 +15,16 @@ public class CreativeCrateBlock extends CrateBlock implements ITE<CreativeCrateT
 		super(p_i48415_1_);
 	}
 
-	@Override
-	public boolean hasTileEntity(BlockState state) {
-		return true;
-	}
+//	@Override
+//	public boolean hasTileEntity(BlockState state) {
+//		return true;
+//	}
 
 	@Override
-	public TileEntity createTileEntity(BlockState state, IBlockReader world) {
+	public TileEntity createNewTileEntity(IBlockReader world) {
 		return AllTileEntities.CREATIVE_CRATE.create();
 	}
-	
+
 	@Override
 	public void onBlockAdded(BlockState state, World worldIn, BlockPos pos, BlockState oldState, boolean isMoving) {
 		withTileEntityDo(worldIn, pos, CreativeCrateTileEntity::onPlaced);

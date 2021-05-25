@@ -1,7 +1,6 @@
 package com.simibubi.create;
 
 import static com.simibubi.create.AllMovementBehaviours.addMovementBehaviour;
-import static com.simibubi.create.AllTags.tagBlockAndItem;
 import static com.simibubi.create.content.AllSections.SCHEMATICS;
 import static com.simibubi.create.foundation.data.CreateRegistrate.connectedTextures;
 import static com.simibubi.create.foundation.data.ModelGen.customItemModel;

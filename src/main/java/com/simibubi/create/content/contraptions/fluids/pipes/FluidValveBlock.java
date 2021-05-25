@@ -59,7 +59,7 @@ public class FluidValveBlock extends DirectionalAxisKineticBlock implements IAxi
 	}
 
 	@Override
-	public TileEntity createTileEntity(BlockState state, IBlockReader world) {
+	public TileEntity createNewTileEntity(IBlockReader world) {
 		return AllTileEntities.FLUID_VALVE.create();
 	}
 
@@ -130,7 +130,7 @@ public class FluidValveBlock extends DirectionalAxisKineticBlock implements IAxi
 	public void scheduledTick(BlockState state, ServerWorld world, BlockPos pos, Random r) {
 		FluidPropagator.propagateChangedPipe(world, pos, state);
 	}
-	
+
 	@Override
 	public boolean allowsMovement(BlockState state, IBlockReader reader, BlockPos pos, PathType type) {
 		return false;

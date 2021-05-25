@@ -39,10 +39,10 @@ public class DrillBlock extends DirectionalKineticBlock implements ITE<DrillTile
 		super(properties);
 	}
 
-	@Override
-	public boolean hasTileEntity(BlockState state) {
-		return true;
-	}
+//	@Override
+//	public boolean hasTileEntity(BlockState state) {
+//		return true;
+//	}
 
 	@Override
 	public void onEntityCollision(BlockState state, World worldIn, BlockPos pos, Entity entityIn) {
@@ -58,7 +58,7 @@ public class DrillBlock extends DirectionalKineticBlock implements ITE<DrillTile
 	}
 
 	@Override
-	public TileEntity createTileEntity(BlockState state, IBlockReader world) {
+	public TileEntity createNewTileEntity(IBlockReader world) {
 		return AllTileEntities.DRILL.create();
 	}
 

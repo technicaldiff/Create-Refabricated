@@ -7,11 +7,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import net.minecraft.world.server.ServerWorld;
-
 import org.apache.commons.lang3.tuple.Pair;
 
-import com.simibubi.create.AllBlocks;
 import com.simibubi.create.content.logistics.block.belts.tunnel.BeltTunnelBlock.Shape;
 import com.simibubi.create.content.logistics.block.funnel.BeltFunnelBlock;
 import com.simibubi.create.content.logistics.packet.TunnelFlapPacket;
@@ -22,24 +19,23 @@ import com.simibubi.create.foundation.render.backend.instancing.IInstanceRendere
 import com.simibubi.create.foundation.tileEntity.SmartTileEntity;
 import com.simibubi.create.foundation.tileEntity.TileEntityBehaviour;
 import com.simibubi.create.foundation.utility.Iterate;
-import com.simibubi.create.lib.capabilities.Capability;
 import com.simibubi.create.lib.lba.item.IItemHandler;
+import com.simibubi.create.lib.utility.Constants.NBT;
 import com.simibubi.create.lib.utility.LazyOptional;
 import com.tterrag.registrate.fabric.EnvExecutor;
 
+import net.fabricmc.api.EnvType;
 import net.minecraft.block.BlockState;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.INBT;
 import net.minecraft.nbt.IntNBT;
 import net.minecraft.nbt.ListNBT;
 import net.minecraft.state.properties.BlockStateProperties;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.Direction;
 import net.minecraft.util.Direction.Axis;
 import net.minecraft.util.Direction.AxisDirection;
-import net.fabricmc.api.EnvType;
-import com.simibubi.create.lib.utility.Constants.NBT;
+import net.minecraft.world.server.ServerWorld;
 
 public class BeltTunnelTileEntity extends SmartTileEntity implements IInstanceRendered {
 
@@ -185,24 +181,24 @@ public class BeltTunnelTileEntity extends SmartTileEntity implements IInstanceRe
 	@Override
 	public void addBehaviours(List<TileEntityBehaviour> behaviours) {}
 
-	@Override
-	public <T> LazyOptional<T> getCapability(Capability<T> capability, Direction side) {
-		if (capability != CapabilityItemHandler.ITEM_HANDLER_CAPABILITY)
-			return super.getCapability(capability, side);
-
-		if (!this.cap.isPresent()) {
-			if (AllBlocks.BELT.has(world.getBlockState(pos.down()))) {
-				TileEntity teBelow = world.getTileEntity(pos.down());
-				if (teBelow != null) {
-					T capBelow = teBelow.getCapability(capability, Direction.UP)
-						.orElse(null);
-					if (capBelow != null) {
-						cap = LazyOptional.of(() -> capBelow)
-							.cast();
-					}
-				}
-			}
-		}
-		return this.cap.cast();
-	}
+//	@Override
+//	public <T> LazyOptional<T> getCapability(Capability<T> capability, Direction side) {
+//		if (capability != CapabilityItemHandler.ITEM_HANDLER_CAPABILITY)
+//			return super.getCapability(capability, side);
+//
+//		if (!this.cap.isPresent()) {
+//			if (AllBlocks.BELT.has(world.getBlockState(pos.down()))) {
+//				TileEntity teBelow = world.getTileEntity(pos.down());
+//				if (teBelow != null) {
+//					T capBelow = teBelow.getCapability(capability, Direction.UP)
+//						.orElse(null);
+//					if (capBelow != null) {
+//						cap = LazyOptional.of(() -> capBelow)
+//							.cast();
+//					}
+//				}
+//			}
+//		}
+//		return this.cap.cast();
+//	}
 }

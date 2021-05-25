@@ -12,6 +12,7 @@ import com.simibubi.create.lib.block.CanConnectRedstoneBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.HorizontalBlock;
+import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.item.ItemStack;
@@ -32,7 +33,7 @@ import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 
-public class NixieTubeBlock extends HorizontalBlock implements ITE<NixieTubeTileEntity>, CanConnectRedstoneBlock {
+public class NixieTubeBlock extends HorizontalBlock implements ITE<NixieTubeTileEntity>, CanConnectRedstoneBlock, ITileEntityProvider {
 
 	public static final BooleanProperty CEILING = BooleanProperty.create("ceiling");
 
@@ -144,14 +145,14 @@ public class NixieTubeBlock extends HorizontalBlock implements ITE<NixieTubeTile
 	}
 
 	@Override
-	public TileEntity createTileEntity(BlockState state, IBlockReader world) {
+	public TileEntity createNewTileEntity(IBlockReader world) {
 		return new NixieTubeTileEntity(AllTileEntities.NIXIE_TUBE.get());
 	}
 
-	@Override
-	public boolean hasTileEntity(BlockState state) {
-		return true;
-	}
+//	@Override
+//	public boolean hasTileEntity(BlockState state) {
+//		return true;
+//	}
 
 	private void updateDisplayedRedstoneValue(BlockState state, World worldIn, BlockPos pos) {
 		if (worldIn.isRemote)

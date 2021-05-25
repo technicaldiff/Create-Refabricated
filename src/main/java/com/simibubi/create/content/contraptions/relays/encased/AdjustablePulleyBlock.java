@@ -29,7 +29,7 @@ public class AdjustablePulleyBlock extends EncasedBeltBlock implements ITE<Adjus
 	}
 
 	@Override
-	public TileEntity createTileEntity(BlockState state, IBlockReader world) {
+	public TileEntity createNewTileEntity(IBlockReader world) {
 		return AllTileEntities.ADJUSTABLE_PULLEY.create();
 	}
 

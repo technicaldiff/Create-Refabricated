@@ -8,8 +8,8 @@ import com.google.gson.JsonObject;
 import com.simibubi.create.content.contraptions.processing.ProcessingRecipeBuilder.ProcessingRecipeFactory;
 import com.simibubi.create.foundation.fluid.FluidHelper;
 import com.simibubi.create.foundation.fluid.FluidIngredient;
-
 import com.simibubi.create.lib.annotation.MethodsReturnNonnullByDefault;
+import com.simibubi.create.lib.lba.fluid.FluidStack;
 
 import net.minecraft.item.crafting.IRecipeSerializer;
 import net.minecraft.item.crafting.Ingredient;

@@ -9,6 +9,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.HorizontalFaceBlock;
+import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.particles.RedstoneParticleData;
 import net.minecraft.pathfinding.PathType;
@@ -29,19 +30,19 @@ import net.minecraft.world.World;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 
-public class AnalogLeverBlock extends HorizontalFaceBlock implements ITE<AnalogLeverTileEntity> {
+public class AnalogLeverBlock extends HorizontalFaceBlock implements ITE<AnalogLeverTileEntity>, ITileEntityProvider {
 
 	public AnalogLeverBlock(Properties p_i48402_1_) {
 		super(p_i48402_1_);
 	}
 
-	@Override
-	public boolean hasTileEntity(BlockState state) {
-		return true;
-	}
+//	@Override
+//	public boolean hasTileEntity(BlockState state) {
+//		return true;
+//	}
 
 	@Override
-	public TileEntity createTileEntity(BlockState state, IBlockReader world) {
+	public TileEntity createNewTileEntity(IBlockReader world) {
 		return AllTileEntities.ANALOG_LEVER.create();
 	}
 
@@ -137,7 +138,7 @@ public class AnalogLeverBlock extends HorizontalFaceBlock implements ITE<AnalogL
 	public Class<AnalogLeverTileEntity> getTileEntityClass() {
 		return AnalogLeverTileEntity.class;
 	}
-	
+
 	@Override
 	public boolean allowsMovement(BlockState state, IBlockReader reader, BlockPos pos, PathType type) {
 		return false;

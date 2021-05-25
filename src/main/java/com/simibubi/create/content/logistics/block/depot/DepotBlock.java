@@ -10,6 +10,7 @@ import com.simibubi.create.lib.annotation.MethodsReturnNonnullByDefault;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.pathfinding.PathType;
@@ -25,7 +26,7 @@ import net.minecraft.world.World;
 
 @ParametersAreNonnullByDefault
 @MethodsReturnNonnullByDefault
-public class DepotBlock extends Block implements ITE<DepotTileEntity>, IWrenchable {
+public class DepotBlock extends Block implements ITE<DepotTileEntity>, IWrenchable, ITileEntityProvider {
 
 	public DepotBlock(Properties p_i48440_1_) {
 		super(p_i48440_1_);
@@ -37,13 +38,13 @@ public class DepotBlock extends Block implements ITE<DepotTileEntity>, IWrenchab
 		return AllShapes.DEPOT;
 	}
 
-	@Override
-	public boolean hasTileEntity(BlockState state) {
-		return true;
-	}
+//	@Override
+//	public boolean hasTileEntity(BlockState state) {
+//		return true;
+//	}
 
 	@Override
-	public TileEntity createTileEntity(BlockState state, IBlockReader world) {
+	public TileEntity createNewTileEntity(IBlockReader world) {
 		return AllTileEntities.DEPOT.create();
 	}
 

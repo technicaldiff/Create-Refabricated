@@ -29,12 +29,12 @@ public class AllFluids {
 
 	public static RegistryEntry<VirtualFluid> TEA = REGISTRATE.virtualFluid("tea")
 		.lang(f -> "fluid.create.tea", "Builder's Tea")
-		.tag(AllTags.forgeFluidTag("tea"))
+//		.tag(AllTags.forgeFluidTag("tea"))
 		.register();
 
 	public static RegistryEntry<VirtualFluid> MILK = REGISTRATE.virtualFluid("milk")
 		.lang(f -> "fluid.create.milk", "Milk")
-		.tag(AllTags.forgeFluidTag("milk"))
+//		.tag(AllTags.forgeFluidTag("milk"))
 		.register();
 
 	public static RegistryEntry<SimpleFlowableFluid.Flowing> HONEY =
@@ -46,7 +46,7 @@ public class AllFluids {
 				.tickRate(25)
 				.flowSpeed(3)
 				.blastResistance(100f))
-			.tag(AllTags.forgeFluidTag("honey"))
+//			.tag(AllTags.forgeFluidTag("honey"))
 			.bucket()
 			.properties(p -> (FabricItemSettings) p.maxStackSize(1))
 			.build()
@@ -55,7 +55,7 @@ public class AllFluids {
 	public static RegistryEntry<SimpleFlowableFluid.Flowing> CHOCOLATE =
 		REGISTRATE.standardFluid("chocolate"/*, NoColorFluidAttributes::new*/)
 			.lang(f -> "fluid.create.chocolate", "Chocolate")
-			.tag(AllTags.forgeFluidTag("chocolate"))
+//			.tag(AllTags.forgeFluidTag("chocolate"))
 //			.attributes(b -> b.viscosity(500)
 //				.density(1400))
 			.properties(p -> p.levelDecreasePerBlock(2)
