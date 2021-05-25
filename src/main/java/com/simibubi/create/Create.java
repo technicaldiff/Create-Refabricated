@@ -107,7 +107,6 @@ public class Create implements ModInitializer {
 		AllSoundEvents.register();
 
 		AllConfigs.register();
-		random = new Random();
 
 		EnvExecutor.runWhenOn(EnvType.CLIENT, () -> () -> CreateClient.addClientListeners());
 	}
@@ -116,7 +115,6 @@ public class Create implements ModInitializer {
 		CapabilityMinecartController.register();
 		SchematicInstances.register();
 
-		CHUNK_UTIL = new ChunkUtil();
 		CHUNK_UTIL.init();
 //		MinecraftForge.EVENT_BUS.register(chunkUtil); // init() handles registering events
 

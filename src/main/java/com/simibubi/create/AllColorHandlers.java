@@ -3,9 +3,6 @@ package com.simibubi.create;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.simibubi.create.foundation.block.IBlockVertexColor;
-import com.simibubi.create.foundation.block.render.ColoredVertexModel;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.RedstoneWireBlock;
 import net.minecraft.client.renderer.color.BlockColors;
@@ -16,8 +13,6 @@ import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.util.IItemProvider;
 import net.minecraft.world.GrassColors;
 import net.minecraft.world.biome.BiomeColors;
-import net.minecraftforge.client.event.ColorHandlerEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 public class AllColorHandlers {
 

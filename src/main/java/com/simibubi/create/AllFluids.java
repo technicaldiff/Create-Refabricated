@@ -6,7 +6,8 @@ import com.simibubi.create.content.contraptions.fluids.VirtualFluid;
 import com.simibubi.create.content.contraptions.fluids.potion.PotionFluid;
 import com.simibubi.create.content.palettes.AllPaletteBlocks;
 import com.simibubi.create.foundation.data.CreateRegistrate;
-import com.tterrag.registrate.util.entry.RegistryEntry;
+import com.tterrag.registrate.fabric.SimpleFlowableFluid;
+import com.tterrag.registrate.util.entry.FluidEntry;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -22,7 +23,7 @@ public class AllFluids {
 	private static final CreateRegistrate REGISTRATE = Create.registrate();
 
 	public static FluidEntry<PotionFluid> POTION =
-		REGISTRATE.virtualFluid("potion", PotionFluidAttributes::new, PotionFluid::new)
+		REGISTRATE.potionFluid("potion"/*, PotionFluidAttributes::new, PotionFluid::new*/)
 			.lang(f -> "fluid.create.potion", "Potion")
 			.register();
 
@@ -36,8 +37,8 @@ public class AllFluids {
 //		.tag(AllTags.forgeFluidTag("milk"))
 		.register();
 
-	public static FluidEntry<ForgeFlowingFluid.Flowing> HONEY =
-		REGISTRATE.standardFluid("honey", NoColorFluidAttributes::new)
+	public static FluidEntry<SimpleFlowableFluid.Flowing> HONEY =
+		REGISTRATE.standardFluid("honey"/* NoColorFluidAttributes::new*/)
 			.lang(f -> "fluid.create.honey", "Honey")
 //			.attributes(b -> b.viscosity(500)
 //				.density(1400))
@@ -51,8 +52,8 @@ public class AllFluids {
 			.build()
 			.register();
 
-	public static FluidEntry<ForgeFlowingFluid.Flowing> CHOCOLATE =
-		REGISTRATE.standardFluid("chocolate", NoColorFluidAttributes::new)
+	public static FluidEntry<SimpleFlowableFluid.Flowing> CHOCOLATE =
+		REGISTRATE.standardFluid("chocolate"/*, NoColorFluidAttributes::new*/)
 			.lang(f -> "fluid.create.chocolate", "Chocolate")
 //			.tag(AllTags.forgeFluidTag("chocolate"))
 //			.attributes(b -> b.viscosity(500)
@@ -75,13 +76,13 @@ public class AllFluids {
 
 	@Environment(EnvType.CLIENT)
 	private static void makeTranslucent(FluidEntry<?> entry) {
-		SimpleFlowableFluid fluid = entry.get();
+//		SimpleFlowableFluid fluid = entry.get();
 //		RenderTypeLookup.setRenderLayer(fluid, RenderType.getTranslucent());
 //		RenderTypeLookup.setRenderLayer(fluid.getStillFluid(), RenderType.getTranslucent());
 
 		// fabric
-		BlockRenderLayerMap.INSTANCE.putFluid(fluid, RenderType.getTranslucent());
-		BlockRenderLayerMap.INSTANCE.putFluid(fluid.getStillFluid(), RenderType.getTranslucent());
+		BlockRenderLayerMap.INSTANCE.putFluid(entry.get(), RenderType.getTranslucent());
+		BlockRenderLayerMap.INSTANCE.putFluid(entry.get().getStillFluid(), RenderType.getTranslucent());
 	}
 
 	@Nullable

@@ -15,18 +15,9 @@ import com.tterrag.registrate.builders.ContainerBuilder.ScreenFactory;
 import com.tterrag.registrate.util.entry.ContainerEntry;
 import com.tterrag.registrate.util.nullness.NonNullSupplier;
 
-import com.simibubi.create.lib.utility.ContainerTypeFactoryWrapper;
-
 import net.minecraft.client.gui.IHasContainer;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.inventory.container.Container;
-import net.minecraft.inventory.container.ContainerType;
-import net.minecraft.inventory.container.ContainerType.IFactory;
-import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.event.RegistryEvent;
-import net.minecraftforge.fml.network.IContainerFactory;
 
 public class AllContainerTypes {
 

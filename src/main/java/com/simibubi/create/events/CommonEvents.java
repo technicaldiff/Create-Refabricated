@@ -1,45 +1,36 @@
 package com.simibubi.create.events;
 
-import com.simibubi.create.content.contraptions.components.crusher.CrushingWheelTileEntity;
-import com.simibubi.create.content.contraptions.components.structureMovement.train.CouplingHandler;
-import com.simibubi.create.lib.event.StartRidingCallback;
-import com.simibubi.create.content.contraptions.components.deployer.DeployerFakePlayer;
-import com.simibubi.create.content.curiosities.armor.DivingBootsItem;
-import com.simibubi.create.content.curiosities.armor.DivingHelmetItem;
-import com.simibubi.create.content.curiosities.tools.ExtendoGripItem;
-import com.simibubi.create.lib.event.EntityEyeHeightCallback;
-import com.simibubi.create.lib.event.FluidPlaceBlockCallback;
-
-import com.simibubi.create.lib.event.LivingEntityEvents;
-
-import com.simibubi.create.lib.event.MobEntitySetTargetCallback;
-
-import net.fabricmc.fabric.api.event.player.AttackBlockCallback;
-
-import net.fabricmc.fabric.api.networking.v1.EntityTrackingEvents;
-import net.minecraft.entity.item.minecart.AbstractMinecartEntity;
-
-import net.minecraft.entity.player.ServerPlayerEntity;
-
 import org.jetbrains.annotations.Nullable;
 
 import com.mojang.brigadier.CommandDispatcher;
 import com.simibubi.create.AllFluids;
 import com.simibubi.create.Create;
+import com.simibubi.create.content.contraptions.components.crusher.CrushingWheelTileEntity;
+import com.simibubi.create.content.contraptions.components.deployer.DeployerFakePlayer;
 import com.simibubi.create.content.contraptions.components.structureMovement.ContraptionHandler;
+import com.simibubi.create.content.contraptions.components.structureMovement.train.CouplingHandler;
 import com.simibubi.create.content.contraptions.components.structureMovement.train.CouplingPhysics;
 import com.simibubi.create.content.contraptions.components.structureMovement.train.capability.CapabilityMinecartController;
 import com.simibubi.create.content.contraptions.fluids.recipe.FluidTransferRecipes;
 import com.simibubi.create.content.contraptions.fluids.recipe.PotionMixingRecipeManager;
 import com.simibubi.create.content.contraptions.wrench.WrenchItem;
+import com.simibubi.create.content.curiosities.armor.DivingBootsItem;
+import com.simibubi.create.content.curiosities.armor.DivingHelmetItem;
+import com.simibubi.create.content.curiosities.tools.ExtendoGripItem;
 import com.simibubi.create.content.curiosities.zapper.ZapperInteractionHandler;
 import com.simibubi.create.content.curiosities.zapper.ZapperItem;
+import com.simibubi.create.content.schematics.ServerSchematicLoader;
 import com.simibubi.create.foundation.command.AllCommands;
 import com.simibubi.create.foundation.fluid.FluidHelper;
 import com.simibubi.create.foundation.utility.Iterate;
 import com.simibubi.create.foundation.utility.ServerSpeedProvider;
 import com.simibubi.create.foundation.utility.WorldAttached;
 import com.simibubi.create.foundation.utility.recipe.RecipeFinder;
+import com.simibubi.create.lib.event.EntityEyeHeightCallback;
+import com.simibubi.create.lib.event.FluidPlaceBlockCallback;
+import com.simibubi.create.lib.event.LivingEntityEvents;
+import com.simibubi.create.lib.event.MobEntitySetTargetCallback;
+import com.simibubi.create.lib.event.StartRidingCallback;
 
 import net.fabricmc.fabric.api.command.v1.CommandRegistrationCallback;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerChunkEvents;
@@ -47,12 +38,16 @@ import net.fabricmc.fabric.api.event.lifecycle.v1.ServerEntityEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerWorldEvents;
+import net.fabricmc.fabric.api.event.player.AttackBlockCallback;
 import net.fabricmc.fabric.api.event.player.AttackEntityCallback;
+import net.fabricmc.fabric.api.networking.v1.EntityTrackingEvents;
 import net.minecraft.block.BlockState;
 import net.minecraft.command.CommandSource;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.item.minecart.AbstractMinecartEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.fluid.FluidState;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.MinecraftServer;
@@ -142,7 +137,7 @@ public class CommonEvents {
 
 	public static void onUnloadWorld(World world) {
 		Create.REDSTONE_LINK_NETWORK_HANDLER.onUnloadWorld(world);
-		Create.torquePropagator.onUnloadWorld(world);
+		Create.TORQUE_PROPAGATOR.onUnloadWorld(world);
 		WorldAttached.invalidateWorld(world);
 	}
 

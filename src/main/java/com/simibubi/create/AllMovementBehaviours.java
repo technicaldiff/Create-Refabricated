@@ -46,7 +46,7 @@ public class AllMovementBehaviours {
 	}
 
 	public static boolean contains(Block block) {
-		return MOVEMENT_BEHAVIOURS.containsKey(block.getRegistryName());
+		return MOVEMENT_BEHAVIOURS.containsKey(Registry.BLOCK.getKey(block));
 	}
 
 	public static <B extends Block> NonNullConsumer<? super B> addMovementBehaviour(

@@ -22,10 +22,6 @@ import java.util.stream.Collectors;
 
 import javax.annotation.Nullable;
 
-import com.simibubi.create.lib.lba.fluid.SimpleFluidTank;
-
-import net.minecraft.util.registry.Registry;
-
 import org.apache.commons.lang3.tuple.MutablePair;
 import org.apache.commons.lang3.tuple.Pair;
 
@@ -73,6 +69,7 @@ import com.simibubi.create.foundation.utility.UniqueLinkedList;
 import com.simibubi.create.foundation.utility.worldWrappers.WrappedWorld;
 import com.simibubi.create.lib.lba.fluid.FluidStack;
 import com.simibubi.create.lib.lba.fluid.IFluidHandler;
+import com.simibubi.create.lib.lba.fluid.SimpleFluidTank;
 import com.simibubi.create.lib.lba.item.CombinedInvWrapper;
 import com.simibubi.create.lib.lba.item.IItemHandlerModifiable;
 import com.simibubi.create.lib.utility.Constants.BlockFlags;
@@ -392,7 +389,7 @@ public abstract class Contraption {
 			boolean blockAttachedTowardsFace =
 				BlockMovementChecks.isBlockAttachedTowards(blockState, world, offsetPos, offset.getOpposite());
 			boolean brittle = BlockMovementChecks.isBrittle(blockState);
-			boolean canStick = !brittle && state.canStickTo(blockState) && blockState.canStickTo(state);
+			boolean canStick = !brittle && StickinessUtil.canStickTo(state, blockState) && StickinessUtil.canStickTo(blockState, state);
 			if (canStick) {
 				if (state.getPushReaction() == PushReaction.PUSH_ONLY
 					|| blockState.getPushReaction() == PushReaction.PUSH_ONLY) {

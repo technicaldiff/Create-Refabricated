@@ -232,13 +232,12 @@ public class SymmetryWandItem extends Item {
 //				BlockSnapshot blocksnapshot = BlockSnapshot.create(world.getRegistryKey(), world, position);
 				BlockState cachedState = world.getBlockState(position);
 				FluidState ifluidstate = world.getFluidState(position);
-				world.setBlockState(position, ifluidstate.getBlockState(), BlockFlags.UPDATE_NEIGHBORS);
-				world.setBlockState(position, blockState);
-
 				CompoundNBT wandNbt = wand.getOrCreateTag();
 				wandNbt.putBoolean("Simulate", true);
 				boolean placeInterrupted = !world.canPlace(cachedState, position, ISelectionContext.dummy());
 				wandNbt.putBoolean("Simulate", false);
+				world.setBlockState(position, ifluidstate.getBlockState(), BlockFlags.UPDATE_NEIGHBORS);
+				world.setBlockState(position, blockState);
 
 				if (placeInterrupted) {
 					world.setBlockState(position, cachedState);
