@@ -44,11 +44,11 @@ public class PulleyBlock extends HorizontalAxisKineticBlock implements ITE<Pulle
 
     private static void onRopeBroken(World world, BlockPos pulleyPos) {
         TileEntity te = world.getTileEntity(pulleyPos);
-        if (!(te instanceof PulleyTileEntity))
-            return;
-        PulleyTileEntity pulley = (PulleyTileEntity) te;
-        pulley.offset = 0;
-        pulley.sendData();
+        if (te instanceof PulleyTileEntity) {
+        	PulleyTileEntity pulley = (PulleyTileEntity) te;
+        	pulley.initialOffset = 0;
+        	pulley.onLengthBroken();
+		}
     }
 
     @Override

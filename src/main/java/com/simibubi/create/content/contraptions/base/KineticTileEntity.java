@@ -330,7 +330,7 @@ public abstract class KineticTileEntity extends SmartTileEntity
 	}
 
 	public KineticNetwork getOrCreateNetwork() {
-		return Create.torquePropagator.getOrCreateNetworkFor(this);
+		return Create.TORQUE_PROPAGATOR.getOrCreateNetworkFor(this);
 	}
 
 	public boolean hasNetwork() {

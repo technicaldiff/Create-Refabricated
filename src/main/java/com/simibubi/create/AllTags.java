@@ -23,7 +23,7 @@ import net.minecraft.util.ResourceLocation;
 
 public class AllTags {
 //	private static final CreateRegistrate REGISTRATE = Create.registrate()
-//		.itemGroup(() -> Create.baseCreativeTab);
+//		.itemGroup(() -> Create.BASE_CREATIVE_TAB);
 
 	public static <T extends Block, P> NonNullFunction<BlockBuilder<T, P>, ItemBuilder<BlockItem, BlockBuilder<T, P>>> tagBlockAndItem(
 		String tagName) {

@@ -43,7 +43,7 @@ public class InstantSchematicPacket implements C2SPacket {
 			.execute(() -> {
 				if (player == null)
 					return;
-				Create.schematicReceiver.handleInstantSchematic(player, name, player.world, origin, bounds);
+				Create.SCHEMATIC_RECEIVER.handleInstantSchematic(player, name, player.world, origin, bounds);
 			});
 	}
 

@@ -34,7 +34,6 @@ import com.simibubi.create.content.contraptions.fluids.recipe.PotionMixingRecipe
 import com.simibubi.create.content.contraptions.wrench.WrenchItem;
 import com.simibubi.create.content.curiosities.zapper.ZapperInteractionHandler;
 import com.simibubi.create.content.curiosities.zapper.ZapperItem;
-import com.simibubi.create.content.schematics.ServerSchematicLoader;
 import com.simibubi.create.foundation.command.AllCommands;
 import com.simibubi.create.foundation.fluid.FluidHelper;
 import com.simibubi.create.foundation.utility.Iterate;
@@ -70,10 +69,10 @@ import net.minecraft.world.chunk.Chunk;
 public class CommonEvents {
 
 	public static void onServerTick(MinecraftServer server) {
-		if (Create.schematicReceiver == null)
-			Create.schematicReceiver = new ServerSchematicLoader();
-		Create.schematicReceiver.tick();
-		Create.lagger.tick();
+		if (Create.SCHEMATIC_RECEIVER == null)
+			Create.SCHEMATIC_RECEIVER = new ServerSchematicLoader();
+		Create.SCHEMATIC_RECEIVER.tick();
+		Create.LAGGER.tick();
 		ServerSpeedProvider.serverTick(server);
 	}
 
@@ -133,16 +132,16 @@ public class CommonEvents {
 	}
 
 	public static void serverStopped(MinecraftServer server) {
-		Create.schematicReceiver.shutdown();
+		Create.SCHEMATIC_RECEIVER.shutdown();
 	}
 
 	public static void onLoadWorld(World world) {
-		Create.redstoneLinkNetworkHandler.onLoadWorld(world);
-		Create.torquePropagator.onLoadWorld(world);
+		Create.REDSTONE_LINK_NETWORK_HANDLER.onLoadWorld(world);
+		Create.TORQUE_PROPAGATOR.onLoadWorld(world);
 	}
 
 	public static void onUnloadWorld(World world) {
-		Create.redstoneLinkNetworkHandler.onUnloadWorld(world);
+		Create.REDSTONE_LINK_NETWORK_HANDLER.onUnloadWorld(world);
 		Create.torquePropagator.onUnloadWorld(world);
 		WorldAttached.invalidateWorld(world);
 	}

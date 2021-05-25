@@ -11,6 +11,7 @@ import com.simibubi.create.AllBlocks;
 import com.simibubi.create.AllItems;
 import com.simibubi.create.AllSoundEvents;
 import com.simibubi.create.AllTags.AllBlockTags;
+import com.simibubi.create.content.contraptions.components.structureMovement.BlockMovementChecks;
 import com.simibubi.create.content.contraptions.relays.belt.BeltBlock;
 import com.simibubi.create.content.contraptions.relays.belt.BeltPart;
 import com.simibubi.create.content.contraptions.relays.belt.BeltSlope;
@@ -28,8 +29,6 @@ import com.simibubi.create.foundation.item.ItemHelper.ExtractionCountMode;
 import com.simibubi.create.foundation.render.backend.instancing.IInstanceRendered;
 import com.simibubi.create.foundation.tileEntity.SmartTileEntity;
 import com.simibubi.create.foundation.tileEntity.TileEntityBehaviour;
-import com.simibubi.create.foundation.tileEntity.behaviour.BehaviourType;
-import com.simibubi.create.foundation.tileEntity.behaviour.filtering.FilteringBehaviour;
 import com.simibubi.create.foundation.utility.BlockHelper;
 import com.simibubi.create.foundation.utility.IPartialSafeNBT;
 import com.simibubi.create.foundation.utility.Iterate;
@@ -43,8 +42,6 @@ import com.simibubi.create.lib.utility.LoadedCheckUtil;
 
 import com.simibubi.create.lib.utility.NBTSerializer;
 
-import net.minecraft.block.AbstractRailBlock;
-import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.PistonHeadBlock;
@@ -437,6 +434,7 @@ public class SchematicannonTileEntity extends SmartTileEntity implements INamedC
 
 		boolean shouldSkip = false;
 		BlockState blockState = Blocks.AIR.getDefaultState();
+		TileEntity tileEntity = null;
 		ItemRequirement requirement;
 
 		if (entityMode) {
@@ -446,8 +444,9 @@ public class SchematicannonTileEntity extends SmartTileEntity implements INamedC
 
 		} else {
 			blockState = BlockHelper.setZeroAge(blockReader.getBlockState(target));
-			requirement = ItemRequirement.of(blockState);
-			shouldSkip = !shouldPlace(target, blockState);
+			tileEntity = blockReader.getTileEntity(target);
+			requirement = ItemRequirement.of(blockState, tileEntity);
+			shouldSkip = !shouldPlace(target, blockState, tileEntity);
 		}
 
 		if (shouldSkip || requirement.isInvalid()) {
@@ -457,10 +456,10 @@ public class SchematicannonTileEntity extends SmartTileEntity implements INamedC
 		}
 
 		// Find item
-		List<ItemStack> requiredItems = requirement.getRequiredItems();
+		List<ItemRequirement.StackRequirement> requiredItems = requirement.getRequiredItems();
 		if (!requirement.isEmpty()) {
-			for (ItemStack required : requiredItems) {
-				if (!grabItemsFromAttachedInventories(required, requirement.getUsage(), true)) {
+			for (ItemRequirement.StackRequirement required : requiredItems) {
+				if (!grabItemsFromAttachedInventories(required.item, required.usage, true)) {
 					if (skipMissing) {
 						statusMsg = "skipping";
 						blockSkipped = true;
@@ -471,15 +470,15 @@ public class SchematicannonTileEntity extends SmartTileEntity implements INamedC
 						return;
 					}
 
-					missingItem = required;
+					missingItem = required.item;
 					state = State.PAUSED;
 					statusMsg = "missingBlock";
 					return;
 				}
 			}
 
-			for (ItemStack required : requiredItems)
-				grabItemsFromAttachedInventories(required, requirement.getUsage(), false);
+			for (ItemRequirement.StackRequirement required : requiredItems)
+				grabItemsFromAttachedInventories(required.item, required.usage, false);
 		}
 
 		// Success
@@ -489,7 +488,7 @@ public class SchematicannonTileEntity extends SmartTileEntity implements INamedC
 		else
 			statusMsg = "clearing";
 
-		ItemStack icon = requirement.isEmpty() || requiredItems.isEmpty() ? ItemStack.EMPTY : requiredItems.get(0);
+		ItemStack icon = requirement.isEmpty() || requiredItems.isEmpty() ? ItemStack.EMPTY : requiredItems.get(0).item;
 		if (entityMode)
 			launchEntity(target, icon, blockReader.getEntities()
 				.collect(Collectors.toList())
@@ -733,8 +732,7 @@ public class SchematicannonTileEntity extends SmartTileEntity implements INamedC
 	}
 
 	public static boolean shouldDeferBlock(BlockState state) {
-		Block block = state.getBlock();
-		return block instanceof AbstractRailBlock || block.is(AllBlocks.GANTRY_CARRIAGE.get());
+		return state.getBlock().is(AllBlocks.GANTRY_CARRIAGE.get()) || BlockMovementChecks.isBrittle(state);
 	}
 
 	public void finishedPrinting() {
@@ -764,7 +762,7 @@ public class SchematicannonTileEntity extends SmartTileEntity implements INamedC
 		deferredBlocks.clear();
 	}
 
-	protected boolean shouldPlace(BlockPos pos, BlockState state) {
+	protected boolean shouldPlace(BlockPos pos, BlockState state, TileEntity te) {
 		if (world == null)
 			return false;
 		BlockState toReplace = world.getBlockState(pos);
@@ -794,7 +792,7 @@ public class SchematicannonTileEntity extends SmartTileEntity implements INamedC
 			&& (toReplace.getBlock().hasBlockEntity() || (toReplaceOther != null && toReplaceOther.getBlock().hasBlockEntity())))
 			return false;
 
-		if (shouldIgnoreBlockState(state))
+		if (shouldIgnoreBlockState(state, te))
 			return false;
 
 		if (replaceMode == 3)
@@ -813,12 +811,12 @@ public class SchematicannonTileEntity extends SmartTileEntity implements INamedC
 		return false;
 	}
 
-	protected boolean shouldIgnoreBlockState(BlockState state) {
+	protected boolean shouldIgnoreBlockState(BlockState state, TileEntity te) {
 		// Block doesnt have a mapping (Water, lava, etc)
 		if (state.getBlock() == Blocks.STRUCTURE_VOID)
 			return true;
 
-		ItemRequirement requirement = ItemRequirement.of(state);
+		ItemRequirement requirement = ItemRequirement.of(state, te);
 		if (requirement.isEmpty())
 			return false;
 		if (requirement.isInvalid())
@@ -937,7 +935,7 @@ public class SchematicannonTileEntity extends SmartTileEntity implements INamedC
 
 	@Override
 	public Container createMenu(int id, PlayerInventory inv, PlayerEntity player) {
-		return new SchematicannonContainer(id, inv, this);
+		return SchematicannonContainer.create(id, inv, this);
 	}
 
 	@Override
@@ -953,15 +951,17 @@ public class SchematicannonTileEntity extends SmartTileEntity implements INamedC
 		if (schematicLoaded) {
 			blocksToPlace = blocksPlaced;
 			for (BlockPos pos : blockReader.getAllPositions()) {
-				BlockState required = blockReader.getBlockState(pos.add(schematicAnchor));
+				BlockPos relPos = pos.add(schematicAnchor);
+				BlockState required = blockReader.getBlockState(relPos);
+				TileEntity requiredTE = blockReader.getTileEntity(relPos);
 
 				if (!LoadedCheckUtil.isAreaLoaded(getWorld(), pos.add(schematicAnchor), 0)) {
 					checklist.warnBlockNotLoaded();
 					continue;
 				}
-				if (!shouldPlace(pos.add(schematicAnchor), required))
+				if (!shouldPlace(pos.add(schematicAnchor), required, requiredTE))
 					continue;
-				ItemRequirement requirement = ItemRequirement.of(required);
+				ItemRequirement requirement = ItemRequirement.of(required, blockReader.getTileEntity(relPos));
 				if (requirement.isEmpty())
 					continue;
 				if (requirement.isInvalid())

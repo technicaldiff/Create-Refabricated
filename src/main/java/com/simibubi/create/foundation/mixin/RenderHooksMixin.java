@@ -66,14 +66,16 @@ public class RenderHooksMixin {
         double camY = cameraPos.getY();
         double camZ = cameraPos.getZ();
 
-        CreateClient.kineticRenderer.get(world).beginFrame(info, camX, camY, camZ);
-        ContraptionRenderDispatcher.beginFrame(info, camX, camY, camZ);
-    }
+		CreateClient.KINETIC_RENDERER.get(world)
+			.beginFrame(info, camX, camY, camZ);
+		ContraptionRenderDispatcher.beginFrame(info, camX, camY, camZ);
+	}
 
-    @Inject(at = @At("TAIL"), method = "scheduleBlockRerenderIfNeeded")
-    private void checkUpdate(BlockPos pos, BlockState lastState, BlockState newState, CallbackInfo ci) {
-        CreateClient.kineticRenderer.get(world).update(world.getTileEntity(pos));
-    }
+	@Inject(at = @At("TAIL"), method = "scheduleBlockRerenderIfNeeded")
+	private void checkUpdate(BlockPos pos, BlockState lastState, BlockState newState, CallbackInfo ci) {
+		CreateClient.KINETIC_RENDERER.get(world)
+			.update(world.getTileEntity(pos));
+	}
 
     @Inject(at = @At("TAIL"), method = "loadRenderers")
     private void refresh(CallbackInfo ci) {
@@ -81,10 +83,10 @@ public class RenderHooksMixin {
         OptifineHandler.refresh();
         Backend.refresh();
 
-        if (Backend.canUseInstancing() && world != null) {
-            KineticRenderer kineticRenderer = CreateClient.kineticRenderer.get(world);
-            kineticRenderer.invalidate();
-            world.loadedTileEntityList.forEach(kineticRenderer::add);
-        }
-    }
+		if (Backend.canUseInstancing() && world != null) {
+			KineticRenderer kineticRenderer = CreateClient.KINETIC_RENDERER.get(world);
+			kineticRenderer.invalidate();
+			world.loadedTileEntityList.forEach(kineticRenderer::add);
+		}
+	}
 }

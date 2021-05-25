@@ -149,7 +149,7 @@ public class FluidPipeBlock extends SixWayBlock implements IWaterLoggable, IWren
 		FluidTransportBehaviour transport = TileEntityBehaviour.get(world, neighbourPos, FluidTransportBehaviour.TYPE);
 		BracketedTileEntityBehaviour bracket = TileEntityBehaviour.get(world, neighbourPos, BracketedTileEntityBehaviour.TYPE);
 		if (isPipe(neighbour))
-			return bracket == null || !bracket.isBacketPresent()
+			return bracket == null || !bracket.isBracketPresent()
 				|| FluidPropagator.getStraightPipeAxis(neighbour) == direction.getAxis();
 		if (transport == null)
 			return false;
@@ -229,7 +229,7 @@ public class FluidPipeBlock extends SixWayBlock implements IWaterLoggable, IWren
 		IBlockDisplayReader world, BlockPos pos) {
 
 		BracketedTileEntityBehaviour bracket = TileEntityBehaviour.get(world, pos, BracketedTileEntityBehaviour.TYPE);
-		if (bracket != null && bracket.isBacketPresent())
+		if (bracket != null && bracket.isBracketPresent())
 			return state;
 
 		// Update sides that are not ignored

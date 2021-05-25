@@ -82,8 +82,8 @@ public class GlassFluidPipeBlock extends AxisPipeBlock implements IWaterLoggable
 	}
 
 	@Override
-	public ItemRequirement getRequiredItems(BlockState state) {
-		return ItemRequirement.of(AllBlocks.FLUID_PIPE.getDefaultState());
+	public ItemRequirement getRequiredItems(BlockState state, TileEntity te) {
+		return ItemRequirement.of(AllBlocks.FLUID_PIPE.getDefaultState(), te);
 	}
 
 	@Override

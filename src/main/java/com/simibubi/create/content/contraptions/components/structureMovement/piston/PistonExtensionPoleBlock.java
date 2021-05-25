@@ -9,6 +9,7 @@ import java.util.function.Predicate;
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.AllShapes;
 import com.simibubi.create.content.contraptions.components.structureMovement.piston.MechanicalPistonBlock.PistonState;
+import com.simibubi.create.content.contraptions.components.structureMovement.pulley.PulleyTileEntity;
 import com.simibubi.create.content.contraptions.wrench.IWrenchable;
 import com.simibubi.create.foundation.block.ProperDirectionalBlock;
 import com.simibubi.create.foundation.utility.placement.IPlacementHelper;
@@ -35,6 +36,7 @@ import net.minecraft.item.ToolItem;
 import net.minecraft.pathfinding.PathType;
 import net.minecraft.state.StateContainer.Builder;
 import net.minecraft.state.properties.BlockStateProperties;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Direction;
 import net.minecraft.util.Direction.Axis;
@@ -123,6 +125,13 @@ public class PistonExtensionPoleBlock extends ProperDirectionalBlock implements 
 				.forEach(p -> worldIn.destroyBlock(p, !player.isCreative()));
 			worldIn.setBlockState(basePos, worldIn.getBlockState(basePos)
 				.with(MechanicalPistonBlock.STATE, PistonState.RETRACTED));
+
+			TileEntity te = worldIn.getTileEntity(basePos);
+			if (te instanceof MechanicalPistonTileEntity) {
+				MechanicalPistonTileEntity baseTE = (MechanicalPistonTileEntity) te;
+				baseTE.offset = 0;
+				baseTE.onLengthBroken();
+			}
 		}
 
 		super.onBlockHarvested(worldIn, pos, state, player);

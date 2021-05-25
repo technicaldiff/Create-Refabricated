@@ -4,6 +4,7 @@ import java.util.function.Consumer;
 import java.util.function.Supplier;
 
 import com.simibubi.create.content.logistics.item.filter.FilterItem;
+import com.simibubi.create.content.schematics.ItemRequirement;
 import com.simibubi.create.foundation.networking.AllPackets;
 import com.simibubi.create.foundation.tileEntity.SmartTileEntity;
 import com.simibubi.create.foundation.tileEntity.TileEntityBehaviour;
@@ -16,6 +17,7 @@ import com.simibubi.create.lib.utility.NBTSerializer;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.item.ItemEntity;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.Direction;
@@ -168,6 +170,15 @@ public class FilteringBehaviour extends TileEntityBehaviour {
 		}
 
 		super.destroy();
+	}
+
+	@Override
+	public ItemRequirement getRequiredItems() {
+		Item filterItem = filter.getItem();
+		if (filterItem instanceof FilterItem)
+			return new ItemRequirement(ItemRequirement.ItemUseType.CONSUME, filterItem);
+
+		return ItemRequirement.NONE;
 	}
 
 	public ItemStack getFilter(Direction side) {

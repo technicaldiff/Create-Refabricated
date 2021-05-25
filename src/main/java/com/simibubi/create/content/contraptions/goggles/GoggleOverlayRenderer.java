@@ -37,7 +37,7 @@ import net.fabricmc.api.EnvType;
 
 public class GoggleOverlayRenderer {
 
-	private static final Map<Object, OutlineEntry> outlines = CreateClient.outliner.getOutlines();
+	private static final Map<Object, OutlineEntry> outlines = CreateClient.OUTLINER.getOutlines();
 
 	public static void lookingAtBlocksThroughGogglesShowsTooltip(MatrixStack ms, float v) {
 		RayTraceResult objectMouseOver = Minecraft.getInstance().objectMouseOver;

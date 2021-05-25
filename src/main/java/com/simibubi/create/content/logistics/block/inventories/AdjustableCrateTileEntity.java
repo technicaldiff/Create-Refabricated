@@ -74,7 +74,7 @@ public class AdjustableCrateTileEntity extends CrateTileEntity implements INamed
 
 	@Override
 	public Container createMenu(int id, PlayerInventory inventory, PlayerEntity player) {
-		return new AdjustableCrateContainer(id, inventory, this);
+		return AdjustableCrateContainer.create(id, inventory, this);
 	}
 
 	public AdjustableCrateTileEntity getOtherCrate() {

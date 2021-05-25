@@ -18,6 +18,7 @@ import com.simibubi.create.content.contraptions.relays.encased.CasingConnectivit
 import com.simibubi.create.foundation.block.IBlockVertexColor;
 import com.simibubi.create.foundation.block.connected.CTModel;
 import com.simibubi.create.foundation.block.connected.ConnectedTextureBehaviour;
+import com.simibubi.create.foundation.block.render.ColoredVertexModel;
 import com.simibubi.create.foundation.block.render.CustomRenderedItemModel;
 import com.simibubi.create.lib.extensions.ItemExtensions;
 import com.simibubi.create.lib.helper.ItemSupplierHelper;
@@ -229,6 +230,12 @@ public class CreateRegistrate extends AbstractRegistrate<CreateRegistrate> {
 	}
 
 	@Environment(EnvType.CLIENT)
+	private static void registerBlockVertexColor(Block entry, IBlockVertexColor colorFunc) {
+		CreateClient.getCustomBlockModels()
+			.register(entry.delegate, model -> new ColoredVertexModel(model, colorFunc));
+	}
+
+	@Environment(EnvType.CLIENT)
 	private static void registerBlockModel(Block entry,
 		Supplier<NonNullFunction<IBakedModel, ? extends IBakedModel>> func) {
 		CreateClient.getCustomBlockModels()
@@ -254,12 +261,6 @@ public class CreateRegistrate extends AbstractRegistrate<CreateRegistrate> {
 		CreateClient.getColorHandler()
 			.register(entry, colorFunc.get()
 				.get());
-	}
-
-	@Environment(EnvType.CLIENT)
-	private static void registerBlockVertexColor(Block entry, IBlockVertexColor colorFunc) {
-		CreateClient.getColorHandler()
-			.register(entry, colorFunc);
 	}
 
 	@Environment(EnvType.CLIENT)

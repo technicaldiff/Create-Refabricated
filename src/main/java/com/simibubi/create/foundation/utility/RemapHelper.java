@@ -61,7 +61,14 @@ package com.simibubi.create.foundation.utility;
 //import net.minecraft.block.Block;
 //import net.minecraft.item.Item;
 //import net.minecraft.util.ResourceLocation;
+//import net.minecraftforge.event.RegistryEvent;
+//import net.minecraftforge.eventbus.api.SubscribeEvent;
+//import net.minecraftforge.fml.ModContainer;
+//import net.minecraftforge.fml.ModList;
+//import net.minecraftforge.fml.common.Mod;
+//import net.minecraftforge.registries.ForgeRegistries;
 //
+//@Mod.EventBusSubscriber
 //public class RemapHelper {
 //	private static final Map<String, ResourceLocation> reMap = new HashMap<>();
 //
@@ -180,6 +187,7 @@ package com.simibubi.create.foundation.utility;
 ////		reMap.put("rose_quartz_shovel", );
 //	}
 //
+//	@SubscribeEvent
 //	public static void onRemapBlocks(RegistryEvent.MissingMappings<Block> event) {
 //		ModContainer mod = ModList.get()
 //			.getModContainerById(Create.ID)
@@ -192,16 +200,17 @@ package com.simibubi.create.foundation.utility;
 //		for (RegistryEvent.MissingMappings.Mapping<Block> mapping : mappings) {
 //			if (reMap.containsKey(mapping.key.getPath())) {
 //				try {
-//					Create.logger.warn("Remapping block '{}' to '{}'", mapping.key, reMap.get(mapping.key.getPath()));
+//					Create.LOGGER.warn("Remapping block '{}' to '{}'", mapping.key, reMap.get(mapping.key.getPath()));
 //					mapping.remap(ForgeRegistries.BLOCKS.getValue(reMap.get(mapping.key.getPath())));
 //				} catch (Throwable t) {
-//					Create.logger.warn("Remapping block '{}' to '{}' failed: {}", mapping.key,
+//					Create.LOGGER.warn("Remapping block '{}' to '{}' failed: {}", mapping.key,
 //						reMap.get(mapping.key.getPath()), t);
 //				}
 //			}
 //		}
 //	}
 //
+//	@SubscribeEvent
 //	public static void onRemapItems(RegistryEvent.MissingMappings<Item> event) {
 //		ModContainer mod = ModList.get()
 //			.getModContainerById(Create.ID)
@@ -214,10 +223,10 @@ package com.simibubi.create.foundation.utility;
 //		for (RegistryEvent.MissingMappings.Mapping<Item> mapping : mappings) {
 //			if (reMap.containsKey(mapping.key.getPath())) {
 //				try {
-//					Create.logger.warn("Remapping item '{}' to '{}'", mapping.key, reMap.get(mapping.key.getPath()));
+//					Create.LOGGER.warn("Remapping item '{}' to '{}'", mapping.key, reMap.get(mapping.key.getPath()));
 //					mapping.remap(ForgeRegistries.ITEMS.getValue(reMap.get(mapping.key.getPath())));
 //				} catch (Throwable t) {
-//					Create.logger.warn("Remapping item '{}' to '{}' failed: {}", mapping.key,
+//					Create.LOGGER.warn("Remapping item '{}' to '{}' failed: {}", mapping.key,
 //						reMap.get(mapping.key.getPath()), t);
 //				}
 //			}

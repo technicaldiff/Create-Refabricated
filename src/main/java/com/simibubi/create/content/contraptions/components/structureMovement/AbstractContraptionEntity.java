@@ -395,7 +395,7 @@ public abstract class AbstractContraptionEntity extends Entity implements ExtraS
 			byte[] byteArray = dataOutput.toByteArray();
 			int estimatedPacketSize = byteArray.length;
 			if (estimatedPacketSize > 2_000_000) {
-				Create.logger.warn("Could not send Contraption Spawn Data (Packet too big): "
+				Create.LOGGER.warn("Could not send Contraption Spawn Data (Packet too big): "
 					+ getContraption().getType().id + " @" + getPositionVec() + " (" + getUniqueID().toString() + ")");
 				buffer.writeCompoundTag(new CompoundNBT());
 				return;

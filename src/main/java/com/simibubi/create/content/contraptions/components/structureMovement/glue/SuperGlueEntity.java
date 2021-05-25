@@ -11,7 +11,7 @@ import com.simibubi.create.AllEntityTypes;
 import com.simibubi.create.AllItems;
 import com.simibubi.create.AllSoundEvents;
 import com.simibubi.create.content.contraptions.base.DirectionalKineticBlock;
-import com.simibubi.create.content.contraptions.components.structureMovement.BlockMovementTraits;
+import com.simibubi.create.content.contraptions.components.structureMovement.BlockMovementChecks;
 import com.simibubi.create.content.contraptions.components.structureMovement.bearing.BearingBlock;
 import com.simibubi.create.content.contraptions.components.structureMovement.chassis.AbstractChassisBlock;
 import com.simibubi.create.content.schematics.ISpecialEntityItemRequirement;
@@ -196,11 +196,11 @@ public class SuperGlueEntity extends Entity implements ExtraSpawnDataEntity, ISp
 
 	public static boolean isValidFace(World world, BlockPos pos, Direction direction) {
 		BlockState state = world.getBlockState(pos);
-		if (BlockMovementTraits.isBlockAttachedTowards(world, pos, state, direction))
+		if (BlockMovementChecks.isBlockAttachedTowards(state, world, pos, direction))
 			return true;
-		if (!BlockMovementTraits.movementNecessary(state, world, pos))
+		if (!BlockMovementChecks.isMovementNecessary(state, world, pos))
 			return false;
-		if (BlockMovementTraits.notSupportive(state, direction))
+		if (BlockMovementChecks.isNotSupportive(state, direction))
 			return false;
 		return true;
 	}

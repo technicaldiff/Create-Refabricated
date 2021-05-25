@@ -14,14 +14,14 @@
     "FogColorTrackerMixin",
     "HeavyBootsOnPlayerMixin",
     "LightUpdateMixin",
+    "ModelDataRefreshMixin",
     "NetworkLightUpdateMixin",
     "RenderHooksMixin",
     "ShaderCloseMixin",
     "StoreProjectionMatrixMixin",
     "TileRemoveMixin",
     "TileWorldHookMixin",
-    "WindowResizeMixin",
-    "ModelDataRefreshMixin"
+    "WindowResizeMixin"
   ],
   "injectors": {
     "defaultRequire": 1

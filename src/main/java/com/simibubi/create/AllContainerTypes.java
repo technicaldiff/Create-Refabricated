@@ -10,58 +10,45 @@ import com.simibubi.create.content.schematics.block.SchematicTableContainer;
 import com.simibubi.create.content.schematics.block.SchematicTableScreen;
 import com.simibubi.create.content.schematics.block.SchematicannonContainer;
 import com.simibubi.create.content.schematics.block.SchematicannonScreen;
-import com.simibubi.create.foundation.utility.Lang;
+import com.tterrag.registrate.builders.ContainerBuilder.ForgeContainerFactory;
+import com.tterrag.registrate.builders.ContainerBuilder.ScreenFactory;
+import com.tterrag.registrate.util.entry.ContainerEntry;
+import com.tterrag.registrate.util.nullness.NonNullSupplier;
 
 import com.simibubi.create.lib.utility.ContainerTypeFactoryWrapper;
 
 import net.minecraft.client.gui.IHasContainer;
-import net.minecraft.client.gui.ScreenManager;
-import net.minecraft.client.gui.ScreenManager.IScreenFactory;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.ContainerType;
+import net.minecraft.inventory.container.ContainerType.IFactory;
 import net.minecraft.util.ResourceLocation;
-import net.fabricmc.fabric.api.screenhandler.v1.ScreenHandlerRegistry;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.event.RegistryEvent;
+import net.minecraftforge.fml.network.IContainerFactory;
 
-public enum AllContainerTypes {
+public class AllContainerTypes {
 
-	SCHEMATIC_TABLE(SchematicTableContainer::new),
-	SCHEMATICANNON(SchematicannonContainer::new),
-	FLEXCRATE(AdjustableCrateContainer::new),
-	FILTER(FilterContainer::new),
-	ATTRIBUTE_FILTER(AttributeFilterContainer::new),
+	public static final ContainerEntry<SchematicTableContainer> SCHEMATIC_TABLE =
+		register("schematic_table", SchematicTableContainer::new, () -> SchematicTableScreen::new);
 
-	;
+	public static final ContainerEntry<SchematicannonContainer> SCHEMATICANNON =
+		register("schematicannon", SchematicannonContainer::new, () -> SchematicannonScreen::new);
 
-	public ContainerType<? extends Container> type;
-	private ContainerTypeFactoryWrapper<?> factory;
+	public static final ContainerEntry<AdjustableCrateContainer> FLEXCRATE =
+		register("flexcrate", AdjustableCrateContainer::new, () -> AdjustableCrateScreen::new);
 
-	<C extends Container> AllContainerTypes(ContainerTypeFactoryWrapper<C> factory) {
-		this.factory = factory;
+	public static final ContainerEntry<FilterContainer> FILTER =
+		register("filter", FilterContainer::new, () -> FilterScreen::new);
+
+	public static final ContainerEntry<AttributeFilterContainer> ATTRIBUTE_FILTER =
+		register("attribute_filter", AttributeFilterContainer::new, () -> AttributeFilterScreen::new);
+
+	private static <C extends Container, S extends Screen & IHasContainer<C>> ContainerEntry<C> register(String name, ForgeContainerFactory<C> factory, NonNullSupplier<ScreenFactory<C, S>> screenFactory) {
+		return Create.registrate().container(name, factory, screenFactory).register();
 	}
 
-	public static void register() {
-		for (AllContainerTypes container : values()) {
-			container.type = new ContainerType<>(container.factory);
-			ScreenHandlerRegistry.registerSimple(new ResourceLocation(Create.ID, Lang.asId(container.name())), container.factory);
-		}
-	}
+	public static void register() {}
 
-	@Environment(EnvType.CLIENT)
-	public static void registerScreenFactories() {
-		bind(SCHEMATIC_TABLE, SchematicTableScreen::new);
-		bind(SCHEMATICANNON, SchematicannonScreen::new);
-		bind(FLEXCRATE, AdjustableCrateScreen::new);
-		bind(FILTER, FilterScreen::new);
-		bind(ATTRIBUTE_FILTER, AttributeFilterScreen::new);
-	}
-
-	@Environment(EnvType.CLIENT)
-	@SuppressWarnings("unchecked")
-	private static <C extends Container, S extends Screen & IHasContainer<C>> void bind(AllContainerTypes c,
-		IScreenFactory<C, S> factory) {
-		ScreenManager.registerFactory((ContainerType<C>) c.type, factory);
-	}
 }

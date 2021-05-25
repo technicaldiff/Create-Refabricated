@@ -39,7 +39,7 @@ public class NetworkLightUpdateMixin {
 				chunk.getTileEntityMap()
 					.values()
 					.forEach(tile -> {
-						CreateClient.kineticRenderer.get(world)
+						CreateClient.KINETIC_RENDERER.get(world)
 							.onLightUpdate(tile);
 					});
 			}

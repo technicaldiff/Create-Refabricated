@@ -51,8 +51,8 @@ public class EncasedShaftBlock extends AbstractEncasedShaftBlock implements ISpe
 	}
 
 	@Override
-	public ItemRequirement getRequiredItems(BlockState state) {
-		return ItemRequirement.of(AllBlocks.SHAFT.getDefaultState());
+	public ItemRequirement getRequiredItems(BlockState state, TileEntity te) {
+		return ItemRequirement.of(AllBlocks.SHAFT.getDefaultState(), te);
 	}
 
 }

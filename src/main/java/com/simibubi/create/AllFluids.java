@@ -6,7 +6,6 @@ import com.simibubi.create.content.contraptions.fluids.VirtualFluid;
 import com.simibubi.create.content.contraptions.fluids.potion.PotionFluid;
 import com.simibubi.create.content.palettes.AllPaletteBlocks;
 import com.simibubi.create.foundation.data.CreateRegistrate;
-import com.tterrag.registrate.fabric.SimpleFlowableFluid;
 import com.tterrag.registrate.util.entry.RegistryEntry;
 
 import net.fabricmc.api.EnvType;
@@ -22,23 +21,23 @@ public class AllFluids {
 
 	private static final CreateRegistrate REGISTRATE = Create.registrate();
 
-	public static RegistryEntry<PotionFluid> POTION =
-		REGISTRATE.potionFluid("potion"/*, PotionFluidAttributes::new, PotionFluid::new*/)
+	public static FluidEntry<PotionFluid> POTION =
+		REGISTRATE.virtualFluid("potion", PotionFluidAttributes::new, PotionFluid::new)
 			.lang(f -> "fluid.create.potion", "Potion")
 			.register();
 
-	public static RegistryEntry<VirtualFluid> TEA = REGISTRATE.virtualFluid("tea")
+	public static FluidEntry<VirtualFluid> TEA = REGISTRATE.virtualFluid("tea")
 		.lang(f -> "fluid.create.tea", "Builder's Tea")
 //		.tag(AllTags.forgeFluidTag("tea"))
 		.register();
 
-	public static RegistryEntry<VirtualFluid> MILK = REGISTRATE.virtualFluid("milk")
+	public static FluidEntry<VirtualFluid> MILK = REGISTRATE.virtualFluid("milk")
 		.lang(f -> "fluid.create.milk", "Milk")
 //		.tag(AllTags.forgeFluidTag("milk"))
 		.register();
 
-	public static RegistryEntry<SimpleFlowableFluid.Flowing> HONEY =
-		REGISTRATE.standardFluid("honey"/*, NoColorFluidAttributes::new*/)
+	public static FluidEntry<ForgeFlowingFluid.Flowing> HONEY =
+		REGISTRATE.standardFluid("honey", NoColorFluidAttributes::new)
 			.lang(f -> "fluid.create.honey", "Honey")
 //			.attributes(b -> b.viscosity(500)
 //				.density(1400))
@@ -52,8 +51,8 @@ public class AllFluids {
 			.build()
 			.register();
 
-	public static RegistryEntry<SimpleFlowableFluid.Flowing> CHOCOLATE =
-		REGISTRATE.standardFluid("chocolate"/*, NoColorFluidAttributes::new*/)
+	public static FluidEntry<ForgeFlowingFluid.Flowing> CHOCOLATE =
+		REGISTRATE.standardFluid("chocolate", NoColorFluidAttributes::new)
 			.lang(f -> "fluid.create.chocolate", "Chocolate")
 //			.tag(AllTags.forgeFluidTag("chocolate"))
 //			.attributes(b -> b.viscosity(500)
@@ -75,7 +74,7 @@ public class AllFluids {
 	public static void assignRenderLayers() {}
 
 	@Environment(EnvType.CLIENT)
-	private static void makeTranslucent(RegistryEntry<? extends SimpleFlowableFluid> entry) {
+	private static void makeTranslucent(FluidEntry<?> entry) {
 		SimpleFlowableFluid fluid = entry.get();
 //		RenderTypeLookup.setRenderLayer(fluid, RenderType.getTranslucent());
 //		RenderTypeLookup.setRenderLayer(fluid.getStillFluid(), RenderType.getTranslucent());

@@ -73,9 +73,9 @@ public class TileEntityRenderHelper {
 				String message = "TileEntity " + Registry.BLOCK_ENTITY_TYPE.getKey(tileEntity.getType()).toString()
 						+ " didn't want to render while moved.\n";
 				if (AllConfigs.CLIENT.explainRenderErrors.get())
-					Create.logger.error(message, e);
+					Create.LOGGER.error(message, e);
 				else
-					Create.logger.error(message);
+					Create.LOGGER.error(message);
 			}
 
 			ms.pop();
