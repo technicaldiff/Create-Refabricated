@@ -1,6 +1,5 @@
 package com.simibubi.create.events;
 
-import java.lang.annotation.ElementType;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -61,8 +60,10 @@ import com.simibubi.create.foundation.utility.ServerSpeedProvider;
 import com.simibubi.create.foundation.utility.placement.PlacementHelpers;
 import com.simibubi.create.foundation.utility.worldWrappers.WrappedClientWorld;
 import com.simibubi.create.lib.event.ClientWorldEvents;
-import com.simibubi.create.lib.event.PlayerTickEndCallback;
+import com.simibubi.create.lib.event.FogEvents;
 import com.simibubi.create.lib.event.LeftClickAirCallback;
+import com.simibubi.create.lib.event.OverlayRenderCallback;
+import com.simibubi.create.lib.event.PlayerTickEndCallback;
 import com.simibubi.create.lib.event.RenderHandCallback;
 import com.simibubi.create.lib.event.RenderTickStartCallback;
 import com.simibubi.create.lib.event.RenderTooltipBorderColorCallback;
@@ -92,6 +93,7 @@ import net.minecraft.fluid.FluidState;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.vector.Vector3d;
+import net.minecraft.util.math.vector.Vector3f;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.world.World;
@@ -205,21 +207,23 @@ public class ClientEvents {
 		RenderWork.runAll();
 	}
 
-	public static void onRenderOverlay(RenderGameOverlayEvent.Post event) {
-		MatrixStack ms = event.getMatrixStack();
+	public static void onRenderOverlay(MatrixStack stack, float partialTicks, OverlayRenderCallback.Types type) {
+//		MatrixStack ms = event.getMatrixStack();
 		IRenderTypeBuffer.Impl buffers = Minecraft.getInstance()
 			.getBufferBuilders()
 			.getEntityVertexConsumers();
 		int light = 0xF000F0;
 		int overlay = OverlayTexture.DEFAULT_UV;
-		float pt = event.getPartialTicks();
+//		float pt = event.getPartialTicks();
 
-		if (event.getType() == ElementType.AIR)
-			CopperBacktankArmorLayer.renderRemainingAirOverlay(ms, buffers, light, overlay, pt);
-		if (event.getType() != ElementType.HOTBAR)
+		if (type == OverlayRenderCallback.Types.AIR) {
+			CopperBacktankArmorLayer.renderRemainingAirOverlay(stack, buffers, light, overlay, partialTicks);
 			return;
+		}
+//		if (type != OverlayRenderCallback.Types.HOTBAR)
+//			return;
 
-		onRenderHotbar(ms, buffers, light, overlay, pt);
+		onRenderHotbar(stack, buffers, light, overlay, partialTicks);
 	}
 
 	public static void onRenderHotbar(MatrixStack ms, IRenderTypeBuffer buffer, int light, int overlay,
@@ -277,51 +281,55 @@ public class ClientEvents {
 		return !(Minecraft.getInstance().world == null || Minecraft.getInstance().player == null);
 	}
 
-	public static void getFogDensity(EntityViewRenderEvent.FogDensity event) {
-		ActiveRenderInfo info = event.getInfo();
+	public static float getFogDensity(ActiveRenderInfo info, float currentDensity) {
+//		ActiveRenderInfo info = event.getInfo();
 		FluidState fluidState = info.getFluidState();
 		if (fluidState.isEmpty())
-			return;
+			return currentDensity;
 		Fluid fluid = fluidState.getFluid();
 
 		if (fluid.isEquivalentTo(AllFluids.CHOCOLATE.get())) {
-			event.setDensity(5f);
-			event.setCanceled(true);
-			return;
+//			event.setDensity(5f);
+//			event.setCanceled(true);
+			return 5f;
 		}
 
 		if (fluid.isEquivalentTo(AllFluids.HONEY.get())) {
-			event.setDensity(1.5f);
-			event.setCanceled(true);
-			return;
+//			event.setDensity(1.5f);
+//			event.setCanceled(true);
+			return 1.5f;
 		}
 
 		if (FluidHelper.isWater(fluid) && AllItems.DIVING_HELMET.get()
 			.isWornBy(Minecraft.getInstance().renderViewEntity)) {
-			event.setDensity(0.010f);
-			event.setCanceled(true);
-			return;
+//			event.setDensity(0.010f);
+//			event.setCanceled(true);
+			return 0.010f;
 		}
+		return currentDensity;
 	}
 
-	public static void getFogColor(EntityViewRenderEvent.FogColors event) {
-		ActiveRenderInfo info = event.getInfo();
+	public static Vector3f getFogColor(ActiveRenderInfo info, Vector3f currentColor) {
+//		ActiveRenderInfo info = event.getInfo();
 		FluidState fluidState = info.getFluidState();
 		if (fluidState.isEmpty())
-			return;
+			return currentColor;
 		Fluid fluid = fluidState.getFluid();
 
 		if (fluid.isEquivalentTo(AllFluids.CHOCOLATE.get())) {
-			event.setRed(98 / 256f);
-			event.setGreen(32 / 256f);
-			event.setBlue(32 / 256f);
+//			event.setRed(98 / 256f);
+//			event.setGreen(32 / 256f);
+//			event.setBlue(32 / 256f);
+			return new Vector3f(98 / 256f, 32 / 256f, 32 / 256f);
 		}
 
 		if (fluid.isEquivalentTo(AllFluids.HONEY.get())) {
-			event.setRed(234 / 256f);
-			event.setGreen(174 / 256f);
-			event.setBlue(47 / 256f);
+//			event.setRed(234 / 256f);
+//			event.setGreen(174 / 256f);
+//			event.setBlue(47 / 256f);
+			return new Vector3f(234 / 256f, 174 / 256f, 47 / 256f);
 		}
+		return  currentColor;
 	}
 
 	public static void leftClickEmpty(ClientPlayerEntity player) {
@@ -342,6 +350,9 @@ public class ClientEvents {
 		ItemTooltipCallback.EVENT.register(ClientEvents::addToItemTooltip);
 		RenderTooltipBorderColorCallback.EVENT.register(ClientEvents::getItemTooltipColor);
 		LeftClickAirCallback.EVENT.register(ClientEvents::leftClickEmpty);
+		OverlayRenderCallback.EVENT.register(ClientEvents::onRenderOverlay);
+		FogEvents.SET_DENSITY.register(ClientEvents::getFogDensity);
+		FogEvents.SET_COLOR.register(ClientEvents::getFogColor);
 
 		ClientChunkEvents.CHUNK_UNLOAD.register(CommonEvents::onChunkUnloaded);
 		ClientTickEvents.END_WORLD_TICK.register(CommonEvents::onWorldTick);
