@@ -8,15 +8,14 @@ import java.util.Random;
 
 import javax.annotation.Nullable;
 
-import com.simibubi.create.lib.utility.VertexBuilderUtil;
-
 import org.lwjgl.system.MemoryStack;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
 import com.simibubi.create.foundation.renderState.SuperRenderTypeBuffer;
-import com.simibubi.create.foundation.utility.VirtualEmptyModelData;
 import com.simibubi.create.foundation.utility.placement.PlacementHelpers;
+import com.simibubi.create.lib.render.VirtualRenderingStateManager;
+import com.simibubi.create.lib.utility.VertexBuilderUtil;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.client.Minecraft;
@@ -68,9 +67,8 @@ public abstract class GhostBlockRenderer {
 			BlockPos pos = params.pos;
 			ms.translate(pos.getX(), pos.getY(), pos.getZ());
 
-			dispatcher.getBlockModelRenderer()
-				.renderModel(ms.peek(), vb, params.state, model, 1f, 1f, 1f, 0xF000F0, OverlayTexture.DEFAULT_UV,
-					VirtualEmptyModelData.INSTANCE);
+			VirtualRenderingStateManager.runVirtually(() -> dispatcher.getBlockModelRenderer()
+					.render(ms.peek(), vb, params.state, model, 1f, 1f, 1f, 0xF000F0, OverlayTexture.DEFAULT_UV));
 
 			ms.pop();
 		}
@@ -104,8 +102,8 @@ public abstract class GhostBlockRenderer {
 
 			// dispatcher.getBlockModelRenderer().renderModel(ms.peek(), vb, params.state, model, 1f, 1f, 1f, 0xF000F0, OverlayTexture.DEFAULT_UV, VirtualEmptyModelData.INSTANCE);
 			renderModel(params, ms.peek(), vb, params.state, model, 1f, 1f, 1f,
-				WorldRenderer.getLightmapCoordinates(mc.world, pos), OverlayTexture.DEFAULT_UV,
-				VirtualEmptyModelData.INSTANCE);
+				WorldRenderer.getLightmapCoordinates(mc.world, pos), OverlayTexture.DEFAULT_UV/*,
+				VirtualEmptyModelData.INSTANCE*/);
 
 			// buffer.draw();
 			// clean
@@ -117,18 +115,18 @@ public abstract class GhostBlockRenderer {
 		// BlockModelRenderer
 		public void renderModel(GhostBlockParams params, MatrixStack.Entry entry, IVertexBuilder vb,
 			@Nullable BlockState state, IBakedModel model, float p_228804_5_, float p_228804_6_, float p_228804_7_,
-			int p_228804_8_, int p_228804_9_, net.minecraftforge.client.model.data.IModelData modelData) {
+			int p_228804_8_, int p_228804_9_/*, net.minecraftforge.client.model.data.IModelData modelData*/) {
 			Random random = new Random();
 
 			for (Direction direction : Direction.values()) {
 				random.setSeed(42L);
 				renderQuad(params, entry, vb, p_228804_5_, p_228804_6_, p_228804_7_,
-					model.getQuads(state, direction, random, modelData), p_228804_8_, p_228804_9_);
+					model.getQuads(state, direction, random/*, modelData*/), p_228804_8_, p_228804_9_);
 			}
 
 			random.setSeed(42L);
 			renderQuad(params, entry, vb, p_228804_5_, p_228804_6_, p_228804_7_,
-				model.getQuads(state, (Direction) null, random, modelData), p_228804_8_, p_228804_9_);
+				model.getQuads(state, (Direction) null, random/*, modelData*/), p_228804_8_, p_228804_9_);
 		}
 
 		// BlockModelRenderer

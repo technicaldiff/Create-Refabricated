@@ -67,11 +67,13 @@ public abstract class EntityMixin implements EntityExtensions, NBTSerializable {
 		else cir.cancel();
 	}
 
+	@Unique
 	@Override
 	public Collection<ItemEntity> create$captureDrops() {
 		return create$captureDrops;
 	}
 
+	@Unique
 	@Override
 	public Collection<ItemEntity> create$captureDrops(Collection<ItemEntity> value) {
 		Collection<ItemEntity> ret = create$captureDrops;
@@ -124,6 +126,7 @@ public abstract class EntityMixin implements EntityExtensions, NBTSerializable {
 		}
 	}
 
+	@Unique
 	@Override
 	public CompoundNBT create$getExtraCustomData() {
 		if (create$extraCustomData == null) {
@@ -132,6 +135,7 @@ public abstract class EntityMixin implements EntityExtensions, NBTSerializable {
 		return create$extraCustomData;
 	}
 
+	@Unique
 	@Override
 	public CompoundNBT create$serializeNBT() {
 		CompoundNBT nbt = new CompoundNBT();
@@ -144,6 +148,7 @@ public abstract class EntityMixin implements EntityExtensions, NBTSerializable {
 		return nbt;
 	}
 
+	@Unique
 	@Override
 	public void create$deserializeNBT(CompoundNBT nbt) {
 		read(nbt);

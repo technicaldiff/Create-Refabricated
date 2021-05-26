@@ -8,7 +8,6 @@ import javax.annotation.Nullable;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
@@ -19,8 +18,8 @@ public abstract class AbstractBlockBreakQueue {
 			ItemStack usedTool = toDamage.copy();
 			BlockHelper.destroyBlockAs(world, pos, playerEntity, toDamage, effectChance,
 				stack -> drop.accept(pos, stack));
-			if (toDamage.isEmpty() && !usedTool.isEmpty())
-				ForgeEventFactory.onPlayerDestroyItem(playerEntity, usedTool, Hand.MAIN_HAND);
+//			if (toDamage.isEmpty() && !usedTool.isEmpty())
+//				ForgeEventFactory.onPlayerDestroyItem(playerEntity, usedTool, Hand.MAIN_HAND);
 		};
 	}
 

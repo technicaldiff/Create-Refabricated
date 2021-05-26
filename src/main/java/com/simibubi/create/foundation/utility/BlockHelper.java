@@ -1,23 +1,20 @@
 package com.simibubi.create.foundation.utility;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.function.Consumer;
 
 import javax.annotation.Nullable;
-
-import net.minecraft.block.AbstractRailBlock;
-import net.minecraft.block.RailBlock;
-
-import net.minecraft.world.chunk.Chunk;
-import net.minecraft.world.chunk.ChunkSection;
 
 import org.apache.commons.lang3.mutable.MutableInt;
 
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.content.contraptions.base.KineticTileEntity;
 import com.simibubi.create.content.contraptions.components.actors.SeatBlock;
+import com.simibubi.create.lib.utility.PlantUtil;
 
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
+import net.fabricmc.fabric.api.event.player.PlayerBlockBreakEvents;
+import net.minecraft.block.AbstractRailBlock;
 import net.minecraft.block.BedBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -48,9 +45,9 @@ import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.world.GameRules;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
+import net.minecraft.world.chunk.Chunk;
+import net.minecraft.world.chunk.ChunkSection;
 import net.minecraft.world.server.ServerWorld;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
 
 public class BlockHelper {
 
@@ -204,14 +201,15 @@ public class BlockHelper {
 			world.playEvent(2001, pos, Block.getStateId(state));
 		TileEntity tileentity = state.getBlock().hasBlockEntity() ? world.getTileEntity(pos) : null;
 		if (player != null) {
-			BlockEvent.BreakEvent event = new BlockEvent.BreakEvent(world, pos, state, player);
-			MinecraftForge.EVENT_BUS.post(event);
-			if (event.isCanceled())
-				return;
+			if (!PlayerBlockBreakEvents.BEFORE.invoker().beforeBlockBreak(world, player, pos, state, tileentity)) return;
+//			BlockEvent.BreakEvent event = new BlockEvent.BreakEvent(world, pos, state, player);
+//			MinecraftForge.EVENT_BUS.post(event);
+//			if (event.isCanceled())
+//				return;
 
-			if (event.getExpToDrop() > 0 && world instanceof ServerWorld)
+			if (/*event.getExpToDrop() > 0 && */world instanceof ServerWorld)
 				com.simibubi.create.lib.helper.BlockHelper.dropXpOnBlockBreak(state.getBlock(),
-					(ServerWorld) world, pos, event.getExpToDrop());
+					(ServerWorld) world, pos, 0);
 
 			usedTool.onBlockDestroyed(world, state, pos, player);
 			player.addStat(Stats.BLOCK_MINED.get(state.getBlock()));
@@ -251,7 +249,7 @@ public class BlockHelper {
 		}
 		BlockState old = chunksection.setBlockState(i, j & 15, k, state);
 		chunk.markDirty();
-		world.markAndNotifyBlock(target, chunk, old, state, 82, 512);
+		world.setBlockState(target/*, chunk, old*/, state, 82, 512);
 
 		world.setBlockState(target, state, 82);
 		world.neighborChanged(target, world.getBlockState(target.down()).getBlock(), target.down());
@@ -270,8 +268,8 @@ public class BlockHelper {
 			return;
 		} else if (state.getBlock() == Blocks.COMPOSTER)
 			state = Blocks.COMPOSTER.getDefaultState();
-		else if (state.getBlock() != Blocks.SEA_PICKLE && state.getBlock() instanceof IPlantable)
-			state = ((IPlantable) state.getBlock()).getPlant(world, target);
+		else if (state.getBlock() != Blocks.SEA_PICKLE && PlantUtil.isPlant(state.getBlock()))
+			state = PlantUtil.getPlant(state.getBlock());
 
 		if (world.getDimension()
 			.isUltrawarm()

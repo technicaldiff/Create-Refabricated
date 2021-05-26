@@ -4,10 +4,7 @@ import static java.lang.Math.abs;
 
 import java.util.List;
 
-import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-
-import alexiil.mc.lib.attributes.fluid.FixedFluidInvView;
 
 import com.simibubi.create.content.contraptions.fluids.tank.FluidTankBlock.Shape;
 import com.simibubi.create.content.contraptions.goggles.IHaveGoggleInformation;
@@ -18,9 +15,9 @@ import com.simibubi.create.foundation.tileEntity.SmartTileEntity;
 import com.simibubi.create.foundation.tileEntity.TileEntityBehaviour;
 import com.simibubi.create.lib.lba.fluid.IFluidHandler;
 import com.simibubi.create.lib.lba.fluid.SimpleFluidTank;
-import com.simibubi.create.lib.utility.LazyOptional;
 
 import alexiil.mc.lib.attributes.Simulation;
+import alexiil.mc.lib.attributes.fluid.FixedFluidInvView;
 import alexiil.mc.lib.attributes.fluid.volume.FluidKey;
 import alexiil.mc.lib.attributes.fluid.volume.FluidVolume;
 import net.fabricmc.api.EnvType;
@@ -287,17 +284,17 @@ public class FluidTankTileEntity extends SmartTileEntity implements IHaveGoggleI
 
 	private AxisAlignedBB cachedBoundingBox;
 
-	@Override
-	@Environment(EnvType.CLIENT)
-	public AxisAlignedBB getRenderBoundingBox() {
-		if (cachedBoundingBox == null) {
-			if (isController())
-				cachedBoundingBox = super.getRenderBoundingBox().expand(width - 1, height - 1, width - 1);
-			else
-				cachedBoundingBox = super.getRenderBoundingBox();
-		}
-		return cachedBoundingBox;
-	}
+//	@Override
+//	@Environment(EnvType.CLIENT)
+//	public AxisAlignedBB getRenderBoundingBox() {
+//		if (cachedBoundingBox == null) {
+//			if (isController())
+//				cachedBoundingBox = super.getRenderBoundingBox().expand(width - 1, height - 1, width - 1);
+//			else
+//				cachedBoundingBox = super.getRenderBoundingBox();
+//		}
+//		return cachedBoundingBox;
+//	}
 
 	@Override
 	@Environment(EnvType.CLIENT)

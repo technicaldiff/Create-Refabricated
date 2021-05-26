@@ -15,7 +15,10 @@ import com.simibubi.create.foundation.gui.widgets.InterpolatedChasingAngle;
 import com.simibubi.create.foundation.gui.widgets.InterpolatedChasingValue;
 import com.simibubi.create.foundation.utility.AngleHelper;
 import com.simibubi.create.foundation.utility.VecHelper;
+import com.simibubi.create.lib.event.OverlayRenderCallback;
 
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.MainWindow;
 import net.minecraft.client.Minecraft;
@@ -31,8 +34,6 @@ import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.vector.Matrix4f;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.util.math.vector.Vector3f;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
 
 public class PlacementHelpers {
 
@@ -140,21 +141,20 @@ public class PlacementHelpers {
 	}
 
 	@Environment(EnvType.CLIENT)
-	public static void onRender(RenderGameOverlayEvent.Pre event) {
-		if (event.getType() != RenderGameOverlayEvent.ElementType.CROSSHAIRS)
+	public static void onRender(MatrixStack stack, float partialTicks, MainWindow window, OverlayRenderCallback.Types type) {
+		if (type != OverlayRenderCallback.Types.CROSSHAIRS)
 			return;
 
 		Minecraft mc = Minecraft.getInstance();
 		PlayerEntity player = mc.player;
 
 		if (player != null && animationTick > 0) {
-			MainWindow res = event.getWindow();
 
-			float screenY = res.getScaledHeight() / 2f;
-			float screenX = res.getScaledWidth() / 2f;
+			float screenY = window.getScaledHeight() / 2f;
+			float screenX = window.getScaledWidth() / 2f;
 			float progress = getCurrentAlpha();
 
-			drawDirectionIndicator(event.getMatrixStack(), event.getPartialTicks(), screenX, screenY, progress);
+			drawDirectionIndicator(stack, partialTicks, screenX, screenY, progress);
 		}
 	}
 

@@ -33,9 +33,9 @@ public class Debug {
 	}
 
 	@Deprecated
-	public static String getLogicalSide() {
-		return EffectiveSide.get()
-			.isClient() ? "CL" : "SV";
+	public static String getLogicalSide() { // the method that uses the method that uses this method isn't used, so unimportant
+		return "";//EffectiveSide.get()
+//			.isClient() ? "CL" : "SV";
 	}
 
 	@Deprecated

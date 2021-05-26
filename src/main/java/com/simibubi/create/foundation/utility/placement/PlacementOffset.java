@@ -117,14 +117,15 @@ public class PlacementOffset {
 			state = state.with(BlockStateProperties.WATERLOGGED, fluidState.getFluid() == Fluids.WATER);
 		}
 
-		BlockSnapshot snapshot = BlockSnapshot.create(world.getRegistryKey(), world, newPos);
+//		BlockSnapshot snapshot = BlockSnapshot.create(world.getRegistryKey(), world, newPos);
 		world.setBlockState(newPos, state);
 
-		BlockEvent.EntityPlaceEvent event = new BlockEvent.EntityPlaceEvent(snapshot, IPlacementHelper.ID, player);
-		if (MinecraftForge.EVENT_BUS.post(event)) {
-			snapshot.restore(true, false);
-			return ActionResultType.FAIL;
-		}
+//		BlockEvent.EntityPlaceEvent event = new BlockEvent.EntityPlaceEvent(snapshot, IPlacementHelper.ID, player);
+
+//		if (MinecraftForge.EVENT_BUS.post(event)) {
+//			snapshot.restore(true, false);
+//			return ActionResultType.FAIL;
+//		}
 
 		BlockState newState = world.getBlockState(newPos);
 		SoundType soundtype = newState.getSoundType();

@@ -9,10 +9,6 @@ import com.simibubi.create.foundation.render.backend.core.PartialModel;
 import com.simibubi.create.foundation.utility.Iterate;
 import com.simibubi.create.foundation.utility.Lang;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.client.renderer.model.IBakedModel;
-import net.minecraft.client.renderer.model.ModelBakery;
-import net.minecraft.client.renderer.model.ModelManager;
 import net.minecraft.util.Direction;
 import net.minecraft.util.ResourceLocation;
 
@@ -102,7 +98,7 @@ public class AllBlockPartials {
 		GOGGLES = get("goggles"),
 
 		EJECTOR_TOP = get("weighted_ejector/top"),
-		
+
 		COPPER_BACKTANK_SHAFT = get("copper_backtank/block_shaft_input"),
 		COPPER_BACKTANK_COGS = get("copper_backtank/block_cogs"),
 
@@ -143,11 +139,6 @@ public class AllBlockPartials {
 
 	private static PartialModel get(String path) {
 		return new PartialModel(new ResourceLocation(Create.ID, "block/" + path));
-	}
-
-	public static void onModelBake(Map<ResourceLocation, IBakedModel> modelRegistry) {
-		for (AllBlockPartials partial : all)
-			partial.bakedModel = modelRegistry.get(partial.modelLocation);
 	}
 
 	public static void clientInit() {

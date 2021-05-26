@@ -3,14 +3,14 @@ package com.simibubi.create.content.contraptions.goggles;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.simibubi.create.AllBlockPartials;
 
+import net.fabricmc.fabric.api.renderer.v1.model.ForwardingBakedModel;
 import net.minecraft.client.renderer.model.IBakedModel;
 import net.minecraft.client.renderer.model.ItemCameraTransforms.TransformType;
-import net.minecraftforge.client.model.BakedModelWrapper;
 
-public class GogglesModel extends BakedModelWrapper<IBakedModel> {
+public class GogglesModel extends ForwardingBakedModel {
 
 	public GogglesModel(IBakedModel template) {
-		super(template);
+		wrapped = template;
 	}
 
 	@Override
@@ -20,5 +20,4 @@ public class GogglesModel extends BakedModelWrapper<IBakedModel> {
 				.handlePerspective(cameraTransformType, mat);
 		return super.handlePerspective(cameraTransformType, mat);
 	}
-
 }

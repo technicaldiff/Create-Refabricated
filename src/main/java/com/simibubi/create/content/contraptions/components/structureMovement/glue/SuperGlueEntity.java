@@ -2,8 +2,6 @@ package com.simibubi.create.content.contraptions.components.structureMovement.gl
 
 import javax.annotation.Nullable;
 
-import com.tterrag.registrate.fabric.EnvExecutor;
-
 import org.apache.commons.lang3.Validate;
 
 import com.simibubi.create.AllBlocks;
@@ -22,6 +20,7 @@ import com.simibubi.create.foundation.utility.AnimationTickHolder;
 import com.simibubi.create.foundation.utility.BlockFace;
 import com.simibubi.create.foundation.utility.worldWrappers.WrappedWorld;
 import com.simibubi.create.lib.entity.ExtraSpawnDataEntity;
+import com.tterrag.registrate.fabric.EnvExecutor;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -46,6 +45,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.IPacket;
 import net.minecraft.network.PacketBuffer;
+import net.minecraft.network.play.server.SSpawnObjectPacket;
 import net.minecraft.state.BooleanProperty;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.DamageSource;
@@ -453,7 +453,7 @@ public class SuperGlueEntity extends Entity implements ExtraSpawnDataEntity, ISp
 
 	@Override
 	public IPacket<?> createSpawnPacket() {
-		return NetworkHooks.getEntitySpawningPacket(this);
+		return new SSpawnObjectPacket(this);
 	}
 
 	@Override

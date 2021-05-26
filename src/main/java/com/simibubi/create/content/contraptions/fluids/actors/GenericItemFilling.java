@@ -52,18 +52,18 @@ public class GenericItemFilling {
 		if (stack.getItem() == Items.MILK_BUCKET)
 			return false;
 
-//		LazyOptional<IFluidHandlerItem> capability =
-//			stack.getCapability(CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY);
-//		IFluidHandlerItem tank = capability.orElse(null);
-//		if (tank == null)
-//			return false;
-//		if (!isFluidHandlerValid(stack, tank))
-//			return false;
-//		for (int i = 0; i < tank.getTanks(); i++) {
-//			if (tank.getFluidInTank(i)
-//				.getAmount() < tank.getTankCapacity(i))
-//				return true;
-//		}
+		LazyOptional<IFluidHandlerItem> capability =
+			stack.getCapability(CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY);
+		IFluidHandlerItem tank = capability.orElse(null);
+		if (tank == null)
+			return false;
+		if (!isFluidHandlerValid(stack, tank))
+			return false;
+		for (int i = 0; i < tank.getTanks(); i++) {
+			if (tank.getFluidInTank(i)
+				.getAmount() < tank.getTankCapacity(i))
+				return true;
+		}
 		return false;
 	}
 

@@ -80,6 +80,7 @@ import net.fabricmc.fabric.api.event.player.AttackBlockCallback;
 import net.fabricmc.fabric.api.event.player.PlayerBlockBreakEvents;
 import net.fabricmc.fabric.api.event.player.UseBlockCallback;
 import net.fabricmc.fabric.api.networking.v1.PacketSender;
+import net.minecraft.client.MainWindow;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.player.ClientPlayerEntity;
 import net.minecraft.client.network.play.ClientPlayNetHandler;
@@ -207,7 +208,7 @@ public class ClientEvents {
 		RenderWork.runAll();
 	}
 
-	public static void onRenderOverlay(MatrixStack stack, float partialTicks, OverlayRenderCallback.Types type) {
+	public static void onRenderOverlay(MatrixStack stack, float partialTicks, MainWindow window, OverlayRenderCallback.Types type) {
 //		MatrixStack ms = event.getMatrixStack();
 		IRenderTypeBuffer.Impl buffers = Minecraft.getInstance()
 			.getBufferBuilders()
@@ -379,6 +380,7 @@ public class ClientEvents {
 		PlayerBlockBreakEvents.AFTER.register(SymmetryHandler::onBlockDestroyed);
 		PlayerTickEndCallback.EVENT.register(ContraptionHandlerClient::preventRemotePlayersWalkingAnimations);
 		UseBlockCallback.EVENT.register(ContraptionHandlerClient::rightClickingOnContraptionsGetsHandledLocally);
+		OverlayRenderCallback.EVENT.register(PlacementHelpers::onRender);
 	}
 
 //	public static void loadCompleted(FMLLoadCompleteEvent event) { config stuff, unnecessary for fabric
