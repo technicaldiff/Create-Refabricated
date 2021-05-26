@@ -7,10 +7,15 @@ import com.simibubi.create.content.contraptions.wrench.IWrenchable;
 import com.simibubi.create.foundation.block.ITE;
 import com.simibubi.create.foundation.gui.ScreenOpener;
 import com.simibubi.create.foundation.utility.Iterate;
-
 import com.simibubi.create.lib.block.CanConnectRedstoneBlock;
+import com.simibubi.create.lib.extensions.BlockExtensions;
+import com.simibubi.create.lib.extensions.TileEntityExtensions;
+import com.simibubi.create.lib.utility.LazyOptional;
 import com.tterrag.registrate.fabric.EnvExecutor;
 
+import alexiil.mc.lib.attributes.item.ItemAttributes;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.HorizontalBlock;
@@ -31,10 +36,8 @@ import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorldReader;
 import net.minecraft.world.World;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
 
-public class StockpileSwitchBlock extends HorizontalBlock implements ITE<StockpileSwitchTileEntity>, IWrenchable, CanConnectRedstoneBlock, ITileEntityProvider {
+public class StockpileSwitchBlock extends HorizontalBlock implements ITE<StockpileSwitchTileEntity>, IWrenchable, CanConnectRedstoneBlock, ITileEntityProvider, BlockExtensions {
 
 	public static final IntegerProperty INDICATOR = IntegerProperty.create("indicator", 0, 6);
 
@@ -48,7 +51,7 @@ public class StockpileSwitchBlock extends HorizontalBlock implements ITE<Stockpi
 	}
 
 	@Override
-	public void onNeighborChange(BlockState state, IWorldReader world, BlockPos pos, BlockPos neighbor) {
+	public void create$onNeighborChange(BlockState state, IWorldReader world, BlockPos pos, BlockPos neighbor) {
 		if (world.isRemote())
 			return;
 		if (!isObserving(state, pos, neighbor))
@@ -122,7 +125,7 @@ public class StockpileSwitchBlock extends HorizontalBlock implements ITE<Stockpi
 			TileEntity te = context.getWorld()
 				.getTileEntity(context.getPos()
 					.offset(face));
-			if (te != null && te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY)
+			if (te != null && LazyOptional.of(() -> ItemAttributes.INSERTABLE.getFirstOrNull(te.getWorld(), te.getPos()))
 				.isPresent())
 				if (preferredFacing == null)
 					preferredFacing = face;

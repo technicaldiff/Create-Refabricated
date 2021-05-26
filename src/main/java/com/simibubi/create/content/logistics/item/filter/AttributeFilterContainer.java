@@ -6,8 +6,8 @@ import java.util.List;
 import com.simibubi.create.AllContainerTypes;
 import com.simibubi.create.foundation.utility.Pair;
 import com.simibubi.create.lib.lba.item.ItemStackHandler;
-
 import com.simibubi.create.lib.lba.item.SlotItemHandler;
+import com.simibubi.create.lib.utility.Constants.NBT;
 
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
@@ -21,7 +21,6 @@ import net.minecraft.nbt.ListNBT;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
-import com.simibubi.create.lib.utility.Constants.NBT;
 
 public class AttributeFilterContainer extends AbstractFilterContainer {
 
@@ -68,7 +67,7 @@ public class AttributeFilterContainer extends AbstractFilterContainer {
 	}
 
 	protected void addFilterSlots() {
-		this.addSlot(SlotItemHandler.create(filterInventory, 0, -34, 22));
+		this.addSlot(new SlotItemHandler(filterInventory, 0, -34, 22));
 		this.addSlot(new SlotItemHandler(filterInventory, 1, -28, 57) {
 			@Override
 			public boolean canTakeStack(PlayerEntity playerIn) {

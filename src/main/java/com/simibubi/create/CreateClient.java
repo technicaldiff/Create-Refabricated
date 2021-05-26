@@ -87,7 +87,7 @@ public class CreateClient implements ClientModInitializer {
 
 	public static void addClientListeners() {
 //		modEventBus.addListener(CreateClient::clientInit); // turned into onInitializeClient()
-		modEventBus.register(getColorHandler());
+//		modEventBus.register(getColorHandler()); // registered in OnInitializeClient()
 //		modEventBus.addListener(CreateClient::onTextureStitch); // registered in OnInitializeClient()
 //		modEventBus.addListener(CreateClient::onModelRegistry); // registered in OnInitializeClient()
 //		modEventBus.addListener(CreateClient::onModelBake); // registered in OnInitializeClient()
@@ -134,6 +134,10 @@ public class CreateClient implements ClientModInitializer {
 //		event.enqueueWork(() -> { // I think this can just be run on initialize
 			CopperBacktankArmorLayer.register();
 //		});
+
+		// fabric colorproviders
+		getColorHandler().registerBlockColors();
+		getColorHandler().registerItemColors();
 	}
 
 	public static void onTextureStitch(TextureStitchUtil util) {

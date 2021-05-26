@@ -4,10 +4,14 @@ import com.simibubi.create.foundation.advancement.AllTriggers;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.BlockItemUseContext;
+import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Direction;
+import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.world.World;
 
 public class FunnelItem extends BlockItem {
@@ -16,10 +20,11 @@ public class FunnelItem extends BlockItem {
 		super(p_i48527_1_, p_i48527_2_);
 	}
 
-	public static void funnelItemAlwaysPlacesWhenUsed(PlayerInteractEvent.RightClickBlock event) {
-		if (event.getItemStack()
+	public static ActionResultType funnelItemAlwaysPlacesWhenUsed(PlayerEntity player, World world, Hand hand, BlockRayTraceResult hitResult) {
+		if (player.getHeldItem(hand)
 			.getItem() instanceof FunnelItem)
-			event.setUseBlock(Result.DENY);
+			return ActionResultType.FAIL;
+		return ActionResultType.PASS;
 	}
 
 	@Override

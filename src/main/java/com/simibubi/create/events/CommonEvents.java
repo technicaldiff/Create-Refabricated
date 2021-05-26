@@ -22,6 +22,7 @@ import com.simibubi.create.content.curiosities.armor.DivingHelmetItem;
 import com.simibubi.create.content.curiosities.tools.ExtendoGripItem;
 import com.simibubi.create.content.curiosities.zapper.ZapperInteractionHandler;
 import com.simibubi.create.content.curiosities.zapper.ZapperItem;
+import com.simibubi.create.content.logistics.block.funnel.FunnelItem;
 import com.simibubi.create.foundation.command.AllCommands;
 import com.simibubi.create.foundation.fluid.FluidHelper;
 import com.simibubi.create.foundation.utility.Iterate;
@@ -43,6 +44,7 @@ import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerWorldEvents;
 import net.fabricmc.fabric.api.event.player.AttackBlockCallback;
 import net.fabricmc.fabric.api.event.player.AttackEntityCallback;
+import net.fabricmc.fabric.api.event.player.UseBlockCallback;
 import net.fabricmc.fabric.api.networking.v1.EntityTrackingEvents;
 import net.minecraft.block.BlockState;
 import net.minecraft.command.CommandSource;
@@ -190,6 +192,7 @@ public class CommonEvents {
 		LivingEntityEvents.DROPS.register(CrushingWheelTileEntity::handleCrushedMobDrops);
 		LivingEntityEvents.LOOTING_LEVEL.register(CrushingWheelTileEntity::crushingIsFortunate);
 		LivingEntityEvents.DROPS.register(DeployerFakePlayer::deployerCollectsDropsFromKilledEntities);
+		UseBlockCallback.EVENT.register(FunnelItem::funnelItemAlwaysPlacesWhenUsed)
 	}
 
 }

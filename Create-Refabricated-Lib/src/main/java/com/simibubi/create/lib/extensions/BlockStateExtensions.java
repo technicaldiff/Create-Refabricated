@@ -9,6 +9,7 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockReader;
+import net.minecraft.world.IWorldReader;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 
@@ -33,5 +34,9 @@ public interface BlockStateExtensions {
 
 	default int create$getFlammability(IBlockReader world, BlockPos pos, Direction face) {
 		return ((BlockExtensions) ((BlockState) this).getBlock()).create$getFlammability((BlockState) this, world, pos, face);
+	}
+
+	default void create$onNeighborChange(IWorldReader world, BlockPos pos, BlockPos neighbor) {
+		((BlockExtensions) ((BlockState) this).getBlock()).create$onNeighborChange((BlockState) this, world, pos, neighbor);
 	}
 }

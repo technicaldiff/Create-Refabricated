@@ -12,6 +12,8 @@ import com.simibubi.create.foundation.tileEntity.behaviour.filtering.FilteringBe
 import com.simibubi.create.foundation.tileEntity.behaviour.inventory.InvManipulationBehaviour;
 import com.simibubi.create.foundation.utility.BlockHelper;
 
+import com.simibubi.create.lib.extensions.BlockExtensions;
+
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.block.Block;
@@ -32,7 +34,7 @@ import net.minecraft.world.IWorldReader;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 
-public abstract class AbstractFunnelBlock extends Block implements ITE<FunnelTileEntity>, IWrenchable, ITileEntityProvider {
+public abstract class AbstractFunnelBlock extends Block implements ITE<FunnelTileEntity>, IWrenchable, ITileEntityProvider, BlockExtensions {
 
 	public static final BooleanProperty POWERED = BlockStateProperties.POWERED;
 
@@ -59,7 +61,7 @@ public abstract class AbstractFunnelBlock extends Block implements ITE<FunnelTil
 
 	@Override
 	@Environment(EnvType.CLIENT)
-	public boolean addDestroyEffects(BlockState state, World world, BlockPos pos, ParticleManager manager) {
+	public boolean create$addDestroyEffects(BlockState state, World world, BlockPos pos, ParticleManager manager) {
 		BlockHelper.addReducedDestroyEffects(state, world, pos, manager);
 		return true;
 	}

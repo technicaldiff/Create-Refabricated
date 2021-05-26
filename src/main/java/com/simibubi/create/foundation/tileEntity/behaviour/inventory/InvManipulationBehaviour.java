@@ -16,6 +16,9 @@ import com.simibubi.create.lib.lba.item.IItemHandler;
 import com.simibubi.create.lib.lba.item.ItemHandlerHelper;
 import com.simibubi.create.lib.utility.LazyOptional;
 
+import alexiil.mc.lib.attributes.SearchOptions;
+import alexiil.mc.lib.attributes.item.ItemAttributes;
+import alexiil.mc.lib.attributes.item.ItemTransferable;
 import net.minecraft.block.BlockState;
 import net.minecraft.item.ItemStack;
 import net.minecraft.state.properties.BlockStateProperties;
@@ -186,8 +189,11 @@ public class InvManipulationBehaviour extends TileEntityBehaviour {
 		TileEntity invTE = world.getTileEntity(pos);
 		if (invTE == null)
 			return;
-		targetCapability = bypassSided ? CapabilityUtil.getCapability(invTE, CapabilityUtil.ITEM_HANDLER_CAPABILITY)
-			: CapabilityUtil.getCapability(invTE, CapabilityUtil.ITEM_HANDLER_CAPABILITY);
+		// fixme: assume that if something is insertable, it is also extractable. probably a bad idea.
+		ItemTransferable transferable = (ItemTransferable) (bypassSided
+				? ItemAttributes.INSERTABLE.getFirstOrNull(invTE.getWorld(), invTE.getPos())
+				: ItemAttributes.INSERTABLE.getFirstOrNull(invTE.getWorld(), invTE.getPos(), SearchOptions.inDirection(targetBlockFace.getFace())));
+		targetCapability = transferable == null ? LazyOptional.empty() : LazyOptional.of(() -> (IItemHandler) transferable);
 		if (targetCapability.isPresent())
 			targetCapability.addListener(this::onHandlerInvalidated);
 	}

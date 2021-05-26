@@ -13,9 +13,10 @@ import com.simibubi.create.foundation.tileEntity.behaviour.belt.TransportedItemS
 import com.simibubi.create.foundation.tileEntity.behaviour.filtering.FilteringBehaviour;
 import com.simibubi.create.foundation.tileEntity.behaviour.inventory.InvManipulationBehaviour;
 import com.simibubi.create.foundation.utility.Iterate;
-
 import com.simibubi.create.lib.block.CanConnectRedstoneBlock;
+import com.simibubi.create.lib.utility.LazyOptional;
 
+import alexiil.mc.lib.attributes.item.ItemAttributes;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.HorizontalBlock;
@@ -79,7 +80,7 @@ public class ContentObserverBlock extends HorizontalBlock implements ITE<Content
 
 			if (TileEntityBehaviour.get(tileEntity, TransportedItemStackHandlerBehaviour.TYPE) != null)
 				canDetect = true;
-			else if (tileEntity != null && tileEntity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY)
+			else if (tileEntity != null && LazyOptional.of(() -> ItemAttributes.INSERTABLE.getFirstOrNull(tileEntity.getWorld(), tileEntity.getPos()))
 				.isPresent())
 				canDetect = true;
 			else if (tileEntity instanceof FunnelTileEntity)

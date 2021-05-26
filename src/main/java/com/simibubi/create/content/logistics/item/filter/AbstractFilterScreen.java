@@ -20,6 +20,8 @@ import com.simibubi.create.foundation.item.ItemDescription.Palette;
 import com.simibubi.create.foundation.item.TooltipHelper;
 import com.simibubi.create.foundation.networking.AllPackets;
 
+import com.simibubi.create.lib.utility.ItemStackUtil;
+
 import net.minecraft.client.gui.widget.Widget;
 import net.minecraft.client.renderer.Rectangle2d;
 import net.minecraft.client.resources.I18n;
@@ -81,8 +83,7 @@ public abstract class AbstractFilterScreen<F extends AbstractFilterContainer> ex
 		super.tick();
 		handleIndicators();
 
-		if (!container.player.getHeldItemMainhand()
-			.equals(container.filterItem, false))
+		if (!ItemStackUtil.equals(container.player.getHeldItemMainhand(), container.filterItem, false))
 			client.player.closeScreen();
 	}
 

@@ -13,7 +13,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.registry.Registry;
-import net.minecraft.util.text.TranslationTextComponent;
 
 public class FluidContentsAttribute implements ItemAttribute {
     public static final FluidContentsAttribute EMPTY = new FluidContentsAttribute(null);
@@ -42,8 +41,8 @@ public class FluidContentsAttribute implements ItemAttribute {
     @Override
     public Object[] getTranslationParameters() {
         String parameter = "";
-        if(fluid != null)
-            parameter = new TranslationTextComponent(fluid.getAttributes().getTranslationKey()).getString();
+//        if(fluid != null)
+//            parameter = new TranslationTextComponent(fluid.getAttributes().getTranslationKey()).getString();
         return new Object[] { parameter };
     }
 
@@ -65,14 +64,14 @@ public class FluidContentsAttribute implements ItemAttribute {
     private List<Fluid> extractFluids(ItemStack stack) {
         List<Fluid> fluids = new ArrayList<>();
 
-        LazyOptional<IFluidHandlerItem> capability =
-                stack.getCapability(CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY);
-
-        capability.ifPresent((cap) -> {
-            for(int i = 0; i < cap.getTanks(); i++) {
-                fluids.add(cap.getFluidInTank(i).getFluid());
-            }
-        });
+//        LazyOptional<IFluidHandlerItem> capability =
+//                stack.getCapability(CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY);
+//
+//        capability.ifPresent((cap) -> {
+//            for(int i = 0; i < cap.getTanks(); i++) {
+//                fluids.add(cap.getFluidInTank(i).getFluid());
+//            }
+//        });
 
         return fluids;
     }

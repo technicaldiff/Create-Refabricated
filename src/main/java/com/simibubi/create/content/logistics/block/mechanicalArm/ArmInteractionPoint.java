@@ -36,9 +36,15 @@ import com.simibubi.create.foundation.tileEntity.behaviour.inventory.InvManipula
 import com.simibubi.create.foundation.utility.NBTHelper;
 import com.simibubi.create.foundation.utility.VecHelper;
 import com.simibubi.create.lib.lba.item.IItemHandler;
+import com.simibubi.create.lib.lba.item.InvWrapper;
 import com.simibubi.create.lib.lba.item.ItemHandlerHelper;
 import com.simibubi.create.lib.utility.LazyOptional;
 
+import alexiil.mc.lib.attributes.SearchOptions;
+import alexiil.mc.lib.attributes.item.ItemAttributes;
+import alexiil.mc.lib.attributes.item.ItemInsertable;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.ComposterBlock;
@@ -59,8 +65,6 @@ import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
 
 public abstract class ArmInteractionPoint {
 
@@ -144,7 +148,8 @@ public abstract class ArmInteractionPoint {
 			TileEntity te = world.getTileEntity(pos);
 			if (te == null)
 				return null;
-			cachedHandler = te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, Direction.UP);
+			ItemInsertable insertable = ItemAttributes.INSERTABLE.getFirstOrNull(te.getWorld(), te.getPos(), SearchOptions.inDirection(Direction.UP));
+			cachedHandler = insertable == null ? LazyOptional.empty() : LazyOptional.of(() -> (IItemHandler) insertable);
 		}
 		return cachedHandler.orElse(null);
 	}

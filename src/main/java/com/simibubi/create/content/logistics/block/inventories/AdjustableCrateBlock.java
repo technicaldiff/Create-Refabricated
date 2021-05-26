@@ -4,6 +4,8 @@ import com.simibubi.create.AllBlocks;
 import com.simibubi.create.AllTileEntities;
 import com.simibubi.create.foundation.item.ItemHelper;
 
+import com.simibubi.create.lib.utility.NetworkUtil;
+
 import net.minecraft.block.BlockState;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.entity.player.PlayerEntity;
@@ -67,7 +69,7 @@ public class AdjustableCrateBlock extends CrateBlock implements ITileEntityProvi
 			if (te instanceof AdjustableCrateTileEntity) {
 				AdjustableCrateTileEntity fte = (AdjustableCrateTileEntity) te;
 				fte = fte.getMainCrate();
-				NetworkHooks.openGui((ServerPlayerEntity) player, fte, fte::sendToContainer);
+				NetworkUtil.openGUI((ServerPlayerEntity) player, fte, fte::sendToContainer);
 			}
 			return ActionResultType.SUCCESS;
 		}

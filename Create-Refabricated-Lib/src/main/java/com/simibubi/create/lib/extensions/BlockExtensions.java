@@ -58,4 +58,6 @@ public interface BlockExtensions {
 	default boolean shouldDisplayFluidOverlay(BlockState state, IBlockDisplayReader world, BlockPos pos, FluidState fluidState) {
 		return state.getBlock() instanceof BreakableBlock || state.getBlock() instanceof LeavesBlock;
 	}
+
+	default void create$onNeighborChange(BlockState state, IWorldReader world, BlockPos pos, BlockPos neighbor) {}
 }

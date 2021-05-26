@@ -4,12 +4,13 @@ import com.simibubi.create.AllTileEntities;
 import com.simibubi.create.foundation.block.ITE;
 
 import net.minecraft.block.BlockState;
+import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 
-public class CreativeCrateBlock extends CrateBlock implements ITE<CreativeCrateTileEntity> {
+public class CreativeCrateBlock extends CrateBlock implements ITE<CreativeCrateTileEntity>, ITileEntityProvider {
 
 	public CreativeCrateBlock(Properties p_i48415_1_) {
 		super(p_i48415_1_);

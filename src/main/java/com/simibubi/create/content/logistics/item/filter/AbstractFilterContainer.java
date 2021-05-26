@@ -1,5 +1,6 @@
 package com.simibubi.create.content.logistics.item.filter;
 
+import com.simibubi.create.lib.lba.item.ItemHandlerHelper;
 import com.simibubi.create.lib.lba.item.ItemStackHandler;
 
 import net.minecraft.entity.player.PlayerEntity;

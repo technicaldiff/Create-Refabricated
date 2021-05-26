@@ -16,6 +16,9 @@ import com.simibubi.create.lib.lba.item.IItemHandler;
 import com.simibubi.create.lib.lba.item.ItemHandlerHelper;
 import com.simibubi.create.lib.utility.LazyOptional;
 
+import alexiil.mc.lib.attributes.SearchOptions;
+import alexiil.mc.lib.attributes.item.ItemAttributes;
+import alexiil.mc.lib.attributes.item.ItemInsertable;
 import net.minecraft.block.BlockState;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
@@ -63,7 +66,10 @@ public class DirectBeltInputBehaviour extends TileEntityBehaviour {
 	}
 
 	private ItemStack defaultInsertionCallback(TransportedItemStack inserted, Direction side, boolean simulate) {
-		LazyOptional<IItemHandler> lazy = CapabilityUtil.getCapability(tileEntity, CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, side);
+		ItemInsertable insertable = ItemAttributes.INSERTABLE.getFirstOrNull(tileEntity.getWorld(), tileEntity.getPos(), SearchOptions.inDirection(side));
+		LazyOptional<IItemHandler> lazy = insertable == null
+				? LazyOptional.empty()
+				: LazyOptional.of(() -> (IItemHandler) insertable);
 
 		if (!lazy.isPresent())
 			return inserted.stack;

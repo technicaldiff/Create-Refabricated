@@ -8,9 +8,11 @@ import com.simibubi.create.lib.event.InstanceRegistrationCallback;
 import com.tterrag.registrate.AbstractRegistrate;
 import com.tterrag.registrate.builders.BuilderCallback;
 import com.tterrag.registrate.builders.TileEntityBuilder;
+import com.tterrag.registrate.fabric.EnvExecutor;
 import com.tterrag.registrate.util.nullness.NonNullFunction;
 import com.tterrag.registrate.util.nullness.NonNullSupplier;
 
+import net.fabricmc.api.EnvType;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityType;
 
@@ -30,9 +32,9 @@ public class CreateTileEntityBuilder<T extends TileEntity, P> extends TileEntity
 	}
 
     public CreateTileEntityBuilder<T, P> instance(NonNullSupplier<IRendererFactory<? super T>> instanceFactory) {
-//		if (this.instanceFactory == null) { // fixme this is likely to be broken
-//			EnvExecutor.runWhenOn(EnvType.CLIENT, () -> this::registerInstance);
-//		}
+		if (this.instanceFactory == null) { // fixme this is likely to be broken
+			EnvExecutor.runWhenOn(EnvType.CLIENT, () -> this::registerInstance);
+		}
 
 		this.instanceFactory = instanceFactory;
 

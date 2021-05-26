@@ -1,7 +1,8 @@
 package com.simibubi.create.content.logistics.block.inventories;
 
+import org.jetbrains.annotations.NotNull;
+
 import com.simibubi.create.AllBlocks;
-import com.simibubi.create.lib.capabilities.Capability;
 import com.simibubi.create.lib.lba.item.IItemHandler;
 import com.simibubi.create.lib.lba.item.ItemStackHandler;
 import com.simibubi.create.lib.utility.LazyOptional;
@@ -17,12 +18,9 @@ import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityType;
-import net.minecraft.util.Direction;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
-
-import org.jetbrains.annotations.NotNull;
 
 public class AdjustableCrateTileEntity extends CrateTileEntity implements INamedContainerProvider {
 
@@ -175,14 +173,14 @@ public class AdjustableCrateTileEntity extends CrateTileEntity implements INamed
 		invHandler.invalidate();
 	}
 
-	@Override
-	public <T> LazyOptional<T> getCapability(Capability<T> capability, Direction facing) {
-		if (capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
-			AdjustableCrateTileEntity mainCrate = getMainCrate();
-			if (mainCrate != null && mainCrate.invHandler != null && mainCrate.invHandler.isPresent())
-				return mainCrate.invHandler.cast();
-		}
-		return super.getCapability(capability, facing);
-	}
+//	@Override
+//	public <T> LazyOptional<T> getCapability(Capability<T> capability, Direction facing) {
+//		if (capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
+//			AdjustableCrateTileEntity mainCrate = getMainCrate();
+//			if (mainCrate != null && mainCrate.invHandler != null && mainCrate.invHandler.isPresent())
+//				return mainCrate.invHandler.cast();
+//		}
+//		return super.getCapability(capability, facing);
+//	}
 
 }

@@ -2,6 +2,8 @@ package com.simibubi.create.lib.lba.item;
 
 import javax.annotation.Nonnull;
 
+import alexiil.mc.lib.attributes.Simulation;
+import alexiil.mc.lib.attributes.item.ItemInsertable;
 import net.minecraft.item.ItemStack;
 
 public final class ItemHandlerHelper {
@@ -16,5 +18,17 @@ public final class ItemHandlerHelper {
 		ItemStack copy = itemStack.copy();
 		copy.setCount(size);
 		return copy;
+	}
+
+	public static ItemStack insertItemStacked(ItemInsertable insertable, ItemStack stack, boolean simulate) {
+		if (simulate) {
+			return insertable.attemptInsertion(stack, Simulation.SIMULATE);
+		} else {
+			return insertable.attemptInsertion(stack, Simulation.ACTION);
+		}
+	}
+
+	public static ItemStack insertItem(ItemInsertable insertable, ItemStack stack, boolean simulate) {
+		return insertItemStacked(insertable, stack, simulate);
 	}
 }

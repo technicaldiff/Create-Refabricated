@@ -22,9 +22,12 @@ import com.simibubi.create.foundation.utility.AngleHelper;
 import com.simibubi.create.foundation.utility.Lang;
 import com.simibubi.create.foundation.utility.NBTHelper;
 import com.simibubi.create.foundation.utility.VecHelper;
-
+import com.simibubi.create.lib.utility.Constants.NBT;
 import com.simibubi.create.lib.utility.LoadedCheckUtil;
+import com.simibubi.create.lib.utility.NBTSerializer;
 
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.JukeboxBlock;
 import net.minecraft.item.ItemStack;
@@ -39,9 +42,6 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.util.text.ITextComponent;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
-import com.simibubi.create.lib.utility.Constants.NBT;
 
 public class ArmTileEntity extends KineticTileEntity {
 
@@ -441,7 +441,8 @@ public class ArmTileEntity extends KineticTileEntity {
 
 		NBTHelper.writeEnum(compound, "Phase", phase);
 		compound.putBoolean("Powered", redstoneLocked);
-		compound.put("HeldItem", heldItem.serializeNBT());
+		compound.put("HeldItem", NBTSerializer.serializeNBT(heldItem));
+
 		compound.putInt("TargetPointIndex", chasedPointIndex);
 		compound.putFloat("MovementProgress", chasedPointProgress);
 	}

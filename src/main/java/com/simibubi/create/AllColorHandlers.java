@@ -3,12 +3,11 @@ package com.simibubi.create;
 import java.util.HashMap;
 import java.util.Map;
 
+import net.fabricmc.fabric.api.client.rendering.v1.ColorProviderRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.block.RedstoneWireBlock;
-import net.minecraft.client.renderer.color.BlockColors;
 import net.minecraft.client.renderer.color.IBlockColor;
 import net.minecraft.client.renderer.color.IItemColor;
-import net.minecraft.client.renderer.color.ItemColors;
 import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.util.IItemProvider;
 import net.minecraft.world.GrassColors;
@@ -47,16 +46,14 @@ public class AllColorHandlers {
 
 	//
 
-	@SubscribeEvent
-	public void registerBlockColors(ColorHandlerEvent.Block event) {
-		BlockColors blockColors = event.getBlockColors();
-		coloredBlocks.forEach((block, color) -> blockColors.register(color, block));
+	public void registerBlockColors() {
+//		BlockColors blockColors = event.getBlockColors();
+		coloredBlocks.forEach((block, color) -> ColorProviderRegistry.BLOCK.register(color, block));
 	}
 
-	@SubscribeEvent
-	public void registerItemColors(ColorHandlerEvent.Item event) {
-		ItemColors itemColors = event.getItemColors();
-		coloredItems.forEach((item, color) -> itemColors.register(color, item));
+	public void registerItemColors() {
+//		ItemColors itemColors = event.getItemColors();
+		coloredItems.forEach((item, color) -> ColorProviderRegistry.ITEM.register(color, item));
 	}
 
 }

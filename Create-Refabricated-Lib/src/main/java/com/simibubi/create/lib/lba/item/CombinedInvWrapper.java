@@ -1,5 +1,7 @@
 package com.simibubi.create.lib.lba.item;
 
+import alexiil.mc.lib.attributes.Simulation;
+import alexiil.mc.lib.attributes.item.filter.ItemFilter;
 import net.minecraft.item.ItemStack;
 
 public class CombinedInvWrapper implements IItemHandlerModifiable {

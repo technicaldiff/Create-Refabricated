@@ -17,6 +17,8 @@ import com.simibubi.create.lib.lba.item.ItemHandlerHelper;
 import com.simibubi.create.lib.lba.item.ItemStackHandler;
 import com.simibubi.create.lib.utility.Constants.NBT;
 
+import com.simibubi.create.lib.utility.NetworkUtil;
+
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.util.ITooltipFlag;
@@ -145,9 +147,7 @@ public class FilterItem extends Item implements INamedContainerProvider {
 
 		if (!player.isSneaking() && hand == Hand.MAIN_HAND) {
 			if (!world.isRemote && player instanceof ServerPlayerEntity)
-				NetworkHooks.openGui((ServerPlayerEntity) player, this, buf -> {
-					buf.writeItemStack(heldItem);
-				});
+				NetworkUtil.openGUI((ServerPlayerEntity) player, this, buf -> buf.writeItemStack(heldItem));
 			return ActionResult.success(heldItem);
 		}
 		return ActionResult.pass(heldItem);

@@ -8,13 +8,11 @@ import java.util.function.Consumer;
 
 import com.simibubi.create.content.schematics.ItemRequirement;
 import com.simibubi.create.foundation.tileEntity.behaviour.BehaviourType;
-
 import com.simibubi.create.foundation.utility.IPartialSafeNBT;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.ITickableTileEntity;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityType;
 
 public abstract class SmartTileEntity extends SyncedTileEntity implements ITickableTileEntity, IPartialSafeNBT {
@@ -184,13 +182,13 @@ public abstract class SmartTileEntity extends SyncedTileEntity implements ITicka
 		return (T) behaviours.get(type);
 	}
 
-	protected boolean isItemHandlerCap(Capability<?> cap) {
-		return cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY;
-	}
-
-	protected boolean isFluidHandlerCap(Capability<?> cap) {
-		return cap == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY;
-	}
+//	protected boolean isItemHandlerCap(Capability<?> cap) {
+//		return cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY;
+//	}
+//
+//	protected boolean isFluidHandlerCap(Capability<?> cap) {
+//		return cap == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY;
+//	}
 
 	public void markVirtual() {
 		virtualMode = true;

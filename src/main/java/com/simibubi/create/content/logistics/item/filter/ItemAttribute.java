@@ -127,7 +127,7 @@ public interface ItemAttribute {
 		DUMMY(s -> false),
 		PLACEABLE(s -> s.getItem() instanceof BlockItem),
 		CONSUMABLE(ItemStack::isFood),
-		FLUID_CONTAINER(s -> s.getCapability(CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY).isPresent()),
+//		FLUID_CONTAINER(s -> s.getCapability(CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY).isPresent()),
 		ENCHANTED(ItemStack::isEnchanted),
 		RENAMED(ItemStack::hasDisplayName),
 		DAMAGED(ItemStack::isDamaged),
@@ -230,18 +230,20 @@ public interface ItemAttribute {
 
 		@Override
 		public boolean appliesTo(ItemStack stack) {
-			return stack.getItem()
-				.getTags()
-				.contains(tagName);
+//			return stack.getItem()
+//				.getTags()
+//				.contains(tagName);
+			return false;
 		}
 
 		@Override
 		public List<ItemAttribute> listAttributesOf(ItemStack stack) {
-			return stack.getItem()
-				.getTags()
-				.stream()
-				.map(InTag::new)
-				.collect(Collectors.toList());
+//			return stack.getItem()
+//				.getTags()
+//				.stream()
+//				.map(InTag::new)
+//				.collect(Collectors.toList());
+			return new ArrayList<>();
 		}
 
 		@Override

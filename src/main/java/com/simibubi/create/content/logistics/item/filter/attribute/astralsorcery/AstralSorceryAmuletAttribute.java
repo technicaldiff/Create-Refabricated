@@ -2,6 +2,7 @@ package com.simibubi.create.content.logistics.item.filter.attribute.astralsorcer
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import com.simibubi.create.content.logistics.item.filter.ItemAttribute;
 
@@ -11,6 +12,7 @@ import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.INBT;
 import net.minecraft.nbt.ListNBT;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.registry.Registry;
 import net.minecraft.util.text.TranslationTextComponent;
 
 public class AstralSorceryAmuletAttribute implements ItemAttribute {
@@ -53,9 +55,9 @@ public class AstralSorceryAmuletAttribute implements ItemAttribute {
     public Object[] getTranslationParameters() {
         String something = "";
 
-        Enchantment enchant = ForgeRegistries.ENCHANTMENTS.getValue(ResourceLocation.tryCreate(enchName));
-        if(enchant != null) {
-            something = new TranslationTextComponent(enchant.getName()).getString();
+        Optional<Enchantment> enchant = Registry.ENCHANTMENT.getOrEmpty(ResourceLocation.tryCreate(enchName));
+        if(enchant.isPresent()) {
+            something = new TranslationTextComponent(enchant.get().getName()).getString();
         }
 
         if(enchType == 1) something = "existing " + something;

@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import com.simibubi.create.AllTags;
 import com.simibubi.create.content.logistics.item.filter.ItemAttribute;
 
 import net.minecraft.item.DyeColor;
@@ -41,7 +42,8 @@ public class ColorAttribute implements ItemAttribute {
 	private Collection<DyeColor> findMatchingDyeColors(ItemStack stack) {
 		CompoundNBT nbt = stack.getTag();
 
-		DyeColor color = DyeColor.getColor(stack);
+		DyeColor color = AllTags.getColorFromStack(stack);
+
 		if (color != null)
 			return Collections.singletonList(color);
 

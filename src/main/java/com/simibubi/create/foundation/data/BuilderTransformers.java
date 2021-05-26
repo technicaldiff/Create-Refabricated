@@ -5,8 +5,6 @@ import static com.simibubi.create.foundation.data.CreateRegistrate.connectedText
 
 import javax.annotation.Nullable;
 
-import com.simibubi.create.AllTags.AllBlockTags;
-import com.simibubi.create.AllTags.AllItemTags;
 import com.simibubi.create.Create;
 import com.simibubi.create.content.contraptions.base.CasingBlock;
 import com.simibubi.create.content.contraptions.components.crank.ValveHandleBlock;
@@ -65,10 +63,10 @@ public class BuilderTransformers {
 //					.withExistingParent(variant + "_valve_handle", p.modLoc("block/valve_handle"))
 //					.texture("3", p.modLoc("block/valve_handle/valve_handle_" + variant)));
 //			})
-			.tag(AllBlockTags.BRITTLE.tag, AllBlockTags.VALVE_HANDLES.tag)
+//			.tag(AllBlockTags.BRITTLE.tag, AllBlockTags.VALVE_HANDLES.tag)
 			.onRegister(ItemUseOverrides::addBlock)
 			.item()
-			.tag(AllItemTags.VALVE_HANDLES.tag)
+//			.tag(AllTags.AllItemTags.VALVE_HANDLES.tag)
 			.build();
 	}
 
