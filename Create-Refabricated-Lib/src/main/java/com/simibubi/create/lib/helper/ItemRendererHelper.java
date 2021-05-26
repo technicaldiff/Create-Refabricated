@@ -11,11 +11,16 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.renderer.ItemRenderer;
 import net.minecraft.client.renderer.model.BakedQuad;
+import net.minecraft.client.renderer.model.IBakedModel;
 import net.minecraft.client.renderer.texture.TextureManager;
 import net.minecraft.item.ItemStack;
 
 @Environment(EnvType.CLIENT)
 public final class ItemRendererHelper {
+	public static void renderBakedItemModel(ItemRenderer renderer, IBakedModel model, ItemStack stack, int light, int overlay, MatrixStack matrices, IVertexBuilder vertices) {
+		get(renderer).create$renderBakedItemModel(model, stack, light, overlay, matrices, vertices);
+	}
+
 	public static void renderBakedItemQuads(ItemRenderer renderer, MatrixStack matricies, IVertexBuilder verticies, List<BakedQuad> quads, ItemStack stack, int light, int overlay) {
 		get(renderer).create$renderBakedItemQuads(matricies, verticies, quads, stack, light, overlay);
 	}

@@ -10,6 +10,7 @@ import com.simibubi.create.content.contraptions.components.structureMovement.glu
 import com.simibubi.create.content.contraptions.components.structureMovement.mounted.MinecartContraptionItem;
 import com.simibubi.create.content.contraptions.components.structureMovement.train.MinecartCouplingItem;
 import com.simibubi.create.content.contraptions.goggles.GogglesItem;
+import com.simibubi.create.content.contraptions.goggles.GogglesItemRenderer;
 import com.simibubi.create.content.contraptions.goggles.GogglesModel;
 import com.simibubi.create.content.contraptions.processing.burner.BlazeBurnerBlockItem;
 import com.simibubi.create.content.contraptions.relays.belt.item.BeltConnectorItem;
@@ -44,8 +45,11 @@ import com.simibubi.create.foundation.data.CreateRegistrate;
 import com.simibubi.create.foundation.item.HiddenIngredientItem;
 import com.simibubi.create.foundation.item.TagDependentIngredientItem;
 import com.simibubi.create.foundation.item.TooltipHelper;
+import com.tterrag.registrate.fabric.EnvExecutor;
 import com.tterrag.registrate.util.entry.ItemEntry;
 
+import net.fabricmc.api.EnvType;
+import net.fabricmc.fabric.api.client.rendering.v1.BuiltinItemRendererRegistry;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Food;
 import net.minecraft.item.Item;
@@ -179,6 +183,7 @@ public class AllItems {
 	public static final ItemEntry<GogglesItem> GOGGLES = REGISTRATE.item("goggles", GogglesItem::new)
 		.properties(p -> p.maxCount(1))
 		.onRegister(CreateRegistrate.itemModel(() -> GogglesModel::new))
+		.onRegister(item -> EnvExecutor.runWhenOn(EnvType.CLIENT, () -> () -> BuiltinItemRendererRegistry.INSTANCE.register(item, new GogglesItemRenderer())))
 		.lang("Engineer's Goggles")
 		.register();
 

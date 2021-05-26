@@ -232,7 +232,7 @@ public class CreateRegistrate extends AbstractRegistrate<CreateRegistrate> {
 	@Environment(EnvType.CLIENT)
 	private static void registerBlockVertexColor(Block entry, IBlockVertexColor colorFunc) {
 		CreateClient.getCustomBlockModels()
-			.register(entry, model -> new ColoredVertexModel(model, colorFunc));
+			.register(() -> entry, model -> new ColoredVertexModel(model, colorFunc));
 	}
 
 	@Environment(EnvType.CLIENT)

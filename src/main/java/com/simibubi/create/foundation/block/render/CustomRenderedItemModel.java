@@ -7,18 +7,18 @@ import java.util.stream.Collectors;
 
 import com.simibubi.create.Create;
 
+import net.fabricmc.fabric.api.client.rendering.v1.BuiltinItemRendererRegistry.DynamicItemRenderer;
 import net.fabricmc.fabric.api.renderer.v1.model.ForwardingBakedModel;
 import net.minecraft.client.renderer.model.IBakedModel;
 import net.minecraft.client.renderer.model.ModelBakery;
 import net.minecraft.client.renderer.model.ModelRotation;
-import net.minecraft.client.renderer.tileentity.ItemStackTileEntityRenderer;
 import net.minecraft.util.ResourceLocation;
 
 public abstract class CustomRenderedItemModel extends ForwardingBakedModel {
 
 	protected String basePath;
 	protected Map<String, IBakedModel> partials = new HashMap<>();
-	protected ItemStackTileEntityRenderer renderer;
+	protected DynamicItemRenderer renderer;
 
 	public CustomRenderedItemModel(IBakedModel template, String basePath) {
 		wrapped = template;
@@ -35,11 +35,11 @@ public abstract class CustomRenderedItemModel extends ForwardingBakedModel {
 		return wrapped;
 	}
 
-	public ItemStackTileEntityRenderer getRenderer() {
+	public DynamicItemRenderer getRenderer() {
 		return renderer;
 	}
 
-	public abstract ItemStackTileEntityRenderer createRenderer();
+	public abstract DynamicItemRenderer createRenderer();
 
 	public final List<ResourceLocation> getModelLocations() {
 		return partials.keySet().stream().map(this::getPartialModelLocation).collect(Collectors.toList());
