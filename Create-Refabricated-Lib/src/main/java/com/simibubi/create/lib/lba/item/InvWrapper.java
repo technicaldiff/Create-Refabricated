@@ -3,7 +3,7 @@ package com.simibubi.create.lib.lba.item;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 
-public class InvWrapper implements IItemHandlerModifiable{
+public class InvWrapper implements IItemHandlerModifiable {
 	public IInventory inv;
 	public InvWrapper(IInventory inv) {
 		this.inv = inv;
