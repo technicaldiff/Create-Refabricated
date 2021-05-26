@@ -32,10 +32,10 @@ import com.simibubi.create.foundation.tileEntity.behaviour.belt.TransportedItemS
 import com.simibubi.create.foundation.tileEntity.behaviour.belt.TransportedItemStackHandlerBehaviour.TransportedResult;
 import com.simibubi.create.foundation.utility.NBTHelper;
 import com.simibubi.create.lib.lba.item.ItemStackHandler;
-import com.simibubi.create.lib.utility.LazyOptional;
 import com.tterrag.registrate.fabric.EnvExecutor;
 
 import net.fabricmc.api.EnvType;
+import net.fabricmc.fabric.api.rendering.data.v1.RenderAttachmentBlockEntity;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.Entity;
@@ -55,7 +55,7 @@ import net.minecraft.util.math.vector.Vector3i;
 import net.minecraft.world.IBlockDisplayReader;
 import net.minecraft.world.LightType;
 
-public class BeltTileEntity extends KineticTileEntity implements LightUpdateListener {
+public class BeltTileEntity extends KineticTileEntity implements LightUpdateListener, RenderAttachmentBlockEntity {
 
 	public Map<Entity, TransportedEntityInfo> passengers;
 	public Optional<DyeColor> color;
@@ -489,12 +489,9 @@ public class BeltTileEntity extends KineticTileEntity implements LightUpdateList
 		return empty;
 	}
 
-	public static final ModelProperty<CasingType> CASING_PROPERTY = new ModelProperty<>();
-
 	@Override
-	public IModelData getModelData() {
-		return new ModelDataMap.Builder().withInitial(CASING_PROPERTY, casing)
-			.build();
+	public CasingType getRenderAttachmentData() {
+		return casing;
 	}
 
 	@Override

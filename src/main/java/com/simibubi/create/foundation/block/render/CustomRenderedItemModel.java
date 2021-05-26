@@ -5,26 +5,23 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
 import com.simibubi.create.Create;
 
+import net.fabricmc.fabric.api.renderer.v1.model.ForwardingBakedModel;
 import net.minecraft.client.renderer.model.IBakedModel;
-import net.minecraft.client.renderer.model.ItemCameraTransforms;
 import net.minecraft.client.renderer.model.ModelBakery;
 import net.minecraft.client.renderer.model.ModelRotation;
 import net.minecraft.client.renderer.tileentity.ItemStackTileEntityRenderer;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.client.model.BakedModelWrapper;
 
-@SuppressWarnings("deprecation")
-public abstract class CustomRenderedItemModel extends BakedModelWrapper<IBakedModel> {
+public abstract class CustomRenderedItemModel extends ForwardingBakedModel {
 
 	protected String basePath;
 	protected Map<String, IBakedModel> partials = new HashMap<>();
 	protected ItemStackTileEntityRenderer renderer;
 
 	public CustomRenderedItemModel(IBakedModel template, String basePath) {
-		super(template);
+		wrapped = template;
 		this.basePath = basePath;
 		this.renderer = createRenderer();
 	}
@@ -34,15 +31,8 @@ public abstract class CustomRenderedItemModel extends BakedModelWrapper<IBakedMo
 		return true;
 	}
 
-	@Override
-	public IBakedModel handlePerspective(ItemCameraTransforms.TransformType cameraTransformType, MatrixStack mat) {
-		// Super call returns originalModel, but we want to return this, else ISTER won't be used.
-		super.handlePerspective(cameraTransformType, mat);
-		return this;
-	}
-
 	public final IBakedModel getOriginalModel() {
-		return originalModel;
+		return wrapped;
 	}
 
 	public ItemStackTileEntityRenderer getRenderer() {

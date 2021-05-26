@@ -1,29 +1,23 @@
 package com.simibubi.create.foundation.block.connected;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 import java.util.Random;
+import java.util.function.Supplier;
 
 import com.simibubi.create.foundation.block.connected.ConnectedTextureBehaviour.CTContext;
-import com.simibubi.create.foundation.block.render.QuadHelper;
 import com.simibubi.create.foundation.utility.Iterate;
 
-import com.simibubi.create.lib.helper.BakedQuadHelper;
-
+import net.fabricmc.fabric.api.renderer.v1.model.ForwardingBakedModel;
+import net.fabricmc.fabric.api.renderer.v1.render.RenderContext;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
-import net.minecraft.client.renderer.model.BakedQuad;
 import net.minecraft.client.renderer.model.IBakedModel;
-import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
-import net.minecraft.client.renderer.vertex.VertexFormat;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockDisplayReader;
 
-public class CTModel extends BakedModelWrapperWithData {
+public class CTModel extends ForwardingBakedModel {
 
-	protected static final ModelProperty<CTData> CT_PROPERTY = new ModelProperty<>();
 	private ConnectedTextureBehaviour behaviour;
 
 	private class CTData {
@@ -44,13 +38,8 @@ public class CTModel extends BakedModelWrapperWithData {
 	}
 
 	public CTModel(IBakedModel originalModel, ConnectedTextureBehaviour behaviour) {
-		super(originalModel);
+		wrapped = originalModel;
 		this.behaviour = behaviour;
-	}
-
-	@Override
-	protected Builder gatherModelData(Builder builder, IBlockDisplayReader world, BlockPos pos, BlockState state) {
-		return builder.withInitial(CT_PROPERTY, createCTData(world, pos, state));
 	}
 
 	protected CTData createCTData(IBlockDisplayReader world, BlockPos pos, BlockState state) {
@@ -68,43 +57,31 @@ public class CTModel extends BakedModelWrapperWithData {
 	}
 
 	@Override
-	public List<BakedQuad> getQuads(BlockState state, Direction side, Random rand, IModelData extraData) {
-		List<BakedQuad> quads = super.getQuads(state, side, rand, extraData);
-		if (!extraData.hasProperty(CT_PROPERTY))
-			return quads;
-		CTData data = extraData.getData(CT_PROPERTY);
-		quads = new ArrayList<>(quads);
+	public boolean isVanillaAdapter() {
+		return false;
+	}
 
-		VertexFormat format = DefaultVertexFormats.BLOCK;
-
-		for (int i = 0; i < quads.size(); i++) {
-			BakedQuad quad = quads.get(i);
-
-			CTSpriteShiftEntry spriteShift = behaviour.get(state, quad.getFace());
+	@Override
+	public void emitBlockQuads(IBlockDisplayReader blockView, BlockState state, BlockPos pos, Supplier<Random> randomSupplier, RenderContext context) {
+		CTData data = createCTData(blockView, pos, state);
+		context.pushTransform(quad -> {
+			CTSpriteShiftEntry spriteShift = behaviour.get(state, quad.lightFace());
 			if (spriteShift == null)
-				continue;
-			if (BakedQuadHelper.getSprite(quad) != spriteShift.getOriginal())
-				continue;
-			int index = data.get(quad.getFace());
+				return true;
+			int index = data.get(quad.lightFace());
 			if (index == -1)
-				continue;
-
-			BakedQuad newQuad = QuadHelper.clone(quad);
-			int[] vertexData = newQuad.getVertexData();
-
-			for (int vertex = 0; vertex < vertexData.length; vertex += format.getIntegerSize()) {
-				int uvOffset = 16 / 4;
-				int uIndex = vertex + uvOffset;
-				int vIndex = vertex + uvOffset + 1;
-				float u = Float.intBitsToFloat(vertexData[uIndex]);
-				float v = Float.intBitsToFloat(vertexData[vIndex]);
-				vertexData[uIndex] = Float.floatToRawIntBits(spriteShift.getTargetU(u, index));
-				vertexData[vIndex] = Float.floatToRawIntBits(spriteShift.getTargetV(v, index));
+				return true;
+			for (int vertexIndex = 0; vertexIndex < 4; vertexIndex++) {
+				float u = quad.spriteU(vertexIndex, 0);
+				float v = quad.spriteV(vertexIndex, 0);
+				u = spriteShift.getTargetU(u, index);
+				v = spriteShift.getTargetV(v, index);
+				quad.sprite(vertexIndex, 0, u, v);
 			}
-
-			quads.set(i, newQuad);
-		}
-		return quads;
+			return true;
+		});
+		super.emitBlockQuads(blockView, state, pos, randomSupplier, context);
+		context.popTransform();
 	}
 
 }
