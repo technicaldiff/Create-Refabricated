@@ -21,6 +21,8 @@ import com.simibubi.create.content.logistics.block.depot.EjectorElytraPacket;
 import com.simibubi.create.content.logistics.block.depot.EjectorPlacementPacket;
 import com.simibubi.create.content.logistics.block.depot.EjectorTriggerPacket;
 import com.simibubi.create.content.logistics.block.mechanicalArm.ArmPlacementPacket;
+import com.simibubi.create.content.logistics.item.LinkedControllerBindPacket;
+import com.simibubi.create.content.logistics.item.LinkedControllerInputPacket;
 import com.simibubi.create.content.logistics.item.filter.FilterScreenPacket;
 import com.simibubi.create.content.logistics.packet.ConfigureFlexcratePacket;
 import com.simibubi.create.content.logistics.packet.ConfigureStockswitchPacket;
@@ -31,9 +33,10 @@ import com.simibubi.create.content.schematics.packet.InstantSchematicPacket;
 import com.simibubi.create.content.schematics.packet.SchematicPlacePacket;
 import com.simibubi.create.content.schematics.packet.SchematicSyncPacket;
 import com.simibubi.create.content.schematics.packet.SchematicUploadPacket;
-import com.simibubi.create.foundation.command.SConfigureConfigPacket;
 import com.simibubi.create.foundation.command.HighlightPacket;
+import com.simibubi.create.foundation.command.SConfigureConfigPacket;
 import com.simibubi.create.foundation.config.ui.CConfigureConfigPacket;
+import com.simibubi.create.foundation.gui.ClearContainerPacket;
 import com.simibubi.create.foundation.tileEntity.behaviour.filtering.FilteringCountUpdatePacket;
 import com.simibubi.create.foundation.tileEntity.behaviour.scrollvalue.ScrollValueUpdatePacket;
 import com.simibubi.create.foundation.utility.ServerSpeedProvider;
@@ -56,6 +59,7 @@ public enum AllPackets {
 	CONFIGURE_SEQUENCER(ConfigureSequencedGearshiftPacket.class),
 	PLACE_SCHEMATIC(SchematicPlacePacket.class),
 	UPLOAD_SCHEMATIC(SchematicUploadPacket.class),
+	CLEAR_CONTAINER(ClearContainerPacket.class),
 	CONFIGURE_FILTER(FilterScreenPacket.class),
 	CONFIGURE_FILTERING_AMOUNT(FilteringCountUpdatePacket.class),
 	CONFIGURE_SCROLLABLE(ScrollValueUpdatePacket.class),
@@ -70,6 +74,8 @@ public enum AllPackets {
 	PLACE_EJECTOR(EjectorPlacementPacket.class),
 	TRIGGER_EJECTOR(EjectorTriggerPacket.class),
 	EJECTOR_ELYTRA(EjectorElytraPacket.class),
+	LINKED_CONTROLLER_INPUT(LinkedControllerInputPacket.class),
+	LINKED_CONTROLLER_BIND(LinkedControllerBindPacket.class),
 	C_CONFIGURE_CONFIG(CConfigureConfigPacket.class),
 
 	// Server to Client

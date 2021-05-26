@@ -34,7 +34,6 @@ import com.simibubi.create.content.curiosities.zapper.ZapperRenderHandler;
 import com.simibubi.create.content.curiosities.zapper.terrainzapper.WorldshaperRenderHandler;
 import com.simibubi.create.content.logistics.block.depot.EjectorTargetHandler;
 import com.simibubi.create.content.logistics.block.mechanicalArm.ArmInteractionPointHandler;
-import com.simibubi.create.foundation.block.ItemUseOverrides;
 import com.simibubi.create.foundation.config.AllConfigs;
 import com.simibubi.create.foundation.fluid.FluidHelper;
 import com.simibubi.create.foundation.item.ItemDescription;
@@ -105,6 +104,7 @@ public class ClientEvents {
 	private static final String blockPrefix = "block." + Create.ID;
 
 	public static void onTickStart(Minecraft client) {
+		LinkedControllerClientHandler.tick();
 		AirCurrent.tickClientPlayerSounds();
 	}
 
@@ -230,6 +230,7 @@ public class ClientEvents {
 	public static void onRenderHotbar(MatrixStack ms, IRenderTypeBuffer buffer, int light, int overlay,
 		float partialTicks) {
 		CreateClient.SCHEMATIC_HANDLER.renderOverlay(ms, buffer, light, overlay, partialTicks);
+		LinkedControllerClientHandler.renderOverlay(ms, buffer, light, overlay, partialTicks);
 	}
 
 	public static RenderTooltipBorderColorCallback.BorderColorEntry getItemTooltipColor(ItemStack stack,

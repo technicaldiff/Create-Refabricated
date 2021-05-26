@@ -13,7 +13,7 @@ import net.minecraft.server.MinecraftServer;
 public class FilterScreenPacket implements C2SPacket {
 
 	public enum Option {
-		CLEAR, WHITELIST, WHITELIST2, BLACKLIST, RESPECT_DATA, IGNORE_DATA, UPDATE_FILTER_ITEM, ADD_TAG, ADD_INVERTED_TAG;
+		WHITELIST, WHITELIST2, BLACKLIST, RESPECT_DATA, IGNORE_DATA, UPDATE_FILTER_ITEM, ADD_TAG, ADD_INVERTED_TAG;
 	}
 
 	private Option option;
@@ -44,14 +44,6 @@ public class FilterScreenPacket implements C2SPacket {
 		server.execute(() -> {
 			if (player == null)
 				return;
-
-			if (player.openContainer instanceof AbstractFilterContainer) {
-				AbstractFilterContainer c = (AbstractFilterContainer) player.openContainer;
-				if (option == Option.CLEAR) {
-					c.clearContents();
-					return;
-				}
-			}
 
 			if (player.openContainer instanceof FilterContainer) {
 				FilterContainer c = (FilterContainer) player.openContainer;
