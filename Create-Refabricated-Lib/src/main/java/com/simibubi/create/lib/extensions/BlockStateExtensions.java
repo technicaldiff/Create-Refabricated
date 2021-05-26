@@ -1,5 +1,7 @@
 package com.simibubi.create.lib.extensions;
 
+import javax.annotation.Nullable;
+
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.block.BlockState;
@@ -38,5 +40,10 @@ public interface BlockStateExtensions {
 
 	default void create$onNeighborChange(IWorldReader world, BlockPos pos, BlockPos neighbor) {
 		((BlockExtensions) ((BlockState) this).getBlock()).create$onNeighborChange((BlockState) this, world, pos, neighbor);
+	}
+
+	default float create$getSlipperiness(IWorldReader world, BlockPos pos, @Nullable Entity entity)
+	{
+		return ((BlockExtensions) ((BlockState) this).getBlock()).create$getSlipperiness((BlockState) this, world, pos, entity);
 	}
 }

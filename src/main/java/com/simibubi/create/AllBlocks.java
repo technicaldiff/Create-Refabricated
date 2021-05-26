@@ -1,13 +1,12 @@
 package com.simibubi.create;
 
 import static com.simibubi.create.AllMovementBehaviours.addMovementBehaviour;
+import static com.simibubi.create.AllTags.tagBlockAndItem;
 import static com.simibubi.create.content.AllSections.SCHEMATICS;
 import static com.simibubi.create.foundation.data.CreateRegistrate.connectedTextures;
 import static com.simibubi.create.foundation.data.ModelGen.customItemModel;
 import static com.simibubi.create.foundation.data.ModelGen.oxidizedItemModel;
 
-import com.simibubi.create.AllTags.AllBlockTags;
-import com.simibubi.create.AllTags.AllItemTags;
 import com.simibubi.create.content.AllSections;
 import com.simibubi.create.content.contraptions.base.CasingBlock;
 import com.simibubi.create.content.contraptions.components.actors.DrillBlock;
@@ -142,7 +141,6 @@ import com.tterrag.registrate.util.entry.BlockEntry;
 
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.fabricmc.fabric.api.tool.attribute.v1.FabricToolTags;
-import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.SoundType;
@@ -151,17 +149,7 @@ import net.minecraft.client.renderer.RenderType;
 import net.minecraft.item.DyeColor;
 import net.minecraft.item.Item;
 import net.minecraft.item.Rarity;
-import net.minecraft.loot.ConstantRange;
-import net.minecraft.loot.ItemLootEntry;
-import net.minecraft.loot.LootPool;
-import net.minecraft.loot.LootTable;
-import net.minecraft.loot.LootTable.Builder;
-import net.minecraft.loot.conditions.ILootCondition.IBuilder;
-import net.minecraft.loot.conditions.SurvivesExplosion;
-import net.minecraft.loot.functions.CopyName;
-import net.minecraft.loot.functions.CopyNbt;
 import net.minecraft.state.properties.PistonType;
-import net.minecraft.tags.BlockTags;
 import net.minecraft.util.ResourceLocation;
 
 public class AllBlocks {
@@ -1291,7 +1279,7 @@ public class AllBlocks {
 	public static final BlockEntry<OxidizingBlock> COPPER_ORE =
 		REGISTRATE.block("copper_ore", p -> new OxidizingBlock(p, 1))
 			.initialProperties(() -> Blocks.IRON_ORE)
-			.transform(oxidizedBlockstate())
+//			.transform(oxidizedBlockstate())
 ////			.tag(Tags.Blocks.ORES)
 			.transform(tagBlockAndItem("ores/copper"))
 ////			.tag(Tags.Items.ORES)
@@ -1316,7 +1304,7 @@ public class AllBlocks {
 			.transform(tagBlockAndItem("storage_blocks/copper"))
 ////			.tag(Tags.Items.STORAGE_BLOCKS)
 			.transform(oxidizedItemModel())
-			.transform(oxidizedBlockstate())
+//			.transform(oxidizedBlockstate())
 			.lang("Block of Copper")
 			.register();
 
@@ -1325,7 +1313,7 @@ public class AllBlocks {
 			.initialProperties(() -> Blocks.IRON_BLOCK)
 			.item()
 			.transform(oxidizedItemModel())
-			.transform(oxidizedBlockstate())
+//			.transform(oxidizedBlockstate())
 			.register();
 
 	public static final BlockEntry<OxidizingBlock> COPPER_TILES =
@@ -1333,7 +1321,7 @@ public class AllBlocks {
 			.initialProperties(() -> Blocks.IRON_BLOCK)
 			.item()
 			.transform(oxidizedItemModel())
-			.transform(oxidizedBlockstate())
+//			.transform(oxidizedBlockstate())
 			.register();
 
 	public static final BlockEntry<Block> ZINC_BLOCK = REGISTRATE.block("zinc_block", p -> new Block(p))

@@ -4,11 +4,8 @@ import java.util.List;
 
 import com.simibubi.create.foundation.tileEntity.SmartTileEntity;
 import com.simibubi.create.foundation.tileEntity.TileEntityBehaviour;
-import com.simibubi.create.lib.capabilities.Capability;
-import com.simibubi.create.lib.utility.LazyOptional;
 
 import net.minecraft.tileentity.TileEntityType;
-import net.minecraft.util.Direction;
 
 public class DepotTileEntity extends SmartTileEntity {
 
@@ -24,10 +21,10 @@ public class DepotTileEntity extends SmartTileEntity {
 		depotBehaviour.addSubBehaviours(behaviours);
 	}
 
-	@Override
-	public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
-		if (cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY)
-			return depotBehaviour.getItemCapability(cap, side);
-		return super.getCapability(cap, side);
-	}
+//	@Override
+//	public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
+//		if (cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY)
+//			return depotBehaviour.getItemCapability(cap, side);
+//		return super.getCapability(cap, side);
+//	}
 }

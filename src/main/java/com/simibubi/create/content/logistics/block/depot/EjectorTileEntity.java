@@ -3,7 +3,6 @@ package com.simibubi.create.content.logistics.block.depot;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 
 import javax.annotation.Nullable;
 
@@ -29,7 +28,6 @@ import com.simibubi.create.foundation.utility.animation.LerpedFloat;
 import com.simibubi.create.foundation.utility.animation.LerpedFloat.Chaser;
 import com.simibubi.create.lib.lba.item.ItemStackHandler;
 import com.simibubi.create.lib.utility.Constants.NBT;
-import com.simibubi.create.lib.utility.LazyOptional;
 import com.simibubi.create.lib.utility.NBTSerializer;
 
 import net.fabricmc.api.EnvType;
@@ -62,14 +60,7 @@ import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
 
 
-public class EjectorTileEntity extends KineticTileEntity implements CapabilityProvider {
-	// fabric capabilities
-	public Map<String, Boolean> capabilities;
-	@Override
-	public Map<String, Boolean> getCapabilities() {
-		return capabilities;
-	}
-
+public class EjectorTileEntity extends KineticTileEntity {
 	List<IntAttached<ItemStack>> launchedItems;
 	ScrollValueBehaviour maxStackSize;
 	DepotBehaviour depotBehaviour;
@@ -232,7 +223,7 @@ public class EjectorTileEntity extends KineticTileEntity implements CapabilityPr
 		}
 
 		if (!world.isRemote)
-			world.markAndNotifyBlock(pos, world.getChunkAt(pos), getBlockState(), getBlockState(), 0, 512);
+			world.setBlockState(pos, /*world.getChunkAt(pos), getBlockState(),*/ getBlockState(), 0, 512);
 
 		if (depotBehaviour.heldItem != null) {
 			addToLaunchedItems(heldItemStack);
@@ -542,13 +533,13 @@ public class EjectorTileEntity extends KineticTileEntity implements CapabilityPr
 			.up(launcher.getVerticalDistance());
 	}
 
-	@Override
-	public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
-		if (isItemHandlerCap(cap))
-			return depotBehaviour.getItemCapability(cap, side);
-//		return super.getCapability(cap, side);
-		return LazyOptional.empty();
-	}
+//	@Override
+//	public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
+//		if (isItemHandlerCap(cap))
+//			return depotBehaviour.getItemCapability(cap, side);
+////		return super.getCapability(cap, side);
+//		return LazyOptional.empty();
+//	}
 
 	@Override
 	public boolean shouldRenderAsTE() {

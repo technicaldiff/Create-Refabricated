@@ -60,4 +60,8 @@ public interface BlockExtensions {
 	}
 
 	default void create$onNeighborChange(BlockState state, IWorldReader world, BlockPos pos, BlockPos neighbor) {}
+
+	default float create$getSlipperiness(BlockState state, IWorldReader world, BlockPos pos, Entity entity) {
+		return ((Block) this).getSlipperiness();
+	}
 }

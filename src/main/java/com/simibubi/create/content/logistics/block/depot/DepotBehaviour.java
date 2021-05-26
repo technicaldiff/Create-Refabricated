@@ -21,7 +21,6 @@ import com.simibubi.create.foundation.tileEntity.behaviour.belt.TransportedItemS
 import com.simibubi.create.foundation.tileEntity.behaviour.belt.TransportedItemStackHandlerBehaviour.TransportedResult;
 import com.simibubi.create.foundation.utility.NBTHelper;
 import com.simibubi.create.foundation.utility.VecHelper;
-import com.simibubi.create.lib.capabilities.Capability;
 import com.simibubi.create.lib.lba.item.ItemHandlerHelper;
 import com.simibubi.create.lib.lba.item.ItemStackHandler;
 import com.simibubi.create.lib.utility.Constants.NBT;
@@ -302,9 +301,9 @@ public class DepotBehaviour extends TileEntityBehaviour {
 		this.heldItem.prevBeltPosition = 0.5f;
 	}
 
-	public <T> LazyOptional<T> getItemCapability(Capability<T> cap, Direction side) {
-		return lazyItemHandler.cast();
-	}
+//	public <T> LazyOptional<T> getItemCapability(Capability<T> cap, Direction side) {
+//		return lazyItemHandler.cast();
+//	}
 
 	private ItemStack tryInsertingFromSide(TransportedItemStack transportedStack, Direction side, boolean simulate) {
 		ItemStack inserted = transportedStack.stack;

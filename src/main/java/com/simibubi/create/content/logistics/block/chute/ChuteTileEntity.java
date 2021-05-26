@@ -34,8 +34,8 @@ import com.simibubi.create.lib.lba.item.IItemHandler;
 import com.simibubi.create.lib.lba.item.ItemHandlerHelper;
 import com.simibubi.create.lib.utility.ItemStackUtil;
 import com.simibubi.create.lib.utility.LazyOptional;
-
 import com.simibubi.create.lib.utility.NBTSerializer;
+import com.simibubi.create.lib.utility.TransferUtil;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -82,8 +82,8 @@ public class ChuteTileEntity extends SmartTileEntity implements IHaveGoggleInfor
 	int airCurrentUpdateCooldown;
 	int entitySearchCooldown;
 
-//	LazyOptional<IItemHandler> capAbove;
-//	LazyOptional<IItemHandler> capBelow;
+	LazyOptional<IItemHandler> capAbove;
+	LazyOptional<IItemHandler> capBelow;
 
 	public ChuteTileEntity(TileEntityType<?> tileEntityTypeIn) {
 		super(tileEntityTypeIn);
@@ -473,19 +473,19 @@ public class ChuteTileEntity extends SmartTileEntity implements IHaveGoggleInfor
 		return true;
 	}
 
-//	private LazyOptional<IItemHandler> grabCapability(Direction side) {
-//		BlockPos pos = this.pos.offset(side);
-//		if (world == null)
-//			return LazyOptional.empty();
-//		TileEntity te = world.getTileEntity(pos);
-//		if (te == null)
-//			return LazyOptional.empty();
-//		if (te instanceof ChuteTileEntity) {
-//			if (side != Direction.DOWN || !(te instanceof SmartChuteTileEntity) || getItemMotion() > 0)
-//				return LazyOptional.empty();
-//		}
-//		te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, side.getOpposite());
-//	}
+	private LazyOptional<IItemHandler> grabCapability(Direction side) {
+		BlockPos pos = this.pos.offset(side);
+		if (world == null)
+			return LazyOptional.empty();
+		TileEntity te = world.getTileEntity(pos);
+		if (te == null)
+			return LazyOptional.empty();
+		if (te instanceof ChuteTileEntity) {
+			if (side != Direction.DOWN || !(te instanceof SmartChuteTileEntity) || getItemMotion() > 0)
+				return LazyOptional.empty();
+		}
+		return TransferUtil.getItemHandler(world, pos, side);
+	}
 
 	public void setItem(ItemStack stack) {
 		setItem(stack, getItemMotion() < 0 ? 1 : 0);

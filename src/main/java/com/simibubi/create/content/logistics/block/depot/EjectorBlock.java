@@ -12,6 +12,8 @@ import com.simibubi.create.foundation.block.ITE;
 import com.simibubi.create.foundation.networking.AllPackets;
 import com.simibubi.create.foundation.utility.VecHelper;
 
+import com.simibubi.create.lib.extensions.BlockExtensions;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.Entity;
@@ -32,7 +34,7 @@ import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorldReader;
 import net.minecraft.world.World;
 
-public class EjectorBlock extends HorizontalKineticBlock implements ITE<EjectorTileEntity> {
+public class EjectorBlock extends HorizontalKineticBlock implements ITE<EjectorTileEntity>, BlockExtensions {
 
 	public EjectorBlock(Properties properties) {
 		super(properties);
@@ -45,10 +47,10 @@ public class EjectorBlock extends HorizontalKineticBlock implements ITE<EjectorT
 	}
 
 	@Override
-	public float getSlipperiness(BlockState state, IWorldReader world, BlockPos pos, Entity entity) {
+	public float create$getSlipperiness(BlockState state, IWorldReader world, BlockPos pos, Entity entity) {
 		return getTileEntityOptional(world, pos).filter(ete -> ete.state == State.LAUNCHING)
 			.map($ -> 1f)
-			.orElse(super.getSlipperiness(state, world, pos, entity));
+			.orElse(super.getSlipperiness(/*state, world, pos, entity*/));
 	}
 
 	@Override
