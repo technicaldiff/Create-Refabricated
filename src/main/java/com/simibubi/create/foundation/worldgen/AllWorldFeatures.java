@@ -9,9 +9,12 @@ import com.simibubi.create.content.palettes.AllPaletteBlocks;
 import com.tterrag.registrate.util.nullness.NonNullSupplier;
 
 import net.minecraft.block.Block;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.util.registry.WorldGenRegistries;
+import net.minecraft.world.biome.Biome;
 import net.minecraft.world.biome.Biome.Category;
+import net.minecraft.world.biome.BiomeGenerationSettings;
 import net.minecraft.world.biome.Biomes;
 import net.minecraft.world.gen.GenerationStage;
 import net.minecraft.world.gen.feature.Feature;
@@ -66,14 +69,14 @@ public class AllWorldFeatures {
 			});
 	}
 
-	public static void reload(BiomeLoadingEvent event) {
+	public static void reload(ResourceLocation key, Biome.Category category, BiomeGenerationSettings generation) {
 		entries.values()
 			.forEach(entry -> {
-				if (event.getName() == Biomes.THE_VOID.getRegistryName())
+				if (key == Biomes.THE_VOID.getValue()) // uhhh???
 					return;
-				if (event.getCategory() == Category.NETHER)
+				if (category == Category.NETHER)
 					return;
-				event.getGeneration()
+				generation // wat
 					.feature(GenerationStage.Decoration.UNDERGROUND_ORES, entry.getFeature());
 			});
 	}

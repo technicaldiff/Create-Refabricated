@@ -192,7 +192,7 @@ public class CommonEvents {
 		LivingEntityEvents.DROPS.register(CrushingWheelTileEntity::handleCrushedMobDrops);
 		LivingEntityEvents.LOOTING_LEVEL.register(CrushingWheelTileEntity::crushingIsFortunate);
 		LivingEntityEvents.DROPS.register(DeployerFakePlayer::deployerCollectsDropsFromKilledEntities);
-		UseBlockCallback.EVENT.register(FunnelItem::funnelItemAlwaysPlacesWhenUsed)
+		UseBlockCallback.EVENT.register(FunnelItem::funnelItemAlwaysPlacesWhenUsed);
 	}
 
 }

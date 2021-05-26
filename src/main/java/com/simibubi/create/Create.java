@@ -2,9 +2,13 @@ package com.simibubi.create;
 
 import java.util.Random;
 
+import com.simibubi.create.lib.event.BiomeLoadingCallback;
 import com.tterrag.registrate.fabric.EnvExecutor;
 
 import net.fabricmc.api.ModInitializer;
+
+import net.minecraft.world.biome.Biome;
+import net.minecraft.world.biome.BiomeGenerationSettings;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -109,6 +113,8 @@ public class Create implements ModInitializer {
 		AllConfigs.register();
 
 		EnvExecutor.runWhenOn(EnvType.CLIENT, () -> () -> CreateClient.addClientListeners());
+
+		BiomeLoadingCallback.EVENT.register(Create::onBiomeLoad);
 	}
 
 	public static void init() {
@@ -137,8 +143,8 @@ public class Create implements ModInitializer {
 //		ProcessingRecipeGen.registerAll(gen);
 //	}
 
-	public static void onBiomeLoad(BiomeLoadingEvent event) {
-		AllWorldFeatures.reload(event);
+	public static void onBiomeLoad(ResourceLocation key, Biome.Category category, BiomeGenerationSettings generation) {
+		AllWorldFeatures.reload(key, category, generation);
 	}
 
 	public static CreateRegistrate registrate() {

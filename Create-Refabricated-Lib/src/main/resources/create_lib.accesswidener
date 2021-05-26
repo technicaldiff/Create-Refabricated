@@ -7,4 +7,6 @@ accessible class net/minecraft/client/particle/ParticleManager$IParticleMetaFact
 accessible class net/minecraft/tags/TagRegistry$NamedTag
 accessible method net/minecraft/tags/TagRegistry$NamedTag <init> (Lnet/minecraft/util/ResourceLocation;)V
 
+accessible class net/minecraft/world/biome/Biome$Climate
+
 extendable class net/minecraft/inventory/container/ContainerType$IFactory

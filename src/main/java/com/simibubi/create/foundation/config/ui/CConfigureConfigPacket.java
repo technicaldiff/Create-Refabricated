@@ -14,6 +14,8 @@ public class CConfigureConfigPacket<T> implements C2SPacket {
 	private String path;
 	private String value;
 
+	protected CConfigureConfigPacket() {}
+
 	public CConfigureConfigPacket(String path, T value) {
 		this.path = path;
 		this.value = serialize(value);
