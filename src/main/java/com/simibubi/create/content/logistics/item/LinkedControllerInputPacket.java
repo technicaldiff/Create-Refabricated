@@ -30,6 +30,13 @@ public class LinkedControllerInputPacket extends LinkedControllerPacketBase {
 	}
 
 	@Override
+	public void read(PacketBuffer buf) {
+		buf.readBoolean();
+		buf.readVarInt();
+		activatedButtons.forEach(); // fixme
+	}
+
+	@Override
 	public void write(PacketBuffer buffer) {
 		buffer.writeBoolean(press);
 		buffer.writeVarInt(activatedButtons.size());

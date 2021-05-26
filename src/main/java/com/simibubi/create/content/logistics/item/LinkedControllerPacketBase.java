@@ -1,22 +1,21 @@
 package com.simibubi.create.content.logistics.item;
 
-import java.util.function.Supplier;
-
 import com.simibubi.create.AllItems;
-import com.simibubi.create.foundation.networking.SimplePacketBase;
 
+import me.pepperbell.simplenetworking.C2SPacket;
+import me.pepperbell.simplenetworking.SimpleChannel;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraftforge.fml.network.NetworkEvent.Context;
+import net.minecraft.network.play.ServerPlayNetHandler;
+import net.minecraft.server.MinecraftServer;
 
-public abstract class LinkedControllerPacketBase extends SimplePacketBase {
+public abstract class LinkedControllerPacketBase implements C2SPacket {
 
 	@Override
-	public void handle(Supplier<Context> context) {
-		context.get()
-			.enqueueWork(() -> {
-				ServerPlayerEntity player = context.get()
-					.getSender();
+	public void handle(MinecraftServer server, ServerPlayerEntity player, ServerPlayNetHandler handler, SimpleChannel.ResponseTarget responseTarget) {
+		server.execute(() -> {
+//				ServerPlayerEntity player = context.get()
+//					.getSender();
 				if (player == null)
 					return;
 
@@ -28,8 +27,8 @@ public abstract class LinkedControllerPacketBase extends SimplePacketBase {
 				}
 				handle(player, heldItem);
 			});
-		context.get()
-			.setPacketHandled(true);
+//		context.get()
+//			.setPacketHandled(true);
 	}
 
 	protected abstract void handle(ServerPlayerEntity player, ItemStack heldItem);
