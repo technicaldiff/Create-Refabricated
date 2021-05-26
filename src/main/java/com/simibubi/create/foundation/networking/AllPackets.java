@@ -116,7 +116,7 @@ public enum AllPackets {
 				registered = true;
 			}
 			if (!registered) {
-				Create.logger.error("Could not register packet with type " + packet.type.getClass());
+				Create.LOGGER.error("Could not register packet with type " + packet.type.getClass());
 			}
 		}
 		channel.initServerListener();

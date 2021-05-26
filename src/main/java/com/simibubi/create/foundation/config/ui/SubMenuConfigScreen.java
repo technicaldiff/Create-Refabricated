@@ -81,7 +81,7 @@ public class SubMenuConfigScreen extends ConfigScreen {
 			ForgeConfigSpec.ConfigValue configValue = values.get(path);
 			configValue.set(value);
 			if (type == ModConfig.Type.SERVER) {
-				AllPackets.channel.sendToServer(new CConfigureConfigPacket<>(path, value));
+				AllPackets.channel.sendToServer(new CConfigureConfigPacket(path, value));
 			}
 		});
 		clearChanges();
