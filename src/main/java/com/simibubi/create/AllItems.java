@@ -55,7 +55,6 @@ import net.minecraft.item.Food;
 import net.minecraft.item.Item;
 import net.minecraft.item.Rarity;
 import net.minecraft.tags.ITag;
-import net.minecraft.tags.ItemTags;
 import net.minecraft.util.ResourceLocation;
 
 public class AllItems {
@@ -232,7 +231,7 @@ public class AllItems {
 	public static final ItemEntry<LinkedControllerItem> LINKED_CONTROLLER =
 		REGISTRATE.item("linked_controller", LinkedControllerItem::new)
 		.transform(CreateRegistrate.customRenderedItem(() -> LinkedControllerModel::new))
-		.model(AssetLookup.itemModelWithPartials())
+//		.model(AssetLookup.itemModelWithPartials())
 		.register();
 
 	public static final ItemEntry<MinecartContraptionItem> MINECART_CONTRAPTION =

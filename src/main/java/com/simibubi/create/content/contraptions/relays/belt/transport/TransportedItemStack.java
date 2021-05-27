@@ -4,7 +4,7 @@ import java.util.Random;
 
 import com.simibubi.create.content.contraptions.processing.InWorldProcessing;
 import com.simibubi.create.content.contraptions.relays.belt.BeltHelper;
-import com.simibubi.create.content.logistics.InWorldProcessing;
+import com.simibubi.create.lib.utility.NBTSerializer;
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;

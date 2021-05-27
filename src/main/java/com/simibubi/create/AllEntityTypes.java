@@ -18,26 +18,25 @@ import net.fabricmc.fabric.api.client.rendereregistry.v1.EntityRendererRegistry;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricEntityTypeBuilder;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityClassification;
-import net.minecraft.entity.EntityType;
 import net.minecraft.entity.EntityType.IFactory;
 
 public class AllEntityTypes {
 
 	public static final EntityEntry<OrientedContraptionEntity> ORIENTED_CONTRAPTION =
-			contraption("contraption", OrientedContraptionEntity::new, () -> OrientedContraptionEntityRenderer::new,
+			contraption("contraption", OrientedContraptionEntity::new, () -> (manager, context) -> new OrientedContraptionEntityRenderer(manager),
 					5, 3, true);
 	public static final EntityEntry<ControlledContraptionEntity> CONTROLLED_CONTRAPTION =
-			contraption("stationary_contraption", ControlledContraptionEntity::new, () -> ContraptionEntityRenderer::new,
+			contraption("stationary_contraption", ControlledContraptionEntity::new, () -> (manager, context) -> new ContraptionEntityRenderer<ControlledContraptionEntity>(manager),
 					20, 40, false);
 	public static final EntityEntry<GantryContraptionEntity> GANTRY_CONTRAPTION =
-			contraption("gantry_contraption", GantryContraptionEntity::new, () -> ContraptionEntityRenderer::new,
+			contraption("gantry_contraption", GantryContraptionEntity::new, () -> (manager, context) -> new ContraptionEntityRenderer<GantryContraptionEntity>(manager),
 					10, 40, false);
 
 	public static final EntityEntry<SuperGlueEntity> SUPER_GLUE =
-			register("super_glue", SuperGlueEntity::new, () -> SuperGlueRenderer::new,
+			register("super_glue", SuperGlueEntity::new, () -> (manager, context) -> new SuperGlueRenderer(manager),
 					EntityClassification.MISC, 10, Integer.MAX_VALUE, false, true, SuperGlueEntity::build);
 	public static final EntityEntry<SeatEntity> SEAT =
-			register("seat", SeatEntity::new, () -> SeatEntity.Render::new,
+			register("seat", SeatEntity::new, () -> (manager, context) -> new SeatEntity.Render(manager),
 					EntityClassification.MISC, 0, Integer.MAX_VALUE, false, true, SeatEntity::build);
 
 	//
