@@ -55,6 +55,7 @@ import net.minecraft.item.Food;
 import net.minecraft.item.Item;
 import net.minecraft.item.Rarity;
 import net.minecraft.tags.ITag;
+import net.minecraft.tags.ItemTags;
 import net.minecraft.util.ResourceLocation;
 
 public class AllItems {
@@ -144,11 +145,11 @@ public class AllItems {
 		COPPER_SHEET = taggedIngredient("copper_sheet"/*, forgeItemTag("plates/copper"), PLATES.tag*/),
 		BRASS_SHEET = taggedIngredient("brass_sheet"/*, forgeItemTag("plates/brass"), PLATES.tag*/),
 		IRON_SHEET = taggedIngredient("iron_sheet"/*, forgeItemTag("plates/iron"), PLATES.tag*/),
-		GOLDEN_SHEET = taggedIngredient("golden_sheet"/*, forgeItemTag("plates/gold"), PLATES.tag*/),
+		GOLDEN_SHEET = taggedIngredient("golden_sheet"/*, forgeItemTag("plates/gold"), PLATES.tag, ItemTags.PIGLIN_LOVED*/),
 		LAPIS_SHEET = taggedIngredient("lapis_sheet"/*, forgeItemTag("plates/lapis_lazuli"), PLATES.tag*/),
 
 		CRUSHED_IRON = taggedIngredient("crushed_iron_ore"/*, CRUSHED_ORES.tag*/),
-		CRUSHED_GOLD = taggedIngredient("crushed_gold_ore"/*, CRUSHED_ORES.tag*/),
+		CRUSHED_GOLD = taggedIngredient("crushed_gold_ore"/*, CRUSHED_ORES.tag, ItemTags.PIGLIN_LOVED*/),
 		CRUSHED_COPPER = taggedIngredient("crushed_copper_ore"/*, CRUSHED_ORES.tag*/),
 		CRUSHED_ZINC = taggedIngredient("crushed_zinc_ore"/*, CRUSHED_ORES.tag*/),
 		CRUSHED_BRASS = taggedIngredient("crushed_brass"/*, CRUSHED_ORES.tag*/);
@@ -227,7 +228,7 @@ public class AllItems {
 			.lang("Creative Worldshaper")
 //			.model(AssetLookup.itemModelWithPartials())
 			.register();
-	
+
 	public static final ItemEntry<LinkedControllerItem> LINKED_CONTROLLER =
 		REGISTRATE.item("linked_controller", LinkedControllerItem::new)
 		.transform(CreateRegistrate.customRenderedItem(() -> LinkedControllerModel::new))
