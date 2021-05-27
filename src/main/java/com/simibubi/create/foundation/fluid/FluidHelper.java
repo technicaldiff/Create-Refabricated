@@ -2,6 +2,9 @@ package com.simibubi.create.foundation.fluid;
 
 import javax.annotation.Nullable;
 
+import alexiil.mc.lib.attributes.SearchOptions;
+import alexiil.mc.lib.attributes.Simulation;
+
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSyntaxException;
@@ -12,8 +15,11 @@ import com.simibubi.create.content.contraptions.processing.EmptyingByBasin;
 import com.simibubi.create.foundation.tileEntity.SmartTileEntity;
 import com.simibubi.create.foundation.utility.Pair;
 import com.simibubi.create.lib.lba.fluid.FluidStack;
-
+import com.simibubi.create.lib.lba.fluid.IFluidHandler;
 import com.simibubi.create.lib.utility.FluidUtil;
+import com.simibubi.create.lib.utility.LazyOptional;
+
+import com.simibubi.create.lib.utility.TransferUtil;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -116,18 +122,18 @@ public class FluidHelper {
 			return false;
 
 		Pair<FluidStack, ItemStack> emptyingResult = EmptyingByBasin.emptyItem(worldIn, heldItem, true);
-		LazyOptional<IFluidHandler> capability = te.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY);
+		LazyOptional<IFluidHandler> capability = TransferUtil.getFluidHandler(te.getWorld(), te.getPos(), SearchOptions.ALL);
 		IFluidHandler tank = capability.orElse(null);
 		FluidStack fluidStack = emptyingResult.getFirst();
 
-		if (tank == null || fluidStack.getAmount() != tank.fill(fluidStack, FluidAction.SIMULATE))
+		if (tank == null || fluidStack.getAmount() != tank.fill(fluidStack, Simulation.SIMULATE))
 			return false;
 		if (worldIn.isRemote)
 			return true;
 
 		ItemStack copyOfHeld = heldItem.copy();
 		emptyingResult = EmptyingByBasin.emptyItem(worldIn, copyOfHeld, false);
-		tank.fill(fluidStack, FluidAction.EXECUTE);
+		tank.fill(fluidStack, Simulation.ACTION);
 
 		if (!player.isCreative()) {
 			if (copyOfHeld.isEmpty())
@@ -145,7 +151,7 @@ public class FluidHelper {
 		if (!GenericItemFilling.canItemBeFilled(world, heldItem))
 			return false;
 
-		LazyOptional<IFluidHandler> capability = te.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY);
+		LazyOptional<IFluidHandler> capability = TransferUtil.getFluidHandler(te.getWorld(), te.getPos(), SearchOptions.ALL);
 		IFluidHandler tank = capability.orElse(null);
 
 		if (tank == null)
@@ -155,7 +161,7 @@ public class FluidHelper {
 			FluidStack fluid = tank.getFluidInTank(i);
 			if (fluid.isEmpty())
 				continue;
-			int requiredAmountForItem = GenericItemFilling.getRequiredAmountForItem(world, heldItem, fluid.copy());
+			int requiredAmountForItem = GenericItemFilling.getRequiredAmountForItem(world, heldItem, (FluidStack) fluid.copy());
 			if (requiredAmountForItem == -1)
 				continue;
 			if (requiredAmountForItem > fluid.getAmount())
@@ -166,10 +172,10 @@ public class FluidHelper {
 
 			if (player.isCreative())
 				heldItem = heldItem.copy();
-			ItemStack out = GenericItemFilling.fillItem(world, requiredAmountForItem, heldItem, fluid.copy());
+			ItemStack out = GenericItemFilling.fillItem(world, requiredAmountForItem, heldItem, (FluidStack) fluid.copy());
 
-			FluidStack copy = fluid.withAmount(requiredAmountForItem);
-			tank.drain(copy, FluidAction.EXECUTE);
+			FluidStack copy = (FluidStack) fluid.withAmount(FluidUtil.millibucketsToFluidAmount(requiredAmountForItem));
+			tank.drain(copy, Simulation.ACTION);
 
 			if (!player.isCreative())
 				player.inventory.placeItemBackInInventory(world, out);
@@ -182,7 +188,7 @@ public class FluidHelper {
 
 	@Nullable
 	public static FluidExchange exchange(IFluidHandler fluidTank, IFluidHandlerItem fluidItem, FluidExchange preferred,
-		int maxAmount) {
+										 int maxAmount) {
 		return exchange(fluidTank, fluidItem, preferred, true, maxAmount);
 	}
 

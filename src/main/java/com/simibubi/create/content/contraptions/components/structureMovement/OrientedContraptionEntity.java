@@ -286,8 +286,7 @@ public class OrientedContraptionEntity extends AbstractContraptionEntity {
 			tickActors();
 		boolean isStalled = isStalled();
 
-		LazyOptional<MinecartController> capability =
-				CapabilityUtil.getCapability(riding, CapabilityMinecartController.MINECART_CONTROLLER_CAPABILITY);
+		LazyOptional<MinecartController> capability = LazyOptional.ofObject((MinecartController) MinecartAndRailUtil.getController((AbstractMinecartEntity) riding));
 		if (capability.isPresent()) {
 			if (!world.isRemote())
 				capability.orElse(null)

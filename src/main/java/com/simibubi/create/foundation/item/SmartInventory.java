@@ -3,9 +3,8 @@ package com.simibubi.create.foundation.item;
 import java.util.function.Consumer;
 
 import com.simibubi.create.foundation.tileEntity.SyncedTileEntity;
-
 import com.simibubi.create.lib.lba.item.ItemStackHandler;
-
+import com.simibubi.create.lib.lba.item.RecipeWrapper;
 import com.simibubi.create.lib.utility.NBTSerializable;
 
 import net.minecraft.item.ItemStack;

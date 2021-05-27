@@ -143,8 +143,8 @@ public class Create implements ModInitializer {
 //		ProcessingRecipeGen.registerAll(gen);
 //	}
 
-	public static void onBiomeLoad(ResourceLocation key, Biome.Category category, BiomeGenerationSettings generation) {
-		AllWorldFeatures.reload(key, category, generation);
+	public static BiomeGenerationSettings.Builder onBiomeLoad(ResourceLocation key, Biome.Category category, BiomeGenerationSettings.Builder generation) {
+		return AllWorldFeatures.reload(key, category, generation);
 	}
 
 	public static CreateRegistrate registrate() {

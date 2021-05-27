@@ -9,9 +9,10 @@ import net.minecraft.world.biome.BiomeGenerationSettings;
 public interface BiomeLoadingCallback {
 	public static final Event<BiomeLoadingCallback> EVENT = EventFactory.createArrayBacked(BiomeLoadingCallback.class, callbacks -> (key, category, generation) -> {
 		for (BiomeLoadingCallback callback : callbacks) {
-			callback.onBiomeLoad(key, category, generation);
+			generation = callback.onBiomeLoad(key, category, generation);
 		}
+		return generation;
 	});
 
-	void onBiomeLoad(ResourceLocation key, Biome.Category category, BiomeGenerationSettings generation);
+	BiomeGenerationSettings.Builder onBiomeLoad(ResourceLocation key, Biome.Category category, BiomeGenerationSettings.Builder generation);
 }

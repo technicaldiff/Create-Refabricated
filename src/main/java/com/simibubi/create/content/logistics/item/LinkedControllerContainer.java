@@ -1,6 +1,8 @@
 package com.simibubi.create.content.logistics.item;
 
 import com.simibubi.create.foundation.gui.IClearableContainer;
+import com.simibubi.create.lib.lba.item.ItemStackHandler;
+import com.simibubi.create.lib.lba.item.SlotItemHandler;
 
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
@@ -10,8 +12,6 @@ import net.minecraft.inventory.container.ContainerType;
 import net.minecraft.inventory.container.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketBuffer;
-import net.minecraftforge.items.ItemStackHandler;
-import net.minecraftforge.items.SlotItemHandler;
 
 public class LinkedControllerContainer extends Container implements IClearableContainer {
 
@@ -61,7 +61,7 @@ public class LinkedControllerContainer extends Container implements IClearableCo
 		int slot = 0;
 		int x = 12;
 		int y = 44;
-		
+
 		for (int column = 0; column < 6; column++) {
 			for (int row = 0; row < 2; ++row)
 				addSlot(new SlotItemHandler(filterInventory, slot++, x, y + row * 18));

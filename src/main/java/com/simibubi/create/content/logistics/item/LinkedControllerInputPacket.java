@@ -21,19 +21,21 @@ public class LinkedControllerInputPacket extends LinkedControllerPacketBase {
 		this.press = press;
 	}
 
-	public LinkedControllerInputPacket(PacketBuffer buffer) {
-		activatedButtons = new ArrayList<>();
-		press = buffer.readBoolean();
-		int size = buffer.readVarInt();
-		for (int i = 0; i < size; i++)
-			activatedButtons.add(buffer.readVarInt());
-	}
+//	public LinkedControllerInputPacket(PacketBuffer buffer) {
+//		activatedButtons = new ArrayList<>();
+//		press = buffer.readBoolean();
+//		int size = buffer.readVarInt();
+//		for (int i = 0; i < size; i++)
+//			activatedButtons.add(buffer.readVarInt());
+//	}
 
 	@Override
 	public void read(PacketBuffer buf) {
-		buf.readBoolean();
-		buf.readVarInt();
-		activatedButtons.forEach(); // fixme
+		activatedButtons = new ArrayList<>();
+		press = buf.readBoolean();
+		int size = buf.readVarInt();
+		for (int i = 0; i < size; i++)
+			activatedButtons.add(buf.readVarInt());
 	}
 
 	@Override

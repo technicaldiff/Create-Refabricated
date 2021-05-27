@@ -1,30 +1,37 @@
 package com.simibubi.create.content.contraptions.fluids.actors;
 
+import java.util.List;
+
+import com.simibubi.create.AllRecipeTypes;
+import com.simibubi.create.foundation.fluid.FluidIngredient;
 import com.simibubi.create.lib.lba.fluid.FluidStack;
+import com.simibubi.create.lib.lba.item.ItemStackHandler;
+import com.simibubi.create.lib.lba.item.RecipeWrapper;
 
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.world.World;
 
 public class FillingBySpout {
 
-//	static RecipeWrapper wrapper = new RecipeWrapper(new ItemStackHandler(1));
+	static RecipeWrapper wrapper = new RecipeWrapper(new ItemStackHandler(1));
 	public static boolean canItemBeFilled(World world, ItemStack stack) {
-//		wrapper.setInventorySlotContents(0, stack);
-//		if (AllRecipeTypes.FILLING.find(wrapper, world)
-//			.isPresent())
-//			return true;
+		wrapper.setInventorySlotContents(0, stack);
+		if (AllRecipeTypes.FILLING.find(wrapper, world)
+			.isPresent())
+			return true;
 		return GenericItemFilling.canItemBeFilled(world, stack);
 	}
 
 	public static int getRequiredAmountForItem(World world, ItemStack stack, FluidStack availableFluid) {
-//		wrapper.setInventorySlotContents(0, stack);
-//		for (IRecipe/*<RecipeWrapper>*/ recipe : world.getRecipeManager()
-//			.getRecipes(AllRecipeTypes.FILLING.getType(), wrapper, world)) {
-//			FillingRecipe fillingRecipe = (FillingRecipe) recipe;
-//			FluidIngredient requiredFluid = fillingRecipe.getRequiredFluid();
-//			if (requiredFluid.test(availableFluid))
-//				return requiredFluid.getRequiredAmount();
-//		}
+		wrapper.setInventorySlotContents(0, stack);
+		for (IRecipe<RecipeWrapper> recipe : world.getRecipeManager()
+			.getRecipes(AllRecipeTypes.FILLING.getType(), wrapper, world)) {
+			FillingRecipe fillingRecipe = (FillingRecipe) recipe;
+			FluidIngredient requiredFluid = fillingRecipe.getRequiredFluid();
+			if (requiredFluid.test(availableFluid))
+				return requiredFluid.getRequiredAmount();
+		}
 		return GenericItemFilling.getRequiredAmountForItem(world, stack, availableFluid);
 	}
 
@@ -32,18 +39,18 @@ public class FillingBySpout {
 		FluidStack toFill = (FluidStack) availableFluid.copy();
 		toFill.setAmount(requiredAmount);
 
-//		wrapper.setInventorySlotContents(0, stack);
-//		for (IRecipe/*<RecipeWrapper>*/ recipe : world.getRecipeManager()
-//			.getRecipes(AllRecipeTypes.FILLING.getType(), wrapper, world)) {
-//			FillingRecipe fillingRecipe = (FillingRecipe) recipe;
-//			FluidIngredient requiredFluid = fillingRecipe.getRequiredFluid();
-//			if (requiredFluid.test(toFill)) {
-//				List<ItemStack> results = fillingRecipe.rollResults();
-//				availableFluid.shrink(requiredAmount);
-//				stack.shrink(1);
-//				return results.isEmpty() ? ItemStack.EMPTY : results.get(0);
-//			}
-//		}
+		wrapper.setInventorySlotContents(0, stack);
+		for (IRecipe/*<RecipeWrapper>*/ recipe : world.getRecipeManager()
+			.getRecipes(AllRecipeTypes.FILLING.getType(), wrapper, world)) {
+			FillingRecipe fillingRecipe = (FillingRecipe) recipe;
+			FluidIngredient requiredFluid = fillingRecipe.getRequiredFluid();
+			if (requiredFluid.test(toFill)) {
+				List<ItemStack> results = fillingRecipe.rollResults();
+				availableFluid.shrink(requiredAmount);
+				stack.shrink(1);
+				return results.isEmpty() ? ItemStack.EMPTY : results.get(0);
+			}
+		}
 
 		return GenericItemFilling.fillItem(world, requiredAmount, stack, availableFluid);
 	}

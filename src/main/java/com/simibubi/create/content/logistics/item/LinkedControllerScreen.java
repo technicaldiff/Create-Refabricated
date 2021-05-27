@@ -14,6 +14,8 @@ import com.simibubi.create.foundation.gui.AllIcons;
 import com.simibubi.create.foundation.gui.GuiGameElement;
 import com.simibubi.create.foundation.gui.widgets.IconButton;
 import com.simibubi.create.foundation.utility.Lang;
+import com.simibubi.create.lib.mixin.accessor.SlotAccessor;
+import com.simibubi.create.lib.utility.ItemStackUtil;
 
 import net.minecraft.client.renderer.Rectangle2d;
 import net.minecraft.client.resources.I18n;
@@ -42,13 +44,13 @@ public class LinkedControllerScreen extends AbstractSimiContainerScreen<LinkedCo
 			super.drawMouseoverTooltip(ms, x, y);
 			return;
 		}
-		renderWrappedToolTip(ms, addToTooltip(new LinkedList<>(), hoveredSlot.getSlotIndex()), x, y, textRenderer);
+		renderTooltip(ms, addToTooltip(new LinkedList<>(), ((SlotAccessor) hoveredSlot).getSlotIndex()), x, y/*, textRenderer*/);
 	}
 
 	@Override
 	public List<ITextComponent> getTooltipFromItem(ItemStack stack) {
 		List<ITextComponent> list = super.getTooltipFromItem(stack);
-		return hoveredSlot != null ? addToTooltip(list, hoveredSlot.getSlotIndex()) : list;
+		return hoveredSlot != null ? addToTooltip(list, ((SlotAccessor) hoveredSlot).getSlotIndex()) : list;
 	}
 
 	private List<ITextComponent> addToTooltip(List<ITextComponent> list, int slot) {
@@ -103,8 +105,7 @@ public class LinkedControllerScreen extends AbstractSimiContainerScreen<LinkedCo
 	@Override
 	public void tick() {
 		super.tick();
-		if (!container.player.getHeldItemMainhand()
-			.equals(container.mainItem, false))
+		if (!ItemStackUtil.equals(container.player.getHeldItemMainhand(), container.mainItem, false))
 			client.player.closeScreen();
 	}
 

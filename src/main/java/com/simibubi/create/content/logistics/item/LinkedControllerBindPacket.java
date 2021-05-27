@@ -5,12 +5,12 @@ import org.apache.commons.lang3.tuple.Pair;
 import com.simibubi.create.content.logistics.RedstoneLinkNetworkHandler.Frequency;
 import com.simibubi.create.foundation.tileEntity.TileEntityBehaviour;
 import com.simibubi.create.foundation.tileEntity.behaviour.linked.LinkBehaviour;
+import com.simibubi.create.lib.lba.item.ItemStackHandler;
 
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.math.BlockPos;
-import net.minecraftforge.items.ItemStackHandler;
 
 public class LinkedControllerBindPacket extends LinkedControllerPacketBase {
 
@@ -22,9 +22,15 @@ public class LinkedControllerBindPacket extends LinkedControllerPacketBase {
 		this.linkLocation = linkLocation;
 	}
 
-	public LinkedControllerBindPacket(PacketBuffer buffer) {
-		this.button = buffer.readVarInt();
-		this.linkLocation = buffer.readBlockPos();
+//	public LinkedControllerBindPacket(PacketBuffer buffer) {
+//		this.button = buffer.readVarInt();
+//		this.linkLocation = buffer.readBlockPos();
+//	}
+
+	@Override
+	public void read(PacketBuffer buf) {
+		button = buf.readVarInt();
+		linkLocation = buf.readBlockPos();
 	}
 
 	@Override
@@ -39,7 +45,7 @@ public class LinkedControllerBindPacket extends LinkedControllerPacketBase {
 		LinkBehaviour linkBehaviour = TileEntityBehaviour.get(player.world, linkLocation, LinkBehaviour.TYPE);
 		if (linkBehaviour == null)
 			return;
-		
+
 		Pair<Frequency, Frequency> pair = linkBehaviour.getNetworkKey();
 		frequencyItems.setStackInSlot(button * 2, pair.getKey()
 			.getStack()

@@ -6,7 +6,12 @@ import com.simibubi.create.AllItems;
 import com.simibubi.create.content.logistics.RedstoneLinkNetworkHandler;
 import com.simibubi.create.content.logistics.RedstoneLinkNetworkHandler.Frequency;
 import com.simibubi.create.foundation.utility.Couple;
+import com.simibubi.create.lib.lba.item.ItemStackHandler;
+import com.simibubi.create.lib.utility.NetworkUtil;
+import com.tterrag.registrate.fabric.EnvExecutor;
 
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.entity.player.ServerPlayerEntity;
@@ -23,11 +28,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.fml.DistExecutor;
-import net.minecraftforge.fml.network.NetworkHooks;
-import net.minecraftforge.items.ItemStackHandler;
 
 public class LinkedControllerItem extends Item implements INamedContainerProvider {
 
@@ -45,7 +45,7 @@ public class LinkedControllerItem extends Item implements INamedContainerProvide
 		if (!player.isSneaking() && player.isAllowEdit()
 			&& AllBlocks.REDSTONE_LINK.has(world.getBlockState(ctx.getPos()))) {
 			if (world.isRemote)
-				DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> this.toggleBindMode(ctx.getPos()));
+				EnvExecutor.runWhenOn(EnvType.CLIENT, () -> () -> this.toggleBindMode(ctx.getPos()));
 			player.getCooldownTracker()
 				.setCooldown(this, 2);
 			return ActionResultType.SUCCESS;
@@ -60,7 +60,7 @@ public class LinkedControllerItem extends Item implements INamedContainerProvide
 
 		if (player.isSneaking() && hand == Hand.MAIN_HAND) {
 			if (!world.isRemote && player instanceof ServerPlayerEntity && player.isAllowEdit())
-				NetworkHooks.openGui((ServerPlayerEntity) player, this, buf -> {
+				NetworkUtil.openGUI((ServerPlayerEntity) player, this, buf -> {
 					buf.writeItemStack(heldItem);
 				});
 			return ActionResult.success(heldItem);
@@ -68,7 +68,7 @@ public class LinkedControllerItem extends Item implements INamedContainerProvide
 
 		if (!player.isSneaking()) {
 			if (world.isRemote)
-				DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> this::toggleActive);
+				EnvExecutor.runWhenOn(EnvType.CLIENT, () -> this::toggleActive);
 			player.getCooldownTracker()
 				.setCooldown(this, 2);
 		}
@@ -76,12 +76,12 @@ public class LinkedControllerItem extends Item implements INamedContainerProvide
 		return ActionResult.pass(heldItem);
 	}
 
-	@OnlyIn(Dist.CLIENT)
+	@Environment(EnvType.CLIENT)
 	private void toggleBindMode(BlockPos pos) {
 		LinkedControllerClientHandler.toggleBindMode(pos);
 	}
 
-	@OnlyIn(Dist.CLIENT)
+	@Environment(EnvType.CLIENT)
 	private void toggleActive() {
 		LinkedControllerClientHandler.toggle();
 	}

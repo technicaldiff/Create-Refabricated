@@ -6,6 +6,7 @@ import java.util.Map;
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.Create;
 import com.simibubi.create.content.palettes.AllPaletteBlocks;
+import com.simibubi.create.lib.utility.BiomeUtil;
 import com.tterrag.registrate.util.nullness.NonNullSupplier;
 
 import net.minecraft.block.Block;
@@ -69,16 +70,16 @@ public class AllWorldFeatures {
 			});
 	}
 
-	public static void reload(ResourceLocation key, Biome.Category category, BiomeGenerationSettings generation) {
+	public static BiomeGenerationSettings.Builder reload(ResourceLocation key, Biome.Category category, BiomeGenerationSettings.Builder generation) {
 		entries.values()
 			.forEach(entry -> {
 				if (key == Biomes.THE_VOID.getValue()) // uhhh???
 					return;
 				if (category == Category.NETHER)
 					return;
-				generation // wat
-					.feature(GenerationStage.Decoration.UNDERGROUND_ORES, entry.getFeature());
+				generation.feature(GenerationStage.Decoration.UNDERGROUND_ORES, entry.getFeature());
 			});
+		return generation;
 	}
 
 //	public static void fillConfig(ForgeConfigSpec.Builder builder) {

@@ -13,6 +13,7 @@ import com.simibubi.create.Create;
 import com.simibubi.create.foundation.config.AllConfigs;
 import com.simibubi.create.foundation.tileEntity.behaviour.linked.LinkBehaviour;
 import com.simibubi.create.foundation.utility.WorldHelper;
+import com.simibubi.create.lib.utility.LoadedCheckUtil;
 
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -108,7 +109,7 @@ public class RedstoneLinkNetworkHandler {
 				iterator.remove();
 				continue;
 			}
-			if (!world.isAreaLoaded(other.getLocation(), 0)) {
+			if (!LoadedCheckUtil.isAreaLoaded(world, other.getLocation(), 0)) {
 				iterator.remove();
 				continue;
 			}

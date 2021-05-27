@@ -7,6 +7,7 @@ import com.simibubi.create.Create;
 import com.simibubi.create.content.contraptions.processing.ProcessingRecipe;
 import com.simibubi.create.content.contraptions.processing.ProcessingRecipeBuilder;
 import com.simibubi.create.content.contraptions.processing.ProcessingRecipeBuilder.ProcessingRecipeParams;
+import com.simibubi.create.lib.lba.item.RecipeWrapper;
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;

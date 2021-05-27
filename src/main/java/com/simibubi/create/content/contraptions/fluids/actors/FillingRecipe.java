@@ -2,15 +2,15 @@ package com.simibubi.create.content.contraptions.fluids.actors;
 
 import com.simibubi.create.AllRecipeTypes;
 import com.simibubi.create.content.contraptions.processing.ProcessingRecipe;
-import com.simibubi.create.content.contraptions.processing.ProcessingRecipeBuilder.ProcessingRecipeParams;
+import com.simibubi.create.content.contraptions.processing.ProcessingRecipeBuilder;
 import com.simibubi.create.foundation.fluid.FluidIngredient;
+import com.simibubi.create.lib.lba.item.RecipeWrapper;
 
-import net.minecraft.inventory.IInventory;
 import net.minecraft.world.World;
 
-public class FillingRecipe extends ProcessingRecipe/*<RecipeWrapper>*/ {
+public class FillingRecipe extends ProcessingRecipe<RecipeWrapper> {
 
-	public FillingRecipe(ProcessingRecipeParams params) {
+	public FillingRecipe(ProcessingRecipeBuilder.ProcessingRecipeParams params) {
 		super(AllRecipeTypes.FILLING, params);
 	}
 
@@ -41,7 +41,7 @@ public class FillingRecipe extends ProcessingRecipe/*<RecipeWrapper>*/ {
 	}
 
 	@Override
-	public boolean matches(IInventory iInventory, World world) {
+	public boolean matches(RecipeWrapper iInventory, World world) {
 		return false;
 	}
 }
