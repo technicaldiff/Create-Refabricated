@@ -25,8 +25,11 @@ import com.simibubi.create.foundation.utility.VecHelper;
 import com.simibubi.create.foundation.utility.animation.LerpedFloat;
 import com.simibubi.create.lib.lba.item.IItemHandlerModifiable;
 import com.simibubi.create.lib.lba.item.ItemStackHandler;
+import com.simibubi.create.lib.lba.item.RecipeWrapper;
 import com.simibubi.create.lib.utility.Constants;
 import com.simibubi.create.lib.utility.LazyOptional;
+
+import com.simibubi.create.lib.utility.NBTSerializer;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.ServerPlayerEntity;
@@ -325,8 +328,7 @@ public class DeployerTileEntity extends KineticTileEntity {
 		compound.putBoolean("Powered", redstoneLocked);
 
 		if (player != null) {
-			compound.put("HeldItem", player.getHeldItemMainhand()
-				.serializeNBT());
+			compound.put("HeldItem", NBTSerializer.serializeNBT(player.getHeldItemMainhand()));
 			ListNBT invNBT = new ListNBT();
 			player.inventory.write(invNBT);
 			compound.put("Inventory", invNBT);
@@ -340,11 +342,11 @@ public class DeployerTileEntity extends KineticTileEntity {
 		compound.putFloat("Reach", reach);
 		if (player == null)
 			return;
-		compound.put("HeldItem", player.getHeldItemMainhand()
-			.serializeNBT());
+		compound.put("HeldItem", NBTSerializer.serializeNBT(player.getHeldItemMainhand()));
 		if (player.spawnedItemEffects != null) {
-			compound.put("Particle", player.spawnedItemEffects.serializeNBT());
+			compound.put("Particle", NBTSerializer.serializeNBT(player.spawnedItemEffects));
 			player.spawnedItemEffects = null;
+
 		}
 	}
 

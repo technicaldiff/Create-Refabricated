@@ -4,15 +4,15 @@ import com.simibubi.create.AllFluids;
 import com.simibubi.create.content.contraptions.fluids.potion.PotionFluidHandler;
 import com.simibubi.create.foundation.fluid.FluidHelper;
 import com.simibubi.create.lib.lba.fluid.FluidStack;
-
+import com.simibubi.create.lib.lba.fluid.IFluidHandlerItem;
 import com.simibubi.create.lib.utility.FluidUtil;
+import com.simibubi.create.lib.utility.LazyOptional;
+import com.simibubi.create.lib.utility.TransferUtil;
 
 import net.minecraft.fluid.Fluids;
-import net.minecraft.item.BucketItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
-import net.minecraft.item.MilkBucketItem;
 import net.minecraft.potion.PotionUtils;
 import net.minecraft.potion.Potions;
 import net.minecraft.world.World;
@@ -33,16 +33,16 @@ public class GenericItemFilling {
 	 * @param stack The ItemStack.
 	 * @param fluidHandler The IFluidHandlerItem instance retrieved from the ItemStack.
 	 * @return If the IFluidHandlerItem is valid for the passed ItemStack.
-	 */
+	 */ // this doesn't exist on fabric so this method is kinda useless
 	public static boolean isFluidHandlerValid(ItemStack stack, IFluidHandlerItem fluidHandler) {
-		// Not instanceof in case a correct subclass is made
-		if (fluidHandler.getClass() == FluidBucketWrapper.class) {
-			Item item = stack.getItem();
-			// Forge does not patch the FluidBucketWrapper onto subclasses of BucketItem
-			if (item.getClass() != BucketItem.class && !(item instanceof MilkBucketItem)) {
-				return false;
-			}
-		}
+//		// Not instanceof in case a correct subclass is made
+//		if (fluidHandler.getClass() == FluidBucketWrapper.class) {
+//			Item item = stack.getItem();
+//			// Forge does not patch the FluidBucketWrapper onto subclasses of BucketItem
+//			if (item.getClass() != BucketItem.class && !(item instanceof MilkBucketItem)) {
+//				return false;
+//			}
+//		}
 		return true;
 	}
 
@@ -53,7 +53,8 @@ public class GenericItemFilling {
 			return false;
 
 		LazyOptional<IFluidHandlerItem> capability =
-			stack.getCapability(CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY);
+				TransferUtil.getFluidHandlerItem(stack);
+
 		IFluidHandlerItem tank = capability.orElse(null);
 		if (tank == null)
 			return false;

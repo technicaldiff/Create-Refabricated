@@ -4,9 +4,6 @@ import static com.simibubi.create.content.contraptions.components.structureMovem
 
 import java.util.Queue;
 
-import com.simibubi.create.lib.lba.item.CombinedInvWrapper;
-import com.simibubi.create.lib.lba.item.IItemHandlerModifiable;
-
 import org.apache.commons.lang3.tuple.Pair;
 
 import com.simibubi.create.AllBlocks;
@@ -19,6 +16,9 @@ import com.simibubi.create.content.contraptions.components.structureMovement.mou
 import com.simibubi.create.foundation.utility.Iterate;
 import com.simibubi.create.foundation.utility.NBTHelper;
 import com.simibubi.create.foundation.utility.VecHelper;
+import com.simibubi.create.lib.lba.item.CombinedInvWrapper;
+import com.simibubi.create.lib.lba.item.IItemHandlerModifiable;
+import com.simibubi.create.lib.lba.item.InvWrapper;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.Entity;

@@ -8,8 +8,6 @@ import java.util.List;
 
 import javax.annotation.Nullable;
 
-import alexiil.mc.lib.attributes.Simulation;
-
 import com.simibubi.create.content.contraptions.fluids.FluidFX;
 import com.simibubi.create.content.contraptions.goggles.IHaveGoggleInformation;
 import com.simibubi.create.content.contraptions.relays.belt.transport.TransportedItemStack;
@@ -24,10 +22,8 @@ import com.simibubi.create.foundation.tileEntity.behaviour.fluid.SmartFluidTankB
 import com.simibubi.create.foundation.utility.VecHelper;
 import com.simibubi.create.lib.lba.fluid.FluidStack;
 import com.simibubi.create.lib.lba.fluid.IFluidHandler;
-import com.simibubi.create.lib.utility.LazyOptional;
 
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
+import alexiil.mc.lib.attributes.Simulation;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.block.BlockState;
 import net.minecraft.item.ItemStack;
@@ -73,13 +69,13 @@ public class SpoutTileEntity extends SmartTileEntity implements IHaveGoggleInfor
 
 	protected AxisAlignedBB cachedBoundingBox;
 
-	@Override
-	@Environment(EnvType.CLIENT)
-	public AxisAlignedBB getRenderBoundingBox() {
-		if (cachedBoundingBox == null)
-			cachedBoundingBox = super.getRenderBoundingBox().expand(0, -2, 0);
-		return cachedBoundingBox;
-	}
+//	@Override
+//	@Environment(EnvType.CLIENT)
+//	public AxisAlignedBB getRenderBoundingBox() {
+//		if (cachedBoundingBox == null)
+//			cachedBoundingBox = super.getRenderBoundingBox().expand(0, -2, 0);
+//		return cachedBoundingBox;
+//	}
 
 	@Override
 	public void addBehaviours(List<TileEntityBehaviour> behaviours) {

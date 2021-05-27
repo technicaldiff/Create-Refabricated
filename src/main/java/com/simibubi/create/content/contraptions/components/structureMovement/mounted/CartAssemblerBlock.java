@@ -15,7 +15,6 @@ import com.simibubi.create.content.contraptions.components.structureMovement.Ass
 import com.simibubi.create.content.contraptions.components.structureMovement.OrientedContraptionEntity;
 import com.simibubi.create.content.contraptions.components.structureMovement.mounted.CartAssemblerTileEntity.CartMovementMode;
 import com.simibubi.create.content.contraptions.components.structureMovement.train.CouplingHandler;
-import com.simibubi.create.content.contraptions.components.structureMovement.train.capability.CapabilityMinecartController;
 import com.simibubi.create.content.contraptions.components.structureMovement.train.capability.MinecartController;
 import com.simibubi.create.content.contraptions.components.tracks.ControllerRailBlock;
 import com.simibubi.create.content.contraptions.wrench.IWrenchable;
@@ -31,6 +30,7 @@ import com.simibubi.create.lib.block.SlopeCreationCheckingRail;
 import com.simibubi.create.lib.helper.EntityHelper;
 import com.simibubi.create.lib.helper.EntitySelectionContextHelper;
 import com.simibubi.create.lib.utility.LazyOptional;
+import com.simibubi.create.lib.utility.MinecartAndRailUtil;
 import com.simibubi.create.lib.utility.NBTSerializer;
 
 import net.minecraft.block.AbstractRailBlock;
@@ -157,7 +157,8 @@ public class CartAssemblerBlock extends AbstractRailBlock
 						.isNormalCube(world, pos.offset(d)))
 						facing = d.getOpposite();
 
-				float speed = getRailMaxSpeed(state, world, pos, cart);
+//				float speed = getRailMaxSpeed(state, world, pos, cart);
+				float speed = 0.4f; // default in forge
 				cart.setMotion(facing.getXOffset() * speed, facing.getYOffset() * speed, facing.getZOffset() * speed);
 			}
 			if (action == CartAssemblerAction.ASSEMBLE_ACCELERATE_DIRECTIONAL) {
@@ -165,7 +166,8 @@ public class CartAssemblerBlock extends AbstractRailBlock
 						AllBlocks.CONTROLLER_RAIL.getDefaultState()
 								.with(ControllerRailBlock.SHAPE, state.get(RAIL_SHAPE))
 								.with(ControllerRailBlock.BACKWARDS, state.get(RAIL_TYPE) == CartAssembleRailType.CONTROLLER_RAIL_BACKWARDS));
-				float speed = getRailMaxSpeed(state, world, pos, cart);
+//				float speed = getRailMaxSpeed(state, world, pos, cart);
+				float speed = 0.4f; // default in forge
 				cart.setMotion(Vector3d.of(accelerationVector).scale(speed));
 			}
 			if (action == CartAssemblerAction.DISASSEMBLE_BRAKE) {
@@ -251,8 +253,7 @@ public class CartAssemblerBlock extends AbstractRailBlock
 			.isEmpty())
 			return;
 
-		LazyOptional<MinecartController> optional =
-			cart.getCapability(CapabilityMinecartController.MINECART_CONTROLLER_CAPABILITY);
+		LazyOptional<MinecartController> optional = LazyOptional.ofObject((MinecartController) MinecartAndRailUtil.getController(cart));
 		if (optional.isPresent() && optional.orElse(null)
 			.isCoupledThroughContraption())
 			return;

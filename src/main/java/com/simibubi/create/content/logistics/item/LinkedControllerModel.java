@@ -2,8 +2,8 @@ package com.simibubi.create.content.logistics.item;
 
 import com.simibubi.create.foundation.block.render.CustomRenderedItemModel;
 
+import net.fabricmc.fabric.api.client.rendering.v1.BuiltinItemRendererRegistry;
 import net.minecraft.client.renderer.model.IBakedModel;
-import net.minecraft.client.renderer.tileentity.ItemStackTileEntityRenderer;
 
 public class LinkedControllerModel extends CustomRenderedItemModel {
 
@@ -13,7 +13,7 @@ public class LinkedControllerModel extends CustomRenderedItemModel {
 	}
 
 	@Override
-	public ItemStackTileEntityRenderer createRenderer() {
+	public BuiltinItemRendererRegistry.DynamicItemRenderer createRenderer() {
 		return new LinkedControllerItemRenderer();
 	}
 

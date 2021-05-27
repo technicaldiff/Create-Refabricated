@@ -21,6 +21,8 @@ import com.simibubi.create.lib.lba.fluid.FluidStack;
 import com.simibubi.create.lib.lba.fluid.IFluidHandler;
 import com.simibubi.create.lib.lba.item.IItemHandler;
 
+import com.simibubi.create.lib.utility.TransferUtil;
+
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.item.crafting.Ingredient;
@@ -56,9 +58,10 @@ public class BasinRecipe extends ProcessingRecipe<SmartInventory> {
 
 	private static boolean apply(BasinTileEntity basin, IRecipe<?> recipe, boolean test) {
 		boolean isBasinRecipe = recipe instanceof BasinRecipe;
-		IItemHandler availableItems = basin.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY)
+		IItemHandler availableItems = TransferUtil.getItemHandler(basin)
 			.orElse(null);
-		IFluidHandler availableFluids = basin.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY)
+
+		IFluidHandler availableFluids = TransferUtil.getFluidHandler(basin)
 			.orElse(null);
 
 		if (availableItems == null || availableFluids == null)
@@ -98,14 +101,13 @@ public class BasinRecipe extends ProcessingRecipe<SmartInventory> {
 					if (!ingredient.test(extracted))
 						continue;
 					// Catalyst items are never consumed
-					if (extracted.hasContainerItem() && extracted.getContainerItem()
-						.isItemEqual(extracted))
+					if (extracted.getItem().hasContainerItem() && extracted.getItem().getContainerItem()
+						.equals(extracted.getItem()))
 						continue Ingredients;
 					if (!simulate)
 						availableItems.extractItem(slot, 1, false);
-					else if (extracted.hasContainerItem())
-						recipeOutputItems.add(extracted.getContainerItem()
-							.copy());
+					else if (extracted.getItem().hasContainerItem())
+						recipeOutputItems.add(new ItemStack(extracted.getItem().getContainerItem()));
 					extractedItemsFromSlot[slot]++;
 					continue Ingredients;
 				}

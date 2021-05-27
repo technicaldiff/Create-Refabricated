@@ -133,7 +133,7 @@ public class MechanicalCrafterTileEntity extends KineticTileEntity {
 
 	@Override
 	public void write(CompoundNBT compound, boolean clientPacket) {
-		compound.put("Inventory", inventory.serializeNBT());
+		compound.put("Inventory", inventory.create$serializeNBT());
 
 		CompoundNBT inputNBT = new CompoundNBT();
 		input.write(inputNBT);
@@ -160,7 +160,7 @@ public class MechanicalCrafterTileEntity extends KineticTileEntity {
 		Phase phaseBefore = phase;
 		GroupedItems before = this.groupedItems;
 
-		inventory.deserializeNBT(compound.getCompound("Inventory"));
+		inventory.create$deserializeNBT(compound.getCompound("Inventory"));
 		input.read(compound.getCompound("ConnectedInput"));
 		groupedItems = GroupedItems.read(compound.getCompound("GroupedItems"));
 		phase = Phase.IDLE;
@@ -241,9 +241,8 @@ public class MechanicalCrafterTileEntity extends KineticTileEntity {
 					List<ItemStack> containers = new ArrayList<>();
 					groupedItems.grid.values()
 						.forEach(stack -> {
-							if (stack.hasContainerItem())
-								containers.add(stack.getContainerItem()
-									.copy());
+							if (stack.getItem().hasContainerItem())
+								containers.add(new ItemStack(stack.getItem().getContainerItem()));
 						});
 
 					if (isVirtual())
@@ -493,12 +492,12 @@ public class MechanicalCrafterTileEntity extends KineticTileEntity {
 		countDown = Math.max(100, getCountDownSpeed() + 1);
 	}
 
-	@Override
-	public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
-		if (isItemHandlerCap(cap))
-			return invSupplier.cast();
-		return super.getCapability(cap, side);
-	}
+//	@Override
+//	public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
+//		if (isItemHandlerCap(cap))
+//			return invSupplier.cast();
+//		return super.getCapability(cap, side);
+//	}
 
 	public void connectivityChanged() {
 		reRender = true;

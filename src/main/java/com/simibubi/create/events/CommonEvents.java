@@ -11,8 +11,10 @@ import com.simibubi.create.Create;
 import com.simibubi.create.content.contraptions.components.crusher.CrushingWheelTileEntity;
 import com.simibubi.create.content.contraptions.components.deployer.DeployerFakePlayer;
 import com.simibubi.create.content.contraptions.components.structureMovement.ContraptionHandler;
+import com.simibubi.create.content.contraptions.components.structureMovement.mounted.MinecartContraptionItem;
 import com.simibubi.create.content.contraptions.components.structureMovement.train.CouplingHandler;
 import com.simibubi.create.content.contraptions.components.structureMovement.train.CouplingPhysics;
+import com.simibubi.create.content.contraptions.components.structureMovement.train.MinecartCouplingItem;
 import com.simibubi.create.content.contraptions.components.structureMovement.train.capability.CapabilityMinecartController;
 import com.simibubi.create.content.contraptions.fluids.recipe.FluidTransferRecipes;
 import com.simibubi.create.content.contraptions.fluids.recipe.PotionMixingRecipeManager;
@@ -46,6 +48,7 @@ import net.fabricmc.fabric.api.event.lifecycle.v1.ServerWorldEvents;
 import net.fabricmc.fabric.api.event.player.AttackBlockCallback;
 import net.fabricmc.fabric.api.event.player.AttackEntityCallback;
 import net.fabricmc.fabric.api.event.player.UseBlockCallback;
+import net.fabricmc.fabric.api.event.player.UseEntityCallback;
 import net.fabricmc.fabric.api.networking.v1.EntityTrackingEvents;
 import net.minecraft.block.BlockState;
 import net.minecraft.command.CommandSource;
@@ -195,6 +198,8 @@ public class CommonEvents {
 		LivingEntityEvents.LOOTING_LEVEL.register(CrushingWheelTileEntity::crushingIsFortunate);
 		LivingEntityEvents.DROPS.register(DeployerFakePlayer::deployerCollectsDropsFromKilledEntities);
 		UseBlockCallback.EVENT.register(FunnelItem::funnelItemAlwaysPlacesWhenUsed);
+		UseEntityCallback.EVENT.register(MinecartCouplingItem::handleInteractionWithMinecart);
+		UseEntityCallback.EVENT.register(MinecartContraptionItem::wrenchCanBeUsedToPickUpMinecartContraptions);
 	}
 
 }

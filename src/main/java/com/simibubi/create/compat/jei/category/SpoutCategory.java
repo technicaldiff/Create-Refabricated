@@ -17,6 +17,9 @@ import com.simibubi.create.content.contraptions.fluids.potion.PotionFluidHandler
 import com.simibubi.create.content.contraptions.processing.ProcessingRecipeBuilder;
 import com.simibubi.create.foundation.fluid.FluidIngredient;
 import com.simibubi.create.foundation.gui.AllGuiTextures;
+import com.simibubi.create.lib.lba.fluid.FluidStack;
+import com.simibubi.create.lib.lba.fluid.IFluidHandlerItem;
+import com.simibubi.create.lib.utility.LazyOptional;
 
 import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.gui.IRecipeLayout;

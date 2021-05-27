@@ -7,8 +7,13 @@ import com.simibubi.create.AllRecipeTypes;
 import com.simibubi.create.content.contraptions.fluids.potion.PotionFluidHandler;
 import com.simibubi.create.foundation.utility.Pair;
 import com.simibubi.create.lib.lba.fluid.FluidStack;
+import com.simibubi.create.lib.lba.fluid.IFluidHandlerItem;
 import com.simibubi.create.lib.lba.item.ItemStackHandler;
+import com.simibubi.create.lib.lba.item.RecipeWrapper;
+import com.simibubi.create.lib.utility.LazyOptional;
+import com.simibubi.create.lib.utility.TransferUtil;
 
+import alexiil.mc.lib.attributes.Simulation;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.PotionItem;
 import net.minecraft.item.crafting.IRecipe;
@@ -28,7 +33,7 @@ public class EmptyingByBasin {
 			return true;
 
 		LazyOptional<IFluidHandlerItem> capability =
-			stack.getCapability(CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY);
+				TransferUtil.getFluidHandlerItem(stack);
 		IFluidHandlerItem tank = capability.orElse(null);
 		if (tank == null)
 			return false;
@@ -62,11 +67,11 @@ public class EmptyingByBasin {
 		ItemStack split = stack.copy();
 		split.setCount(1);
 		LazyOptional<IFluidHandlerItem> capability =
-			split.getCapability(CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY);
+				TransferUtil.getFluidHandlerItem(split);
 		IFluidHandlerItem tank = capability.orElse(null);
 		if (tank == null)
 			return Pair.of(resultingFluid, resultingItem);
-		resultingFluid = tank.drain(1000, simulate ? FluidAction.SIMULATE : FluidAction.EXECUTE);
+		resultingFluid = tank.drain(1000, simulate ? Simulation.SIMULATE : Simulation.ACTION);
 		resultingItem = tank.getContainer()
 			.copy();
 		if (!simulate)

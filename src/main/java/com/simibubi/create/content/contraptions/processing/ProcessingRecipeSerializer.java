@@ -20,7 +20,7 @@ import net.minecraft.util.ResourceLocation;
 
 @MethodsReturnNonnullByDefault
 @ParametersAreNonnullByDefault
-public class ProcessingRecipeSerializer<T extends ProcessingRecipe<?>> extends ForgeRegistryEntry<IRecipeSerializer<?>>
+public class ProcessingRecipeSerializer<T extends ProcessingRecipe<?>> /*extends ForgeRegistryEntry<IRecipeSerializer<?>>*/
 	implements IRecipeSerializer<T> {
 
 	private final ProcessingRecipeFactory<T> factory;
@@ -106,7 +106,7 @@ public class ProcessingRecipeSerializer<T extends ProcessingRecipe<?>> extends F
 		buffer.writeVarInt(outputs.size());
 		outputs.forEach(o -> o.write(buffer));
 		buffer.writeVarInt(fluidOutputs.size());
-		fluidOutputs.forEach(o -> o.writeToPacket(buffer));
+//		fluidOutputs.forEach(o -> o.writeToPacket(buffer));
 
 		buffer.writeVarInt(recipe.getProcessingDuration());
 		buffer.writeVarInt(recipe.getRequiredHeat()
@@ -132,8 +132,8 @@ public class ProcessingRecipeSerializer<T extends ProcessingRecipe<?>> extends F
 			results.add(ProcessingOutput.read(buffer));
 
 		size = buffer.readVarInt();
-		for (int i = 0; i < size; i++)
-			fluidResults.add(FluidStack.readFromPacket(buffer));
+//		for (int i = 0; i < size; i++)
+//			fluidResults.add(FluidStack.readFromPacket(buffer));
 
 		return new ProcessingRecipeBuilder<>(factory, recipeId).withItemIngredients(ingredients)
 			.withItemOutputs(results)

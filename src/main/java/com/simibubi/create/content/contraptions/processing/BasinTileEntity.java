@@ -7,10 +7,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Random;
 
-import javax.annotation.Nonnull;
-
-import alexiil.mc.lib.attributes.Simulation;
-
 import com.simibubi.create.AllParticleTypes;
 import com.simibubi.create.AllTags;
 import com.simibubi.create.content.contraptions.components.mixer.MechanicalMixerTileEntity;
@@ -44,9 +40,10 @@ import com.simibubi.create.lib.lba.item.IItemHandlerModifiable;
 import com.simibubi.create.lib.lba.item.ItemHandlerHelper;
 import com.simibubi.create.lib.utility.Constants.NBT;
 import com.simibubi.create.lib.utility.LazyOptional;
-
 import com.simibubi.create.lib.utility.NBTSerializer;
+import com.simibubi.create.lib.utility.TransferUtil;
 
+import alexiil.mc.lib.attributes.Simulation;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.block.Block;
@@ -141,8 +138,8 @@ public class BasinTileEntity extends SmartTileEntity implements IHaveGoggleInfor
 	@Override
 	protected void fromTag(BlockState state, CompoundNBT compound, boolean clientPacket) {
 		super.fromTag(state, compound, clientPacket);
-		inputInventory.deserializeNBT(compound.getCompound("InputItems"));
-		outputInventory.deserializeNBT(compound.getCompound("OutputItems"));
+		inputInventory.create$deserializeNBT(compound.getCompound("InputItems"));
+		outputInventory.create$deserializeNBT(compound.getCompound("OutputItems"));
 
 		preferredSpoutput = null;
 		if (compound.contains("PreferredSpoutput"))
@@ -165,8 +162,8 @@ public class BasinTileEntity extends SmartTileEntity implements IHaveGoggleInfor
 	@Override
 	public void write(CompoundNBT compound, boolean clientPacket) {
 		super.write(compound, clientPacket);
-		compound.put("InputItems", inputInventory.serializeNBT());
-		compound.put("OutputItems", outputInventory.serializeNBT());
+		compound.put("InputItems", inputInventory.create$serializeNBT());
+		compound.put("OutputItems", outputInventory.create$serializeNBT());
 
 		if (preferredSpoutput != null)
 			NBTHelper.writeEnum(compound, "PreferredSpoutput", preferredSpoutput);
@@ -307,8 +304,9 @@ public class BasinTileEntity extends SmartTileEntity implements IHaveGoggleInfor
 		TileEntity te = world.getTileEntity(pos.down()
 			.offset(direction));
 		IItemHandler targetInv = te == null ? null
-			: te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, direction.getOpposite())
+			: TransferUtil.getItemHandler(te, direction.getOpposite())
 				.orElse(null);
+
 		boolean update = false;
 
 		for (Iterator<ItemStack> iterator = spoutputBuffer.iterator(); iterator.hasNext();) {
@@ -428,9 +426,9 @@ public class BasinTileEntity extends SmartTileEntity implements IHaveGoggleInfor
 				.offset(direction));
 			if (te == null)
 				return false;
-			targetInv = te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, direction.getOpposite())
+			targetInv = TransferUtil.getItemHandler(te, direction.getOpposite())
 				.orElse(null);
-			targetTank = te.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, direction.getOpposite())
+			targetTank = TransferUtil.getFluidHandler(te, direction.getOpposite())
 				.orElse(null);
 		}
 
@@ -438,8 +436,8 @@ public class BasinTileEntity extends SmartTileEntity implements IHaveGoggleInfor
 			return false;
 		for (ItemStack itemStack : outputItems) {
 			// Catalyst items are never consumed
-			if (itemStack.hasContainerItem() && itemStack.getContainerItem()
-				.isItemEqual(itemStack))
+			if (itemStack.getItem().hasContainerItem() && itemStack.getItem().getContainerItem()
+				.equals(itemStack.getItem()))
 				continue;
 
 			if (simulate || direction == Direction.DOWN) {
@@ -470,8 +468,8 @@ public class BasinTileEntity extends SmartTileEntity implements IHaveGoggleInfor
 	}
 
 	public void readOnlyItems(CompoundNBT compound) {
-		inputInventory.deserializeNBT(compound.getCompound("InputItems"));
-		outputInventory.deserializeNBT(compound.getCompound("OutputItems"));
+		inputInventory.create$deserializeNBT(compound.getCompound("InputItems"));
+		outputInventory.create$deserializeNBT(compound.getCompound("OutputItems"));
 	}
 
 	public static HeatLevel getHeatLevelOf(BlockState state) {
@@ -605,7 +603,7 @@ public class BasinTileEntity extends SmartTileEntity implements IHaveGoggleInfor
 	@Override
 	public boolean addToGoggleTooltip(List<ITextComponent> tooltip, boolean isPlayerSneaking) {
 		return containedFluidTooltip(tooltip, isPlayerSneaking,
-			getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY));
+				TransferUtil.getFluidHandler(this).orElse(null));
 	}
 
 	class BasinValueBox extends ValueBoxTransform.Sided {

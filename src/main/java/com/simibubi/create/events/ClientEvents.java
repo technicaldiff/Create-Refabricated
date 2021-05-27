@@ -21,6 +21,7 @@ import com.simibubi.create.content.contraptions.components.structureMovement.ren
 import com.simibubi.create.content.contraptions.components.structureMovement.train.CouplingHandlerClient;
 import com.simibubi.create.content.contraptions.components.structureMovement.train.CouplingPhysics;
 import com.simibubi.create.content.contraptions.components.structureMovement.train.CouplingRenderer;
+import com.simibubi.create.content.contraptions.components.structureMovement.train.MinecartCouplingItem;
 import com.simibubi.create.content.contraptions.components.structureMovement.train.capability.CapabilityMinecartController;
 import com.simibubi.create.content.contraptions.components.turntable.TurntableHandler;
 import com.simibubi.create.content.contraptions.goggles.GoggleOverlayRenderer;
@@ -80,6 +81,7 @@ import net.fabricmc.fabric.api.client.rendering.v1.WorldRenderEvents;
 import net.fabricmc.fabric.api.event.player.AttackBlockCallback;
 import net.fabricmc.fabric.api.event.player.PlayerBlockBreakEvents;
 import net.fabricmc.fabric.api.event.player.UseBlockCallback;
+import net.fabricmc.fabric.api.event.player.UseEntityCallback;
 import net.fabricmc.fabric.api.networking.v1.PacketSender;
 import net.minecraft.client.MainWindow;
 import net.minecraft.client.Minecraft;

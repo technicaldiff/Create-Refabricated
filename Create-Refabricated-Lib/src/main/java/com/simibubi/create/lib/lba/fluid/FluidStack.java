@@ -68,4 +68,8 @@ public class FluidStack extends FluidVolume {
 	public boolean isFluidEqual(FluidStack other) {
 		return getRawFluid() == other.getRawFluid() && toTag() == other.toTag();
 	}
+
+	public void shrink(int amount) {
+		setAmount(this.amount().sub(FluidUtil.millibucketsToFluidAmount(amount)));
+	}
 }

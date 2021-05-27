@@ -14,11 +14,8 @@ import com.simibubi.create.content.contraptions.components.structureMovement.Con
 import com.simibubi.create.content.contraptions.components.structureMovement.OrientedContraptionEntity;
 import com.simibubi.create.foundation.utility.Lang;
 import com.simibubi.create.foundation.utility.NBTHelper;
-
 import com.simibubi.create.lib.extensions.AbstractRailBlockExtensions;
-
 import com.simibubi.create.lib.helper.AbstractRailBlockHelper;
-
 import com.simibubi.create.lib.utility.NBTSerializer;
 
 import net.minecraft.block.AbstractRailBlock;
@@ -42,10 +39,11 @@ import net.minecraft.state.properties.RailShape;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Direction;
+import net.minecraft.util.Hand;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.EntityRayTraceResult;
 import net.minecraft.util.text.TextFormatting;
-import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 
 public class MinecartContraptionItem extends Item {
@@ -198,32 +196,30 @@ public class MinecartContraptionItem extends Item {
 	@Override
 	public void fillItemGroup(ItemGroup group, NonNullList<ItemStack> items) {}
 
-	public static void wrenchCanBeUsedToPickUpMinecartContraptions(PlayerInteractEvent.EntityInteract event) {
-		Entity entity = event.getTarget();
-		PlayerEntity player = event.getPlayer();
+	public static ActionResultType wrenchCanBeUsedToPickUpMinecartContraptions(PlayerEntity player, World world, Hand hand, Entity entity, @org.jetbrains.annotations.Nullable EntityRayTraceResult hitResult) {
+//		Entity entity = event.getTarget();
+//		PlayerEntity player = event.getPlayer();
 		if (player == null || entity == null)
-			return;
+			return ActionResultType.PASS;
 
-		ItemStack wrench = player.getHeldItem(event.getHand());
+		ItemStack wrench = player.getHeldItem(hand);
 		if (!AllItems.WRENCH.isIn(wrench))
-			return;
+			return ActionResultType.PASS;
 		if (entity instanceof AbstractContraptionEntity)
 			entity = entity.getRidingEntity();
 		if (!(entity instanceof AbstractMinecartEntity))
-			return;
+			return ActionResultType.PASS;
 		AbstractMinecartEntity cart = (AbstractMinecartEntity) entity;
 		Type type = cart.getMinecartType();
 		if (type != Type.RIDEABLE && type != Type.FURNACE && type != Type.CHEST)
-			return;
+			return ActionResultType.PASS;
 		List<Entity> passengers = cart.getPassengers();
 		if (passengers.isEmpty() || !(passengers.get(0) instanceof OrientedContraptionEntity))
-			return;
+			return ActionResultType.PASS;
 		OrientedContraptionEntity contraption = (OrientedContraptionEntity) passengers.get(0);
 
-		if (event.getWorld().isRemote) {
-			event.setCancellationResult(ActionResultType.SUCCESS);
-			event.setCanceled(true);
-			return;
+		if (player.world.isRemote) {
+			return ActionResultType.SUCCESS;
 		}
 
 		ItemStack generatedStack = create(type, contraption).setDisplayName(entity.getCustomName());
@@ -236,19 +232,18 @@ public class MinecartContraptionItem extends Item {
 			if (estimatedPacketSize > 2_000_000) {
 				player.sendStatusMessage(Lang.translate("contraption.minecart_contraption_too_big")
 					.formatted(TextFormatting.RED), true);
-				return;
+				return ActionResultType.PASS;
 			}
 
 		} catch (IOException e) {
 			e.printStackTrace();
-			return;
+			return ActionResultType.PASS;
 		}
 
-		player.inventory.placeItemBackInInventory(event.getWorld(), generatedStack);
+		player.inventory.placeItemBackInInventory(player.world, generatedStack);
 		contraption.remove();
 		entity.remove();
-		event.setCancellationResult(ActionResultType.SUCCESS);
-		event.setCanceled(true);
+		return ActionResultType.SUCCESS;
 	}
 
 	public static ItemStack create(Type type, OrientedContraptionEntity entity) {

@@ -11,7 +11,7 @@ package com.simibubi.create.content.contraptions.processing.burner;
 //import net.minecraft.util.math.vector.Vector3d;
 //import net.minecraft.world.World;
 
-public class BlazeBurnerHandler {
+//public class BlazeBurnerHandler {
 //
 //	public static void thrownEggsGetEatenByBurner(ProjectileImpactEvent.Throwable event) {
 //		if (!(event.getThrowable() instanceof EggEntity))
@@ -49,4 +49,4 @@ public class BlazeBurnerHandler {
 //		world.playSound(null, heater.getPos(), AllSoundEvents.BLAZE_MUNCH.get(), SoundCategory.BLOCKS, .5F, 1F);
 //	}
 //
-}
+//}

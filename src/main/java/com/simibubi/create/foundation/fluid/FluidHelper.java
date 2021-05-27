@@ -2,9 +2,6 @@ package com.simibubi.create.foundation.fluid;
 
 import javax.annotation.Nullable;
 
-import alexiil.mc.lib.attributes.SearchOptions;
-import alexiil.mc.lib.attributes.Simulation;
-
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSyntaxException;
@@ -16,11 +13,13 @@ import com.simibubi.create.foundation.tileEntity.SmartTileEntity;
 import com.simibubi.create.foundation.utility.Pair;
 import com.simibubi.create.lib.lba.fluid.FluidStack;
 import com.simibubi.create.lib.lba.fluid.IFluidHandler;
+import com.simibubi.create.lib.lba.fluid.IFluidHandlerItem;
 import com.simibubi.create.lib.utility.FluidUtil;
 import com.simibubi.create.lib.utility.LazyOptional;
-
 import com.simibubi.create.lib.utility.TransferUtil;
 
+import alexiil.mc.lib.attributes.SearchOptions;
+import alexiil.mc.lib.attributes.Simulation;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.player.PlayerEntity;
@@ -229,8 +228,8 @@ public class FluidHelper {
 					|| undecided && preferred == FluidExchange.ITEM_TO_TANK) {
 
 					int amount = fluidTank.fill(
-						fluidItem.drain(Math.min(maxTransferAmountPerTank, tankCapacity), FluidAction.EXECUTE),
-						FluidAction.EXECUTE);
+						fluidItem.drain(Math.min(maxTransferAmountPerTank, tankCapacity), Simulation.ACTION),
+						Simulation.ACTION);
 					if (amount > 0) {
 						lockedExchange = FluidExchange.ITEM_TO_TANK;
 						if (singleOp)
@@ -244,8 +243,8 @@ public class FluidHelper {
 					|| undecided && preferred == FluidExchange.TANK_TO_ITEM) {
 
 					int amount = fluidItem.fill(
-						fluidTank.drain(Math.min(maxTransferAmountPerTank, itemCapacity), FluidAction.EXECUTE),
-						FluidAction.EXECUTE);
+						fluidTank.drain(Math.min(maxTransferAmountPerTank, itemCapacity), Simulation.ACTION),
+						Simulation.ACTION);
 					if (amount > 0) {
 						lockedExchange = FluidExchange.TANK_TO_ITEM;
 						if (singleOp)

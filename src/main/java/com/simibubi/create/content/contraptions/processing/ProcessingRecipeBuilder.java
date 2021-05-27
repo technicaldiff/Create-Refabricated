@@ -241,7 +241,7 @@ public class ProcessingRecipeBuilder<T extends ProcessingRecipe<?>> {
 				return;
 
 			JsonArray conds = new JsonArray();
-			recipeConditions.forEach(c -> conds.add(CraftingHelper.serialize(c)));
+//			recipeConditions.forEach(c -> conds.add(CraftingHelper.serialize(c)));
 			json.add("conditions", conds);
 		}
 

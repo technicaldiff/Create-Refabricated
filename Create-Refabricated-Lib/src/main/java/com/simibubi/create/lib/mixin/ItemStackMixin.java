@@ -5,13 +5,16 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
+import com.simibubi.create.lib.event.BlockPlaceCallback;
 import com.simibubi.create.lib.item.CustomMaxCountItem;
 import com.simibubi.create.lib.utility.MixinHelper;
 import com.simibubi.create.lib.utility.NBTSerializable;
 
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.ItemUseContext;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.util.ActionResultType;
 
 @Mixin(ItemStack.class)
 public abstract class ItemStackMixin implements NBTSerializable {
@@ -34,5 +37,13 @@ public abstract class ItemStackMixin implements NBTSerializable {
 	@Override
 	public void create$deserializeNBT(CompoundNBT nbt) {
 		MixinHelper.<ItemStack>cast(this).setTag(ItemStack.read(nbt).getTag());
+	}
+
+	@Inject(at = @At("HEAD"),
+			method = "onItemUse(Lnet/minecraft/item/ItemUseContext;)Lnet/minecraft/util/ActionResultType;", cancellable = true)
+	public void onItemUse(ItemUseContext itemUseContext, CallbackInfoReturnable<ActionResultType> cir) {
+		if (!itemUseContext.getWorld().isRemote) {
+			cir.setReturnValue(BlockPlaceCallback.EVENT.invoker().onBlockPlace(itemUseContext));
+		}
 	}
 }
