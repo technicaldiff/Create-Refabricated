@@ -12,7 +12,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.nbt.CompoundNBT;
 
 @Mixin(Entity.class)
-public abstract class HeavyBootsOnEntityMixin implements CapabilityProvider {
+public abstract class HeavyBootsOnEntityMixin {
 //	protected HeavyBootsOnEntityMixin(Class<Entity> baseClass) {
 //		super(baseClass);
 //	}

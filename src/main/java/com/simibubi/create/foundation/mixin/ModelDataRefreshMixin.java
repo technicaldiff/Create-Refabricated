@@ -1,22 +1,17 @@
 package com.simibubi.create.foundation.mixin;
 
-import com.simibubi.create.content.schematics.SchematicWorld;
-
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.world.World;
-import net.minecraftforge.client.model.ModelDataManager;
-
-import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import net.minecraft.client.Minecraft;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
+import com.simibubi.create.content.schematics.SchematicWorld;
 
-@OnlyIn(Dist.CLIENT)
-@Mixin(ModelDataManager.class)
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
+import net.minecraft.client.Minecraft;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.world.World;
+
+@Environment(EnvType.CLIENT)
+//@Mixin(ModelDataManager.class)
 public class ModelDataRefreshMixin {
 
 	/**
@@ -24,8 +19,8 @@ public class ModelDataRefreshMixin {
 	 * to refresh its model data from a world the client isn't currently in,
 	 * but we need that to not happen for tile entities in fake schematic
 	 * worlds, so in those cases just do nothing instead.
-	 */
-	@Inject(at = @At("HEAD"), method = "requestModelDataRefresh", cancellable = true, remap = false)
+	 */ // this is a mixin into a forge class, not needed
+//	@Inject(at = @At("HEAD"), method = "requestModelDataRefresh", cancellable = true, remap = false)
 	private static void requestModelDataRefresh(TileEntity te, CallbackInfo ci) {
 		if (te != null) {
 			World world = te.getWorld();

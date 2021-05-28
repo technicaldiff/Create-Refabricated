@@ -9,6 +9,8 @@ import com.simibubi.create.content.curiosities.symmetry.mirror.EmptyMirror;
 import com.simibubi.create.content.curiosities.symmetry.mirror.SymmetryMirror;
 import com.simibubi.create.foundation.utility.AnimationTickHolder;
 
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.client.rendering.v1.WorldRenderContext;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -22,38 +24,39 @@ import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.ItemUseContext;
 import net.minecraft.particles.ParticleTypes;
 import net.minecraft.particles.RedstoneParticleData;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.ActionResultType;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.vector.Vector3d;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
 import net.minecraft.world.World;
 
 public class SymmetryHandler {
 
 	private static int tickCounter = 0;
 
-	public static void onBlockPlaced(EntityPlaceEvent event) {
-		if (event.getWorld()
+	public static ActionResultType onBlockPlaced(ItemUseContext context) {
+		if (context.getWorld()
 			.isRemote())
-			return;
-		if (!(event.getEntity() instanceof PlayerEntity))
-			return;
+			return ActionResultType.PASS;
+		if (!(context.getPlayer() instanceof PlayerEntity))
+			return ActionResultType.PASS;
 
-		PlayerEntity player = (PlayerEntity) event.getEntity();
+		PlayerEntity player = (PlayerEntity) context.getPlayer();
 		PlayerInventory inv = player.inventory;
 		for (int i = 0; i < PlayerInventory.getHotbarSize(); i++) {
 			if (!inv.getStackInSlot(i)
 				.isEmpty()
 				&& inv.getStackInSlot(i)
 					.getItem() == AllItems.WAND_OF_SYMMETRY.get()) {
-				SymmetryWandItem.apply(player.world, inv.getStackInSlot(i), player, event.getPos(),
-					event.getPlacedBlock());
+				SymmetryWandItem.apply(player.world, inv.getStackInSlot(i), player, context.getPos(),
+					context.getWorld().getBlockState(context.getPos()));
 			}
 		}
+		return ActionResultType.PASS;
 	}
 
 	public static void onBlockDestroyed(World world, PlayerEntity player, BlockPos pos, BlockState state, TileEntity te) {

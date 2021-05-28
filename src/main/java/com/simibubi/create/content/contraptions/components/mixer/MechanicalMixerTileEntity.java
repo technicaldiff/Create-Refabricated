@@ -20,6 +20,8 @@ import com.simibubi.create.foundation.utility.Couple;
 import com.simibubi.create.foundation.utility.VecHelper;
 import com.simibubi.create.lib.lba.item.IItemHandler;
 
+import com.simibubi.create.lib.utility.TransferUtil;
+
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.block.BlockState;
@@ -201,9 +203,9 @@ public class MechanicalMixerTileEntity extends BasinOperatingTileEntity {
 		Optional<BasinTileEntity> basin = getBasin();
 		if (!basin.isPresent())
 			return matchingRecipes;
-		IItemHandler availableItems = basin.get()
-			.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY)
+		IItemHandler availableItems = TransferUtil.getItemHandler(basin.get())
 			.orElse(null);
+
 		if (availableItems == null)
 			return matchingRecipes;
 

@@ -17,7 +17,11 @@ import com.simibubi.create.foundation.tileEntity.behaviour.belt.TransportedItemS
 import com.simibubi.create.foundation.utility.BlockHelper;
 import com.simibubi.create.foundation.utility.worldWrappers.WrappedWorld;
 import com.simibubi.create.lib.extensions.EntityExtensions;
+import com.simibubi.create.lib.mixin.accessor.BucketItemAccessor;
 
+import net.fabricmc.fabric.api.event.player.PlayerBlockBreakEvents;
+import net.fabricmc.fabric.api.event.player.UseBlockCallback;
+import net.fabricmc.fabric.api.event.player.UseEntityCallback;
 import net.minecraft.block.AbstractFireBlock;
 import net.minecraft.block.BeehiveBlock;
 import net.minecraft.block.Block;
@@ -55,6 +59,7 @@ import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
+import net.minecraft.util.math.EntityRayTraceResult;
 import net.minecraft.util.math.RayTraceContext;
 import net.minecraft.util.math.RayTraceContext.BlockMode;
 import net.minecraft.util.math.RayTraceContext.FluidMode;
@@ -103,7 +108,7 @@ public class DeployerHandler {
 
 		if (held.getItem() instanceof BucketItem) {
 			BucketItem bucketItem = (BucketItem) held.getItem();
-			Fluid fluid = bucketItem.getFluid();
+			Fluid fluid = ((BucketItemAccessor) bucketItem).getContainedBlock();
 			if (fluid != Fluids.EMPTY && world.getFluidState(targetPos)
 				.getFluid() == fluid)
 				return false;
@@ -149,12 +154,13 @@ public class DeployerHandler {
 
 			// Use on entity
 			if (mode == Mode.USE) {
-				ActionResultType cancelResult = ForgeHooks.onInteractEntity(player, entity, hand);
-				if (cancelResult == ActionResultType.FAIL) {
+				ActionResultType cancelResult = UseEntityCallback.EVENT.invoker().interact(player, world, hand, entity, new EntityRayTraceResult(entity));
+
+				if (cancelResult == ActionResultType.FAIL || cancelResult == ActionResultType.SUCCESS) {
 					((EntityExtensions) entity).create$captureDrops(null);
 					return;
 				}
-				if (cancelResult == null) {
+				if (cancelResult == ActionResultType.PASS) {
 					if (entity.processInitialInteract(player, hand)
 						.isAccepted())
 						success = true;
@@ -207,12 +213,12 @@ public class DeployerHandler {
 				player.blockBreakingProgress = null;
 				return;
 			}
-			LeftClickBlock event = ForgeHooks.onLeftClickBlock(player, clickedPos, face);
-			if (event.isCanceled())
+			ActionResultType actionResult = UseBlockCallback.EVENT.invoker().interact(player, player.world, player.getActiveHand(), result);
+			if (actionResult != ActionResultType.PASS)
 				return;
 			if (BlockHelper.extinguishFire(world, player, clickedPos, face)) // FIXME: is there an equivalent in world, as there was in 1.15?
 				return;
-			if (event.getUseBlock() != DENY)
+//			if (event.getUseBlock() != DENY)
 				clickedState.onBlockClicked(world, clickedPos, player);
 			if (stack.isEmpty())
 				return;
@@ -245,34 +251,33 @@ public class DeployerHandler {
 
 		// Right click
 		ItemUseContext itemusecontext = new ItemUseContext(player, hand, result);
-		Event.Result useBlock = DEFAULT;
-		Event.Result useItem = DEFAULT;
+		ActionResultType useBlock = null;
+		ActionResultType useItem = null;
 		if (!clickedState.getShape(world, clickedPos)
 			.isEmpty()) {
-			RightClickBlock event = ForgeHooks.onRightClickBlock(player, hand, clickedPos, result);
-			useBlock = event.getUseBlock();
-			useItem = event.getUseItem();
+			useBlock = UseBlockCallback.EVENT.invoker().interact(player, player.world, hand, result);
+			useItem = useBlock;
 		}
 
 		// Item has custom active use
-		if (useItem != DENY) {
-			ActionResultType actionresult = stack.onItemUseFirst(itemusecontext);
-			if (actionresult != ActionResultType.PASS)
-				return;
-		}
+//		if (useItem != null) {
+//			ActionResultType actionresult = stack.onItemUseFirst(itemusecontext);
+//			if (actionresult != ActionResultType.PASS)
+//				return;
+//		}
 
 		boolean holdingSomething = !player.getHeldItemMainhand()
 			.isEmpty();
 		boolean flag1 =
-			!(player.isSneaking() && holdingSomething) || (stack.doesSneakBypassUse(world, clickedPos, player));
+			!(player.isSneaking() && holdingSomething) /*|| (stack.doesSneakBypassUse(world, clickedPos, player))*/;
 
 		// Use on block
-		if (useBlock != DENY && flag1
+		if (useBlock != null && flag1
 			&& safeOnUse(clickedState, world, clickedPos, player, hand, result) == ActionResultType.SUCCESS)
 			return;
 		if (stack.isEmpty())
 			return;
-		if (useItem == DENY)
+		if (useItem == null)
 			return;
 		if (item instanceof BlockItem
 			&& !(item instanceof CartAssemblerBlockItem)
@@ -331,23 +336,24 @@ public class DeployerHandler {
 		BlockState blockstate = world.getBlockState(pos);
 		GameType gameType = interactionManager.getGameType();
 
-		if (net.minecraftforge.common.ForgeHooks.onBlockBreakEvent(world, gameType, player, pos) == -1)
+		if (!PlayerBlockBreakEvents.BEFORE.invoker().beforeBlockBreak(world, player, pos, world.getBlockState(pos), world.getTileEntity(pos)))
 			return false;
 
+
 		TileEntity tileentity = world.getTileEntity(pos);
-		if (player.getHeldItemMainhand()
-			.onBlockStartBreak(pos, player))
-			return false;
+//		if (player.getHeldItemMainhand()
+//			.onBlockStartBreak(pos, player))
+//			return false;
 		if (player.isBlockBreakingRestricted(world, pos, gameType))
 			return false;
 
 		ItemStack prevHeldItem = player.getHeldItemMainhand();
 		ItemStack heldItem = prevHeldItem.copy();
 
-		boolean canHarvest = blockstate.canHarvestBlock(world, pos, player);
+		boolean canHarvest = player.isUsingEffectiveTool(blockstate) && player.isAllowEdit();
 		prevHeldItem.onBlockDestroyed(world, blockstate, pos, player);
-		if (prevHeldItem.isEmpty() && !heldItem.isEmpty())
-			net.minecraftforge.event.ForgeEventFactory.onPlayerDestroyItem(player, heldItem, Hand.MAIN_HAND);
+//		if (prevHeldItem.isEmpty() && !heldItem.isEmpty())
+//			net.minecraftforge.event.ForgeEventFactory.onPlayerDestroyItem(player, heldItem, Hand.MAIN_HAND);
 
 
 		BlockPos posUp = pos.up();
@@ -361,8 +367,9 @@ public class DeployerHandler {
 			world.setBlockState(pos, Blocks.AIR.getDefaultState(), 35);
 			world.setBlockState(posUp, Blocks.AIR.getDefaultState(), 35);
 		} else {
-			if (!blockstate.removedByPlayer(world, pos, player, canHarvest, world.getFluidState(pos)))
-				return true;
+			/*if (!*/blockstate.getBlock().onBlockHarvested(player.world, pos, blockstate, player/*, world.getFluidState(pos)))
+				return true*/);
+			world.setBlockState(pos, blockstate);
 		}
 
 		blockstate.getBlock()

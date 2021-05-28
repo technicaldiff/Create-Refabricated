@@ -20,6 +20,8 @@ import com.simibubi.create.lib.lba.item.ItemHandlerHelper;
 import com.simibubi.create.lib.lba.item.ItemStackHandler;
 import com.simibubi.create.lib.utility.LazyOptional;
 
+import com.simibubi.create.lib.utility.TransferUtil;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
@@ -194,7 +196,8 @@ public class MechanicalCrafterBlock extends HorizontalKineticBlock implements IT
 				}
 
 				LazyOptional<IItemHandler> capability =
-					crafter.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY);
+						TransferUtil.getItemHandler(crafter);
+
 				if (!capability.isPresent())
 					return ActionResultType.PASS;
 				ItemStack remainder =

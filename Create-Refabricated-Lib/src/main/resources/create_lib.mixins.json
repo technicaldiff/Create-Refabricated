@@ -48,6 +48,7 @@
     "accessor.BiomeGenerationSettings$BuilderAccessor",
     "accessor.BiomeManagerAccessor",
     "accessor.BlockAccessor",
+    "accessor.BucketItemAccessor",
     "accessor.ChunkManagerAccessor",
     "accessor.CriteriaTriggersAccessor",
     "accessor.DamageSourceAccessor",

@@ -21,6 +21,7 @@ import com.simibubi.create.content.contraptions.fluids.recipe.PotionMixingRecipe
 import com.simibubi.create.content.contraptions.wrench.WrenchItem;
 import com.simibubi.create.content.curiosities.armor.DivingBootsItem;
 import com.simibubi.create.content.curiosities.armor.DivingHelmetItem;
+import com.simibubi.create.content.curiosities.symmetry.SymmetryHandler;
 import com.simibubi.create.content.curiosities.tools.ExtendoGripItem;
 import com.simibubi.create.content.curiosities.zapper.ZapperInteractionHandler;
 import com.simibubi.create.content.curiosities.zapper.ZapperItem;
@@ -32,6 +33,7 @@ import com.simibubi.create.foundation.utility.Iterate;
 import com.simibubi.create.foundation.utility.ServerSpeedProvider;
 import com.simibubi.create.foundation.utility.WorldAttached;
 import com.simibubi.create.foundation.utility.recipe.RecipeFinder;
+import com.simibubi.create.lib.event.BlockPlaceCallback;
 import com.simibubi.create.lib.event.DataPackReloadCallback;
 import com.simibubi.create.lib.event.EntityEyeHeightCallback;
 import com.simibubi.create.lib.event.FluidPlaceBlockCallback;
@@ -200,6 +202,7 @@ public class CommonEvents {
 		UseBlockCallback.EVENT.register(FunnelItem::funnelItemAlwaysPlacesWhenUsed);
 		UseEntityCallback.EVENT.register(MinecartCouplingItem::handleInteractionWithMinecart);
 		UseEntityCallback.EVENT.register(MinecartContraptionItem::wrenchCanBeUsedToPickUpMinecartContraptions);
+		BlockPlaceCallback.EVENT.register(SymmetryHandler::onBlockPlaced);
 	}
 
 }
