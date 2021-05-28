@@ -105,6 +105,9 @@ public class PlacementOffset {
 		if (!isReplaceable(world))
 			return ActionResultType.PASS;
 
+		if (world.isRemote)
+			return ActionResultType.SUCCESS;
+
 		ItemUseContext context = new ItemUseContext(player, hand, ray);
 		BlockPos newPos = new BlockPos(pos);
 
@@ -132,9 +135,6 @@ public class PlacementOffset {
 		world.playSound(player, newPos, soundtype.getPlaceSound(), SoundCategory.BLOCKS, (soundtype.getVolume() + 1.0F) / 2.0F, soundtype.getPitch() * 0.8F);
 
 		player.addStat(Stats.ITEM_USED.get(blockItem));
-
-		if (world.isRemote)
-			return ActionResultType.SUCCESS;
 
 		if (player instanceof ServerPlayerEntity)
 			CriteriaTriggers.PLACED_BLOCK.trigger((ServerPlayerEntity) player, newPos, context.getItem());

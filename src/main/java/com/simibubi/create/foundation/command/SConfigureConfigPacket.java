@@ -9,6 +9,8 @@ import com.simibubi.create.Create;
 import com.simibubi.create.content.contraptions.goggles.GoggleConfigScreen;
 import com.simibubi.create.foundation.config.AllConfigs;
 import com.simibubi.create.foundation.config.ui.BaseConfigScreen;
+import com.simibubi.create.foundation.config.ui.ConfigHelper;
+import com.simibubi.create.foundation.config.ui.SubMenuConfigScreen;
 import com.simibubi.create.foundation.gui.ScreenOpener;
 import com.simibubi.create.foundation.ponder.PonderRegistry;
 import com.simibubi.create.foundation.ponder.PonderUI;
@@ -30,6 +32,12 @@ import net.minecraft.util.text.IFormattableTextComponent;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.common.ForgeConfig;
+import net.minecraftforge.fml.DistExecutor;
+import net.minecraftforge.fml.config.ModConfig;
+import net.minecraftforge.fml.network.NetworkEvent;
 
 public class SConfigureConfigPacket implements S2CPacket {
 
@@ -58,6 +66,11 @@ public class SConfigureConfigPacket implements S2CPacket {
 	public void handle(Minecraft client, ClientPlayNetHandler handler, ResponseTarget responseTarget) {
 		client
 			.execute(() -> {
+				if (option.startsWith("SET")) {
+					trySetConfig(option.substring(3), value);
+					return;
+				}
+
 				try {
 					Actions.valueOf(option)
 						.performAction(value);
@@ -66,6 +79,36 @@ public class SConfigureConfigPacket implements S2CPacket {
 						.warn("Received ConfigureConfigPacket with invalid Option: " + option);
 				}
 			});
+
+	}
+
+	private static void trySetConfig(String option, String value) {
+		ClientPlayerEntity player = Minecraft.getInstance().player;
+		if (player == null)
+			return;
+
+		ConfigHelper.ConfigPath configPath;
+		try {
+			configPath = ConfigHelper.ConfigPath.parse(option);
+		} catch (IllegalArgumentException e) {
+			player.sendStatusMessage(new StringTextComponent(e.getMessage()), false);
+			return;
+		}
+
+		if (configPath.getType() != ModConfig.Type.CLIENT) {
+			Create.LOGGER.warn("Received type-mismatched config packet on client");
+			return;
+		}
+
+		try {
+			ConfigHelper.setConfigValue(configPath, value);
+			player.sendStatusMessage(new StringTextComponent("Great Success!"), false);
+		} catch (ConfigHelper.InvalidValueException e) {
+			player.sendStatusMessage(new StringTextComponent("Config could not be set the the specified value!"), false);
+		} catch (Exception e) {
+			player.sendStatusMessage(new StringTextComponent("Something went wrong while trying to set config value. Check the client logs for more information"), false);
+			Create.LOGGER.warn("Exception during client-side config value set:", e);
+		}
 
 	}
 
@@ -94,7 +137,25 @@ public class SConfigureConfigPacket implements S2CPacket {
 
 		@Environment(EnvType.CLIENT)
 		private static void configScreen(String value) {
-			ScreenOpener.open(new BaseConfigScreen(null));
+			if (value.equals("")) {
+				ScreenOpener.open(BaseConfigScreen.forCreate(null));
+				return;
+			}
+
+			ClientPlayerEntity player = Minecraft.getInstance().player;
+			ConfigHelper.ConfigPath configPath;
+			try {
+				 configPath = ConfigHelper.ConfigPath.parse(value);
+			} catch (IllegalArgumentException e) {
+				player.sendStatusMessage(new StringTextComponent(e.getMessage()), false);
+				return;
+			}
+
+			try {
+				ScreenOpener.open(SubMenuConfigScreen.find(configPath));
+			} catch (Exception e) {
+				player.sendStatusMessage(new StringTextComponent("Unable to find the specified config"), false);
+			}
 		}
 
 		@Environment(EnvType.CLIENT)

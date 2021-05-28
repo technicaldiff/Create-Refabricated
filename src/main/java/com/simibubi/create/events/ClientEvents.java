@@ -116,8 +116,10 @@ public class ClientEvents {
 		World world = client.world;
 		if (!isGameActive())
 			return;
+		}
 
-//		if (event.phase == Phase.START) { // moved to onTickStart
+//		if (event.phase == Phase.START) {
+//			LinkedControllerClientHandler.tick();
 //			AirCurrent.tickClientPlayerSounds();
 //			return;
 //		}
@@ -388,8 +390,8 @@ public class ClientEvents {
 		OverlayRenderCallback.EVENT.register(PlacementHelpers::onRender);
 	}
 
-//	public static void loadCompleted(FMLLoadCompleteEvent event) { config stuff, unnecessary for fabric
-//		ModContainer createContainer = ModList.get().getModContainerById("create").orElseThrow(() -> new IllegalStateException("Create Mod Container missing after loadCompleted"));
-//		createContainer.registerExtensionPoint(ExtensionPoint.CONFIGGUIFACTORY, () -> (mc, previousScreen) -> new BaseConfigScreen(previousScreen));
+//	public static void loadCompleted(FMLLoadCompleteEvent event) {
+//		ModContainer createContainer = ModList.get().getModContainerById(Create.ID).orElseThrow(() -> new IllegalStateException("Create Mod Container missing after loadCompleted"));
+//		createContainer.registerExtensionPoint(ExtensionPoint.CONFIGGUIFACTORY, () -> (mc, previousScreen) -> BaseConfigScreen.forCreate(previousScreen));
 //	}
 }
