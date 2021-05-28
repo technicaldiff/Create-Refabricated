@@ -4,11 +4,10 @@ package com.simibubi.create.foundation.config;
 import com.google.gson.JsonObject;
 
 import dev.inkwell.conrad.api.Config;
+import dev.inkwell.conrad.api.value.ValueKey;
 import dev.inkwell.vivian.api.builders.CategoryBuilder;
 import dev.inkwell.vivian.api.util.Group;
 import net.minecraft.util.text.TranslationTextComponent;
-
-import java.io.File;
 
 public abstract class ConfigBase extends Config<JsonObject> {
 
@@ -43,6 +42,11 @@ public abstract class ConfigBase extends Config<JsonObject> {
 //	protected ConfigBool b(boolean current, String name, String... comment) {
 //		return new ConfigBool(name, current, comment);
 //	}
+
+	protected ValueKey<Boolean> b(boolean current, String name, String... comment) {
+		return value(current);
+	}
+
 //
 //	protected ConfigFloat f(float current, float min, float max, String name, String... comment) {
 //		return new ConfigFloat(name, current, min, max, comment);
@@ -51,7 +55,15 @@ public abstract class ConfigBase extends Config<JsonObject> {
 //	protected ConfigFloat f(float current, float min, String name, String... comment) {
 //		return f(current, min, Float.MAX_VALUE, name, comment);
 //	}
-//
+
+	public ValueKey<Float> f(float current, float min, float max, String name, String... comment) {
+		return builder(current).bounds(min, max).build();
+	}
+
+	public ValueKey<Float> f(float current, float min, String name, String... comment) {
+		return f(current, min, Float.MAX_VALUE, name, comment);
+	}
+
 //	protected ConfigInt i(int current, int min, int max, String name, String... comment) {
 //		return new ConfigInt(name, current, min, max, comment);
 //	}
@@ -59,7 +71,15 @@ public abstract class ConfigBase extends Config<JsonObject> {
 //	protected ConfigInt i(int current, int min, String name, String... comment) {
 //		return i(current, min, Integer.MAX_VALUE, name, comment);
 //	}
-//
+
+	protected ValueKey<Integer> i(int current, int min, int max, String name, String... comment) {
+		return builder(current).bounds(min, min).build();
+	}
+
+	protected ValueKey<Integer> i(int current, int min, String name, String... comment) {
+		return i(current, min, Integer.MAX_VALUE, name, comment);
+	}
+
 //	protected <T extends Enum<T>> ConfigEnum<T> e(T defaultValue, String name, String... comment) {
 //		return new ConfigEnum<>(name, defaultValue, comment);
 //	}
@@ -68,7 +88,11 @@ public abstract class ConfigBase extends Config<JsonObject> {
 //		return new ConfigGroup(name, depth, comment);
 //	}
 	protected Group group(int depth, String name, String... comment) {
-		return new CategoryBuilder(new TranslationTextComponent(name));
+		CategoryBuilder builder = new CategoryBuilder(new TranslationTextComponent(name));
+		for (String string : comment) {
+			builder.addTooltip(new TranslationTextComponent(string));
+		}
+		return builder;
 	}
 //
 //	protected <T extends ConfigBase> T nested(int depth, Supplier<T> constructor, String... comment) {

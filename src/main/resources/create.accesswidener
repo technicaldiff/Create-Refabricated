@@ -16,3 +16,5 @@ accessible method net/minecraft/client/gui/ScreenManager registerFactory (Lnet/m
 accessible method net/minecraft/inventory/container/ContainerType <init> (Lnet/minecraft/inventory/container/ContainerType$IFactory;)V
 
 extendable method net/minecraft/entity/Entity updatePassengerPosition (Lnet/minecraft/entity/Entity;Lnet/minecraft/entity/Entity$IMoveCallback;)V
+
+extendable class dev/inkwell/conrad/api/value/ValueKey

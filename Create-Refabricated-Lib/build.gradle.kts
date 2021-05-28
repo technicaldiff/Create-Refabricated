@@ -18,15 +18,22 @@ repositories {
 			includeGroup("com.github.PepperCode1")
 		}
 	}
+
+	maven("https://hephaestus.dev/release") {
+		name = "Conrad"
+	}
 }
 
 dependencies {
     val lba_version: String by rootProject
 	val registrate_version: String by project
+	val conrad_version: String by rootProject
 
 	// Javax Annotations
 	implementation("com.google.code.findbugs", "jsr305", "3.0.2")
 
+	// Conrad
+	modImplementation("dev.inkwell", "conrad", conrad_version)
     // LibBlockAttributes
     modImplementation("alexiil.mc.lib", "libblockattributes-all", lba_version)
     //modImplementation("alexiil.mc.lib", "libblockattributes-items", lba_version)

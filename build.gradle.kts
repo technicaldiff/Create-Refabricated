@@ -189,8 +189,7 @@ dependencies {
 	implementation("com.google.code.findbugs", "jsr305", "3.0.2")
 
 	// Conrad
-	implementation("dev.inkwell", "conrad", conrad_version)
-	include("dev.inkwell", "just-owen", "1.0.1")
+	modImplementation("dev.inkwell", "conrad", conrad_version)
 
 	// Registrate
 	modImplementation("com.github.PepperCode1", "Registrate-Fabric", registrate_version)
