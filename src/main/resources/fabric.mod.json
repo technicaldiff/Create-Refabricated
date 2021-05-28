@@ -29,6 +29,9 @@
     ],
     "rei_plugins": [
       "com.simibubi.create.compat.rei.CreateREI"
+    ],
+    "config": [
+      "com.simibubi.create.foundation.config.AllConfigs"
     ]
   },
 

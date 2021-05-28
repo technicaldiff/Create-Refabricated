@@ -2111,6 +2111,11 @@
 	"create.ponder.windmill_structure.header": "Windmill Contraptions",
 	"create.ponder.windmill_structure.text_1": "Any Structure can count as a valid Windmill, as long as it contains at least 8 sail-like Blocks.",
 
-	"_": "Thank you for translating Create!"
+	"_": "Thank you for translating Create!",
 
+  "_": "Fabric: Configs",
+
+  "create.create/name": "name",
+  "create.create/name.comment1": "comment 1",
+  "create.create/name.comment2": "comment 2"
 }

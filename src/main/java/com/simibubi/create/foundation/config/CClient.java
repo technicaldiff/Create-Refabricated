@@ -1,8 +1,28 @@
 package com.simibubi.create.foundation.config;
 
+import dev.inkwell.vivian.api.util.Group;
+
+import org.jetbrains.annotations.NotNull;
+
+import com.google.gson.JsonObject;
+
+import dev.inkwell.conrad.api.value.data.SaveType;
+import dev.inkwell.conrad.api.value.serialization.ConfigSerializer;
+import dev.inkwell.conrad.api.value.serialization.GsonSerializer;
+
 public class CClient extends ConfigBase {
 
-	public ConfigGroup client = group(0, "client",
+	@Override
+	public @NotNull ConfigSerializer<JsonObject> getSerializer() {
+		return GsonSerializer.DEFAULT;
+	}
+
+	@Override
+	public @NotNull SaveType getSaveType() {
+		return SaveType.ROOT;
+	}
+
+	public Group client = group(0, "client",
 		"Client-only settings - If you're looking for general settings, look inside your worlds serverconfig folder!");
 	public ConfigBool tooltips = b(true, "enableTooltips", "Show item descriptions on Shift and controls on Ctrl.");
 	public ConfigBool enableOverstressedTooltip =
