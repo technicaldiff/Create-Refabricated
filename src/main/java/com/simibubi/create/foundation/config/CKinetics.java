@@ -1,49 +1,72 @@
 package com.simibubi.create.foundation.config;
 
+import org.jetbrains.annotations.NotNull;
+
+import com.simibubi.create.lib.utility.ConfigValue;
+
+import dev.inkwell.conrad.api.value.data.SaveType;
+import dev.inkwell.conrad.api.value.serialization.ConfigSerializer;
+import dev.inkwell.conrad.api.value.serialization.FlatOwenSerializer;
+import dev.inkwell.owen.OwenElement;
+import dev.inkwell.vivian.api.builders.CategoryBuilder;
+
 public class CKinetics extends ConfigBase {
 
-	public ConfigBool disableStress = b(false, "disableStress", Comments.disableStress);
-	public ConfigInt maxBeltLength = i(20, 5, "maxBeltLength", Comments.maxBeltLength);
-	public ConfigInt crushingDamage = i(4, 0, "crushingDamage", Comments.crushingDamage);
-	public ConfigInt maxMotorSpeed = i(256, 64, "maxMotorSpeed", Comments.rpm, Comments.maxMotorSpeed);
-	public ConfigInt waterWheelBaseSpeed = i(4, 1, "waterWheelBaseSpeed", Comments.rpm, Comments.waterWheelBaseSpeed);
-	public ConfigInt waterWheelFlowSpeed = i(4, 1, "waterWheelFlowSpeed", Comments.rpm, Comments.waterWheelFlowSpeed);
-	public ConfigInt furnaceEngineSpeed = i(16, 1, "furnaceEngineSpeed", Comments.rpm, Comments.furnaceEngineSpeed);
-	public ConfigInt maxRotationSpeed = i(256, 64, "maxRotationSpeed", Comments.rpm, Comments.maxRotationSpeed);
-	public ConfigEnum<DeployerAggroSetting> ignoreDeployerAttacks =
-		e(DeployerAggroSetting.CREEPERS, "ignoreDeployerAttacks", Comments.ignoreDeployerAttacks);
-	public ConfigInt kineticValidationFrequency =
-		i(60, 5, "kineticValidationFrequency", Comments.kineticValidationFrequency);
-	public ConfigFloat crankHungerMultiplier = f(.01f, 0, 1, "crankHungerMultiplier", Comments.crankHungerMultiplier);
-	public ConfigInt minimumWindmillSails = i(8, 0, "minimumWindmillSails", Comments.minimumWindmillSails);
-	public ConfigInt maxEjectorDistance = i(32, 0, "maxEjectorDistance", Comments.maxEjectorDistance);
-	public ConfigInt ejectorScanInterval = i(120, 10, "ejectorScanInterval", Comments.ejectorScanInterval);
+	@Override
+	public @NotNull SaveType getSaveType() {
+		return SaveType.LEVEL;
+	}
 
-	public ConfigGroup fan = group(1, "encasedFan", "Encased Fan");
-	public ConfigInt fanPushDistance = i(20, 5, "fanPushDistance", Comments.fanPushDistance);
-	public ConfigInt fanPullDistance = i(20, 5, "fanPullDistance", Comments.fanPullDistance);
-	public ConfigInt fanBlockCheckRate = i(30, 10, "fanBlockCheckRate", Comments.fanBlockCheckRate);
-	public ConfigInt fanRotationArgmax = i(256, 64, "fanRotationArgmax", Comments.rpm, Comments.fanRotationArgmax);
-	public ConfigInt generatingFanSpeed = i(4, 0, "generatingFanSpeed", Comments.rpm, Comments.generatingFanSpeed);
-	public ConfigInt inWorldProcessingTime = i(150, 0, "inWorldProcessingTime", Comments.inWorldProcessingTime);
+	@Override
+	public @NotNull ConfigSerializer<OwenElement> getSerializer() {
+		return FlatOwenSerializer.INSTANCE;
+	}
 
-	public ConfigGroup contraptions = group(1, "contraptions", "Moving Contraptions");
-	public ConfigInt maxBlocksMoved = i(2048, 1, "maxBlocksMoved", Comments.maxBlocksMoved);
-	public ConfigInt maxChassisRange = i(16, 1, "maxChassisRange", Comments.maxChassisRange);
-	public ConfigInt maxPistonPoles = i(64, 1, "maxPistonPoles", Comments.maxPistonPoles);
-	public ConfigInt maxRopeLength = i(128, 1, "maxRopeLength", Comments.maxRopeLength);
-	public ConfigInt maxCartCouplingLength = i(32, 1, "maxCartCouplingLength", Comments.maxCartCouplingLength);
+	public static final CategoryBuilder kinetics = group(0, "kinetics", null, CServer.Comments.kinetics);
+	public static final ConfigValue<Boolean> disableStress = b(false, "disableStress", kinetics, Comments.disableStress);
+	public static final ConfigValue<Integer> maxBeltLength = i(20, 5, "maxBeltLength", kinetics, Comments.maxBeltLength);
+	public static final ConfigValue<Integer> crushingDamage = i(4, 0, "crushingDamage", kinetics, Comments.crushingDamage);
+	public static final ConfigValue<Integer> maxMotorSpeed = i(256, 64, "maxMotorSpeed", kinetics, Comments.rpm, Comments.maxMotorSpeed);
+	public static final ConfigValue<Integer> waterWheelBaseSpeed = i(4, 1, "waterWheelBaseSpeed", kinetics, Comments.rpm, Comments.waterWheelBaseSpeed);
+	public static final ConfigValue<Integer> waterWheelFlowSpeed = i(4, 1, "waterWheelFlowSpeed", kinetics, Comments.rpm, Comments.waterWheelFlowSpeed);
+	public static final ConfigValue<Integer> furnaceEngineSpeed = i(16, 1, "furnaceEngineSpeed", kinetics, Comments.rpm, Comments.furnaceEngineSpeed);
+	public static final ConfigValue<Integer> maxRotationSpeed = i(256, 64, "maxRotationSpeed", kinetics, Comments.rpm, Comments.maxRotationSpeed);
+	public static final ConfigValue<DeployerAggroSetting> ignoreDeployerAttacks =
+		e(DeployerAggroSetting.CREEPERS, "ignoreDeployerAttacks", kinetics, Comments.ignoreDeployerAttacks);
+	public static final ConfigValue<Integer> kineticValidationFrequency =
+		i(60, 5, "kineticValidationFrequency", kinetics, Comments.kineticValidationFrequency);
+	public static final ConfigValue<Float> crankHungerMultiplier = f(.01f, 0, 1, "crankHungerMultiplier", kinetics, Comments.crankHungerMultiplier);
+	public static final ConfigValue<Integer> minimumWindmillSails = i(8, 0, "minimumWindmillSails", kinetics, Comments.minimumWindmillSails);
+	public static final ConfigValue<Integer> maxEjectorDistance = i(32, 0, "maxEjectorDistance", kinetics, Comments.maxEjectorDistance);
+	public static final ConfigValue<Integer> ejectorScanInterval = i(120, 10, "ejectorScanInterval", kinetics, Comments.ejectorScanInterval);
 
-	public CStress stressValues = nested(1, CStress::new, Comments.stress);
+	public static final CategoryBuilder fan = group(1, "encasedFan", kinetics, "Encased Fan");
+	public static final ConfigValue<Integer> fanPushDistance = i(20, 5, "fanPushDistance", fan, Comments.fanPushDistance);
+	public static final ConfigValue<Integer> fanPullDistance = i(20, 5, "fanPullDistance", fan, Comments.fanPullDistance);
+	public static final ConfigValue<Integer> fanBlockCheckRate = i(30, 10, "fanBlockCheckRate", fan, Comments.fanBlockCheckRate);
+	public static final ConfigValue<Integer> fanRotationArgmax = i(256, 64, "fanRotationArgmax", fan, Comments.rpm, Comments.fanRotationArgmax);
+	public static final ConfigValue<Integer> generatingFanSpeed = i(4, 0, "generatingFanSpeed", fan, Comments.rpm, Comments.generatingFanSpeed);
+	public static final ConfigValue<Integer> inWorldProcessingTime = i(150, 0, "inWorldProcessingTime", fan, Comments.inWorldProcessingTime);
 
-	public ConfigGroup state = group(1, "stats", Comments.stats);
-	public ConfigFloat mediumSpeed = f(30, 0, 4096, "mediumSpeed", Comments.rpm, Comments.mediumSpeed);
-	public ConfigFloat fastSpeed = f(100, 0, 65535, "fastSpeed", Comments.rpm, Comments.fastSpeed);
-	public ConfigFloat mediumStressImpact =
-		f(4, 0, 4096, "mediumStressImpact", Comments.su, Comments.mediumStressImpact);
-	public ConfigFloat highStressImpact = f(8, 0, 65535, "highStressImpact", Comments.su, Comments.highStressImpact);
-	public ConfigFloat mediumCapacity = f(128, 0, 4096, "mediumCapacity", Comments.su, Comments.mediumCapacity);
-	public ConfigFloat highCapacity = f(512, 0, 65535, "highCapacity", Comments.su, Comments.highCapacity);
+	public static final CategoryBuilder contraptions = group(1, "contraptions", kinetics, "Moving Contraptions");
+	public static final ConfigValue<Integer> maxBlocksMoved = i(2048, 1, "maxBlocksMoved", contraptions, Comments.maxBlocksMoved);
+	public static final ConfigValue<Integer> maxChassisRange = i(16, 1, "maxChassisRange", contraptions, Comments.maxChassisRange);
+	public static final ConfigValue<Integer> maxPistonPoles = i(64, 1, "maxPistonPoles", contraptions, Comments.maxPistonPoles);
+	public static final ConfigValue<Integer> maxRopeLength = i(128, 1, "maxRopeLength", contraptions, Comments.maxRopeLength);
+	public static final ConfigValue<Integer> maxCartCouplingLength = i(32, 1, "maxCartCouplingLength", contraptions, Comments.maxCartCouplingLength);
+
+//	public CStress stressValues = nested(1, CStress::new, Comments.stress); // moved to bottom
+
+	public static final CategoryBuilder state = group(1, "stats", kinetics, Comments.stats);
+	public static final ConfigValue<Float> mediumSpeed = f(30, 0, 4096, "mediumSpeed", kinetics, Comments.rpm, Comments.mediumSpeed);
+	public static final ConfigValue<Float> fastSpeed = f(100, 0, 65535, "fastSpeed", kinetics, Comments.rpm, Comments.fastSpeed);
+	public static final ConfigValue<Float> mediumStressImpact =
+		f(4, 0, 4096, "mediumStressImpact", kinetics, Comments.su, Comments.mediumStressImpact);
+	public ConfigValue<Float> highStressImpact = f(8, 0, 65535, "highStressImpact", kinetics, Comments.su, Comments.highStressImpact);
+	public static final ConfigValue<Float> mediumCapacity = f(128, 0, 4096, "mediumCapacity", kinetics, Comments.su, Comments.mediumCapacity);
+	public static final ConfigValue<Float> highCapacity = f(512, 0, 65535, "highCapacity", kinetics, Comments.su, Comments.highCapacity);
+
+	public CStress stressValues = new CStress();
 
 	@Override
 	public String getName() {

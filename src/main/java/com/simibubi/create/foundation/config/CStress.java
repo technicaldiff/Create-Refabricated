@@ -3,37 +3,58 @@ package com.simibubi.create.foundation.config;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.jetbrains.annotations.NotNull;
+
+import com.simibubi.create.lib.utility.ConfigValue;
+
+import dev.inkwell.conrad.api.value.data.SaveType;
+import dev.inkwell.conrad.api.value.serialization.ConfigSerializer;
+import dev.inkwell.conrad.api.value.serialization.FlatOwenSerializer;
+import dev.inkwell.owen.OwenElement;
+import dev.inkwell.vivian.api.builders.CategoryBuilder;
 import net.minecraft.block.Block;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.registry.Registry;
 
 public class CStress extends ConfigBase {
 
-	private Map<ResourceLocation, ConfigValue<Double>> capacities = new HashMap<>();
-	private Map<ResourceLocation, ConfigValue<Double>> impacts = new HashMap<>();
-
 	@Override
-	protected void registerAll(Builder builder) {
-		builder.comment("", Comments.su, Comments.impact)
-			.push("impact");
-		StressConfigDefaults.registeredDefaultImpacts
-			.forEach((r, i) -> getImpacts().put(r, builder.define(r.getPath(), i)));
-		builder.pop();
-
-		builder.comment("", Comments.su, Comments.capacity)
-			.push("capacity");
-		StressConfigDefaults.registeredDefaultCapacities
-			.forEach((r, i) -> getCapacities().put(r, builder.define(r.getPath(), i)));
-		builder.pop();
+	public @NotNull SaveType getSaveType() {
+		return SaveType.LEVEL;
 	}
 
-	public double getImpactOf(Block block) {
-		ResourceLocation key = block.getRegistryName();
+	@Override
+	public @NotNull ConfigSerializer<OwenElement> getSerializer() {
+		return FlatOwenSerializer.INSTANCE;
+	}
+
+	private Map<ResourceLocation, ConfigValue<Float>> capacities = new HashMap<>();
+	private Map<ResourceLocation, ConfigValue<Float>> impacts = new HashMap<>();
+
+	@Override
+	protected void registerAll() {
+//		builder.comment("", Comments.su, Comments.impact)
+//			.push("impact");
+		StressConfigDefaults.registeredDefaultImpacts
+			.forEach((r, i) -> getImpacts().put(r, f(i.floatValue(), 0f, "impact", null, Comments.su, Comments.impact)));
+//		builder.pop();
+
+//		builder.comment("", Comments.su, Comments.capacity)
+//			.push("capacity");
+		StressConfigDefaults.registeredDefaultCapacities
+			.forEach((r, i) -> getCapacities().put(r, f(i.floatValue(), 0f, "capacity", (CategoryBuilder) null, Comments.su, Comments.capacity)));
+//		builder.pop();
+	}
+
+	public float getImpactOf(Block block) {
+		ResourceLocation key = Registry.BLOCK.getKey(block);
 		return getImpacts().containsKey(key) ? getImpacts().get(key)
 			.get() : 0;
 	}
 
-	public double getCapacityOf(Block block) {
-		ResourceLocation key = block.getRegistryName();
+	public float getCapacityOf(Block block) {
+		ResourceLocation key = Registry.BLOCK.getKey(block);
+
 		return getCapacities().containsKey(key) ? getCapacities().get(key)
 			.get() : 0;
 	}
@@ -43,11 +64,11 @@ public class CStress extends ConfigBase {
 		return "stressValues.v" + StressConfigDefaults.forcedUpdateVersion;
 	}
 
-	public Map<ResourceLocation, ConfigValue<Double>> getImpacts() {
+	public Map<ResourceLocation, ConfigValue<Float>> getImpacts() {
 		return impacts;
 	}
 
-	public Map<ResourceLocation, ConfigValue<Double>> getCapacities() {
+	public Map<ResourceLocation, ConfigValue<Float>> getCapacities() {
 		return capacities;
 	}
 

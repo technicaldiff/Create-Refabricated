@@ -242,7 +242,7 @@ public class ClientEvents {
 	}
 
 	public static void addToItemTooltip(ItemStack stack, ITooltipFlag iTooltipFlag, List<ITextComponent> itemTooltip) {
-		if (!AllConfigs.CLIENT.tooltips.getValue())
+		if (!AllConfigs.CLIENT.tooltips.get())
 			return;
 		if (Minecraft.getInstance().player == null)
 			return;

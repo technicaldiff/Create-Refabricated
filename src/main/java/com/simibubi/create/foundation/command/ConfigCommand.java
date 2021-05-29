@@ -11,8 +11,6 @@ import net.minecraft.command.CommandSource;
 import net.minecraft.command.Commands;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.util.text.StringTextComponent;
-import net.minecraftforge.fml.config.ModConfig;
-import net.minecraftforge.fml.network.PacketDistributor;
 
 /**
  * Examples:
@@ -37,10 +35,11 @@ public class ConfigCommand {
 				.then(Commands.argument("path", StringArgumentType.string())
 						.executes(ctx -> {
 							ServerPlayerEntity player = ctx.getSource().asPlayer();
-							AllPackets.channel.send(
-									PacketDistributor.PLAYER.with(() -> player),
-									new SConfigureConfigPacket(SConfigureConfigPacket.Actions.configScreen.name(), StringArgumentType.getString(ctx, "path"))
-							);
+							AllPackets.channel.sendToClient(new SConfigureConfigPacket(SConfigureConfigPacket.Actions.configScreen.name(), StringArgumentType.getString(ctx, "path")), player);
+//							AllPackets.channel.send(
+//									PacketDistributor.PLAYER.with(() -> player),
+//									new SConfigureConfigPacket(SConfigureConfigPacket.Actions.configScreen.name(), StringArgumentType.getString(ctx, "path"))
+//							);
 
 							return Command.SINGLE_SUCCESS;
 						})

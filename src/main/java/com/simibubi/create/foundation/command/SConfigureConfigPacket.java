@@ -32,12 +32,6 @@ import net.minecraft.util.text.IFormattableTextComponent;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.common.ForgeConfig;
-import net.minecraftforge.fml.DistExecutor;
-import net.minecraftforge.fml.config.ModConfig;
-import net.minecraftforge.fml.network.NetworkEvent;
 
 public class SConfigureConfigPacket implements S2CPacket {
 
@@ -54,6 +48,12 @@ public class SConfigureConfigPacket implements S2CPacket {
 	public SConfigureConfigPacket(PacketBuffer buffer) {
 		this.option = buffer.readString(32767);
 		this.value = buffer.readString(32767);
+	}
+
+	@Override
+	public void read(PacketBuffer buf) {
+		this.option = buf.readString(32767);
+		this.value = buf.readString(32767);
 	}
 
 	@Override
@@ -95,10 +95,10 @@ public class SConfigureConfigPacket implements S2CPacket {
 			return;
 		}
 
-		if (configPath.getType() != ModConfig.Type.CLIENT) {
-			Create.LOGGER.warn("Received type-mismatched config packet on client");
-			return;
-		}
+//		if (configPath.getType() != ModConfig.Type.CLIENT) {
+//			Create.LOGGER.warn("Received type-mismatched config packet on client");
+//			return;
+//		}
 
 		try {
 			ConfigHelper.setConfigValue(configPath, value);
@@ -217,7 +217,7 @@ public class SConfigureConfigPacket implements S2CPacket {
 
 		@Environment(EnvType.CLIENT)
 		private static void experimentalLighting(String value) {
-			ForgeConfig.CLIENT.experimentalForgeLightPipelineEnabled.set(true);
+//			ForgeConfig.CLIENT.experimentalForgeLightPipelineEnabled.set(true);
 			Minecraft.getInstance().worldRenderer.loadRenderers();
 		}
 

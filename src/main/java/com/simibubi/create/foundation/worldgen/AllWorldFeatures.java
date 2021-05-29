@@ -6,9 +6,9 @@ import java.util.Map;
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.Create;
 import com.simibubi.create.content.palettes.AllPaletteBlocks;
-import com.simibubi.create.lib.utility.BiomeUtil;
 import com.tterrag.registrate.util.nullness.NonNullSupplier;
 
+import dev.inkwell.vivian.api.builders.CategoryBuilder;
 import net.minecraft.block.Block;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.registry.Registry;
@@ -18,8 +18,6 @@ import net.minecraft.world.biome.Biome.Category;
 import net.minecraft.world.biome.BiomeGenerationSettings;
 import net.minecraft.world.biome.Biomes;
 import net.minecraft.world.gen.GenerationStage;
-import net.minecraft.world.gen.feature.Feature;
-import net.minecraft.world.gen.placement.Placement;
 
 public class AllWorldFeatures {
 
@@ -82,24 +80,24 @@ public class AllWorldFeatures {
 		return generation;
 	}
 
-//	public static void fillConfig(ForgeConfigSpec.Builder builder) {
-//		entries.values()
-//			.forEach(entry -> {
-//				builder.push(entry.id);
-//				entry.addToConfig(builder);
+	public static void fillConfig(CategoryBuilder builder) {
+		entries.values()
+			.forEach(entry -> {
+//				builder.add(entry.id);
+				entry.addToConfig(builder);
 //				builder.pop();
-//			});
-//	}
+			});
+	}
 
 	public static void register() {}
 
-	public static void registerOreFeatures(RegistryEvent.Register<Feature<?>> event) {
-		event.getRegistry()
-			.register(ConfigDrivenOreFeature.INSTANCE);
-	}
+//	public static void registerOreFeatures(RegistryEvent.Register<Feature<?>> event) {
+//		event.getRegistry()
+//			.register(ConfigDrivenOreFeature.INSTANCE);
+//	}
 
-	public static void registerDecoratorFeatures(RegistryEvent.Register<Placement<?>> event) {
-		event.getRegistry()
-			.register(ConfigDrivenDecorator.INSTANCE);
-	}
+//	public static void registerDecoratorFeatures(RegistryEvent.Register<Placement<?>> event) {
+//		event.getRegistry()
+//			.register(ConfigDrivenDecorator.INSTANCE);
+//	}
 }

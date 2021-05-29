@@ -1,15 +1,36 @@
 package com.simibubi.create.foundation.config;
 
+import org.jetbrains.annotations.NotNull;
+
+import com.simibubi.create.lib.utility.ConfigValue;
+
+import dev.inkwell.conrad.api.value.data.SaveType;
+import dev.inkwell.conrad.api.value.serialization.ConfigSerializer;
+import dev.inkwell.conrad.api.value.serialization.FlatOwenSerializer;
+import dev.inkwell.owen.OwenElement;
+import dev.inkwell.vivian.api.builders.CategoryBuilder;
+
 public class CFluids extends ConfigBase {
 
-	public ConfigInt fluidTankCapacity = i(8, 1, "fluidTankCapacity", Comments.buckets, Comments.fluidTankCapacity);
-	public ConfigInt fluidTankMaxHeight = i(32, 1, "fluidTankMaxHeight", Comments.blocks, Comments.fluidTankMaxHeight);
-	public ConfigInt mechanicalPumpRange =
-		i(16, 1, "mechanicalPumpRange", Comments.blocks, Comments.mechanicalPumpRange);
+	@Override
+	public @NotNull SaveType getSaveType() {
+		return SaveType.LEVEL;
+	}
 
-	public ConfigInt hosePulleyBlockThreshold = i(10000, -1, "hosePulleyBlockThreshold", Comments.blocks,
+	@Override
+	public @NotNull ConfigSerializer<OwenElement> getSerializer() {
+		return FlatOwenSerializer.INSTANCE;
+	}
+
+	public static final CategoryBuilder fluids = group(0, "fluids", null, CServer.Comments.fluids);
+	public static final ConfigValue<Integer> fluidTankCapacity = i(8, 1, "fluidTankCapacity", fluids, Comments.buckets, Comments.fluidTankCapacity);
+	public static final ConfigValue<Integer> fluidTankMaxHeight = i(32, 1, "fluidTankMaxHeight", fluids, Comments.blocks, Comments.fluidTankMaxHeight);
+	public static final ConfigValue<Integer> mechanicalPumpRange =
+		i(16, 1, "mechanicalPumpRange", fluids, Comments.blocks, Comments.mechanicalPumpRange);
+
+	public static final ConfigValue<Integer> hosePulleyBlockThreshold = i(10000, -1, "hosePulleyBlockThreshold", fluids, Comments.blocks,
 		Comments.toDisable, Comments.hosePulleyBlockThreshold);
-	public ConfigInt hosePulleyRange = i(128, 1, "hosePulleyRange", Comments.blocks, Comments.hosePulleyRange);
+	public static final ConfigValue<Integer> hosePulleyRange = i(128, 1, "hosePulleyRange", fluids, Comments.blocks, Comments.hosePulleyRange);
 
 	@Override
 	public String getName() {

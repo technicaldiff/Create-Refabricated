@@ -1,15 +1,25 @@
 package com.simibubi.create.foundation.config;
 
 
-import com.google.gson.JsonObject;
+import java.util.ArrayList;
+
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
+import com.simibubi.create.lib.utility.ConfigValue;
 
 import dev.inkwell.conrad.api.Config;
-import dev.inkwell.conrad.api.value.ValueKey;
+import dev.inkwell.conrad.api.value.data.SaveType;
+import dev.inkwell.owen.OwenElement;
 import dev.inkwell.vivian.api.builders.CategoryBuilder;
-import dev.inkwell.vivian.api.util.Group;
 import net.minecraft.util.text.TranslationTextComponent;
 
-public abstract class ConfigBase extends Config<JsonObject> {
+public abstract class ConfigBase extends Config<OwenElement> {
+
+	@Override
+	public @NotNull SaveType getSaveType() {
+		return SaveType.USER;
+	}
 
 //	public ForgeConfigSpec specification;
 //
@@ -17,10 +27,10 @@ public abstract class ConfigBase extends Config<JsonObject> {
 //	protected List<CValue<?, ?>> allValues;
 //	protected List<ConfigBase> children;
 //
-//	protected void registerAll(final ForgeConfigSpec.Builder builder) {
+	protected void registerAll() {
 //		for (CValue<?, ?> cValue : allValues)
 //			cValue.register(builder);
-//	}
+	}
 //
 //	public void onLoad() {
 //		if (children != null)
@@ -38,56 +48,44 @@ public abstract class ConfigBase extends Config<JsonObject> {
 //	protected static interface IValueProvider<V, T extends ConfigValue<V>>
 //		extends Function<ForgeConfigSpec.Builder, T> {
 //	}
-//
-//	protected ConfigBool b(boolean current, String name, String... comment) {
-//		return new ConfigBool(name, current, comment);
-//	}
 
-	protected ValueKey<Boolean> b(boolean current, String name, String... comment) {
-		return value(current);
+	protected static ConfigValue<Boolean> b(boolean current, String name, @Nullable CategoryBuilder group, String... comment) {
+		return new ConfigValue<>(value(current));
 	}
 
-//
-//	protected ConfigFloat f(float current, float min, float max, String name, String... comment) {
-//		return new ConfigFloat(name, current, min, max, comment);
-//	}
-//
-//	protected ConfigFloat f(float current, float min, String name, String... comment) {
-//		return f(current, min, Float.MAX_VALUE, name, comment);
-//	}
-
-	public ValueKey<Float> f(float current, float min, float max, String name, String... comment) {
-		return builder(current).bounds(min, max).build();
+	public static ConfigValue<Float> f(float current, float min, float max, String name, @Nullable CategoryBuilder group, String... comment) {
+		return new ConfigValue<>(builder(current).bounds(min, max).build());
 	}
 
-	public ValueKey<Float> f(float current, float min, String name, String... comment) {
-		return f(current, min, Float.MAX_VALUE, name, comment);
+	protected static ConfigValue<Float> f(float current, float min, String name, @Nullable CategoryBuilder group, String... comment) {
+		return f(current, min, Float.MAX_VALUE, name, group, comment);
 	}
 
-//	protected ConfigInt i(int current, int min, int max, String name, String... comment) {
-//		return new ConfigInt(name, current, min, max, comment);
-//	}
-//
-//	protected ConfigInt i(int current, int min, String name, String... comment) {
-//		return i(current, min, Integer.MAX_VALUE, name, comment);
-//	}
-
-	protected ValueKey<Integer> i(int current, int min, int max, String name, String... comment) {
-		return builder(current).bounds(min, min).build();
+	protected static ConfigValue<Integer> i(int current, int min, int max, String name, @Nullable CategoryBuilder group, String... comment) {
+		return new ConfigValue<>(builder(current).bounds(min, min).build());
 	}
 
-	protected ValueKey<Integer> i(int current, int min, String name, String... comment) {
-		return i(current, min, Integer.MAX_VALUE, name, comment);
+	public static ConfigValue<Integer> i(int current, int min, String name, @Nullable CategoryBuilder group, String... comment) {
+		return i(current, min, Integer.MAX_VALUE, name, group, comment);
 	}
 
-//	protected <T extends Enum<T>> ConfigEnum<T> e(T defaultValue, String name, String... comment) {
-//		return new ConfigEnum<>(name, defaultValue, comment);
-//	}
-//
-//	protected ConfigGroup group(int depth, String name, String... comment) {
-//		return new ConfigGroup(name, depth, comment);
-//	}
-	protected Group group(int depth, String name, String... comment) {
+	protected static ConfigValue<Double> d(double current, double min, double max, String name, @Nullable CategoryBuilder group, String... comment) {
+		return new ConfigValue<Double>(builder(current).bounds(min, max).build());
+	}
+
+	protected static ConfigValue<Double> d(double current, double min, String name, @Nullable CategoryBuilder group, String... comment) {
+		return d(current, min, Double.MAX_VALUE, name, group, comment);
+	}
+
+	protected static <T extends Enum<T>> ConfigValue<T> e(T defaultValue, String name, @Nullable CategoryBuilder group, String... comment) {
+		return new ConfigValue<T>(value(() -> defaultValue));
+	}
+
+	public static CategoryBuilder group(int depth, String name, @Nullable CategoryBuilder group, String... comment) {
+		if (depth != 0) { // group should also be null in this scenario
+			group.addSection(new TranslationTextComponent(name), new ArrayList<>());
+			return group;
+		}
 		CategoryBuilder builder = new CategoryBuilder(new TranslationTextComponent(name));
 		for (String string : comment) {
 			builder.addTooltip(new TranslationTextComponent(string));

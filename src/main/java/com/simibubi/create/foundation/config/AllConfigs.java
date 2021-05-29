@@ -1,26 +1,7 @@
 package com.simibubi.create.foundation.config;
 
-import org.jetbrains.annotations.NotNull;
 
-import com.google.gson.JsonObject;
-
-import dev.inkwell.conrad.api.Config;
-import dev.inkwell.conrad.api.value.data.SaveType;
-import dev.inkwell.conrad.api.value.serialization.ConfigSerializer;
-import dev.inkwell.conrad.api.value.serialization.GsonSerializer;
-
-
-public class AllConfigs extends Config<JsonObject> {
-
-	@Override
-	public @NotNull ConfigSerializer<JsonObject> getSerializer() {
-		return GsonSerializer.DEFAULT;
-	}
-
-	@Override
-	public @NotNull SaveType getSaveType() {
-		return SaveType.USER;
-	}
+public class AllConfigs {
 
 //	static Map<ConfigBase, ModConfig.Type> configs = new HashMap<>();
 
@@ -42,6 +23,8 @@ public class AllConfigs extends Config<JsonObject> {
 //	}
 
 	public static void register() {
+		SERVER.kinetics.stressValues.registerAll();
+		COMMON.worldGen.registerAll();
 //		CLIENT = register(CClient::new, ModConfig.Type.CLIENT);
 //		COMMON = register(CCommon::new, ModConfig.Type.COMMON);
 //		SERVER = register(CServer::new, ModConfig.Type.SERVER);

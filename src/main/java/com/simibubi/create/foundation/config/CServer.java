@@ -1,24 +1,44 @@
 package com.simibubi.create.foundation.config;
 
+import org.jetbrains.annotations.NotNull;
+
+import com.simibubi.create.lib.utility.ConfigValue;
+
+import dev.inkwell.conrad.api.value.data.SaveType;
+import dev.inkwell.conrad.api.value.serialization.ConfigSerializer;
+import dev.inkwell.conrad.api.value.serialization.FlatOwenSerializer;
+import dev.inkwell.owen.OwenElement;
+import dev.inkwell.vivian.api.builders.CategoryBuilder;
+
 public class CServer extends ConfigBase {
 
-	public ConfigGroup infrastructure = group(0, "infrastructure", Comments.infrastructure);
-	public ConfigInt tickrateSyncTimer =
-		i(20, 5, "tickrateSyncTimer", "[in Ticks]", Comments.tickrateSyncTimer, Comments.tickrateSyncTimer2);
+	@Override
+	public @NotNull SaveType getSaveType() {
+		return SaveType.LEVEL;
+	}
 
-	public CRecipes recipes = nested(0, CRecipes::new, Comments.recipes);
-	public CKinetics kinetics = nested(0, CKinetics::new, Comments.kinetics);
-	public CFluids fluids = nested(0, CFluids::new, Comments.fluids);
-	public CLogistics logistics = nested(0, CLogistics::new, Comments.logistics);
-	public CSchematics schematics = nested(0, CSchematics::new, Comments.schematics);
-	public CCuriosities curiosities = nested(0, CCuriosities::new, Comments.curiosities);
+	@Override
+	public @NotNull ConfigSerializer<OwenElement> getSerializer() {
+		return FlatOwenSerializer.INSTANCE;
+	}
+
+	public CategoryBuilder infrastructure = group(0, "infrastructure", null, Comments.infrastructure);
+	public ConfigValue<Integer> tickrateSyncTimer =
+		i(20, 5, "tickrateSyncTimer", infrastructure, "[in Ticks]", Comments.tickrateSyncTimer, Comments.tickrateSyncTimer2);
+
+	public CRecipes recipes = new CRecipes();
+	public CKinetics kinetics = new CKinetics();
+	public CFluids fluids = new CFluids();
+	public CLogistics logistics = new CLogistics();
+	public CSchematics schematics = new CSchematics();
+	public CCuriosities curiosities = new CCuriosities();
 
 	@Override
 	public String getName() {
 		return "server";
 	}
 
-	private static class Comments {
+	public static class Comments {
 		static String recipes = "Packmakers' control panel for internal recipe compat";
 		static String schematics = "Everything related to Schematic tools";
 		static String kinetics = "Parameters and abilities of Create's kinetic mechanisms";
