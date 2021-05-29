@@ -50,6 +50,7 @@
     "accessor.BlockAccessor",
     "accessor.BucketItemAccessor",
     "accessor.ChunkManagerAccessor",
+    "accessor.ChunkStatusAccessor",
     "accessor.CriteriaTriggersAccessor",
     "accessor.DamageSourceAccessor",
     "accessor.EntityAccessor",

@@ -10,7 +10,6 @@ import com.simibubi.create.content.contraptions.goggles.GoggleConfigScreen;
 import com.simibubi.create.foundation.config.AllConfigs;
 import com.simibubi.create.foundation.config.ui.BaseConfigScreen;
 import com.simibubi.create.foundation.config.ui.ConfigHelper;
-import com.simibubi.create.foundation.config.ui.SubMenuConfigScreen;
 import com.simibubi.create.foundation.gui.ScreenOpener;
 import com.simibubi.create.foundation.ponder.PonderRegistry;
 import com.simibubi.create.foundation.ponder.PonderUI;
@@ -101,9 +100,9 @@ public class SConfigureConfigPacket implements S2CPacket {
 //		}
 
 		try {
-			ConfigHelper.setConfigValue(configPath, value);
+//			ConfigHelper.setConfigValue(configPath, value);
 			player.sendStatusMessage(new StringTextComponent("Great Success!"), false);
-		} catch (ConfigHelper.InvalidValueException e) {
+//		} catch (ConfigHelper.InvalidValueException e) {
 			player.sendStatusMessage(new StringTextComponent("Config could not be set the the specified value!"), false);
 		} catch (Exception e) {
 			player.sendStatusMessage(new StringTextComponent("Something went wrong while trying to set config value. Check the client logs for more information"), false);
@@ -152,7 +151,7 @@ public class SConfigureConfigPacket implements S2CPacket {
 			}
 
 			try {
-				ScreenOpener.open(SubMenuConfigScreen.find(configPath));
+//				ScreenOpener.open(SubMenuConfigScreen.find(configPath));
 			} catch (Exception e) {
 				player.sendStatusMessage(new StringTextComponent("Unable to find the specified config"), false);
 			}

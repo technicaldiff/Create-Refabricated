@@ -1,16 +1,11 @@
 package com.simibubi.create.foundation.config.ui.entries;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
-import com.simibubi.create.foundation.gui.AllIcons;
 import com.simibubi.create.foundation.gui.BoxElement;
-import com.simibubi.create.foundation.gui.DelegatedStencilElement;
 import com.simibubi.create.foundation.gui.TextStencilElement;
-import com.simibubi.create.foundation.gui.Theme;
-import com.simibubi.create.foundation.gui.UIRenderHelper;
 import com.simibubi.create.foundation.gui.widgets.BoxWidget;
 
-import net.minecraft.client.Minecraft;
-import net.minecraftforge.common.ForgeConfigSpec;
+import dev.inkwell.conrad.api.value.ValueKey;
 
 public class EnumEntry extends ValueEntry<Enum<?>> {
 
@@ -20,29 +15,33 @@ public class EnumEntry extends ValueEntry<Enum<?>> {
 	protected BoxWidget cycleLeft;
 	protected BoxWidget cycleRight;
 
-	public EnumEntry(String label, ForgeConfigSpec.ConfigValue<Enum<?>> value, ForgeConfigSpec.ValueSpec spec) {
-		super(label, value, spec);
-
-		valueText = new TextStencilElement(Minecraft.getInstance().fontRenderer, "YEP").centered(true, true);
-		valueText.withElementRenderer((ms, width, height, alpha) -> UIRenderHelper.angledGradient(ms, 0, 0, height / 2,
-			height, width, Theme.p(Theme.Key.TEXT)));
-
-		DelegatedStencilElement l = AllIcons.I_CONFIG_PREV.asStencil();
-		cycleLeft = new BoxWidget(0, 0, cycleWidth + 8, 16).showingElement(l)
-			.withCallback(() -> cycleValue(-1));
-		l.withElementRenderer(BoxWidget.gradientFactory.apply(cycleLeft));
-
-		DelegatedStencilElement r = AllIcons.I_CONFIG_NEXT.asStencil();
-		cycleRight = new BoxWidget(0, 0, cycleWidth + 8, 16).showingElement(r)
-			.withCallback(() -> cycleValue(1));
-		r.at(cycleWidth - 8, 0);
-		r.withElementRenderer(BoxWidget.gradientFactory.apply(cycleRight));
-
-		listeners.add(cycleLeft);
-		listeners.add(cycleRight);
-
-		onReset();
+	public EnumEntry(ValueKey<Enum<?>> key) {
+		super(key);
 	}
+
+//	public EnumEntry(String label, ForgeConfigSpec.ConfigValue<Enum<?>> value, ForgeConfigSpec.ValueSpec spec) {
+//		super(label, value, spec);
+//
+//		valueText = new TextStencilElement(Minecraft.getInstance().fontRenderer, "YEP").centered(true, true);
+//		valueText.withElementRenderer((ms, width, height, alpha) -> UIRenderHelper.angledGradient(ms, 0, 0, height / 2,
+//			height, width, Theme.p(Theme.Key.TEXT)));
+//
+//		DelegatedStencilElement l = AllIcons.I_CONFIG_PREV.asStencil();
+//		cycleLeft = new BoxWidget(0, 0, cycleWidth + 8, 16).showingElement(l)
+//			.withCallback(() -> cycleValue(-1));
+//		l.withElementRenderer(BoxWidget.gradientFactory.apply(cycleLeft));
+//
+//		DelegatedStencilElement r = AllIcons.I_CONFIG_NEXT.asStencil();
+//		cycleRight = new BoxWidget(0, 0, cycleWidth + 8, 16).showingElement(r)
+//			.withCallback(() -> cycleValue(1));
+//		r.at(cycleWidth - 8, 0);
+//		r.withElementRenderer(BoxWidget.gradientFactory.apply(cycleRight));
+//
+//		listeners.add(cycleLeft);
+//		listeners.add(cycleRight);
+//
+//		onReset();
+//	}
 
 	protected void cycleValue(int direction) {
 		Enum<?> e = getValue();

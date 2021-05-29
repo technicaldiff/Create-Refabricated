@@ -26,8 +26,6 @@ import com.simibubi.create.lib.utility.Constants.NBT;
 import com.simibubi.create.lib.utility.LoadedCheckUtil;
 import com.simibubi.create.lib.utility.NBTSerializer;
 
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.JukeboxBlock;
 import net.minecraft.item.ItemStack;
@@ -38,7 +36,6 @@ import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.Direction;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvents;
-import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.util.text.ITextComponent;
@@ -159,11 +156,11 @@ public class ArmTileEntity extends KineticTileEntity {
 		}
 	}
 
-	@Override
-	@Environment(EnvType.CLIENT)
-	public AxisAlignedBB makeRenderBoundingBox() {
-		return super.makeRenderBoundingBox().grow(3);
-	}
+//	@Override
+//	@Environment(EnvType.CLIENT)
+//	public AxisAlignedBB makeRenderBoundingBox() {
+//		return super.makeRenderBoundingBox().grow(3);
+//	}
 
 	private boolean checkForMusicAmong(List<ArmInteractionPoint> list) {
 		for (ArmInteractionPoint armInteractionPoint : list) {

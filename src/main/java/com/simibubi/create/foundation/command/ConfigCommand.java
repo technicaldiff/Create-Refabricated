@@ -59,24 +59,25 @@ public class ConfigCommand {
 												return 0;
 											}
 
-											if (configPath.getType() == ModConfig.Type.CLIENT) {
-												ServerPlayerEntity player = ctx.getSource().asPlayer();
-												AllPackets.channel.send(
-														PacketDistributor.PLAYER.with(() -> player),
-														new SConfigureConfigPacket("SET" + path, value)
-												);
-
-												return Command.SINGLE_SUCCESS;
-											}
+//											if (configPath.getType() == ModConfig.Type.CLIENT) {
+//												ServerPlayerEntity player = ctx.getSource().asPlayer();
+//												AllPackets.channel.sendToClient(new SConfigureConfigPacket("SET" + path, value), player);
+////												AllPackets.channel.send(
+////														PacketDistributor.PLAYER.with(() -> player),
+////														new SConfigureConfigPacket("SET" + path, value)
+////												);
+//
+//												return Command.SINGLE_SUCCESS;
+//											}
 
 											try {
-												ConfigHelper.setConfigValue(configPath, value);
+//												ConfigHelper.setConfigValue(configPath, value);
 												ctx.getSource().sendFeedback(new StringTextComponent("Great Success!"), false);
 												return Command.SINGLE_SUCCESS;
-											} catch (ConfigHelper.InvalidValueException e) {
+											} catch (Exception /*ConfigHelper.InvalidValueException*/ e) {
 												ctx.getSource().sendErrorMessage(new StringTextComponent("Config could not be set the the specified value!"));
-												return 0;
-											} catch (Exception e) {
+//												return 0;
+//											} catch (Exception e) {
 												ctx.getSource().sendErrorMessage(new StringTextComponent("Something went wrong while trying to set config value. Check the server logs for more information"));
 												Create.LOGGER.warn("Exception during server-side config value set:", e);
 												return 0;

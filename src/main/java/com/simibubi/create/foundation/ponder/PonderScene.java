@@ -33,6 +33,7 @@ import com.simibubi.create.foundation.utility.outliner.Outliner;
 
 import it.unimi.dsi.fastutil.ints.IntArrayList;
 import it.unimi.dsi.fastutil.ints.IntList;
+import net.fabricmc.fabric.api.block.BlockPickInteractionAware;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.ActiveRenderInfo;
@@ -165,9 +166,17 @@ public class PonderScene {
 			.getFirst()
 			.selectBlock(selectedPos);
 		BlockState blockState = world.getBlockState(selectedPos);
-		ItemStack pickBlock = blockState.getPickBlock(
-			new BlockRayTraceResult(VecHelper.getCenterOf(selectedPos), Direction.UP, selectedPos, true), world,
-			selectedPos, Minecraft.getInstance().player);
+		ItemStack pickBlock;
+
+		if (blockState instanceof BlockPickInteractionAware) {
+			pickBlock = ((BlockPickInteractionAware) blockState).getPickedStack(blockState, world, selectedPos, Minecraft.getInstance().player, new BlockRayTraceResult(VecHelper.getCenterOf(selectedPos), Direction.UP, selectedPos, true));
+		} else {
+			pickBlock = blockState.getBlock().getItem(world, selectedPos, blockState);
+		}
+
+//		pickBlock = blockState.getPickBlock(
+//			new BlockRayTraceResult(VecHelper.getCenterOf(selectedPos), Direction.UP, selectedPos, true), world,
+//			selectedPos, Minecraft.getInstance().player);
 
 		return Pair.of(pickBlock, selectedPos);
 	}

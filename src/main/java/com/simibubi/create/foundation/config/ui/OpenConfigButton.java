@@ -2,6 +2,7 @@ package com.simibubi.create.foundation.config.ui;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
@@ -12,14 +13,11 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screen.IngameMenuScreen;
 import net.minecraft.client.gui.screen.MainMenuScreen;
 import net.minecraft.client.gui.screen.Screen;
+import net.minecraft.client.gui.widget.Widget;
 import net.minecraft.client.gui.widget.button.Button;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.text.StringTextComponent;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.client.event.GuiScreenEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 
 public class OpenConfigButton extends Button {
 
@@ -74,12 +72,10 @@ public class OpenConfigButton extends Button {
 		}
 	}
 
-	@EventBusSubscriber(value = Dist.CLIENT)
 	public static class OpenConfigButtonHandler {
 
-		@SubscribeEvent
-		public static void onGuiInit(GuiScreenEvent.InitGuiEvent event) {
-			Screen gui = event.getGui();
+		public static void onGuiInit(Screen gui, List<Widget> widgets, Consumer<Widget> add, Consumer<Widget> remove) {
+//			Screen gui = event.getGui();
 
 			MenuRows menu = null;
 			int rowIdx = 0, offsetX = 0;
@@ -98,10 +94,10 @@ public class OpenConfigButton extends Button {
 				String target = (onLeft ? menu.leftButtons : menu.rightButtons).get(rowIdx - 1);
 
 				int offsetX_ = offsetX;
-				event.getWidgetList().stream()
+				widgets.stream()
 					.filter(w -> w.getMessage().getString().equals(target))
 					.findFirst()
-					.ifPresent(w -> event.addWidget(
+					.ifPresent(w -> add.accept(
 							new OpenConfigButton(w.x + offsetX_ + (onLeft ? -20 : w.getWidth()), w.y)
 					));
 			}

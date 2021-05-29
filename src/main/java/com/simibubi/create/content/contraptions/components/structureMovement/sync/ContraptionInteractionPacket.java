@@ -1,5 +1,6 @@
 package com.simibubi.create.content.contraptions.components.structureMovement.sync;
 
+import com.jamieswhiteshirt.reachentityattributes.ReachEntityAttributes;
 import com.simibubi.create.content.contraptions.components.structureMovement.AbstractContraptionEntity;
 
 import me.pepperbell.simplenetworking.C2SPacket;
@@ -54,7 +55,7 @@ public class ContraptionInteractionPacket implements C2SPacket {
 			if (!(entityByID instanceof AbstractContraptionEntity))
 				return;
 			AbstractContraptionEntity contraptionEntity = (AbstractContraptionEntity) entityByID;
-			double d = sender.getAttribute(ForgeMod.REACH_DISTANCE.get()).getValue() + 10;
+			double d = sender.getAttribute(ReachEntityAttributes.REACH).getValue() + 10;
 			if (!sender.canEntityBeSeen(entityByID))
 				d -= 3;
 			d *= d;

@@ -549,27 +549,27 @@ public abstract class KineticTileEntity extends SmartTileEntity
 		return ICogWheel.isSmallCog(state);
 	}
 
-	@Override
-	public void requestModelDataUpdate() {
-		super.requestModelDataUpdate();
-		if (!this.removed) {
-			FastRenderDispatcher.enqueueUpdate(this);
-		}
-	}
+//	@Override
+//	public void requestModelDataUpdate() {
+//		super.requestModelDataUpdate();
+//		if (!this.removed) {
+//			FastRenderDispatcher.enqueueUpdate(this);
+//		}
+//	}
 
 	protected AxisAlignedBB cachedBoundingBox;
 
 	@Environment(EnvType.CLIENT)
 	public AxisAlignedBB getRenderBoundingBox() {
-		if (cachedBoundingBox == null) {
-			cachedBoundingBox = makeRenderBoundingBox();
-		}
+//		if (cachedBoundingBox == null) {
+//			cachedBoundingBox = makeRenderBoundingBox();
+//		}
 		return cachedBoundingBox;
 	}
 
-	protected AxisAlignedBB makeRenderBoundingBox() {
-		return super.getRenderBoundingBox();
-	}
+//	protected AxisAlignedBB makeRenderBoundingBox() {
+//		return super.getRenderBoundingBox();
+//	}
 
 	@Environment(EnvType.CLIENT)
 	public void tickAudio() {

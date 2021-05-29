@@ -12,7 +12,6 @@ import net.minecraft.block.BlockState;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.Direction;
-import net.minecraft.util.math.AxisAlignedBB;
 
 public class WaterWheelTileEntity extends GeneratingKineticTileEntity {
 
@@ -36,10 +35,10 @@ public class WaterWheelTileEntity extends GeneratingKineticTileEntity {
 		}
 	}
 
-	@Override
-	public AxisAlignedBB makeRenderBoundingBox() {
-		return new AxisAlignedBB(pos).grow(1);
-	}
+//	@Override
+//	public AxisAlignedBB makeRenderBoundingBox() {
+//		return new AxisAlignedBB(pos).grow(1);
+//	}
 
 	@Override
 	public void write(CompoundNBT compound, boolean clientPacket) {

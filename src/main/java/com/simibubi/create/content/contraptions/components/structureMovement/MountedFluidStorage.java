@@ -10,7 +10,10 @@ import com.simibubi.create.foundation.networking.AllPackets;
 import com.simibubi.create.foundation.utility.NBTHelper;
 import com.simibubi.create.lib.lba.fluid.FluidStack;
 import com.simibubi.create.lib.lba.fluid.IFluidHandler;
+import com.simibubi.create.lib.lba.fluid.SimpleFluidTank;
 import com.simibubi.create.lib.utility.LazyOptional;
+
+import com.simibubi.create.lib.utility.TransferUtil;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.nbt.CompoundNBT;
@@ -83,7 +86,7 @@ public class MountedFluidStorage {
 			tank.setFluidLevel(new InterpolatedChasingValue().start(fillState));
 		tank.getFluidLevel()
 			.target(fillState);
-		IFluidTank tankInventory = tank.getTankInventory();
+		SimpleFluidTank tankInventory = tank.getTankInventory();
 		if (tankInventory instanceof SmartFluidTank)
 			((SmartFluidTank) tankInventory).setFluid(fluid);
 	}
@@ -93,7 +96,7 @@ public class MountedFluidStorage {
 		if (te == null)
 			return;
 
-		IFluidHandler teHandler = te.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY)
+		IFluidHandler teHandler = TransferUtil.getFluidHandler(te)
 			.orElse(null);
 		if (!(teHandler instanceof SmartFluidTank))
 			return;
@@ -111,7 +114,7 @@ public class MountedFluidStorage {
 		if (tank instanceof CreativeSmartFluidTank)
 			return;
 
-		LazyOptional<IFluidHandler> capability = te.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY);
+		LazyOptional<IFluidHandler> capability = TransferUtil.getFluidHandler(te);
 		IFluidHandler teHandler = capability.orElse(null);
 		if (!(teHandler instanceof SmartFluidTank))
 			return;
@@ -121,7 +124,7 @@ public class MountedFluidStorage {
 	}
 
 	public IFluidHandler getFluidHandler() {
-		return tank;
+		return (IFluidHandler) tank;
 	}
 
 	public CompoundNBT serialize() {

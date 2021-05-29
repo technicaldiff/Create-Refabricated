@@ -106,11 +106,11 @@ public class MechanicalPressTileEntity extends BasinOperatingTileEntity {
 		}
 	}
 
-	@Override
-	public AxisAlignedBB makeRenderBoundingBox() {
-		return new AxisAlignedBB(pos).expand(0, -1.5, 0)
-			.expand(0, 1, 0);
-	}
+//	@Override
+//	public AxisAlignedBB makeRenderBoundingBox() {
+//		return new AxisAlignedBB(pos).expand(0, -1.5, 0)
+//			.expand(0, 1, 0);
+//	}
 
 	public float getRenderedHeadOffset(float partialTicks) {
 		if (!running)

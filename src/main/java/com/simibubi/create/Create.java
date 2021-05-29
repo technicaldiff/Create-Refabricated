@@ -2,14 +2,6 @@ package com.simibubi.create;
 
 import java.util.Random;
 
-import com.simibubi.create.lib.event.BiomeLoadingCallback;
-import com.tterrag.registrate.fabric.EnvExecutor;
-
-import net.fabricmc.api.ModInitializer;
-
-import net.minecraft.world.biome.Biome;
-import net.minecraft.world.biome.BiomeGenerationSettings;
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -31,18 +23,16 @@ import com.simibubi.create.foundation.config.AllConfigs;
 import com.simibubi.create.foundation.data.CreateRegistrate;
 import com.simibubi.create.foundation.networking.AllPackets;
 import com.simibubi.create.foundation.worldgen.AllWorldFeatures;
+import com.simibubi.create.lib.event.BiomeLoadingCallback;
+import com.tterrag.registrate.fabric.EnvExecutor;
 import com.tterrag.registrate.util.NonNullLazyValue;
 
-import net.minecraft.data.DataGenerator;
-import net.minecraft.inventory.container.ContainerType;
-import net.minecraft.item.ItemGroup;
-import net.minecraft.item.crafting.IRecipeSerializer;
-import net.minecraft.particles.ParticleType;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.SoundEvent;
-import net.minecraft.world.gen.feature.Feature;
-import net.minecraft.world.gen.placement.Placement;
 import net.fabricmc.api.EnvType;
+import net.fabricmc.api.ModInitializer;
+import net.minecraft.item.ItemGroup;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.biome.Biome;
+import net.minecraft.world.biome.BiomeGenerationSettings;
 
 public class Create implements ModInitializer {
 
@@ -92,8 +82,8 @@ public class Create implements ModInitializer {
 
 //		modEventBus.addListener(Create::init); // I think this can just be run now
 		init();
-		modEventBus.addGenericListener(Feature.class, AllWorldFeatures::registerOreFeatures);
-		modEventBus.addGenericListener(Placement.class, AllWorldFeatures::registerDecoratorFeatures);
+//		modEventBus.addGenericListener(Feature.class, AllWorldFeatures::registerOreFeatures);
+//		modEventBus.addGenericListener(Placement.class, AllWorldFeatures::registerDecoratorFeatures);
 //		modEventBus.addGenericListener(IRecipeSerializer.class, AllRecipeTypes::register);
 //		modEventBus.addGenericListener(ParticleType.class, AllParticleTypes::register);
 //		modEventBus.addGenericListener(SoundEvent.class, AllSoundEvents::register);

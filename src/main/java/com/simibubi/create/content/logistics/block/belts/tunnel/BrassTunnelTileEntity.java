@@ -11,8 +11,6 @@ import java.util.Set;
 
 import javax.annotation.Nullable;
 
-import com.simibubi.create.lib.utility.NBTSerializer;
-
 import org.apache.commons.lang3.tuple.Pair;
 
 import com.simibubi.create.AllBlocks;
@@ -32,11 +30,12 @@ import com.simibubi.create.foundation.utility.Couple;
 import com.simibubi.create.foundation.utility.Iterate;
 import com.simibubi.create.foundation.utility.Lang;
 import com.simibubi.create.foundation.utility.NBTHelper;
-import com.simibubi.create.lib.utility.Constants.NBT;
 import com.simibubi.create.lib.lba.item.IItemHandler;
 import com.simibubi.create.lib.lba.item.ItemHandlerHelper;
+import com.simibubi.create.lib.utility.Constants.NBT;
 import com.simibubi.create.lib.utility.LazyOptional;
 import com.simibubi.create.lib.utility.LoadedCheckUtil;
+import com.simibubi.create.lib.utility.NBTSerializer;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.item.ItemEntity;
@@ -575,7 +574,7 @@ public class BrassTunnelTileEntity extends BeltTunnelTileEntity {
 		if (!clientPacket)
 			return;
 		if (wasConnectedLeft != connectedLeft || wasConnectedRight != connectedRight) {
-			requestModelDataUpdate();
+//			requestModelDataUpdate();
 			if (hasWorld())
 				world.notifyBlockUpdate(getPos(), getBlockState(), getBlockState(), 16);
 		}

@@ -11,6 +11,8 @@ import com.simibubi.create.lib.utility.LazyOptional;
 
 import com.simibubi.create.lib.utility.NBTSerializer;
 
+import com.simibubi.create.lib.utility.TransferUtil;
+
 import net.minecraft.block.ChestBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
@@ -44,7 +46,7 @@ public class MountedStorage {
 		if (te instanceof BarrelTileEntity)
 			return true;
 
-		LazyOptional<IItemHandler> capability = te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY);
+		LazyOptional<IItemHandler> capability = TransferUtil.getItemHandler(te);
 		return capability.orElse(null) instanceof ItemStackHandler;
 	}
 
@@ -78,7 +80,7 @@ public class MountedStorage {
 			te.updateContainingBlockInfo();
 		}
 
-		IItemHandler teHandler = te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY)
+		IItemHandler teHandler = TransferUtil.getItemHandler(te)
 			.orElse(dummyHandler);
 		if (teHandler == dummyHandler)
 			return;
@@ -109,7 +111,7 @@ public class MountedStorage {
 		if (handler instanceof BottomlessItemHandler)
 			return;
 
-		LazyOptional<IItemHandler> capability = te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY);
+		LazyOptional<IItemHandler> capability = TransferUtil.getItemHandler(te);
 		IItemHandler teHandler = capability.orElse(null);
 		if (!(teHandler instanceof IItemHandlerModifiable))
 			return;

@@ -1,13 +1,10 @@
 package com.simibubi.create.foundation.config.ui.entries;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
-import com.simibubi.create.foundation.gui.AllIcons;
 import com.simibubi.create.foundation.gui.RenderElement;
-import com.simibubi.create.foundation.gui.Theme;
-import com.simibubi.create.foundation.gui.UIRenderHelper;
 import com.simibubi.create.foundation.gui.widgets.BoxWidget;
 
-import net.minecraftforge.common.ForgeConfigSpec;
+import dev.inkwell.conrad.api.value.ValueKey;
 
 public class BooleanEntry extends ValueEntry<Boolean> {
 
@@ -15,23 +12,27 @@ public class BooleanEntry extends ValueEntry<Boolean> {
 	RenderElement disabled;
 	BoxWidget button;
 
-	public BooleanEntry(String label, ForgeConfigSpec.ConfigValue<Boolean> value, ForgeConfigSpec.ValueSpec spec) {
-		super(label, value, spec);
-
-		enabled = AllIcons.I_CONFIRM.asStencil()
-			.withElementRenderer((ms, width, height, alpha) -> UIRenderHelper.angledGradient(ms, 0, 0, height / 2, height, width, Theme.p(Theme.Key.BUTTON_SUCCESS)))
-			.at(10, 0);
-
-		disabled = AllIcons.I_DISABLE.asStencil()
-			.withElementRenderer((ms, width, height, alpha) -> UIRenderHelper.angledGradient(ms, 0, 0, height / 2, height, width, Theme.p(Theme.Key.BUTTON_FAIL)))
-			.at(10, 0);
-
-		button = new BoxWidget().showingElement(enabled)
-			.withCallback(() -> setValue(!getValue()));
-
-		listeners.add(button);
-		onReset();
+	public BooleanEntry(ValueKey<Boolean> key) {
+		super(key);
 	}
+
+//	public BooleanEntry(String label, ForgeConfigSpec.ConfigValue<Boolean> value, ForgeConfigSpec.ValueSpec spec) {
+//		super(label, value, spec);
+//
+//		enabled = AllIcons.I_CONFIRM.asStencil()
+//			.withElementRenderer((ms, width, height, alpha) -> UIRenderHelper.angledGradient(ms, 0, 0, height / 2, height, width, Theme.p(Theme.Key.BUTTON_SUCCESS)))
+//			.at(10, 0);
+//
+//		disabled = AllIcons.I_DISABLE.asStencil()
+//			.withElementRenderer((ms, width, height, alpha) -> UIRenderHelper.angledGradient(ms, 0, 0, height / 2, height, width, Theme.p(Theme.Key.BUTTON_FAIL)))
+//			.at(10, 0);
+//
+//		button = new BoxWidget().showingElement(enabled)
+//			.withCallback(() -> setValue(!getValue()));
+//
+//		listeners.add(button);
+//		onReset();
+//	}
 
 	@Override
 	protected void setEditable(boolean b) {
@@ -53,7 +54,7 @@ public class BooleanEntry extends ValueEntry<Boolean> {
 		button.x = x + width - 80 - resetWidth;
 		button.y = y + 10;
 		button.setWidth(35);
-		button.setHeight(height - 20);
+//		button.setHeight(height - 20);
 		button.render(ms, mouseX, mouseY, partialTicks);
 	}
 

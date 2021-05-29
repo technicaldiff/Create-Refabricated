@@ -1,19 +1,15 @@
 package com.simibubi.create.foundation.config.ui;
 
-import java.util.function.Supplier;
+import java.util.Objects;
 
-import com.simibubi.create.foundation.command.SConfigureConfigPacket;
-import com.simibubi.create.foundation.config.AllConfigs;
-import com.simibubi.create.foundation.networking.AllPackets;
-import com.simibubi.create.foundation.networking.SimplePacketBase;
+import com.simibubi.create.Create;
 
 import me.pepperbell.simplenetworking.C2SPacket;
 import me.pepperbell.simplenetworking.SimpleChannel;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.network.PacketBuffer;
-import net.minecraftforge.common.ForgeConfigSpec;
-import net.minecraftforge.fml.network.NetworkEvent;
-import net.minecraftforge.fml.network.PacketDistributor;
+import net.minecraft.network.play.ServerPlayNetHandler;
+import net.minecraft.server.MinecraftServer;
 
 public class CConfigureConfigPacket<T> implements C2SPacket {
 
@@ -45,27 +41,27 @@ public class CConfigureConfigPacket<T> implements C2SPacket {
 
 	@Override
 	public void handle(MinecraftServer server, ServerPlayerEntity sender, ServerPlayNetHandler handler, SimpleChannel.ResponseTarget responseTarget) {
-		context.get().enqueueWork(() -> {
+		server.execute(() -> { // Conrad does client <---> server syncing for us, so I don't think this is needed?
 			try {
-				ServerPlayerEntity sender = context.get().getSender();
+//				ServerPlayerEntity sender = context.get().getSender();
 				if (sender == null || !sender.hasPermissionLevel(2))
 					return;
 
-				ForgeConfigSpec spec = ConfigHelper.findConfigSpecFor(ModConfig.Type.SERVER, modID);
-				ForgeConfigSpec.ValueSpec valueSpec = spec.getRaw(path);
-				ForgeConfigSpec.ConfigValue<T> configValue = spec.getValues().get(path);
+//				ForgeConfigSpec spec = ConfigHelper.findConfigSpecFor(ModConfig.Type.SERVER, modID);
+//				ForgeConfigSpec.ValueSpec valueSpec = spec.getRaw(path);
+//				ForgeConfigSpec.ConfigValue<T> configValue = spec.getValues().get(path);
 
-				T v = (T) deserialize(configValue.get(), value);
-				if (!valueSpec.test(v))
-					return;
-
-				configValue.set(v);
+//				T v = (T) deserialize(configValue.get(), value);
+//				if (!valueSpec.test(v))
+//					return;
+//
+//				configValue.set(v);
 			} catch (Exception e) {
 				Create.LOGGER.warn("Unable to handle ConfigureConfig Packet. ", e);
 			}
 		});
 
-		context.get().setPacketHandled(true);
+//		context.get().setPacketHandled(true);
 	}
 
 	public String serialize(T value) {

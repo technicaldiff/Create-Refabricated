@@ -1,21 +1,14 @@
 package com.simibubi.create.foundation.config.ui.entries;
 
-import java.lang.reflect.Field;
 import java.util.function.Function;
 
 import javax.annotation.Nullable;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
-import com.simibubi.create.foundation.config.ui.ConfigTextField;
 import com.simibubi.create.foundation.gui.TextStencilElement;
-import com.simibubi.create.foundation.gui.Theme;
-import com.simibubi.create.foundation.gui.UIRenderHelper;
 
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.FontRenderer;
+import dev.inkwell.conrad.api.value.ValueKey;
 import net.minecraft.client.gui.widget.TextFieldWidget;
-import net.minecraft.util.text.StringTextComponent;
-import net.minecraftforge.common.ForgeConfigSpec;
 
 public abstract class NumberEntry<T extends Number> extends ValueEntry<T> {
 
@@ -23,68 +16,72 @@ public abstract class NumberEntry<T extends Number> extends ValueEntry<T> {
 	protected TextStencilElement minText = null, maxText = null;
 	protected TextFieldWidget textField;
 
+	public NumberEntry(ValueKey<T> key) {
+		super(key);
+	}
+
 	@Nullable
-	public static NumberEntry<? extends Number> create(Object type, String label, ForgeConfigSpec.ConfigValue<?> value, ForgeConfigSpec.ValueSpec spec) {
-		if (type instanceof Integer) {
-			return new IntegerEntry(label, (ForgeConfigSpec.ConfigValue<Integer>) value, spec);
-		} else if (type instanceof Float) {
-			return new FloatEntry(label, (ForgeConfigSpec.ConfigValue<Float>) value, spec);
-		} else if (type instanceof Double) {
-			return new DoubleEntry(label, (ForgeConfigSpec.ConfigValue<Double>) value, spec);
-		}
+//	public static NumberEntry<? extends Number> create(Object type, String label, ForgeConfigSpec.ConfigValue<?> value, ForgeConfigSpec.ValueSpec spec) {
+//		if (type instanceof Integer) {
+//			return new IntegerEntry(label, (ForgeConfigSpec.ConfigValue<Integer>) value, spec);
+//		} else if (type instanceof Float) {
+//			return new FloatEntry(label, (ForgeConfigSpec.ConfigValue<Float>) value, spec);
+//		} else if (type instanceof Double) {
+//			return new DoubleEntry(label, (ForgeConfigSpec.ConfigValue<Double>) value, spec);
+//		}
+//
+//		return null;
+//	}
 
-		return null;
-	}
+//	public NumberEntry(String label, ForgeConfigSpec.ConfigValue<T> value, ForgeConfigSpec.ValueSpec spec) {
+//		super(label, value, spec);
+//		textField = new ConfigTextField(Minecraft.getInstance().fontRenderer, 0, 0, 200, 20, unit);
+//		textField.setText(String.valueOf(getValue()));
+//		textField.setTextColor(Theme.i(Theme.Key.TEXT));
 
-	public NumberEntry(String label, ForgeConfigSpec.ConfigValue<T> value, ForgeConfigSpec.ValueSpec spec) {
-		super(label, value, spec);
-		textField = new ConfigTextField(Minecraft.getInstance().fontRenderer, 0, 0, 200, 20, unit);
-		textField.setText(String.valueOf(getValue()));
-		textField.setTextColor(Theme.i(Theme.Key.TEXT));
+//		Object range = spec.getRange();
+//		try {
+//			Field minField = range.getClass().getDeclaredField("min");
+//			Field maxField = range.getClass().getDeclaredField("max");
+//			minField.setAccessible(true);
+//			maxField.setAccessible(true);
+//			T min = (T) minField.get(range);
+//			T max = (T) maxField.get(range);
+//
+//			FontRenderer font = Minecraft.getInstance().fontRenderer;
+//			if (min.doubleValue() > getTypeMin().doubleValue()) {
+//				StringTextComponent t = new StringTextComponent(formatBound(min) + " < ");
+//				minText = new TextStencilElement(font, t).centered(true, false);
+//				minText.withElementRenderer((ms, width, height, alpha) -> UIRenderHelper.angledGradient(ms, 0 ,0, height/2, height, width, Theme.p(Theme.Key.TEXT_DARKER)));
+//				minOffset = font.getWidth(t);
+//			}
+//			if (max.doubleValue() < getTypeMax().doubleValue()) {
+//				StringTextComponent t = new StringTextComponent(" < " + formatBound(max));
+//				maxText = new TextStencilElement(font, t).centered(true, false);
+//				maxText.withElementRenderer((ms, width, height, alpha) -> UIRenderHelper.angledGradient(ms, 0 ,0, height/2, height, width, Theme.p(Theme.Key.TEXT_DARKER)));
+//				maxOffset = font.getWidth(t);
+//			}
+//		} catch (NoSuchFieldException | IllegalAccessException | ClassCastException | NullPointerException ignored) {
+//
+//		}
+//
+//		textField.setResponder(s -> {
+//			try {
+//				T number = getParser().apply(s);
+//				if (!spec.test(number))
+//					throw new IllegalArgumentException();
+//
+//				textField.setTextColor(Theme.i(Theme.Key.TEXT));
+//				setValue(number);
+//
+//			} catch (IllegalArgumentException ignored) {
+//				textField.setTextColor(Theme.i(Theme.Key.BUTTON_FAIL));
+//			}
+//		});
 
-		Object range = spec.getRange();
-		try {
-			Field minField = range.getClass().getDeclaredField("min");
-			Field maxField = range.getClass().getDeclaredField("max");
-			minField.setAccessible(true);
-			maxField.setAccessible(true);
-			T min = (T) minField.get(range);
-			T max = (T) maxField.get(range);
-
-			FontRenderer font = Minecraft.getInstance().fontRenderer;
-			if (min.doubleValue() > getTypeMin().doubleValue()) {
-				StringTextComponent t = new StringTextComponent(formatBound(min) + " < ");
-				minText = new TextStencilElement(font, t).centered(true, false);
-				minText.withElementRenderer((ms, width, height, alpha) -> UIRenderHelper.angledGradient(ms, 0 ,0, height/2, height, width, Theme.p(Theme.Key.TEXT_DARKER)));
-				minOffset = font.getWidth(t);
-			}
-			if (max.doubleValue() < getTypeMax().doubleValue()) {
-				StringTextComponent t = new StringTextComponent(" < " + formatBound(max));
-				maxText = new TextStencilElement(font, t).centered(true, false);
-				maxText.withElementRenderer((ms, width, height, alpha) -> UIRenderHelper.angledGradient(ms, 0 ,0, height/2, height, width, Theme.p(Theme.Key.TEXT_DARKER)));
-				maxOffset = font.getWidth(t);
-			}
-		} catch (NoSuchFieldException | IllegalAccessException | ClassCastException | NullPointerException ignored) {
-
-		}
-
-		textField.setResponder(s -> {
-			try {
-				T number = getParser().apply(s);
-				if (!spec.test(number))
-					throw new IllegalArgumentException();
-
-				textField.setTextColor(Theme.i(Theme.Key.TEXT));
-				setValue(number);
-
-			} catch (IllegalArgumentException ignored) {
-				textField.setTextColor(Theme.i(Theme.Key.BUTTON_FAIL));
-			}
-		});
-
-		listeners.add(textField);
-		onReset();
-	}
+//		listeners.add(textField);
+//		onReset();
+//	}
 
 	protected String formatBound(T bound) {
 		String sci = String.format("%.2E", bound.doubleValue());
@@ -127,7 +124,7 @@ public abstract class NumberEntry<T extends Number> extends ValueEntry<T> {
 		textField.x = x + width - 82 - resetWidth;
 		textField.y = y + 8;
 		textField.setWidth(Math.min(width - getLabelWidth(width) - resetWidth - minOffset - maxOffset, 40));
-		textField.setHeight(20);
+//		textField.setHeight(20);
 		textField.render(ms, mouseX, mouseY, partialTicks);
 
 		if (minText != null)
@@ -144,10 +141,13 @@ public abstract class NumberEntry<T extends Number> extends ValueEntry<T> {
 	}
 
 	public static class IntegerEntry extends NumberEntry<Integer> {
-
-		public IntegerEntry(String label, ForgeConfigSpec.ConfigValue<Integer> value, ForgeConfigSpec.ValueSpec spec) {
-			super(label, value, spec);
+		public IntegerEntry(ValueKey<Integer> key) {
+			super(key);
 		}
+
+//		public IntegerEntry(String label, ForgeConfigSpec.ConfigValue<Integer> value, ForgeConfigSpec.ValueSpec spec) {
+//			super(label, value, spec);
+//		}
 
 		@Override
 		protected Integer getTypeMin() {
@@ -166,10 +166,13 @@ public abstract class NumberEntry<T extends Number> extends ValueEntry<T> {
 	}
 
 	public static class FloatEntry extends NumberEntry<Float> {
-
-		public FloatEntry(String label, ForgeConfigSpec.ConfigValue<Float> value, ForgeConfigSpec.ValueSpec spec) {
-			super(label, value, spec);
+		public FloatEntry(ValueKey<Float> key) {
+			super(key);
 		}
+
+//		public FloatEntry(String label, ForgeConfigSpec.ConfigValue<Float> value, ForgeConfigSpec.ValueSpec spec) {
+//			super(label, value, spec);
+//		}
 
 		@Override
 		protected Float getTypeMin() {
@@ -188,10 +191,13 @@ public abstract class NumberEntry<T extends Number> extends ValueEntry<T> {
 	}
 
 	public static class DoubleEntry extends NumberEntry<Double> {
-
-		public DoubleEntry(String label, ForgeConfigSpec.ConfigValue<Double> value, ForgeConfigSpec.ValueSpec spec) {
-			super(label, value, spec);
+		public DoubleEntry(ValueKey<Double> key) {
+			super(key);
 		}
+
+//		public DoubleEntry(String label, ForgeConfigSpec.ConfigValue<Double> value, ForgeConfigSpec.ValueSpec spec) {
+//			super(label, value, spec);
+//		}
 
 		@Override
 		protected Double getTypeMin() {

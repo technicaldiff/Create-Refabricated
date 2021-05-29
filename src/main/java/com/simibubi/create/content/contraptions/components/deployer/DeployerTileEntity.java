@@ -369,10 +369,10 @@ public class DeployerTileEntity extends KineticTileEntity {
 			: heldItem.isEmpty() ? AllBlockPartials.DEPLOYER_HAND_POINTING : AllBlockPartials.DEPLOYER_HAND_HOLDING;
 	}
 
-	@Override
-	public AxisAlignedBB makeRenderBoundingBox() {
-		return super.makeRenderBoundingBox().grow(3);
-	}
+//	@Override
+//	public AxisAlignedBB makeRenderBoundingBox() {
+//		return super.makeRenderBoundingBox().grow(3);
+//	}
 
 	@Override
 	public void remove() {

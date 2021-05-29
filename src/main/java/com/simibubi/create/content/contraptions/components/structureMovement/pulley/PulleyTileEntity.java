@@ -19,7 +19,6 @@ import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.Direction;
-import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.vector.Vector3d;
@@ -33,16 +32,16 @@ public class PulleyTileEntity extends LinearActuatorTileEntity {
 		super(type);
 	}
 
-	@Override
-	public AxisAlignedBB makeRenderBoundingBox() {
-		return super.makeRenderBoundingBox().expand(0, -offset, 0);
-	}
+//	@Override
+//	public AxisAlignedBB makeRenderBoundingBox() {
+//		return super.makeRenderBoundingBox().expand(0, -offset, 0);
+//	}
 
 	@Override
 	public double getMaxRenderDistanceSquared() {
 		return super.getMaxRenderDistanceSquared() + offset * offset;
 	}
-	
+
 	@Override
 	public void tick() {
 		super.tick();
@@ -200,7 +199,7 @@ public class PulleyTileEntity extends LinearActuatorTileEntity {
 		initialOffset = compound.getInt("InitialOffset");
 		super.fromTag(state, compound, clientPacket);
 	}
-	
+
 	@Override
 	public void write(CompoundNBT compound, boolean clientPacket) {
 		compound.putInt("InitialOffset", initialOffset);
@@ -234,7 +233,7 @@ public class PulleyTileEntity extends LinearActuatorTileEntity {
 		boolean moving = running && (movedContraption == null || !movedContraption.isStalled());
 		return super.getInterpolatedOffset(moving ? partialTicks : 0.5f);
 	}
-	
+
 	public void animateOffset(float forcedOffset) {
 		offset = forcedOffset;
 	}

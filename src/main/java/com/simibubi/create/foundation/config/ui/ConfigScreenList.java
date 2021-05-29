@@ -7,10 +7,10 @@ import org.lwjgl.opengl.GL11;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
-import com.simibubi.create.foundation.config.ui.entries.NumberEntry;
 import com.simibubi.create.foundation.gui.TextStencilElement;
 import com.simibubi.create.foundation.gui.Theme;
 import com.simibubi.create.foundation.gui.UIRenderHelper;
+import com.simibubi.create.lib.utility.GuiUtils;
 
 import net.minecraft.client.MainWindow;
 import net.minecraft.client.Minecraft;
@@ -21,7 +21,6 @@ import net.minecraft.client.gui.widget.TextFieldWidget;
 import net.minecraft.client.gui.widget.list.ExtendedList;
 import net.minecraft.util.text.IFormattableTextComponent;
 import net.minecraft.util.text.ITextComponent;
-import net.minecraftforge.fml.client.gui.GuiUtils;
 
 public class ConfigScreenList extends ExtendedList<ConfigScreenList.Entry> {
 
@@ -31,8 +30,8 @@ public class ConfigScreenList extends ExtendedList<ConfigScreenList.Entry> {
 
 	public ConfigScreenList(Minecraft client, int width, int height, int top, int bottom, int elementHeight) {
 		super(client, width, height, top, bottom, elementHeight);
-		func_244605_b(false);
-		func_244606_c(false);
+		method_31322(false);
+		method_31323(false);
 		setRenderSelection(false);
 		currentText = null;
 		headerHeight = 3;
@@ -59,7 +58,7 @@ public class ConfigScreenList extends ExtendedList<ConfigScreenList.Entry> {
 
 	@Override
 	public boolean mouseClicked(double x, double y, int button) {
-		children().stream().filter(e -> e instanceof NumberEntry<?>).forEach(e -> e.mouseClicked(x, y, button));
+		children().stream().filter(e -> true/*e instanceof NumberEntry<?>*/).forEach(e -> e.mouseClicked(x, y, button));
 
 		return super.mouseClicked(x, y, button);
 	}

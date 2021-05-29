@@ -6,7 +6,6 @@ import com.simibubi.create.foundation.gui.widgets.InterpolatedChasingValue;
 import net.minecraft.block.BlockState;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntityType;
-import net.minecraft.util.math.AxisAlignedBB;
 
 public class FlywheelTileEntity extends GeneratingKineticTileEntity {
 
@@ -48,10 +47,10 @@ public class FlywheelTileEntity extends GeneratingKineticTileEntity {
 		return lastCapacityProvided = generatedCapacity;
 	}
 
-	@Override
-	public AxisAlignedBB makeRenderBoundingBox() {
-		return super.makeRenderBoundingBox().grow(2);
-	}
+//	@Override
+//	public AxisAlignedBB makeRenderBoundingBox() {
+//		return super.makeRenderBoundingBox().grow(2);
+//	}
 
 	@Override
 	public void write(CompoundNBT compound, boolean clientPacket) {

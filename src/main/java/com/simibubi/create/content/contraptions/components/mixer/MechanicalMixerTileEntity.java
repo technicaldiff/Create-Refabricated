@@ -19,7 +19,6 @@ import com.simibubi.create.foundation.utility.AnimationTickHolder;
 import com.simibubi.create.foundation.utility.Couple;
 import com.simibubi.create.foundation.utility.VecHelper;
 import com.simibubi.create.lib.lba.item.IItemHandler;
-
 import com.simibubi.create.lib.utility.TransferUtil;
 
 import net.fabricmc.api.EnvType;
@@ -37,7 +36,6 @@ import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.Direction.Axis;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvents;
-import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.vector.Vector3d;
 
@@ -88,10 +86,10 @@ public class MechanicalMixerTileEntity extends BasinOperatingTileEntity {
 		return speed / 2;
 	}
 
-	@Override
-	public AxisAlignedBB makeRenderBoundingBox() {
-		return new AxisAlignedBB(pos).expand(0, -1.5, 0);
-	}
+//	@Override
+//	public AxisAlignedBB makeRenderBoundingBox() {
+//		return new AxisAlignedBB(pos).expand(0, -1.5, 0);
+//	}
 
 	@Override
 	protected void fromTag(BlockState state, CompoundNBT compound, boolean clientPacket) {

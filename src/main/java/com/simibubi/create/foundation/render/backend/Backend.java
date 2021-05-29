@@ -18,6 +18,7 @@ import com.simibubi.create.foundation.render.backend.instancing.IFlywheelWorld;
 import net.minecraft.client.Minecraft;
 import net.minecraft.resources.IReloadableResourceManager;
 import net.minecraft.resources.IResourceManager;
+import net.minecraft.resources.IResourceManagerReloadListener;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.vector.Matrix4f;
 import net.minecraft.world.World;
@@ -91,7 +92,7 @@ public class Backend {
 		IResourceManager manager = mc.getResourceManager();
 
 		if (manager instanceof IReloadableResourceManager) {
-			ISelectiveResourceReloadListener listener = shaderLoader::onResourceManagerReload;
+			IResourceManagerReloadListener listener = shaderLoader::onResourceManagerReload;
 			((IReloadableResourceManager) manager).addReloadListener(listener);
 		}
 	}

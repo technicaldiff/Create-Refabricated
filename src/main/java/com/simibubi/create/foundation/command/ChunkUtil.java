@@ -4,28 +4,25 @@ import java.util.EnumSet;
 import java.util.LinkedList;
 import java.util.List;
 
-import com.simibubi.create.lib.helper.ChunkManagerHelper;
-
-import net.fabricmc.fabric.api.event.lifecycle.v1.ServerChunkEvents;
-
-import net.minecraft.world.chunk.Chunk;
-import net.minecraft.world.server.ServerWorld;
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import com.simibubi.create.lib.helper.ChunkManagerHelper;
+
+import net.fabricmc.fabric.api.event.lifecycle.v1.ServerChunkEvents;
 import net.minecraft.util.math.ChunkPos;
-import net.minecraft.world.chunk.ChunkStatus;
+import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.gen.Heightmap;
 import net.minecraft.world.server.ChunkHolder;
 import net.minecraft.world.server.ServerChunkProvider;
+import net.minecraft.world.server.ServerWorld;
 
 public class ChunkUtil {
 	private static final Logger LOGGER = LogManager.getLogger("Create/ChunkUtil");
-	final EnumSet<Heightmap.Type> POST_FEATURES = EnumSet.of(Heightmap.Type.OCEAN_FLOOR, Heightmap.Type.WORLD_SURFACE,
+	public final EnumSet<Heightmap.Type> POST_FEATURES = EnumSet.of(Heightmap.Type.OCEAN_FLOOR, Heightmap.Type.WORLD_SURFACE,
 		Heightmap.Type.MOTION_BLOCKING, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES);
 
-	private final List<Long> markedChunks;
+	public final List<Long> markedChunks;
 	private final List<Long> interestingChunks;
 
 	public ChunkUtil() {
@@ -35,20 +32,21 @@ public class ChunkUtil {
 	}
 
 	public void init() {
-		ChunkStatus.FULL =
-			new ChunkStatus("full", ChunkStatus.HEIGHTMAPS, 0, POST_FEATURES, ChunkStatus.Type.LEVELCHUNK,
-				(_0, _1, _2, _3, _4, future, _6, chunk) -> future.apply(chunk), (_0, _1, _2, _3, future, chunk) -> {
-					if (markedChunks.contains(chunk.getPos()
-						.asLong())) {
-						LOGGER.debug("trying to load unforced chunk " + chunk.getPos()
-							.toString() + ", returning chunk loading error");
-						// this.reloadChunk(world.getChunkProvider(), chunk.getPos());
-						return ChunkHolder.MISSING_CHUNK_FUTURE;
-					} else {
-						// LOGGER.debug("regular, chunkStatus: " + chunk.getStatus().toString());
-						return future.apply(chunk);
-					}
-				});
+		// now done via mixin crimes, ChunkStatusMixin
+//		ChunkStatus.FULL =
+//			new ChunkStatus("full", ChunkStatus.HEIGHTMAPS, 0, POST_FEATURES, ChunkStatus.Type.LEVELCHUNK,
+//				(_0, _1, _2, _3, _4, future, _6, chunk) -> future.apply(chunk), (_0, _1, _2, _3, future, chunk) -> {
+//					if (markedChunks.contains(chunk.getPos()
+//						.asLong())) {
+//						LOGGER.debug("trying to load unforced chunk " + chunk.getPos()
+//							.toString() + ", returning chunk loading error");
+//						// this.reloadChunk(world.getChunkProvider(), chunk.getPos());
+//						return ChunkHolder.MISSING_CHUNK_FUTURE;
+//					} else {
+//						// LOGGER.debug("regular, chunkStatus: " + chunk.getStatus().toString());
+//						return future.apply(chunk);
+//					}
+//				});
 
 		ServerChunkEvents.CHUNK_LOAD.register(this::chunkLoad);
 		ServerChunkEvents.CHUNK_UNLOAD.register(this::chunkUnload);

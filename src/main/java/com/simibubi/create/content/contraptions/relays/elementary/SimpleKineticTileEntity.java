@@ -9,7 +9,6 @@ import com.simibubi.create.foundation.tileEntity.TileEntityBehaviour;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.tileentity.TileEntityType;
-import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 
 public class SimpleKineticTileEntity extends KineticTileEntity {
@@ -25,10 +24,10 @@ public class SimpleKineticTileEntity extends KineticTileEntity {
 		super.addBehaviours(behaviours);
 	}
 
-	@Override
-	public AxisAlignedBB makeRenderBoundingBox() {
-		return new AxisAlignedBB(pos).grow(1);
-	}
+//	@Override
+//	public AxisAlignedBB makeRenderBoundingBox() {
+//		return new AxisAlignedBB(pos).grow(1);
+//	}
 
 	@Override
 	public List<BlockPos> addPropagationLocations(IRotate block, BlockState state, List<BlockPos> neighbours) {

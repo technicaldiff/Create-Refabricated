@@ -10,7 +10,6 @@ import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.Direction;
-import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.vector.Vector3d;
 
 public class CrushingWheelTileEntity extends KineticTileEntity {
@@ -34,10 +33,10 @@ public class CrushingWheelTileEntity extends KineticTileEntity {
 					d);
 	}
 
-	@Override
-	public AxisAlignedBB makeRenderBoundingBox() {
-		return new AxisAlignedBB(pos).grow(1);
-	}
+//	@Override
+//	public AxisAlignedBB makeRenderBoundingBox() {
+//		return new AxisAlignedBB(pos).grow(1);
+//	}
 
 	@Override
 	public void lazyTick() {

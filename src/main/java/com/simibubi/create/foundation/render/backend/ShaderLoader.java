@@ -17,7 +17,6 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
-import java.util.function.Predicate;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
@@ -50,8 +49,8 @@ public class ShaderLoader {
 
 	final Map<ResourceLocation, String> shaderSource = new HashMap<>();
 
-	void onResourceManagerReload(IResourceManager manager, Predicate<IResourceType> predicate) {
-		if (predicate.test(VanillaResourceType.SHADERS)) {
+	void onResourceManagerReload(IResourceManager manager/*, Predicate<IResourceType> predicate*/) {
+//		if (predicate.test(VanillaResourceType.SHADERS)) { // can't figure out a way to tell on Fabric. Resource reloads already take ages, hoping this won't hurt that bad to always run.
 			OptifineHandler.refresh();
 			Backend.refresh();
 
@@ -65,7 +64,7 @@ public class ShaderLoader {
 
 				Backend.log.info("Loaded all shader programs.");
 			}
-		}
+//		}
 	}
 
 	private void loadShaderSources(IResourceManager manager) {

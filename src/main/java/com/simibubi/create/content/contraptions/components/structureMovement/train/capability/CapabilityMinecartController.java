@@ -16,9 +16,7 @@ import com.simibubi.create.Create;
 import com.simibubi.create.content.contraptions.components.structureMovement.train.CouplingHandler;
 import com.simibubi.create.foundation.utility.Iterate;
 import com.simibubi.create.foundation.utility.WorldAttached;
-import com.simibubi.create.lib.extensions.AbstractMinecartEntityExtensions;
 import com.simibubi.create.lib.utility.LazyOptional;
-import com.simibubi.create.lib.utility.ListenerProvider;
 import com.simibubi.create.lib.utility.MinecartAndRailUtil;
 import com.simibubi.create.lib.utility.NBTSerializable;
 import com.tterrag.registrate.util.nullness.NonNullConsumer;
@@ -212,7 +210,7 @@ public class CapabilityMinecartController implements NBTSerializable/*ICapabilit
 		CapabilityMinecartController capability = new CapabilityMinecartController(cart);
 		ResourceLocation id = Create.asResource("minecart_controller");
 //		event.addCapability(id, capability);
-		((ListenerProvider) ((AbstractMinecartEntityExtensions) cart).getController()).addListener((controller) -> {
+		((MinecartController) MinecartAndRailUtil.getController(cart)).addListener((controller) -> {
 			if (capability.cap.isPresent())
 				capability.cap.invalidate();
 		});
@@ -263,12 +261,12 @@ public class CapabilityMinecartController implements NBTSerializable/*ICapabilit
 
 	@Override
 	public CompoundNBT create$serializeNBT() {
-		return handler.serializeNBT();
+		return handler.create$serializeNBT();
 	}
 
 	@Override
 	public void create$deserializeNBT(CompoundNBT nbt) {
-		handler.deserializeNBT(nbt);
+		handler.create$deserializeNBT(nbt);
 	}
 
 }

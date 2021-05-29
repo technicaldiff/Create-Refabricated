@@ -39,9 +39,11 @@ import com.simibubi.create.lib.lba.item.IItemHandler;
 import com.simibubi.create.lib.lba.item.ItemHandlerHelper;
 import com.simibubi.create.lib.utility.LazyOptional;
 import com.simibubi.create.lib.utility.LoadedCheckUtil;
-
 import com.simibubi.create.lib.utility.NBTSerializer;
+import com.simibubi.create.lib.utility.TransferUtil;
 
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.PistonHeadBlock;
@@ -65,7 +67,6 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.Direction;
 import net.minecraft.util.Direction.AxisDirection;
-import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MutableBoundingBox;
 import net.minecraft.util.registry.Registry;
@@ -73,8 +74,6 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.world.gen.feature.template.PlacementSettings;
 import net.minecraft.world.gen.feature.template.Template;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
 
 public class SchematicannonTileEntity extends SmartTileEntity implements INamedContainerProvider, IInstanceRendered, CustomRenderBoundingBox {
 
@@ -175,7 +174,8 @@ public class SchematicannonTileEntity extends SmartTileEntity implements INamedC
 			TileEntity tileEntity = world.getTileEntity(pos.offset(facing));
 			if (tileEntity != null) {
 				LazyOptional<IItemHandler> capability =
-					tileEntity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, facing.getOpposite());
+						TransferUtil.getItemHandler(tileEntity, facing.getOpposite());
+
 				if (capability.isPresent()) {
 					attachedInventories.add(capability);
 				}

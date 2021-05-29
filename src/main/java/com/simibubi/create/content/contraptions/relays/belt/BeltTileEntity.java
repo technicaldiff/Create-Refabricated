@@ -48,7 +48,6 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.Direction;
 import net.minecraft.util.Direction.Axis;
-import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.util.math.vector.Vector3i;
@@ -148,13 +147,13 @@ public class BeltTileEntity extends KineticTileEntity implements LightUpdateList
 		return super.calculateStressApplied();
 	}
 
-	@Override
-	public AxisAlignedBB makeRenderBoundingBox() {
-		if (!isController())
-			return super.makeRenderBoundingBox();
-		else
-			return super.makeRenderBoundingBox().grow(beltLength + 1);
-	}
+//	@Override
+//	public AxisAlignedBB makeRenderBoundingBox() {
+//		if (!isController())
+//			return super.makeRenderBoundingBox();
+//		else
+//			return super.makeRenderBoundingBox().grow(beltLength + 1);
+//	}
 
 	protected void initializeItemHandler() {
 		if (world.isRemote || itemHandler != null)
@@ -233,7 +232,7 @@ public class BeltTileEntity extends KineticTileEntity implements LightUpdateList
 		if (casingBefore == casing)
 			return;
 		if (!isVirtual())
-			requestModelDataUpdate();
+//			requestModelDataUpdate();
 		if (hasWorld())
 			world.notifyBlockUpdate(getPos(), getBlockState(), getBlockState(), 16);
 	}
