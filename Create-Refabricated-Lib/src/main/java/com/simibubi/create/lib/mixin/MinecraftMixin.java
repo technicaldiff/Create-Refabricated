@@ -60,7 +60,7 @@ public abstract class MinecraftMixin {
 		ClientWorldEvents.UNLOAD.invoker().onWorldUnload((Minecraft) (Object) this, this.world);
 	}
 
-	@Inject(method = "clickMouse()V", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/player/PlayerEntity;resetCooldown()V"))
+	@Inject(method = "clickMouse()V", at = @At(value = "FIELD", ordinal = 2, target = "Lnet/minecraft/client/Minecraft;player:Lnet/minecraft/client/entity/player/ClientPlayerEntity;"))
 	private void create$onClickMouse(CallbackInfo ci) {
 		LeftClickAirCallback.EVENT.invoker().onLeftClickAir(player);
 	}
