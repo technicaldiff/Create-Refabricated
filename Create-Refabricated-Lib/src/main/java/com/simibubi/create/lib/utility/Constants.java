@@ -21,4 +21,9 @@ public class Constants {
 		public static final int DEFAULT = NOTIFY_NEIGHBORS | BLOCK_UPDATE; // 3
 		public static final int DEFAULT_AND_RERENDER = DEFAULT | RERENDER_MAIN_THREAD; // 11
 	}
+
+	public static class crafting {
+		public static int HEIGHT = 3;
+		public static int WIDTH = 3;
+	}
 }

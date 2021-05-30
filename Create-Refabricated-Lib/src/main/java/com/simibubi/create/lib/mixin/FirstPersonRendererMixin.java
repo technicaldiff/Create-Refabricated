@@ -25,34 +25,12 @@ import net.minecraft.util.Hand;
 @Environment(EnvType.CLIENT)
 @Mixin(FirstPersonRenderer.class)
 public abstract class FirstPersonRendererMixin {
+	private static int slotMainHand = 0;
 	@Shadow
 	private ItemStack itemStackMainHand;
-
 	@Shadow
 	private ItemStack itemStackOffHand;
 
-	@Inject(at = @At("HEAD"), method = "renderFirstPersonItem(Lnet/minecraft/client/entity/player/AbstractClientPlayerEntity;FFLnet/minecraft/util/Hand;FLnet/minecraft/item/ItemStack;FLcom/mojang/blaze3d/matrix/MatrixStack;Lnet/minecraft/client/renderer/IRenderTypeBuffer;I)V", cancellable = true)
-	private void create$onRenderFirstPersonItem(AbstractClientPlayerEntity player, float tickDelta, float pitch, Hand hand, float swingProgress, ItemStack stack, float equipProgress, MatrixStack matrices, IRenderTypeBuffer vertexConsumers, int light, CallbackInfo ci) {
-		if (RenderHandCallback.EVENT.invoker().onRenderHand(player, hand, stack, matrices, vertexConsumers, tickDelta, pitch, swingProgress, equipProgress, light)) {
-			ci.cancel();
-		}
-	}
-
-	@Inject(at = @At(value = "INVOKE", shift = At.Shift.AFTER, target = "Lnet/minecraft/entity/player/PlayerEntity;getCooledAttackStrength(F)F"),
-	locals = LocalCapture.CAPTURE_FAILEXCEPTION,
-	method = "Lnet/minecraft/client/renderer/FirstPersonRenderer;tick()V")
-	public void tick(CallbackInfo ci,
-					 ClientPlayerEntity clientPlayerEntity, ItemStack itemStack, ItemStack itemStack2) {
-		if (create$shouldCauseReequipAnimation(itemStackMainHand, itemStack, clientPlayerEntity.inventory.currentItem)) {
-			itemStackMainHand = itemStack;
-		}
-
-		if (create$shouldCauseReequipAnimation(itemStackOffHand, itemStack2, -1)) {
-			itemStackOffHand = itemStack2;
-		}
-	}
-
-	private static int slotMainHand = 0;
 	static boolean create$shouldCauseReequipAnimation(@Nonnull ItemStack from, @Nonnull ItemStack to, int slot) {
 		if (from.isEmpty() && to.isEmpty()) return false;
 		if (from.isEmpty() || to.isEmpty()) return true;
@@ -63,5 +41,26 @@ public abstract class FirstPersonRendererMixin {
 			slotMainHand = slot;
 		}
 		return ((ItemExtensions) from.getItem()).create$shouldCauseReequipAnimation(from, to, changed);
+	}
+
+	@Inject(at = @At("HEAD"), method = "renderFirstPersonItem(Lnet/minecraft/client/entity/player/AbstractClientPlayerEntity;FFLnet/minecraft/util/Hand;FLnet/minecraft/item/ItemStack;FLcom/mojang/blaze3d/matrix/MatrixStack;Lnet/minecraft/client/renderer/IRenderTypeBuffer;I)V", cancellable = true)
+	private void create$onRenderFirstPersonItem(AbstractClientPlayerEntity player, float tickDelta, float pitch, Hand hand, float swingProgress, ItemStack stack, float equipProgress, MatrixStack matrices, IRenderTypeBuffer vertexConsumers, int light, CallbackInfo ci) {
+		if (RenderHandCallback.EVENT.invoker().onRenderHand(player, hand, stack, matrices, vertexConsumers, tickDelta, pitch, swingProgress, equipProgress, light)) {
+			ci.cancel();
+		}
+	}
+
+	@Inject(at = @At(value = "INVOKE", shift = At.Shift.AFTER, target = "Lnet/minecraft/entity/player/PlayerEntity;getCooledAttackStrength(F)F"),
+			locals = LocalCapture.CAPTURE_FAILEXCEPTION,
+			method = "Lnet/minecraft/client/renderer/FirstPersonRenderer;tick()V")
+	public void tick(CallbackInfo ci,
+					 ClientPlayerEntity clientPlayerEntity, ItemStack itemStack, ItemStack itemStack2) {
+		if (create$shouldCauseReequipAnimation(itemStackMainHand, itemStack, clientPlayerEntity.inventory.currentItem)) {
+			itemStackMainHand = itemStack;
+		}
+
+		if (create$shouldCauseReequipAnimation(itemStackOffHand, itemStack2, -1)) {
+			itemStackOffHand = itemStack2;
+		}
 	}
 }

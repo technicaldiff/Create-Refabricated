@@ -8,6 +8,7 @@ import net.minecraft.advancements.ICriterionTrigger;
 
 /**
  * Use the Fabric API version instead.
+ *
  * @see net.fabricmc.fabric.api.object.builder.v1.advancement.CriterionRegistry
  */
 @Deprecated

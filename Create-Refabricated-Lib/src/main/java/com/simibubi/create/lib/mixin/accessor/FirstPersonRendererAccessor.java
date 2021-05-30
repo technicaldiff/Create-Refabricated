@@ -9,8 +9,8 @@ import net.minecraft.item.ItemStack;
 @Mixin(FirstPersonRenderer.class)
 public interface FirstPersonRendererAccessor {
 	@Accessor("itemStackMainHand")
-	public ItemStack getItemStackMainHand();
+	ItemStack getItemStackMainHand();
 
 	@Accessor("itemStackOffHand")
-	public ItemStack getItemStackOffHand();
+	ItemStack getItemStackOffHand();
 }

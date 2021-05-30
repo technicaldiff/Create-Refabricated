@@ -11,9 +11,9 @@ import net.minecraft.entity.item.ExperienceOrbEntity;
 import net.minecraft.util.math.BlockPos;
 
 @Mixin(ExperienceOrbEntity.class)
-public class ExperienceOrbEntityMixin {
+public abstract class ExperienceOrbEntityMixin {
 	@ModifyVariable(at = @At(value = "INVOKE", shift = At.Shift.AFTER, target = "Lnet/minecraft/block/Block;getSlipperiness()F"),
-					method = "tick()V")
+			method = "tick()V")
 	public float create$setSlipperiness(float g) {
 		BlockPos create$pos = new BlockPos(
 				MixinHelper.<ExperienceOrbEntity>cast(this).getX(),

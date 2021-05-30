@@ -9,5 +9,5 @@ import net.minecraft.client.renderer.entity.layers.LayerRenderer;
 @Mixin(LivingRenderer.class)
 public interface LivingRendererAccessor {
 	@Invoker("addLayer")
-	public boolean addLayer(LayerRenderer layerRenderer);
+	boolean addLayer(LayerRenderer layerRenderer);
 }

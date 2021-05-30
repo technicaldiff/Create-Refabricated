@@ -9,5 +9,5 @@ import net.minecraft.item.BucketItem;
 @Mixin(BucketItem.class)
 public interface BucketItemAccessor {
 	@Accessor("containedBlock")
-	public Fluid getContainedBlock();
+	Fluid getContainedBlock();
 }

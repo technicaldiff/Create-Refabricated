@@ -13,5 +13,5 @@ import net.minecraft.client.particle.ParticleManager;
 @Mixin(ParticleManager.class)
 public interface ParticleManagerAccessor {
 	@Accessor("factories")
-	public Int2ObjectMap<IParticleFactory<?>> getFactories();
+	Int2ObjectMap<IParticleFactory<?>> getFactories();
 }

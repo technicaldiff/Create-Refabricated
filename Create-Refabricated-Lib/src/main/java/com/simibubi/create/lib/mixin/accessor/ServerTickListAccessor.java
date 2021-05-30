@@ -11,5 +11,5 @@ import net.minecraft.world.server.ServerTickList;
 @Mixin(ServerTickList.class)
 public interface ServerTickListAccessor {
 	@Accessor("pendingTickListEntriesHashSet")
-	public Set<NextTickListEntry> getPendingTickListEntriesHashSet();
+	Set<NextTickListEntry> getPendingTickListEntriesHashSet();
 }

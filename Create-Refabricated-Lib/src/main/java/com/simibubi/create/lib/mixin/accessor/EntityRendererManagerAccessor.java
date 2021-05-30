@@ -13,8 +13,8 @@ import net.minecraft.entity.EntityType;
 @Mixin(EntityRendererManager.class)
 public interface EntityRendererManagerAccessor {
 	@Accessor("playerRenderer")
-	public PlayerRenderer getPlayerRenderer();
+	PlayerRenderer getPlayerRenderer();
 
 	@Accessor("renderers")
-	public Map<EntityType<?>, EntityRenderer<?>> getRenderers();
+	Map<EntityType<?>, EntityRenderer<?>> getRenderers();
 }

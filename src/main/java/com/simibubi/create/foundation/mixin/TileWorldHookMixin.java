@@ -32,7 +32,7 @@ public class TileWorldHookMixin {
 	@Final
 	protected List<TileEntity> tileEntitiesToBeRemoved;
 
-	@Inject(at = @At("TAIL"), method = "addTileEntity")
+	@Inject(at = @At("TAIL"), method = "addTileEntity(Lnet/minecraft/tileentity/TileEntity;)Z")
 	private void onAddTile(TileEntity te, CallbackInfoReturnable<Boolean> cir) {
 		if (isRemote) {
 			CreateClient.KINETIC_RENDERER.get(self)
@@ -43,8 +43,8 @@ public class TileWorldHookMixin {
 	/**
 	 * Without this we don't unload instances when a chunk unloads.
 	 */
-	@Inject(at = @At(value = "INVOKE", target = "Ljava/util/Set;clear()V", ordinal = 0), method = "tickBlockEntities")
-	private void onChunkUnload(CallbackInfo ci) {
+	@Inject(at = @At(value = "INVOKE", target = "Ljava/util/List;clear()V"), method = "tickBlockEntities()V")
+	public void onChunkUnload(CallbackInfo ci) {
 		if (isRemote) {
 			KineticRenderer kineticRenderer = CreateClient.KINETIC_RENDERER.get(self);
 			for (TileEntity tile : tileEntitiesToBeRemoved) {

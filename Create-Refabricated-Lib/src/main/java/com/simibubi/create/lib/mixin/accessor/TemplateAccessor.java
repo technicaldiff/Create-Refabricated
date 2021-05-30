@@ -13,5 +13,7 @@ import net.minecraft.world.gen.feature.template.Template;
 @Mixin(Template.class)
 public interface TemplateAccessor {
 	@Invoker("loadEntity")
-	static Optional<Entity> loadEntity(IServerWorld iServerWorld, CompoundNBT compoundNBT) {throw new AssertionError();}
+	static Optional<Entity> loadEntity(IServerWorld iServerWorld, CompoundNBT compoundNBT) {
+		throw new AssertionError();
+	}
 }

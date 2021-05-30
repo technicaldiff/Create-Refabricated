@@ -3,6 +3,7 @@ package com.simibubi.create.lib.mixin;
 import java.util.Iterator;
 
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
@@ -21,6 +22,9 @@ import net.minecraft.world.World;
 
 @Mixin(World.class)
 public abstract class WorldMixin {
+	@Shadow
+	public abstract BlockState getBlockState(BlockPos blockPos);
+
 	@Inject(at = @At("RETURN"), method = "getRedstonePower(Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/util/Direction;)I", cancellable = true)
 	public void create$getRedstonePower(BlockPos blockPos, Direction direction, CallbackInfoReturnable<Integer> cir) {
 		BlockState create$blockstate = MixinHelper.<World>cast(this).getBlockState(blockPos);
@@ -38,7 +42,7 @@ public abstract class WorldMixin {
 			locals = LocalCapture.CAPTURE_FAILEXCEPTION,
 			method = "updateComparatorOutputLevel(Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/block/Block;)V")
 	public void create$updateComparatorOutputLevel(BlockPos blockPos, Block block, CallbackInfo ci,
-											Iterator var3, Direction direction, BlockPos blockPos2, BlockState blockState) {
-		((BlockStateExtensions) blockState).create$onNeighborChange(MixinHelper.cast(this), blockPos2, blockPos);
+												   Iterator var3, Direction direction, BlockPos blockPos2) {
+		((BlockStateExtensions) getBlockState(blockPos2)).create$onNeighborChange(MixinHelper.cast(this), blockPos2, blockPos);
 	}
 }

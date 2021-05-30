@@ -27,26 +27,23 @@ import net.minecraft.util.IReorderingProcessor;
 
 @Mixin(Screen.class)
 public abstract class ScreenMixin {
+	@Unique
+	private static final int CREATE$DEFAULT_BORDER_COLOR_START = 1347420415;
+	@Unique
+	private static final int CREATE$DEFAULT_BORDER_COLOR_END = 1344798847;
 	@Shadow
 	@Final
 	protected List<Widget> buttons;
 	@Shadow
 	@Final
 	protected List<IGuiEventListener> children;
+	@Unique
+	private ItemStack create$cachedStack = ItemStack.EMPTY;
+	@Unique
+	private RenderTooltipBorderColorCallback.BorderColorEntry create$borderColorEntry = null;
 
 	@Shadow
 	protected abstract <T extends Widget> T addButton(T widget);
-
-	@Unique
-	private static final int CREATE$DEFAULT_BORDER_COLOR_START = 1347420415;
-	@Unique
-	private static final int CREATE$DEFAULT_BORDER_COLOR_END = 1344798847;
-
-	@Unique
-	private ItemStack create$cachedStack = ItemStack.EMPTY;
-
-	@Unique
-	private RenderTooltipBorderColorCallback.BorderColorEntry create$borderColorEntry = null;
 
 	@Inject(method = "renderTooltip(Lcom/mojang/blaze3d/matrix/MatrixStack;Lnet/minecraft/item/ItemStack;II)V", at = @At("HEAD"))
 	private void create$cacheItemStack(MatrixStack matrixStack, ItemStack itemStack, int i, int j, CallbackInfo ci) {

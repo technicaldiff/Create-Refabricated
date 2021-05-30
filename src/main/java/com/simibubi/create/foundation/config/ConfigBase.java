@@ -62,7 +62,7 @@ public abstract class ConfigBase extends Config<OwenElement> {
 	}
 
 	protected static ConfigValue<Integer> i(int current, int min, int max, String name, @Nullable CategoryBuilder group, String... comment) {
-		return new ConfigValue<>(builder(current).bounds(min, min).build());
+		return new ConfigValue<>(builder(current).bounds(min, max).build());
 	}
 
 	public static ConfigValue<Integer> i(int current, int min, String name, @Nullable CategoryBuilder group, String... comment) {

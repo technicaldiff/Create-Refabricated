@@ -44,7 +44,7 @@ public abstract class BoatEntityMixin {
 	}
 
 	@ModifyVariable(at = @At(value = "INVOKE", shift = At.Shift.AFTER, target = "Lnet/minecraft/block/Block;getSlipperiness()F"),
-					method = "getBoatGlide()F")
+			method = "getBoatGlide()F")
 	public float create$setSlipperiness(float f) {
 		return ((BlockStateExtensions) create$state).create$getSlipperiness(create$world, create$pos, create$entity);
 	}

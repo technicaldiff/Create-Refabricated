@@ -15,7 +15,6 @@
     "FogColorTrackerMixin",
     "HeavyBootsOnPlayerMixin",
     "LightUpdateMixin",
-    "ModelDataRefreshMixin",
     "NetworkLightUpdateMixin",
     "RenderHooksMixin",
     "ShaderCloseMixin",

@@ -18,7 +18,7 @@ import net.minecraft.util.math.vector.Vector3f;
 
 @Environment(EnvType.CLIENT)
 @Mixin(FogRenderer.class)
-public class FogRendererMixin {
+public abstract class FogRendererMixin {
 
 	@Shadow
 	private static float red;

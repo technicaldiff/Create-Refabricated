@@ -26,27 +26,30 @@ import net.minecraft.world.World;
 
 @Mixin(AbstractMinecartEntity.class)
 public abstract class AbstractMinecartEntityMixin extends Entity implements AbstractMinecartEntityExtensions {
+	public boolean create$canUseRail = true;
+	public MinecartController create$controller = null;
+
 	private AbstractMinecartEntityMixin(EntityType<?> entityType, World world) {
 		super(entityType, world);
 	}
 
-	@Shadow protected abstract double getMaximumSpeed();
-	@Shadow public abstract AbstractMinecartEntity.Type getMinecartType();
+	@Shadow
+	protected abstract double getMaximumSpeed();
 
-	public boolean create$canUseRail = true;
-	public MinecartController create$controller = null;
+	@Shadow
+	public abstract AbstractMinecartEntity.Type getMinecartType();
 
-	@Inject(at = @At("TAIL"), method = "Lnet/minecraft/entity/item/minecart/AbstractMinecartEntity;<init>(Lnet/minecraft/entity/EntityType;Lnet/minecraft/world/World;)V")
+	@Inject(at = @At("TAIL"), method = "<init>(Lnet/minecraft/entity/EntityType;Lnet/minecraft/world/World;)V")
 	public void create$abstractMinecartEntity(EntityType<?> entityType, World world, CallbackInfo ci) {
 		create$controller = create$controller.create(MixinHelper.cast(this));
 	}
-	@Inject(at = @At("TAIL"), method = "Lnet/minecraft/entity/item/minecart/AbstractMinecartEntity;<init>(Lnet/minecraft/entity/EntityType;Lnet/minecraft/world/World;DDD)V")
-	public void create$bstractMinecartEntity(EntityType<?> entityType, World world, double d, double e, double f, CallbackInfo ci) {
+
+	@Inject(at = @At("TAIL"), method = "<init>(Lnet/minecraft/entity/EntityType;Lnet/minecraft/world/World;DDD)V")
+	public void create$abstractMinecartEntity(EntityType<?> entityType, World world, double d, double e, double f, CallbackInfo ci) {
 		create$controller = create$controller.create(MixinHelper.cast(this));
 	}
 
-	// this *should* inject into right before the 4th reference to bl, right in between the 2 if statements.
-	@Inject(at = @At(value = "FIELD", target = "Lnet/minecraft/entity/item/minecart/AbstractMinecartEntity;moveAlongTrack(Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/block/BlockState;)V", ordinal = 3),
+	@Inject(at = @At(value = "INVOKE", target = "Lnet/minecraft/util/math/MathHelper;floor(D)I", ordinal = 4),
 			method = "moveAlongTrack(Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/block/BlockState;)V")
 	protected void create$moveAlongTrack(BlockPos blockPos, BlockState blockState, CallbackInfo ci) {
 		if (blockState.getBlock() instanceof MinecartPassHandlerBlock) {
@@ -65,12 +68,18 @@ public abstract class AbstractMinecartEntityMixin extends Entity implements Abst
 	@Override
 	public ItemStack create$getCartItem() {
 		switch (getMinecartType()) {
-			case FURNACE: return new ItemStack(Items.FURNACE_MINECART);
-			case CHEST: return new ItemStack(Items.CHEST_MINECART);
-			case TNT: return new ItemStack(Items.TNT_MINECART);
-			case HOPPER:return new ItemStack(Items.HOPPER_MINECART);
-			case COMMAND_BLOCK: return new ItemStack(Items.COMMAND_BLOCK_MINECART);
-			default: return new ItemStack(Items.MINECART);
+			case FURNACE:
+				return new ItemStack(Items.FURNACE_MINECART);
+			case CHEST:
+				return new ItemStack(Items.CHEST_MINECART);
+			case TNT:
+				return new ItemStack(Items.TNT_MINECART);
+			case HOPPER:
+				return new ItemStack(Items.HOPPER_MINECART);
+			case COMMAND_BLOCK:
+				return new ItemStack(Items.COMMAND_BLOCK_MINECART);
+			default:
+				return new ItemStack(Items.MINECART);
 		}
 	}
 

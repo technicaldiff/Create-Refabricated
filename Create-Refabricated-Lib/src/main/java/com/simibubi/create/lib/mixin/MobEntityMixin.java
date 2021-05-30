@@ -17,7 +17,7 @@ import net.minecraft.item.ItemStack;
 @Mixin(MobEntity.class)
 public abstract class MobEntityMixin {
 	@Inject(at = @At("HEAD"), method = "getSlotForItemStack(Lnet/minecraft/item/ItemStack;)Lnet/minecraft/inventory/EquipmentSlotType;", cancellable = true)
-	static void create$getSlotForItemStack(ItemStack itemStack, CallbackInfoReturnable<EquipmentSlotType> cir) {
+	private static void create$getSlotForItemStack(ItemStack itemStack, CallbackInfoReturnable<EquipmentSlotType> cir) {
 		if (itemStack.getItem() instanceof EquipmentItem) {
 			cir.setReturnValue(((EquipmentItem) itemStack.getItem()).getEquipmentSlot(itemStack));
 		}

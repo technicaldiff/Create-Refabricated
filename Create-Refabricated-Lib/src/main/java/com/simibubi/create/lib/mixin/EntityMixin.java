@@ -22,7 +22,6 @@ import com.simibubi.create.lib.utility.ListenerProvider;
 import com.simibubi.create.lib.utility.MixinHelper;
 import com.simibubi.create.lib.utility.NBTSerializable;
 
-import net.minecraft.block.BlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.item.ItemEntity;
@@ -101,10 +100,11 @@ public abstract class EntityMixin implements EntityExtensions, NBTSerializable {
 
 	// RUNNING EFFECTS
 
-	@Inject(at = @At(value = "INVOKE", target = "Lnet/minecraft/world/World;getBlockState(Lnet/minecraft/util/math/BlockPos;)Lnet/minecraft/block/BlockState;", shift = At.Shift.AFTER)
-			, method = "spawnSprintingParticles()V", cancellable = true)
-	public void create$spawnSprintingParticles(CallbackInfo ci, BlockState blockstate) {
-		if (((BlockStateExtensions) blockstate).create$addRunningEffects(world, blockPos, MixinHelper.cast(this))) {
+	@Inject(at = @At(value = "INVOKE", target = "Lnet/minecraft/world/World;getBlockState(Lnet/minecraft/util/math/BlockPos;)Lnet/minecraft/block/BlockState;", shift = At.Shift.AFTER),
+			locals = LocalCapture.CAPTURE_FAILEXCEPTION,
+			method = "spawnSprintingParticles()V", cancellable = true)
+	public void create$spawnSprintingParticles(CallbackInfo ci, int i, int j, int k, BlockPos blockPos) {
+		if (((BlockStateExtensions) world.getBlockState(blockPos)).create$addRunningEffects(world, blockPos, MixinHelper.cast(this))) {
 			ci.cancel();
 		}
 	}

@@ -31,7 +31,7 @@ public abstract class MinecraftMixin {
 	@Shadow
 	public ClientPlayerEntity player;
 
-	@Inject(at = @At(value = "NEW", target = "Lnet/minecraft/client/particle/ParticleManager", shift = Shift.AFTER), method = "<init>")
+	@Inject(at = @At(value = "FIELD", target = "Lnet/minecraft/client/Minecraft;particles:Lnet/minecraft/client/particle/ParticleManager;", shift = Shift.AFTER), method = "<init>")
 	public void create$registerParticleManagers(GameConfiguration gameConfiguration, CallbackInfo ci) {
 		ParticleManagerRegistrationCallback.EVENT.invoker().onParticleManagerRegistration();
 	}
@@ -60,7 +60,7 @@ public abstract class MinecraftMixin {
 		ClientWorldEvents.UNLOAD.invoker().onWorldUnload((Minecraft) (Object) this, this.world);
 	}
 
-	@Inject(method = "clickMouse()V", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/network/ClientPlayerEntity;resetLastAttackedTicks()V"))
+	@Inject(method = "clickMouse()V", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/player/PlayerEntity;resetCooldown()V"))
 	private void create$onClickMouse(CallbackInfo ci) {
 		LeftClickAirCallback.EVENT.invoker().onLeftClickAir(player);
 	}

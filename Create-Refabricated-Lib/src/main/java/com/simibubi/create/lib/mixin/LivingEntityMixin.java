@@ -5,9 +5,11 @@ import java.util.Collection;
 
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyVariable;
+import org.spongepowered.asm.mixin.injection.Slice;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
@@ -20,6 +22,7 @@ import com.simibubi.create.lib.utility.MixinHelper;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.block.BlockState;
+import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
@@ -34,24 +37,39 @@ import net.minecraft.world.server.ServerWorld;
 
 @Mixin(LivingEntity.class)
 public abstract class LivingEntityMixin extends Entity {
+	@Shadow
+	protected PlayerEntity attackingPlayer;
+	@Unique
+	private DamageSource create$currentDamageSource;
+
 	public LivingEntityMixin(EntityType<?> entityType, World world) {
 		super(entityType, world);
 	}
 
-	@Shadow protected PlayerEntity attackingPlayer;
-	@Shadow public abstract ItemStack getHeldItem(Hand hand);
+	@Shadow
+	public abstract ItemStack getHeldItem(Hand hand);
 
 	@Inject(method = "spawnDrops(Lnet/minecraft/util/DamageSource;)V", at = @At("HEAD"))
 	private void create$spawnDropsHEAD(DamageSource source, CallbackInfo ci) {
+		create$currentDamageSource = source;
 		((EntityExtensions) this).create$captureDrops(new ArrayList<>());
 	}
 
-	@Inject(method = "spawnDrops(Lnet/minecraft/util/DamageSource;)V",
-			at = @At(value = "INVOKE", target = "Lnet/minecraft/enchantment/EnchantmentHelper;getLootingModifier(Lnet/minecraft/entity/LivingEntity;)I"),
-			locals = LocalCapture.CAPTURE_FAILEXCEPTION)
-	private void create$spawnDropsBODY(DamageSource source, CallbackInfo ci,
-									  Entity entity, int j) {
-		j = LivingEntityEvents.LOOTING_LEVEL.invoker().modifyLootingLevel(source);
+	@ModifyVariable(method = "spawnDrops(Lnet/minecraft/util/DamageSource;)V",
+			at = @At(value = "STORE", ordinal = 0))
+	private int create$spawnDropsBODY(int j) {
+		int modifiedLevel = LivingEntityEvents.LOOTING_LEVEL.invoker().modifyLootingLevel(create$currentDamageSource);
+		if (modifiedLevel != 0) {
+			return modifiedLevel;
+		} else {
+			return EnchantmentHelper.getLootingModifier((LivingEntity) create$currentDamageSource.getTrueSource());
+		}
+	}
+
+	@ModifyVariable(method = "spawnDrops(Lnet/minecraft/util/DamageSource;)V",
+			at = @At(value = "STORE", ordinal = 1))
+	private int create$spawnDropsBODY2(int j) {
+		return LivingEntityEvents.LOOTING_LEVEL.invoker().modifyLootingLevel(create$currentDamageSource);
 	}
 
 	@Inject(method = "spawnDrops(Lnet/minecraft/util/DamageSource;)V", at = @At("TAIL"))
@@ -83,6 +101,7 @@ public abstract class LivingEntityMixin extends Entity {
 	private int create$dropXp(int i) {
 		return LivingEntityEvents.EXPERIENCE_DROP.invoker().onLivingEntityExperienceDrop(i, attackingPlayer);
 	}
+
 	@Inject(at = @At(value = "INVOKE", target = "Lnet/minecraft/world/server/ServerWorld;spawnParticle(Lnet/minecraft/particles/IParticleData;DDDIDDDD)I", shift = At.Shift.BEFORE),
 			locals = LocalCapture.CAPTURE_FAILEXCEPTION,
 			method = "updateFallState(DZLnet/minecraft/block/BlockState;Lnet/minecraft/util/math/BlockPos;)V", cancellable = true)
@@ -94,7 +113,8 @@ public abstract class LivingEntityMixin extends Entity {
 		}
 	}
 
-	@ModifyVariable(at = @At(value = "INVOKE", shift = At.Shift.AFTER, target = "Lnet/minecraft/block/Block;getSlipperiness()F"),
+	@ModifyVariable(slice = @Slice(from = @At(value = "INVOKE", target = "Lnet/minecraft/entity/Entity;getVelocityAffectingPos()Lnet/minecraft/util/math/BlockPos;")),
+			at = @At("STORE"),
 			method = "travel(Lnet/minecraft/util/math/vector/Vector3d;)V")
 	public float create$setSlipperiness(float t) {
 		return ((BlockStateExtensions) MixinHelper.<LivingEntity>cast(this).world.getBlockState(getVelocityAffectingPos()))
