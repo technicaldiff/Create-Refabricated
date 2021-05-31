@@ -42,7 +42,7 @@ public enum AllParticleTypes {
 
 	public static void register() {
 		for (AllParticleTypes particle : values())
-			Registry.register(Registry.PARTICLE_TYPE, particle.entry.id, particle.entry.type);
+			Registry.register(Registry.PARTICLE_TYPE, particle.entry.id, particle.get());
 //			particle.entry.register(Registry.PARTICLE_TYPE);
 
 	}

@@ -3,7 +3,6 @@ package com.simibubi.create;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.function.Function;
 
 import javax.annotation.Nullable;
@@ -15,7 +14,6 @@ import com.simibubi.create.content.curiosities.armor.CopperBacktankArmorLayer;
 import com.simibubi.create.content.schematics.ClientSchematicLoader;
 import com.simibubi.create.content.schematics.client.SchematicAndQuillHandler;
 import com.simibubi.create.content.schematics.client.SchematicHandler;
-import com.simibubi.create.events.ClientEvents;
 import com.simibubi.create.foundation.ResourceReloadHandler;
 import com.simibubi.create.foundation.block.render.CustomBlockModels;
 import com.simibubi.create.foundation.block.render.SpriteShifter;
@@ -37,10 +35,10 @@ import com.simibubi.create.foundation.utility.ghost.GhostBlocks;
 import com.simibubi.create.foundation.utility.outliner.Outliner;
 import com.simibubi.create.lib.event.ModelsBakedCallback;
 import com.simibubi.create.lib.event.OnModelRegistryCallback;
+import com.simibubi.create.lib.event.OnPlayerRendererInitCallback;
 import com.simibubi.create.lib.event.OnTextureStitchCallback;
 import com.simibubi.create.lib.event.ParticleManagerRegistrationCallback;
 import com.simibubi.create.lib.utility.SpecialModelUtil;
-
 import com.simibubi.create.lib.utility.TextureStitchUtil;
 
 import net.fabricmc.api.ClientModInitializer;
@@ -52,7 +50,6 @@ import net.minecraft.client.renderer.model.IBakedModel;
 import net.minecraft.client.renderer.model.ModelBakery;
 import net.minecraft.client.renderer.model.ModelManager;
 import net.minecraft.client.renderer.model.ModelResourceLocation;
-import net.minecraft.client.renderer.texture.AtlasTexture;
 import net.minecraft.client.settings.GraphicsFanciness;
 import net.minecraft.inventory.container.PlayerContainer;
 import net.minecraft.item.Item;
@@ -131,8 +128,9 @@ public class CreateClient implements ClientModInitializer {
 		ArmorRenderingRegistry.registerSimpleTexture(new ResourceLocation(Create.ID, "copper"),
 				AllItems.COPPER_BACKTANK.get(), AllItems.DIVING_HELMET.get(), AllItems.DIVING_BOOTS.get());
 
-//		event.enqueueWork(() -> { // I think this can just be run on initialize
-			CopperBacktankArmorLayer.register();
+//		event.enqueueWork(() -> { // I think this can just be run on initialize // note to past me: no it cannot
+		OnPlayerRendererInitCallback.EVENT.register(CopperBacktankArmorLayer::register);
+//			CopperBacktankArmorLayer.register();
 //		});
 
 		// fabric colorproviders

@@ -100,7 +100,7 @@ public enum AllPackets {
 
 	public static final ResourceLocation CHANNEL_NAME = new ResourceLocation(Create.ID, "network");
 	public static final String NETWORK_VERSION = new ResourceLocation(Create.ID, "1").toString();
-	public static SimpleChannel channel;
+	public static SimpleChannel channel = new SimpleChannel(CHANNEL_NAME);
 
 	private Class<? extends Packet> type;
 

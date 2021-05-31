@@ -8,7 +8,6 @@ import org.apache.commons.lang3.mutable.MutableBoolean;
 
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.AllItems;
-import com.simibubi.create.AllTags;
 import com.simibubi.create.AllTileEntities;
 import com.simibubi.create.Create;
 import com.simibubi.create.content.contraptions.base.HorizontalKineticBlock;
@@ -29,6 +28,7 @@ import com.simibubi.create.lib.block.CustomPathNodeTypeBlock;
 import com.simibubi.create.lib.extensions.BlockExtensions;
 import com.simibubi.create.lib.helper.EntitySelectionContextHelper;
 import com.simibubi.create.lib.lba.item.ItemStackHandler;
+import com.simibubi.create.lib.utility.TagUtil;
 
 import alexiil.mc.lib.attributes.item.ItemAttributes;
 import net.fabricmc.api.EnvType;
@@ -244,7 +244,7 @@ public class BeltBlock extends HorizontalKineticBlock implements ITE<BeltTileEnt
 			return ActionResultType.PASS;
 		ItemStack heldItem = player.getHeldItem(handIn);
 		boolean isShaft = AllBlocks.SHAFT.isIn(heldItem);
-		boolean isDye = AllTags.isDye(heldItem.getItem());
+		boolean isDye = TagUtil.isDye(heldItem.getItem());
 		boolean hasWater = EmptyingByBasin.emptyItem(world, heldItem, true)
 			.getFirst()
 			.getFluid()
@@ -253,7 +253,7 @@ public class BeltBlock extends HorizontalKineticBlock implements ITE<BeltTileEnt
 
 		if (isDye || hasWater) {
 			if (!world.isRemote)
-				withTileEntityDo(world, pos, te -> te.applyColor(AllTags.getColorFromStack(heldItem)));
+				withTileEntityDo(world, pos, te -> te.applyColor(TagUtil.getColorFromStack(heldItem)));
 			return ActionResultType.SUCCESS;
 		}
 

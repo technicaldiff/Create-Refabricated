@@ -1,11 +1,11 @@
 package com.simibubi.create.foundation.utility;
 
-import com.simibubi.create.AllTags;
-import com.simibubi.create.lib.utility.NamedTagWrapper;
+import com.simibubi.create.lib.utility.TagUtil;
 
 import net.minecraft.block.Blocks;
 import net.minecraft.item.DyeColor;
 import net.minecraft.item.Item;
+import net.minecraft.tags.ITag;
 import net.minecraft.util.IItemProvider;
 
 public class DyeHelper {
@@ -48,41 +48,41 @@ public class DyeHelper {
 		}
 	}
 
-	public static NamedTagWrapper<Item> getTagOfDye(DyeColor color) {
+	public static ITag.INamedTag<Item> getTagOfDye(DyeColor color) {
 		switch (color) {
 		case BLACK:
-			return AllTags.BLACK_DYES;
+			return TagUtil.BLACK_DYES;
 		case BLUE:
-			return AllTags.BLUE_DYES;
+			return TagUtil.BLUE_DYES;
 		case BROWN:
-			return AllTags.BROWN_DYES;
+			return TagUtil.BROWN_DYES;
 		case CYAN:
-			return AllTags.CYAN_DYES;
+			return TagUtil.CYAN_DYES;
 		case GRAY:
-			return AllTags.GRAY_DYES;
+			return TagUtil.GRAY_DYES;
 		case GREEN:
-			return AllTags.GREEN_DYES;
+			return TagUtil.GREEN_DYES;
 		case LIGHT_BLUE:
-			return AllTags.LIGHT_BLUE_DYES;
+			return TagUtil.LIGHT_BLUE_DYES;
 		case LIGHT_GRAY:
-			return AllTags.LIGHT_GRAY_DYES;
+			return TagUtil.LIGHT_GRAY_DYES;
 		case LIME:
-			return AllTags.LIME_DYES;
+			return TagUtil.LIME_DYES;
 		case MAGENTA:
-			return AllTags.MAGENTA_DYES;
+			return TagUtil.MAGENTA_DYES;
 		case ORANGE:
-			return AllTags.ORANGE_DYES;
+			return TagUtil.ORANGE_DYES;
 		case PINK:
-			return AllTags.PINK_DYES;
+			return TagUtil.PINK_DYES;
 		case PURPLE:
-			return AllTags.PURPLE_DYES;
+			return TagUtil.PURPLE_DYES;
 		case RED:
-			return AllTags.RED_DYES;
+			return TagUtil.RED_DYES;
 		case YELLOW:
-			return AllTags.YELLOW_DYES;
+			return TagUtil.YELLOW_DYES;
 		case WHITE:
 		default:
-			return AllTags.WHITE_DYES;
+			return TagUtil.WHITE_DYES;
 		}
 	}
 }

@@ -5,12 +5,12 @@ import java.util.Random;
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.AllShapes;
 import com.simibubi.create.AllSoundEvents;
-import com.simibubi.create.AllTags;
 import com.simibubi.create.AllTileEntities;
 import com.simibubi.create.content.contraptions.base.DirectionalAxisKineticBlock;
 import com.simibubi.create.foundation.block.ITE;
 import com.simibubi.create.foundation.config.AllConfigs;
 import com.simibubi.create.foundation.utility.Lang;
+import com.simibubi.create.lib.utility.TagUtil;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -70,7 +70,7 @@ public class MechanicalPistonBlock extends DirectionalAxisKineticBlock implement
 			return ActionResultType.PASS;
 		if (!player.getHeldItem(handIn)
 			.getItem()
-			.isIn(AllTags.SLIMEBALLS)) {
+			.isIn(TagUtil.SLIMEBALLS)) {
 			if (player.getHeldItem(handIn)
 				.isEmpty()) {
 				withTileEntityDo(worldIn, pos, te -> te.assembleNextTick = true);

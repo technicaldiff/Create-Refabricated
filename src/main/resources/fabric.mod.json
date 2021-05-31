@@ -24,12 +24,7 @@
     "client": [
       "com.simibubi.create.CreateClient"
     ],
-    "modmenu": [
-      "com.simibubi.create.foundation.config.ModMenuIntegration"
-    ],
-    "rei_plugins": [
-      "com.simibubi.create.compat.rei.CreateREI"
-    ],
+
     "config": [
       "com.simibubi.create.foundation.config.AllConfigs"
     ]
