@@ -158,6 +158,9 @@ import com.simibubi.create.content.schematics.block.SchematicannonRenderer;
 import com.simibubi.create.content.schematics.block.SchematicannonTileEntity;
 import com.simibubi.create.foundation.tileEntity.renderer.SmartTileEntityRenderer;
 import com.tterrag.registrate.util.entry.TileEntityEntry;
+import com.tterrag.registrate.util.nullness.NonNullSupplier;
+
+import net.minecraft.block.Block;
 
 public class AllTileEntities {
 
@@ -244,11 +247,12 @@ public class AllTileEntities {
 		.renderer(() -> KineticTileEntityRenderer::new)
 		.register();
 
+	@SuppressWarnings("RedundantCast")
 	public static final TileEntityEntry<HandCrankTileEntity> HAND_CRANK = Create.registrate()
 		.tileEntity("hand_crank", HandCrankTileEntity::new)
 		.instance(() -> HandCrankInstance::new)
 		.validBlocks(AllBlocks.HAND_CRANK, AllBlocks.COPPER_VALVE_HANDLE)
-		.validBlocks(AllBlocks.DYED_VALVE_HANDLES)
+		.validBlocks((NonNullSupplier<? extends Block>[]) AllBlocks.DYED_VALVE_HANDLES)
 		.renderer(() -> HandCrankRenderer::new)
 		.register();
 
@@ -656,7 +660,7 @@ public class AllTileEntities {
 			.validBlocks(AllBlocks.ADJUSTABLE_PULSE_REPEATER)
 			.renderer(() -> AdjustableRepeaterRenderer::new)
 			.register();
-	
+
 	public static final TileEntityEntry<CopperBacktankTileEntity> COPPER_BACKTANK = Create.registrate()
 		.tileEntity("copper_backtank", CopperBacktankTileEntity::new)
 		.instance(() -> CopperBacktankInstance::new)

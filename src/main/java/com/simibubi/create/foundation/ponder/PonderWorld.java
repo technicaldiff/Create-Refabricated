@@ -19,6 +19,7 @@ import com.simibubi.create.foundation.utility.worldWrappers.WrappedClientWorld;
 import com.simibubi.create.lib.helper.ParticleManagerHelper;
 import com.simibubi.create.lib.utility.NBTSerializer;
 
+import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.client.Minecraft;
@@ -60,7 +61,7 @@ public class PonderWorld extends SchematicWorld {
 	private LazyValue<ClientWorld> asClientWorld = new LazyValue<>(() -> WrappedClientWorld.of(this));
 
 	protected PonderWorldParticles particles;
-	private final Map<ResourceLocation, IParticleFactory<?>> particleFactories;
+	private final Int2ObjectMap<IParticleFactory<?>> particleFactories;
 
 	int overrideLight;
 	Selection mask;
@@ -222,8 +223,8 @@ public class PonderWorld extends SchematicWorld {
 	@SuppressWarnings("unchecked")
 	private <T extends IParticleData> Particle makeParticle(T data, double x, double y, double z, double mx, double my,
 		double mz) {
-		ResourceLocation key = Registry.PARTICLE_TYPE.getKey(data.getType());
-		IParticleFactory<T> iparticlefactory = (IParticleFactory<T>) particleFactories.get(key);
+		int id = Registry.PARTICLE_TYPE.getId(data.getType());
+		IParticleFactory<T> iparticlefactory = (IParticleFactory<T>) particleFactories.get(id);
 		return iparticlefactory == null ? null
 			: iparticlefactory.makeParticle(data, asClientWorld.getValue(), x, y, z, mx, my, mz);
 	}

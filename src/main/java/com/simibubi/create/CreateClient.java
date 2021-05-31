@@ -42,10 +42,12 @@ import com.simibubi.create.lib.utility.SpecialModelUtil;
 import com.simibubi.create.lib.utility.TextureStitchUtil;
 
 import net.fabricmc.api.ClientModInitializer;
+import net.fabricmc.fabric.api.client.rendereregistry.v1.LivingEntityFeatureRendererRegistrationCallback;
 import net.fabricmc.fabric.api.client.rendering.v1.ArmorRenderingRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.BlockModelShapes;
+import net.minecraft.client.renderer.entity.LivingRenderer;
 import net.minecraft.client.renderer.model.IBakedModel;
 import net.minecraft.client.renderer.model.ModelBakery;
 import net.minecraft.client.renderer.model.ModelManager;
@@ -128,10 +130,13 @@ public class CreateClient implements ClientModInitializer {
 		ArmorRenderingRegistry.registerSimpleTexture(new ResourceLocation(Create.ID, "copper"),
 				AllItems.COPPER_BACKTANK.get(), AllItems.DIVING_HELMET.get(), AllItems.DIVING_BOOTS.get());
 
-//		event.enqueueWork(() -> { // I think this can just be run on initialize // note to past me: no it cannot
-		OnPlayerRendererInitCallback.EVENT.register(CopperBacktankArmorLayer::register);
-//			CopperBacktankArmorLayer.register();
-//		});
+		LivingEntityFeatureRendererRegistrationCallback.EVENT.register(
+			((entityType, entityRenderer, registrationHelper) -> {
+				if (entityRenderer == null)
+					return;
+				new CopperBacktankArmorLayer<>((LivingRenderer<?, ?>) entityRenderer);
+			})
+		);
 
 		// fabric colorproviders
 		getColorHandler().registerBlockColors();

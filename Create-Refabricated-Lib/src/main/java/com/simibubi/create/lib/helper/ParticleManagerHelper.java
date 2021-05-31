@@ -4,6 +4,7 @@ import com.simibubi.create.lib.extensions.ParticleManagerExtensions;
 import com.simibubi.create.lib.mixin.accessor.ParticleManagerAccessor;
 import com.simibubi.create.lib.utility.MixinHelper;
 
+import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
 import net.minecraft.client.particle.IParticleFactory;
 import net.minecraft.client.particle.ParticleManager;
@@ -25,8 +26,8 @@ public final class ParticleManagerHelper {
 		get($this).create$registerFactory1(type, factory);
 	}
 
-	public static Int2ObjectOpenHashMap getFactories(ParticleManager manager) {
-		return (Int2ObjectOpenHashMap) ((ParticleManagerAccessor) manager).getFactories();
+	public static Int2ObjectMap<IParticleFactory<?>> getFactories(ParticleManager manager) {
+		return ((ParticleManagerAccessor) manager).getFactories();
 	}
 
 	private static ParticleManagerExtensions get(ParticleManager manager) {

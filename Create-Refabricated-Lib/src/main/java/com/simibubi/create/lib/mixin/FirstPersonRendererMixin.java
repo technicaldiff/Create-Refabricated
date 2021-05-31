@@ -31,7 +31,7 @@ public abstract class FirstPersonRendererMixin {
 	@Shadow
 	private ItemStack itemStackOffHand;
 
-	static boolean create$shouldCauseReequipAnimation(@Nonnull ItemStack from, @Nonnull ItemStack to, int slot) {
+	private static boolean create$shouldCauseReequipAnimation(@Nonnull ItemStack from, @Nonnull ItemStack to, int slot) {
 		if (from.isEmpty() && to.isEmpty()) return false;
 		if (from.isEmpty() || to.isEmpty()) return true;
 
@@ -50,9 +50,9 @@ public abstract class FirstPersonRendererMixin {
 		}
 	}
 
-	@Inject(at = @At(value = "INVOKE", shift = At.Shift.AFTER, target = "Lnet/minecraft/entity/player/PlayerEntity;getCooledAttackStrength(F)F"),
+	@Inject(at = @At(value = "INVOKE", shift = At.Shift.AFTER, target = "Lnet/minecraft/client/entity/player/ClientPlayerEntity;getCooledAttackStrength(F)F"),
 			locals = LocalCapture.CAPTURE_FAILEXCEPTION,
-			method = "Lnet/minecraft/client/renderer/FirstPersonRenderer;tick()V")
+			method = "tick()V")
 	public void tick(CallbackInfo ci,
 					 ClientPlayerEntity clientPlayerEntity, ItemStack itemStack, ItemStack itemStack2) {
 		if (create$shouldCauseReequipAnimation(itemStackMainHand, itemStack, clientPlayerEntity.inventory.currentItem)) {

@@ -42,8 +42,8 @@ public abstract class ParticleManagerMixin implements ParticleManagerExtensions 
 		registerFactory(type, factory);
 	}
 
-	@Inject(at = @At(value = "INVOKE", shift = At.Shift.BEFORE, target = "Lnet/minecraft/block/AbstractBlock$AbstractBlockState;getShape(Lnet/minecraft/world/IBlockReader;Lnet/minecraft/util/math/BlockPos;)Lnet/minecraft/util/math/shapes/VoxelShape;"),
-			method = "Lnet/minecraft/client/particle/ParticleManager;addBlockDestroyEffects(Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/block/BlockState;)V", cancellable = true)
+	@Inject(at = @At(value = "INVOKE", shift = At.Shift.BEFORE, target = "Lnet/minecraft/block/BlockState;getShape(Lnet/minecraft/world/IBlockReader;Lnet/minecraft/util/math/BlockPos;)Lnet/minecraft/util/math/shapes/VoxelShape;"),
+			method = "addBlockDestroyEffects(Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/block/BlockState;)V", cancellable = true)
 	public void create$addBlockDestroyEffects(BlockPos blockPos, BlockState blockState, CallbackInfo ci) {
 		if (((BlockStateExtensions) blockState).create$addDestroyEffects(world, blockPos, MixinHelper.cast(this))) {
 			ci.cancel();

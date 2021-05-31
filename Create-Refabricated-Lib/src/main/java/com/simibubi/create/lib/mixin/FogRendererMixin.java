@@ -29,7 +29,7 @@ public abstract class FogRendererMixin {
 	@Shadow
 	private static float blue;
 
-	@Inject(at = @At(value = "INVOKE", shift = At.Shift.BEFORE, target = "Lnet/minecraft/client/renderer/FogRenderer;render(Lnet/minecraft/client/renderer/ActiveRenderInfo;FLnet/minecraft/client/world/ClientWorld;IF)V"),
+	@Inject(at = @At(value = "INVOKE", target = "Lcom/mojang/blaze3d/systems/RenderSystem;clearColor(FFFF)V"),
 			method = "render(Lnet/minecraft/client/renderer/ActiveRenderInfo;FLnet/minecraft/client/world/ClientWorld;IF)V")
 	private static void render(ActiveRenderInfo activeRenderInfo, float f, ClientWorld clientWorld, int i, float g, CallbackInfo ci) {
 		Vector3f color = FogEvents.SET_COLOR.invoker().setColor(activeRenderInfo, new Vector3f(red, green, blue));

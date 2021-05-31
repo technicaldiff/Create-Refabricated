@@ -7,6 +7,6 @@ import net.minecraft.client.renderer.entity.layers.LayerRenderer;
 
 public class LivingRendererHelper {
 	public static boolean addRenderer(LivingRenderer renderer, LayerRenderer toAdd) {
-		return ((LivingRendererAccessor) renderer).addLayer(toAdd);
+		return ((LivingRendererAccessor) renderer).create$addLayer(toAdd);
 	}
 }

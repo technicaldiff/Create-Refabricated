@@ -37,7 +37,7 @@ public interface ICustomParticleDataWithSprite<T extends IParticleData> extends 
 	@Override
 	@Environment(EnvType.CLIENT)
 	public default void register(ParticleType<T> type, ParticleManager particles) {
-		ParticleManagerHelper.registerFactory(null, type, getMetaFactory()); // fixme, null is probably wrong
+		ParticleManagerHelper.registerFactory(particles, type, getMetaFactory());
 	}
 
 }

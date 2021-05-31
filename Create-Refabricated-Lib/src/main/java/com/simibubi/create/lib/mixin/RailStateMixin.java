@@ -70,9 +70,9 @@ public abstract class RailStateMixin {
 
 	/**
 	 * In the event of catastrophic failure, look here first. <br>
-	 * I don't see any other way to do a change like this. If you figure out another way, please fix it. <br>
 	 * This is hopefully pretty much identical to the original, so ideally this won't conflict.
 	 *
+	 * @reason I don't see any other way to do a change like this. If you figure out another way, please fix it. <br>
 	 * @author Tropheus Jay
 	 */
 	@Overwrite
@@ -142,7 +142,7 @@ public abstract class RailStateMixin {
 	}
 
 	/**
-	 * See method above
+	 * @reason See method above
 	 *
 	 * @author Tropheus Jay
 	 */
