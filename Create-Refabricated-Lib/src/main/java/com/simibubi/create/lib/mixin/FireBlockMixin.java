@@ -44,22 +44,22 @@ public abstract class FireBlockMixin extends AbstractFireBlock implements FireBl
 		super(properties, f);
 	}
 
-	@Inject(at = @At(value = "RETURN"),
+	@Inject(at = @At(value = "INVOKE", shift = At.Shift.AFTER, target = "Lnet/minecraft/block/BlockState;with(Lnet/minecraft/state/Property;Ljava/lang/Comparable;)Ljava/lang/Object;"),
 			locals = LocalCapture.CAPTURE_FAILEXCEPTION,
 			method = "getStateForPlacement(Lnet/minecraft/world/IBlockReader;Lnet/minecraft/util/math/BlockPos;)Lnet/minecraft/block/BlockState;", cancellable = true)
 	protected void create$getStateForPlacement(IBlockReader iBlockReader, BlockPos blockPos, CallbackInfoReturnable<BlockState> cir,
-											   BlockPos blockPos2, BlockState blockState, BlockState blockState2, Direction[] var6,
-											   int var7, int var8, Direction direction) {
+											   BlockState blockState2, Direction[] var6,
+											   int var7, int var8, Direction direction, BooleanProperty booleanProperty) {
 		create$reader = iBlockReader;
 		create$pos = blockPos;
-		create$property = FACING_TO_PROPERTY_MAP.get(direction);
+		create$property = booleanProperty;
 		create$direction = direction;
 		if (canCatchFire(iBlockReader, blockPos, Direction.UP)) {
 			cir.setReturnValue(getDefaultState());
 		}
 	}
 
-	@ModifyVariable(slice = @Slice(from = @At(value = "INVOKE", shift = At.Shift.BEFORE, target = "Lnet/minecraft/state/StateHolder;with(Lnet/minecraft/state/Property;Ljava/lang/Comparable;)Ljava/lang/Object;")),
+	@ModifyVariable(slice = @Slice(from = @At(value = "INVOKE", shift = At.Shift.BEFORE, target = "Lnet/minecraft/block/BlockState;with(Lnet/minecraft/state/Property;Ljava/lang/Comparable;)Ljava/lang/Object;")),
 			at = @At(value = "STORE"),
 			method = "getStateForPlacement(Lnet/minecraft/world/IBlockReader;Lnet/minecraft/util/math/BlockPos;)Lnet/minecraft/block/BlockState;")
 	protected BlockState create$setBlockState(BlockState blockState2) {

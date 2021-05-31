@@ -1,5 +1,7 @@
 package com.simibubi.create.lib.mixin;
 
+import net.minecraft.util.math.shapes.VoxelShape;
+
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
@@ -30,13 +32,13 @@ public abstract class BoatEntityMixin {
 	@Unique
 	Entity create$entity;
 
-	@Inject(at = @At(value = "INVOKE", shift = At.Shift.BEFORE, target = "Lnet/minecraft/block/Block;getSlipperiness()F"),
+	@Inject(at = @At(value = "INVOKE", target = "Lnet/minecraft/block/Block;getSlipperiness()F"),
 			locals = LocalCapture.CAPTURE_FAILEXCEPTION,
 			method = "getBoatGlide()F")
 	public void create$getBoatGlide(CallbackInfoReturnable<Float> cir,
 									AxisAlignedBB axisAlignedBB, AxisAlignedBB axisAlignedBB2, int i, int j, int k,
-									int l, int m, int n, float f, int o, BlockPos.Mutable mutable, int p, int q,
-									int r, int s, BlockState blockState) {
+									int l, int m, int n, VoxelShape shape, float f, int o, BlockPos.Mutable mutable,
+									int p, int q, int r, int s, BlockState blockState) {
 		create$state = blockState;
 		create$world = MixinHelper.<BoatEntity>cast(this).world;
 		create$pos = mutable;
