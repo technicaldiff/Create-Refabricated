@@ -2,6 +2,7 @@ package com.simibubi.create.lib.mixin;
 
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Mutable;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
 
@@ -21,6 +22,7 @@ import net.minecraft.util.math.BlockPos;
 @Environment(EnvType.CLIENT)
 @Mixin(DiggingParticle.class)
 public abstract class DiggingParticleMixin extends SpriteTexturedParticle implements DiggingParticleExtensions {
+	@Mutable
 	@Final
 	@Shadow
 	private final BlockState sourceState = null;

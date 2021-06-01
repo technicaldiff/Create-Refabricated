@@ -41,12 +41,12 @@ public abstract class AbstractMinecartEntityMixin extends Entity implements Abst
 
 	@Inject(at = @At("TAIL"), method = "<init>(Lnet/minecraft/entity/EntityType;Lnet/minecraft/world/World;)V")
 	public void create$abstractMinecartEntity(EntityType<?> entityType, World world, CallbackInfo ci) {
-		create$controller = create$controller.create(MixinHelper.cast(this));
+		create$controller = MinecartController.InitController.initController.create(MixinHelper.cast(this));
 	}
 
 	@Inject(at = @At("TAIL"), method = "<init>(Lnet/minecraft/entity/EntityType;Lnet/minecraft/world/World;DDD)V")
 	public void create$abstractMinecartEntity(EntityType<?> entityType, World world, double d, double e, double f, CallbackInfo ci) {
-		create$controller = create$controller.create(MixinHelper.cast(this));
+		create$controller = MinecartController.InitController.initController.create(MixinHelper.cast(this));
 	}
 
 	@Inject(at = @At(value = "INVOKE", target = "Lnet/minecraft/util/math/MathHelper;floor(D)I", ordinal = 4),

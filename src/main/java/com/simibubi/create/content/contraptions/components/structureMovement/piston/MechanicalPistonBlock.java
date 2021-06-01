@@ -10,12 +10,12 @@ import com.simibubi.create.content.contraptions.base.DirectionalAxisKineticBlock
 import com.simibubi.create.foundation.block.ITE;
 import com.simibubi.create.foundation.config.AllConfigs;
 import com.simibubi.create.foundation.utility.Lang;
-import com.simibubi.create.lib.utility.TagUtil;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemUseContext;
+import net.minecraft.item.Items;
 import net.minecraft.particles.ParticleTypes;
 import net.minecraft.state.EnumProperty;
 import net.minecraft.state.StateContainer.Builder;
@@ -68,9 +68,9 @@ public class MechanicalPistonBlock extends DirectionalAxisKineticBlock implement
 			return ActionResultType.PASS;
 		if (player.isSneaking())
 			return ActionResultType.PASS;
-		if (!player.getHeldItem(handIn)
+		if (!(player.getHeldItem(handIn)
 			.getItem()
-			.isIn(TagUtil.SLIMEBALLS)) {
+			/*.isIn(TagUtil.SLIMEBALLS)*/== Items.SLIME_BALL)) {
 			if (player.getHeldItem(handIn)
 				.isEmpty()) {
 				withTileEntityDo(worldIn, pos, te -> te.assembleNextTick = true);

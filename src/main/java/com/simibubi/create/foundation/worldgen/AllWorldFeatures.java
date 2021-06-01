@@ -58,14 +58,14 @@ public class AllWorldFeatures {
 	public static final int forcedUpdateVersion = 2;
 
 	public static void registerFeatures() {
-		// ForgeRegistries.FEATURES.register(ConfigDrivenOreFeature.INSTANCE);
-		// ForgeRegistries.DECORATORS.register(ConfigDrivenDecorator.INSTANCE);
+		Registry.register(Registry.FEATURE, "create_config_driven_ore", ConfigDrivenOreFeature.INSTANCE);
+		Registry.register(Registry.DECORATOR, "create_config_driven_decorator", ConfigDrivenDecorator.INSTANCE);
 		entries.entrySet()
-			.forEach(entry -> {
-				Registry.register(WorldGenRegistries.CONFIGURED_FEATURE, Create.ID + "_" + entry.getKey(),
-					entry.getValue()
-						.getFeature());
-			});
+				.forEach(entry -> {
+					Registry.register(WorldGenRegistries.CONFIGURED_FEATURE, Create.ID + "_" + entry.getKey(),
+							entry.getValue()
+									.getFeature());
+				});
 	}
 
 	public static BiomeGenerationSettings.Builder reload(ResourceLocation key, Biome.Category category, BiomeGenerationSettings.Builder generation) {

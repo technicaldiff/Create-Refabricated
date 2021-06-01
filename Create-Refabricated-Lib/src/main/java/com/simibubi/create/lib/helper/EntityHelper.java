@@ -16,7 +16,7 @@ public final class EntityHelper {
 	}
 
 	public static String getEntityString(Entity entity) {
-		return ((EntityAccessor) entity).getEntityString();
+		return ((EntityAccessor) entity).create$getEntityString();
 	}
 
 	public static boolean canBeRidden(Entity entity) {

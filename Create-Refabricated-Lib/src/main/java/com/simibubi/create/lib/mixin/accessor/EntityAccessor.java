@@ -11,5 +11,5 @@ public interface EntityAccessor {
 	boolean create$canBeRidden(Entity entity);
 
 	@Invoker("getEntityString")
-	String getEntityString();
+	String create$getEntityString();
 }

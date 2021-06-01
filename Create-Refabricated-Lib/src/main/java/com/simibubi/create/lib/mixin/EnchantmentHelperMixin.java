@@ -23,7 +23,7 @@ public abstract class EnchantmentHelperMixin {
 		return create$customItemEnchantment(i, stack);
 	}
 
-	static int create$customItemEnchantment(int i, ItemStack stack) {
+	private static int create$customItemEnchantment(int i, ItemStack stack) {
 		if (stack.getItem() instanceof CustomItemEnchantabilityItem) {
 			int e = ((CustomItemEnchantabilityItem) stack.getItem()).getItemEnchantability(stack);
 			if (e == 0) e = i;

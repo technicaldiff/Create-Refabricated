@@ -5,13 +5,13 @@ import com.simibubi.create.AllSoundEvents;
 import com.simibubi.create.AllTileEntities;
 import com.simibubi.create.content.contraptions.wrench.IWrenchable;
 import com.simibubi.create.foundation.utility.Iterate;
-import com.simibubi.create.lib.utility.TagUtil;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.RotatedPillarBlock;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.particles.ParticleTypes;
 import net.minecraft.state.BooleanProperty;
 import net.minecraft.tileentity.TileEntity;
@@ -50,8 +50,8 @@ public abstract class AbstractChassisBlock extends RotatedPillarBlock implements
 
 		ItemStack heldItem = player.getHeldItem(handIn);
 		boolean isSlimeBall = heldItem.getItem()
-			.isIn(TagUtil.SLIMEBALLS) || AllItems.SUPER_GLUE.isIn(heldItem);
-
+				== Items.SLIME_BALL || AllItems.SUPER_GLUE.isIn(heldItem);
+//              .isIn(TagUtil.SLIMEBALLS) todo
 		BooleanProperty affectedSide = getGlueableSide(state, hit.getFace());
 		if (affectedSide == null)
 			return ActionResultType.PASS;

@@ -24,6 +24,7 @@ import com.simibubi.create.foundation.data.CreateRegistrate;
 import com.simibubi.create.foundation.networking.AllPackets;
 import com.simibubi.create.foundation.worldgen.AllWorldFeatures;
 import com.simibubi.create.lib.event.BiomeLoadingCallback;
+import com.simibubi.create.lib.utility.MinecartController;
 import com.tterrag.registrate.fabric.EnvExecutor;
 import com.tterrag.registrate.util.NonNullLazyValue;
 
@@ -105,6 +106,7 @@ public class Create implements ModInitializer {
 		EnvExecutor.runWhenOn(EnvType.CLIENT, () -> () -> CreateClient.addClientListeners());
 
 		BiomeLoadingCallback.EVENT.register(Create::onBiomeLoad);
+		MinecartController.InitController.initController = new com.simibubi.create.content.contraptions.components.structureMovement.train.capability.MinecartController(null);
 	}
 
 	public static void init() {

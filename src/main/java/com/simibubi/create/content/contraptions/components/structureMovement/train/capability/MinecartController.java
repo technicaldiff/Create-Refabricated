@@ -75,6 +75,9 @@ public class MinecartController implements NBTSerializable, ListenerProvider, co
 	private Couple<Optional<CouplingData>> couplings;
 
 	public MinecartController(AbstractMinecartEntity minecart) {
+		if (minecart == null) { // this should never be null, is only used for the InitController initialization in the MinecartController interface
+			return;
+		}
 		weakRef = new WeakReference<>(minecart);
 		stallData = Couple.create(Optional::empty);
 		couplings = Couple.create(Optional::empty);
