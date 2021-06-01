@@ -1,13 +1,17 @@
 package com.simibubi.create.foundation.config;
 
 
+import com.tterrag.registrate.fabric.EnvExecutor;
+
+import net.fabricmc.api.EnvType;
+
 public class AllConfigs {
 
 //	static Map<ConfigBase, ModConfig.Type> configs = new HashMap<>();
 
-	public static CClient CLIENT = new CClient();
-	public static CCommon COMMON = new CCommon();
-	public static CServer SERVER = new CServer();
+	public static CClient CLIENT;
+	public static CCommon COMMON;
+	public static CServer SERVER;
 
 //	private static <T extends ConfigBase> T register(Supplier<T> factory, ModConfig.Type side) {
 //		Pair<T, ForgeConfigSpec> specPair = new ForgeConfigSpec.Builder().configure(builder -> {
@@ -23,6 +27,10 @@ public class AllConfigs {
 //	}
 
 	public static void register() {
+		EnvExecutor.runWhenOn(EnvType.CLIENT, () -> () -> CLIENT = new CClient());
+		COMMON = new CCommon();
+		SERVER = new CServer();
+
 		SERVER.kinetics.stressValues.registerAll();
 		COMMON.worldGen.registerAll();
 //		CLIENT = register(CClient::new, ModConfig.Type.CLIENT);

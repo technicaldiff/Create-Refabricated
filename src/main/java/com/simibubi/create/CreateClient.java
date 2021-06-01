@@ -35,7 +35,6 @@ import com.simibubi.create.foundation.utility.ghost.GhostBlocks;
 import com.simibubi.create.foundation.utility.outliner.Outliner;
 import com.simibubi.create.lib.event.ModelsBakedCallback;
 import com.simibubi.create.lib.event.OnModelRegistryCallback;
-import com.simibubi.create.lib.event.OnPlayerRendererInitCallback;
 import com.simibubi.create.lib.event.OnTextureStitchCallback;
 import com.simibubi.create.lib.event.ParticleManagerRegistrationCallback;
 import com.simibubi.create.lib.utility.SpecialModelUtil;
@@ -125,6 +124,7 @@ public class CreateClient implements ClientModInitializer {
 		OnModelRegistryCallback.EVENT.register(CreateClient::onModelRegistry);
 		OnTextureStitchCallback.EVENT.register(CreateClient::onTextureStitch);
 		ParticleManagerRegistrationCallback.EVENT.register(AllParticleTypes::registerFactories);
+		addClientListeners();
 
 		// Replaces ArmorItem#getArmorTexture from a Forge patch
 		ArmorRenderingRegistry.registerSimpleTexture(new ResourceLocation(Create.ID, "copper"),

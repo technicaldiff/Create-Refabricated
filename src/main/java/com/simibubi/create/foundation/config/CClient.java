@@ -1,5 +1,8 @@
 package com.simibubi.create.foundation.config;
 
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
+
 import org.jetbrains.annotations.NotNull;
 
 import com.simibubi.create.lib.utility.ConfigValue;
@@ -10,6 +13,7 @@ import dev.inkwell.conrad.api.value.serialization.FlatOwenSerializer;
 import dev.inkwell.owen.OwenElement;
 import dev.inkwell.vivian.api.builders.CategoryBuilder;
 
+@Environment(EnvType.CLIENT)
 public class CClient extends ConfigBase {
 
 	@Override

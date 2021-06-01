@@ -25,10 +25,8 @@ import com.simibubi.create.foundation.networking.AllPackets;
 import com.simibubi.create.foundation.worldgen.AllWorldFeatures;
 import com.simibubi.create.lib.event.BiomeLoadingCallback;
 import com.simibubi.create.lib.utility.MinecartController;
-import com.tterrag.registrate.fabric.EnvExecutor;
 import com.tterrag.registrate.util.NonNullLazyValue;
 
-import net.fabricmc.api.EnvType;
 import net.fabricmc.api.ModInitializer;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.util.ResourceLocation;
@@ -101,9 +99,7 @@ public class Create implements ModInitializer {
 		AllParticleTypes.register();
 		AllSoundEvents.register();
 
-		AllConfigs.register();
-
-		EnvExecutor.runWhenOn(EnvType.CLIENT, () -> () -> CreateClient.addClientListeners());
+//		REGISTRATE.get().register();
 
 		BiomeLoadingCallback.EVENT.register(Create::onBiomeLoad);
 		MinecartController.InitController.initController = new com.simibubi.create.content.contraptions.components.structureMovement.train.capability.MinecartController(null);

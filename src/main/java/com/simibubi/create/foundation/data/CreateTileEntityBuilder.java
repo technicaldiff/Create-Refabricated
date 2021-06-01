@@ -3,7 +3,6 @@ package com.simibubi.create.foundation.data;
 import javax.annotation.Nullable;
 
 import com.simibubi.create.foundation.render.backend.instancing.IRendererFactory;
-import com.simibubi.create.foundation.render.backend.instancing.InstancedTileRenderRegistry;
 import com.simibubi.create.lib.event.InstanceRegistrationCallback;
 import com.tterrag.registrate.AbstractRegistrate;
 import com.tterrag.registrate.builders.BuilderCallback;
@@ -16,7 +15,7 @@ import net.fabricmc.api.EnvType;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityType;
 
-public class CreateTileEntityBuilder<T extends TileEntity, P> extends TileEntityBuilder<T, P> implements InstanceRegistrationCallback {
+public class CreateTileEntityBuilder<T extends TileEntity, P> extends TileEntityBuilder<T, P> {
 
 	@Nullable
 	private NonNullSupplier<IRendererFactory<? super T>> instanceFactory;
@@ -29,6 +28,7 @@ public class CreateTileEntityBuilder<T extends TileEntity, P> extends TileEntity
 	protected CreateTileEntityBuilder(AbstractRegistrate<?> owner, P parent, String name, BuilderCallback callback,
 		NonNullFunction<TileEntityType<T>, ? extends T> factory) {
 		super(owner, parent, name, callback, factory);
+		InstanceRegistrationCallback.EVENT.register(this::registerInstance);
 	}
 
     public CreateTileEntityBuilder<T, P> instance(NonNullSupplier<IRendererFactory<? super T>> instanceFactory) {
@@ -41,12 +41,11 @@ public class CreateTileEntityBuilder<T extends TileEntity, P> extends TileEntity
 		return this;
 	}
 
-	@Override
 	public void registerInstance() {
 //		OneTimeEventReceiver.addModListener(FMLClientSetupEvent.class, ($) -> {
 			NonNullSupplier<IRendererFactory<? super T>> instanceFactory = this.instanceFactory;
 			if (instanceFactory != null) {
-				InstancedTileRenderRegistry.instance.register(getEntry(), instanceFactory.get());
+//				InstancedTileRenderRegistry.instance.register(getEntry(), instanceFactory.get());
 			}
 
 //		});
