@@ -40,7 +40,7 @@ public class FillingBySpout {
 		toFill.setAmount(requiredAmount);
 
 		wrapper.setInventorySlotContents(0, stack);
-		for (IRecipe/*<RecipeWrapper>*/ recipe : world.getRecipeManager()
+		for (IRecipe<RecipeWrapper> recipe : world.getRecipeManager()
 			.getRecipes(AllRecipeTypes.FILLING.getType(), wrapper, world)) {
 			FillingRecipe fillingRecipe = (FillingRecipe) recipe;
 			FluidIngredient requiredFluid = fillingRecipe.getRequiredFluid();

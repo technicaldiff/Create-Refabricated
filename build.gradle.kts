@@ -137,7 +137,7 @@ repositories {
 		name = "BuildCraft"
 	}
 
-	maven("https://raw.githubusercontent.com/Devan-Kerman/Devan-Repo/master/") {
+	maven("https://storage.googleapis.com/devan-maven/") {
 		name = "HalfOf2"
 	}
 
@@ -200,6 +200,9 @@ dependencies {
 	//modImplementation("alexiil.mc.lib", "libblockattributes-items", lba_version)
 	//modImplementation("alexiil.mc.lib", "libblockattributes-fluids", lba_version)
 
+	// Reach Entity Attributes
+	modImplementation("com.jamieswhiteshirt", "reach-entity-attributes", reach_entity_attributes_version)
+
 	// Runtime resource generation
 	modImplementation("net.devtech", "arrp", arrp_version)
 	include("net.devtech", "arrp", arrp_version)
@@ -220,9 +223,6 @@ dependencies {
 	modRuntime("com.github.SuperCoder7979", "databreaker", databreaker_version) {
 		exclude(module = "fabric-loader")
 	}
-
-	// Reach Entity Attributes
-	modImplementation("com.jamieswhiteshirt", "reach-entity-attributes", reach_entity_attributes_version)
 }
 
 loom.accessWidener("src/main/resources/create.accesswidener")

@@ -32,8 +32,6 @@ dependencies {
 	// Javax Annotations
 	implementation("com.google.code.findbugs", "jsr305", "3.0.2")
 
-	// Conrad
-	modImplementation("dev.inkwell", "conrad", conrad_version)
     // LibBlockAttributes
     modImplementation("alexiil.mc.lib", "libblockattributes-all", lba_version)
     //modImplementation("alexiil.mc.lib", "libblockattributes-items", lba_version)
@@ -42,6 +40,9 @@ dependencies {
 	// Registrate
 	modImplementation("com.github.PepperCode1", "Registrate-Fabric", registrate_version)
 	include("com.github.PepperCode1", "Registrate-Fabric", registrate_version)
+
+	// Conrad
+	modImplementation("dev.inkwell", "conrad", conrad_version)
 }
 
 loom.accessWidener("src/main/resources/create_lib.accesswidener")

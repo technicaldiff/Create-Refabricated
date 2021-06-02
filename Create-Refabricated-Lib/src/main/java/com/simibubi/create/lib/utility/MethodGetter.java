@@ -11,7 +11,7 @@ public class MethodGetter {
 	/**
 	 * remember, this is a Fabric mod, you need intermediary for obfuscatedName, not SRG
 	 */
-	public static Method findMethod(Class clas, String methodName, String obfuscatedName, Class<?>... parameterTypes) {
+	public static Method findMethod(Class<?> clas, String methodName, String obfuscatedName, Class<?>... parameterTypes) {
 		Method method;
 		try {
 			// obfuscated

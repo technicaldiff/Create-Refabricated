@@ -20,7 +20,7 @@ import net.minecraft.world.World;
  */
 public class SimpleFluidTank extends SimpleFixedFluidInv implements AttributeProvider {
 	@Override
-	public void addAllAttributes(World world, BlockPos pos, BlockState state, AttributeList to) {
+	public void addAllAttributes(World world, BlockPos pos, BlockState state, AttributeList<?> to) {
 		to.offer(FluidAttributes.INVENTORY_BASED);
 	}
 

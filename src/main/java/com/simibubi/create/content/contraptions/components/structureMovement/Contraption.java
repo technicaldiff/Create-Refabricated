@@ -835,7 +835,7 @@ public abstract class Contraption {
 
 	private CompoundNBT writeBlocksCompound() {
 		CompoundNBT compound = new CompoundNBT();
-		HashMapPalette<BlockState> palette = new HashMapPalette<>(new ObjectIntIdentityMap(), 16, (i, s) -> { // fixme, this is very deeply
+		HashMapPalette<BlockState> palette = new HashMapPalette<>(new ObjectIntIdentityMap<>(), 16, (i, s) -> { // fixme, this is very deeply
 			throw new IllegalStateException("Palette Map index exceeded maximum");								// integrated into forge and
 		}, NBTUtil::readBlockState, NBTUtil::writeBlockState);													// probably broken
 		ListNBT blockList = new ListNBT();
@@ -863,7 +863,7 @@ public abstract class Contraption {
 		ListNBT blockList;
 		if (usePalettedDeserialization) {
 			CompoundNBT c = ((CompoundNBT) compound);
-			palette = new HashMapPalette<>(new ObjectIntIdentityMap(), 16, (i, s) -> { // see above comment
+			palette = new HashMapPalette<>(new ObjectIntIdentityMap<>(), 16, (i, s) -> { // see above comment
 				throw new IllegalStateException("Palette Map index exceeded maximum");
 			}, NBTUtil::readBlockState, NBTUtil::writeBlockState);
 			palette.read(c.getList("Palette", 10));
