@@ -18,6 +18,8 @@ import com.simibubi.create.lib.event.RenderTooltipBorderColorCallback;
 import com.simibubi.create.lib.event.ScreenInitCallback;
 import com.simibubi.create.lib.utility.MixinHelper;
 
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.IGuiEventListener;
 import net.minecraft.client.gui.screen.Screen;
@@ -25,6 +27,7 @@ import net.minecraft.client.gui.widget.Widget;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IReorderingProcessor;
 
+@Environment(EnvType.CLIENT)
 @Mixin(Screen.class)
 public abstract class ScreenMixin {
 	@Unique

@@ -172,48 +172,48 @@ public class CreateRegistrate extends AbstractRegistrate<CreateRegistrate> {
 	/* Util */
 
 	public static <T extends Block> NonNullConsumer<? super T> connectedTextures(ConnectedTextureBehaviour behavior) {
-		return entry -> onClient(() -> () -> registerCTBehviour(entry, behavior));
+		return entry -> onClient(() -> () -> ClientMethods.registerCTBehviour(entry, behavior));
 	}
 
 	public static <T extends Block> NonNullConsumer<? super T> casingConnectivity(
 		BiConsumer<T, CasingConnectivity> consumer) {
-		return entry -> onClient(() -> () -> registerCasingConnectivity(entry, consumer));
+		return entry -> onClient(() -> () -> ClientMethods.registerCasingConnectivity(entry, consumer));
 	}
 
-	@Environment(EnvType.CLIENT)
 	public static <T extends Block> NonNullConsumer<? super T> blockModel(
 		Supplier<NonNullFunction<IBakedModel, ? extends IBakedModel>> func) {
-		return entry -> onClient(() -> () -> registerBlockModel(entry, func));
+		return entry -> onClient(() -> () -> ClientMethods.registerBlockModel(entry, func));
 	}
 
 	public static <T extends Block> NonNullConsumer<? super T> blockColors(Supplier<Supplier<IBlockColor>> colorFunc) {
-		return entry -> onClient(() -> () -> registerBlockColor(entry, colorFunc));
+		return entry -> onClient(() -> () -> ClientMethods.registerBlockColor(entry, colorFunc));
 	}
 
 	public static <T extends Block> NonNullConsumer<? super T> blockVertexColors(IBlockVertexColor colorFunc) {
-		return entry -> onClient(() -> () -> registerBlockVertexColor(entry, colorFunc));
+		return entry -> onClient(() -> () -> ClientMethods.registerBlockVertexColor(entry, colorFunc));
 	}
 
-	@Environment(EnvType.CLIENT)
 	public static <T extends Item> NonNullConsumer<? super T> itemModel(
 		Supplier<NonNullFunction<IBakedModel, ? extends IBakedModel>> func) {
-		return entry -> onClient(() -> () -> registerItemModel(entry, func));
+		return entry -> onClient(() -> () -> ClientMethods.registerItemModel(entry, func));
 	}
 
 	public static <T extends Item> NonNullConsumer<? super T> itemColors(Supplier<Supplier<IItemColor>> colorFunc) {
-		return entry -> onClient(() -> () -> registerItemColor(entry, colorFunc));
+		return entry -> onClient(() -> () -> ClientMethods.registerItemColor(entry, colorFunc));
 	}
 
-	@Environment(EnvType.CLIENT)
 	public static <T extends Item, P> NonNullUnaryOperator<ItemBuilder<T, P>> customRenderedItem(
 		Supplier<NonNullFunction<IBakedModel, ? extends CustomRenderedItemModel>> func) {
 		return b -> b
-			.onRegister(entry -> onClient(() -> () -> registerCustomRenderedItem(entry, func)));
+			.onRegister(entry -> onClient(() -> () -> ClientMethods.registerCustomRenderedItem(entry, func)));
 	}
 
 	protected static void onClient(Supplier<Runnable> toRun) {
 		EnvExecutor.runWhenOn(EnvType.CLIENT, toRun);
 	}
+
+	@Environment(EnvType.CLIENT)
+	private static class ClientMethods {
 
 	@Environment(EnvType.CLIENT)
 	private static void registerCTBehviour(Block entry, ConnectedTextureBehaviour behavior) {
@@ -266,6 +266,8 @@ public class CreateRegistrate extends AbstractRegistrate<CreateRegistrate> {
 		CreateClient.getColorHandler()
 			.register(entry, colorFunc.get()
 				.get());
+	}
+
 	}
 
 }

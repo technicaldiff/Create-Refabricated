@@ -12,6 +12,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import com.simibubi.create.lib.event.OnModelRegistryCallback;
 import com.simibubi.create.lib.utility.SpecialModelUtil;
 
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.client.renderer.color.BlockColors;
 import net.minecraft.client.renderer.model.IUnbakedModel;
 import net.minecraft.client.renderer.model.ModelBakery;
@@ -19,6 +21,7 @@ import net.minecraft.profiler.IProfiler;
 import net.minecraft.resources.IResourceManager;
 import net.minecraft.util.ResourceLocation;
 
+@Environment(EnvType.CLIENT)
 @Mixin(ModelBakery.class)
 public abstract class ModelBakeryMixin {
 	@Final

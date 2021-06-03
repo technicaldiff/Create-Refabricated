@@ -12,7 +12,7 @@
     "sources": "https://github.com/Create-Fabric/Create-Refabricated"
   },
 
-  "license": "MIT",
+  "license": "LGPL-2.1-only",
   "icon": "assets/create_lib/icon.png",
 
   "environment": "*",

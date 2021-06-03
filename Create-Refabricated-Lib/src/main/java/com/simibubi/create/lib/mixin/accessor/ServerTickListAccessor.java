@@ -9,7 +9,7 @@ import net.minecraft.world.NextTickListEntry;
 import net.minecraft.world.server.ServerTickList;
 
 @Mixin(ServerTickList.class)
-public interface ServerTickListAccessor {
+public interface ServerTickListAccessor<T> {
 	@Accessor("pendingTickListEntriesHashSet")
-	Set<NextTickListEntry> getPendingTickListEntriesHashSet();
+	Set<NextTickListEntry<T>> getPendingTickListEntriesHashSet();
 }

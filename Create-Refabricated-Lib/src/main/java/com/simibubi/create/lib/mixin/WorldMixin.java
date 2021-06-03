@@ -42,7 +42,7 @@ public abstract class WorldMixin {
 			locals = LocalCapture.CAPTURE_FAILEXCEPTION,
 			method = "updateComparatorOutputLevel(Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/block/Block;)V")
 	public void create$updateComparatorOutputLevel(BlockPos blockPos, Block block, CallbackInfo ci,
-												   Iterator var3, Direction direction, BlockPos blockPos2) {
+												   Iterator<?> var3, Direction direction, BlockPos blockPos2) {
 		((BlockStateExtensions) getBlockState(blockPos2)).create$onNeighborChange(MixinHelper.cast(this), blockPos2, blockPos);
 	}
 }
