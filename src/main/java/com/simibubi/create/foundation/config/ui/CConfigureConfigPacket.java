@@ -1,29 +1,28 @@
 package com.simibubi.create.foundation.config.ui;
 
-import java.util.function.Supplier;
-
-import com.simibubi.create.foundation.command.SConfigureConfigPacket;
 import com.simibubi.create.foundation.config.AllConfigs;
-import com.simibubi.create.foundation.networking.AllPackets;
-import com.simibubi.create.foundation.networking.SimplePacketBase;
 
+import me.pepperbell.simplenetworking.C2SPacket;
+import me.pepperbell.simplenetworking.SimpleChannel;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.network.PacketBuffer;
-import net.minecraftforge.common.ForgeConfigSpec;
-import net.minecraftforge.fml.network.NetworkEvent;
-import net.minecraftforge.fml.network.PacketDistributor;
+import net.minecraft.network.play.ServerPlayNetHandler;
+import net.minecraft.server.MinecraftServer;
 
-public class CConfigureConfigPacket<T> extends SimplePacketBase {
+public class CConfigureConfigPacket<T> implements C2SPacket {
 
 	private String path;
 	private String value;
+
+	protected CConfigureConfigPacket() {}
 
 	public CConfigureConfigPacket(String path, T value) {
 		this.path = path;
 		this.value = serialize(value);
 	}
 
-	public CConfigureConfigPacket(PacketBuffer buffer) {
+	@Override
+	public void read(PacketBuffer buffer) {
 		this.path = buffer.readString(32767);
 		this.value = buffer.readString(32767);
 	}
@@ -35,8 +34,7 @@ public class CConfigureConfigPacket<T> extends SimplePacketBase {
 	}
 
 	@Override
-	public void handle(Supplier<NetworkEvent.Context> context) {
-		ServerPlayerEntity sender = context.get().getSender();
+	public void handle(MinecraftServer server, ServerPlayerEntity sender, ServerPlayNetHandler handler, SimpleChannel.ResponseTarget responseTarget) {
 		if (sender == null || !sender.hasPermissionLevel(2))
 			return;
 

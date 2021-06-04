@@ -7,6 +7,8 @@ import com.simibubi.create.content.logistics.item.filter.AttributeFilterContaine
 import com.simibubi.create.content.logistics.item.filter.FilterItem;
 import com.simibubi.create.content.logistics.item.filter.ItemAttribute;
 
+import com.simibubi.create.lib.lba.item.ItemStackHandler;
+
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.item.HangingEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -28,9 +30,6 @@ import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraftforge.common.crafting.StackList;
-import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
-import net.minecraftforge.items.ItemStackHandler;
 
 public class BlueprintItem extends Item {
 

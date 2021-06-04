@@ -7,6 +7,13 @@ import com.simibubi.create.content.curiosities.tools.BlueprintEntity.BlueprintSe
 import com.simibubi.create.foundation.gui.GhostItemContainer;
 import com.simibubi.create.foundation.gui.IClearableContainer;
 
+import com.simibubi.create.lib.lba.item.IItemHandler;
+import com.simibubi.create.lib.lba.item.ItemStackHandler;
+
+import com.simibubi.create.lib.lba.item.SlotItemHandler;
+
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerInventory;
@@ -19,11 +26,6 @@ import net.minecraft.item.crafting.ICraftingRecipe;
 import net.minecraft.item.crafting.IRecipeType;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.network.play.server.SSetSlotPacket;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.items.IItemHandler;
-import net.minecraftforge.items.ItemStackHandler;
-import net.minecraftforge.items.SlotItemHandler;
 
 public class BlueprintContainer extends GhostItemContainer<BlueprintSection> implements IClearableContainer {
 
@@ -120,7 +122,7 @@ public class BlueprintContainer extends GhostItemContainer<BlueprintSection> imp
 	}
 
 	@Override
-	@OnlyIn(Dist.CLIENT)
+	@Environment(EnvType.CLIENT)
 	protected BlueprintSection createOnClient(PacketBuffer extraData) {
 		int entityID = extraData.readVarInt();
 		int section = extraData.readVarInt();

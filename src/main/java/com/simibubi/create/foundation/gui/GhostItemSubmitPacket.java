@@ -1,25 +1,27 @@
 package com.simibubi.create.foundation.gui;
 
-import java.util.function.Supplier;
-
-import com.simibubi.create.foundation.networking.SimplePacketBase;
-
+import me.pepperbell.simplenetworking.C2SPacket;
+import me.pepperbell.simplenetworking.SimpleChannel;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketBuffer;
-import net.minecraftforge.fml.network.NetworkEvent.Context;
+import net.minecraft.network.play.ServerPlayNetHandler;
+import net.minecraft.server.MinecraftServer;
 
-public class GhostItemSubmitPacket extends SimplePacketBase {
+public class GhostItemSubmitPacket implements C2SPacket {
 
 	private final ItemStack item;
 	private final int slot;
+
+	protected GhostItemSubmitPacket() {}
 
 	public GhostItemSubmitPacket(ItemStack item, int slot) {
 		this.item = item;
 		this.slot = slot;
 	}
 
-	public GhostItemSubmitPacket(PacketBuffer buffer) {
+	@Override
+	public void read(PacketBuffer buffer) {
 		item = buffer.readItemStack();
 		slot = buffer.readInt();
 	}
@@ -31,11 +33,9 @@ public class GhostItemSubmitPacket extends SimplePacketBase {
 	}
 
 	@Override
-	public void handle(Supplier<Context> context) {
-		context.get()
-			.enqueueWork(() -> {
-				ServerPlayerEntity player = context.get()
-					.getSender();
+	public void handle(MinecraftServer server, ServerPlayerEntity player, ServerPlayNetHandler handler, SimpleChannel.ResponseTarget responseTarget) {
+		server
+			.execute(() -> {
 				if (player == null)
 					return;
 
@@ -46,8 +46,6 @@ public class GhostItemSubmitPacket extends SimplePacketBase {
 				}
 
 			});
-		context.get()
-			.setPacketHandled(true);
 	}
 
 }

@@ -1,7 +1,10 @@
 package com.simibubi.create.content.logistics.item.filter;
 
+import com.simibubi.create.foundation.gui.GhostItemContainer;
 import com.simibubi.create.foundation.gui.IClearableContainer;
 
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.ClickType;
@@ -34,7 +37,7 @@ public abstract class AbstractFilterContainer extends GhostItemContainer<ItemSta
 	}
 
 	@Override
-	@OnlyIn(Dist.CLIENT)
+	@Environment(EnvType.CLIENT)
 	protected ItemStack createOnClient(PacketBuffer extraData) {
 		return extraData.readItemStack();
 	}

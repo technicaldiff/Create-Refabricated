@@ -79,8 +79,8 @@ public enum AllPackets {
 	LINKED_CONTROLLER_INPUT(LinkedControllerInputPacket.class),
 	LINKED_CONTROLLER_BIND(LinkedControllerBindPacket.class),
 	C_CONFIGURE_CONFIG(CConfigureConfigPacket.class),
-	SUBMIT_GHOST_ITEM(GhostItemSubmitPacket.class, GhostItemSubmitPacket::new, PLAY_TO_SERVER),
-	BLUEPRINT_COMPLETE_RECIPE(BlueprintAssignCompleteRecipePacket.class, BlueprintAssignCompleteRecipePacket::new, PLAY_TO_SERVER),
+	SUBMIT_GHOST_ITEM(GhostItemSubmitPacket.class),
+	BLUEPRINT_COMPLETE_RECIPE(BlueprintAssignCompleteRecipePacket.class),
 
 	// Server to Client
 	SYMMETRY_EFFECT(SymmetryEffectPacket.class),
@@ -99,7 +99,7 @@ public enum AllPackets {
 	BLOCK_HIGHLIGHT(HighlightPacket.class),
 	TUNNEL_FLAP(TunnelFlapPacket.class),
 	FUNNEL_FLAP(FunnelFlapPacket.class),
-	PERSISTENT_DATA(ISyncPersistentData.Packet.class, ISyncPersistentData.Packet::new, PLAY_TO_CLIENT),
+	PERSISTENT_DATA(ISyncPersistentData.Packet.class),
 
 	;
 

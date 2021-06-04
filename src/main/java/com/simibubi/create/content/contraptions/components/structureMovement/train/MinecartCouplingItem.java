@@ -1,5 +1,10 @@
 package com.simibubi.create.content.contraptions.components.structureMovement.train;
 
+import com.simibubi.create.foundation.utility.Iterate;
+
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
+
 import org.jetbrains.annotations.Nullable;
 
 import com.simibubi.create.AllItems;

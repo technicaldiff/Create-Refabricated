@@ -4,12 +4,16 @@ import java.util.function.Supplier;
 
 import com.simibubi.create.foundation.networking.SimplePacketBase;
 
+import me.pepperbell.simplenetworking.C2SPacket;
+import me.pepperbell.simplenetworking.SimpleChannel;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.network.PacketBuffer;
+import net.minecraft.network.play.ServerPlayNetHandler;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.network.NetworkEvent.Context;
 
-public class BlueprintAssignCompleteRecipePacket extends SimplePacketBase {
+public class BlueprintAssignCompleteRecipePacket implements C2SPacket {
 
 	private ResourceLocation recipeID;
 
@@ -17,7 +21,8 @@ public class BlueprintAssignCompleteRecipePacket extends SimplePacketBase {
 		this.recipeID = recipeID;
 	}
 
-	public BlueprintAssignCompleteRecipePacket(PacketBuffer buffer) {
+	@Override
+	public void read(PacketBuffer buffer) {
 		recipeID = buffer.readResourceLocation();
 	}
 
@@ -27,11 +32,9 @@ public class BlueprintAssignCompleteRecipePacket extends SimplePacketBase {
 	}
 
 	@Override
-	public void handle(Supplier<Context> context) {
-		context.get()
-			.enqueueWork(() -> {
-				ServerPlayerEntity player = context.get()
-					.getSender();
+	public void handle(MinecraftServer server, ServerPlayerEntity player, ServerPlayNetHandler handler, SimpleChannel.ResponseTarget responseTarget) {
+		server
+			.execute(() -> {
 				if (player == null)
 					return;
 				if (player.openContainer instanceof BlueprintContainer) {
@@ -42,8 +45,6 @@ public class BlueprintAssignCompleteRecipePacket extends SimplePacketBase {
 						.ifPresent(r -> BlueprintItem.assignCompleteRecipe(c.ghostInventory, r));
 				}
 			});
-		context.get()
-			.setPacketHandled(true);
 	}
 
 }

@@ -7,6 +7,13 @@ import java.util.Optional;
 
 import javax.annotation.Nullable;
 
+import com.simibubi.create.lib.lba.item.IItemHandlerModifiable;
+import com.simibubi.create.lib.lba.item.InvWrapper;
+import com.simibubi.create.lib.lba.item.ItemStackHandler;
+
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
+
 import org.apache.commons.lang3.Validate;
 
 import com.simibubi.create.AllEntityTypes;
@@ -56,16 +63,6 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.world.GameRules;
 import net.minecraft.world.World;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.common.ForgeHooks;
-import net.minecraftforge.common.util.FakePlayer;
-import net.minecraftforge.fml.common.registry.IEntityAdditionalSpawnData;
-import net.minecraftforge.fml.hooks.BasicEventHooks;
-import net.minecraftforge.fml.network.NetworkHooks;
-import net.minecraftforge.items.IItemHandlerModifiable;
-import net.minecraftforge.items.ItemStackHandler;
-import net.minecraftforge.items.wrapper.InvWrapper;
 
 public class BlueprintEntity extends HangingEntity
 	implements IEntityAdditionalSpawnData, ISpecialEntityItemRequirement, ISyncPersistentData {
@@ -282,7 +279,7 @@ public class BlueprintEntity extends HangingEntity
 	}
 
 	@Override
-	@OnlyIn(Dist.CLIENT)
+	@Environment(EnvType.CLIENT)
 	public void setPositionAndRotationDirect(double p_180426_1_, double p_180426_3_, double p_180426_5_,
 		float p_180426_7_, float p_180426_8_, int p_180426_9_, boolean p_180426_10_) {
 		BlockPos blockpos =
