@@ -1,9 +1,5 @@
 package com.simibubi.create.content.curiosities.tools;
 
-import java.util.function.Supplier;
-
-import com.simibubi.create.foundation.networking.SimplePacketBase;
-
 import me.pepperbell.simplenetworking.C2SPacket;
 import me.pepperbell.simplenetworking.SimpleChannel;
 import net.minecraft.entity.player.ServerPlayerEntity;
@@ -11,11 +7,12 @@ import net.minecraft.network.PacketBuffer;
 import net.minecraft.network.play.ServerPlayNetHandler;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.fml.network.NetworkEvent.Context;
 
 public class BlueprintAssignCompleteRecipePacket implements C2SPacket {
 
 	private ResourceLocation recipeID;
+
+	protected BlueprintAssignCompleteRecipePacket() {}
 
 	public BlueprintAssignCompleteRecipePacket(ResourceLocation recipeID) {
 		this.recipeID = recipeID;

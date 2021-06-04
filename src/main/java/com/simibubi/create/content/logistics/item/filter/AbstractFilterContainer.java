@@ -1,7 +1,6 @@
 package com.simibubi.create.content.logistics.item.filter;
 
 import com.simibubi.create.foundation.gui.GhostItemContainer;
-import com.simibubi.create.foundation.gui.IClearableContainer;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -11,8 +10,6 @@ import net.minecraft.inventory.container.ClickType;
 import net.minecraft.inventory.container.ContainerType;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketBuffer;
-import net.minecraftforge.items.ItemHandlerHelper;
-import net.minecraftforge.items.ItemStackHandler;
 
 public abstract class AbstractFilterContainer extends GhostItemContainer<ItemStack> {
 

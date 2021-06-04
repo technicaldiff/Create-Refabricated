@@ -10,8 +10,8 @@ import net.minecraft.server.MinecraftServer;
 
 public class GhostItemSubmitPacket implements C2SPacket {
 
-	private final ItemStack item;
-	private final int slot;
+	private ItemStack item;
+	private int slot;
 
 	protected GhostItemSubmitPacket() {}
 

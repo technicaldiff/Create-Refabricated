@@ -1,14 +1,14 @@
 package com.simibubi.create.foundation.networking;
 
 import java.util.Iterator;
-import java.util.function.Supplier;
 
+import me.pepperbell.simplenetworking.S2CPacket;
+import me.pepperbell.simplenetworking.SimpleChannel;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.network.play.ClientPlayNetHandler;
 import net.minecraft.entity.Entity;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.PacketBuffer;
-import net.minecraftforge.fml.network.NetworkEvent.Context;
-import net.minecraftforge.fml.network.PacketDistributor;
 
 public interface ISyncPersistentData {
 
@@ -18,18 +18,21 @@ public interface ISyncPersistentData {
 		AllPackets.channel.send(PacketDistributor.TRACKING_ENTITY.with(() -> self), new Packet(self));
 	}
 
-	public static class Packet extends SimplePacketBase {
+	public static class Packet implements S2CPacket {
 
 		private int entityId;
 		private Entity entity;
 		private CompoundNBT readData;
+
+		protected Packet() {}
 
 		public Packet(Entity entity) {
 			this.entity = entity;
 			this.entityId = entity.getEntityId();
 		}
 
-		public Packet(PacketBuffer buffer) {
+		@Override
+		public void read(PacketBuffer buffer) {
 			entityId = buffer.readInt();
 			readData = buffer.readCompoundTag();
 		}
@@ -41,9 +44,9 @@ public interface ISyncPersistentData {
 		}
 
 		@Override
-		public void handle(Supplier<Context> context) {
-			context.get()
-				.enqueueWork(() -> {
+		public void handle(Minecraft client, ClientPlayNetHandler handler, SimpleChannel.ResponseTarget responseTarget) {
+			client
+				.execute(() -> {
 					Entity entityByID = Minecraft.getInstance().world.getEntityByID(entityId);
 					if (!(entityByID instanceof ISyncPersistentData))
 						return;
@@ -55,10 +58,7 @@ public interface ISyncPersistentData {
 					data.merge(readData);
 					((ISyncPersistentData) entityByID).onPersistentDataUpdated();
 				});
-			context.get()
-				.setPacketHandled(true);
 		}
-
 	}
 
 }
