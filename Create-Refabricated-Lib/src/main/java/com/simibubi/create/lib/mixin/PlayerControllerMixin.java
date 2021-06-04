@@ -28,7 +28,7 @@ public abstract class PlayerControllerMixin {
 	@Shadow
 	private ClientPlayNetHandler connection;
 
-	@Inject(at = @At(value = "FIELD", target = "Lnet/minecraft/client/multiplayer/PlayerController;func_217292_a(Lnet/minecraft/client/entity/player/ClientPlayerEntity;Lnet/minecraft/client/world/ClientWorld;Lnet/minecraft/util/Hand;Lnet/minecraft/util/math/BlockRayTraceResult;)Lnet/minecraft/util/ActionResultType;"),
+	@Inject(at = @At("HEAD"),
 			method = "func_217292_a(Lnet/minecraft/client/entity/player/ClientPlayerEntity;Lnet/minecraft/client/world/ClientWorld;Lnet/minecraft/util/Hand;Lnet/minecraft/util/math/BlockRayTraceResult;)Lnet/minecraft/util/ActionResultType;",
 			cancellable = true)
 	public void create$func_217292_a(ClientPlayerEntity clientPlayerEntity, ClientWorld clientWorld, Hand hand, BlockRayTraceResult blockRayTraceResult, CallbackInfoReturnable<ActionResultType> cir) {

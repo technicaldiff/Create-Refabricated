@@ -1,12 +1,11 @@
 package com.simibubi.create.lib.mixin;
 
-import net.minecraft.util.math.BlockPos;
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.objectweb.asm.Opcodes;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Mutable;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
@@ -32,19 +31,25 @@ import net.minecraft.network.PacketBuffer;
 import net.minecraft.network.play.server.SSpawnObjectPacket;
 import net.minecraft.network.play.server.SUpdateTileEntityPacket;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.math.BlockPos;
 
 @Environment(EnvType.CLIENT)
 @Mixin(ClientPlayNetHandler.class)
 public abstract class ClientPlayNetHandlerMixin {
 	@Unique
 	private static final Logger CREATE$LOGGER = LogManager.getLogger();
+	@Mutable
 	@Final
 	@Shadow
-	private final NetworkManager netManager = null;
+	private final NetworkManager netManager;
 	@Shadow
 	private ClientWorld world;
 	@Unique
 	private boolean create$tileEntityHandled;
+
+	protected ClientPlayNetHandlerMixin(NetworkManager netManager) {
+		this.netManager = netManager;
+	}
 
 	@ModifyVariable(at = @At(value = "JUMP", opcode = Opcodes.IFNULL, ordinal = 3, shift = Shift.BEFORE),
 			method = "handleSpawnObject(Lnet/minecraft/network/play/server/SSpawnObjectPacket;)V")
