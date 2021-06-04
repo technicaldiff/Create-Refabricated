@@ -33,7 +33,6 @@ import com.simibubi.create.content.contraptions.components.waterwheel.WaterWheel
 import com.simibubi.create.foundation.config.AllConfigs;
 import com.simibubi.create.foundation.config.CKinetics;
 import com.simibubi.create.foundation.utility.Lang;
-import com.simibubi.create.lib.utility.ConfigValue;
 
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;

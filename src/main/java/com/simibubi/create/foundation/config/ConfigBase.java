@@ -1,214 +1,192 @@
 package com.simibubi.create.foundation.config;
 
-
 import java.util.ArrayList;
+import java.util.List;
+import java.util.function.Function;
+import java.util.function.Supplier;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import net.minecraftforge.common.ForgeConfigSpec;
+import net.minecraftforge.common.ForgeConfigSpec.BooleanValue;
+import net.minecraftforge.common.ForgeConfigSpec.Builder;
+import net.minecraftforge.common.ForgeConfigSpec.ConfigValue;
+import net.minecraftforge.common.ForgeConfigSpec.DoubleValue;
+import net.minecraftforge.common.ForgeConfigSpec.EnumValue;
+import net.minecraftforge.common.ForgeConfigSpec.IntValue;
 
-import com.simibubi.create.lib.utility.ConfigValue;
+public abstract class ConfigBase {
 
-import dev.inkwell.conrad.api.Config;
-import dev.inkwell.conrad.api.value.data.SaveType;
-import dev.inkwell.owen.OwenElement;
-import dev.inkwell.vivian.api.builders.CategoryBuilder;
-import net.minecraft.util.text.TranslationTextComponent;
+	public ForgeConfigSpec specification;
 
-public abstract class ConfigBase extends Config<OwenElement> {
+	protected int depth;
+	protected List<CValue<?, ?>> allValues;
+	protected List<ConfigBase> children;
 
-	@Override
-	public @NotNull SaveType getSaveType() {
-		return SaveType.USER;
+	protected void registerAll(final ForgeConfigSpec.Builder builder) {
+		for (CValue<?, ?> cValue : allValues)
+			cValue.register(builder);
 	}
 
-//	public ForgeConfigSpec specification;
-//
-//	protected int depth;
-//	protected List<CValue<?, ?>> allValues;
-//	protected List<ConfigBase> children;
-//
-	protected void registerAll() {
-//		for (CValue<?, ?> cValue : allValues)
-//			cValue.register(builder);
-	}
-//
-//	public void onLoad() {
-//		if (children != null)
-//			children.forEach(ConfigBase::onLoad);
-//	}
-//
-//	public void onReload() {
-//		if (children != null)
-//			children.forEach(ConfigBase::onReload);
-//	}
-//
-//	public abstract String getName();
-//
-//	@FunctionalInterface
-//	protected static interface IValueProvider<V, T extends ConfigValue<V>>
-//		extends Function<ForgeConfigSpec.Builder, T> {
-//	}
-
-	protected static ConfigValue<Boolean> b(boolean current, String name, @Nullable CategoryBuilder group, String... comment) {
-		return new ConfigValue<>(value(current));
+	public void onLoad() {
+		if (children != null)
+			children.forEach(ConfigBase::onLoad);
 	}
 
-	public static ConfigValue<Float> f(float current, float min, float max, String name, @Nullable CategoryBuilder group, String... comment) {
-		return new ConfigValue<>(builder(current).bounds(min, max).build());
+	public void onReload() {
+		if (children != null)
+			children.forEach(ConfigBase::onReload);
 	}
 
-	protected static ConfigValue<Float> f(float current, float min, String name, @Nullable CategoryBuilder group, String... comment) {
-		return f(current, min, Float.MAX_VALUE, name, group, comment);
+	public abstract String getName();
+
+	@FunctionalInterface
+	protected static interface IValueProvider<V, T extends ConfigValue<V>>
+		extends Function<ForgeConfigSpec.Builder, T> {
 	}
 
-	protected static ConfigValue<Integer> i(int current, int min, int max, String name, @Nullable CategoryBuilder group, String... comment) {
-		return new ConfigValue<>(builder(current).bounds(min, max).build());
+	protected ConfigBool b(boolean current, String name, String... comment) {
+		return new ConfigBool(name, current, comment);
 	}
 
-	public static ConfigValue<Integer> i(int current, int min, String name, @Nullable CategoryBuilder group, String... comment) {
-		return i(current, min, Integer.MAX_VALUE, name, group, comment);
+	protected ConfigFloat f(float current, float min, float max, String name, String... comment) {
+		return new ConfigFloat(name, current, min, max, comment);
 	}
 
-	protected static ConfigValue<Double> d(double current, double min, double max, String name, @Nullable CategoryBuilder group, String... comment) {
-		return new ConfigValue<Double>(builder(current).bounds(min, max).build());
+	protected ConfigFloat f(float current, float min, String name, String... comment) {
+		return f(current, min, Float.MAX_VALUE, name, comment);
 	}
 
-	protected static ConfigValue<Double> d(double current, double min, String name, @Nullable CategoryBuilder group, String... comment) {
-		return d(current, min, Double.MAX_VALUE, name, group, comment);
+	protected ConfigInt i(int current, int min, int max, String name, String... comment) {
+		return new ConfigInt(name, current, min, max, comment);
 	}
 
-	protected static <T extends Enum<T>> ConfigValue<T> e(T defaultValue, String name, @Nullable CategoryBuilder group, String... comment) {
-		return new ConfigValue<T>(value(() -> defaultValue));
+	protected ConfigInt i(int current, int min, String name, String... comment) {
+		return i(current, min, Integer.MAX_VALUE, name, comment);
 	}
 
-	public static CategoryBuilder group(int depth, String name, @Nullable CategoryBuilder group, String... comment) {
-		if (depth != 0) { // group should also be null in this scenario
-			group.addSection(new TranslationTextComponent(name), new ArrayList<>());
-			return group;
+	protected <T extends Enum<T>> ConfigEnum<T> e(T defaultValue, String name, String... comment) {
+		return new ConfigEnum<>(name, defaultValue, comment);
+	}
+
+	protected ConfigGroup group(int depth, String name, String... comment) {
+		return new ConfigGroup(name, depth, comment);
+	}
+
+	protected <T extends ConfigBase> T nested(int depth, Supplier<T> constructor, String... comment) {
+		T config = constructor.get();
+		new ConfigGroup(config.getName(), depth, comment);
+		new CValue<Boolean, ForgeConfigSpec.BooleanValue>(config.getName(), builder -> {
+			config.depth = depth;
+			config.registerAll(builder);
+			if (config.depth > depth)
+				builder.pop(config.depth - depth);
+			return null;
+		});
+		if (children == null)
+			children = new ArrayList<>();
+		children.add(config);
+		return config;
+	}
+
+	public class CValue<V, T extends ConfigValue<V>> {
+		protected ConfigValue<V> value;
+		protected String name;
+		private IValueProvider<V, T> provider;
+
+		public CValue(String name, IValueProvider<V, T> provider, String... comment) {
+			this.name = name;
+			this.provider = builder -> {
+				addComments(builder, comment);
+				return provider.apply(builder);
+			};
+			if (allValues == null)
+				allValues = new ArrayList<>();
+			allValues.add(this);
 		}
-		CategoryBuilder builder = new CategoryBuilder(new TranslationTextComponent(name));
-		for (String string : comment) {
-			builder.addTooltip(new TranslationTextComponent(string));
+
+		public void addComments(Builder builder, String... comment) {
+			if (comment.length > 0) {
+				String[] comments = new String[comment.length + 1];
+				comments[0] = "";
+				System.arraycopy(comment, 0, comments, 1, comment.length);
+				builder.comment(comments);
+			} else
+				builder.comment("");
 		}
-		return builder;
+
+		public void register(ForgeConfigSpec.Builder builder) {
+			value = provider.apply(builder);
+		}
+
+		public V get() {
+			return value.get();
+		}
+
+		public void set(V value) {
+			this.value.set(value);
+		}
+
+		public String getName() {
+			return name;
+		}
 	}
-//
-//	protected <T extends ConfigBase> T nested(int depth, Supplier<T> constructor, String... comment) {
-//		T config = constructor.get();
-//		new ConfigGroup(config.getName(), depth, comment);
-//		new CValue<Boolean, ForgeConfigSpec.BooleanValue>(config.getName(), builder -> {
-//			config.depth = depth;
-//			config.registerAll(builder);
-//			if (config.depth > depth)
-//				builder.pop(config.depth - depth);
-//			return null;
-//		});
-//		if (children == null)
-//			children = new ArrayList<>();
-//		children.add(config);
-//		return config;
-//	}
-//
-//	public class CValue<V, T extends ConfigValue<V>> {
-//		protected ConfigValue<V> value;
-//		protected String name;
-//		private IValueProvider<V, T> provider;
-//
-//		public CValue(String name, IValueProvider<V, T> provider, String... comment) {
-//			this.name = name;
-//			this.provider = builder -> {
-//				addComments(builder, comment);
-//				return provider.apply(builder);
-//			};
-//			if (allValues == null)
-//				allValues = new ArrayList<>();
-//			allValues.add(this);
-//		}
-//
-//		public void addComments(Builder builder, String... comment) {
-//			if (comment.length > 0) {
-//				String[] comments = new String[comment.length + 1];
-//				comments[0] = "";
-//				System.arraycopy(comment, 0, comments, 1, comment.length);
-//				builder.comment(comments);
-//			} else
-//				builder.comment("");
-//		}
-//
-//		public void register(ForgeConfigSpec.Builder builder) {
-//			value = provider.apply(builder);
-//		}
-//
-//		public V get() {
-//			return value.get();
-//		}
-//
-//		public void set(V value) {
-//			this.value.set(value);
-//		}
-//
-//		public String getName() {
-//			return name;
-//		}
-//	}
-//
-//	/**
-//	 * Marker for config subgroups
-//	 */
-//	public class ConfigGroup extends CValue<Boolean, BooleanValue> {
-//
-//		private int groupDepth;
-//		private String[] comment;
-//
-//		public ConfigGroup(String name, int depth, String... comment) {
-//			super(name, builder -> null, comment);
-//			groupDepth = depth;
-//			this.comment = comment;
-//		}
-//
-//		@Override
-//		public void register(Builder builder) {
-//			if (depth > groupDepth)
-//				builder.pop(depth - groupDepth);
-//			depth = groupDepth;
-//			addComments(builder, comment);
-//			builder.push(getName());
-//			depth++;
-//		}
-//
-//	}
-//
-//	public class ConfigBool extends CValue<Boolean, BooleanValue> {
-//
-//		public ConfigBool(String name, boolean def, String... comment) {
-//			super(name, builder -> builder.define(name, def), comment);
-//		}
-//	}
-//
-//	public class ConfigEnum<T extends Enum<T>> extends CValue<T, EnumValue<T>> {
-//
-//		public ConfigEnum(String name, T defaultValue, String[] comment) {
-//			super(name, builder -> builder.defineEnum(name, defaultValue), comment);
-//		}
-//
-//	}
-//
-//	public class ConfigFloat extends CValue<Double, DoubleValue> {
-//
-//		public ConfigFloat(String name, float current, float min, float max, String... comment) {
-//			super(name, builder -> builder.defineInRange(name, current, min, max), comment);
-//		}
-//
-//		public float getF() {
-//			return get().floatValue();
-//		}
-//	}
-//
-//	public class ConfigInt extends CValue<Integer, IntValue> {
-//
-//		public ConfigInt(String name, int current, int min, int max, String... comment) {
-//			super(name, builder -> builder.defineInRange(name, current, min, max), comment);
-//		}
-//	}
-//
+
+	/**
+	 * Marker for config subgroups
+	 */
+	public class ConfigGroup extends CValue<Boolean, BooleanValue> {
+
+		private int groupDepth;
+		private String[] comment;
+
+		public ConfigGroup(String name, int depth, String... comment) {
+			super(name, builder -> null, comment);
+			groupDepth = depth;
+			this.comment = comment;
+		}
+
+		@Override
+		public void register(Builder builder) {
+			if (depth > groupDepth)
+				builder.pop(depth - groupDepth);
+			depth = groupDepth;
+			addComments(builder, comment);
+			builder.push(getName());
+			depth++;
+		}
+
+	}
+
+	public class ConfigBool extends CValue<Boolean, BooleanValue> {
+
+		public ConfigBool(String name, boolean def, String... comment) {
+			super(name, builder -> builder.define(name, def), comment);
+		}
+	}
+
+	public class ConfigEnum<T extends Enum<T>> extends CValue<T, EnumValue<T>> {
+
+		public ConfigEnum(String name, T defaultValue, String[] comment) {
+			super(name, builder -> builder.defineEnum(name, defaultValue), comment);
+		}
+
+	}
+
+	public class ConfigFloat extends CValue<Double, DoubleValue> {
+
+		public ConfigFloat(String name, float current, float min, float max, String... comment) {
+			super(name, builder -> builder.defineInRange(name, current, min, max), comment);
+		}
+
+		public float getF() {
+			return get().floatValue();
+		}
+	}
+
+	public class ConfigInt extends CValue<Integer, IntValue> {
+
+		public ConfigInt(String name, int current, int min, int max, String... comment) {
+			super(name, builder -> builder.defineInRange(name, current, min, max), comment);
+		}
+	}
+
 }

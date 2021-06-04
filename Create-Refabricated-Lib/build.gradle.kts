@@ -40,9 +40,6 @@ dependencies {
 	// Registrate
 	modImplementation("com.github.PepperCode1", "Registrate-Fabric", registrate_version)
 	include("com.github.PepperCode1", "Registrate-Fabric", registrate_version)
-
-	// Conrad
-	modImplementation("dev.inkwell", "conrad", conrad_version)
 }
 
 loom.accessWidener("src/main/resources/create_lib.accesswidener")

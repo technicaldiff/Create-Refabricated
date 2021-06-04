@@ -1,67 +1,54 @@
 package com.simibubi.create.foundation.config.ui;
 
-import java.util.Objects;
+import java.util.function.Supplier;
 
-import com.simibubi.create.Create;
+import com.simibubi.create.foundation.command.SConfigureConfigPacket;
+import com.simibubi.create.foundation.config.AllConfigs;
+import com.simibubi.create.foundation.networking.AllPackets;
+import com.simibubi.create.foundation.networking.SimplePacketBase;
 
-import me.pepperbell.simplenetworking.C2SPacket;
-import me.pepperbell.simplenetworking.SimpleChannel;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.network.PacketBuffer;
-import net.minecraft.network.play.ServerPlayNetHandler;
-import net.minecraft.server.MinecraftServer;
+import net.minecraftforge.common.ForgeConfigSpec;
+import net.minecraftforge.fml.network.NetworkEvent;
+import net.minecraftforge.fml.network.PacketDistributor;
 
-public class CConfigureConfigPacket<T> implements C2SPacket {
+public class CConfigureConfigPacket<T> extends SimplePacketBase {
 
-	private String modID;
 	private String path;
 	private String value;
 
-	protected CConfigureConfigPacket() {}
-
-	public CConfigureConfigPacket(String modID, String path, T value) {
-		this.modID = Objects.requireNonNull(modID);
+	public CConfigureConfigPacket(String path, T value) {
 		this.path = path;
 		this.value = serialize(value);
 	}
 
-	@Override
-	public void read(PacketBuffer buffer) {
-		this.modID = buffer.readString(32767);
+	public CConfigureConfigPacket(PacketBuffer buffer) {
 		this.path = buffer.readString(32767);
 		this.value = buffer.readString(32767);
 	}
 
 	@Override
 	public void write(PacketBuffer buffer) {
-		buffer.writeString(modID);
 		buffer.writeString(path);
 		buffer.writeString(value);
 	}
 
 	@Override
-	public void handle(MinecraftServer server, ServerPlayerEntity sender, ServerPlayNetHandler handler, SimpleChannel.ResponseTarget responseTarget) {
-		server.execute(() -> { // Conrad does client <---> server syncing for us, so I don't think this is needed?
-			try {
-//				ServerPlayerEntity sender = context.get().getSender();
-				if (sender == null || !sender.hasPermissionLevel(2))
-					return;
+	public void handle(Supplier<NetworkEvent.Context> context) {
+		ServerPlayerEntity sender = context.get().getSender();
+		if (sender == null || !sender.hasPermissionLevel(2))
+			return;
 
-//				ForgeConfigSpec spec = ConfigHelper.findConfigSpecFor(ModConfig.Type.SERVER, modID);
-//				ForgeConfigSpec.ValueSpec valueSpec = spec.getRaw(path);
-//				ForgeConfigSpec.ConfigValue<T> configValue = spec.getValues().get(path);
+		ForgeConfigSpec.ValueSpec valueSpec = AllConfigs.SERVER.specification.getRaw(path);
+		ForgeConfigSpec.ConfigValue<T> configValue = AllConfigs.SERVER.specification.getValues().get(path);
 
-//				T v = (T) deserialize(configValue.get(), value);
-//				if (!valueSpec.test(v))
-//					return;
-//
-//				configValue.set(v);
-			} catch (Exception e) {
-				Create.LOGGER.warn("Unable to handle ConfigureConfig Packet. ", e);
-			}
-		});
+		T v = (T) deserialize(configValue.get(), value);
+		if (!valueSpec.test(v))
+			return;
 
-//		context.get().setPacketHandled(true);
+		configValue.set(v);
+
 	}
 
 	public String serialize(T value) {
@@ -79,7 +66,7 @@ public class CConfigureConfigPacket<T> implements C2SPacket {
 		throw new IllegalArgumentException("unknown type " + value + ": " + value.getClass().getSimpleName());
 	}
 
-	public static Object deserialize(Object type, String sValue) {
+	public Object deserialize(Object type, String sValue) {
 		if (type instanceof Boolean)
 			return Boolean.parseBoolean(sValue);
 		if (type instanceof Enum<?>)

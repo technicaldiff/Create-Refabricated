@@ -1,33 +1,12 @@
 package com.simibubi.create.foundation.config;
 
-import org.jetbrains.annotations.NotNull;
-
-import com.simibubi.create.lib.utility.ConfigValue;
-
-import dev.inkwell.conrad.api.value.data.SaveType;
-import dev.inkwell.conrad.api.value.serialization.ConfigSerializer;
-import dev.inkwell.conrad.api.value.serialization.FlatOwenSerializer;
-import dev.inkwell.owen.OwenElement;
-import dev.inkwell.vivian.api.builders.CategoryBuilder;
-
 public class CLogistics extends ConfigBase {
 
-	@Override
-	public @NotNull SaveType getSaveType() {
-		return SaveType.LEVEL;
-	}
-
-	@Override
-	public @NotNull ConfigSerializer<OwenElement> getSerializer() {
-		return FlatOwenSerializer.INSTANCE;
-	}
-
-	public static final CategoryBuilder logistics = group(0, "logistics", null, CServer.Comments.logistics);
-	public static final ConfigValue<Integer> defaultExtractionLimit = i(64, 1, 64, "defaultExtractionLimit", logistics, Comments.defaultExtractionLimit);
-	public static final ConfigValue<Integer> defaultExtractionTimer = i(8, 1, "defaultExtractionTimer", logistics, Comments.defaultExtractionTimer);
-	public static final ConfigValue<Integer> psiTimeout = i(20, 1, "psiTimeout", logistics, Comments.psiTimeout);
-	public static final ConfigValue<Integer> mechanicalArmRange = i(5, 1, "mechanicalArmRange", logistics, Comments.mechanicalArmRange);
-	public static final ConfigValue<Integer> linkRange = i(128, 1, "linkRange", logistics, Comments.linkRange);
+	public ConfigInt defaultExtractionLimit = i(64, 1, 64, "defaultExtractionLimit", Comments.defaultExtractionLimit);
+	public ConfigInt defaultExtractionTimer = i(8, 1, "defaultExtractionTimer", Comments.defaultExtractionTimer);
+	public ConfigInt psiTimeout = i(20, 1, "psiTimeout", Comments.psiTimeout);
+	public ConfigInt mechanicalArmRange = i(5, 1, "mechanicalArmRange", Comments.mechanicalArmRange);
+	public ConfigInt linkRange = i(128, 1, "linkRange", Comments.linkRange);
 
 	@Override
 	public String getName() {

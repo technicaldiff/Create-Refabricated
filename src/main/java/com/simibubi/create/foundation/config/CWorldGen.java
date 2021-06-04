@@ -1,36 +1,17 @@
 package com.simibubi.create.foundation.config;
 
-import org.jetbrains.annotations.NotNull;
-
 import com.simibubi.create.foundation.worldgen.AllWorldFeatures;
-import com.simibubi.create.lib.utility.ConfigValue;
 
-import dev.inkwell.conrad.api.value.data.SaveType;
-import dev.inkwell.conrad.api.value.serialization.ConfigSerializer;
-import dev.inkwell.conrad.api.value.serialization.FlatOwenSerializer;
-import dev.inkwell.owen.OwenElement;
-import dev.inkwell.vivian.api.builders.CategoryBuilder;
-
+import net.minecraftforge.common.ForgeConfigSpec.Builder;
 
 public class CWorldGen extends ConfigBase {
 
-	@Override
-	public @NotNull SaveType getSaveType() {
-		return SaveType.LEVEL;
-	}
+	public ConfigBool disable = b(false, "disableWorldGen", Comments.disable);
 
 	@Override
-	public @NotNull ConfigSerializer<OwenElement> getSerializer() {
-		return FlatOwenSerializer.INSTANCE;
-	}
-
-	public static final CategoryBuilder worldgen = group(0, "worldGen", null, CCommon.Comments.worldGen);
-	public static final ConfigValue<Boolean> disable = b(false, "disableWorldGen", worldgen, Comments.disable);
-
-	@Override
-	protected void registerAll() {
-		super.registerAll();
-		AllWorldFeatures.fillConfig(worldgen);
+	protected void registerAll(Builder builder) {
+		super.registerAll(builder);
+		AllWorldFeatures.fillConfig(builder);
 	}
 
 	@Override

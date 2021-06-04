@@ -1,40 +1,19 @@
 package com.simibubi.create.foundation.config;
 
-import org.jetbrains.annotations.NotNull;
-
-import com.simibubi.create.lib.utility.ConfigValue;
-
-import dev.inkwell.conrad.api.value.data.SaveType;
-import dev.inkwell.conrad.api.value.serialization.ConfigSerializer;
-import dev.inkwell.conrad.api.value.serialization.FlatOwenSerializer;
-import dev.inkwell.owen.OwenElement;
-import dev.inkwell.vivian.api.builders.CategoryBuilder;
-
 public class CRecipes extends ConfigBase {
 
-	@Override
-	public @NotNull SaveType getSaveType() {
-		return SaveType.LEVEL;
-	}
-
-	@Override
-	public @NotNull ConfigSerializer<OwenElement> getSerializer() {
-		return FlatOwenSerializer.INSTANCE;
-	}
-
-	public static final CategoryBuilder recipes = group(0, "recipes", null, CServer.Comments.recipes);
-	public static final ConfigValue<Boolean> bulkPressing = b(false, "bulkPressing", recipes, Comments.bulkPressing);
-	public static final ConfigValue<Boolean> allowShapelessInMixer = b(true, "allowShapelessInMixer", recipes, Comments.allowShapelessInMixer);
-	public static final ConfigValue<Boolean> allowShapedSquareInPress = b(true, "allowShapedSquareInPress", recipes, Comments.allowShapedSquareInPress);
-	public static final ConfigValue<Boolean> allowRegularCraftingInCrafter =
-		b(true, "allowRegularCraftingInCrafter", recipes, Comments.allowRegularCraftingInCrafter);
-	public static final ConfigValue<Boolean> allowStonecuttingOnSaw = b(true, "allowStonecuttingOnSaw", recipes, Comments.allowStonecuttingOnSaw);
-	public static final ConfigValue<Boolean> allowWoodcuttingOnSaw = b(true, "allowWoodcuttingOnSaw", recipes, Comments.allowWoodcuttingOnSaw);
-	public static final ConfigValue<Integer> lightSourceCountForRefinedRadiance =
-		i(10, 1, "lightSourceCountForRefinedRadiance", recipes, Comments.refinedRadiance);
-	public static final ConfigValue<Boolean> enableRefinedRadianceRecipe =
-		b(true, "enableRefinedRadianceRecipe", recipes, Comments.refinedRadianceRecipe);
-	public static final ConfigValue<Boolean> enableShadowSteelRecipe = b(true, "enableShadowSteelRecipe", recipes, Comments.shadowSteelRecipe);
+	public ConfigBool bulkPressing = b(false, "bulkPressing", Comments.bulkPressing);
+	public ConfigBool allowShapelessInMixer = b(true, "allowShapelessInMixer", Comments.allowShapelessInMixer);
+	public ConfigBool allowShapedSquareInPress = b(true, "allowShapedSquareInPress", Comments.allowShapedSquareInPress);
+	public ConfigBool allowRegularCraftingInCrafter =
+		b(true, "allowRegularCraftingInCrafter", Comments.allowRegularCraftingInCrafter);
+	public ConfigBool allowStonecuttingOnSaw = b(true, "allowStonecuttingOnSaw", Comments.allowStonecuttingOnSaw);
+	public ConfigBool allowWoodcuttingOnSaw = b(true, "allowWoodcuttingOnSaw", Comments.allowWoodcuttingOnSaw);
+	public ConfigInt lightSourceCountForRefinedRadiance =
+		i(10, 1, "lightSourceCountForRefinedRadiance", Comments.refinedRadiance);
+	public ConfigBool enableRefinedRadianceRecipe =
+		b(true, "enableRefinedRadianceRecipe", Comments.refinedRadianceRecipe);
+	public ConfigBool enableShadowSteelRecipe = b(true, "enableShadowSteelRecipe", Comments.shadowSteelRecipe);
 
 	@Override
 	public String getName() {

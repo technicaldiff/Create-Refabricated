@@ -165,10 +165,6 @@ repositories {
 			includeGroup("com.jamieswhiteshirt")
 		}
 	}
-
-	maven("https://hephaestus.dev/release") {
-		name = "Conrad"
-	}
 }
 
 dependencies {
@@ -180,16 +176,12 @@ dependencies {
 	val rei_version: String by project
 	val databreaker_version: String by project
 	val reach_entity_attributes_version: String by project
-	val conrad_version: String by project
 
 	implementation(project(":Create-Refabricated-Lib"))
 	include(project(":Create-Refabricated-Lib"))
 
 	// Javax Annotations
 	implementation("com.google.code.findbugs", "jsr305", "3.0.2")
-
-	// Conrad
-	modImplementation("dev.inkwell", "conrad", conrad_version)
 
 	// Registrate
 	modImplementation("com.github.PepperCode1", "Registrate-Fabric", registrate_version)

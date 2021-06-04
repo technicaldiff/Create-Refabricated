@@ -1,40 +1,19 @@
 package com.simibubi.create.foundation.config;
 
-import org.jetbrains.annotations.NotNull;
-
-import com.simibubi.create.lib.utility.ConfigValue;
-
-import dev.inkwell.conrad.api.value.data.SaveType;
-import dev.inkwell.conrad.api.value.serialization.ConfigSerializer;
-import dev.inkwell.conrad.api.value.serialization.FlatOwenSerializer;
-import dev.inkwell.owen.OwenElement;
-import dev.inkwell.vivian.api.builders.CategoryBuilder;
-
 public class CSchematics extends ConfigBase {
 
-	@Override
-	public @NotNull SaveType getSaveType() {
-		return SaveType.LEVEL;
-	}
+	public ConfigInt maxSchematics = i(10, 1, "maxSchematics", Comments.maxSchematics);
+	public ConfigInt maxTotalSchematicSize = i(256, 16, "maxSchematics", Comments.kb, Comments.maxSize);
+	public ConfigInt maxSchematicPacketSize =
+		i(1024, 256, 32767, "maxSchematicPacketSize", Comments.b, Comments.maxPacketSize);
+	public ConfigInt schematicIdleTimeout = i(600, 100, "schematicIdleTimeout", Comments.idleTimeout);
 
-	@Override
-	public @NotNull ConfigSerializer<OwenElement> getSerializer() {
-		return FlatOwenSerializer.INSTANCE;
-	}
-
-	public static final CategoryBuilder schematics = group(0, "schematics", null, CServer.Comments.schematics);
-	public static final ConfigValue<Integer> maxSchematics = i(10, 1, "maxSchematics", schematics, Comments.maxSchematics);
-	public static final ConfigValue<Integer> maxTotalSchematicSize = i(256, 16, "maxSchematics", schematics, Comments.kb, Comments.maxSize);
-	public static final ConfigValue<Integer> maxSchematicPacketSize =
-		i(1024, 256, 32767, "maxSchematicPacketSize", schematics, Comments.b, Comments.maxPacketSize);
-	public static final ConfigValue<Integer> schematicIdleTimeout = i(600, 100, "schematicIdleTimeout", schematics, Comments.idleTimeout);
-
-	public static final CategoryBuilder schematicannon = group(0, "schematicannon", schematics, "Schematicannon");
-	public static final ConfigValue<Integer> schematicannonDelay = i(10, 1, "schematicannonDelay", schematicannon, Comments.delay);
-	public static final ConfigValue<Integer> schematicannonSkips = i(10, 1, "schematicannonSkips", schematicannon, Comments.skips);
-	public static final ConfigValue<Float> schematicannonGunpowderWorth =
-		f(20, 0, 100, "schematicannonGunpowderWorth", schematicannon, Comments.gunpowderWorth);
-	public static final ConfigValue<Float> schematicannonFuelUsage = f(0.05f, 0, 100, "schematicannonFuelUsage", schematicannon, Comments.fuelUsage);
+	public ConfigGroup schematicannon = group(0, "schematicannon", "Schematicannon");
+	public ConfigInt schematicannonDelay = i(10, 1, "schematicannonDelay", Comments.delay);
+	public ConfigInt schematicannonSkips = i(10, 1, "schematicannonSkips", Comments.skips);
+	public ConfigFloat schematicannonGunpowderWorth =
+		f(20, 0, 100, "schematicannonGunpowderWorth", Comments.gunpowderWorth);
+	public ConfigFloat schematicannonFuelUsage = f(0.05f, 0, 100, "schematicannonFuelUsage", Comments.fuelUsage);
 
 	@Override
 	public String getName() {

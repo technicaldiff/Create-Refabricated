@@ -4,7 +4,6 @@ import java.util.Optional;
 
 import com.simibubi.create.foundation.config.CWorldGen;
 import com.simibubi.create.foundation.config.ConfigBase;
-import com.simibubi.create.lib.utility.ConfigValue;
 import com.tterrag.registrate.util.nullness.NonNullSupplier;
 
 import dev.inkwell.vivian.api.builders.CategoryBuilder;

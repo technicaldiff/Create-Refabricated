@@ -1,32 +1,11 @@
 package com.simibubi.create.foundation.config;
 
-import org.jetbrains.annotations.NotNull;
-
-import com.simibubi.create.lib.utility.ConfigValue;
-
-import dev.inkwell.conrad.api.value.data.SaveType;
-import dev.inkwell.conrad.api.value.serialization.ConfigSerializer;
-import dev.inkwell.conrad.api.value.serialization.FlatOwenSerializer;
-import dev.inkwell.owen.OwenElement;
-import dev.inkwell.vivian.api.builders.CategoryBuilder;
-
 public class CCuriosities extends ConfigBase {
 
-	@Override
-	public @NotNull SaveType getSaveType() {
-		return SaveType.LEVEL;
-	}
-
-	@Override
-	public @NotNull ConfigSerializer<OwenElement> getSerializer() {
-		return FlatOwenSerializer.INSTANCE;
-	}
-
-	public static final CategoryBuilder curiosities = group(0, "curiosities", null, CServer.Comments.curiosities);
-	public static final ConfigValue<Integer> maxSymmetryWandRange = i(50, 10, "maxSymmetryWandRange", curiosities, Comments.symmetryRange);
-	public static final ConfigValue<Integer> placementAssistRange = i(12, 3, "placementAssistRange", curiosities, Comments.placementRange);
-	public static final ConfigValue<Integer> maxAirInBacktank = i(900, 1, "maxAirInBacktank", curiosities, Comments.maxAirInBacktank);
-//	public static final ConfigInt zapperUndoLogLength = i(10, 0, "zapperUndoLogLength", curiosities, Comments.zapperUndoLogLength); NYI
+	public ConfigInt maxSymmetryWandRange = i(50, 10, "maxSymmetryWandRange", Comments.symmetryRange);
+	public ConfigInt placementAssistRange = i(12, 3, "placementAssistRange", Comments.placementRange);
+	public ConfigInt maxAirInBacktank = i(900, 1, "maxAirInBacktank", Comments.maxAirInBacktank);
+//	public ConfigInt zapperUndoLogLength = i(10, 0, "zapperUndoLogLength", Comments.zapperUndoLogLength); NYI
 
 	@Override
 	public String getName() {
