@@ -5,7 +5,6 @@ import org.apache.logging.log4j.Logger;
 import org.objectweb.asm.Opcodes;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Mutable;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
@@ -38,18 +37,13 @@ import net.minecraft.util.math.BlockPos;
 public abstract class ClientPlayNetHandlerMixin {
 	@Unique
 	private static final Logger CREATE$LOGGER = LogManager.getLogger();
-	@Mutable
 	@Final
 	@Shadow
-	private final NetworkManager netManager;
+	private NetworkManager netManager;
 	@Shadow
 	private ClientWorld world;
 	@Unique
 	private boolean create$tileEntityHandled;
-
-	protected ClientPlayNetHandlerMixin(NetworkManager netManager) {
-		this.netManager = netManager;
-	}
 
 	@ModifyVariable(at = @At(value = "JUMP", opcode = Opcodes.IFNULL, ordinal = 3, shift = Shift.BEFORE),
 			method = "handleSpawnObject(Lnet/minecraft/network/play/server/SSpawnObjectPacket;)V")
