@@ -27,16 +27,17 @@ package com.simibubi.create.compat.jei.category;
 //import net.minecraft.util.text.ITextComponent;
 //import net.minecraft.util.text.StringTextComponent;
 //import net.minecraft.util.text.TextFormatting;
+//import net.minecraftforge.fluids.FluidStack;
 //
 //public abstract class CreateRecipeCategory<T extends IRecipe<?>> implements IRecipeCategory<T> {
 //
-//	public List<Supplier<? extends Object>> recipeCatalysts = new ArrayList<>();
-//	public List<Supplier<List<? extends IRecipe<?>>>> recipes = new ArrayList<>();
-//	public ResourceLocation uid;
+//	public final List<Supplier<List<? extends IRecipe<?>>>> recipes = new ArrayList<>();
+//	public final List<Supplier<? extends Object>> recipeCatalysts = new ArrayList<>();
 //
+//	protected ResourceLocation uid;
 //	protected String name;
-//	private IDrawable icon;
 //	private IDrawable background;
+//	private IDrawable icon;
 //
 //	public CreateRecipeCategory(IDrawable icon, IDrawable background) {
 //		this.background = background;
@@ -46,11 +47,6 @@ package com.simibubi.create.compat.jei.category;
 //	public void setCategoryId(String name) {
 //		this.uid = new ResourceLocation(Create.ID, name);
 //		this.name = name;
-//	}
-//
-//	@Override
-//	public IDrawable getIcon() {
-//		return icon;
 //	}
 //
 //	@Override
@@ -67,6 +63,11 @@ package com.simibubi.create.compat.jei.category;
 //	@Override
 //	public IDrawable getBackground() {
 //		return background;
+//	}
+//
+//	@Override
+//	public IDrawable getIcon() {
+//		return icon;
 //	}
 //
 //	protected static AllGuiTextures getRenderedSlot(IRecipe<?> recipe, int index) {

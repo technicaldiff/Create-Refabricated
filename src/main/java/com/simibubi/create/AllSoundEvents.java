@@ -156,6 +156,31 @@ public class AllSoundEvents {
 			.category(SoundCategory.BLOCKS)
 			.build(),
 
+		CONTROLLER_CLICK = create("controller_click").subtitle("Controller clicks")
+			.playExisting(SoundEvents.ENTITY_ITEM_FRAME_ADD_ITEM, .35f, 1f)
+			.category(SoundCategory.BLOCKS)
+			.build(),
+
+		SAW_ACTIVATE_WOOD = create("saw_activate_wood").subtitle("Mechanical Saw activates")
+			.playExisting(SoundEvents.ENTITY_BOAT_PADDLE_LAND, .75f, 1.5f)
+			.category(SoundCategory.BLOCKS)
+			.build(),
+
+		SAW_ACTIVATE_STONE = create("saw_activate_stone").subtitle("Mechanical Saw activates")
+			.playExisting(SoundEvents.UI_STONECUTTER_TAKE_RESULT, .125f, 1.25f)
+			.category(SoundCategory.BLOCKS)
+			.build(),
+
+		SAW_PROCESS = create("saw_process").subtitle("Mechanical Saw processes")
+			.playExisting(SoundEvents.BLOCK_SAND_PLACE, .075f, .75f)
+			.category(SoundCategory.BLOCKS)
+			.build(),
+
+		SAW_IDLE = create("saw_idle").subtitle("Mechanical Saw turns")
+			.playExisting(SoundEvents.ENTITY_BOAT_PADDLE_LAND)
+			.category(SoundCategory.BLOCKS)
+			.build(),
+
 		BLAZE_MUNCH = create("blaze_munch").subtitle("Blaze Burner munches")
 			.playExisting(SoundEvents.ENTITY_GENERIC_EAT, .5f, 1f)
 			.category(SoundCategory.BLOCKS)

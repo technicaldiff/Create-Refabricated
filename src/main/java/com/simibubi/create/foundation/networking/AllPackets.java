@@ -15,6 +15,7 @@ import com.simibubi.create.content.contraptions.components.structureMovement.tra
 import com.simibubi.create.content.contraptions.fluids.actors.FluidSplashPacket;
 import com.simibubi.create.content.contraptions.relays.advanced.sequencer.ConfigureSequencedGearshiftPacket;
 import com.simibubi.create.content.curiosities.symmetry.SymmetryEffectPacket;
+import com.simibubi.create.content.curiosities.tools.BlueprintAssignCompleteRecipePacket;
 import com.simibubi.create.content.curiosities.tools.ExtendoGripInteractionPacket;
 import com.simibubi.create.content.curiosities.zapper.ZapperBeamPacket;
 import com.simibubi.create.content.logistics.block.depot.EjectorElytraPacket;
@@ -37,6 +38,7 @@ import com.simibubi.create.foundation.command.HighlightPacket;
 import com.simibubi.create.foundation.command.SConfigureConfigPacket;
 import com.simibubi.create.foundation.config.ui.CConfigureConfigPacket;
 import com.simibubi.create.foundation.gui.ClearContainerPacket;
+import com.simibubi.create.foundation.gui.GhostItemSubmitPacket;
 import com.simibubi.create.foundation.tileEntity.behaviour.filtering.FilteringCountUpdatePacket;
 import com.simibubi.create.foundation.tileEntity.behaviour.scrollvalue.ScrollValueUpdatePacket;
 import com.simibubi.create.foundation.utility.ServerSpeedProvider;
@@ -77,12 +79,14 @@ public enum AllPackets {
 	LINKED_CONTROLLER_INPUT(LinkedControllerInputPacket.class),
 	LINKED_CONTROLLER_BIND(LinkedControllerBindPacket.class),
 	C_CONFIGURE_CONFIG(CConfigureConfigPacket.class),
+	SUBMIT_GHOST_ITEM(GhostItemSubmitPacket.class, GhostItemSubmitPacket::new, PLAY_TO_SERVER),
+	BLUEPRINT_COMPLETE_RECIPE(BlueprintAssignCompleteRecipePacket.class, BlueprintAssignCompleteRecipePacket::new, PLAY_TO_SERVER),
 
 	// Server to Client
 	SYMMETRY_EFFECT(SymmetryEffectPacket.class),
 	SERVER_SPEED(ServerSpeedProvider.Packet.class),
 	BEAM_EFFECT(ZapperBeamPacket.class),
-	CONFIGURE_CONFIG(SConfigureConfigPacket.class),
+	S_CONFIGURE_CONFIG(SConfigureConfigPacket.class),
 	CONTRAPTION_STALL(ContraptionStallPacket.class),
 	CONTRAPTION_DISASSEMBLE(ContraptionDisassemblyPacket.class),
 	GLUE_EFFECT(GlueEffectPacket.class),
@@ -95,6 +99,7 @@ public enum AllPackets {
 	BLOCK_HIGHLIGHT(HighlightPacket.class),
 	TUNNEL_FLAP(TunnelFlapPacket.class),
 	FUNNEL_FLAP(FunnelFlapPacket.class),
+	PERSISTENT_DATA(ISyncPersistentData.Packet.class, ISyncPersistentData.Packet::new, PLAY_TO_CLIENT),
 
 	;
 

@@ -27,7 +27,6 @@ import com.simibubi.create.content.contraptions.goggles.GoggleOverlayRenderer;
 import com.simibubi.create.content.contraptions.goggles.IHaveGoggleInformation;
 import com.simibubi.create.content.contraptions.relays.belt.item.BeltConnectorHandler;
 import com.simibubi.create.content.curiosities.armor.CopperBacktankArmorLayer;
-import com.simibubi.create.content.curiosities.symmetry.SymmetryHandler;
 import com.simibubi.create.content.curiosities.tools.ExtendoGripRenderHandler;
 import com.simibubi.create.content.curiosities.zapper.ZapperItem;
 import com.simibubi.create.content.curiosities.zapper.ZapperRenderHandler;
@@ -156,6 +155,7 @@ public class ClientEvents {
 		CreateClient.OUTLINER.tickOutlines();
 		CreateClient.GHOST_BLOCKS.tickGhosts();
 		ContraptionRenderDispatcher.tick();
+		BlueprintOverlayRenderer.tick();
 	}
 
 	public static void onJoin(ClientPlayNetHandler handler, PacketSender sender, Minecraft client) {
@@ -234,6 +234,7 @@ public class ClientEvents {
 		float partialTicks) {
 		CreateClient.SCHEMATIC_HANDLER.renderOverlay(ms, buffer, light, overlay, partialTicks);
 		LinkedControllerClientHandler.renderOverlay(ms, buffer, light, overlay, partialTicks);
+		BlueprintOverlayRenderer.renderOverlay(ms, buffer, light, overlay, partialTicks);
 	}
 
 	public static RenderTooltipBorderColorCallback.BorderColorEntry getItemTooltipColor(ItemStack stack,

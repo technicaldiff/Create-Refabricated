@@ -56,7 +56,7 @@ public class FilterScreenPacket implements C2SPacket {
 				if (option == Option.IGNORE_DATA)
 					c.respectNBT = false;
 				if (option == Option.UPDATE_FILTER_ITEM)
-					c.filterInventory.setStackInSlot(
+					c.ghostInventory.setStackInSlot(
 							data.getInt("Slot"),
 							net.minecraft.item.ItemStack.read(data.getCompound("Item")));
 			}

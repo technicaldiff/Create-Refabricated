@@ -159,8 +159,8 @@ public class MountedContraption extends Contraption {
 	public void addExtraInventories(Entity cart) {
 		if (!(cart instanceof IInventory))
 			return;
-		IItemHandlerModifiable handlerFromInv = new InvWrapper((IInventory) cart);
-		inventory = new CombinedInvWrapper(handlerFromInv, inventory);
+		IItemHandlerModifiable handlerFromInv = new ContraptionInvWrapper(true, new InvWrapper((IInventory) cart));
+		inventory = new ContraptionInvWrapper(handlerFromInv, inventory);
 	}
 
 	@Override

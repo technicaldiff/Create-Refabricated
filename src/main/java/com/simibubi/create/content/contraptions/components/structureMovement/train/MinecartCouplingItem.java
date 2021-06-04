@@ -8,8 +8,6 @@ import com.simibubi.create.lib.utility.LazyOptional;
 import com.simibubi.create.lib.utility.MinecartAndRailUtil;
 import com.tterrag.registrate.fabric.EnvExecutor;
 
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.minecart.AbstractMinecartEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -73,6 +71,11 @@ public class MinecartCouplingItem extends Item {
 			return false;
 		if (world.isRemote)
 			return true;
+
+		for (boolean forward : Iterate.trueAndFalse) {
+			if (controller.hasContraptionCoupling(forward))
+				couplings--;
+		}
 
 		CouplingHandler.status(player, "removed");
 		controller.decouple();

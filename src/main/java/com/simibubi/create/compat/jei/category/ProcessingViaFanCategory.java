@@ -21,7 +21,6 @@ package com.simibubi.create.compat.jei.category;
 //import net.minecraft.item.ItemStack;
 //import net.minecraft.item.crafting.IRecipe;
 //import net.minecraft.util.math.vector.Vector3f;
-//import net.minecraft.util.text.TextFormatting;
 //
 //public abstract class ProcessingViaFanCategory<T extends IRecipe<?>> extends CreateRecipeCategory<T> {
 //
@@ -41,7 +40,7 @@ package com.simibubi.create.compat.jei.category;
 //
 //	public static Supplier<ItemStack> getFan(String name) {
 //		return () -> AllBlocks.ENCASED_FAN.asStack()
-//			.setDisplayName(Lang.translate("recipe." + name + ".fan").formatted(TextFormatting.RESET));
+//			.setDisplayName(Lang.translate("recipe." + name + ".fan").styled(style -> style.withItalic(false)));
 //	}
 //
 //	@Override

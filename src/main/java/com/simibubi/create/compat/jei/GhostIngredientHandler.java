@@ -5,35 +5,31 @@ package com.simibubi.create.compat.jei;
 //
 //import javax.annotation.ParametersAreNonnullByDefault;
 //
-//import com.simibubi.create.lib.annotation.MethodsReturnNonnullByDefault;
-//
-//import org.apache.logging.log4j.LogManager;
-//
-//import com.simibubi.create.content.logistics.item.filter.AbstractFilterContainer;
-//import com.simibubi.create.content.logistics.item.filter.AbstractFilterScreen;
 //import com.simibubi.create.content.logistics.item.filter.AttributeFilterScreen;
-//import com.simibubi.create.content.logistics.item.filter.FilterScreenPacket;
+//import com.simibubi.create.foundation.gui.AbstractSimiContainerScreen;
+//import com.simibubi.create.foundation.gui.GhostItemContainer;
+//import com.simibubi.create.foundation.gui.GhostItemSubmitPacket;
 //import com.simibubi.create.foundation.networking.AllPackets;
 //
+//import mcp.MethodsReturnNonnullByDefault;
 //import mezz.jei.api.gui.handlers.IGhostIngredientHandler;
 //import net.minecraft.client.renderer.Rectangle2d;
 //import net.minecraft.inventory.container.Slot;
 //import net.minecraft.item.ItemStack;
-//import net.minecraft.nbt.CompoundNBT;
 //
 //@MethodsReturnNonnullByDefault
 //@ParametersAreNonnullByDefault
-//public class FilterGhostIngredientHandler<T extends AbstractFilterContainer>
-//	implements IGhostIngredientHandler<AbstractFilterScreen<T>> {
+//public class GhostIngredientHandler<T extends GhostItemContainer<?>>
+//	implements IGhostIngredientHandler<AbstractSimiContainerScreen<T>> {
 //
 //	@Override
-//	public <I> List<Target<I>> getTargets(AbstractFilterScreen<T> gui, I ingredient, boolean doStart) {
+//	public <I> List<Target<I>> getTargets(AbstractSimiContainerScreen<T> gui, I ingredient, boolean doStart) {
 //		List<Target<I>> targets = new ArrayList<>();
 //		boolean isAttributeFilter = gui instanceof AttributeFilterScreen;
 //
 //		if (ingredient instanceof ItemStack) {
 //			for (int i = 36; i < gui.getContainer().inventorySlots.size(); i++) {
-//				targets.add(new FilterGhostTarget<>(gui, i - 36, isAttributeFilter));
+//				targets.add(new GhostTarget<>(gui, i - 36, isAttributeFilter));
 //
 //				// Only accept items in 1st slot. 2nd is used for functionality, don't wanna override that one
 //				if (isAttributeFilter)
@@ -53,14 +49,14 @@ package com.simibubi.create.compat.jei;
 //		return true;
 //	}
 //
-//	private static class FilterGhostTarget<I, T extends AbstractFilterContainer> implements Target<I> {
+//	private static class GhostTarget<I, T extends GhostItemContainer<?>> implements Target<I> {
 //
 //		private final Rectangle2d area;
-//		private final AbstractFilterScreen<T> gui;
+//		private final AbstractSimiContainerScreen<T> gui;
 //		private final int slotIndex;
 //		private final boolean isAttributeFilter;
 //
-//		public FilterGhostTarget(AbstractFilterScreen<T> gui, int slotIndex, boolean isAttributeFilter) {
+//		public GhostTarget(AbstractSimiContainerScreen<T> gui, int slotIndex, boolean isAttributeFilter) {
 //			this.gui = gui;
 //			this.slotIndex = slotIndex;
 //			this.isAttributeFilter = isAttributeFilter;
@@ -76,19 +72,14 @@ package com.simibubi.create.compat.jei;
 //		@Override
 //		public void accept(I ingredient) {
 //			ItemStack stack = ((ItemStack) ingredient).copy();
-//			LogManager.getLogger()
-//				.info(stack);
 //			stack.setCount(1);
-//			gui.getContainer().filterInventory.setStackInSlot(slotIndex, stack);
+//			gui.getContainer().ghostInventory.setStackInSlot(slotIndex, stack);
 //
 //			if (isAttributeFilter)
 //				return;
 //
 //			// sync new filter contents with server
-//			CompoundNBT data = new CompoundNBT();
-//			data.putInt("Slot", slotIndex);
-//			data.put("Item", stack.serializeNBT());
-//			AllPackets.channel.sendToServer(new FilterScreenPacket(FilterScreenPacket.Option.UPDATE_FILTER_ITEM, data));
+//			AllPackets.channel.sendToServer(new GhostItemSubmitPacket(stack, slotIndex));
 //		}
 //	}
 //}

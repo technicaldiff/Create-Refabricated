@@ -4,11 +4,13 @@ import com.simibubi.create.AllItems;
 import com.simibubi.create.lib.utility.ExtraDataUtil;
 
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
+import net.minecraft.tags.FluidTags;
 import net.minecraft.world.World;
 
 public class DivingHelmetItem extends CopperArmorItem {
@@ -29,7 +31,9 @@ public class DivingHelmetItem extends CopperArmorItem {
 		if (!AllItems.DIVING_HELMET.get()
 			.isWornBy(entity))
 			return;
-		if (!entity.isInWater())
+		if (!entity.areEyesInFluid(FluidTags.WATER))
+			return;
+		if (entity instanceof PlayerEntity && ((PlayerEntity) entity).isCreative())
 			return;
 
 		ItemStack backtank = ItemStack.EMPTY;
