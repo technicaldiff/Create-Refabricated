@@ -1,5 +1,8 @@
 package com.simibubi.create.foundation.config;
 
+import com.simibubi.create.lib.config.Config;
+import com.simibubi.create.lib.config.Configs;
+
 public class CRecipes extends ConfigBase {
 
 	public ConfigBool bulkPressing = b(false, "bulkPressing", Comments.bulkPressing);
@@ -14,6 +17,12 @@ public class CRecipes extends ConfigBase {
 	public ConfigBool enableRefinedRadianceRecipe =
 		b(true, "enableRefinedRadianceRecipe", Comments.refinedRadianceRecipe);
 	public ConfigBool enableShadowSteelRecipe = b(true, "enableShadowSteelRecipe", Comments.shadowSteelRecipe);
+
+	public Config config = new Config(Configs.PATH_TO_CONFIGS + getName());
+	@Override
+	public Config getConfig() {
+		return config;
+	}
 
 	@Override
 	public String getName() {

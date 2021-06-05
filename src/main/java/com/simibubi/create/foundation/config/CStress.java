@@ -3,18 +3,27 @@ package com.simibubi.create.foundation.config;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.simibubi.create.lib.config.Config;
+import com.simibubi.create.lib.config.ConfigValue;
+import com.simibubi.create.lib.config.Configs;
+
 import net.minecraft.block.Block;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.common.ForgeConfigSpec.Builder;
-import net.minecraftforge.common.ForgeConfigSpec.ConfigValue;
+import net.minecraft.util.registry.Registry;
 
 public class CStress extends ConfigBase {
+
+	public Config config = new Config(Configs.PATH_TO_CONFIGS + getName());
+	@Override
+	public Config getConfig() {
+		return config;
+	}
 
 	private Map<ResourceLocation, ConfigValue<Double>> capacities = new HashMap<>();
 	private Map<ResourceLocation, ConfigValue<Double>> impacts = new HashMap<>();
 
 	@Override
-	protected void registerAll(Builder builder) {
+	protected void registerAll() {
 		builder.comment("", Comments.su, Comments.impact)
 			.push("impact");
 		StressConfigDefaults.registeredDefaultImpacts
@@ -29,13 +38,13 @@ public class CStress extends ConfigBase {
 	}
 
 	public double getImpactOf(Block block) {
-		ResourceLocation key = block.getRegistryName();
+		ResourceLocation key = Registry.BLOCK.getKey(block);
 		return getImpacts().containsKey(key) ? getImpacts().get(key)
 			.get() : 0;
 	}
 
 	public double getCapacityOf(Block block) {
-		ResourceLocation key = block.getRegistryName();
+		ResourceLocation key = Registry.BLOCK.getKey(block);
 		return getCapacities().containsKey(key) ? getCapacities().get(key)
 			.get() : 0;
 	}

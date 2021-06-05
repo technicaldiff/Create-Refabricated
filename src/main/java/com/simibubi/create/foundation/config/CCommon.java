@@ -1,9 +1,18 @@
 package com.simibubi.create.foundation.config;
 
+import com.simibubi.create.lib.config.Config;
+import com.simibubi.create.lib.config.Configs;
+
 public class CCommon extends ConfigBase {
 
 	public CWorldGen worldGen = nested(0, CWorldGen::new, Comments.worldGen);
 	public ConfigBool logTeErrors = b(false, "logTeErrors", Comments.logTeErrors);
+
+	public Config config = new Config(Configs.PATH_TO_CONFIGS + getName());
+	@Override
+	public Config getConfig() {
+		return config;
+	}
 
 	@Override
 	public String getName() {

@@ -8,7 +8,6 @@ import com.simibubi.create.Create;
 import com.simibubi.create.content.palettes.AllPaletteBlocks;
 import com.tterrag.registrate.util.nullness.NonNullSupplier;
 
-import dev.inkwell.vivian.api.builders.CategoryBuilder;
 import net.minecraft.block.Block;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.registry.Registry;

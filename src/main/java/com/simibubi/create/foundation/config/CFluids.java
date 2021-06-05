@@ -1,5 +1,8 @@
 package com.simibubi.create.foundation.config;
 
+import com.simibubi.create.lib.config.Config;
+import com.simibubi.create.lib.config.Configs;
+
 public class CFluids extends ConfigBase {
 
 	public ConfigInt fluidTankCapacity = i(8, 1, "fluidTankCapacity", Comments.buckets, Comments.fluidTankCapacity);
@@ -10,6 +13,12 @@ public class CFluids extends ConfigBase {
 	public ConfigInt hosePulleyBlockThreshold = i(10000, -1, "hosePulleyBlockThreshold", Comments.blocks,
 		Comments.toDisable, Comments.hosePulleyBlockThreshold);
 	public ConfigInt hosePulleyRange = i(128, 1, "hosePulleyRange", Comments.blocks, Comments.hosePulleyRange);
+
+	public Config config = new Config(Configs.PATH_TO_CONFIGS + getName());
+	@Override
+	public Config getConfig() {
+		return config;
+	}
 
 	@Override
 	public String getName() {

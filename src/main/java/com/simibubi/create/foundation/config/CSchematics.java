@@ -1,5 +1,9 @@
 package com.simibubi.create.foundation.config;
 
+import com.simibubi.create.lib.config.Config;
+import com.simibubi.create.lib.config.ConfigGroup;
+import com.simibubi.create.lib.config.Configs;
+
 public class CSchematics extends ConfigBase {
 
 	public ConfigInt maxSchematics = i(10, 1, "maxSchematics", Comments.maxSchematics);
@@ -8,12 +12,18 @@ public class CSchematics extends ConfigBase {
 		i(1024, 256, 32767, "maxSchematicPacketSize", Comments.b, Comments.maxPacketSize);
 	public ConfigInt schematicIdleTimeout = i(600, 100, "schematicIdleTimeout", Comments.idleTimeout);
 
-	public ConfigGroup schematicannon = group(0, "schematicannon", "Schematicannon");
+	public ConfigGroupWrapper schematicannon = group(0, "schematicannon", "Schematicannon");
 	public ConfigInt schematicannonDelay = i(10, 1, "schematicannonDelay", Comments.delay);
 	public ConfigInt schematicannonSkips = i(10, 1, "schematicannonSkips", Comments.skips);
 	public ConfigFloat schematicannonGunpowderWorth =
 		f(20, 0, 100, "schematicannonGunpowderWorth", Comments.gunpowderWorth);
 	public ConfigFloat schematicannonFuelUsage = f(0.05f, 0, 100, "schematicannonFuelUsage", Comments.fuelUsage);
+
+	public Config config = new Config(Configs.PATH_TO_CONFIGS + getName());
+	@Override
+	public Config getConfig() {
+		return config;
+	}
 
 	@Override
 	public String getName() {

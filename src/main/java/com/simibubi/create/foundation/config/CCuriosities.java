@@ -1,11 +1,20 @@
 package com.simibubi.create.foundation.config;
 
+import com.simibubi.create.lib.config.Config;
+import com.simibubi.create.lib.config.Configs;
+
 public class CCuriosities extends ConfigBase {
 
 	public ConfigInt maxSymmetryWandRange = i(50, 10, "maxSymmetryWandRange", Comments.symmetryRange);
 	public ConfigInt placementAssistRange = i(12, 3, "placementAssistRange", Comments.placementRange);
 	public ConfigInt maxAirInBacktank = i(900, 1, "maxAirInBacktank", Comments.maxAirInBacktank);
 //	public ConfigInt zapperUndoLogLength = i(10, 0, "zapperUndoLogLength", Comments.zapperUndoLogLength); NYI
+
+	public Config config = new Config(Configs.PATH_TO_CONFIGS + getName());
+	@Override
+	public Config getConfig() {
+		return config;
+	}
 
 	@Override
 	public String getName() {

@@ -1,5 +1,8 @@
 package com.simibubi.create.foundation.config;
 
+import com.simibubi.create.lib.config.Config;
+import com.simibubi.create.lib.config.Configs;
+
 public class CLogistics extends ConfigBase {
 
 	public ConfigInt defaultExtractionLimit = i(64, 1, 64, "defaultExtractionLimit", Comments.defaultExtractionLimit);
@@ -7,6 +10,12 @@ public class CLogistics extends ConfigBase {
 	public ConfigInt psiTimeout = i(20, 1, "psiTimeout", Comments.psiTimeout);
 	public ConfigInt mechanicalArmRange = i(5, 1, "mechanicalArmRange", Comments.mechanicalArmRange);
 	public ConfigInt linkRange = i(128, 1, "linkRange", Comments.linkRange);
+
+	public Config config = new Config(Configs.PATH_TO_CONFIGS + getName());
+	@Override
+	public Config getConfig() {
+		return config;
+	}
 
 	@Override
 	public String getName() {
