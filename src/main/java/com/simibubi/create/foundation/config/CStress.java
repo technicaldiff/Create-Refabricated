@@ -24,17 +24,21 @@ public class CStress extends ConfigBase {
 
 	@Override
 	protected void registerAll() {
-		builder.comment("", Comments.su, Comments.impact)
-			.push("impact");
+//		builder.comment("", Comments.su, Comments.impact)
+//			.push("impact");
 		StressConfigDefaults.registeredDefaultImpacts
-			.forEach((r, i) -> getImpacts().put(r, builder.define(r.getPath(), i)));
-		builder.pop();
+			.forEach((r, i) -> getImpacts().put(r, define(r.getPath(), i)));
+//		builder.pop();
 
-		builder.comment("", Comments.su, Comments.capacity)
-			.push("capacity");
+//		builder.comment("", Comments.su, Comments.capacity)
+//			.push("capacity");
 		StressConfigDefaults.registeredDefaultCapacities
-			.forEach((r, i) -> getCapacities().put(r, builder.define(r.getPath(), i)));
-		builder.pop();
+			.forEach((r, i) -> getCapacities().put(r, define(r.getPath(), i)));
+//		builder.pop();
+	}
+
+	public static ConfigValue<Double> define(String path, double i) {
+		return new ConfigValue<>(path, i, getCurrentConfigGroup());
 	}
 
 	public double getImpactOf(Block block) {

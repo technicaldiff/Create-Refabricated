@@ -3,8 +3,6 @@ package com.simibubi.create.foundation.block.render;
 import java.util.Random;
 import java.util.function.Supplier;
 
-import com.simibubi.create.foundation.block.IBlockVertexColor;
-
 import net.fabricmc.fabric.api.renderer.v1.model.ForwardingBakedModel;
 import net.fabricmc.fabric.api.renderer.v1.render.RenderContext;
 import net.minecraft.block.BlockState;

@@ -18,10 +18,10 @@ import net.minecraft.world.World;
 
 public class ItemUseOverrides {
 
-	private static final Set<ResourceLocation> overrides = new HashSet<>();
+	private static final Set<ResourceLocation> OVERRIDES = new HashSet<>();
 
 	public static void addBlock(Block block) {
-		overrides.add(Registry.BLOCK.getKey(block));
+		OVERRIDES.add(Registry.BLOCK.getKey(block));
 	}
 
 	public static ActionResultType onBlockActivated(PlayerEntity player, World world, Hand hand, BlockRayTraceResult traceResult) {
@@ -32,7 +32,7 @@ public class ItemUseOverrides {
 			.getBlockState(traceResult.getPos());
 		ResourceLocation id = Registry.BLOCK.getKey(state.getBlock());
 
-		if (!overrides.contains(id))
+		if (!OVERRIDES.contains(id))
 			return ActionResultType.PASS;
 
 		BlockRayTraceResult blockTrace =
@@ -43,5 +43,7 @@ public class ItemUseOverrides {
 			return ActionResultType.PASS;
 		else
 			return result;
+
 	}
+
 }

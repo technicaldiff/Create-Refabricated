@@ -125,7 +125,7 @@ public class AllItems {
 		REGISTRATE.item("chromatic_compound", ChromaticCompoundItem::new)
 			.properties(p -> p.rarity(Rarity.UNCOMMON))
 //			.model(AssetLookup.existingItemModel())
-			.onRegister(CreateRegistrate.itemColors(() -> ChromaticCompoundColor::new))
+			.color(() -> ChromaticCompoundColor::new)
 			.register();
 
 	public static final ItemEntry<ShadowSteelItem> SHADOW_STEEL = REGISTRATE.item("shadow_steel", ShadowSteelItem::new)
@@ -222,7 +222,7 @@ public class AllItems {
 	public static final ItemEntry<LinkedControllerItem> LINKED_CONTROLLER =
 		REGISTRATE.item("linked_controller", LinkedControllerItem::new)
 			.transform(CreateRegistrate.customRenderedItem(() -> LinkedControllerModel::new))
-			.model(AssetLookup.itemModelWithPartials())
+//			.model(AssetLookup.itemModelWithPartials())
 			.register();
 
 	public static final ItemEntry<SymmetryWandItem> WAND_OF_SYMMETRY =

@@ -19,8 +19,8 @@ import com.simibubi.create.foundation.block.render.CustomBlockModels;
 import com.simibubi.create.foundation.block.render.SpriteShifter;
 import com.simibubi.create.foundation.config.AllConfigs;
 import com.simibubi.create.foundation.gui.UIRenderHelper;
-import com.simibubi.create.foundation.item.CustomItemModels;
-import com.simibubi.create.foundation.item.CustomRenderedItems;
+import com.simibubi.create.foundation.item.render.CustomItemModels;
+import com.simibubi.create.foundation.item.render.CustomRenderedItems;
 import com.simibubi.create.foundation.ponder.content.PonderIndex;
 import com.simibubi.create.foundation.ponder.elements.WorldSectionElement;
 import com.simibubi.create.foundation.render.AllProgramSpecs;
@@ -80,12 +80,10 @@ public class CreateClient implements ClientModInitializer {
 	private static CustomBlockModels customBlockModels;
 	private static CustomItemModels customItemModels;
 	private static CustomRenderedItems customRenderedItems;
-	private static AllColorHandlers colorHandlers;
 	private static CasingConnectivity casingConnectivity;
 
 	public static void addClientListeners() {
 //		modEventBus.addListener(CreateClient::clientInit); // turned into onInitializeClient()
-//		modEventBus.register(getColorHandler()); // registered in OnInitializeClient()
 //		modEventBus.addListener(CreateClient::onTextureStitch); // registered in OnInitializeClient()
 //		modEventBus.addListener(CreateClient::onModelRegistry); // registered in OnInitializeClient()
 //		modEventBus.addListener(CreateClient::onModelBake); // registered in OnInitializeClient()
@@ -137,10 +135,6 @@ public class CreateClient implements ClientModInitializer {
 				new CopperBacktankArmorLayer<>((LivingRenderer<?, ?>) entityRenderer);
 			})
 		);
-
-		// fabric colorproviders
-		getColorHandler().registerBlockColors();
-		getColorHandler().registerItemColors();
 	}
 
 	public static void onTextureStitch(TextureStitchUtil util) {
@@ -219,12 +213,6 @@ public class CreateClient implements ClientModInitializer {
 		if (customBlockModels == null)
 			customBlockModels = new CustomBlockModels();
 		return customBlockModels;
-	}
-
-	public static AllColorHandlers getColorHandler() {
-		if (colorHandlers == null)
-			colorHandlers = new AllColorHandlers();
-		return colorHandlers;
 	}
 
 	public static CasingConnectivity getCasingConnectivity() {

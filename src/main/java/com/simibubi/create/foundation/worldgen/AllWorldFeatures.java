@@ -1,13 +1,9 @@
 package com.simibubi.create.foundation.worldgen;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.Create;
 import com.simibubi.create.content.palettes.AllPaletteBlocks;
 import com.tterrag.registrate.util.nullness.NonNullSupplier;
-
 import net.minecraft.block.Block;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.registry.Registry;
@@ -17,6 +13,9 @@ import net.minecraft.world.biome.Biome.Category;
 import net.minecraft.world.biome.BiomeGenerationSettings;
 import net.minecraft.world.biome.Biomes;
 import net.minecraft.world.gen.GenerationStage;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class AllWorldFeatures {
 
@@ -79,11 +78,11 @@ public class AllWorldFeatures {
 		return generation;
 	}
 
-	public static void fillConfig(CategoryBuilder builder) {
+	public static void fillConfig() {
 		entries.values()
 			.forEach(entry -> {
 //				builder.add(entry.id);
-				entry.addToConfig(builder);
+				entry.addToConfig();
 //				builder.pop();
 			});
 	}

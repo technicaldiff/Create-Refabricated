@@ -1,4 +1,4 @@
-package com.simibubi.create.foundation.block.render;
+package com.simibubi.create.foundation.item.render;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
 

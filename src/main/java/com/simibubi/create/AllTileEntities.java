@@ -158,9 +158,6 @@ import com.simibubi.create.content.schematics.block.SchematicannonRenderer;
 import com.simibubi.create.content.schematics.block.SchematicannonTileEntity;
 import com.simibubi.create.foundation.tileEntity.renderer.SmartTileEntityRenderer;
 import com.tterrag.registrate.util.entry.TileEntityEntry;
-import com.tterrag.registrate.util.nullness.NonNullSupplier;
-
-import net.minecraft.block.Block;
 
 public class AllTileEntities {
 
@@ -252,7 +249,7 @@ public class AllTileEntities {
 		.tileEntity("hand_crank", HandCrankTileEntity::new)
 		.instance(() -> HandCrankInstance::new)
 		.validBlocks(AllBlocks.HAND_CRANK, AllBlocks.COPPER_VALVE_HANDLE)
-		.validBlocks((NonNullSupplier<? extends Block>[]) AllBlocks.DYED_VALVE_HANDLES)
+		.validBlocks(AllBlocks.DYED_VALVE_HANDLES.toArray())
 		.renderer(() -> HandCrankRenderer::new)
 		.register();
 

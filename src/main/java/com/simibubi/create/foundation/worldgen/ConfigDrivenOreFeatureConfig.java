@@ -49,7 +49,7 @@ public class ConfigDrivenOreFeatureConfig implements IFeatureConfig, IPlacementC
 	public float getFrequency() {
 		if (AllConfigs.COMMON.worldGen.disable.get())
 			return 0;
-		return entry().frequency.getF();
+		return entry().frequency.get();
 	}
 
 	protected ConfigDrivenFeatureEntry entry() {

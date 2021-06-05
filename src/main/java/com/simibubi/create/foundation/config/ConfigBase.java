@@ -1,7 +1,6 @@
 package com.simibubi.create.foundation.config;
 
 import java.io.File;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Supplier;
 
@@ -12,7 +11,9 @@ import com.simibubi.create.lib.config.ConfigValue;
 
 public abstract class ConfigBase {
 
-	public abstract Config getConfig();
+	public Config getConfig() {
+		return null;
+	}
 
 //	public ForgeConfigSpec specification;
 
@@ -80,17 +81,17 @@ public abstract class ConfigBase {
 
 	protected <T extends ConfigBase> T nested(int depth, Supplier<T> constructor, String... comment) {
 		T config = constructor.get();
-		new ConfigGroupWrapper(config.getName(), depth, comment);
-		new CValue<Boolean, ConfigBool>(config.getName(), builder -> {
-			config.depth = depth;
-			config.registerAll(builder);
-			if (config.depth > depth)
-				builder.pop(config.depth - depth);
-			return null;
-		});
-		if (children == null)
-			children = new ArrayList<>();
-		children.add(config);
+//		new ConfigGroup(config.getName(), depth, comment);
+//		new CValue<Boolean, ForgeConfigSpec.BooleanValue>(config.getName(), builder -> {
+//			config.depth = depth;
+//			config.registerAll(builder);
+//			if (config.depth > depth)
+//				builder.pop(config.depth - depth);
+//			return null;
+//		});
+//		if (children == null)
+//			children = new ArrayList<>();
+//		children.add(config);
 		return config;
 	}
 
@@ -155,7 +156,14 @@ public abstract class ConfigBase {
 	public static ConfigWrapper currentConfig;
 
 	public static ConfigGroupWrapper getCurrentConfigGroup() {
-
+		if (currentConfigGroup != null) {
+			return currentConfigGroup;
+		}
+		ConfigGroup group = currentConfig.groups.get(0);
+		ConfigGroupWrapper wrapper = new ConfigGroupWrapper(group);
+		currentConfig.groups.set(0, wrapper);
+		currentConfigGroup = wrapper;
+		return wrapper;
 	}
 
 	/**
@@ -168,6 +176,13 @@ public abstract class ConfigBase {
 
 		public ConfigGroupWrapper(String name, int depth, String... comments) {
 			super(depth, name, comments);
+			currentConfigGroup = this;
+		}
+
+		public ConfigGroupWrapper(ConfigGroup group) {
+			this(group.name, group.depth, (String[]) group.comments.toArray());
+			config = group.config;
+			configs = group.configs;
 			currentConfigGroup = this;
 		}
 

@@ -98,7 +98,7 @@ public class SailBlock extends ProperDirectionalBlock implements BlockPickIntera
 
 	protected void applyDye(BlockState state, World world, BlockPos pos, @Nullable DyeColor color) {
 		BlockState newState =
-				(color == null ? AllBlocks.SAIL_FRAME : AllBlocks.DYED_SAILS[color.ordinal()]).getDefaultState()
+				(color == null ? AllBlocks.SAIL_FRAME : AllBlocks.DYED_SAILS.get(color)).getDefaultState()
 						.with(FACING, state.get(FACING));
 
 		// Dye the block itself

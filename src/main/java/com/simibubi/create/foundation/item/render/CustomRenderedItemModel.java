@@ -1,4 +1,4 @@
-package com.simibubi.create.foundation.block.render;
+package com.simibubi.create.foundation.item.render;
 
 import java.util.HashMap;
 import java.util.List;
