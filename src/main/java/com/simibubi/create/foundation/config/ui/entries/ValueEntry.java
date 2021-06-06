@@ -1,6 +1,7 @@
 package com.simibubi.create.foundation.config.ui.entries;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -16,11 +17,12 @@ import com.simibubi.create.foundation.config.ui.ConfigScreenList;
 import com.simibubi.create.foundation.gui.AllIcons;
 import com.simibubi.create.foundation.gui.DelegatedStencilElement;
 import com.simibubi.create.foundation.gui.widgets.BoxWidget;
+import com.simibubi.create.lib.config.ConfigValue;
+import com.simibubi.create.lib.mixin.accessor.AbstractList$AbstractListEntryAccessor;
 
 import net.minecraft.util.text.IFormattableTextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
-import net.minecraftforge.common.ForgeConfigSpec;
 
 public class ValueEntry<T> extends ConfigScreenList.LabeledEntry {
 
@@ -28,31 +30,31 @@ public class ValueEntry<T> extends ConfigScreenList.LabeledEntry {
 	protected static final int resetWidth = 28;//including 6px offset on either side
 	public static final Pattern unitPattern = Pattern.compile("\\[(in .*)]");
 
-	protected ForgeConfigSpec.ConfigValue<T> value;
-	protected ForgeConfigSpec.ValueSpec spec;
+	protected ConfigValue<T> value;
+//	protected ForgeConfigSpec.ValueSpec spec;
 	protected BoxWidget resetButton;
 	protected boolean editable = true;
 	protected String path;
 
-	public ValueEntry(String label, ForgeConfigSpec.ConfigValue<T> value, ForgeConfigSpec.ValueSpec spec) {
+	public ValueEntry(String label, ConfigValue<T> value) {
 		super(label);
 		this.value = value;
-		this.spec = spec;
-		this.path = String.join(".", value.getPath());
+//		this.spec = spec;
+		this.path = String.join(".", value.key);
 
 		resetButton = new BoxWidget(0, 0, resetWidth - 12, 16)
 				.showingElement(AllIcons.I_CONFIG_RESET.asStencil())
 				.withCallback(() -> {
-					setValue((T) spec.getDefault());
+					setValue((T) value.defaultValue);
 					this.onReset();
 				});
 		resetButton.modifyElement(e -> ((DelegatedStencilElement) e).withElementRenderer(BoxWidget.gradientFactory.apply(resetButton)));
 
 		listeners.add(resetButton);
 
-		List<String> path = value.getPath();
+		List<String> path = (List<String>) Collections.singleton(value.key);
 		labelTooltip.add(new StringTextComponent(path.get(path.size()-1)).formatted(TextFormatting.GRAY));
-		String comment = spec.getComment();
+		String comment = value.comments.get(0);
 		if (comment == null || comment.isEmpty())
 			return;
 		String[] commentLines = comment.split("\n");
@@ -136,7 +138,7 @@ public class ValueEntry<T> extends ConfigScreenList.LabeledEntry {
 	}
 
 	protected boolean isCurrentValueDefault() {
-		return spec.getDefault().equals(getValue());
+		return value.defaultValue == getValue();
 	}
 
 	public void onReset() {
@@ -153,7 +155,7 @@ public class ValueEntry<T> extends ConfigScreenList.LabeledEntry {
 
 	protected void bumpCog() {bumpCog(10f);}
 	protected void bumpCog(float force) {
-		if (list != null && list instanceof ConfigScreenList)
-			((ConfigScreenList) list).bumpCog(force);
+		if (((AbstractList$AbstractListEntryAccessor) this).getList() != null && ((AbstractList$AbstractListEntryAccessor) this).getList() instanceof ConfigScreenList)
+			((ConfigScreenList) ((AbstractList$AbstractListEntryAccessor) this).getList()).bumpCog(force);
 	}
 }

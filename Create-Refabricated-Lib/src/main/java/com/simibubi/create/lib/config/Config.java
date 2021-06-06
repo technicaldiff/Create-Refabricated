@@ -17,8 +17,10 @@ public class Config {
 	public OutputStream out;
 	public Properties properties;
 	private static final Logger LOGGER = LogManager.getLogger();
+	public String name;
 
-	public Config(File file) {
+	public Config(File file, String name) {
+		this.name = name;
 		configFile = file;
 		properties = new Properties();
 		try {
@@ -31,8 +33,8 @@ public class Config {
 		}
 	}
 
-	public Config(String pathToFile) {
-		this(new File(pathToFile));
+	public Config(String pathToFile, String name) {
+		this(new File(pathToFile), name);
 	}
 
 	public void set(ConfigValue value) {
@@ -42,6 +44,16 @@ public class Config {
 
 	public Object get(String key) {
 		return properties.get(key);
+	}
+
+	public List<ConfigValue> getAllValues() {
+		List<ConfigValue> values = new ArrayList<>();
+		for (ConfigGroup group : groups) {
+			for (ConfigValue value : group.configs) {
+				values.add(value);
+			}
+		}
+		return values;
 	}
 
 	public void save() {

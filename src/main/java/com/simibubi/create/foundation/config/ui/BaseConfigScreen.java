@@ -11,7 +11,6 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
-import net.minecraftforge.fml.config.ModConfig;
 
 public class BaseConfigScreen extends ConfigScreen {
 
@@ -31,14 +30,14 @@ public class BaseConfigScreen extends ConfigScreen {
 		TextStencilElement text = new TextStencilElement(client.fontRenderer, new StringTextComponent("Client Settings").formatted(TextFormatting.BOLD)).centered(true, true);
 		widgets.add(clientConfigWidget = new BoxWidget(width / 2 - 100, height / 2 - 15 - 30, 200, 16)
 				.showingElement(text)
-				.withCallback(() -> ScreenOpener.open(new SubMenuConfigScreen(this, ModConfig.Type.CLIENT, AllConfigs.CLIENT.specification)))
+				.withCallback(() -> ScreenOpener.open(new SubMenuConfigScreen(this, AllConfigs.CLIENT.getConfig())))
 		);
 		text.withElementRenderer(BoxWidget.gradientFactory.apply(clientConfigWidget));
 
 		TextStencilElement text2 = new TextStencilElement(client.fontRenderer, new StringTextComponent("World Generation Settings").formatted(TextFormatting.BOLD)).centered(true, true);
 		widgets.add(commonConfigWidget = new BoxWidget(width / 2 - 100, height / 2 - 15, 200, 16)
 				.showingElement(text2)
-				.withCallback(() -> ScreenOpener.open(new SubMenuConfigScreen(this, ModConfig.Type.COMMON, AllConfigs.COMMON.specification)))
+				.withCallback(() -> ScreenOpener.open(new SubMenuConfigScreen(this, AllConfigs.COMMON.getConfig())))
 		);
 		text2.withElementRenderer(BoxWidget.gradientFactory.apply(commonConfigWidget));
 
@@ -48,7 +47,7 @@ public class BaseConfigScreen extends ConfigScreen {
 		);
 
 		if (Minecraft.getInstance().world != null) {
-			serverConfigWidget.withCallback(() -> ScreenOpener.open(new SubMenuConfigScreen(this, ModConfig.Type.SERVER, AllConfigs.SERVER.specification)));
+			serverConfigWidget.withCallback(() -> ScreenOpener.open(new SubMenuConfigScreen(this, AllConfigs.SERVER.getConfig())));
 			text3.withElementRenderer(BoxWidget.gradientFactory.apply(serverConfigWidget));
 		} else {
 			serverConfigWidget.active = false;

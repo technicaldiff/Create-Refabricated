@@ -40,6 +40,8 @@
     "TileEntityMixin",
     "WalkNodeProcessorMixin",
     "WorldMixin",
+    "accessor.AbstractList$AbstractListEntryAccessor",
+    "accessor.AbstractListAccessor",
     "accessor.AbstractMinecartEntityAccessor",
     "accessor.AbstractSpawnerAccessor",
     "accessor.BeaconTileEntityAccessor",
@@ -106,7 +108,8 @@
     "accessor.MinecraftAccessor",
     "accessor.ParticleAccessor",
     "accessor.ParticleManagerAccessor",
-    "accessor.ScreenAccessor"
+    "accessor.ScreenAccessor",
+    "accessor.WidgetAccessor"
   ],
   "server": [
     "Vector3dMixin",

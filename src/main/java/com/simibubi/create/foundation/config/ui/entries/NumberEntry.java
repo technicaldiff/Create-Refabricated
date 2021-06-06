@@ -1,6 +1,5 @@
 package com.simibubi.create.foundation.config.ui.entries;
 
-import java.lang.reflect.Field;
 import java.util.function.Function;
 
 import javax.annotation.Nullable;
@@ -10,12 +9,13 @@ import com.simibubi.create.foundation.config.ui.ConfigTextField;
 import com.simibubi.create.foundation.gui.TextStencilElement;
 import com.simibubi.create.foundation.gui.Theme;
 import com.simibubi.create.foundation.gui.UIRenderHelper;
+import com.simibubi.create.lib.config.ConfigValue;
+import com.simibubi.create.lib.mixin.accessor.WidgetAccessor;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.widget.TextFieldWidget;
 import net.minecraft.util.text.StringTextComponent;
-import net.minecraftforge.common.ForgeConfigSpec;
 
 public abstract class NumberEntry<T extends Number> extends ValueEntry<T> {
 
@@ -24,32 +24,32 @@ public abstract class NumberEntry<T extends Number> extends ValueEntry<T> {
 	protected TextFieldWidget textField;
 
 	@Nullable
-	public static NumberEntry<? extends Number> create(Object type, String label, ForgeConfigSpec.ConfigValue<?> value, ForgeConfigSpec.ValueSpec spec) {
+	public static NumberEntry<? extends Number> create(Object type, String label, ConfigValue<?> value) {
 		if (type instanceof Integer) {
-			return new IntegerEntry(label, (ForgeConfigSpec.ConfigValue<Integer>) value, spec);
+			return new IntegerEntry(label, (ConfigValue<Integer>) value);
 		} else if (type instanceof Float) {
-			return new FloatEntry(label, (ForgeConfigSpec.ConfigValue<Float>) value, spec);
+			return new FloatEntry(label, (ConfigValue<Float>) value);
 		} else if (type instanceof Double) {
-			return new DoubleEntry(label, (ForgeConfigSpec.ConfigValue<Double>) value, spec);
+			return new DoubleEntry(label, (ConfigValue<Double>) value);
 		}
 
 		return null;
 	}
 
-	public NumberEntry(String label, ForgeConfigSpec.ConfigValue<T> value, ForgeConfigSpec.ValueSpec spec) {
-		super(label, value, spec);
+	public NumberEntry(String label, ConfigValue<T> value) {
+		super(label, value);
 		textField = new ConfigTextField(Minecraft.getInstance().fontRenderer, 0, 0, 200, 20, unit);
 		textField.setText(String.valueOf(getValue()));
 		textField.setTextColor(Theme.i(Theme.Key.TEXT));
 
-		Object range = spec.getRange();
+//		Object range = spec.getRange();
 		try {
-			Field minField = range.getClass().getDeclaredField("min");
-			Field maxField = range.getClass().getDeclaredField("max");
-			minField.setAccessible(true);
-			maxField.setAccessible(true);
-			T min = (T) minField.get(range);
-			T max = (T) maxField.get(range);
+//			Field minField = range.getClass().getDeclaredField("min");
+//			Field maxField = range.getClass().getDeclaredField("max");
+//			minField.setAccessible(true);
+//			maxField.setAccessible(true);
+			T min = (T) value.max;//minField.get(range);
+			T max = (T) value.min;//maxField.get(range);
 
 			FontRenderer font = Minecraft.getInstance().fontRenderer;
 			if (min.doubleValue() > getTypeMin().doubleValue()) {
@@ -64,14 +64,14 @@ public abstract class NumberEntry<T extends Number> extends ValueEntry<T> {
 				maxText.withElementRenderer((ms, width, height, alpha) -> UIRenderHelper.angledGradient(ms, 0 ,0, height/2, height, width, Theme.p(Theme.Key.TEXT_DARKER)));
 				maxOffset = font.getWidth(t);
 			}
-		} catch (NoSuchFieldException | IllegalAccessException | ClassCastException | NullPointerException ignored) {
+		} catch (ClassCastException | NullPointerException ignored) {
 
 		}
 
 		textField.setResponder(s -> {
 			try {
 				T number = getParser().apply(s);
-				if (!spec.test(number))
+				if (!value.constraint.fits(number, value.min, value.max))
 					throw new IllegalArgumentException();
 
 				textField.setTextColor(Theme.i(Theme.Key.TEXT));
@@ -127,7 +127,7 @@ public abstract class NumberEntry<T extends Number> extends ValueEntry<T> {
 		textField.x = x + width - 82 - resetWidth;
 		textField.y = y + 8;
 		textField.setWidth(Math.min(width - getLabelWidth(width) - resetWidth - minOffset - maxOffset, 40));
-		textField.setHeight(20);
+		((WidgetAccessor) textField).setHeight(20);
 		textField.render(ms, mouseX, mouseY, partialTicks);
 
 		if (minText != null)
@@ -145,8 +145,8 @@ public abstract class NumberEntry<T extends Number> extends ValueEntry<T> {
 
 	public static class IntegerEntry extends NumberEntry<Integer> {
 
-		public IntegerEntry(String label, ForgeConfigSpec.ConfigValue<Integer> value, ForgeConfigSpec.ValueSpec spec) {
-			super(label, value, spec);
+		public IntegerEntry(String label, ConfigValue<Integer> value) {
+			super(label, value);
 		}
 
 		@Override
@@ -167,8 +167,8 @@ public abstract class NumberEntry<T extends Number> extends ValueEntry<T> {
 
 	public static class FloatEntry extends NumberEntry<Float> {
 
-		public FloatEntry(String label, ForgeConfigSpec.ConfigValue<Float> value, ForgeConfigSpec.ValueSpec spec) {
-			super(label, value, spec);
+		public FloatEntry(String label, ConfigValue<Float> value) {
+			super(label, value);
 		}
 
 		@Override
@@ -189,8 +189,8 @@ public abstract class NumberEntry<T extends Number> extends ValueEntry<T> {
 
 	public static class DoubleEntry extends NumberEntry<Double> {
 
-		public DoubleEntry(String label, ForgeConfigSpec.ConfigValue<Double> value, ForgeConfigSpec.ValueSpec spec) {
-			super(label, value, spec);
+		public DoubleEntry(String label, ConfigValue<Double> value) {
+			super(label, value);
 		}
 
 		@Override

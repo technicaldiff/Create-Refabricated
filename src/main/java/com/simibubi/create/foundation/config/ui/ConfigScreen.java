@@ -55,7 +55,7 @@ public abstract class ConfigScreen extends AbstractSimiScreen {
 
 	@Override
 	public void renderBackground(@Nonnull MatrixStack ms) {
-		net.minecraftforge.common.MinecraftForge.EVENT_BUS.post(new net.minecraftforge.client.event.GuiScreenEvent.BackgroundDrawnEvent(this, ms));
+//		net.minecraftforge.common.MinecraftForge.EVENT_BUS.post(new net.minecraftforge.client.event.GuiScreenEvent.BackgroundDrawnEvent(this, ms));
 	}
 
 	@Override

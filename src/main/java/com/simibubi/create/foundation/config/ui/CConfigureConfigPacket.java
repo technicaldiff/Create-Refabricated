@@ -1,6 +1,7 @@
 package com.simibubi.create.foundation.config.ui;
 
 import com.simibubi.create.foundation.config.AllConfigs;
+import com.simibubi.create.lib.config.ConfigValue;
 
 import me.pepperbell.simplenetworking.C2SPacket;
 import me.pepperbell.simplenetworking.SimpleChannel;
@@ -38,11 +39,11 @@ public class CConfigureConfigPacket<T> implements C2SPacket {
 		if (sender == null || !sender.hasPermissionLevel(2))
 			return;
 
-		ForgeConfigSpec.ValueSpec valueSpec = AllConfigs.SERVER.specification.getRaw(path);
-		ForgeConfigSpec.ConfigValue<T> configValue = AllConfigs.SERVER.specification.getValues().get(path);
+//		ForgeConfigSpec.ValueSpec valueSpec = AllConfigs.SERVER.specification.getRaw(path);
+		ConfigValue<T> configValue = (ConfigValue<T>) AllConfigs.SERVER.getConfig().get(path);
 
 		T v = (T) deserialize(configValue.get(), value);
-		if (!valueSpec.test(v))
+		if (!configValue.constraint.fits(v, configValue.min, configValue.max))
 			return;
 
 		configValue.set(v);

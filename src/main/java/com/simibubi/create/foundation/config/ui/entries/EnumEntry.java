@@ -8,11 +8,11 @@ import com.simibubi.create.foundation.gui.TextStencilElement;
 import com.simibubi.create.foundation.gui.Theme;
 import com.simibubi.create.foundation.gui.UIRenderHelper;
 import com.simibubi.create.foundation.gui.widgets.BoxWidget;
+import com.simibubi.create.lib.config.ConfigValue;
 
 import net.minecraft.client.Minecraft;
-import net.minecraftforge.common.ForgeConfigSpec;
 
-public class EnumEntry extends ValueEntry<Enum<?>> {
+public class EnumEntry<T> extends ValueEntry<T> {
 
 	protected static final int cycleWidth = 34;
 
@@ -20,8 +20,8 @@ public class EnumEntry extends ValueEntry<Enum<?>> {
 	protected BoxWidget cycleLeft;
 	protected BoxWidget cycleRight;
 
-	public EnumEntry(String label, ForgeConfigSpec.ConfigValue<Enum<?>> value, ForgeConfigSpec.ValueSpec spec) {
-		super(label, value, spec);
+	public EnumEntry(String label, ConfigValue<T> value) {
+		super(label, value);
 
 		valueText = new TextStencilElement(Minecraft.getInstance().fontRenderer, "YEP").centered(true, true);
 		valueText.withElementRenderer((ms, width, height, alpha) -> UIRenderHelper.angledGradient(ms, 0, 0, height / 2,
@@ -45,11 +45,11 @@ public class EnumEntry extends ValueEntry<Enum<?>> {
 	}
 
 	protected void cycleValue(int direction) {
-		Enum<?> e = getValue();
+		Enum<?> e = (Enum<?>) getValue();
 		Enum<?>[] options = e.getDeclaringClass()
 			.getEnumConstants();
 		e = options[Math.floorMod(e.ordinal() + direction, options.length)];
-		setValue(e);
+		setValue((T) e);
 		bumpCog(direction * 15f);
 	}
 
@@ -95,8 +95,8 @@ public class EnumEntry extends ValueEntry<Enum<?>> {
 	}
 
 	@Override
-	public void onValueChange(Enum<?> newValue) {
+	public void onValueChange(T newValue) {
 		super.onValueChange(newValue);
-		valueText.withText(newValue.name());
+		valueText.withText(((Enum<?>) newValue).name());
 	}
 }

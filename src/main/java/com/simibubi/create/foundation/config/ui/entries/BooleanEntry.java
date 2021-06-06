@@ -6,8 +6,8 @@ import com.simibubi.create.foundation.gui.RenderElement;
 import com.simibubi.create.foundation.gui.Theme;
 import com.simibubi.create.foundation.gui.UIRenderHelper;
 import com.simibubi.create.foundation.gui.widgets.BoxWidget;
-
-import net.minecraftforge.common.ForgeConfigSpec;
+import com.simibubi.create.lib.config.ConfigValue;
+import com.simibubi.create.lib.mixin.accessor.WidgetAccessor;
 
 public class BooleanEntry extends ValueEntry<Boolean> {
 
@@ -15,8 +15,8 @@ public class BooleanEntry extends ValueEntry<Boolean> {
 	RenderElement disabled;
 	BoxWidget button;
 
-	public BooleanEntry(String label, ForgeConfigSpec.ConfigValue<Boolean> value, ForgeConfigSpec.ValueSpec spec) {
-		super(label, value, spec);
+	public BooleanEntry(String label, ConfigValue<Boolean> value) {
+		super(label, value);
 
 		enabled = AllIcons.I_CONFIRM.asStencil()
 			.withElementRenderer((ms, width, height, alpha) -> UIRenderHelper.angledGradient(ms, 0, 0, height / 2, height, width, Theme.p(Theme.Key.BUTTON_SUCCESS)))
@@ -53,7 +53,7 @@ public class BooleanEntry extends ValueEntry<Boolean> {
 		button.x = x + width - 80 - resetWidth;
 		button.y = y + 10;
 		button.setWidth(35);
-		button.setHeight(height - 20);
+		((WidgetAccessor) button).setHeight(height - 20);
 		button.render(ms, mouseX, mouseY, partialTicks);
 	}
 
