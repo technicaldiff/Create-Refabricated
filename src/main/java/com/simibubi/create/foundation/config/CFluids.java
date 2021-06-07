@@ -1,10 +1,10 @@
 package com.simibubi.create.foundation.config;
 
 import com.simibubi.create.lib.config.Config;
-import com.simibubi.create.lib.config.Configs;
+import com.simibubi.create.lib.config.ConfigGroup;
 
 public class CFluids extends ConfigBase {
-
+	public ConfigGroup fluids = group(0, "fluids", CServer.Comments.fluids);
 	public ConfigInt fluidTankCapacity = i(8, 1, "fluidTankCapacity", Comments.buckets, Comments.fluidTankCapacity);
 	public ConfigInt fluidTankMaxHeight = i(32, 1, "fluidTankMaxHeight", Comments.blocks, Comments.fluidTankMaxHeight);
 	public ConfigInt mechanicalPumpRange =

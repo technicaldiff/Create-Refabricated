@@ -5,7 +5,7 @@ import com.simibubi.create.lib.config.ConfigGroup;
 import com.simibubi.create.lib.config.Configs;
 
 public class CSchematics extends ConfigBase {
-
+	public ConfigGroup schematics = group(0, "schematics", CServer.Comments.schematics);
 	public ConfigInt maxSchematics = i(10, 1, "maxSchematics", Comments.maxSchematics);
 	public ConfigInt maxTotalSchematicSize = i(256, 16, "maxSchematics", Comments.kb, Comments.maxSize);
 	public ConfigInt maxSchematicPacketSize =

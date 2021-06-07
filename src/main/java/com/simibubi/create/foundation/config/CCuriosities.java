@@ -1,10 +1,10 @@
 package com.simibubi.create.foundation.config;
 
 import com.simibubi.create.lib.config.Config;
-import com.simibubi.create.lib.config.Configs;
+import com.simibubi.create.lib.config.ConfigGroup;
 
 public class CCuriosities extends ConfigBase {
-
+	public ConfigGroup curiosities = group(0, "curiosities", CServer.Comments.curiosities);
 	public ConfigInt maxSymmetryWandRange = i(50, 10, "maxSymmetryWandRange", Comments.symmetryRange);
 	public ConfigInt placementAssistRange = i(12, 3, "placementAssistRange", Comments.placementRange);
 	public ConfigInt maxAirInBacktank = i(900, 1, "maxAirInBacktank", Comments.maxAirInBacktank);

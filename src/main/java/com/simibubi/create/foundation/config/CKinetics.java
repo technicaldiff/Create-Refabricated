@@ -5,7 +5,7 @@ import com.simibubi.create.lib.config.ConfigGroup;
 import com.simibubi.create.lib.config.Configs;
 
 public class CKinetics extends ConfigBase {
-
+	public ConfigGroup kinetics = group(0, "kinetics", CServer.Comments.kinetics);
 	public ConfigBool disableStress = b(false, "disableStress", Comments.disableStress);
 	public ConfigInt maxBeltLength = i(20, 5, "maxBeltLength", Comments.maxBeltLength);
 	public ConfigInt crushingDamage = i(4, 0, "crushingDamage", Comments.crushingDamage);

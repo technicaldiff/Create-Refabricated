@@ -1,11 +1,13 @@
 package com.simibubi.create.foundation.config;
 
 import com.simibubi.create.lib.config.Config;
+import com.simibubi.create.lib.config.ConfigGroup;
 import com.simibubi.create.lib.config.Configs;
 
 public class CCommon extends ConfigBase {
 
 	public CWorldGen worldGen = nested(0, CWorldGen::new, Comments.worldGen);
+	public ConfigGroup common = group(0, "common", "Configs used for both Client and Server");
 	public ConfigBool logTeErrors = b(false, "logTeErrors", Comments.logTeErrors);
 
 	public Config config = new Config(getName());

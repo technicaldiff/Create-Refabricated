@@ -22,6 +22,7 @@ public class ConfigGroup {
 
 	public void addConfigValue(ConfigValue value) {
 		configs.add(value);
+		value.setGroup(this);
 		if (config != null) {
 			config.set(value);
 		}

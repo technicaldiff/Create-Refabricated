@@ -1,10 +1,11 @@
 package com.simibubi.create.foundation.config;
 
 import com.simibubi.create.lib.config.Config;
-import com.simibubi.create.lib.config.Configs;
+import com.simibubi.create.lib.config.ConfigGroup;
 
 public class CRecipes extends ConfigBase {
 
+	public ConfigGroup recipes = group(0, "recipes", CServer.Comments.recipes);
 	public ConfigBool bulkPressing = b(false, "bulkPressing", Comments.bulkPressing);
 	public ConfigBool allowShapelessInMixer = b(true, "allowShapelessInMixer", Comments.allowShapelessInMixer);
 	public ConfigBool allowShapedSquareInPress = b(true, "allowShapedSquareInPress", Comments.allowShapedSquareInPress);

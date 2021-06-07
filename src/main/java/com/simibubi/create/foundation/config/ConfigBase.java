@@ -15,7 +15,19 @@ public abstract class ConfigBase {
 		return null;
 	}
 
-	public static List<Object> currentConfigSet = new ArrayList<>();
+	public static List<ConfigGroup> currentGroupSet = new ArrayList<>();
+	public static ConfigGroup currentGroup;
+	public static ConfigGroup getCurrentGroup() {
+		return currentGroup;
+	}
+
+	public static void initGroups(Config config) {
+		for (ConfigGroup group : currentGroupSet) {
+			group.setConfig(config);
+			group.registerValues();
+			currentGroupSet.remove(group);
+		}
+	}
 
 //	public ForgeConfigSpec specification;
 
@@ -48,12 +60,14 @@ public abstract class ConfigBase {
 	protected ConfigBool b(boolean current, String name, String... comment) {
 		ConfigBool result = new ConfigBool(name, current);
 		result.addComments(comment);
+		getCurrentGroup().addConfigValue(result);
 		return result;
 	}
 
 	protected ConfigFloat f(float current, float min, float max, String name, String... comment) {
 		ConfigFloat result = new ConfigFloat(name, current);
 		result.addComments(comment);
+		getCurrentGroup().addConfigValue(result);
 		return result;
 	}
 
@@ -64,6 +78,7 @@ public abstract class ConfigBase {
 	protected ConfigInt i(int current, int min, int max, String name, String... comment) {
 		ConfigInt result = new ConfigInt(name, current);
 		result.addComments(comment);
+		getCurrentGroup().addConfigValue(result);
 		return result;
 	}
 
@@ -74,13 +89,13 @@ public abstract class ConfigBase {
 	protected <T extends Enum<T>> ConfigEnum<T> e(T defaultValue, String name, String... comment) {
 		ConfigEnum<T> result = new ConfigEnum<T>(name, defaultValue);
 		result.addComments(comment);
+		getCurrentGroup().addConfigValue(result);
 		return result;
 	}
 
-	public static List<ConfigGroup> clientConfigsToUpdate = new ArrayList<>();
-
 	protected ConfigGroup group(int depth, String name, String... comment) {
 		ConfigGroup group = new ConfigGroup(name, depth, comment);
+		currentGroup = group;
 		return group;
 	}
 

@@ -1,10 +1,10 @@
 package com.simibubi.create.foundation.config;
 
 import com.simibubi.create.lib.config.Config;
-import com.simibubi.create.lib.config.Configs;
+import com.simibubi.create.lib.config.ConfigGroup;
 
 public class CLogistics extends ConfigBase {
-
+	public ConfigGroup logistics = group(0, "logistics", CServer.Comments.logistics);
 	public ConfigInt defaultExtractionLimit = i(64, 1, 64, "defaultExtractionLimit", Comments.defaultExtractionLimit);
 	public ConfigInt defaultExtractionTimer = i(8, 1, "defaultExtractionTimer", Comments.defaultExtractionTimer);
 	public ConfigInt psiTimeout = i(20, 1, "psiTimeout", Comments.psiTimeout);
