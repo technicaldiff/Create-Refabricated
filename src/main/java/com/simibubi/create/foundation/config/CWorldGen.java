@@ -2,12 +2,11 @@ package com.simibubi.create.foundation.config;
 
 import com.simibubi.create.foundation.worldgen.AllWorldFeatures;
 import com.simibubi.create.lib.config.Config;
-import com.simibubi.create.lib.config.Configs;
 
 
 public class CWorldGen extends ConfigBase {
 
-	public Config config = new Config(Configs.PATH_TO_CONFIGS + getName());
+	public Config config = new Config(getName());
 	@Override
 	public Config getConfig() {
 		return config;

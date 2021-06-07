@@ -6,7 +6,7 @@ import com.simibubi.create.lib.config.Configs;
 
 public class CServer extends ConfigBase {
 
-	public ConfigGroupWrapper infrastructure = group(0, "infrastructure", Comments.infrastructure);
+	public ConfigGroup infrastructure = group(0, "infrastructure", Comments.infrastructure);
 	public ConfigInt tickrateSyncTimer =
 		i(20, 5, "tickrateSyncTimer", "[in Ticks]", Comments.tickrateSyncTimer, Comments.tickrateSyncTimer2);
 
@@ -17,7 +17,7 @@ public class CServer extends ConfigBase {
 	public CSchematics schematics = nested(0, CSchematics::new, Comments.schematics);
 	public CCuriosities curiosities = nested(0, CCuriosities::new, Comments.curiosities);
 
-	public Config config = new Config(Configs.PATH_TO_CONFIGS + getName());
+	public Config config = new Config(getName());
 	@Override
 	public Config getConfig() {
 		return config;

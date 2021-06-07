@@ -8,38 +8,52 @@ public class ConfigValue<T> {
 	public T defaultValue;
 	public ConfigGroup group;
 	public String key;
-	public Constraint<T> constraint;
+	public Constraint constraint;
 	public List<String> comments = new ArrayList<>();
 	// only for number-based values
-	public T min;
-	public T max;
+	public Number min;
+	public Number max;
+	// only for enums
+	public Class<T> clazz;
 
-	public ConfigValue(String key, T value, ConfigGroup group) {
+	public ConfigValue(String key, T value) {
 		this.value = value;
 		this.defaultValue = value;
-		this.group = group;
 		this.key = key;
-		this.group.addConfigValue(this);
 	}
 
 	public T get() {
 		return value;
 	}
 
-	public boolean fitsConstraints(Constraint<T> constraint) {return constraint.fits(value, min, max);}
-
-	public void set(T value) {
-		if (fitsConstraints(constraint)) {
+	public boolean set(T value) {
+		if (fitsConstraint(value)) {
 			this.value = value;
-		} else {
-			this.value = defaultValue;
+			saveValue();
+			return true;
 		}
-		updateStoredValue();
+		return false;
 	}
 
-	public void updateStoredValue() {
+	public void saveValue() {
 		group.config.set(this);
 	}
+
+	// specific setters
+
+	public void setClass(Class<T> clazz) {
+		this.clazz = clazz;
+	}
+
+	public void setMin(Number min) {
+		this.min = min;
+	}
+
+	public void setMax(Number max) {
+		this.max = max;
+	}
+
+	// comments
 
 	public void addComment(String comment) {
 		comments.add(comment);
@@ -51,12 +65,23 @@ public class ConfigValue<T> {
 		}
 	}
 
-	public void setConstraint(Constraint<T> constraint) {
-		this.constraint = constraint;
+	// group
+
+	public void setGroup(ConfigGroup group) {
+		this.group = group;
 	}
 
+	// constraints
+
 	@FunctionalInterface
-	public interface Constraint<T> {
-		boolean fits(T value, T min, T max);
+	public interface Constraint {
+		boolean fits(Object newValue, ConfigValue value);
 	}
+
+	public boolean fitsConstraint(T newValue) {
+		return constraint.fits(newValue, this);
+	}
+
+	public static final Constraint MIN_MAX = (newValue, value) -> ((double) newValue) >= ((double) value.min) && ((double) value.max) >= ((double) newValue);
+	public static final Constraint TYPE = (newValue, value) -> newValue.getClass() == value.clazz;
 }

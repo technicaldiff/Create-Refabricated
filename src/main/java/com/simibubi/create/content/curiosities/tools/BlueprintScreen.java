@@ -20,6 +20,8 @@ import com.simibubi.create.foundation.gui.widgets.IconButton;
 import com.simibubi.create.foundation.networking.AllPackets;
 import com.simibubi.create.foundation.utility.Lang;
 
+import com.simibubi.create.lib.mixin.accessor.SlotAccessor;
+
 import net.minecraft.client.renderer.Rectangle2d;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.PlayerInventory;
@@ -87,8 +89,7 @@ public class BlueprintScreen extends AbstractSimiContainerScreen<BlueprintContai
 			super.drawMouseoverTooltip(ms, x, y);
 			return;
 		}
-		renderWrappedToolTip(ms, addToTooltip(new LinkedList<>(), hoveredSlot.getSlotIndex(), true), x, y,
-			textRenderer);
+		renderTooltip(ms, addToTooltip(new LinkedList<>(), ((SlotAccessor) hoveredSlot).getSlotIndex(), true), x, y);
 	}
 
 	@Override
@@ -96,7 +97,7 @@ public class BlueprintScreen extends AbstractSimiContainerScreen<BlueprintContai
 		List<ITextComponent> list = super.getTooltipFromItem(stack);
 		if (hoveredSlot.inventory == container.playerInventory)
 			return list;
-		return hoveredSlot != null ? addToTooltip(list, hoveredSlot.getSlotIndex(), false) : list;
+		return hoveredSlot != null ? addToTooltip(list, ((SlotAccessor) hoveredSlot).getSlotIndex(), false) : list;
 	}
 
 	private List<ITextComponent> addToTooltip(List<ITextComponent> list, int slot, boolean isEmptySlot) {

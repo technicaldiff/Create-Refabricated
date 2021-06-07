@@ -13,3 +13,8 @@ accessible method net/minecraft/tags/TagRegistry$NamedTag <init> (Lnet/minecraft
 accessible class net/minecraft/world/biome/Biome$Climate
 
 extendable class net/minecraft/inventory/container/ContainerType$IFactory
+
+
+accessible class net/minecraft/item/crafting/Ingredient$IItemList
+accessible class net/minecraft/item/crafting/Ingredient$SingleItemList
+accessible class net/minecraft/item/crafting/Ingredient$TagList

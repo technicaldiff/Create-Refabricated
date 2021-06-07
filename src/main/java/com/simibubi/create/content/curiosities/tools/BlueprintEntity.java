@@ -7,13 +7,6 @@ import java.util.Optional;
 
 import javax.annotation.Nullable;
 
-import com.simibubi.create.lib.lba.item.IItemHandlerModifiable;
-import com.simibubi.create.lib.lba.item.InvWrapper;
-import com.simibubi.create.lib.lba.item.ItemStackHandler;
-
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
-
 import org.apache.commons.lang3.Validate;
 
 import com.simibubi.create.AllEntityTypes;
@@ -26,7 +19,18 @@ import com.simibubi.create.content.schematics.ItemRequirement.ItemUseType;
 import com.simibubi.create.foundation.networking.ISyncPersistentData;
 import com.simibubi.create.foundation.utility.Couple;
 import com.simibubi.create.foundation.utility.VecHelper;
+import com.simibubi.create.lib.entity.ExtraSpawnDataEntity;
+import com.simibubi.create.lib.extensions.ServerPlayerEntityExtensions;
+import com.simibubi.create.lib.helper.EntityHelper;
+import com.simibubi.create.lib.lba.item.IItemHandlerModifiable;
+import com.simibubi.create.lib.lba.item.InvWrapper;
+import com.simibubi.create.lib.lba.item.ItemStackHandler;
+import com.simibubi.create.lib.utility.NetworkUtil;
 
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
+import net.fabricmc.fabric.api.block.BlockPickInteractionAware;
+import net.fabricmc.fabric.api.object.builder.v1.entity.FabricEntityTypeBuilder;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.RedstoneDiodeBlock;
@@ -47,6 +51,7 @@ import net.minecraft.item.crafting.IRecipeType;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.IPacket;
 import net.minecraft.network.PacketBuffer;
+import net.minecraft.network.play.server.SSpawnObjectPacket;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Direction;
 import net.minecraft.util.Direction.Axis;
@@ -62,10 +67,11 @@ import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.world.GameRules;
+import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 
 public class BlueprintEntity extends HangingEntity
-	implements IEntityAdditionalSpawnData, ISpecialEntityItemRequirement, ISyncPersistentData {
+	implements ExtraSpawnDataEntity, ISpecialEntityItemRequirement, ISyncPersistentData, BlockPickInteractionAware {
 
 	protected int size;
 	protected Direction verticalOrientation;
@@ -87,15 +93,15 @@ public class BlueprintEntity extends HangingEntity
 		}
 	}
 
-	public static EntityType.Builder<?> build(EntityType.Builder<?> builder) {
+	public static FabricEntityTypeBuilder<?> build(FabricEntityTypeBuilder<?> builder) {
 		@SuppressWarnings("unchecked")
-		EntityType.Builder<BlueprintEntity> entityBuilder = (EntityType.Builder<BlueprintEntity>) builder;
+		FabricEntityTypeBuilder<BlueprintEntity> entityBuilder = (FabricEntityTypeBuilder<BlueprintEntity>) builder;
 		return entityBuilder;
 	}
 
 	@Override
 	public IPacket<?> createSpawnPacket() {
-		return NetworkHooks.getEntitySpawningPacket(this);
+		return new SSpawnObjectPacket(this, getEntityId());
 	}
 
 	@Override
@@ -257,8 +263,13 @@ public class BlueprintEntity extends HangingEntity
 		entityDropItem(AllItems.CRAFTING_BLUEPRINT.asStack());
 	}
 
+//	@Override
+//	public ItemStack getPickedResult(RayTraceResult target) {
+//		return AllItems.CRAFTING_BLUEPRINT.asStack();
+//	}
+
 	@Override
-	public ItemStack getPickedResult(RayTraceResult target) {
+	public ItemStack getPickedStack(BlockState state, IBlockReader view, BlockPos pos, @org.jetbrains.annotations.Nullable PlayerEntity player, @org.jetbrains.annotations.Nullable RayTraceResult result) {
 		return AllItems.CRAFTING_BLUEPRINT.asStack();
 	}
 
@@ -292,18 +303,18 @@ public class BlueprintEntity extends HangingEntity
 		CompoundNBT compound = new CompoundNBT();
 		writeAdditional(compound);
 		buffer.writeCompoundTag(compound);
-		buffer.writeCompoundTag(getPersistentData());
+		buffer.writeCompoundTag(EntityHelper.getExtraCustomData(this));
 	}
 
 	@Override
 	public void readSpawnData(PacketBuffer additionalData) {
 		readAdditional(additionalData.readCompoundTag());
-		getPersistentData().merge(additionalData.readCompoundTag());
+		EntityHelper.getExtraCustomData(this).merge(additionalData.readCompoundTag());
 	}
 
 	@Override
 	public ActionResultType applyPlayerInteraction(PlayerEntity player, Vector3d vec, Hand hand) {
-		if (player instanceof FakePlayer)
+		if (((ServerPlayerEntityExtensions) player).create$isFakePlayer())
 			return ActionResultType.PASS;
 
 		BlueprintSection section = getSectionAt(vec);
@@ -323,7 +334,7 @@ public class BlueprintEntity extends HangingEntity
 				IItemHandlerModifiable playerInv = new InvWrapper(player.inventory);
 				boolean firstPass = true;
 				int amountCrafted = 0;
-				ForgeHooks.setCraftingPlayer(player);
+//				ForgeHooks.setCraftingPlayer(player);
 				Optional<ICraftingRecipe> recipe = Optional.empty();
 
 				do {
@@ -373,7 +384,7 @@ public class BlueprintEntity extends HangingEntity
 						} else {
 							amountCrafted += result.getCount();
 							result.onCrafting(player.world, player, 1);
-							BasicEventHooks.firePlayerCraftingEvent(player, result, craftingInventory);
+//							BasicEventHooks.firePlayerCraftingEvent(player, result, craftingInventory);
 							NonNullList<ItemStack> nonnulllist = world.getRecipeManager()
 								.getRecipeNonNull(IRecipeType.CRAFTING, craftingInventory, world);
 
@@ -394,7 +405,7 @@ public class BlueprintEntity extends HangingEntity
 					}
 
 				} while (player.isSneaking());
-				ForgeHooks.setCraftingPlayer(null);
+//				ForgeHooks.setCraftingPlayer(null);
 
 				return ActionResultType.SUCCESS;
 			}
@@ -402,7 +413,7 @@ public class BlueprintEntity extends HangingEntity
 
 		int i = section.index;
 		if (!world.isRemote && player instanceof ServerPlayerEntity) {
-			NetworkHooks.openGui((ServerPlayerEntity) player, section, buf -> {
+			NetworkUtil.openGUI((ServerPlayerEntity) player, section, buf -> {
 				buf.writeVarInt(getEntityId());
 				buf.writeVarInt(i);
 			});
@@ -449,7 +460,7 @@ public class BlueprintEntity extends HangingEntity
 	}
 
 	public CompoundNBT getOrCreateRecipeCompound() {
-		CompoundNBT persistentData = getPersistentData();
+		CompoundNBT persistentData = EntityHelper.getExtraCustomData(this);
 		if (!persistentData.contains("Recipes"))
 			persistentData.put("Recipes", new CompoundNBT());
 		return persistentData.getCompound("Recipes");

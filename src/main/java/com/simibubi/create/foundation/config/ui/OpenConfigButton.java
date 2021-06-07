@@ -34,7 +34,7 @@ public class OpenConfigButton extends Button {
 	}
 
 	public static void click(Button b) {
-		Minecraft.getInstance().displayGuiScreen(new BaseConfigScreen(Minecraft.getInstance().currentScreen));
+		Minecraft.getInstance().displayGuiScreen(new BaseConfigScreen(Minecraft.getInstance().currentScreen, "create"));
 	}
 
 	public static class SingleMenuRow {

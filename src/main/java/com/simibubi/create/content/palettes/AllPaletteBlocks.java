@@ -108,7 +108,7 @@ public class AllPaletteBlocks {
 	public static final BlockEntry<Block> LIMESTONE =
 		REGISTRATE.baseBlock("limestone", Block::new, () -> Blocks.SANDSTONE, true)
 			.tag(BlockTags.BASE_STONE_OVERWORLD)
-			.loot(cobblestoneLoot(PaletteStoneVariants.LIMESTONE))
+//			.loot(cobblestoneLoot(PaletteStoneVariants.LIMESTONE))
 			.register();
 
 	public static final PalettesVariantEntry LIMESTONE_VARIANTS =
@@ -117,7 +117,7 @@ public class AllPaletteBlocks {
 	public static final BlockEntry<Block> WEATHERED_LIMESTONE =
 		REGISTRATE.baseBlock("weathered_limestone", Block::new, () -> Blocks.SANDSTONE, true)
 			.tag(BlockTags.BASE_STONE_OVERWORLD)
-			.loot(cobblestoneLoot(PaletteStoneVariants.WEATHERED_LIMESTONE))
+//			.loot(cobblestoneLoot(PaletteStoneVariants.WEATHERED_LIMESTONE))
 			.register();
 
 	public static final PalettesVariantEntry WEATHERED_LIMESTONE_VARIANTS = new PalettesVariantEntry(
@@ -126,7 +126,7 @@ public class AllPaletteBlocks {
 	public static final BlockEntry<Block> DOLOMITE =
 		REGISTRATE.baseBlock("dolomite", Block::new, () -> Blocks.QUARTZ_BLOCK, true)
 			.tag(BlockTags.BASE_STONE_OVERWORLD)
-			.loot(cobblestoneLoot(PaletteStoneVariants.DOLOMITE))
+//			.loot(cobblestoneLoot(PaletteStoneVariants.DOLOMITE))
 			.register();
 
 	public static final PalettesVariantEntry DOLOMITE_VARIANTS =
@@ -135,7 +135,7 @@ public class AllPaletteBlocks {
 	public static final BlockEntry<Block> GABBRO =
 		REGISTRATE.baseBlock("gabbro", Block::new, () -> Blocks.ANDESITE, true)
 			.tag(BlockTags.BASE_STONE_OVERWORLD)
-			.loot(cobblestoneLoot(PaletteStoneVariants.GABBRO))
+//			.loot(cobblestoneLoot(PaletteStoneVariants.GABBRO))
 			.register();
 
 	public static final PalettesVariantEntry GABBRO_VARIANTS =
@@ -143,7 +143,7 @@ public class AllPaletteBlocks {
 
 	public static final BlockEntry<Block> SCORIA =
 		REGISTRATE.baseBlock("scoria", Block::new, () -> Blocks.ANDESITE, true)
-			.loot(cobblestoneLoot(PaletteStoneVariants.SCORIA))
+//			.loot(cobblestoneLoot(PaletteStoneVariants.SCORIA))
 			.register();
 
 	public static final BlockEntry<Block> NATURAL_SCORIA = REGISTRATE.block("natural_scoria", Block::new)
@@ -160,16 +160,16 @@ public class AllPaletteBlocks {
 
 	public static final BlockEntry<Block> DARK_SCORIA =
 		REGISTRATE.baseBlock("dark_scoria", Block::new, () -> Blocks.ANDESITE, false)
-			.loot(cobblestoneLoot(PaletteStoneVariants.DARK_SCORIA))
+//			.loot(cobblestoneLoot(PaletteStoneVariants.DARK_SCORIA))
 			.register();
 
 	public static final PalettesVariantEntry DARK_SCORIA_VARIANTS =
 		new PalettesVariantEntry(PaletteStoneVariants.DARK_SCORIA, PaletteBlockPattern.STANDARD_RANGE, DARK_SCORIA);
 
-	private static <T extends Block> NonNullBiConsumer<RegistrateBlockLootTables, T> cobblestoneLoot(PaletteStoneVariants variant) {
-		return (loot, block) -> loot.registerLootTable(block, RegistrateBlockLootTables.droppingWithSilkTouch(block,
-			variant.getVariants().registeredBlocks.get(0).get()));
-	}
+//	private static <T extends Block> NonNullBiConsumer<RegistrateBlockLootTables, T> cobblestoneLoot(PaletteStoneVariants variant) {
+//		return (loot, block) -> loot.registerLootTable(block, RegistrateBlockLootTables.droppingWithSilkTouch(block,
+//			variant.getVariants().registeredBlocks.get(0).get()));
+//	}
 
 //	private static <T extends Block> NonNullBiConsumer<DataGenContext<Block, T>, RegistrateBlockstateProvider> palettesCubeAll() {
 //		return (c, p) -> BlockStateGen.cubeAll(c, p, "palettes/");

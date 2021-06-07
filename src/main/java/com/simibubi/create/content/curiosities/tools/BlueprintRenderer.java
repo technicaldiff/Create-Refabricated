@@ -8,6 +8,7 @@ import com.simibubi.create.foundation.render.SuperByteBuffer;
 import com.simibubi.create.foundation.render.backend.core.PartialModel;
 import com.simibubi.create.foundation.utility.Couple;
 import com.simibubi.create.foundation.utility.MatrixStacker;
+import com.simibubi.create.lib.extensions.Matrix3fExtensions;
 
 import net.minecraft.block.Blocks;
 import net.minecraft.client.Minecraft;
@@ -60,7 +61,7 @@ public class BlueprintRenderer extends EntityRenderer<BlueprintEntity> {
 			.rotateY(-yaw)
 			.rotateX(entity.rotationPitch)
 			.translate(0, 0, 1 / 32f + .001);
-		
+
 		if (entity.size == 3)
 			ms.translate(-1, -1, 0);
 
@@ -83,15 +84,17 @@ public class BlueprintRenderer extends EntityRenderer<BlueprintEntity> {
 
 					Matrix3f n = ms.peek()
 						.getNormal();
-					n.a00 = copy.a00;
-					n.a01 = copy.a01;
-					n.a02 = copy.a02;
-					n.a10 = copy.a10;
-					n.a11 = copy.a11;
-					n.a12 = copy.a12;
-					n.a20 = copy.a20;
-					n.a21 = copy.a21;
-					n.a22 = copy.a22;
+
+					((Matrix3fExtensions)(Object) n).create$set(copy);
+//					n.a00 = copy.a00;
+//					n.a01 = copy.a01;
+//					n.a02 = copy.a02;
+//					n.a10 = copy.a10;
+//					n.a11 = copy.a11;
+//					n.a12 = copy.a12;
+//					n.a20 = copy.a20;
+//					n.a21 = copy.a21;
+//					n.a22 = copy.a22;
 
 					Minecraft.getInstance()
 						.getItemRenderer()

@@ -11,7 +11,7 @@ public class CLogistics extends ConfigBase {
 	public ConfigInt mechanicalArmRange = i(5, 1, "mechanicalArmRange", Comments.mechanicalArmRange);
 	public ConfigInt linkRange = i(128, 1, "linkRange", Comments.linkRange);
 
-	public Config config = new Config(Configs.PATH_TO_CONFIGS + getName());
+	public Config config = new Config(getName());
 	@Override
 	public Config getConfig() {
 		return config;

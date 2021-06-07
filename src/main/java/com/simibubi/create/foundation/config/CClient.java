@@ -6,7 +6,7 @@ import com.simibubi.create.lib.config.Configs;
 
 public class CClient extends ConfigBase {
 
-	public ConfigGroupWrapper client = group(0, "client",
+	public ConfigGroup client = group(0, "client",
 		"Client-only settings - If you're looking for general settings, look inside your worlds serverconfig folder!");
 	public ConfigBool tooltips = b(true, "enableTooltips", "Show item descriptions on Shift and controls on Ctrl.");
 	public ConfigBool enableOverstressedTooltip =
@@ -40,7 +40,7 @@ public class CClient extends ConfigBase {
 	public ConfigBool ignoreFabulousWarning = b(false, "ignoreFabulousWarning",
 		"Setting this to true will prevent Create from sending you a warning when playing with Fabulous graphics enabled");
 
-	public ConfigGroupWrapper placementAssist = group(1, "placementAssist", "Settings for the Placement Assist");
+	public ConfigGroup placementAssist = group(1, "placementAssist", "Settings for the Placement Assist");
 	public ConfigEnum<PlacementIndicatorSetting> placementIndicator = e(PlacementIndicatorSetting.TEXTURE,
 		"indicatorType",
 		"What indicator should be used when showing where the assisted placement ends up relative to your crosshair",
@@ -48,11 +48,11 @@ public class CClient extends ConfigBase {
 	public ConfigFloat indicatorScale =
 		f(1.0f, 0f, "indicatorScale", "Change the size of the Indicator by this multiplier");
 
-	public ConfigGroupWrapper ponder = group(1, "ponder", "Ponder settings");
+	public ConfigGroup ponder = group(1, "ponder", "Ponder settings");
 	public ConfigBool comfyReading =
 		b(false, "comfyReading", "Slow down a ponder scene whenever there is text on screen.");
 
-	public Config config = new Config(Configs.PATH_TO_CONFIGS + getName());
+	public Config config = new Config(getName());
 	@Override
 	public Config getConfig() {
 		return config;

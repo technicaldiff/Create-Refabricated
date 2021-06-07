@@ -43,7 +43,7 @@ public class CConfigureConfigPacket<T> implements C2SPacket {
 		ConfigValue<T> configValue = (ConfigValue<T>) AllConfigs.SERVER.getConfig().get(path);
 
 		T v = (T) deserialize(configValue.get(), value);
-		if (!configValue.constraint.fits(v, configValue.min, configValue.max))
+		if (!configValue.fitsConstraint(v))
 			return;
 
 		configValue.set(v);
@@ -65,7 +65,7 @@ public class CConfigureConfigPacket<T> implements C2SPacket {
 		throw new IllegalArgumentException("unknown type " + value + ": " + value.getClass().getSimpleName());
 	}
 
-	public Object deserialize(Object type, String sValue) {
+	public static Object deserialize(Object type, String sValue) {
 		if (type instanceof Boolean)
 			return Boolean.parseBoolean(sValue);
 		if (type instanceof Enum<?>)

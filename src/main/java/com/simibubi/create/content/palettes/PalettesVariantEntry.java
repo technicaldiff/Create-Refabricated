@@ -42,7 +42,7 @@ public class PalettesVariantEntry {
 			if (pattern.hasFoliage())
 				builder.color(() -> ColorHandlers::getGrassyBlock);
 			pattern.createCTBehaviour(variant)
-				.ifPresent(b -> builder.onRegister(connectedTextures(b)));
+				.ifPresent(b -> builder.onRegister(connectedTextures(b))); // this is from upstream and it somehow compiles?
 
 //			builder.recipe((c, p) -> {
 //				p.stonecutting(DataIngredient.items(variant.getBaseBlock()

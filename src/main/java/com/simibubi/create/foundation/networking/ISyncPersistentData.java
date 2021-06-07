@@ -2,6 +2,8 @@ package com.simibubi.create.foundation.networking;
 
 import java.util.Iterator;
 
+import com.simibubi.create.lib.helper.EntityHelper;
+
 import me.pepperbell.simplenetworking.S2CPacket;
 import me.pepperbell.simplenetworking.SimpleChannel;
 import net.minecraft.client.Minecraft;
@@ -15,7 +17,7 @@ public interface ISyncPersistentData {
 	void onPersistentDataUpdated();
 
 	default void syncPersistentDataWithTracking(Entity self) {
-		AllPackets.channel.send(PacketDistributor.TRACKING_ENTITY.with(() -> self), new Packet(self));
+		AllPackets.channel.sendToClientsTracking(new Packet(self), self);
 	}
 
 	public static class Packet implements S2CPacket {
@@ -40,7 +42,7 @@ public interface ISyncPersistentData {
 		@Override
 		public void write(PacketBuffer buffer) {
 			buffer.writeInt(entityId);
-			buffer.writeCompoundTag(entity.getPersistentData());
+			buffer.writeCompoundTag(EntityHelper.getExtraCustomData(entity));
 		}
 
 		@Override
@@ -50,7 +52,7 @@ public interface ISyncPersistentData {
 					Entity entityByID = Minecraft.getInstance().world.getEntityByID(entityId);
 					if (!(entityByID instanceof ISyncPersistentData))
 						return;
-					CompoundNBT data = entityByID.getPersistentData();
+					CompoundNBT data = EntityHelper.getExtraCustomData(entityByID);
 					for (Iterator<String> iterator = data.keySet()
 						.iterator(); iterator.hasNext();) {
 						data.remove(iterator.next());

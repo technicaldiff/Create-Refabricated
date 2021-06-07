@@ -4,9 +4,9 @@ public class AllConfigs {
 
 //	static Map<ConfigBase, ModConfig.Type> configs = new HashMap<>();
 
-	public static CClient CLIENT;
-	public static CCommon COMMON;
-	public static CServer SERVER;
+	public static CClient CLIENT = new CClient();
+	public static CCommon COMMON = new CCommon();
+	public static CServer SERVER = new CServer();
 
 //	private static <T extends ConfigBase> T register(Supplier<T> factory, ModConfig.Type side) {
 //		Pair<T, ForgeConfigSpec> specPair = new ForgeConfigSpec.Builder().configure(builder -> {

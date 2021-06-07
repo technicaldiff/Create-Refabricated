@@ -15,7 +15,6 @@ import com.simibubi.create.foundation.block.connected.CTSpriteShiftEntry;
 import com.simibubi.create.foundation.block.connected.CTSpriteShifter.CTType;
 import com.simibubi.create.foundation.block.connected.ConnectedTextureBehaviour;
 import com.simibubi.create.foundation.block.connected.HorizontalCTBehaviour;
-import com.tterrag.registrate.providers.DataGenContext;
 import com.tterrag.registrate.util.nullness.NonNullFunction;
 
 import net.fabricmc.api.EnvType;
@@ -24,8 +23,6 @@ import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.block.Block;
 import net.minecraft.block.RotatedPillarBlock;
 import net.minecraft.client.renderer.RenderType;
-import net.minecraft.data.CookingRecipeBuilder;
-import net.minecraft.data.ShapedRecipeBuilder;
 import net.minecraft.util.ResourceLocation;
 
 public class PaletteBlockPattern {
@@ -33,25 +30,25 @@ public class PaletteBlockPattern {
 	public static final PaletteBlockPattern
 
 		COBBLESTONE = create("cobblestone", SUFFIX, ALL_PARTIALS)
-			.addRecipes(v -> (c, p) -> {
-				DataIngredient ingredient = DataIngredient.items(c.get());
-				Block result = v.getBaseBlock().get();
-				CookingRecipeBuilder.smeltingRecipe(ingredient, result, 0.1f, 200)
-					.addCriterion("has_" + p.safeName(ingredient), ingredient.getCritereon(p))
-					.build(p, p.safeId(result));
-			}),
-
+//			.addRecipes(v -> (c, p) -> {
+//				DataIngredient ingredient = DataIngredient.items(c.get());
+//				Block result = v.getBaseBlock().get();
+//				CookingRecipeBuilder.smeltingRecipe(ingredient, result, 0.1f, 200)
+//					.addCriterion("has_" + p.safeName(ingredient), ingredient.getCritereon(p))
+//					.build(p, p.safeId(result));
+//			}),
+,
 		POLISHED = create("polished", PREFIX, FOR_POLISHED)
-			.addRecipes(v -> (c, p) -> {
-				DataIngredient ingredient = DataIngredient.items(v.getBaseBlock().get());
-				ShapedRecipeBuilder.shapedRecipe(c.get(), 4)
-					.key('#', ingredient)
-					.patternLine("##")
-					.patternLine("##")
-					.addCriterion("has_" + p.safeName(ingredient), ingredient.getCritereon(p))
-					.build(p, p.safeId(c.get()));
-			}),
-
+//			.addRecipes(v -> (c, p) -> {
+//				DataIngredient ingredient = DataIngredient.items(v.getBaseBlock().get());
+//				ShapedRecipeBuilder.shapedRecipe(c.get(), 4)
+//					.key('#', ingredient)
+//					.patternLine("##")
+//					.patternLine("##")
+//					.addCriterion("has_" + p.safeName(ingredient), ingredient.getCritereon(p))
+//					.build(p, p.safeId(c.get()));
+//			}),
+,
 		BRICKS = create("bricks", SUFFIX, ALL_PARTIALS), FANCY_BRICKS = create("fancy_bricks", WRAP, ALL_PARTIALS),
 
 		PAVED = create("paved", PREFIX, ALL_PARTIALS)//.blockStateFactory(p -> p::paved)
@@ -68,17 +65,17 @@ public class PaletteBlockPattern {
 		PILLAR = create("pillar", SUFFIX)//.blockStateFactory(p -> p::pillar)
 			.block(RotatedPillarBlock::new)
 			.textures("pillar", "pillar_end")
-			.addRecipes(v -> (c, p) -> {
-				DataIngredient ingredient = DataIngredient.items(v.getBaseBlock().get());
-				ShapedRecipeBuilder.shapedRecipe(c.get(), 2)
-					.key('#', ingredient)
-					.patternLine("#")
-					.patternLine("#")
-					.addCriterion("has_" + p.safeName(ingredient), ingredient.getCritereon(p))
-					.build(p, p.safeId(c.get()));
-			}),
-
-		MOSSY = create("mossy", PREFIX).blockStateFactory(p -> p::cubeAllButMossy)
+//			.addRecipes(v -> (c, p) -> {
+//				DataIngredient ingredient = DataIngredient.items(v.getBaseBlock().get());
+//				ShapedRecipeBuilder.shapedRecipe(c.get(), 2)
+//					.key('#', ingredient)
+//					.patternLine("#")
+//					.patternLine("#")
+//					.addCriterion("has_" + p.safeName(ingredient), ingredient.getCritereon(p))
+//					.build(p, p.safeId(c.get()));
+//			}),
+,
+		MOSSY = create("mossy", PREFIX)//.blockStateFactory(p -> p::cubeAllButMossy)
 			.textures("bricks", "mossy")
 			.useTranslucentLayer()
 			.withFoliage(),
@@ -154,11 +151,11 @@ public class PaletteBlockPattern {
 		return textures[0];
 	}
 
-	public void addRecipes(PaletteStoneVariants variant, DataGenContext<Block, ? extends Block> c,
-		RegistrateRecipeProvider p) {
-		additionalRecipes.apply(variant)
-			.accept(c, p);
-	}
+//	public void addRecipes(PaletteStoneVariants variant, DataGenContext<Block, ? extends Block> c,
+//		RegistrateRecipeProvider p) {
+//		additionalRecipes.apply(variant)
+//			.accept(c, p);
+//	}
 
 	public Optional<ConnectedTextureBehaviour> createCTBehaviour(PaletteStoneVariants variant) {
 		return ctBehaviour.map(f -> f.apply(variant));

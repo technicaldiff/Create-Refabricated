@@ -59,7 +59,7 @@ public class HandCrankBlock extends DirectionalKineticBlock implements ITE<HandC
 		BlockRayTraceResult hit) {
 
 		withTileEntityDo(worldIn, pos, te -> te.turn(player.isSneaking()));
-		player.addExhaustion(getRotationSpeed() * AllConfigs.SERVER.kinetics.crankHungerMultiplier.getF());
+		player.addExhaustion(getRotationSpeed() * AllConfigs.SERVER.kinetics.crankHungerMultiplier.get());
 		return ActionResultType.SUCCESS;
 	}
 

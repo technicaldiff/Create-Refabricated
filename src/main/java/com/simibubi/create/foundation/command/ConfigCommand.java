@@ -1,5 +1,7 @@
 package com.simibubi.create.foundation.command;
 
+import java.util.Arrays;
+
 import com.mojang.brigadier.Command;
 import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.brigadier.builder.ArgumentBuilder;
@@ -59,19 +61,19 @@ public class ConfigCommand {
 												return 0;
 											}
 
-//											if (configPath.getType() == ModConfig.Type.CLIENT) {
-//												ServerPlayerEntity player = ctx.getSource().asPlayer();
-//												AllPackets.channel.sendToClient(new SConfigureConfigPacket("SET" + path, value), player);
-////												AllPackets.channel.send(
-////														PacketDistributor.PLAYER.with(() -> player),
-////														new SConfigureConfigPacket("SET" + path, value)
-////												);
-//
-//												return Command.SINGLE_SUCCESS;
-//											}
+											if (Arrays.asList(configPath.getPath()).contains("client")) {
+												ServerPlayerEntity player = ctx.getSource().asPlayer();
+												AllPackets.channel.sendToClient(new SConfigureConfigPacket("SET" + path, value), player);
+//												AllPackets.channel.send(
+//														PacketDistributor.PLAYER.with(() -> player),
+//														new SConfigureConfigPacket("SET" + path, value)
+//												);
+
+												return Command.SINGLE_SUCCESS;
+											}
 
 											try {
-//												ConfigHelper.setConfigValue(configPath, value);
+												ConfigHelper.setConfigValue(configPath, value);
 												ctx.getSource().sendFeedback(new StringTextComponent("Great Success!"), false);
 												return Command.SINGLE_SUCCESS;
 											} catch (Exception /*ConfigHelper.InvalidValueException*/ e) {

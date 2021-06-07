@@ -14,7 +14,7 @@ public class CFluids extends ConfigBase {
 		Comments.toDisable, Comments.hosePulleyBlockThreshold);
 	public ConfigInt hosePulleyRange = i(128, 1, "hosePulleyRange", Comments.blocks, Comments.hosePulleyRange);
 
-	public Config config = new Config(Configs.PATH_TO_CONFIGS + getName());
+	public Config config = new Config(getName());
 	@Override
 	public Config getConfig() {
 		return config;

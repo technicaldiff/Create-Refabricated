@@ -71,7 +71,7 @@ public abstract class NumberEntry<T extends Number> extends ValueEntry<T> {
 		textField.setResponder(s -> {
 			try {
 				T number = getParser().apply(s);
-				if (!value.constraint.fits(number, value.min, value.max))
+				if (!value.fitsConstraint(number))
 					throw new IllegalArgumentException();
 
 				textField.setTextColor(Theme.i(Theme.Key.TEXT));

@@ -9,8 +9,6 @@ import net.minecraft.item.ItemStack;
 
 import net.fabricmc.fabric.api.client.rendering.v1.BuiltinItemRendererRegistry.DynamicItemRenderer;
 
-import com.simibubi.create.foundation.item.PartialItemModelRenderer;
-
 public abstract class CustomRenderedItemModelRenderer<M extends CustomRenderedItemModel> implements DynamicItemRenderer {
 
 	@Override

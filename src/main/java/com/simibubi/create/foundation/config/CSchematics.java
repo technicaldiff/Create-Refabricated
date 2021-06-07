@@ -12,14 +12,14 @@ public class CSchematics extends ConfigBase {
 		i(1024, 256, 32767, "maxSchematicPacketSize", Comments.b, Comments.maxPacketSize);
 	public ConfigInt schematicIdleTimeout = i(600, 100, "schematicIdleTimeout", Comments.idleTimeout);
 
-	public ConfigGroupWrapper schematicannon = group(0, "schematicannon", "Schematicannon");
+	public ConfigGroup schematicannon = group(0, "schematicannon", "Schematicannon");
 	public ConfigInt schematicannonDelay = i(10, 1, "schematicannonDelay", Comments.delay);
 	public ConfigInt schematicannonSkips = i(10, 1, "schematicannonSkips", Comments.skips);
 	public ConfigFloat schematicannonGunpowderWorth =
 		f(20, 0, 100, "schematicannonGunpowderWorth", Comments.gunpowderWorth);
 	public ConfigFloat schematicannonFuelUsage = f(0.05f, 0, 100, "schematicannonFuelUsage", Comments.fuelUsage);
 
-	public Config config = new Config(Configs.PATH_TO_CONFIGS + getName());
+	public Config config = new Config(getName());
 	@Override
 	public Config getConfig() {
 		return config;

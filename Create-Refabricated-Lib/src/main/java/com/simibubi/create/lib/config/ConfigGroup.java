@@ -12,15 +12,25 @@ public class ConfigGroup {
 	public List<String> comments;
 
 
-	public ConfigGroup(int depth, String name, String... comments) {
+	public ConfigGroup(String name, int depth, String... comments) {
 		this.depth = depth;
 		this.name = name;
-		this.comments = Arrays.asList(comments);
+		this.comments = new ArrayList<>(Arrays.asList(comments));
 	}
+
+	// values
 
 	public void addConfigValue(ConfigValue value) {
 		configs.add(value);
-		config.set(value);
+		if (config != null) {
+			config.set(value);
+		}
+	}
+
+	public void registerValues() {
+		for (ConfigValue<?> value : configs) {
+			this.config.set(value);
+		}
 	}
 
 	public ConfigValue getConfigValue(String key) {
@@ -31,6 +41,20 @@ public class ConfigGroup {
 		}
 		return null;
 	}
+
+	// comments
+
+	public void addComment(String comment) {
+		comments.add(comment);
+	}
+
+	public void addComments(String... comments) {
+		for (String comment : comments) {
+			addComment(comment);
+		}
+	}
+
+	// config
 
 	public void setConfig(Config config) {
 		this.config = config;

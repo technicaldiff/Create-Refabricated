@@ -19,22 +19,18 @@ public class Config {
 	private static final Logger LOGGER = LogManager.getLogger();
 	public String name;
 
-	public Config(File file, String name) {
+	public Config(String name) {
 		this.name = name;
-		configFile = file;
+		configFile = new File(Configs.PATH_TO_CONFIGS + name + ".properties");
 		properties = new Properties();
 		try {
 			if (!configFile.exists()) {
 				configFile.createNewFile();
 			}
-			out = new FileOutputStream(file);
+			out = new FileOutputStream(configFile);
 		} catch (IOException e) {
-			LOGGER.fatal("There was an error initializing Create configs!", e);
+			LOGGER.fatal("There was an error initializing Create's [{}] config!", name, e);
 		}
-	}
-
-	public Config(String pathToFile, String name) {
-		this(new File(pathToFile), name);
 	}
 
 	public void set(ConfigValue value) {
@@ -60,7 +56,7 @@ public class Config {
 		try {
 			properties.store(out, null);
 		} catch (IOException e) {
-			LOGGER.fatal("There was an error saving Create configs!", e);
+			LOGGER.fatal("There was an error saving Create's [{}] config!", name, e);
 		}
 	}
 }

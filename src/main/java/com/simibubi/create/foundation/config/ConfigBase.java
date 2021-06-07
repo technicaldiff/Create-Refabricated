@@ -1,6 +1,6 @@
 package com.simibubi.create.foundation.config;
 
-import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Supplier;
 
@@ -15,11 +15,13 @@ public abstract class ConfigBase {
 		return null;
 	}
 
+	public static List<Object> currentConfigSet = new ArrayList<>();
+
 //	public ForgeConfigSpec specification;
 
 	protected int depth;
-	protected List<CValue<?, ?>> allValues;
-	protected List<ConfigBase> children;
+//	protected List<CValue<?, ?>> allValues;
+//	protected List<ConfigBase> children;
 
 	protected void registerAll() {
 //		for (CValue<?, ?> cValue : allValues)
@@ -27,13 +29,13 @@ public abstract class ConfigBase {
 	}
 
 	public void onLoad() {
-		if (children != null)
-			children.forEach(ConfigBase::onLoad);
+//		if (children != null)
+//			children.forEach(ConfigBase::onLoad);
 	}
 
 	public void onReload() {
-		if (children != null)
-			children.forEach(ConfigBase::onReload);
+//		if (children != null)
+//			children.forEach(ConfigBase::onReload);
 	}
 
 	public abstract String getName();
@@ -44,13 +46,13 @@ public abstract class ConfigBase {
 //	}
 
 	protected ConfigBool b(boolean current, String name, String... comment) {
-		ConfigBool result = new ConfigBool(name, current, getCurrentConfigGroup());
+		ConfigBool result = new ConfigBool(name, current);
 		result.addComments(comment);
 		return result;
 	}
 
 	protected ConfigFloat f(float current, float min, float max, String name, String... comment) {
-		ConfigFloat result = new ConfigFloat(name, current, getCurrentConfigGroup());
+		ConfigFloat result = new ConfigFloat(name, current);
 		result.addComments(comment);
 		return result;
 	}
@@ -60,7 +62,7 @@ public abstract class ConfigBase {
 	}
 
 	protected ConfigInt i(int current, int min, int max, String name, String... comment) {
-		ConfigInt result = new ConfigInt(name, current, getCurrentConfigGroup());
+		ConfigInt result = new ConfigInt(name, current);
 		result.addComments(comment);
 		return result;
 	}
@@ -70,12 +72,15 @@ public abstract class ConfigBase {
 	}
 
 	protected <T extends Enum<T>> ConfigEnum<T> e(T defaultValue, String name, String... comment) {
-		return new ConfigEnum<T>(name, defaultValue, getCurrentConfigGroup());
+		ConfigEnum<T> result = new ConfigEnum<T>(name, defaultValue);
+		result.addComments(comment);
+		return result;
 	}
 
-	protected ConfigGroupWrapper group(int depth, String name, String... comment) {
-		ConfigGroupWrapper group = new ConfigGroupWrapper(name, depth, comment);
-		currentConfigGroup = group;
+	public static List<ConfigGroup> clientConfigsToUpdate = new ArrayList<>();
+
+	protected ConfigGroup group(int depth, String name, String... comment) {
+		ConfigGroup group = new ConfigGroup(name, depth, comment);
 		return group;
 	}
 
@@ -95,11 +100,11 @@ public abstract class ConfigBase {
 		return config;
 	}
 
-	public class CValue<V, T extends ConfigValue<V>> {
-		protected ConfigValue<V> value;
-		protected String name;
+//	public class CValue<V, T extends ConfigValue<V>> {
+//		protected ConfigValue<V> value;
+//		protected String name;
 //		private IValueProvider<V, T> provider;
-
+//
 //		public CValue(String name, IValueProvider<V, T> provider, String... comment) {
 //			this.name = name;
 //			this.provider = builder -> {
@@ -110,7 +115,7 @@ public abstract class ConfigBase {
 //				allValues = new ArrayList<>();
 //			allValues.add(this);
 //		}
-
+//
 //		public void addComments(Builder builder, String... comment) {
 //			if (comment.length > 0) {
 //				String[] comments = new String[comment.length + 1];
@@ -120,78 +125,37 @@ public abstract class ConfigBase {
 //			} else
 //				builder.comment("");
 //		}
-
+//
 //		public void register(ForgeConfigSpec.Builder builder) {
 //			value = provider.apply(builder);
 //		}
-
-		public V get() {
-			return value.get();
-		}
-
-		public void set(V value) {
-			this.value.set(value);
-		}
-
-		public String getName() {
-			return name;
-		}
-	}
-
-	public static class ConfigWrapper extends Config {
-		public ConfigWrapper(File file) {
-			super(file);
-			currentConfig = this;
-			currentConfigGroup = null;
-		}
-
-		public ConfigWrapper(String pathToFile) {
-			super(pathToFile);
-			currentConfig = this;
-			currentConfigGroup = null;
-		}
-	}
-
-	public static ConfigGroupWrapper currentConfigGroup;
-	public static ConfigWrapper currentConfig;
-
-	public static ConfigGroupWrapper getCurrentConfigGroup() {
-		if (currentConfigGroup != null) {
-			return currentConfigGroup;
-		}
-		ConfigGroup group = currentConfig.groups.get(0);
-		ConfigGroupWrapper wrapper = new ConfigGroupWrapper(group);
-		currentConfig.groups.set(0, wrapper);
-		currentConfigGroup = wrapper;
-		return wrapper;
-	}
-
-	/**
-	 * Marker for config subgroups
-	 */
-	public static class ConfigGroupWrapper extends ConfigGroup {
-
+//
+//		public V get() {
+//			return value.get();
+//		}
+//
+//		public void set(V value) {
+//			this.value.set(value);
+//		}
+//
+//		public String getName() {
+//			return name;
+//		}
+//	}
+//
+//	/**
+//	 * Marker for config subgroups
+//	 */
+//	public static class ConfigGroupWrapper extends ConfigGroup {
 //		private int groupDepth;
 //		private String[] comment;
-
-		public ConfigGroupWrapper(String name, int depth, String... comments) {
-			super(depth, name, comments);
-			currentConfigGroup = this;
-		}
-
-		public ConfigGroupWrapper(ConfigGroup group) {
-			this(group.name, group.depth, (String[]) group.comments.toArray());
-			config = group.config;
-			configs = group.configs;
-			currentConfigGroup = this;
-		}
-
+//
 //		public ConfigGroup(String name, int depth, String... comment) {
 //			super(name, builder -> null, comment);
 //			groupDepth = depth;
 //			this.comment = comment;
 //		}
-
+//
 //		@Override
 //		public void register(Builder builder) {
 //			if (depth > groupDepth)
@@ -201,30 +165,30 @@ public abstract class ConfigBase {
 //			builder.push(getName());
 //			depth++;
 //		}
-
-	}
+//
+//	}
 
 	public static class ConfigBool extends ConfigValue<Boolean> {
-		public ConfigBool(String key, Boolean value, ConfigGroupWrapper group) {
-			super(key, value, group);
+		public ConfigBool(String key, boolean value) {
+			super(key, value);
 		}
 	}
 
 	public static class ConfigEnum<T> extends ConfigValue<T> {
-		public ConfigEnum(String key, T value, ConfigGroupWrapper group) {
-			super(key, value, group);
+		public ConfigEnum(String key, T value) {
+			super(key, value);
 		}
 	}
 
 	public static class ConfigFloat extends ConfigValue<Float> {
-		public ConfigFloat(String key, Float value, ConfigGroupWrapper group) {
-			super(key, value, group);
+		public ConfigFloat(String key, float value) {
+			super(key, value);
 		}
 	}
 
 	public static class ConfigInt extends ConfigValue<Integer> {
-		public ConfigInt(String key, Integer value, ConfigGroupWrapper group) {
-			super(key, value, group);
+		public ConfigInt(String key, Integer value) {
+			super(key, value);
 		}
 	}
 

@@ -33,8 +33,8 @@ public class ConfigDrivenFeatureEntry extends ConfigBase {
 	}
 
 	public ConfigDrivenFeatureEntry between(int minHeight, int maxHeight) {
-		allValues.remove(this.minHeight);
-		allValues.remove(this.maxHeight);
+//		allValues.remove(this.minHeight);
+//		allValues.remove(this.maxHeight);
 		this.minHeight = i(minHeight, 0, "minHeight");
 		this.maxHeight = i(maxHeight, 0, "maxHeight");
 		return this;

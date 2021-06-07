@@ -39,7 +39,7 @@ public class AllEntityTypes {
 			EntityClassification.MISC, 10, Integer.MAX_VALUE, false, true, SuperGlueEntity::build);
 
 	public static final EntityEntry<BlueprintEntity> CRAFTING_BLUEPRINT =
-		register("crafting_blueprint", BlueprintEntity::new, () -> BlueprintRenderer::new,
+		register("crafting_blueprint", BlueprintEntity::new, () -> (manager, context) -> new BlueprintRenderer(manager),
 			EntityClassification.MISC, 10, Integer.MAX_VALUE, false, true, BlueprintEntity::build);
 
 	public static final EntityEntry<SeatEntity> SEAT =

@@ -9,6 +9,8 @@ import com.simibubi.create.content.logistics.item.filter.ItemAttribute;
 
 import com.simibubi.create.lib.lba.item.ItemStackHandler;
 
+import com.simibubi.create.lib.mixin.accessor.IngredientAccessor;
+
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.item.HangingEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -91,8 +93,7 @@ public class BlueprintItem extends Item {
 	}
 
 	private static ItemStack convertIngredientToFilter(Ingredient ingredient) {
-		Ingredient.IItemList[] acceptedItems =
-			ObfuscationReflectionHelper.getPrivateValue(Ingredient.class, ingredient, "field_199807_b");
+		Ingredient.IItemList[] acceptedItems = ((IngredientAccessor) (Object) ingredient).getAcceptedItems();
 		if (acceptedItems == null || acceptedItems.length > 18)
 			return ItemStack.EMPTY;
 		if (acceptedItems.length == 0)
@@ -132,7 +133,7 @@ public class BlueprintItem extends Item {
 			return filterItem;
 		}
 
-		if (itemList instanceof StackList) {
+		if (itemList.getStacks().toArray()[0] instanceof ItemStack) {
 			ItemStack result = AllItems.FILTER.asStack();
 			ItemStackHandler filterItems = FilterItem.getFilterItems(result);
 			int i = 0;

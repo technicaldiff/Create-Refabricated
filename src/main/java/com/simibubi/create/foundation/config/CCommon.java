@@ -8,7 +8,7 @@ public class CCommon extends ConfigBase {
 	public CWorldGen worldGen = nested(0, CWorldGen::new, Comments.worldGen);
 	public ConfigBool logTeErrors = b(false, "logTeErrors", Comments.logTeErrors);
 
-	public Config config = new Config(Configs.PATH_TO_CONFIGS + getName());
+	public Config config = new Config(getName());
 	@Override
 	public Config getConfig() {
 		return config;

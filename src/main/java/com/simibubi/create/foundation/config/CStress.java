@@ -5,7 +5,6 @@ import java.util.Map;
 
 import com.simibubi.create.lib.config.Config;
 import com.simibubi.create.lib.config.ConfigValue;
-import com.simibubi.create.lib.config.Configs;
 
 import net.minecraft.block.Block;
 import net.minecraft.util.ResourceLocation;
@@ -13,7 +12,7 @@ import net.minecraft.util.registry.Registry;
 
 public class CStress extends ConfigBase {
 
-	public Config config = new Config(Configs.PATH_TO_CONFIGS + getName());
+	public Config config = new Config(getName());
 	@Override
 	public Config getConfig() {
 		return config;
@@ -38,7 +37,7 @@ public class CStress extends ConfigBase {
 	}
 
 	public static ConfigValue<Double> define(String path, double i) {
-		return new ConfigValue<>(path, i, getCurrentConfigGroup());
+		return new ConfigValue<>(path, i);
 	}
 
 	public double getImpactOf(Block block) {

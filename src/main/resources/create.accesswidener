@@ -18,3 +18,7 @@ accessible method net/minecraft/inventory/container/ContainerType <init> (Lnet/m
 extendable method net/minecraft/entity/Entity updatePassengerPosition (Lnet/minecraft/entity/Entity;Lnet/minecraft/entity/Entity$IMoveCallback;)V
 
 extendable class dev/inkwell/conrad/api/value/ValueKey
+
+accessible class net/minecraft/item/crafting/Ingredient$IItemList
+accessible class net/minecraft/item/crafting/Ingredient$SingleItemList
+accessible class net/minecraft/item/crafting/Ingredient$TagList

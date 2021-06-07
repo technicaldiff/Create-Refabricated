@@ -134,7 +134,7 @@ public class SawTileEntity extends BlockBreakingKineticTileEntity {
 		Item item = stackInSlot.getItem();
 		if (item instanceof BlockItem) {
 			Block block = ((BlockItem) item).getBlock();
-			isWood = block.getSoundType(block.getDefaultState(), world, pos, null) == SoundType.WOOD;
+			isWood = block.getSoundType(block.getDefaultState()) == SoundType.WOOD;
 		}
 
 		if (processingStarted) {

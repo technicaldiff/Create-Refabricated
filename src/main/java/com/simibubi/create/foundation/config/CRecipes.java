@@ -18,7 +18,7 @@ public class CRecipes extends ConfigBase {
 		b(true, "enableRefinedRadianceRecipe", Comments.refinedRadianceRecipe);
 	public ConfigBool enableShadowSteelRecipe = b(true, "enableShadowSteelRecipe", Comments.shadowSteelRecipe);
 
-	public Config config = new Config(Configs.PATH_TO_CONFIGS + getName());
+	public Config config = new Config(getName());
 	@Override
 	public Config getConfig() {
 		return config;
