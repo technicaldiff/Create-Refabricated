@@ -20,13 +20,14 @@ public abstract class ConfigBase {
 	public static ConfigGroup getCurrentGroup() {
 		return currentGroup;
 	}
+	public static Object lock = new Object();
 
 	public static void initGroups(Config config) {
 		for (ConfigGroup group : currentGroupSet) {
 			group.setConfig(config);
 			group.registerValues();
-			currentGroupSet.remove(group);
 		}
+		currentGroupSet.clear();
 	}
 
 //	public ForgeConfigSpec specification;
@@ -96,6 +97,7 @@ public abstract class ConfigBase {
 	protected ConfigGroup group(int depth, String name, String... comment) {
 		ConfigGroup group = new ConfigGroup(name, depth, comment);
 		currentGroup = group;
+		currentGroupSet.add(group);
 		return group;
 	}
 

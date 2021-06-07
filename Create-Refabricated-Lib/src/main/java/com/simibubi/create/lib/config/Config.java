@@ -34,7 +34,7 @@ public class Config {
 	}
 
 	public void set(ConfigValue value) {
-		properties.put(value.key, value.value);
+		properties.put(value.key, value.value.toString());
 		save();
 	}
 
