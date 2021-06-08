@@ -100,7 +100,7 @@ public class Create implements ModInitializer {
 		AllParticleTypes.register();
 		AllSoundEvents.register();
 
-//		REGISTRATE.get().register();
+		REGISTRATE.get().register();
 
 		BiomeLoadingCallback.EVENT.register(Create::onBiomeLoad);
 		MinecartController.InitController.initController = new com.simibubi.create.content.contraptions.components.structureMovement.train.capability.MinecartController(null);
@@ -119,7 +119,7 @@ public class Create implements ModInitializer {
 //		event.enqueueWork(() -> { // I think this can just be run on initialize too
 			SchematicProcessor.register();
 			AllWorldFeatures.registerFeatures();
-//		});
+//		}
 	}
 
 //	public void gatherData(GatherDataEvent event) {

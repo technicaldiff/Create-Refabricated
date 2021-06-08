@@ -43,7 +43,9 @@ public abstract class ItemStackMixin implements NBTSerializable {
 			method = "onItemUse(Lnet/minecraft/item/ItemUseContext;)Lnet/minecraft/util/ActionResultType;", cancellable = true)
 	public void onItemUse(ItemUseContext itemUseContext, CallbackInfoReturnable<ActionResultType> cir) {
 		if (!itemUseContext.getWorld().isRemote) {
-			cir.setReturnValue(BlockPlaceCallback.EVENT.invoker().onBlockPlace(itemUseContext));
+			ActionResultType result = BlockPlaceCallback.EVENT.invoker().onBlockPlace(itemUseContext);
+			if (result != ActionResultType.PASS)
+				cir.setReturnValue(result);
 		}
 	}
 }
