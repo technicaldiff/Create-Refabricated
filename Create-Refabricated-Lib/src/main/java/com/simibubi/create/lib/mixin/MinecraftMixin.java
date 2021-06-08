@@ -8,7 +8,6 @@ import org.spongepowered.asm.mixin.injection.At.Shift;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import com.simibubi.create.lib.event.BeforeFirstReloadCallback;
 import com.simibubi.create.lib.event.ClientWorldEvents;
 import com.simibubi.create.lib.event.InstanceRegistrationCallback;
 import com.simibubi.create.lib.event.LeftClickAirCallback;
@@ -34,11 +33,6 @@ public abstract class MinecraftMixin {
 	@Inject(at = @At(value = "FIELD", target = "Lnet/minecraft/client/Minecraft;particles:Lnet/minecraft/client/particle/ParticleManager;", shift = Shift.AFTER), method = "<init>")
 	public void create$registerParticleManagers(GameConfiguration gameConfiguration, CallbackInfo ci) {
 		ParticleManagerRegistrationCallback.EVENT.invoker().onParticleManagerRegistration();
-	}
-
-	@Inject(at = @At(value = "INVOKE", target = "Lnet/minecraft/client/Minecraft;setLoadingGui(Lnet/minecraft/client/gui/LoadingGui;)V"), method = "<init>(Lnet/minecraft/client/GameConfiguration;)V")
-	public void create$beforeFirstReload(GameConfiguration args, CallbackInfo ci) {
-		BeforeFirstReloadCallback.EVENT.invoker().beforeFirstReload((Minecraft) (Object) this);
 	}
 
 	@Inject(at = @At(value = "INVOKE", target = "Lnet/minecraft/resources/SimpleReloadableResourceManager;<init>(Lnet/minecraft/resources/ResourcePackType;)V"),

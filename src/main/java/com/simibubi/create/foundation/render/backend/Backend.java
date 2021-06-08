@@ -16,9 +16,6 @@ import com.simibubi.create.foundation.render.backend.gl.versioned.GlCompat;
 import com.simibubi.create.foundation.render.backend.instancing.IFlywheelWorld;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.resources.IReloadableResourceManager;
-import net.minecraft.resources.IResourceManager;
-import net.minecraft.resources.IResourceManagerReloadListener;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.vector.Matrix4f;
 import net.minecraft.world.World;
@@ -84,18 +81,18 @@ public class Backend {
 		return capabilities.OpenGL20;
 	}
 
-	public static void init() {
-		// Can be null when running datagenerators due to the unfortunate time we call this
-		Minecraft mc = Minecraft.getInstance();
-		if (mc == null) return;
-
-		IResourceManager manager = mc.getResourceManager();
-
-		if (manager instanceof IReloadableResourceManager) {
-			IResourceManagerReloadListener listener = shaderLoader::onResourceManagerReload;
-			((IReloadableResourceManager) manager).addReloadListener(listener);
-		}
-	}
+//	public static void init() { // replaced by MinecraftMixin in foundation/mixin
+//		// Can be null when running datagenerators due to the unfortunate time we call this
+//		Minecraft mc = Minecraft.getInstance();
+//		if (mc == null) return;
+//
+//		IResourceManager manager = mc.getResourceManager();
+//
+//		if (manager instanceof IReloadableResourceManager) {
+//			IResourceManagerReloadListener listener = shaderLoader::onResourceManagerReload;
+//			((IReloadableResourceManager) manager).addReloadListener(listener);
+//		}
+//	}
 
 	public static void refresh() {
 		capabilities = GL.createCapabilities();

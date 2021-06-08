@@ -49,9 +49,9 @@ public class ShaderLoader {
 
 	final Map<ResourceLocation, String> shaderSource = new HashMap<>();
 
-	void onResourceManagerReload(IResourceManager manager/*, Predicate<IResourceType> predicate*/) {
+	public void onResourceManagerReload(IResourceManager manager/*, Predicate<IResourceType> predicate*/) {
 		boolean shaderReload = false;
-		for (ResourceLocation location : manager.getAllResourceLocations("/" , string -> string.endsWith(".glsl") || string.endsWith(".vert") || string.endsWith(".frag"))) {
+		for (ResourceLocation location : manager.getAllResourceLocations(SHADER_DIR , string -> string.endsWith(".glsl") || string.endsWith(".vert") || string.endsWith(".frag"))) {
 			shaderReload = true;
 		}
 

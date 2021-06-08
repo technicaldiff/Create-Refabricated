@@ -14,6 +14,7 @@ import com.simibubi.create.content.curiosities.armor.CopperBacktankArmorLayer;
 import com.simibubi.create.content.schematics.ClientSchematicLoader;
 import com.simibubi.create.content.schematics.client.SchematicAndQuillHandler;
 import com.simibubi.create.content.schematics.client.SchematicHandler;
+import com.simibubi.create.events.ClientEvents;
 import com.simibubi.create.foundation.ResourceReloadHandler;
 import com.simibubi.create.foundation.block.render.CustomBlockModels;
 import com.simibubi.create.foundation.block.render.SpriteShifter;
@@ -26,7 +27,6 @@ import com.simibubi.create.foundation.ponder.elements.WorldSectionElement;
 import com.simibubi.create.foundation.render.AllProgramSpecs;
 import com.simibubi.create.foundation.render.KineticRenderer;
 import com.simibubi.create.foundation.render.SuperByteBufferCache;
-import com.simibubi.create.foundation.render.backend.Backend;
 import com.simibubi.create.foundation.render.backend.OptifineHandler;
 import com.simibubi.create.foundation.render.backend.core.PartialModel;
 import com.simibubi.create.foundation.render.backend.instancing.InstancedTileRenderer;
@@ -90,7 +90,7 @@ public class CreateClient implements ClientModInitializer {
 //		modEventBus.addListener(AllParticleTypes::registerFactories); // registered in OnInitializeClient()
 //		modEventBus.addListener(ClientEvents::loadCompleted); unnecessary on fabric
 
-		Backend.init();
+//		Backend.init();
 		OptifineHandler.init();
 	}
 
@@ -123,6 +123,7 @@ public class CreateClient implements ClientModInitializer {
 		OnTextureStitchCallback.EVENT.register(CreateClient::onTextureStitch);
 		ParticleManagerRegistrationCallback.EVENT.register(AllParticleTypes::registerFactories);
 		addClientListeners();
+		ClientEvents.register();
 
 		// Replaces ArmorItem#getArmorTexture from a Forge patch
 		ArmorRenderingRegistry.registerSimpleTexture(new ResourceLocation(Create.ID, "copper"),
