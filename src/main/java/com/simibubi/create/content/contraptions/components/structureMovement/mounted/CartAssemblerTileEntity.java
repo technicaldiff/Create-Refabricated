@@ -1,10 +1,7 @@
 package com.simibubi.create.content.contraptions.components.structureMovement.mounted;
 
-import java.util.HashSet;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 import java.util.UUID;
 
 import com.simibubi.create.AllBlocks;
@@ -12,7 +9,6 @@ import com.simibubi.create.content.contraptions.components.structureMovement.Ass
 import com.simibubi.create.content.contraptions.components.structureMovement.IDisplayAssemblyExceptions;
 import com.simibubi.create.content.contraptions.components.structureMovement.OrientedContraptionEntity;
 import com.simibubi.create.content.contraptions.components.structureMovement.train.CouplingHandler;
-import com.simibubi.create.content.contraptions.components.structureMovement.train.capability.CapabilityMinecartController;
 import com.simibubi.create.content.contraptions.components.structureMovement.train.capability.MinecartController;
 import com.simibubi.create.content.contraptions.components.tracks.ControllerRailBlock;
 import com.simibubi.create.foundation.gui.AllIcons;
@@ -26,6 +22,9 @@ import com.simibubi.create.foundation.utility.Couple;
 import com.simibubi.create.foundation.utility.Iterate;
 import com.simibubi.create.foundation.utility.Lang;
 import com.simibubi.create.foundation.utility.VecHelper;
+import com.simibubi.create.lib.utility.LazyOptional;
+import com.simibubi.create.lib.utility.MinecartAndRailUtil;
+import com.simibubi.create.lib.utility.NBTSerializer;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.Entity;
@@ -41,7 +40,6 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.util.math.vector.Vector3i;
 import net.minecraft.world.World;
-import net.minecraftforge.common.util.LazyOptional;
 
 public class CartAssemblerTileEntity extends SmartTileEntity implements IDisplayAssemblyExceptions {
 	private static final int assemblyCooldown = 8;
@@ -95,7 +93,7 @@ public class CartAssemblerTileEntity extends SmartTileEntity implements IDisplay
 						.isNormalCube(world, pos.offset(d)))
 					facing = d.getOpposite();
 
-			float speed = block.getRailMaxSpeed(state, world, pos, cart);
+			float speed = 0.4f;//block.getRailMaxSpeed(state, world, pos, cart);
 			cart.setMotion(facing.getXOffset() * speed, facing.getYOffset() * speed, facing.getZOffset() * speed);
 		}
 		if (action == CartAssemblerBlock.CartAssemblerAction.ASSEMBLE_ACCELERATE_DIRECTIONAL) {
@@ -103,7 +101,7 @@ public class CartAssemblerTileEntity extends SmartTileEntity implements IDisplay
 					AllBlocks.CONTROLLER_RAIL.getDefaultState()
 							.with(ControllerRailBlock.SHAPE, state.get(CartAssemblerBlock.RAIL_SHAPE))
 							.with(ControllerRailBlock.BACKWARDS, state.get(CartAssemblerBlock.RAIL_TYPE) == CartAssembleRailType.CONTROLLER_RAIL_BACKWARDS));
-			float speed = block.getRailMaxSpeed(state, world, pos, cart);
+			float speed = 0.4f;//block.getRailMaxSpeed(state, world, pos, cart);
 			cart.setMotion(Vector3d.of(accelerationVector).scale(speed));
 		}
 		if (action == CartAssemblerBlock.CartAssemblerAction.DISASSEMBLE_BRAKE) {
@@ -119,7 +117,7 @@ public class CartAssemblerTileEntity extends SmartTileEntity implements IDisplay
 			return;
 
 		LazyOptional<MinecartController> optional =
-				cart.getCapability(CapabilityMinecartController.MINECART_CONTROLLER_CAPABILITY);
+				LazyOptional.ofObject((MinecartController) MinecartAndRailUtil.getController(cart));
 		if (optional.isPresent() && optional.orElse(null)
 				.isCoupledThroughContraption())
 			return;
@@ -168,10 +166,11 @@ public class CartAssemblerTileEntity extends SmartTileEntity implements IDisplay
 		entity.startRiding(cart);
 
 		if (cart instanceof FurnaceMinecartEntity) {
-			CompoundNBT nbt = cart.serializeNBT();
+			CompoundNBT nbt = NBTSerializer.serializeNBT(cart);
 			nbt.putDouble("PushZ", 0);
 			nbt.putDouble("PushX", 0);
-			cart.deserializeNBT(nbt);
+			NBTSerializer.deserializeNBT(cart, nbt);
+
 		}
 	}
 
@@ -218,10 +217,10 @@ public class CartAssemblerTileEntity extends SmartTileEntity implements IDisplay
 	protected void disassembleCart(AbstractMinecartEntity cart) {
 		cart.removePassengers();
 		if (cart instanceof FurnaceMinecartEntity) {
-			CompoundNBT nbt = cart.serializeNBT();
+			CompoundNBT nbt = NBTSerializer.serializeNBT(cart);
 			nbt.putDouble("PushZ", cart.getMotion().x);
 			nbt.putDouble("PushX", cart.getMotion().z);
-			cart.deserializeNBT(nbt);
+			NBTSerializer.deserializeNBT(cart, nbt);
 		}
 	}
 

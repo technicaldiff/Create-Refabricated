@@ -2,42 +2,23 @@ package com.simibubi.create.content.curiosities.tools;
 
 import java.util.UUID;
 
-import org.jetbrains.annotations.Nullable;
-
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
 import com.jamieswhiteshirt.reachentityattributes.ReachEntityAttributes;
 import com.simibubi.create.AllItems;
 import com.simibubi.create.foundation.advancement.AllTriggers;
-import com.simibubi.create.foundation.networking.AllPackets;
-import com.simibubi.create.foundation.utility.AnimationTickHolder;
 import com.simibubi.create.lib.utility.ExtraDataUtil;
 
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.entity.player.ClientPlayerEntity;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.attributes.Attribute;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
-import net.minecraft.entity.item.ItemFrameEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.entity.projectile.ProjectileHelper;
 import net.minecraft.item.Item;
 import net.minecraft.item.Rarity;
 import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.ActionResultType;
 import net.minecraft.util.DamageSource;
-import net.minecraft.util.Hand;
 import net.minecraft.util.LazyValue;
-import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.util.math.EntityRayTraceResult;
-import net.minecraft.util.math.RayTraceResult.Type;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.world.World;
 
 public class ExtendoGripItem extends Item {
 	private static DamageSource lastActiveDamageSource;
@@ -109,16 +90,16 @@ public class ExtendoGripItem extends Item {
 
 	}
 
-	@SubscribeEvent
-	public static void addReachToJoiningPlayersHoldingExtendo(PlayerEvent.PlayerLoggedInEvent event) {
-		PlayerEntity player = event.getPlayer();
-		CompoundNBT persistentData = player.getPersistentData();
-
-		if (persistentData.contains(DUAL_EXTENDO_MARKER))
-			player.getAttributes().addTemporaryModifiers(doubleRangeModifier.getValue());
-		else if (persistentData.contains(EXTENDO_MARKER))
-			player.getAttributes().addTemporaryModifiers(rangeModifier.getValue());
-	}
+//	@SubscribeEvent
+//	public static void addReachToJoiningPlayersHoldingExtendo(PlayerEvent.PlayerLoggedInEvent event) {
+//		PlayerEntity player = event.getPlayer();
+//		CompoundNBT persistentData = player.getPersistentData();
+//
+//		if (persistentData.contains(DUAL_EXTENDO_MARKER))
+//			player.getAttributes().addTemporaryModifiers(doubleRangeModifier.getValue());
+//		else if (persistentData.contains(EXTENDO_MARKER))
+//			player.getAttributes().addTemporaryModifiers(rangeModifier.getValue());
+//	}
 
 //	@Environment(EnvType.CLIENT)
 //	public static void dontMissEntitiesWhenYouHaveHighReachDistance(ClickInputEvent event) {
