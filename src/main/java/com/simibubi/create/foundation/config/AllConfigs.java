@@ -28,6 +28,9 @@ public class AllConfigs {
 		COMMON = new CCommon();
 		ConfigBase.initGroups(COMMON.getConfig());
 		COMMON.getConfig().init();
+
+		CCommon.register();
+
 		SERVER = new CServer();
 		ConfigBase.initGroups(SERVER.getConfig());
 		SERVER.getConfig().init();

@@ -23,7 +23,6 @@ import com.simibubi.create.foundation.config.AllConfigs;
 import com.simibubi.create.foundation.data.CreateRegistrate;
 import com.simibubi.create.foundation.networking.AllPackets;
 import com.simibubi.create.foundation.worldgen.AllWorldFeatures;
-import com.simibubi.create.lib.config.Configs;
 import com.simibubi.create.lib.event.BiomeLoadingCallback;
 import com.simibubi.create.lib.utility.MinecartController;
 import com.tterrag.registrate.util.NonNullLazyValue;
@@ -73,7 +72,6 @@ public class Create implements ModInitializer {
 		AllEntityTypes.register();
 		AllTileEntities.register();
 		AllMovementBehaviours.register();
-		String test = Configs.PATH_TO_CONFIGS;
 		AllConfigs.register();
 		AllWorldFeatures.register();
 

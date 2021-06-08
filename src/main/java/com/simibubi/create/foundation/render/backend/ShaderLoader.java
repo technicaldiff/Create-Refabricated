@@ -50,7 +50,13 @@ public class ShaderLoader {
 	final Map<ResourceLocation, String> shaderSource = new HashMap<>();
 
 	void onResourceManagerReload(IResourceManager manager/*, Predicate<IResourceType> predicate*/) {
-//		if (predicate.test(VanillaResourceType.SHADERS)) { // can't figure out a way to tell on Fabric. Resource reloads already take ages, hoping this won't hurt that bad to always run.
+		boolean shaderReload = false;
+		for (ResourceLocation location : manager.getAllResourceLocations("/" , string -> string.endsWith(".glsl") || string.endsWith(".vert") || string.endsWith(".frag"))) {
+			shaderReload = true;
+		}
+
+		if (shaderReload) { // can't figure out a way to tell on Fabric. Resource reloads already take ages, hoping this won't hurt that bad to always run.
+							// dear past me: this hurts for an entirely different reason, I am leaving these comments for comedic effect
 			OptifineHandler.refresh();
 			Backend.refresh();
 
@@ -64,7 +70,7 @@ public class ShaderLoader {
 
 				Backend.log.info("Loaded all shader programs.");
 			}
-//		}
+		}
 	}
 
 	private void loadShaderSources(IResourceManager manager) {

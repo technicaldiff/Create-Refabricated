@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.simibubi.create.lib.config.Config;
+import com.simibubi.create.lib.config.ConfigGroup;
 import com.simibubi.create.lib.config.ConfigValue;
 
 import net.minecraft.block.Block;
@@ -18,26 +19,33 @@ public class CStress extends ConfigBase {
 		return config;
 	}
 
+	public ConfigGroup stress = group(0, "stress", CKinetics.Comments.stress);
+
 	private Map<ResourceLocation, ConfigValue<Double>> capacities = new HashMap<>();
 	private Map<ResourceLocation, ConfigValue<Double>> impacts = new HashMap<>();
 
 	@Override
 	protected void registerAll() {
+		stress.addComment(Comments.impact);
+		stress.addComment(Comments.capacity);
+		stress.addComment(Comments.su);
 //		builder.comment("", Comments.su, Comments.impact)
 //			.push("impact");
 		StressConfigDefaults.registeredDefaultImpacts
-			.forEach((r, i) -> getImpacts().put(r, define(r.getPath(), i)));
+			.forEach((r, i) -> getImpacts().put(r, define(r.getPath() + "_impact", i)));
 //		builder.pop();
 
 //		builder.comment("", Comments.su, Comments.capacity)
 //			.push("capacity");
 		StressConfigDefaults.registeredDefaultCapacities
-			.forEach((r, i) -> getCapacities().put(r, define(r.getPath(), i)));
+			.forEach((r, i) -> getCapacities().put(r, define(r.getPath() + "_capacity", i)));
 //		builder.pop();
 	}
 
 	public static ConfigValue<Double> define(String path, double i) {
-		return new ConfigValue<>(path, i);
+		ConfigValue<Double> result = new ConfigValue<>(path, i);
+		getCurrentGroup().addConfigValue(result);
+		return result;
 	}
 
 	public double getImpactOf(Block block) {
@@ -68,8 +76,8 @@ public class CStress extends ConfigBase {
 	private static class Comments {
 		static String su = "[in Stress Units]";
 		static String impact =
-			"Configure the individual stress impact of mechanical blocks. Note that this cost is doubled for every speed increase it receives.";
-		static String capacity = "Configure how much stress a source can accommodate for.";
+			"Impacts: Configure the individual stress impact of mechanical blocks. Note that this cost is doubled for every speed increase it receives.";
+		static String capacity = "Capacities: Configure how much stress a source can accommodate for.";
 	}
 
 }

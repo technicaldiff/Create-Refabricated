@@ -24,6 +24,9 @@ public class CServer extends ConfigBase {
 		kinetics = nested(0, CKinetics::new, Comments.kinetics);
 		initGroups(kinetics.getConfig());
 		kinetics.getConfig().init();
+
+		CKinetics.register();
+
 		fluids = nested(0, CFluids::new, Comments.fluids);
 		initGroups(fluids.getConfig());
 		fluids.getConfig().init();

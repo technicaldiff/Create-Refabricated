@@ -38,7 +38,14 @@ public class CKinetics extends ConfigBase {
 	public ConfigInt maxRopeLength = i(128, 1, "maxRopeLength", Comments.maxRopeLength);
 	public ConfigInt maxCartCouplingLength = i(32, 1, "maxCartCouplingLength", Comments.maxCartCouplingLength);
 
-	public CStress stressValues = nested(1, CStress::new, Comments.stress);
+	public static CStress stressValues;
+
+	public static void register() {
+		stressValues = nested(1, CStress::new, Comments.stress);
+		stressValues.registerAll();
+		initGroups(stressValues.getConfig());
+		stressValues.getConfig().init();
+	}
 
 	public ConfigGroup state = group(1, "stats", Comments.stats);
 	public ConfigFloat mediumSpeed = f(30, 0, 4096, "mediumSpeed", Comments.rpm, Comments.mediumSpeed);
@@ -60,7 +67,7 @@ public class CKinetics extends ConfigBase {
 		return "kinetics";
 	}
 
-	private static class Comments {
+	public static class Comments {
 		static String maxBeltLength = "Maximum length in blocks of mechanical belts.";
 		static String crushingDamage = "Damage dealt by active Crushing Wheels.";
 		static String maxMotorSpeed = "Maximum allowed speed of a configurable motor.";
@@ -88,7 +95,7 @@ public class CKinetics extends ConfigBase {
 		static String highStressImpact = "Minimum stress impact to be considered 'high'";
 		static String mediumCapacity = "Minimum added Capacity by sources to be considered 'medium'";
 		static String highCapacity = "Minimum added Capacity by sources to be considered 'high'";
-		static String stress = "Fine tune the kinetic stats of individual components";
+		public static String stress = "Fine tune the kinetic stats of individual components";
 		static String ignoreDeployerAttacks = "Select what mobs should ignore Deployers when attacked by them.";
 		static String waterWheelBaseSpeed = "Added rotation speed by a water wheel when at least one flow is present.";
 		static String waterWheelFlowSpeed =
