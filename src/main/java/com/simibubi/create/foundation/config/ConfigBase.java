@@ -101,7 +101,7 @@ public abstract class ConfigBase {
 		return group;
 	}
 
-	protected <T extends ConfigBase> T nested(int depth, Supplier<T> constructor, String... comment) {
+	protected static <T extends ConfigBase> T nested(int depth, Supplier<T> constructor, String... comment) {
 		T config = constructor.get();
 //		new ConfigGroup(config.getName(), depth, comment);
 //		new CValue<Boolean, ForgeConfigSpec.BooleanValue>(config.getName(), builder -> {

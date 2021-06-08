@@ -23,11 +23,15 @@ public class AllConfigs {
 
 	public static void register() {
 		CLIENT = new CClient();
-		ConfigBase.initGroups(CLIENT.config);
+		ConfigBase.initGroups(CLIENT.getConfig());
+		CLIENT.getConfig().init();
 		COMMON = new CCommon();
-		ConfigBase.initGroups(COMMON.config);
+		ConfigBase.initGroups(COMMON.getConfig());
+		COMMON.getConfig().init();
 		SERVER = new CServer();
-		ConfigBase.initGroups(SERVER.config);
+		ConfigBase.initGroups(SERVER.getConfig());
+		SERVER.getConfig().init();
+		CServer.register();
 //		CLIENT = register(CClient::new, ModConfig.Type.CLIENT);
 //		COMMON = register(CCommon::new, ModConfig.Type.COMMON);
 //		SERVER = register(CServer::new, ModConfig.Type.SERVER);

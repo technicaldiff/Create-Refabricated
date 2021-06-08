@@ -10,29 +10,32 @@ public class CServer extends ConfigBase {
 	public ConfigInt tickrateSyncTimer =
 		i(20, 5, "tickrateSyncTimer", "[in Ticks]", Comments.tickrateSyncTimer, Comments.tickrateSyncTimer2);
 
-	public boolean register = register();
+	public static CRecipes recipes;
+	public static CKinetics kinetics;
+	public static CFluids fluids;
+	public static CLogistics logistics;
+	public static CSchematics schematics;
+	public static CCuriosities curiosities;
 
-	public CRecipes recipes;
-	public CKinetics kinetics;
-	public CFluids fluids;
-	public CLogistics logistics;
-	public CSchematics schematics;
-	public CCuriosities curiosities;
-
-	public boolean register() {
+	public static void register() {
 		recipes = nested(0, CRecipes::new, Comments.recipes);
 		initGroups(recipes.getConfig());
+		recipes.getConfig().init();
 		kinetics = nested(0, CKinetics::new, Comments.kinetics);
 		initGroups(kinetics.getConfig());
+		kinetics.getConfig().init();
 		fluids = nested(0, CFluids::new, Comments.fluids);
 		initGroups(fluids.getConfig());
+		fluids.getConfig().init();
 		logistics = nested(0, CLogistics::new, Comments.logistics);
 		initGroups(logistics.getConfig());
+		logistics.getConfig().init();
 		schematics = nested(0, CSchematics::new, Comments.schematics);
 		initGroups(schematics.getConfig());
+		schematics.getConfig().init();
 		curiosities = nested(0, CCuriosities::new, Comments.curiosities);
 		initGroups(curiosities.getConfig());
-		return true;
+		curiosities.getConfig().init();
 	}
 
 	public Config config = new Config(getName());

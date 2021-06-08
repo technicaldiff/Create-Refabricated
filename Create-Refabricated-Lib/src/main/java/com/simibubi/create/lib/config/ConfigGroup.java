@@ -11,7 +11,6 @@ public class ConfigGroup {
 	public String name;
 	public List<String> comments;
 
-
 	public ConfigGroup(String name, int depth, String... comments) {
 		this.depth = depth;
 		this.name = name;

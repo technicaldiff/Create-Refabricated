@@ -34,8 +34,7 @@ public class Config {
 	}
 
 	public void set(ConfigValue value) {
-		properties.put(value.key, value.value.toString());
-		save();
+		properties.putIfAbsent(value.key, value.value.toString());
 	}
 
 	public Object get(String key) {
@@ -52,7 +51,15 @@ public class Config {
 		return values;
 	}
 
-	public void save() {
+	public void init() {
+		writeAll();
+	}
+
+	public void readAll() {
+//		properties
+	}
+
+	public void writeAll() {
 		try {
 			properties.store(out, null);
 		} catch (IOException e) {
