@@ -15,6 +15,7 @@ import com.simibubi.create.content.schematics.ClientSchematicLoader;
 import com.simibubi.create.content.schematics.client.SchematicAndQuillHandler;
 import com.simibubi.create.content.schematics.client.SchematicHandler;
 import com.simibubi.create.events.ClientEvents;
+import com.simibubi.create.events.InputEvents;
 import com.simibubi.create.foundation.ResourceReloadHandler;
 import com.simibubi.create.foundation.block.render.CustomBlockModels;
 import com.simibubi.create.foundation.block.render.SpriteShifter;
@@ -124,6 +125,7 @@ public class CreateClient implements ClientModInitializer {
 		ParticleManagerRegistrationCallback.EVENT.register(AllParticleTypes::registerFactories);
 		addClientListeners();
 		ClientEvents.register();
+		InputEvents.register();
 
 		// Replaces ArmorItem#getArmorTexture from a Forge patch
 		ArmorRenderingRegistry.registerSimpleTexture(new ResourceLocation(Create.ID, "copper"),
