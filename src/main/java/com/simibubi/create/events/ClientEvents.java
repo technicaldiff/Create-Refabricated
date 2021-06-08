@@ -382,7 +382,7 @@ public class ClientEvents {
 		UseBlockCallback.EVENT.register(FurnaceEngineBlock::usingFurnaceEngineOnFurnacePreventsGUI);
 		AttackBlockCallback.EVENT.register(ArmInteractionPointHandler::leftClickingBlocksDeselectsThem);
 		AttackBlockCallback.EVENT.register(EjectorTargetHandler::leftClickingBlocksDeselectsThem);
-		WorldRenderEvents.LAST.register(SymmetryHandler::render);
+		WorldRenderEvents.END.register(SymmetryHandler::render);
 		ClientTickEvents.END_CLIENT_TICK.register(SymmetryHandler::onClientTick);
 		PlayerBlockBreakEvents.AFTER.register(SymmetryHandler::onBlockDestroyed);
 		PlayerTickEndCallback.EVENT.register(ContraptionHandlerClient::preventRemotePlayersWalkingAnimations);
