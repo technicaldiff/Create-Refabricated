@@ -4,8 +4,6 @@ import static net.minecraft.block.HorizontalBlock.HORIZONTAL_FACING;
 
 import javax.annotation.Nullable;
 
-import net.minecraft.block.ChorusPlantBlock;
-
 import org.apache.commons.lang3.mutable.MutableBoolean;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
@@ -151,11 +149,15 @@ public class HarvesterMovementBehaviour extends MovementBehaviour {
 	}
 
 	private BlockState cutCrop(World world, BlockPos pos, BlockState state) {
-		if (state.getBlock() instanceof CropsBlock) {
-			CropsBlock crop = (CropsBlock) state.getBlock();
+		Block block = state.getBlock();
+		if (block instanceof CropsBlock) {
+			CropsBlock crop = (CropsBlock) block;
 			return crop.withAge(0);
 		}
-		if (state.getBlock() == Blocks.SUGAR_CANE || state.getBlock() == Blocks.KELP) {
+		if (block == Blocks.SWEET_BERRY_BUSH) {
+			return state.with(BlockStateProperties.AGE_0_3, Integer.valueOf(1));
+		}
+		if (block == Blocks.SUGAR_CANE || block == Blocks.KELP) {
 			if (state.getFluidState()
 				.isEmpty())
 				return Blocks.AIR.getDefaultState();
@@ -163,7 +165,7 @@ public class HarvesterMovementBehaviour extends MovementBehaviour {
 				.getBlockState();
 		}
 		if (state.getCollisionShape(world, pos)
-			.isEmpty() || state.getBlock() instanceof CocoaBlock) {
+			.isEmpty() || block instanceof CocoaBlock) {
 			for (Property<?> property : state.getProperties()) {
 				if (!(property instanceof IntegerProperty))
 					continue;
