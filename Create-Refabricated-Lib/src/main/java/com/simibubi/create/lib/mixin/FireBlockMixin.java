@@ -35,10 +35,8 @@ public abstract class FireBlockMixin extends AbstractFireBlock implements FireBl
 
 	private FireBlockMixin(Properties properties, float f) {
 		super(properties, f);
-		throw new AssertionError("Create Refabricated's FireBlockMixin dummy constructor called!");
 	}
 
-	@Override
 	public int doFunc_220274_q(BlockState state) {
 		return func_220274_q(state);
 	}
@@ -53,8 +51,11 @@ public abstract class FireBlockMixin extends AbstractFireBlock implements FireBl
 		BlockState blockState = iBlockReader.getBlockState(blockPos2);
 		if (!this.canBurn(blockState) && !blockState.isSideSolidFullSquare(iBlockReader, blockPos2, Direction.UP)) {
 			BlockState blockState2 = this.getDefaultState();
+			Direction[] var6 = Direction.values();
+			int var7 = var6.length;
 
-			for (Direction direction : Direction.values()) {
+			for (int var8 = 0; var8 < var7; ++var8) {
+				Direction direction = var6[var8];
 				BooleanProperty booleanProperty = FACING_TO_PROPERTY_MAP.get(direction);
 				if (booleanProperty != null) {
 					blockState2 = blockState2.with(booleanProperty, this.canBurn(blockState2) || canCatchFire(iBlockReader, blockPos, direction));
