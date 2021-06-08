@@ -27,6 +27,7 @@ public abstract class DiggingParticleMixin extends SpriteTexturedParticle implem
 
 	private DiggingParticleMixin(ClientWorld clientWorld, double d, double e, double f) {
 		super(clientWorld, d, e, f);
+		throw new AssertionError("Create Refabricated's DiggingParticleMixin dummy constructor called!");
 	}
 
 	@Override
