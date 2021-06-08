@@ -56,7 +56,7 @@ public class ExtendoGripRenderHandler {
 		ItemStack offhandItem = getRenderedOffHandStack();
 		boolean notInOffhand = !AllItems.EXTENDO_GRIP.isIn(offhandItem);
 		if (notInOffhand && !AllItems.EXTENDO_GRIP.isIn(heldItem))
-			return true;
+			return false;
 
 		MatrixStacker msr = MatrixStacker.of(ms);
 		AbstractClientPlayerEntity abstractclientplayerentity = mc.player;

@@ -133,7 +133,7 @@ public class ZapperRenderHandler {
 
 	public static boolean onRenderPlayerHand(AbstractClientPlayerEntity client, Hand hand, ItemStack heldItem, MatrixStack ms, IRenderTypeBuffer vertexConsumers, float tickDelta, float pitch, float swingProgress, float equipProgress, int light) {
 		if (!(heldItem.getItem() instanceof ZapperItem))
-			return true;
+			return false;
 
 		Minecraft mc = Minecraft.getInstance();
 		boolean rightHand = hand == Hand.MAIN_HAND ^ mc.player.getPrimaryHand() == HandSide.LEFT;
