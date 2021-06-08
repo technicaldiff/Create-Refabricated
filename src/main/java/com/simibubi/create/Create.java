@@ -16,6 +16,7 @@ import com.simibubi.create.content.palettes.PalettesItemGroup;
 import com.simibubi.create.content.schematics.SchematicProcessor;
 import com.simibubi.create.content.schematics.ServerSchematicLoader;
 import com.simibubi.create.content.schematics.filtering.SchematicInstances;
+import com.simibubi.create.events.CommonEvents;
 import com.simibubi.create.foundation.advancement.AllTriggers;
 import com.simibubi.create.foundation.command.ChunkUtil;
 import com.simibubi.create.foundation.command.ServerLagger;
@@ -99,6 +100,7 @@ public class Create implements ModInitializer {
 		AllContainerTypes.register();
 		AllParticleTypes.register();
 		AllSoundEvents.register();
+		CommonEvents.register();
 
 		REGISTRATE.get().register();
 
