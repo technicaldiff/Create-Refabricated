@@ -27,7 +27,7 @@ public abstract class MinecraftMixin {
 	@Final
 	private IReloadableResourceManager resourceManager;
 
-	@Inject(at = @At(value = "INVOKE", target = "Lnet/minecraft/resources/IReloadableResourceManager;addReloadListener(Lnet/minecraft/resources/IFutureReloadListener;)V"),
+	@Inject(at = @At(value = "INVOKE", target = "Lnet/minecraft/resources/IReloadableResourceManager;addReloadListener(Lnet/minecraft/resources/IFutureReloadListener;)V", ordinal = 0),
 			method = "<init>(Lnet/minecraft/client/GameConfiguration;)V")
 	public void create$afterResourceManagerInit(GameConfiguration args, CallbackInfo ci) {
 		IResourceManagerReloadListener listener = Backend.shaderLoader::onResourceManagerReload;

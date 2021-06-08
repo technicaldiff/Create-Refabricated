@@ -2,15 +2,12 @@ package com.simibubi.create.lib.extensions;
 
 import javax.annotation.Nullable;
 
-import com.simibubi.create.lib.mixin.accessor.FireBlockAccessor;
-
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.BreakableBlock;
-import net.minecraft.block.FireBlock;
 import net.minecraft.block.LeavesBlock;
 import net.minecraft.block.SoundType;
 import net.minecraft.client.particle.ParticleManager;
@@ -44,7 +41,7 @@ public interface BlockExtensions {
 	}
 
 	default int create$getFlammability(BlockState state, IBlockReader world, BlockPos pos, Direction face) {
-		return ((FireBlockAccessor) ((FireBlock) Blocks.FIRE)).func_220274_q(state);
+		return ((FireBlockExtensions) Blocks.FIRE).doFunc_220274_q(state);
 	}
 
 	default SoundType create$getSoundType(BlockState state, IWorldReader world, BlockPos pos, @Nullable Entity entity) {

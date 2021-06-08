@@ -5,12 +5,10 @@ import java.util.Random;
 
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
-import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.ModifyVariable;
-import org.spongepowered.asm.mixin.injection.Slice;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
@@ -31,39 +29,43 @@ public abstract class FireBlockMixin extends AbstractFireBlock implements FireBl
 	@Shadow
 	@Final
 	private static Map<Direction, BooleanProperty> FACING_TO_PROPERTY_MAP;
-	@Unique
-	IBlockReader create$reader;
-	@Unique
-	BlockPos create$pos;
-	@Unique
-	BooleanProperty create$property;
-	@Unique
-	Direction create$direction;
 
-	public FireBlockMixin(Properties properties, float f) {
+	@Shadow
+	protected abstract int func_220274_q(BlockState blockState);
+
+	private FireBlockMixin(Properties properties, float f) {
 		super(properties, f);
 	}
 
-	@Inject(at = @At(value = "INVOKE", shift = At.Shift.AFTER, target = "Lnet/minecraft/block/BlockState;with(Lnet/minecraft/state/Property;Ljava/lang/Comparable;)Ljava/lang/Object;"),
-			locals = LocalCapture.CAPTURE_FAILEXCEPTION,
-			method = "getStateForPlacement(Lnet/minecraft/world/IBlockReader;Lnet/minecraft/util/math/BlockPos;)Lnet/minecraft/block/BlockState;", cancellable = true)
-	protected void create$getStateForPlacement(IBlockReader iBlockReader, BlockPos blockPos, CallbackInfoReturnable<BlockState> cir,
-											   BlockState blockState2, Direction[] var6,
-											   int var7, int var8, Direction direction, BooleanProperty booleanProperty) {
-		create$reader = iBlockReader;
-		create$pos = blockPos;
-		create$property = booleanProperty;
-		create$direction = direction;
-		if (canCatchFire(iBlockReader, blockPos, Direction.UP)) {
-			cir.setReturnValue(getDefaultState());
-		}
+	public int doFunc_220274_q(BlockState state) {
+		return func_220274_q(state);
 	}
 
-	@ModifyVariable(slice = @Slice(from = @At(value = "INVOKE", shift = At.Shift.BEFORE, target = "Lnet/minecraft/block/BlockState;with(Lnet/minecraft/state/Property;Ljava/lang/Comparable;)Ljava/lang/Object;")),
-			at = @At(value = "STORE"),
-			method = "getStateForPlacement(Lnet/minecraft/world/IBlockReader;Lnet/minecraft/util/math/BlockPos;)Lnet/minecraft/block/BlockState;")
-	protected BlockState create$setBlockState(BlockState blockState2) {
-		return blockState2.with(create$property, canCatchFire(create$reader, create$pos.offset(create$direction), create$direction.getOpposite()));
+	/**
+	 * Even though this is an overwrite it's 100x cleaner than the alternatives I tried
+	 * @author Tropheus Jay
+	 */
+	@Overwrite
+	public BlockState getStateForPlacement(IBlockReader iBlockReader, BlockPos blockPos) {
+		BlockPos blockPos2 = blockPos.down();
+		BlockState blockState = iBlockReader.getBlockState(blockPos2);
+		if (!this.canBurn(blockState) && !blockState.isSideSolidFullSquare(iBlockReader, blockPos2, Direction.UP)) {
+			BlockState blockState2 = this.getDefaultState();
+			Direction[] var6 = Direction.values();
+			int var7 = var6.length;
+
+			for (int var8 = 0; var8 < var7; ++var8) {
+				Direction direction = var6[var8];
+				BooleanProperty booleanProperty = FACING_TO_PROPERTY_MAP.get(direction);
+				if (booleanProperty != null) {
+					blockState2 = blockState2.with(booleanProperty, this.canBurn(blockState2) || canCatchFire(iBlockReader, blockPos, direction));
+				}
+			}
+
+			return blockState2;
+		} else {
+			return this.getDefaultState();
+		}
 	}
 
 	@Inject(at = @At(value = "INVOKE", shift = At.Shift.BEFORE, ordinal = 1, target = "Ljava/util/Random;nextInt(I)I"),

@@ -55,7 +55,6 @@
     "accessor.CriteriaTriggersAccessor",
     "accessor.DamageSourceAccessor",
     "accessor.EntityAccessor",
-    "accessor.FireBlockAccessor",
     "accessor.IngredientAccessor",
     "accessor.ItemEntityAccessor",
     "accessor.ItemTagsAccessor",
