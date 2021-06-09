@@ -1,8 +1,5 @@
 package com.simibubi.create.lib.lba.item;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.inventory.container.Slot;
@@ -18,11 +15,11 @@ public class SlotItemHandler extends Slot {
 	}
 
 	public static Inventory handlerToInv(IItemHandler handler) {
-		List<ItemStack> itemStacks = new ArrayList<>();
-		for (int i = 1; i <= handler.getSlots(); i++) {
-			itemStacks.add(handler.getStackInSlot(i));
+		ItemStack[] itemStacks = new ItemStack[handler.getSlots()];
+		for (int i = 0; i < handler.getSlots(); i++) {
+			itemStacks[i] = handler.getStackInSlot(i);
 		}
-		return new Inventory((ItemStack[]) itemStacks.toArray());
+		return new Inventory(itemStacks);
 	}
 
 	/**
@@ -30,11 +27,11 @@ public class SlotItemHandler extends Slot {
 	 */
 	@Deprecated
 	public static SlotItemHandler create(IItemHandler handler, int index, int x, int y) {
-		List<ItemStack> itemStacks = new ArrayList<>();
-		for (int i = 1; i <= handler.getSlots(); i++) {
-			itemStacks.add(handler.getStackInSlot(i));
+		ItemStack[] itemStacks = new ItemStack[handler.getSlots()];
+		for (int i = 0; i < handler.getSlots(); i++) {
+			itemStacks[i] = handler.getStackInSlot(i);
 		}
-		Inventory inv = new Inventory((ItemStack[]) itemStacks.toArray());
+		Inventory inv = new Inventory(itemStacks);
 		return new SlotItemHandler(inv, index, x, y);
 	}
 }

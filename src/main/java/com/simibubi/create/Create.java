@@ -97,7 +97,6 @@ public class Create implements ModInitializer {
 		// register events are painful, hopefully these just work fine here
 		// if they don't, that's a problem for when we can actually debug
 		AllRecipeTypes.register();
-		AllContainerTypes.register();
 		AllParticleTypes.register();
 		AllSoundEvents.register();
 		CommonEvents.register();
