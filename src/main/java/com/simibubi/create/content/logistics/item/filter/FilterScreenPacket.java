@@ -19,6 +19,8 @@ public class FilterScreenPacket implements C2SPacket {
 	private Option option;
 	private CompoundNBT data;
 
+	protected FilterScreenPacket() {}
+
 	public FilterScreenPacket(Option option) {
 		this(option, new CompoundNBT());
 	}

@@ -19,7 +19,7 @@ public class NbtPacket implements C2SPacket {
 	public int slot;
 	public Hand hand;
 
-	public NbtPacket() {}
+	protected NbtPacket() {}
 
 	public NbtPacket(ItemStack stack, Hand hand) {
 		this(stack, -1);

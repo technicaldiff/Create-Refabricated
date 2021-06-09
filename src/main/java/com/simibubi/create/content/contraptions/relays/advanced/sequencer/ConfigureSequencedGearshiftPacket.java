@@ -12,6 +12,8 @@ public class ConfigureSequencedGearshiftPacket extends TileEntityConfigurationPa
 
 	private ListNBT instructions;
 
+	protected ConfigureSequencedGearshiftPacket() {}
+
 	public ConfigureSequencedGearshiftPacket(BlockPos pos, ListNBT instructions) {
 		super(pos);
 		this.instructions = instructions;

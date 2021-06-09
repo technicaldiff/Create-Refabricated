@@ -7,10 +7,12 @@ import net.minecraft.util.math.BlockPos;
 
 public class EjectorTriggerPacket extends TileEntityConfigurationPacket<EjectorTileEntity> {
 
+	protected EjectorTriggerPacket() {}
+
 	public EjectorTriggerPacket(BlockPos pos) {
 		super(pos);
 	}
-	
+
 	@Override
 	protected void writeSettings(PacketBuffer buffer) {}
 

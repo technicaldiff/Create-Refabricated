@@ -11,14 +11,16 @@ public class ConfigureStockswitchPacket extends TileEntityConfigurationPacket<St
 	private float offBelow;
 	private float onAbove;
 	private boolean invert;
-	
+
+	protected ConfigureStockswitchPacket() {}
+
 	public ConfigureStockswitchPacket(BlockPos pos, float offBelow, float onAbove, boolean invert) {
 		super(pos);
 		this.offBelow = offBelow;
 		this.onAbove = onAbove;
 		this.invert = invert;
 	}
-	
+
 	@Override
 	protected void readSettings(PacketBuffer buffer) {
 		offBelow = buffer.readFloat();
@@ -39,5 +41,5 @@ public class ConfigureStockswitchPacket extends TileEntityConfigurationPacket<St
 		te.onWhenAbove = onAbove;
 		te.setInverted(invert);
 	}
-	
+
 }

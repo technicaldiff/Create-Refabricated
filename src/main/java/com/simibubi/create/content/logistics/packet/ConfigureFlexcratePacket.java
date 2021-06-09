@@ -9,7 +9,9 @@ import net.minecraft.util.math.BlockPos;
 public class ConfigureFlexcratePacket extends TileEntityConfigurationPacket<AdjustableCrateTileEntity> {
 
 	private int maxItems;
-	
+
+	protected ConfigureFlexcratePacket() {}
+
 	public ConfigureFlexcratePacket(BlockPos pos, int newMaxItems) {
 		super(pos);
 		this.maxItems = newMaxItems;

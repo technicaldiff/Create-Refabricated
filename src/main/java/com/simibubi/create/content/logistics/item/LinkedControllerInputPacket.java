@@ -16,6 +16,8 @@ public class LinkedControllerInputPacket extends LinkedControllerPacketBase {
 	private Collection<Integer> activatedButtons;
 	private boolean press;
 
+	protected LinkedControllerInputPacket() {}
+
 	public LinkedControllerInputPacket(Collection<Integer> activatedButtons, boolean press) {
 		this.activatedButtons = activatedButtons;
 		this.press = press;

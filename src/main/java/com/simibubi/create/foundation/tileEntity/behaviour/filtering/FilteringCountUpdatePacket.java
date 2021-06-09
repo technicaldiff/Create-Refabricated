@@ -9,7 +9,9 @@ import net.minecraft.util.math.BlockPos;
 public class FilteringCountUpdatePacket extends TileEntityConfigurationPacket<SmartTileEntity> {
 
 	int amount;
-	
+
+	protected FilteringCountUpdatePacket() {}
+
 	public FilteringCountUpdatePacket(BlockPos pos, int amount) {
 		super(pos);
 		this.amount = amount;

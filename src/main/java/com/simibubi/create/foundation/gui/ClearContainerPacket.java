@@ -11,8 +11,6 @@ public class ClearContainerPacket implements C2SPacket {
 
 	public ClearContainerPacket() {}
 
-	public ClearContainerPacket(PacketBuffer buffer) {}
-
 	@Override
 	public void read(PacketBuffer buf) {}
 
