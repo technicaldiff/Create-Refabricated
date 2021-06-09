@@ -5,10 +5,9 @@ import java.util.function.Supplier;
 
 import com.simibubi.create.Create;
 import com.simibubi.create.foundation.data.CreateRegistrate;
-import com.simibubi.create.lib.block.CreateStairsBlock;
+import com.simibubi.create.lib.helper.StairsBlockHelper;
 import com.tterrag.registrate.builders.BlockBuilder;
 import com.tterrag.registrate.builders.ItemBuilder;
-import com.tterrag.registrate.providers.DataGenContext;
 import com.tterrag.registrate.util.nullness.NonnullType;
 
 import net.minecraft.block.AbstractBlock.Properties;
@@ -90,7 +89,7 @@ public abstract class PaletteBlockPartial<B extends Block> {
 
 		@Override
 		protected StairsBlock createBlock(Supplier<? extends Block> block) {
-			return new CreateStairsBlock(block.get().getDefaultState(), Properties.from(block.get()));
+			return StairsBlockHelper.init(block.get().getDefaultState(), Properties.from(block.get()));
 		}
 
 //		@Override
