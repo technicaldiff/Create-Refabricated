@@ -94,7 +94,10 @@ public abstract class LivingEntityMixin extends Entity {
 
 	@ModifyVariable(method = "takeKnockback(FDD)V", at = @At("STORE"), ordinal = 0)
 	private float create$takeKnockback(float f) {
-		return LivingEntityEvents.KNOCKBACK_STRENGTH.invoker().onLivingEntityTakeKnockback(f, attackingPlayer);
+		if (attackingPlayer != null)
+			return LivingEntityEvents.KNOCKBACK_STRENGTH.invoker().onLivingEntityTakeKnockback(f, attackingPlayer);
+
+		return f;
 	}
 
 	@ModifyVariable(method = "dropXp()V", at = @At("STORE"), ordinal = 0)
