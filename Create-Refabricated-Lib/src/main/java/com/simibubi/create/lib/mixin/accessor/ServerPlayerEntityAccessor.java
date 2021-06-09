@@ -9,7 +9,7 @@ import net.minecraft.entity.player.ServerPlayerEntity;
 @Mixin(ServerPlayerEntity.class)
 public interface ServerPlayerEntityAccessor {
 	@Invoker("getNextWindowId")
-	void getNextWindowId();
+	void callGetNextWindowId();
 
 	@Accessor("currentWindowId")
 	int getCurrentWindowId();

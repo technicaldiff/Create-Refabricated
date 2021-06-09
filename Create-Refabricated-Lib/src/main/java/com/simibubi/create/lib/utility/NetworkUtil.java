@@ -19,7 +19,7 @@ public class NetworkUtil {
 	public static void openGUI(ServerPlayerEntity player, INamedContainerProvider containerProvider, Consumer<PacketBuffer> extraDataWriter) {
 		if (player.world.isRemote) return;
 		player.closeContainer();
-		((ServerPlayerEntityAccessor) player).getNextWindowId();
+		((ServerPlayerEntityAccessor) player).callGetNextWindowId();
 		int openContainerId = ((ServerPlayerEntityAccessor) player).getCurrentWindowId();
 		PacketBuffer extraData = new PacketBuffer(Unpooled.buffer());
 		extraDataWriter.accept(extraData);
