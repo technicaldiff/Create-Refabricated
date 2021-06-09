@@ -23,6 +23,7 @@ import com.simibubi.create.foundation.config.AllConfigs;
 import com.simibubi.create.foundation.gui.UIRenderHelper;
 import com.simibubi.create.foundation.item.render.CustomItemModels;
 import com.simibubi.create.foundation.item.render.CustomRenderedItems;
+import com.simibubi.create.foundation.networking.AllPackets;
 import com.simibubi.create.foundation.ponder.content.PonderIndex;
 import com.simibubi.create.foundation.ponder.elements.WorldSectionElement;
 import com.simibubi.create.foundation.render.AllProgramSpecs;
@@ -126,6 +127,7 @@ public class CreateClient implements ClientModInitializer {
 		addClientListeners();
 		ClientEvents.register();
 		InputEvents.register();
+		AllPackets.clientInit();
 
 		// Replaces ArmorItem#getArmorTexture from a Forge patch
 		ArmorRenderingRegistry.registerSimpleTexture(new ResourceLocation(Create.ID, "copper"),
