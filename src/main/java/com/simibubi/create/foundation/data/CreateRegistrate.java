@@ -37,6 +37,7 @@ import com.tterrag.registrate.util.nullness.NonNullUnaryOperator;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
+import net.fabricmc.fabric.api.client.rendering.v1.BuiltinItemRendererRegistry;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.model.IBakedModel;
@@ -239,6 +240,7 @@ public class CreateRegistrate extends AbstractRegistrate<CreateRegistrate> {
 		@Environment(EnvType.CLIENT)
 		private static void registerCustomRenderedItem(Item entry,
 													   Supplier<NonNullFunction<IBakedModel, ? extends CustomRenderedItemModel>> func) {
+			BuiltinItemRendererRegistry.INSTANCE.register(entry, func.get().apply(null).createRenderer());
 			CreateClient.getCustomRenderedItems()
 					.register(ItemSupplierHelper.getSupplier(entry), func.get());
 		}
