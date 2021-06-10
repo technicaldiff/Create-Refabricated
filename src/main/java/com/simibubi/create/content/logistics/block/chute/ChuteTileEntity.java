@@ -12,7 +12,6 @@ import com.simibubi.create.Create;
 import com.simibubi.create.content.contraptions.components.fan.AirCurrent;
 import com.simibubi.create.content.contraptions.components.fan.EncasedFanBlock;
 import com.simibubi.create.content.contraptions.components.fan.EncasedFanTileEntity;
-import com.simibubi.create.content.contraptions.components.fan.IAirCurrentSource;
 import com.simibubi.create.content.contraptions.goggles.IHaveGoggleInformation;
 import com.simibubi.create.content.contraptions.particle.AirParticleData;
 import com.simibubi.create.content.logistics.block.funnel.FunnelBlock;
@@ -56,13 +55,16 @@ import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraft.world.World;
 
 @ParametersAreNonnullByDefault
 @MethodsReturnNonnullByDefault
-public class ChuteTileEntity extends SmartTileEntity implements IHaveGoggleInformation, IAirCurrentSource {
+/*
+ * Commented Code: Chutes create air streams and act similarly to encased fans
+ * (Unfinished)
+ */
+public class ChuteTileEntity extends SmartTileEntity implements IHaveGoggleInformation { // , IAirCurrentSource {
 
-	public AirCurrent airCurrent;
+	//	public AirCurrent airCurrent;
 
 	float pull;
 	float push;
@@ -90,10 +92,10 @@ public class ChuteTileEntity extends SmartTileEntity implements IHaveGoggleInfor
 		itemHandler = new ChuteItemHandler(this);
 		lazyHandler = LazyOptional.of(() -> itemHandler);
 		canPickUpItems = false;
-		capAbove = LazyOptional.empty();
-		capBelow = LazyOptional.empty();
+//		capAbove = LazyOptional.empty();
+//		capBelow = LazyOptional.empty();
 		bottomPullDistance = 0;
-		airCurrent = new AirCurrent(this);
+		//		airCurrent = new AirCurrent(this);
 		updateAirFlow = true;
 	}
 
@@ -179,7 +181,7 @@ public class ChuteTileEntity extends SmartTileEntity implements IHaveGoggleInfor
 
 	private void updateAirFlow(float itemSpeed) {
 		updateAirFlow = false;
-		airCurrent.rebuild();
+		//		airCurrent.rebuild();
 		if (itemSpeed > 0 && world != null && !world.isRemote) {
 			float speed = pull - push;
 			beltBelow = null;
@@ -215,8 +217,8 @@ public class ChuteTileEntity extends SmartTileEntity implements IHaveGoggleInfor
 	}
 
 	private void findEntities(float itemSpeed) {
-		if (getSpeed() != 0)
-			airCurrent.findEntities();
+		//		if (getSpeed() != 0)
+		//			airCurrent.findEntities();
 		if (bottomPullDistance <= 0 && !getItem().isEmpty() || itemSpeed <= 0 || world == null || world.isRemote)
 			return;
 		if (!canCollectItemsFromBelow())
@@ -268,13 +270,13 @@ public class ChuteTileEntity extends SmartTileEntity implements IHaveGoggleInfor
 		}
 
 		extractFromBelt(itemSpeed);
-		if (getSpeed() != 0)
-			airCurrent.tick();
+		//		if (getSpeed() != 0)
+		//			airCurrent.tick();
 	}
 
 	public void blockBelowChanged() {
 		updateAirFlow = true;
-		capBelow = LazyOptional.empty();
+//		capBelow = LazyOptional.empty();
 	}
 
 	private void spawnParticles(float itemMotion) {
@@ -522,8 +524,8 @@ public class ChuteTileEntity extends SmartTileEntity implements IHaveGoggleInfor
 		push = compound.getFloat("Push");
 		bottomPullDistance = compound.getFloat("BottomAirFlowDistance");
 		super.fromTag(state, compound, clientPacket);
-		if (clientPacket)
-			airCurrent.rebuild();
+//		if (clientPacket)
+//			airCurrent.rebuild();
 
 		if (hasWorld() && world != null && world.isRemote && !ItemStackUtil.equals(previousItem, item, false) && !item.isEmpty()) {
 
@@ -725,47 +727,47 @@ public class ChuteTileEntity extends SmartTileEntity implements IHaveGoggleInfor
 		return item;
 	}
 
-	@Override
-	@Nullable
-	public AirCurrent getAirCurrent() {
-		return airCurrent;
-	}
-
-	@Nullable
-	@Override
-	public World getAirCurrentWorld() {
-		return world;
-	}
-
-	@Override
-	public BlockPos getAirCurrentPos() {
-		return pos;
-	}
-
-	@Override
-	public float getSpeed() {
-		if (getBlockState().get(ChuteBlock.SHAPE) == ChuteBlock.Shape.NORMAL && getBlockState().get(ChuteBlock.FACING) != Direction.DOWN)
-			return 0;
-		return pull + push;
-	}
-
-	@Override
-	@Nullable
-	public Direction getAirFlowDirection() {
-		float speed = getSpeed();
-		if (speed == 0)
-			return null;
-		return speed > 0 ? Direction.UP : Direction.DOWN;
-	}
-
-	@Override
-	public boolean isSourceRemoved() {
-		return removed;
-	}
-
-	@Override
-	public Direction getAirflowOriginSide() {
-		return world != null && !(world.getTileEntity(pos.down()) instanceof IAirCurrentSource)
-			&& getBlockState().get(ChuteBlock.FACING) == Direction.DOWN ? Direction.DOWN : Direction.UP;
-	}
+	//	@Override
+	//	@Nullable
+	//	public AirCurrent getAirCurrent() {
+	//		return airCurrent;
+	//	}
+	//
+	//	@Nullable
+	//	@Override
+	//	public World getAirCurrentWorld() {
+	//		return world;
+	//	}
+	//
+	//	@Override
+	//	public BlockPos getAirCurrentPos() {
+	//		return pos;
+	//	}
+	//
+	//	@Override
+	//	public float getSpeed() {
+	//		if (getBlockState().get(ChuteBlock.SHAPE) == Shape.NORMAL && getBlockState().get(ChuteBlock.FACING) != Direction.DOWN)
+	//			return 0;
+	//		return pull + push;
+	//	}
+	//
+	//	@Override
+	//	@Nullable
+	//	public Direction getAirFlowDirection() {
+	//		float speed = getSpeed();
+	//		if (speed == 0)
+	//			return null;
+	//		return speed > 0 ? Direction.UP : Direction.DOWN;
+	//	}
+	//
+	//	@Override
+	//	public boolean isSourceRemoved() {
+	//		return removed;
+	//	}
+	//
+	//	@Override
+	//	public Direction getAirflowOriginSide() {
+	//		return world != null && !(world.getTileEntity(pos.down()) instanceof IAirCurrentSource)
+	//			&& getBlockState().get(ChuteBlock.FACING) == Direction.DOWN ? Direction.DOWN : Direction.UP;
+	//	}
 }
