@@ -92,8 +92,8 @@ public class ChuteTileEntity extends SmartTileEntity implements IHaveGoggleInfor
 		itemHandler = new ChuteItemHandler(this);
 		lazyHandler = LazyOptional.of(() -> itemHandler);
 		canPickUpItems = false;
-//		capAbove = LazyOptional.empty();
-//		capBelow = LazyOptional.empty();
+		capAbove = LazyOptional.empty();
+		capBelow = LazyOptional.empty();
 		bottomPullDistance = 0;
 		//		airCurrent = new AirCurrent(this);
 		updateAirFlow = true;
@@ -276,7 +276,7 @@ public class ChuteTileEntity extends SmartTileEntity implements IHaveGoggleInfor
 
 	public void blockBelowChanged() {
 		updateAirFlow = true;
-//		capBelow = LazyOptional.empty();
+		capBelow = LazyOptional.empty();
 	}
 
 	private void spawnParticles(float itemMotion) {
