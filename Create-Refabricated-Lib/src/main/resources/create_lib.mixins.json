@@ -79,6 +79,7 @@
     "EntityRendererManagerMixin",
     "FirstPersonRendererMixin",
     "FogRendererMixin",
+    "GameSettingsMixin",
     "IngameGuiMixin",
     "ItemRendererMixin",
     "KeyboardListenerMixin",

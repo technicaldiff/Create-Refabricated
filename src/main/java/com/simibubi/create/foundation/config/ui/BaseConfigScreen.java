@@ -42,6 +42,8 @@ public class BaseConfigScreen extends ConfigScreen {
 	String modID = Create.ID;
 
 	/**
+	 * Note from Fabric: This is a lie, it will not work. This is a leftover from Forge.
+	 *
 	 * If you are a Create Addon dev and want to make use of the same GUI
 	 * for your mod's config, use this Constructor to create a entry point
 	 *
