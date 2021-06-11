@@ -3,6 +3,7 @@ package com.simibubi.create.foundation.config.ui.entries;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.function.Predicate;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
@@ -11,12 +12,14 @@ import javax.annotation.Nonnull;
 
 import org.apache.commons.lang3.ArrayUtils;
 
+import com.google.common.base.Predicates;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.simibubi.create.foundation.config.ui.ConfigScreen;
 import com.simibubi.create.foundation.config.ui.ConfigScreenList;
 import com.simibubi.create.foundation.gui.AllIcons;
 import com.simibubi.create.foundation.gui.DelegatedStencilElement;
 import com.simibubi.create.foundation.gui.widgets.BoxWidget;
+import com.simibubi.create.foundation.item.TooltipHelper;
 import com.simibubi.create.lib.config.ConfigValue;
 import com.simibubi.create.lib.mixin.accessor.AbstractList$AbstractListEntryAccessor;
 
@@ -52,8 +55,8 @@ public class ValueEntry<T> extends ConfigScreenList.LabeledEntry {
 
 		listeners.add(resetButton);
 
-		List path = Arrays.asList(Collections.singleton(value.key).toArray());
-		labelTooltip.add(new StringTextComponent((String) path.get(path.size()-1)).formatted(TextFormatting.GRAY));
+		List<String> path = value.getPath();
+		labelTooltip.add(new StringTextComponent(label).formatted(TextFormatting.WHITE));
 		String comment = "";
 		if (value.comments != null && value.comments.size() != 0) {
 			comment = value.comments.get(0);
@@ -80,8 +83,14 @@ public class ValueEntry<T> extends ConfigScreenList.LabeledEntry {
 				u = "in SU";
 			unit = u;
 		}
-		//add comment to tooltip
-		labelTooltip.addAll(Arrays.stream(commentLines).map(StringTextComponent::new).collect(Collectors.toList()));
+		// add comment to tooltip
+		labelTooltip.addAll(Arrays.stream(commentLines)
+			.filter(Predicates.not(s -> s.startsWith("Range")))
+			.map(StringTextComponent::new)
+			.flatMap(stc -> TooltipHelper.cutTextComponent(stc, TextFormatting.GRAY, TextFormatting.GRAY)
+				.stream())
+			.collect(Collectors.toList()));
+		labelTooltip.add(new StringTextComponent(ConfigScreen.modID + ":" + path.get(path.size()-1)).formatted(TextFormatting.DARK_GRAY));
 	}
 
 	@Override

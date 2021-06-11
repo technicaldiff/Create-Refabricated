@@ -8,6 +8,8 @@ import java.util.stream.Collectors;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.simibubi.create.AllItems;
 import com.simibubi.create.foundation.config.AllConfigs;
+import com.simibubi.create.foundation.gui.ScreenOpener;
+import com.simibubi.create.foundation.gui.mainMenu.CreateMainMenuScreen;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screen.IngameMenuScreen;
@@ -19,12 +21,12 @@ import net.minecraft.client.resources.I18n;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.text.StringTextComponent;
 
-public class OpenConfigButton extends Button {
+public class OpenCreateMenuButton extends Button {
 
 	public static ItemStack icon = AllItems.GOGGLES.asStack();
 
-	public OpenConfigButton(int x, int y) {
-		super(x, y, 20, 20, StringTextComponent.EMPTY, OpenConfigButton::click);
+	public OpenCreateMenuButton(int x, int y) {
+		super(x, y, 20, 20, StringTextComponent.EMPTY, OpenCreateMenuButton::click);
 	}
 
 	@Override
@@ -34,7 +36,7 @@ public class OpenConfigButton extends Button {
 	}
 
 	public static void click(Button b) {
-		Minecraft.getInstance().displayGuiScreen(new BaseConfigScreen(Minecraft.getInstance().currentScreen, "create"));
+		ScreenOpener.open(new CreateMainMenuScreen(Minecraft.getInstance().currentScreen));
 	}
 
 	public static class SingleMenuRow {
@@ -97,8 +99,8 @@ public class OpenConfigButton extends Button {
 				list.stream()
 					.filter(w -> w.getMessage().getString().equals(target))
 					.findFirst()
-					.ifPresent(w -> add.accept(
-							new OpenConfigButton(w.x + offsetX_ + (onLeft ? -20 : w.getWidth()), w.y)
+					.ifPresent(w -> event.addWidget(
+							new OpenCreateMenuButton(w.x + offsetX_ + (onLeft ? -20 : w.getWidth()), w.y)
 					));
 			}
 		}
