@@ -11,7 +11,6 @@ import com.simibubi.create.foundation.gui.ScreenOpener;
 import com.simibubi.create.foundation.utility.Iterate;
 import com.simibubi.create.lib.block.CanConnectRedstoneBlock;
 import com.simibubi.create.lib.extensions.BlockExtensions;
-import com.simibubi.create.lib.extensions.TileEntityExtensions;
 import com.simibubi.create.lib.utility.LazyOptional;
 import com.tterrag.registrate.fabric.EnvExecutor;
 
@@ -39,10 +38,6 @@ import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorldReader;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.fml.DistExecutor;
-import net.minecraftforge.items.CapabilityItemHandler;
 
 public class StockpileSwitchBlock extends HorizontalBlock implements ITE<StockpileSwitchTileEntity>, IWrenchable, CanConnectRedstoneBlock, ITileEntityProvider, BlockExtensions {
 

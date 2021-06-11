@@ -3,7 +3,6 @@ package com.simibubi.create.foundation.config.ui.entries;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import java.util.function.Predicate;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
@@ -55,7 +54,7 @@ public class ValueEntry<T> extends ConfigScreenList.LabeledEntry {
 
 		listeners.add(resetButton);
 
-		List<String> path = value.getPath();
+		List path = Arrays.asList(Collections.singleton(value.key).toArray());
 		labelTooltip.add(new StringTextComponent(label).formatted(TextFormatting.WHITE));
 		String comment = "";
 		if (value.comments != null && value.comments.size() != 0) {

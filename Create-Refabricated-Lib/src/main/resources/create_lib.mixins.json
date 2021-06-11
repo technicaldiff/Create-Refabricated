@@ -104,6 +104,7 @@
     "accessor.ItemRendererAccessor",
     "accessor.KeyBindingAccessor",
     "accessor.LivingRendererAccessor",
+    "accessor.MainMenuScreenAccessor",
     "accessor.MinecraftAccessor",
     "accessor.ParticleAccessor",
     "accessor.ParticleManagerAccessor",

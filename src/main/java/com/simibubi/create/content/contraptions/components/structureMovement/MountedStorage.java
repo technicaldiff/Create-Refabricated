@@ -47,7 +47,7 @@ public class MountedStorage {
 		if (te instanceof BarrelTileEntity)
 			return true;
 
-		LazyOptional<IItemHandler> capability = te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY);
+		LazyOptional<IItemHandler> capability = TransferUtil.getItemHandler(te);
 		IItemHandler handler = capability.orElse(null);
 		return handler instanceof ItemStackHandler && !(handler instanceof ProcessingInventory);
 	}

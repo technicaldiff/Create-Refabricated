@@ -1,11 +1,8 @@
 package com.simibubi.create.foundation.config.ui;
 
 import java.awt.*;
-import java.awt.Color;
 import java.util.Collections;
-import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 import java.util.function.Consumer;
 
 import javax.annotation.Nonnull;
@@ -13,25 +10,21 @@ import javax.annotation.Nullable;
 
 import org.lwjgl.glfw.GLFW;
 
-import com.electronwill.nightconfig.core.AbstractConfig;
-import com.electronwill.nightconfig.core.UnmodifiableConfig;
-import com.electronwill.nightconfig.core.UnmodifiableConfig.Entry;
-import com.google.common.base.Strings;
-import com.google.common.collect.Lists;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.simibubi.create.foundation.config.AllConfigs;
 import com.simibubi.create.foundation.config.ui.ConfigScreenList.LabeledEntry;
 import com.simibubi.create.foundation.config.ui.entries.BooleanEntry;
 import com.simibubi.create.foundation.config.ui.entries.EnumEntry;
 import com.simibubi.create.foundation.config.ui.entries.NumberEntry;
+import com.simibubi.create.foundation.config.ui.entries.SubMenuEntry;
 import com.simibubi.create.foundation.config.ui.entries.ValueEntry;
 import com.simibubi.create.foundation.gui.AllIcons;
 import com.simibubi.create.foundation.gui.ConfirmationScreen;
+import com.simibubi.create.foundation.gui.ConfirmationScreen.Response;
 import com.simibubi.create.foundation.gui.DelegatedStencilElement;
 import com.simibubi.create.foundation.gui.ScreenOpener;
 import com.simibubi.create.foundation.gui.Theme;
 import com.simibubi.create.foundation.gui.UIRenderHelper;
-import com.simibubi.create.foundation.gui.ConfirmationScreen.Response;
 import com.simibubi.create.foundation.gui.widgets.BoxWidget;
 import com.simibubi.create.foundation.item.TooltipHelper;
 import com.simibubi.create.foundation.networking.AllPackets;
@@ -149,7 +142,7 @@ public class SubMenuConfigScreen extends ConfigScreen {
 				.withCallback((x, y) ->
 						new ConfirmationScreen()
 								.centered()
-								.withText(ITextProperties.plain("Resetting all settings of the " + type.toString() + " config. Are you sure?"))
+								.withText(ITextProperties.plain("Resetting all settings of the " + config.name + " config. Are you sure?"))
 								.withAction(success -> {
 									if (success)
 										resetConfig();
@@ -308,7 +301,7 @@ public class SubMenuConfigScreen extends ConfigScreen {
 		super.renderWindow(ms, mouseX, mouseY, partialTicks);
 
 		int x = width/2;
-		drawCenteredString(ms, client.fontRenderer, ConfigScreen.modID + " > " + type.toString().toLowerCase(Locale.ROOT) + " > " + title, x, 15, Theme.i(Theme.Key.TEXT));
+		drawCenteredString(ms, client.fontRenderer, ConfigScreen.modID + " > " + config.name.toLowerCase(Locale.ROOT) + " > " + title, x, 15, Theme.i(Theme.Key.TEXT));
 
 		list.render(ms, mouseX, mouseY, partialTicks);
 	}

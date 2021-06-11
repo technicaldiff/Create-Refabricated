@@ -17,6 +17,8 @@ import com.simibubi.create.foundation.utility.Iterate;
 import com.simibubi.create.foundation.utility.Lang;
 import com.simibubi.create.foundation.utility.MatrixStacker;
 
+import com.simibubi.create.lib.mixin.accessor.MainMenuScreenAccessor;
+
 import net.minecraft.client.gui.screen.ConfirmOpenLinkScreen;
 import net.minecraft.client.gui.screen.MainMenuScreen;
 import net.minecraft.client.gui.screen.Screen;
@@ -28,7 +30,6 @@ import net.minecraft.util.Util;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
-import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 
 public class CreateMainMenuScreen extends AbstractSimiScreen {
 
@@ -47,8 +48,7 @@ public class CreateMainMenuScreen extends AbstractSimiScreen {
 		this.parent = parent;
 		returnOnClose = true;
 		if (parent instanceof MainMenuScreen)
-			vanillaPanorama = ObfuscationReflectionHelper.getPrivateValue(MainMenuScreen.class, (MainMenuScreen) parent,
-				"field_209101_K");
+			vanillaPanorama = ((MainMenuScreenAccessor) parent).getPanorama();
 	}
 
 	@Override
@@ -62,7 +62,7 @@ public class CreateMainMenuScreen extends AbstractSimiScreen {
 	protected void renderWindow(MatrixStack ms, int mouseX, int mouseY, float partialTicks) {
 		float f = (float) (Util.milliTime() - this.firstRenderTime) / 1000.0F;
 		float alpha = MathHelper.clamp(f, 0.0F, 1.0F);
-		
+
 		if (parent instanceof MainMenuScreen) {
 			if (alpha < 1)
 				vanillaPanorama.render(partialTicks, 1);

@@ -9,17 +9,13 @@ import com.simibubi.create.foundation.tileEntity.behaviour.inventory.InvManipula
 import com.simibubi.create.foundation.tileEntity.behaviour.inventory.InvManipulationBehaviour.InterfaceProvider;
 import com.simibubi.create.lib.lba.item.IItemHandler;
 
-import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntityType;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.TickPriority;
-import net.minecraft.world.server.ServerWorld;
-import net.minecraftforge.items.IItemHandler;
 
 public class StockpileSwitchTileEntity extends SmartTileEntity {
 

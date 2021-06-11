@@ -122,7 +122,7 @@ public class BaseConfigScreen extends ConfigScreen {
 		widgets.add(clientConfigWidget = new BoxWidget(width / 2 - 100, height / 2 - 15 - 30, 200, 16).showingElement(clientText));
 
 		if (clientSpec != null) {
-			clientConfigWidget.withCallback(() -> linkTo(new SubMenuConfigScreen(this, ModConfig.Type.CLIENT, clientSpec)));
+			clientConfigWidget.withCallback(() -> linkTo(new SubMenuConfigScreen(this, "client", clientSpec)));
 			clientText.withElementRenderer(BoxWidget.gradientFactory.apply(clientConfigWidget));
 		} else {
 			clientConfigWidget.active = false;
@@ -134,7 +134,7 @@ public class BaseConfigScreen extends ConfigScreen {
 		widgets.add(commonConfigWidget = new BoxWidget(width / 2 - 100, height / 2 - 15, 200, 16).showingElement(commonText));
 
 		if (commonSpec != null) {
-			commonConfigWidget.withCallback(() -> linkTo(new SubMenuConfigScreen(this, ModConfig.Type.COMMON, commonSpec)));
+			commonConfigWidget.withCallback(() -> linkTo(new SubMenuConfigScreen(this, "common", commonSpec)));
 			commonText.withElementRenderer(BoxWidget.gradientFactory.apply(commonConfigWidget));
 		} else {
 			commonConfigWidget.active = false;
@@ -146,7 +146,7 @@ public class BaseConfigScreen extends ConfigScreen {
 		widgets.add(serverConfigWidget = new BoxWidget(width / 2 - 100, height / 2 - 15 + 30, 200, 16).showingElement(serverText));
 
 		if (serverSpec != null && Minecraft.getInstance().world != null) {
-			serverConfigWidget.withCallback(() -> linkTo(new SubMenuConfigScreen(this, ModConfig.Type.SERVER, serverSpec)));
+			serverConfigWidget.withCallback(() -> linkTo(new SubMenuConfigScreen(this, "server", serverSpec)));
 			serverText.withElementRenderer(BoxWidget.gradientFactory.apply(serverConfigWidget));
 		} else {
 			serverConfigWidget.active = false;

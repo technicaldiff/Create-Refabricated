@@ -99,9 +99,9 @@ public class EnumEntry<T> extends ValueEntry<T> {
 	@Override
 	public void onValueChange(T newValue) {
 		super.onValueChange(newValue);
-		valueText.withText(newValue.name()
+		valueText.withText(((Enum) newValue).name()
 			.substring(0, 1)
-			+ newValue.name()
+			+ ((Enum) newValue).name()
 				.substring(1)
 				.toLowerCase(Locale.ROOT));
 	}
