@@ -9,6 +9,8 @@ import com.mojang.blaze3d.matrix.MatrixStack;
 import com.simibubi.create.AllItems;
 import com.simibubi.create.foundation.config.AllConfigs;
 
+import net.fabricmc.fabric.api.client.screen.v1.ScreenEvents;
+import net.fabricmc.fabric.api.client.screen.v1.Screens;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screen.IngameMenuScreen;
 import net.minecraft.client.gui.screen.MainMenuScreen;
@@ -74,7 +76,7 @@ public class OpenConfigButton extends Button {
 
 	public static class OpenConfigButtonHandler {
 
-		public static void onGuiInit(Screen gui, List<Widget> list, Consumer<Widget> add, Consumer<Widget> remove) {
+		public static void onGuiInit(Minecraft client, Screen gui, int scaledWidth, int scaledHeight) {
 //			Screen gui = event.getGui();
 
 			MenuRows menu = null;
@@ -94,10 +96,10 @@ public class OpenConfigButton extends Button {
 				String target = (onLeft ? menu.leftButtons : menu.rightButtons).get(rowIdx - 1);
 
 				int offsetX_ = offsetX;
-				list.stream()
+				Screens.getButtons(gui).stream()
 					.filter(w -> w.getMessage().getString().equals(target))
 					.findFirst()
-					.ifPresent(w -> add.accept(
+					.ifPresent(w -> Screens.getButtons(gui).add(
 							new OpenConfigButton(w.x + offsetX_ + (onLeft ? -20 : w.getWidth()), w.y)
 					));
 			}

@@ -3,6 +3,8 @@ package com.simibubi.create.events;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.fabricmc.fabric.api.client.screen.v1.ScreenEvents;
+
 import org.jetbrains.annotations.Nullable;
 
 import com.mojang.brigadier.CommandDispatcher;
@@ -40,7 +42,6 @@ import com.simibubi.create.lib.event.EntityEyeHeightCallback;
 import com.simibubi.create.lib.event.FluidPlaceBlockCallback;
 import com.simibubi.create.lib.event.LivingEntityEvents;
 import com.simibubi.create.lib.event.MobEntitySetTargetCallback;
-import com.simibubi.create.lib.event.ScreenInitCallback;
 import com.simibubi.create.lib.event.StartRidingCallback;
 
 import net.fabricmc.fabric.api.command.v1.CommandRegistrationCallback;
@@ -205,7 +206,7 @@ public class CommonEvents {
 		UseEntityCallback.EVENT.register(MinecartCouplingItem::handleInteractionWithMinecart);
 		UseEntityCallback.EVENT.register(MinecartContraptionItem::wrenchCanBeUsedToPickUpMinecartContraptions);
 		BlockPlaceCallback.EVENT.register(SymmetryHandler::onBlockPlaced);
-		ScreenInitCallback.EVENT.register(OpenConfigButton.OpenConfigButtonHandler::onGuiInit);
+		ScreenEvents.AFTER_INIT.register(OpenConfigButton.OpenConfigButtonHandler::onGuiInit);
 	}
 
 }
