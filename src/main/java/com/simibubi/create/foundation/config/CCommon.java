@@ -10,6 +10,7 @@ public class CCommon extends ConfigBase {
 
 	public static void register() {
 		worldGen = nested(0, CWorldGen::new, Comments.worldGen);
+		worldGen.registerAll();
 		initGroups(worldGen.getConfig());
 		worldGen.getConfig().init();
 	}

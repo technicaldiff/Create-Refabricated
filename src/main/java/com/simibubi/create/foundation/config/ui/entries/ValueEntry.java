@@ -52,9 +52,12 @@ public class ValueEntry<T> extends ConfigScreenList.LabeledEntry {
 
 		listeners.add(resetButton);
 
-		List<String> path = (List<String>) Collections.singleton(value.key);
-		labelTooltip.add(new StringTextComponent(path.get(path.size()-1)).formatted(TextFormatting.GRAY));
-		String comment = value.comments.get(0);
+		List path = Arrays.asList(Collections.singleton(value.key).toArray());
+		labelTooltip.add(new StringTextComponent((String) path.get(path.size()-1)).formatted(TextFormatting.GRAY));
+		String comment = "";
+		if (value.comments != null && value.comments.size() != 0) {
+			comment = value.comments.get(0);
+		}
 		if (comment == null || comment.isEmpty())
 			return;
 		String[] commentLines = comment.split("\n");
