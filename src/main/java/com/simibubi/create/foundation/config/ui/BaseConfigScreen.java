@@ -107,6 +107,9 @@ public class BaseConfigScreen extends ConfigScreen {
 
 	@Override
 	protected void init() {
+		clientSpec = AllConfigs.CLIENT.getConfig();
+		commonSpec = AllConfigs.COMMON.getConfig();
+		serverSpec = AllConfigs.SERVER.getConfig();
 		widgets.clear();
 		super.init();
 

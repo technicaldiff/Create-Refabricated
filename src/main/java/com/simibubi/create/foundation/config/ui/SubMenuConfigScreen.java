@@ -85,11 +85,12 @@ public class SubMenuConfigScreen extends ConfigScreen {
 		changes.forEach((path, value) -> {
 			ConfigValue configValue = (ConfigValue) config.get(path);
 			configValue.set(value);
-			if (config != AllConfigs.CLIENT.config) {
+			if (config != AllConfigs.CLIENT.getConfig()) {
 				AllPackets.channel.sendToServer(new CConfigureConfigPacket<>(path, value));
 			}
 		});
 		clearChanges();
+		config.writeAll();
 	}
 
 	protected void resetConfig() {
@@ -110,6 +111,7 @@ public class SubMenuConfigScreen extends ConfigScreen {
 				.stream()
 				.filter(e -> e instanceof ValueEntry)
 				.forEach(e -> ((ValueEntry<?>) e).onValueChange());
+	config.writeAll();
 	}
 
 	@Override
@@ -200,6 +202,7 @@ public class SubMenuConfigScreen extends ConfigScreen {
 
 		children.add(list);
 
+		config.updateValuesList();
 		config.getAllValues().forEach((configValue) -> {
 			String humanKey = toHumanReadable(configValue.key);
 

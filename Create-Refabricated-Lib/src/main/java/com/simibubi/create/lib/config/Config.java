@@ -51,7 +51,12 @@ public class Config {
 	}
 
 	public Object get(String key) {
-		return properties.get(key);
+		for (ConfigValue value : allValues) {
+			if (value.key.equals(key)) {
+				return value;
+			}
+		}
+		return null;
 	}
 
 	public void updateValuesList() {
@@ -74,7 +79,7 @@ public class Config {
 	}
 
 	/**
-	 * Saves all values changed since launch
+	 * Saves all values changed since launch/last save
 	 */
 	public void writeAll() {
 		try {
@@ -84,6 +89,7 @@ public class Config {
 			FileOutputStream out = new FileOutputStream(configFile);
 			properties.store(out, null);
 			out.close();
+			LOGGER.info("Create's [{}] config was successfully saved.", name);
 		} catch (IOException e) {
 			LOGGER.fatal("There was an error saving Create's [{}] config!", name, e);
 		}
