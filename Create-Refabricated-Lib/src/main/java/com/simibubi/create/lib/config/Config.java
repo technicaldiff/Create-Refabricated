@@ -23,7 +23,7 @@ public class Config {
 	public ArrayList<ConfigGroup> groups = new ArrayList<>();
 	public ArrayList<ConfigValue> allValues = new ArrayList<>();
 	public Properties properties;
-	private static final Logger LOGGER = LogManager.getLogger();
+	private static final Logger LOGGER = LogManager.getLogger("Create");
 	public String name;
 
 	public Config(String name) {
@@ -33,7 +33,7 @@ public class Config {
 		try {
 			configFile.createNewFile();
 		} catch (IOException e) {
-			LOGGER.fatal("There was an error initializing Create's [{}] config!", name, e);
+			LOGGER.fatal("There was an error initializing Create's \"{}\" config!", name, e);
 		}
 	}
 
@@ -76,6 +76,7 @@ public class Config {
 	public void init() {
 		updateValuesList();
 		parseProperties();
+		writeAll();
 	}
 
 	/**
@@ -89,9 +90,9 @@ public class Config {
 			FileOutputStream out = new FileOutputStream(configFile);
 			properties.store(out, null);
 			out.close();
-			LOGGER.info("Create's [{}] config was successfully saved.", name);
+			LOGGER.info("\"{}\" config was successfully saved.", name);
 		} catch (IOException e) {
-			LOGGER.fatal("There was an error saving Create's [{}] config!", name, e);
+			LOGGER.fatal("There was an error saving Create's \"{}\" config!", name, e);
 		}
 	}
 
@@ -127,7 +128,7 @@ public class Config {
 			fileProperties.load(in);
 			in.close();
 		} catch (IOException e) {
-			LOGGER.fatal("There was an error reading Create's [{}] config!", name, e);
+			LOGGER.fatal("There was an error reading Create's \"{}\" config!", name, e);
 		}
 		for (Pair pair : getKeysAndValues(fileProperties)) {
 			String value = (String) pair.getSecond(); // gets the value as a string
@@ -178,5 +179,6 @@ public class Config {
 				}
 			}
 		}
+		LOGGER.info("\"{}\" config was successfully loaded.", name);
 	}
 }

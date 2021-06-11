@@ -11,9 +11,7 @@ import com.simibubi.create.lib.config.ConfigValue;
 
 public abstract class ConfigBase {
 
-	public Config getConfig() {
-		return null;
-	}
+	public abstract Config getConfig();
 
 	public static List<ConfigGroup> currentGroupSet = new ArrayList<>();
 	public static ConfigGroup currentGroup;
