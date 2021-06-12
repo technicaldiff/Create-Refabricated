@@ -116,9 +116,10 @@ public abstract class LivingEntityMixin extends Entity {
 		}
 	}
 
-	@ModifyVariable(slice = @Slice(from = @At(value = "INVOKE", target = "Lnet/minecraft/entity/Entity;getVelocityAffectingPos()Lnet/minecraft/util/math/BlockPos;")),
-			at = @At("STORE"),
-			method = "travel(Lnet/minecraft/util/math/vector/Vector3d;)V")
+	// TODO Make this less :concern: when fabric's mixin fork updates
+	@ModifyVariable(at = @At(value = "INVOKE_ASSIGN", target = "Lnet/minecraft/block/Block;getSlipperiness()F"),
+			method = "travel(Lnet/minecraft/util/math/vector/Vector3d;)V",
+			index = 7)
 	public float create$setSlipperiness(float t) {
 		return ((BlockStateExtensions) MixinHelper.<LivingEntity>cast(this).world.getBlockState(getVelocityAffectingPos()))
 				.create$getSlipperiness(MixinHelper.<LivingEntity>cast(this).world, getVelocityAffectingPos(), MixinHelper.<LivingEntity>cast(this));
