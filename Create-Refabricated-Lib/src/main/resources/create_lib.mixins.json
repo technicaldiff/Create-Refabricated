@@ -76,7 +76,6 @@
     "DiggingParticleMixin",
     "FirstPersonRendererMixin",
     "FogRendererMixin",
-    "GameSettingsMixin",
     "IngameGuiMixin",
     "ItemRendererMixin",
     "KeyboardListenerMixin",
