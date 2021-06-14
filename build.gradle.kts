@@ -1,6 +1,6 @@
 plugins {
 	id("fabric-loom") // Change the version in buildSrc/build.gradle.kts
-	id("io.github.juuxel.loom-quiltflower")
+	id("io.github.juuxel.loom-quiltflower") version "1.1.0" apply false
 	`checkstyle`
 	`maven-publish`
 }
