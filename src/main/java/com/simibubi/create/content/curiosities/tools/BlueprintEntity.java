@@ -7,6 +7,8 @@ import java.util.Optional;
 
 import javax.annotation.Nullable;
 
+import com.jamieswhiteshirt.reachentityattributes.ReachEntityAttributes;
+
 import org.apache.commons.lang3.Validate;
 
 import com.simibubi.create.AllEntityTypes;
@@ -69,17 +71,6 @@ import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.GameRules;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.common.ForgeHooks;
-import net.minecraftforge.common.ForgeMod;
-import net.minecraftforge.common.util.FakePlayer;
-import net.minecraftforge.fml.common.registry.IEntityAdditionalSpawnData;
-import net.minecraftforge.fml.hooks.BasicEventHooks;
-import net.minecraftforge.fml.network.NetworkHooks;
-import net.minecraftforge.items.IItemHandlerModifiable;
-import net.minecraftforge.items.ItemStackHandler;
-import net.minecraftforge.items.wrapper.InvWrapper;
 
 public class BlueprintEntity extends HangingEntity
 	implements ExtraSpawnDataEntity, ISpecialEntityItemRequirement, ISyncPersistentData, BlockPickInteractionAware {
@@ -263,7 +254,7 @@ public class BlueprintEntity extends HangingEntity
 			return super.hitByEntity(source);
 
 		PlayerEntity player = (PlayerEntity) source;
-		double attrib = player.getAttribute(ForgeMod.REACH_DISTANCE.get())
+		double attrib = player.getAttribute(ReachEntityAttributes.REACH)
 			.getValue() + (player.isCreative() ? 0 : -0.5F);
 
 		Vector3d eyePos = source.getEyePosition(1);

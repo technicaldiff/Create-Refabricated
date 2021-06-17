@@ -23,6 +23,8 @@ import com.simibubi.create.foundation.utility.Pair;
 import com.simibubi.create.lib.lba.item.ItemHandlerHelper;
 import com.simibubi.create.lib.lba.item.ItemStackHandler;
 
+import com.simibubi.create.lib.utility.Constants;
+
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.IRenderTypeBuffer;
 import net.minecraft.inventory.CraftingInventory;
@@ -40,9 +42,6 @@ import net.minecraft.util.math.EntityRayTraceResult;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.RayTraceResult.Type;
 import net.minecraft.util.text.TextFormatting;
-import net.minecraftforge.common.util.Constants.NBT;
-import net.minecraftforge.items.ItemHandlerHelper;
-import net.minecraftforge.items.ItemStackHandler;
 
 public class BlueprintOverlayRenderer {
 
@@ -277,7 +276,7 @@ public class BlueprintOverlayRenderer {
 
 			if (AllItems.ATTRIBUTE_FILTER.isIn(itemStack)) {
 				WhitelistMode whitelistMode = WhitelistMode.values()[tag.getInt("WhitelistMode")];
-				ListNBT attributes = tag.getList("MatchedAttributes", NBT.TAG_COMPOUND);
+				ListNBT attributes = tag.getList("MatchedAttributes", Constants.NBT.TAG_COMPOUND);
 				if (whitelistMode == WhitelistMode.WHITELIST_DISJ && attributes.size() == 1) {
 					ItemAttribute fromNBT = ItemAttribute.fromNBT((CompoundNBT) attributes.get(0));
 					if (fromNBT instanceof ItemAttribute.InTag) {

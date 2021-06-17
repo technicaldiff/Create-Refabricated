@@ -110,7 +110,8 @@ public class LinkedControllerScreen extends AbstractSimiContainerScreen<LinkedCo
 			super.drawMouseoverTooltip(ms, x, y);
 			return;
 		}
-		renderWrappedToolTip(ms, addToTooltip(new LinkedList<>(), hoveredSlot.getSlotIndex()), x, y, textRenderer);
+		renderTooltip(ms, addToTooltip(new LinkedList<>(), ((SlotAccessor) hoveredSlot).getSlotIndex()), x, y); // I think this replacement works?
+		// renderWrappedToolTip(ms, addToTooltip(new LinkedList<>(), ((SlotAccessor) hoveredSlot).getSlotIndex()), x, y, textRenderer);
 	}
 
 	@Override
@@ -118,7 +119,7 @@ public class LinkedControllerScreen extends AbstractSimiContainerScreen<LinkedCo
 		List<ITextComponent> list = super.getTooltipFromItem(stack);
 		if (hoveredSlot.inventory == container.playerInventory)
 			return list;
-		return hoveredSlot != null ? addToTooltip(list, hoveredSlot.getSlotIndex()) : list;
+		return hoveredSlot != null ? addToTooltip(list, hoveredSlot.slotNumber) : list;
 	}
 
 	private List<ITextComponent> addToTooltip(List<ITextComponent> list, int slot) {

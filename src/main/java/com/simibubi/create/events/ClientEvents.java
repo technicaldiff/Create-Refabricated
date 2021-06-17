@@ -371,7 +371,6 @@ public class ClientEvents {
 
 		// External Events
 
-		HudRenderCallback.EVENT.register(GoggleOverlayRenderer::lookingAtBlocksThroughGogglesShowsTooltip);
 		RenderHandCallback.EVENT.register(ExtendoGripRenderHandler::onRenderPlayerHand);
 		RenderHandCallback.EVENT.register(ZapperRenderHandler::onRenderPlayerHand);
 		UseBlockCallback.EVENT.register(ItemUseOverrides::onBlockActivated);

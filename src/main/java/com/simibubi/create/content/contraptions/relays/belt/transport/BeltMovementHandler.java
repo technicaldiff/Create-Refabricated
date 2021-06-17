@@ -13,6 +13,8 @@ import com.simibubi.create.content.contraptions.relays.belt.BeltPart;
 import com.simibubi.create.content.contraptions.relays.belt.BeltSlope;
 import com.simibubi.create.content.contraptions.relays.belt.BeltTileEntity;
 
+import com.simibubi.create.lib.mixin.accessor.EntityAccessor;
+
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
@@ -95,7 +97,7 @@ public class BeltMovementHandler {
 
 		// Lock entities in place
 		boolean isPlayer = entityIn instanceof PlayerEntity;
-		if (entityIn instanceof LivingEntity && !isPlayer) 
+		if (entityIn instanceof LivingEntity && !isPlayer)
 			((LivingEntity) entityIn).addPotionEffect(new EffectInstance(Effects.SLOWNESS, 10, 1, false, false));
 
 		final Direction beltFacing = blockState.get(BlockStateProperties.HORIZONTAL_FACING);
@@ -141,9 +143,9 @@ public class BeltMovementHandler {
 		if (!(entityIn instanceof LivingEntity)
 			|| ((LivingEntity) entityIn).moveForward == 0 && ((LivingEntity) entityIn).moveStrafing == 0)
 			movement = movement.add(centering);
-		
+
 		float step = entityIn.stepHeight;
-		if (!isPlayer) 
+		if (!isPlayer)
 			entityIn.stepHeight = 1;
 
 		// Entity Collisions
@@ -176,8 +178,8 @@ public class BeltMovementHandler {
 		} else {
 			entityIn.move(SELF, movement);
 		}
-		
-		entityIn.onGround = true;
+
+		entityIn.setOnGround(true);
 
 		if (!isPlayer)
 			entityIn.stepHeight = step;
@@ -192,7 +194,7 @@ public class BeltMovementHandler {
 			entityIn.setMotion(movement);
 			entityIn.velocityChanged = true;
 		}
-		
+
 	}
 
 	public static boolean shouldIgnoreBlocking(Entity me, Entity other) {

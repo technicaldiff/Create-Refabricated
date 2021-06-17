@@ -79,7 +79,6 @@ public class AllSpriteShifts {
 	//
 
 	private static void populateMaps() {
-		WoodTypeHelper
 		WoodType[] supportedWoodTypes = new WoodType[]{
 			WoodType.OAK, WoodType.SPRUCE, WoodType.BIRCH, WoodType.ACACIA, WoodType.JUNGLE, WoodType.DARK_OAK,
 			WoodType.CRIMSON, WoodType.WARPED
