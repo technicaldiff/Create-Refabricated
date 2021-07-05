@@ -1,19 +1,17 @@
 package com.simibubi.create.content.curiosities.zapper;
 
-import java.util.function.Supplier;
-
-import com.simibubi.create.foundation.networking.SimplePacketBase;
-
+import me.pepperbell.simplenetworking.S2CPacket;
+import me.pepperbell.simplenetworking.SimpleChannel;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.network.play.ClientPlayNetHandler;
 import net.minecraft.entity.Entity;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.vector.Vector3d;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.fml.network.NetworkEvent.Context;
 
-public abstract class ShootGadgetPacket extends SimplePacketBase {
+public abstract class ShootGadgetPacket implements S2CPacket {
 
 	public Vector3d location;
 	public Hand hand;
@@ -45,17 +43,16 @@ public abstract class ShootGadgetPacket extends SimplePacketBase {
 
 	protected abstract void writeAdditional(PacketBuffer buffer);
 
-	@OnlyIn(Dist.CLIENT)
+	@Environment(EnvType.CLIENT)
 	protected abstract void handleAdditional();
 
-	@OnlyIn(Dist.CLIENT)
+	@Environment(EnvType.CLIENT)
 	protected abstract ShootableGadgetRenderHandler getHandler();
 
 	@Override
-	@OnlyIn(Dist.CLIENT)
-	public final void handle(Supplier<Context> context) {
-		context.get()
-			.enqueueWork(() -> {
+	@Environment(EnvType.CLIENT)
+	public void handle(Minecraft client, ClientPlayNetHandler handler, SimpleChannel.ResponseTarget responseTarget) {
+		client.execute(() -> {
 				Entity renderViewEntity = Minecraft.getInstance()
 					.getRenderViewEntity();
 				if (renderViewEntity == null)
@@ -64,15 +61,13 @@ public abstract class ShootGadgetPacket extends SimplePacketBase {
 					.distanceTo(location) > 100)
 					return;
 
-				ShootableGadgetRenderHandler handler = getHandler();
+				ShootableGadgetRenderHandler renderHandler = getHandler();
 				handleAdditional();
 				if (self)
-					handler.shoot(hand, location);
+					renderHandler.shoot(hand, location);
 				else
-					handler.playSound(hand, location);
+					renderHandler.playSound(hand, location);
 			});
-		context.get()
-			.setPacketHandled(true);
 	}
 
 }

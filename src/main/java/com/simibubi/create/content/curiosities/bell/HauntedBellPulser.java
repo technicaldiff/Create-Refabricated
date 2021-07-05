@@ -3,40 +3,37 @@ package com.simibubi.create.content.curiosities.bell;
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.foundation.networking.AllPackets;
 
+import com.simibubi.create.lib.event.PlayerTickEndCallback;
+
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.chunk.Chunk;
-import net.minecraftforge.event.TickEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.LogicalSide;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
-import net.minecraftforge.fml.network.PacketDistributor;
+import net.minecraft.world.server.ServerWorld;
 
-@EventBusSubscriber
 public class HauntedBellPulser {
 
 	public static final int DISTANCE = 3;
 	public static final int RECHARGE_TICKS = 8;
 
-	@SubscribeEvent
-	public static void hauntedBellCreatesPulse(TickEvent.PlayerTickEvent event) {
-		if (event.phase != TickEvent.Phase.END)
+	public static void hauntedBellCreatesPulse(PlayerEntity player) {
+//		if (event.phase != TickEvent.Phase.END)
+//			return;
+		if (player.world.isRemote())
 			return;
-		if (event.side != LogicalSide.SERVER)
-			return;
-		if (event.player.isSpectator())
-			return;
-
-		if (event.player.world.getGameTime() % RECHARGE_TICKS != 0)
+		if (player.isSpectator())
 			return;
 
-		if (event.player.isHolding(AllBlocks.HAUNTED_BELL::is))
-			sendPulse(event.player.world, event.player.getBlockPos(), DISTANCE, false);
+		if (player.world.getGameTime() % RECHARGE_TICKS != 0)
+			return;
+
+		if (player.isHolding(AllBlocks.HAUNTED_BELL::is))
+			sendPulse(player.world, player.getBlockPos(), DISTANCE, false);
 	}
 
 	public static void sendPulse(World world, BlockPos pos, int distance, boolean canOverlap) {
 		Chunk chunk = world.getChunkAt(pos);
-		AllPackets.channel.send(PacketDistributor.TRACKING_CHUNK.with(() -> chunk), new SoulPulseEffectPacket(pos, distance, canOverlap));
+		AllPackets.channel.sendToClientsTracking(new SoulPulseEffectPacket(pos, distance, canOverlap), (ServerWorld) chunk.getWorld(), chunk.getPos());
 	}
 
 }

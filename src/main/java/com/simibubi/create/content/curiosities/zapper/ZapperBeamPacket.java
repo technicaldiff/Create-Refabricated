@@ -3,23 +3,15 @@ package com.simibubi.create.content.curiosities.zapper;
 import com.simibubi.create.CreateClient;
 import com.simibubi.create.content.curiosities.zapper.ZapperRenderHandler.LaserBeam;
 
-import me.pepperbell.simplenetworking.S2CPacket;
-import me.pepperbell.simplenetworking.SimpleChannel.ResponseTarget;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.network.play.ClientPlayNetHandler;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.vector.Vector3d;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 
 public class ZapperBeamPacket extends ShootGadgetPacket {
 
 	public Vector3d target;
-
-	protected ZapperBeamPacket() {}
 
 	public ZapperBeamPacket(Vector3d start, Vector3d target, Hand hand, boolean self) {
 		super(start, hand, self);

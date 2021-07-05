@@ -59,11 +59,13 @@ import com.tterrag.registrate.util.entry.ItemEntry;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.fabric.api.client.rendering.v1.BuiltinItemRendererRegistry;
+import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Food;
 import net.minecraft.item.Item;
 import net.minecraft.item.Rarity;
 import net.minecraft.tags.ITag;
+import net.minecraft.tags.ItemTags;
 import net.minecraft.util.ResourceLocation;
 
 public class AllItems {
@@ -246,21 +248,22 @@ public class AllItems {
 
 	public static final ItemEntry<ExtendoGripItem> EXTENDO_GRIP = REGISTRATE.item("extendo_grip", ExtendoGripItem::new)
 		.transform(CreateRegistrate.customRenderedItem(() -> ExtendoGripModel::new))
+			.properties(p -> p.maxDamage(ExtendoGripItem.MAX_DAMAGE))
 //		.model(AssetLookup.itemModelWithPartials())
 		.register();
 
 	public static final ItemEntry<LinkedControllerItem> LINKED_CONTROLLER =
 		REGISTRATE.item("linked_controller", LinkedControllerItem::new)
-			.properties(p -> p.maxStackSize(1))
+			.properties(p -> (FabricItemSettings) p.maxStackSize(1))
 			.transform(CreateRegistrate.customRenderedItem(() -> LinkedControllerModel::new))
 //			.model(AssetLookup.itemModelWithPartials())
 			.register();
 
 	public static final ItemEntry<PotatoCannonItem> POTATO_CANNON =
 		REGISTRATE.item("potato_cannon", PotatoCannonItem::new)
-			.properties(p -> p.maxStackSize(1))
+			.properties(p -> (FabricItemSettings) p.maxStackSize(1).maxDamage(PotatoCannonItem.MAX_DAMAGE))
 			.transform(CreateRegistrate.customRenderedItem(() -> PotatoCannonModel::new))
-			.model(AssetLookup.itemModelWithPartials())
+//			.model(AssetLookup.itemModelWithPartials())
 			.register();
 
 	public static final ItemEntry<SymmetryWandItem> WAND_OF_SYMMETRY =
@@ -302,12 +305,12 @@ public class AllItems {
 	}
 
 	public static final ItemEntry<FilterItem> FILTER = REGISTRATE.item("filter", FilterItem::regular)
-		.model(AssetLookup.existingItemModel())
+//		.model(AssetLookup.existingItemModel())
 		.register();
 
 	public static final ItemEntry<FilterItem> ATTRIBUTE_FILTER =
 		REGISTRATE.item("attribute_filter", FilterItem::attribute)
-			.model(AssetLookup.existingItemModel())
+//			.model(AssetLookup.existingItemModel())
 			.register();
 
 	// Schematics

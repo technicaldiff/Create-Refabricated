@@ -34,8 +34,6 @@ import net.minecraft.util.text.IFormattableTextComponent;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
-import net.minecraftforge.client.MinecraftForgeClient;
-import net.minecraft.util.text.TextProcessing;
 
 public class TooltipHelper {
 

@@ -12,6 +12,8 @@ import com.simibubi.create.foundation.tileEntity.SmartTileEntity;
 import com.simibubi.create.foundation.tileEntity.TileEntityBehaviour;
 import com.simibubi.create.foundation.utility.Couple;
 
+import com.simibubi.create.lib.utility.Constants;
+
 import net.minecraft.block.BlockState;
 import net.minecraft.command.CommandSource;
 import net.minecraft.command.ICommandSource;
@@ -25,7 +27,6 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextComponentUtils;
 import net.minecraft.world.server.ServerWorld;
-import net.minecraftforge.common.util.Constants.NBT;
 
 public class NixieTubeTileEntity extends SmartTileEntity {
 
@@ -84,7 +85,7 @@ public class NixieTubeTileEntity extends SmartTileEntity {
 
 	public void displayCustomNameOf(ItemStack stack, int nixiePositionInRow) {
 		CompoundNBT compoundnbt = stack.getChildTag("display");
-		if (compoundnbt != null && compoundnbt.contains("Name", NBT.TAG_STRING)) {
+		if (compoundnbt != null && compoundnbt.contains("Name", Constants.NBT.TAG_STRING)) {
 			hasCustomText = true;
 			rawCustomText = getJsonFromString(compoundnbt.getString("Name"));
 			customTextIndex = nixiePositionInRow;
@@ -116,7 +117,7 @@ public class NixieTubeTileEntity extends SmartTileEntity {
 	protected void fromTag(BlockState state, CompoundNBT nbt, boolean clientPacket) {
 		super.fromTag(state, nbt, clientPacket);
 
-		if (nbt.contains("RawCustomText", NBT.TAG_STRING)) {
+		if (nbt.contains("RawCustomText", Constants.NBT.TAG_STRING)) {
 			rawCustomText = getJsonFromString(nbt.getString("RawCustomText"));
 			// Check if string forms valid JSON
 			if (rawCustomText != null && !rawCustomText.isJsonNull()) {

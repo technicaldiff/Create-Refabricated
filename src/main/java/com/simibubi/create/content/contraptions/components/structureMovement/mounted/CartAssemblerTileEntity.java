@@ -40,10 +40,7 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.util.math.vector.Vector3i;
 import net.minecraft.world.World;
-import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 
-@EventBusSubscriber
 public class CartAssemblerTileEntity extends SmartTileEntity implements IDisplayAssemblyExceptions {
 	private static final int assemblyCooldown = 8;
 
@@ -96,7 +93,7 @@ public class CartAssemblerTileEntity extends SmartTileEntity implements IDisplay
 						.isNormalCube(world, pos.offset(d)))
 						facing = d.getOpposite();
 
-				float speed = 0.4;//block.getRailMaxSpeed(state, world, pos, cart);
+				float speed = 0.4f;//block.getRailMaxSpeed(state, world, pos, cart);
 				cart.setMotion(facing.getXOffset() * speed, facing.getYOffset() * speed, facing.getZOffset() * speed);
 			}
 		}
@@ -105,7 +102,7 @@ public class CartAssemblerTileEntity extends SmartTileEntity implements IDisplay
 				ControllerRailBlock.getAccelerationVector(AllBlocks.CONTROLLER_RAIL.getDefaultState()
 					.with(ControllerRailBlock.SHAPE, state.get(CartAssemblerBlock.RAIL_SHAPE))
 					.with(ControllerRailBlock.BACKWARDS, state.get(CartAssemblerBlock.BACKWARDS)));
-			float speed = 0.4;//block.getRailMaxSpeed(state, world, pos, cart);
+			float speed = 0.4f;//block.getRailMaxSpeed(state, world, pos, cart);
 			cart.setMotion(Vector3d.of(accelerationVector)
 				.scale(speed));
 		}

@@ -14,6 +14,10 @@ import com.simibubi.create.foundation.config.AllConfigs;
 import com.simibubi.create.foundation.utility.AnimationTickHolder;
 import com.simibubi.create.foundation.utility.VecHelper;
 
+import com.simibubi.create.lib.item.CustomDurabilityBarItem;
+
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.player.ClientPlayerEntity;
@@ -35,10 +39,8 @@ import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 
-public class PotatoCannonItem extends ShootableItem implements IBackTankRechargeable {
+public class PotatoCannonItem extends ShootableItem implements IBackTankRechargeable, CustomDurabilityBarItem {
 
 	public static ItemStack CLIENT_CURRENT_AMMO = ItemStack.EMPTY;
 	public static final int MAX_DAMAGE = 100;
@@ -58,10 +60,10 @@ public class PotatoCannonItem extends ShootableItem implements IBackTankRecharge
 		return onItemRightClick(context.getWorld(), context.getPlayer(), context.getHand()).getType();
 	}
 
-	@Override
-	public int getItemStackLimit(ItemStack stack) {
-		return 1;
-	}
+//	@Override
+//	public int getItemStackLimit(ItemStack stack) {
+//		return 1;
+//	}
 
 	@Override
 	public int getRGBDurabilityForDisplay(ItemStack stack) {
@@ -92,15 +94,15 @@ public class PotatoCannonItem extends ShootableItem implements IBackTankRecharge
 		return stack.getItem() instanceof PotatoCannonItem;
 	}
 
-	@Override
-	public int getMaxDamage(ItemStack stack) {
-		return MAX_DAMAGE;
-	}
+//	@Override
+//	public int getMaxDamage(ItemStack stack) {
+//		return MAX_DAMAGE;
+//	}
 
 	@Override
 	public ActionResult<ItemStack> onItemRightClick(World world, PlayerEntity player, Hand hand) {
 		ItemStack stack = player.getHeldItem(hand);
-		if (stack.getDamage() == getMaxDamage(stack) - 1)
+		if (stack.getDamage() == stack.getMaxDamage() - 1)
 			return ActionResult.pass(stack);
 
 		return findAmmoInInventory(world, player, stack).map(itemStack -> {
@@ -170,10 +172,10 @@ public class PotatoCannonItem extends ShootableItem implements IBackTankRecharge
 			.orElse(ActionResult.pass(stack));
 	}
 
-	@Override
-	public boolean shouldCauseReequipAnimation(ItemStack oldStack, ItemStack newStack, boolean slotChanged) {
-		return slotChanged || newStack.getItem() != oldStack.getItem();
-	}
+//	@Override
+//	public boolean shouldCauseReequipAnimation(ItemStack oldStack, ItemStack newStack, boolean slotChanged) {
+//		return slotChanged || newStack.getItem() != oldStack.getItem();
+//	}
 
 	private Optional<ItemStack> findAmmoInInventory(World world, PlayerEntity player, ItemStack held) {
 		ItemStack findAmmo = player.findAmmo(held);
@@ -181,7 +183,7 @@ public class PotatoCannonItem extends ShootableItem implements IBackTankRecharge
 			.map($ -> findAmmo);
 	}
 
-	@OnlyIn(Dist.CLIENT)
+	@Environment(EnvType.CLIENT)
 	public static Optional<ItemStack> getAmmoforPreview(ItemStack cannon) {
 		if (AnimationTickHolder.getTicks() % 3 != 0)
 			return Optional.of(CLIENT_CURRENT_AMMO)
@@ -199,7 +201,7 @@ public class PotatoCannonItem extends ShootableItem implements IBackTankRecharge
 	}
 
 	@Override
-	@OnlyIn(Dist.CLIENT)
+	@Environment(EnvType.CLIENT)
 	public void addInformation(ItemStack stack, World world, List<ITextComponent> tooltip, ITooltipFlag flag) {
 		getAmmoforPreview(stack).ifPresent(ammo -> {
 			tooltip.add(new StringTextComponent(""));
@@ -230,10 +232,10 @@ public class PotatoCannonItem extends ShootableItem implements IBackTankRecharge
 		return 1;
 	}
 
-	@Override
-	public boolean onEntitySwing(ItemStack stack, LivingEntity entity) {
-		return true;
-	}
+//	@Override
+//	public boolean onEntitySwing(ItemStack stack, LivingEntity entity) {
+//		return true;
+//	}
 
 	@Override
 	public UseAction getUseAction(ItemStack stack) {

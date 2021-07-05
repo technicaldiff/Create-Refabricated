@@ -16,7 +16,6 @@ import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.TickPriority;
-import net.minecraftforge.items.IItemHandler;
 
 public class StockpileSwitchTileEntity extends SmartTileEntity {
 

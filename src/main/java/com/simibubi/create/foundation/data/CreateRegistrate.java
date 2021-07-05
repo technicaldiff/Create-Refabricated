@@ -185,32 +185,32 @@ public class CreateRegistrate extends AbstractRegistrate<CreateRegistrate> {
 	/* Util */
 
 	public static <T extends Block> NonNullConsumer<? super T> connectedTextures(ConnectedTextureBehaviour behavior) {
-		return entry -> onClient(() -> () -> ClientMethods.registerCTBehviour(entry, behavior));
+		return entry -> onClient(() -> () -> registerCTBehviour(entry, behavior));
 	}
 
 	public static <T extends Block> NonNullConsumer<? super T> casingConnectivity(
 			BiConsumer<T, CasingConnectivity> consumer) {
-		return entry -> onClient(() -> () -> ClientMethods.registerCasingConnectivity(entry, consumer));
+		return entry -> onClient(() -> () -> registerCasingConnectivity(entry, consumer));
 	}
 
 	public static <T extends Block> NonNullConsumer<? super T> blockVertexColors(IBlockVertexColor colorFunc) {
-		return entry -> onClient(() -> () -> ClientMethods.registerBlockVertexColor(entry, colorFunc));
+		return entry -> onClient(() -> () -> registerBlockVertexColor(entry, colorFunc));
 	}
 
 	public static <T extends Block> NonNullConsumer<? super T> blockModel(
 			Supplier<NonNullFunction<IBakedModel, ? extends IBakedModel>> func) {
-		return entry -> onClient(() -> () -> ClientMethods.registerBlockModel(entry, func));
+		return entry -> onClient(() -> () -> registerBlockModel(entry, func));
 	}
 
 	public static <T extends Item> NonNullConsumer<? super T> itemModel(
 			Supplier<NonNullFunction<IBakedModel, ? extends IBakedModel>> func) {
-		return entry -> onClient(() -> () -> ClientMethods.registerItemModel(entry, func));
+		return entry -> onClient(() -> () -> registerItemModel(entry, func));
 	}
 
 	public static <T extends Item, P> NonNullUnaryOperator<ItemBuilder<T, P>> customRenderedItem(
 			Supplier<NonNullFunction<IBakedModel, ? extends CustomRenderedItemModel>> func) {
 		return b -> b
-				.onRegister(entry -> onClient(() -> () -> ClientMethods.registerCustomRenderedItem(entry, func)));
+				.onRegister(entry -> onClient(() -> () -> registerCustomRenderedItem(entry, func)));
 	}
 
 	protected static void onClient(Supplier<Runnable> toRun) {
@@ -242,20 +242,18 @@ public class CreateRegistrate extends AbstractRegistrate<CreateRegistrate> {
 				.register(() -> entry, func.get());
 	}
 
-		@Environment(EnvType.CLIENT)
-		private static void registerItemModel(Item entry,
-											  Supplier<NonNullFunction<IBakedModel, ? extends IBakedModel>> func) {
-			CreateClient.getCustomItemModels()
-					.register(() -> entry, func.get());
-		}
+	@Environment(EnvType.CLIENT)
+	private static void registerItemModel(Item entry,
+										  Supplier<NonNullFunction<IBakedModel, ? extends IBakedModel>> func) {
+		CreateClient.getCustomItemModels()
+				.register(() -> entry, func.get());
+	}
 
-		@Environment(EnvType.CLIENT)
-		private static void registerCustomRenderedItem(Item entry,
-													   Supplier<NonNullFunction<IBakedModel, ? extends CustomRenderedItemModel>> func) {
-			BuiltinItemRendererRegistry.INSTANCE.register(entry, func.get().apply(null).createRenderer());
-			CreateClient.getCustomRenderedItems()
-					.register(ItemSupplierHelper.getSupplier(entry), func.get());
-		}
-
+	@Environment(EnvType.CLIENT)
+	private static void registerCustomRenderedItem(Item entry,
+												   Supplier<NonNullFunction<IBakedModel, ? extends CustomRenderedItemModel>> func) {
+		BuiltinItemRendererRegistry.INSTANCE.register(entry, func.get().apply(null).createRenderer());
+		CreateClient.getCustomRenderedItems()
+				.register(ItemSupplierHelper.getSupplier(entry), func.get());
 	}
 }

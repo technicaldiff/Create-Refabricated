@@ -3,6 +3,9 @@ package com.simibubi.create.events;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.simibubi.create.content.curiosities.bell.HauntedBellPulser;
+import com.simibubi.create.lib.event.PlayerTickEndCallback;
+
 import org.jetbrains.annotations.Nullable;
 
 import com.mojang.brigadier.CommandDispatcher;
@@ -206,6 +209,7 @@ public class CommonEvents {
 		UseEntityCallback.EVENT.register(MinecartContraptionItem::wrenchCanBeUsedToPickUpMinecartContraptions);
 		BlockPlaceCallback.EVENT.register(SymmetryHandler::onBlockPlaced);
 		ScreenEvents.AFTER_INIT.register(OpenCreateMenuButton.OpenConfigButtonHandler::onGuiInit);
+		PlayerTickEndCallback.EVENT.register(HauntedBellPulser::hauntedBellCreatesPulse);
 	}
 
 }

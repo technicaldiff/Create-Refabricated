@@ -12,6 +12,8 @@ import com.simibubi.create.foundation.utility.Iterate;
 import com.simibubi.create.foundation.utility.MatrixStacker;
 import com.simibubi.create.lib.lba.fluid.FluidStack;
 
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.client.render.fluid.v1.FluidRenderHandler;
 import net.fabricmc.fabric.api.client.render.fluid.v1.FluidRenderHandlerRegistry;
 import net.minecraft.client.Minecraft;
@@ -27,12 +29,8 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.util.math.vector.Vector3i;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.fluids.FluidAttributes;
-import net.minecraftforge.fluids.FluidStack;
 
-@OnlyIn(Dist.CLIENT)
+@Environment(EnvType.CLIENT)
 public class FluidRenderer {
 
 	public static IVertexBuilder getFluidBuilder(IRenderTypeBuffer buffer) {
@@ -41,7 +39,6 @@ public class FluidRenderer {
 
 	public static void renderFluidStream(FluidStack fluidStack, Direction direction, float radius, float progress,
 										 boolean inbound, IRenderTypeBuffer buffer, MatrixStack ms, int light) {
-		boolean inbound, IRenderTypeBuffer buffer, MatrixStack ms, int light) {
 		renderFluidStream(fluidStack, direction, radius, progress, inbound, getFluidBuilder(buffer), ms, light);
 	}
 

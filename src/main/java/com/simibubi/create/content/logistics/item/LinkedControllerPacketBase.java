@@ -9,7 +9,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
-import net.minecraftforge.fml.network.NetworkEvent.Context;
 import net.minecraft.network.play.ServerPlayNetHandler;
 import net.minecraft.server.MinecraftServer;
 
@@ -44,7 +43,6 @@ public abstract class LinkedControllerPacketBase implements C2SPacket {
 	@Override
 	public void handle(MinecraftServer server, ServerPlayerEntity player, ServerPlayNetHandler handler, SimpleChannel.ResponseTarget responseTarget) {
 		server.execute(() -> {
-			ServerPlayerEntity player = context.get().getSender();
 			if (player == null)
 				return;
 
@@ -61,7 +59,8 @@ public abstract class LinkedControllerPacketBase implements C2SPacket {
 						return;
 				}
 				handleItem(player, controller);
-			});
+			}
+		});
 	}
 
 	protected abstract void handleItem(ServerPlayerEntity player, ItemStack heldItem);

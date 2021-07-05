@@ -16,10 +16,7 @@ import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.TileEntityType;
-import net.minecraft.util.registry.Registry;
 import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
-import net.minecraftforge.items.ItemStackHandler;
 
 public class SchematicTableTileEntity extends SyncedTileEntity implements ITickableTileEntity, INamedContainerProvider, IInteractionChecker {
 

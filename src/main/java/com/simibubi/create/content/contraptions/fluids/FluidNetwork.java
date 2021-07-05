@@ -12,7 +12,6 @@ import java.util.function.Supplier;
 
 import javax.annotation.Nullable;
 
-import com.simibubi.create.content.contraptions.components.actors.PortableFluidInterfaceTileEntity.InterfaceFluidHandler;
 import com.simibubi.create.content.contraptions.fluids.PipeConnection.Flow;
 import com.simibubi.create.foundation.fluid.FluidHelper;
 import com.simibubi.create.foundation.tileEntity.TileEntityBehaviour;
@@ -159,9 +158,9 @@ public class FluidNetwork {
 			source = sourceSupplier.get();
 		if (!source.isPresent())
 			return;
-		
+
 		keepPortableFluidInterfaceEngaged();
-		
+
 		if (targets.isEmpty())
 			return;
 		for (Pair<BlockFace, IFluidHandler> pair : targets) {
@@ -259,7 +258,7 @@ public class FluidNetwork {
 
 	private void keepPortableFluidInterfaceEngaged() {
 		IFluidHandler handler = source.orElse(null);
-		if (!(handler instanceof InterfaceFluidHandler)) 
+		if (!(handler instanceof InterfaceFluidHandler))
 			return;
 		if (frontier.isEmpty())
 			return;

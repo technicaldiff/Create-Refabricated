@@ -1,15 +1,15 @@
 package com.simibubi.create.content.curiosities.bell;
 
-import java.util.function.Supplier;
-
 import com.simibubi.create.CreateClient;
-import com.simibubi.create.foundation.networking.SimplePacketBase;
 
+import me.pepperbell.simplenetworking.S2CPacket;
+import me.pepperbell.simplenetworking.SimpleChannel;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.network.play.ClientPlayNetHandler;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.math.BlockPos;
-import net.minecraftforge.fml.network.NetworkEvent;
 
-public class SoulPulseEffectPacket extends SimplePacketBase {
+public class SoulPulseEffectPacket implements S2CPacket {
 
 	public BlockPos pos;
 	public int distance;
@@ -21,7 +21,7 @@ public class SoulPulseEffectPacket extends SimplePacketBase {
 		this.canOverlap = overlaps;
 	}
 
-	public SoulPulseEffectPacket(PacketBuffer buffer) {
+	public void read(PacketBuffer buffer) {
 		pos = buffer.readBlockPos();
 		distance = buffer.readInt();
 		canOverlap = buffer.readBoolean();
@@ -35,11 +35,10 @@ public class SoulPulseEffectPacket extends SimplePacketBase {
 	}
 
 	@Override
-	public void handle(Supplier<NetworkEvent.Context> context) {
-		context.get().enqueueWork(() -> {
+	public void handle(Minecraft client, ClientPlayNetHandler handler, SimpleChannel.ResponseTarget responseTarget) {
+		client.execute(() -> {
 			CreateClient.SOUL_PULSE_EFFECT_HANDLER.addPulse(new SoulPulseEffect(pos, distance, canOverlap));
 		});
-		context.get().setPacketHandled(true);
 	}
 
 }

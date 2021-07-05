@@ -64,18 +64,7 @@ import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.Direction;
 import net.minecraft.util.Direction.AxisDirection;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MutableBoundingBox;
-import net.minecraft.util.registry.Registry;
 import net.minecraft.util.text.ITextComponent;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.items.CapabilityItemHandler;
-import net.minecraftforge.items.IItemHandler;
-import net.minecraftforge.items.ItemHandlerHelper;
-import net.minecraftforge.items.wrapper.EmptyHandler;
-import net.minecraft.world.gen.feature.template.PlacementSettings;
-import net.minecraft.world.gen.feature.template.Template;
 
 public class SchematicannonTileEntity extends SmartTileEntity implements INamedContainerProvider, IInstanceRendered, CustomRenderBoundingBox {
 
@@ -595,13 +584,13 @@ public class SchematicannonTileEntity extends SmartTileEntity implements INamedC
 		if (pos.withinDistance(getPos(), 2f))
 			return false;
 		if (!replaceTileEntities
-				&& (toReplace.hasTileEntity() || (toReplaceOther != null && toReplaceOther.hasTileEntity())))
+				&& (toReplace.getBlock().hasBlockEntity() || (toReplaceOther != null && toReplaceOther.getBlock().hasBlockEntity())))
 			return false;
 
 		if (shouldIgnoreBlockState(state, te))
 			return false;
 
-		boolean placingAir = state.getBlock().isAir(state, world, pos);
+		boolean placingAir = state.isAir();
 
 		if (replaceMode == 3)
 			return true;
@@ -771,7 +760,7 @@ public class SchematicannonTileEntity extends SmartTileEntity implements INamedC
 	}
 
 	protected void launchBlock(BlockPos target, ItemStack stack, BlockState state, @Nullable CompoundNBT data) {
-		if (!state.getBlock().isAir(state, world, target))
+		if (!state.isAir())
 			blocksPlaced++;
 		flyingBlocks.add(new LaunchedItem.ForBlockState(this.getPos(), target, stack, state, data));
 		playFiringSound();

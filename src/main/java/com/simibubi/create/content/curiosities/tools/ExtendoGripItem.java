@@ -9,11 +9,11 @@ import com.simibubi.create.AllItems;
 import com.simibubi.create.content.curiosities.armor.BackTankUtil;
 import com.simibubi.create.content.curiosities.armor.IBackTankRechargeable;
 import com.simibubi.create.foundation.advancement.AllTriggers;
+import com.simibubi.create.lib.item.CustomDurabilityBarItem;
 import com.simibubi.create.lib.utility.ExtraDataUtil;
 import com.simibubi.create.foundation.config.AllConfigs;
-import com.simibubi.create.foundation.networking.AllPackets;
-import com.simibubi.create.foundation.utility.AnimationTickHolder;
 
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.attributes.Attribute;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
@@ -25,28 +25,8 @@ import net.minecraft.item.Rarity;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.LazyValue;
-import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.util.math.EntityRayTraceResult;
-import net.minecraft.util.math.RayTraceResult.Type;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.client.event.InputEvent.ClickInputEvent;
-import net.minecraftforge.common.ForgeMod;
-import net.minecraftforge.event.entity.living.LivingAttackEvent;
-import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
-import net.minecraftforge.event.entity.living.LivingKnockBackEvent;
-import net.minecraftforge.event.entity.player.AttackEntityEvent;
-import net.minecraftforge.event.entity.player.PlayerEvent;
-import net.minecraftforge.event.entity.player.PlayerInteractEvent;
-import net.minecraftforge.event.world.BlockEvent.BreakEvent;
-import net.minecraftforge.event.world.BlockEvent.EntityPlaceEvent;
-import net.minecraftforge.eventbus.api.EventPriority;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 
-public class ExtendoGripItem extends Item implements IBackTankRechargeable {
+public class ExtendoGripItem extends Item implements IBackTankRechargeable, CustomDurabilityBarItem {
 	private static DamageSource lastActiveDamageSource;
 
 	public static final int MAX_DAMAGE = 200;
@@ -64,7 +44,7 @@ public class ExtendoGripItem extends Item implements IBackTankRechargeable {
 
 	static LazyValue<Multimap<Attribute, AttributeModifier>> doubleRangeModifier = new LazyValue<>(() ->
 	// Holding two ExtendoGrips o.O
-	ImmutableMultimap.of(ReachEntityAttributes.REACH doubleRangeAttributeModifier));
+	ImmutableMultimap.of(ReachEntityAttributes.REACH, doubleRangeAttributeModifier));
 
 	public ExtendoGripItem(Properties properties) {
 		super(properties.maxStackSize(1)
@@ -232,10 +212,10 @@ public class ExtendoGripItem extends Item implements IBackTankRechargeable {
 		return true;
 	}
 
-	@Override
-	public int getMaxDamage(ItemStack stack) {
-		return MAX_DAMAGE;
-	}
+//	@Override
+//	public int getMaxDamage(ItemStack stack) {
+//		return MAX_DAMAGE; // handled in constructor for item
+//	}
 
 	@SubscribeEvent
 	public static void bufferLivingAttackEvent(LivingAttackEvent event) {
@@ -255,8 +235,7 @@ public class ExtendoGripItem extends Item implements IBackTankRechargeable {
 //			return strength;
 		Entity entity = lastActiveDamageSource.getImmediateSource();
 		if (!(entity instanceof PlayerEntity))
-			return;
-		PlayerEntity player = (PlayerEntity) entity;
+			return strength;
 		if (!isHoldingExtendoGrip(player))
 			return strength;
 		return strength + 2;
