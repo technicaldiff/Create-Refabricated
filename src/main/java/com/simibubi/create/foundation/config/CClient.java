@@ -51,6 +51,10 @@ public class CClient extends ConfigBase {
 	public ConfigGroup ponder = group(1, "ponder", "Ponder settings");
 	public ConfigBool comfyReading =
 		b(false, "comfyReading", "Slow down a ponder scene whenever there is text on screen.");
+	
+	public ConfigGroup sound = group(1, "sound", "Sound settings");
+	public ConfigBool enableAmbientSounds = b(true, "enableAmbientSounds", "Make cogs rumble and machines clatter.");
+	public ConfigFloat ambientVolumeCap = f(.1f, 0, 1, "ambientVolumeCap", "Maximum volume modifier of Ambient noise");
 
 	public Config config = new Config(getName());
 	@Override

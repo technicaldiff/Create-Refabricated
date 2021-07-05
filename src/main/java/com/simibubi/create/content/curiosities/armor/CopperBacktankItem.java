@@ -16,6 +16,7 @@ import net.minecraft.util.math.MathHelper;
 
 public class CopperBacktankItem extends CopperArmorItem implements CustomDurabilityBarItem {
 
+	public static final int DURABILITY_BAR = 0xefefef;
 	private BlockItem blockItem;
 
 	public CopperBacktankItem(Properties p_i48534_3_, BlockItem blockItem) {
@@ -35,7 +36,7 @@ public class CopperBacktankItem extends CopperArmorItem implements CustomDurabil
 
 	@Override
 	public int getRGBDurabilityForDisplay(ItemStack stack) {
-		return 0xefefef;
+		return DURABILITY_BAR;
 	}
 
 	@Override

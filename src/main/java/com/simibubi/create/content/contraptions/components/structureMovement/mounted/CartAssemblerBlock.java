@@ -2,8 +2,6 @@ package com.simibubi.create.content.contraptions.components.structureMovement.mo
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -48,7 +46,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUseContext;
 import net.minecraft.loot.LootContext;
 import net.minecraft.loot.LootParameters;
-import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.pathfinding.PathType;
 import net.minecraft.state.BooleanProperty;
 import net.minecraft.state.EnumProperty;
@@ -67,12 +64,10 @@ import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.util.math.shapes.VoxelShapes;
 import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.util.math.vector.Vector3i;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorldReader;
 import net.minecraft.world.World;
@@ -81,15 +76,17 @@ import net.minecraft.world.server.ServerWorld;
 public class CartAssemblerBlock extends AbstractRailBlock
 	implements ITE<CartAssemblerTileEntity>, IWrenchable, ISpecialBlockItemRequirement, ITileEntityProvider, MinecartPassHandlerBlock, SlopeCreationCheckingRail {
 
+	public static final BooleanProperty POWERED = BlockStateProperties.POWERED;
+	public static final BooleanProperty BACKWARDS = BooleanProperty.create("backwards");
 	public static final Property<RailShape> RAIL_SHAPE =
 		EnumProperty.create("shape", RailShape.class, RailShape.EAST_WEST, RailShape.NORTH_SOUTH);
 	public static final Property<CartAssembleRailType> RAIL_TYPE =
 		EnumProperty.create("rail_type", CartAssembleRailType.class);
-	public static final BooleanProperty POWERED = BlockStateProperties.POWERED;
 
 	public CartAssemblerBlock(Properties properties) {
 		super(true, properties);
 		setDefaultState(getDefaultState().with(POWERED, false)
+			.with(BACKWARDS, false)
 			.with(RAIL_TYPE, CartAssembleRailType.POWERED_RAIL));
 	}
 
@@ -109,15 +106,14 @@ public class CartAssemblerBlock extends AbstractRailBlock
 			.getBlock();
 		BlockState railState = railBlock.getDefaultState()
 			.with(railBlock.getShapeProperty(), state.get(RAIL_SHAPE));
-		if (railState.contains(ControllerRailBlock.BACKWARDS)) {
-			railState = railState.with(ControllerRailBlock.BACKWARDS, state.get(RAIL_TYPE) == CartAssembleRailType.CONTROLLER_RAIL_BACKWARDS);
-		}
+		if (railState.contains(ControllerRailBlock.BACKWARDS))
+			railState = railState.with(ControllerRailBlock.BACKWARDS, state.get(BACKWARDS));
 		return railState;
 	}
 
 	@Override
 	protected void fillStateContainer(Builder<Block, BlockState> builder) {
-		builder.add(RAIL_SHAPE, POWERED, RAIL_TYPE);
+		builder.add(RAIL_SHAPE, POWERED, RAIL_TYPE, BACKWARDS);
 		super.fillStateContainer(builder);
 	}
 
@@ -157,25 +153,22 @@ public class CartAssemblerBlock extends AbstractRailBlock
 	public static CartAssemblerAction getActionForCart(BlockState state, AbstractMinecartEntity cart) {
 		CartAssembleRailType type = state.get(RAIL_TYPE);
 		boolean powered = state.get(POWERED);
-
-		if (type == CartAssembleRailType.REGULAR)
-			return powered ? CartAssemblerAction.ASSEMBLE : CartAssemblerAction.DISASSEMBLE;
-
-		if (type == CartAssembleRailType.ACTIVATOR_RAIL)
+		switch (type) {
+		case ACTIVATOR_RAIL:
 			return powered ? CartAssemblerAction.DISASSEMBLE : CartAssemblerAction.PASS;
-
-		if (type == CartAssembleRailType.POWERED_RAIL)
-			return powered ? CartAssemblerAction.ASSEMBLE_ACCELERATE : CartAssemblerAction.DISASSEMBLE_BRAKE;
-
-		if (type == CartAssembleRailType.DETECTOR_RAIL)
-			return cart.getPassengers()
-				.isEmpty() ? CartAssemblerAction.ASSEMBLE_ACCELERATE : CartAssemblerAction.DISASSEMBLE;
-
-		if (type == CartAssembleRailType.CONTROLLER_RAIL || type == CartAssembleRailType.CONTROLLER_RAIL_BACKWARDS)
+		case CONTROLLER_RAIL:
 			return powered ? CartAssemblerAction.ASSEMBLE_ACCELERATE_DIRECTIONAL
 				: CartAssemblerAction.DISASSEMBLE_BRAKE;
-
-		return CartAssemblerAction.PASS;
+		case DETECTOR_RAIL:
+			return cart.getPassengers()
+				.isEmpty() ? CartAssemblerAction.ASSEMBLE_ACCELERATE : CartAssemblerAction.DISASSEMBLE;
+		case POWERED_RAIL:
+			return powered ? CartAssemblerAction.ASSEMBLE_ACCELERATE : CartAssemblerAction.DISASSEMBLE_BRAKE;
+		case REGULAR:
+			return powered ? CartAssemblerAction.ASSEMBLE : CartAssemblerAction.DISASSEMBLE;
+		default:
+			return CartAssemblerAction.PASS;
+		}
 	}
 
 	public static boolean canAssembleTo(AbstractMinecartEntity cart) {
@@ -216,12 +209,9 @@ public class CartAssemblerBlock extends AbstractRailBlock
 		@Nonnull Block blockIn, @Nonnull BlockPos fromPos, boolean isMoving) {
 		if (worldIn.isRemote)
 			return;
-
 		boolean previouslyPowered = state.get(POWERED);
-		if (previouslyPowered != worldIn.isBlockPowered(pos)) {
+		if (previouslyPowered != worldIn.isBlockPowered(pos))
 			worldIn.setBlockState(pos, state.cycle(POWERED), 2);
-		}
-
 		super.neighborChanged(state, worldIn, pos, blockIn, fromPos, isMoving);
 	}
 
@@ -271,6 +261,14 @@ public class CartAssemblerBlock extends AbstractRailBlock
 	}
 
 	@Override
+	public ItemRequirement getRequiredItems(BlockState state, TileEntity te) {
+		ArrayList<ItemStack> reuiredItems = new ArrayList<>();
+		reuiredItems.add(new ItemStack(getRailItem(state)));
+		reuiredItems.add(new ItemStack(asItem()));
+		return new ItemRequirement(ItemUseType.CONSUME, reuiredItems);
+	}
+
+	@Override
 	@SuppressWarnings("deprecation")
 	@Nonnull
 	public List<ItemStack> getDrops(@Nonnull BlockState state,
@@ -280,16 +278,8 @@ public class CartAssemblerBlock extends AbstractRailBlock
 		return drops;
 	}
 
-	@Override
-	public ItemRequirement getRequiredItems(BlockState state, TileEntity te) {
-		ArrayList<ItemStack> reuiredItems = new ArrayList<>();
-		reuiredItems.add(new ItemStack(getRailItem(state)));
-		reuiredItems.add(new ItemStack(asItem()));
-		return new ItemRequirement(ItemUseType.CONSUME, reuiredItems);
-	}
-
 	@SuppressWarnings("deprecation")
-	public List<ItemStack> getDropedAssembler(BlockState state, ServerWorld world, BlockPos pos,
+	public List<ItemStack> getDropsNoRail(BlockState state, ServerWorld world, BlockPos pos,
 		@Nullable TileEntity p_220077_3_, @Nullable Entity p_220077_4_, ItemStack p_220077_5_) {
 		return super.getDrops(state, (new LootContext.Builder(world)).withRandom(world.rand)
 			.withParameter(LootParameters.ORIGIN, Vector3d.of(pos))
@@ -305,13 +295,10 @@ public class CartAssemblerBlock extends AbstractRailBlock
 		PlayerEntity player = context.getPlayer();
 		if (world.isRemote)
 			return ActionResultType.SUCCESS;
-
 		if (player != null && !player.isCreative())
-			getDropedAssembler(state, (ServerWorld) world, pos, world.getTileEntity(pos), player, context.getItem())
-				.forEach(itemStack -> {
-					player.inventory.placeItemBackInInventory(world, itemStack);
-				});
-		if(world instanceof ServerWorld)
+			getDropsNoRail(state, (ServerWorld) world, pos, world.getTileEntity(pos), player, context.getItem())
+				.forEach(itemStack -> player.inventory.placeItemBackInInventory(world, itemStack));
+		if (world instanceof ServerWorld)
 			state.spawnAdditionalDrops((ServerWorld) world, pos, ItemStack.EMPTY);
 		world.setBlockState(pos, getRailBlock(state));
 		return ActionResultType.SUCCESS;
@@ -357,39 +344,38 @@ public class CartAssemblerBlock extends AbstractRailBlock
 	public BlockState rotate(BlockState state, Rotation rotation) {
 		if (rotation == Rotation.NONE)
 			return state;
-
-		boolean is_controller_rail_backwards = state.get(RAIL_TYPE) == CartAssembleRailType.CONTROLLER_RAIL_BACKWARDS;
-		boolean is_controller_rail = state.get(RAIL_TYPE) == CartAssembleRailType.CONTROLLER_RAIL || is_controller_rail_backwards;
 		BlockState base = AllBlocks.CONTROLLER_RAIL.getDefaultState()
-				.with(ControllerRailBlock.SHAPE, state.get(RAIL_SHAPE))
-				.with(ControllerRailBlock.BACKWARDS, is_controller_rail_backwards)
-				.rotate(rotation);
-		if (is_controller_rail) {
-			state = state.with(RAIL_TYPE,
-					base.get(ControllerRailBlock.BACKWARDS) ? CartAssembleRailType.CONTROLLER_RAIL_BACKWARDS :
-							CartAssembleRailType.CONTROLLER_RAIL
-			);
-		}
-		return state.with(RAIL_SHAPE, base.get(ControllerRailBlock.SHAPE));
+			.with(ControllerRailBlock.SHAPE, state.get(RAIL_SHAPE))
+			.with(ControllerRailBlock.BACKWARDS, state.get(BACKWARDS))
+			.rotate(rotation);
+		return state.with(RAIL_SHAPE, base.get(ControllerRailBlock.SHAPE))
+			.with(BACKWARDS, base.get(ControllerRailBlock.BACKWARDS));
 	}
 
 	@Override
 	public BlockState mirror(BlockState state, Mirror mirror) {
 		if (mirror == Mirror.NONE)
 			return state;
-
-		boolean is_controller_rail_backwards = state.get(RAIL_TYPE) == CartAssembleRailType.CONTROLLER_RAIL_BACKWARDS;
-		boolean is_controller_rail = state.get(RAIL_TYPE) == CartAssembleRailType.CONTROLLER_RAIL || is_controller_rail_backwards;
 		BlockState base = AllBlocks.CONTROLLER_RAIL.getDefaultState()
-				.with(ControllerRailBlock.SHAPE, state.get(RAIL_SHAPE))
-				.with(ControllerRailBlock.BACKWARDS, is_controller_rail_backwards)
-				.mirror(mirror);
-		if (is_controller_rail) {
-			state = state.with(RAIL_TYPE,
-					base.get(ControllerRailBlock.BACKWARDS) ? CartAssembleRailType.CONTROLLER_RAIL_BACKWARDS :
-							CartAssembleRailType.CONTROLLER_RAIL
-			);
+			.with(ControllerRailBlock.SHAPE, state.get(RAIL_SHAPE))
+			.with(ControllerRailBlock.BACKWARDS, state.get(BACKWARDS))
+			.mirror(mirror);
+		return state.with(BACKWARDS, base.get(ControllerRailBlock.BACKWARDS));
+	}
+
+	public static Direction getHorizontalDirection(BlockState blockState) {
+		if (!(blockState.getBlock() instanceof CartAssemblerBlock))
+			return Direction.SOUTH;
+		Direction pointingTo = getPointingTowards(blockState);
+		return blockState.get(BACKWARDS) ? pointingTo.getOpposite() : pointingTo;
+	}
+
+	private static Direction getPointingTowards(BlockState state) {
+		switch (state.get(RAIL_SHAPE)) {
+		case EAST_WEST:
+			return Direction.WEST;
+		default:
+			return Direction.NORTH;
 		}
-		return state.with(RAIL_SHAPE, base.get(ControllerRailBlock.SHAPE));
 	}
 }

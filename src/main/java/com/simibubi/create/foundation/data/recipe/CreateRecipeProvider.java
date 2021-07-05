@@ -77,6 +77,10 @@ public abstract class CreateRecipeProvider extends RecipeProvider {
 			return AllBlocks.COGWHEEL.get();
 		}
 
+		static IItemProvider largeCog() {
+			return AllBlocks.LARGE_COGWHEEL.get();
+		}
+
 		static IItemProvider andesiteCasing() {
 			return AllBlocks.ANDESITE_CASING.get();
 		}
@@ -92,6 +96,10 @@ public abstract class CreateRecipeProvider extends RecipeProvider {
 //		static ITag.INamedTag<Item> iron() {
 //			return Tags.Items.INGOTS_IRON;
 //		}
+
+		static ITag.INamedTag<Item> ironNugget() {
+			return AllTags.forgeItemTag("nuggets/iron");
+		}
 
 		static ITag.INamedTag<Item> zinc() {
 			return AllTags.forgeItemTag("ingots/zinc");
@@ -109,8 +117,8 @@ public abstract class CreateRecipeProvider extends RecipeProvider {
 			return AllItems.ELECTRON_TUBE.get();
 		}
 
-		static IItemProvider circuit() {
-			return AllItems.INTEGRATED_CIRCUIT.get();
+		static IItemProvider clockwork() {
+			return AllItems.CLOCKWORK_COMPONENT.get();
 		}
 
 		static ITag.INamedTag<Item> copperBlock() {

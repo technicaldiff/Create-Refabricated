@@ -14,8 +14,6 @@ import com.simibubi.create.foundation.gui.ScreenOpener;
 import com.simibubi.create.foundation.ponder.PonderRegistry;
 import com.simibubi.create.foundation.ponder.PonderUI;
 import com.simibubi.create.foundation.ponder.content.PonderIndexScreen;
-import com.simibubi.create.foundation.render.backend.FastRenderDispatcher;
-import com.simibubi.create.foundation.render.backend.OptifineHandler;
 
 import me.pepperbell.simplenetworking.S2CPacket;
 import me.pepperbell.simplenetworking.SimpleChannel.ResponseTarget;
@@ -117,7 +115,6 @@ public class SConfigureConfigPacket implements S2CPacket {
 		overlayScreen(() -> Actions::overlayScreen),
 		fixLighting(() -> Actions::experimentalLighting),
 		overlayReset(() -> Actions::overlayReset),
-		experimentalRendering(() -> Actions::experimentalRendering),
 		openPonder(() -> Actions::openPonder),
 		fabulousWarning(() -> Actions::fabulousWarning)
 
@@ -174,33 +171,6 @@ public class SConfigureConfigPacket implements S2CPacket {
 			ITextComponent text = boolToText(AllConfigs.CLIENT.rainbowDebug.get())
 				.append(new StringTextComponent(" Rainbow Debug Utility").formatted(TextFormatting.WHITE));
 			player.sendStatusMessage(text, false);
-		}
-
-		@Environment(EnvType.CLIENT)
-		private static void experimentalRendering(String value) {
-			ClientPlayerEntity player = Minecraft.getInstance().player;
-			if (player == null || "".equals(value))
-				return;
-
-			if (value.equals("info")) {
-				ITextComponent text = new StringTextComponent("Experimental Rendering is currently: ")
-					.append(boolToText(AllConfigs.CLIENT.experimentalRendering.get()));
-				player.sendStatusMessage(text, false);
-				return;
-			}
-
-			boolean parsedBoolean = Boolean.parseBoolean(value);
-			boolean cannotUseER = OptifineHandler.usingShaders() && parsedBoolean;
-
-			AllConfigs.CLIENT.experimentalRendering.set(parsedBoolean);
-
-			ITextComponent text = boolToText(AllConfigs.CLIENT.experimentalRendering.get())
-				.append(new StringTextComponent(" Experimental Rendering").formatted(TextFormatting.WHITE));
-			ITextComponent error = new StringTextComponent("Experimental Rendering does not support Optifine Shaders")
-				.formatted(TextFormatting.RED);
-
-			player.sendStatusMessage(cannotUseER ? error : text, false);
-			FastRenderDispatcher.refresh();
 		}
 
 		@Environment(EnvType.CLIENT)

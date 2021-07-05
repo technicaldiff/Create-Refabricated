@@ -180,7 +180,7 @@ public class ItemRequirement {
 			return this;
 
 		return new ItemRequirement(
-			Stream.concat(requiredItems.stream(), other.requiredItems.stream()).collect(Collectors.toList())
+				Stream.concat(requiredItems.stream(), other.requiredItems.stream()).collect(Collectors.toList())
 		);
 	}
 

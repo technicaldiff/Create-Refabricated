@@ -23,9 +23,10 @@ public class BoxWidget extends ElementWidget {
 
 	protected Color customBorderTop;
 	protected Color customBorderBot;
+	protected Color customBackground;
 	protected boolean animateColors = true;
 	protected LerpedFloat colorAnimation = LerpedFloat.linear();
-	
+
 	protected Color gradientColor1, gradientColor2;
 	private Color previousColor1, previousColor2;
 	private Color colorTarget1 = Theme.c(getIdleTheme(), true);
@@ -67,6 +68,12 @@ public class BoxWidget extends ElementWidget {
 		this.customBorderTop = top;
 		this.customBorderBot = bot;
 		updateColorsFromState();
+		//noinspection unchecked
+		return (T) this;
+	}
+
+	public <T extends BoxWidget> T withCustomBackground(Color color) {
+		this.customBackground = color;
 		//noinspection unchecked
 		return (T) this;
 	}
@@ -122,7 +129,7 @@ public class BoxWidget extends ElementWidget {
 			return;
 
 		box.withAlpha(fadeValue);
-		box.withBackground(Theme.c(Theme.Key.PONDER_BACKGROUND_TRANSPARENT))
+		box.withBackground(customBackground != null ? customBackground : Theme.c(Theme.Key.PONDER_BACKGROUND_TRANSPARENT))
 				.gradientBorder(gradientColor1, gradientColor2)
 				.at(x, y, z)
 				.withBounds(width, height)
@@ -209,9 +216,9 @@ public class BoxWidget extends ElementWidget {
 	public Key getHoverTheme() {
 		return Theme.Key.BUTTON_HOVER;
 	}
-	
+
 	public Key getClickTheme() {
 		return Theme.Key.BUTTON_CLICK;
 	}
-	
+
 }

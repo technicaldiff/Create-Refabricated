@@ -55,10 +55,9 @@ public class GoggleConfigScreen extends AbstractSimiScreen {
 
 	@Override
 	protected void init() {
-		Minecraft mc = Minecraft.getInstance();
-		this.width = mc.getWindow()
+		this.width = client.getWindow()
 			.getScaledWidth();
-		this.height = mc.getWindow()
+		this.height = client.getWindow()
 			.getScaledHeight();
 
 		offsetX = AllConfigs.CLIENT.overlayOffsetX.get();
@@ -93,7 +92,7 @@ public class GoggleConfigScreen extends AbstractSimiScreen {
 		int titleLinesCount = 1;
 		int tooltipTextWidth = 0;
 		for (ITextProperties textLine : tooltip) {
-			int textLineWidth = ScreenHelper.getClient(this).fontRenderer.getWidth(textLine);
+			int textLineWidth = client.fontRenderer.getWidth(textLine);
 			if (textLineWidth > tooltipTextWidth)
 				tooltipTextWidth = textLineWidth;
 		}

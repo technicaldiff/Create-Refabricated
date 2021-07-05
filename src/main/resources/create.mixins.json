@@ -5,23 +5,13 @@
   "compatibilityLevel": "JAVA_8",
   "refmap": "create.refmap.json",
   "mixins": [
-    "ChunkStatusMixin",
-    "HeavyBootsOnEntityMixin",
-    "MinecraftMixin"
   ],
   "client": [
-    "CancelTileEntityRenderMixin",
+    "BreakProgressMixin",
     "EntityContraptionInteractionMixin",
     "FixNormalScalingMixin",
-    "FogColorTrackerMixin",
     "HeavyBootsOnPlayerMixin",
-    "LightUpdateMixin",
-    "NetworkLightUpdateMixin",
-    "RenderHooksMixin",
-    "ShaderCloseMixin",
-    "StoreProjectionMatrixMixin",
-    "TileRemoveMixin",
-    "TileWorldHookMixin",
+    "ModelDataRefreshMixin",
     "WindowResizeMixin"
   ],
   "injectors": {

@@ -10,6 +10,7 @@ import com.google.gson.GsonBuilder;
 import com.simibubi.create.content.CreateItemGroup;
 import com.simibubi.create.content.contraptions.TorquePropagator;
 import com.simibubi.create.content.contraptions.components.structureMovement.train.capability.CapabilityMinecartController;
+import com.simibubi.create.content.curiosities.weapons.PotatoCannonProjectileTypes;
 import com.simibubi.create.content.logistics.RedstoneLinkNetworkHandler;
 import com.simibubi.create.content.palettes.AllPaletteBlocks;
 import com.simibubi.create.content.palettes.PalettesItemGroup;
@@ -22,6 +23,11 @@ import com.simibubi.create.foundation.command.ChunkUtil;
 import com.simibubi.create.foundation.command.ServerLagger;
 import com.simibubi.create.foundation.config.AllConfigs;
 import com.simibubi.create.foundation.data.CreateRegistrate;
+import com.simibubi.create.foundation.data.LangMerger;
+import com.simibubi.create.foundation.data.recipe.MechanicalCraftingRecipeGen;
+import com.simibubi.create.foundation.data.recipe.ProcessingRecipeGen;
+import com.simibubi.create.foundation.data.recipe.SequencedAssemblyRecipeGen;
+import com.simibubi.create.foundation.data.recipe.StandardRecipeGen;
 import com.simibubi.create.foundation.networking.AllPackets;
 import com.simibubi.create.foundation.worldgen.AllWorldFeatures;
 import com.simibubi.create.lib.event.BiomeLoadingCallback;
@@ -116,6 +122,7 @@ public class Create implements ModInitializer {
 
 		AllPackets.registerPackets();
 		AllTriggers.register();
+		PotatoCannonProjectileTypes.register();
 
 //		event.enqueueWork(() -> { // I think this can just be run on initialize too
 			SchematicProcessor.register();
@@ -130,6 +137,7 @@ public class Create implements ModInitializer {
 //		gen.addProvider(AllSoundEvents.provider(gen));
 //		gen.addProvider(new StandardRecipeGen(gen));
 //		gen.addProvider(new MechanicalCraftingRecipeGen(gen));
+//		gen.addProvider(new SequencedAssemblyRecipeGen(gen));
 //		ProcessingRecipeGen.registerAll(gen);
 //	}
 

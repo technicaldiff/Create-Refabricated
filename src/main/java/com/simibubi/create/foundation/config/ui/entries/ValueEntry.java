@@ -84,12 +84,12 @@ public class ValueEntry<T> extends ConfigScreenList.LabeledEntry {
 		}
 		// add comment to tooltip
 		labelTooltip.addAll(Arrays.stream(commentLines)
-			.filter(Predicates.not(s -> s.startsWith("Range")))
-			.map(StringTextComponent::new)
-			.flatMap(stc -> TooltipHelper.cutTextComponent(stc, TextFormatting.GRAY, TextFormatting.GRAY)
-				.stream())
-			.collect(Collectors.toList()));
-		labelTooltip.add(new StringTextComponent(ConfigScreen.modID + ":" + path.get(path.size()-1)).formatted(TextFormatting.DARK_GRAY));
+				.filter(Predicates.not(s -> s.startsWith("Range")))
+				.map(StringTextComponent::new)
+				.flatMap(stc -> TooltipHelper.cutTextComponent(stc, TextFormatting.GRAY, TextFormatting.GRAY)
+						.stream())
+				.collect(Collectors.toList()));
+		labelTooltip.add(new StringTextComponent(ConfigScreen.modID + ":" + path.get(path.size() - 1)).formatted(TextFormatting.DARK_GRAY));
 	}
 
 	@Override

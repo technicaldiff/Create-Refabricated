@@ -20,6 +20,7 @@ public class LinkedControllerBindPacket extends LinkedControllerPacketBase {
 	protected LinkedControllerBindPacket() {}
 
 	public LinkedControllerBindPacket(int button, BlockPos linkLocation) {
+		super((BlockPos) null);
 		this.button = button;
 		this.linkLocation = linkLocation;
 	}
@@ -31,18 +32,20 @@ public class LinkedControllerBindPacket extends LinkedControllerPacketBase {
 
 	@Override
 	public void read(PacketBuffer buf) {
+		super.read(buf);
 		button = buf.readVarInt();
 		linkLocation = buf.readBlockPos();
 	}
 
 	@Override
 	public void write(PacketBuffer buffer) {
+		super.write(buffer);
 		buffer.writeVarInt(button);
 		buffer.writeBlockPos(linkLocation);
 	}
 
 	@Override
-	protected void handle(ServerPlayerEntity player, ItemStack heldItem) {
+	protected void handleItem(ServerPlayerEntity player, ItemStack heldItem) {
 		if (player.isSpectator())
 			return;
 
@@ -59,8 +62,10 @@ public class LinkedControllerBindPacket extends LinkedControllerPacketBase {
 			.getStack()
 			.copy());
 
-		heldItem.getTag()
-			.put("Items", frequencyItems.serializeNBT());
+		heldItem.getTag().put("Items", frequencyItems.serializeNBT());
 	}
+
+	@Override
+	protected void handleLectern(ServerPlayerEntity player, LecternControllerTileEntity lectern) { }
 
 }

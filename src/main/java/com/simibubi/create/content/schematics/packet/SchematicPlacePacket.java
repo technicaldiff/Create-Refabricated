@@ -1,5 +1,10 @@
 package com.simibubi.create.content.schematics.packet;
 
+import java.util.function.Supplier;
+
+import com.simibubi.create.content.schematics.SchematicPrinter;
+import com.simibubi.create.foundation.networking.SimplePacketBase;
+import com.simibubi.create.foundation.utility.BlockHelper;
 import com.simibubi.create.content.schematics.SchematicProcessor;
 import com.simibubi.create.content.schematics.item.SchematicItem;
 
@@ -7,8 +12,10 @@ import me.pepperbell.simplenetworking.C2SPacket;
 import me.pepperbell.simplenetworking.SimpleChannel.ResponseTarget;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTUtil;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.PacketBuffer;
+import net.minecraft.world.World;
+import net.minecraftforge.fml.network.NetworkEvent.Context;
 import net.minecraft.network.play.ServerPlayNetHandler;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.gen.feature.template.PlacementSettings;
@@ -36,13 +43,22 @@ public class SchematicPlacePacket implements C2SPacket {
 		server.execute(() -> {
 			if (player == null)
 				return;
-			Template t = SchematicItem.loadSchematic(stack);
-			PlacementSettings settings = SchematicItem.getSettings(stack);
-			if (player.canUseCommandBlock())
-				settings.func_215220_b(SchematicProcessor.INSTANCE); // remove processor
-			settings.setIgnoreEntities(false);
-			t.place(player.getServerWorld(), NBTUtil.readBlockPos(stack.getTag().getCompound("Anchor")),
-					settings, player.getRNG());
+
+			World world = player.getServerWorld();
+			SchematicPrinter printer = new SchematicPrinter();
+			printer.loadSchematic(stack, world, !player.canUseCommandBlock());
+
+			while (printer.advanceCurrentPos()) {
+				if (!printer.shouldPlaceCurrent(world))
+					continue;
+
+				printer.handleCurrentTarget((pos, state, tile) -> {
+					CompoundNBT tileData = tile != null ? tile.write(new CompoundNBT()) : null;
+					BlockHelper.placeSchematicBlock(world, state, pos, null, tileData);
+				}, (pos, entity) -> {
+					world.addEntity(entity);
+				});
+			}
 		});
 	}
 

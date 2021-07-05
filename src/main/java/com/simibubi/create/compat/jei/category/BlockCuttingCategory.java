@@ -67,6 +67,7 @@ package com.simibubi.create.compat.jei.category;
 //			AllGuiTextures.JEI_SLOT.draw(matrixStack, 77 + xOffset, 47 + yOffset);
 //		}
 //		AllGuiTextures.JEI_DOWN_ARROW.draw(matrixStack, 31, 6);
+//		AllGuiTextures.JEI_SHADOW.draw(matrixStack, 33 - 17, 37 + 13);
 //		saw.draw(matrixStack, 33, 37);
 //	}
 //

@@ -48,18 +48,18 @@ public interface ISyncPersistentData {
 		@Override
 		public void handle(Minecraft client, ClientPlayNetHandler handler, SimpleChannel.ResponseTarget responseTarget) {
 			client
-				.execute(() -> {
-					Entity entityByID = Minecraft.getInstance().world.getEntityByID(entityId);
-					if (!(entityByID instanceof ISyncPersistentData))
-						return;
-					CompoundNBT data = EntityHelper.getExtraCustomData(entityByID);
-					for (Iterator<String> iterator = data.keySet()
-						.iterator(); iterator.hasNext();) {
-						data.remove(iterator.next());
-					}
-					data.merge(readData);
-					((ISyncPersistentData) entityByID).onPersistentDataUpdated();
-				});
+					.execute(() -> {
+						Entity entityByID = Minecraft.getInstance().world.getEntityByID(entityId);
+						if (!(entityByID instanceof ISyncPersistentData))
+							return;
+						CompoundNBT data = EntityHelper.getExtraCustomData(entityByID);
+						for (Iterator<String> iterator = data.keySet()
+								.iterator(); iterator.hasNext(); ) {
+							data.remove(iterator.next());
+						}
+						data.merge(readData);
+						((ISyncPersistentData) entityByID).onPersistentDataUpdated();
+					});
 		}
 	}
 

@@ -1,5 +1,10 @@
 package com.simibubi.create;
 
+import static com.simibubi.create.AllTags.AllItemTags.CREATE_INGOTS;
+import static com.simibubi.create.AllTags.AllItemTags.CRUSHED_ORES;
+import static com.simibubi.create.AllTags.AllItemTags.NUGGETS;
+import static com.simibubi.create.AllTags.AllItemTags.PLATES;
+import static com.simibubi.create.AllTags.forgeItemTag;
 import static com.simibubi.create.content.AllSections.CURIOSITIES;
 import static com.simibubi.create.content.AllSections.KINETICS;
 import static com.simibubi.create.content.AllSections.LOGISTICS;
@@ -12,6 +17,7 @@ import com.simibubi.create.content.contraptions.components.structureMovement.tra
 import com.simibubi.create.content.contraptions.goggles.GogglesItem;
 import com.simibubi.create.content.contraptions.goggles.GogglesItemRenderer;
 import com.simibubi.create.content.contraptions.goggles.GogglesModel;
+import com.simibubi.create.content.contraptions.itemAssembly.SequencedAssemblyItem;
 import com.simibubi.create.content.contraptions.processing.burner.BlazeBurnerBlockItem;
 import com.simibubi.create.content.contraptions.relays.belt.item.BeltConnectorItem;
 import com.simibubi.create.content.contraptions.relays.gearbox.VerticalGearboxItem;
@@ -35,6 +41,8 @@ import com.simibubi.create.content.curiosities.tools.ExtendoGripItem;
 import com.simibubi.create.content.curiosities.tools.ExtendoGripModel;
 import com.simibubi.create.content.curiosities.tools.SandPaperItem;
 import com.simibubi.create.content.curiosities.tools.SandPaperItemRenderer.SandPaperModel;
+import com.simibubi.create.content.curiosities.weapons.PotatoCannonItem;
+import com.simibubi.create.content.curiosities.weapons.PotatoCannonModel;
 import com.simibubi.create.content.curiosities.zapper.terrainzapper.WorldshaperItem;
 import com.simibubi.create.content.curiosities.zapper.terrainzapper.WorldshaperModel;
 import com.simibubi.create.content.logistics.item.LinkedControllerItem;
@@ -73,8 +81,13 @@ public class AllItems {
 		CINDER_FLOUR = ingredient("cinder_flour"), POWDERED_OBSIDIAN = ingredient("powdered_obsidian"),
 		ROSE_QUARTZ = ingredient("rose_quartz"), POLISHED_ROSE_QUARTZ = ingredient("polished_rose_quartz"),
 		PROPELLER = ingredient("propeller"), WHISK = ingredient("whisk"), BRASS_HAND = ingredient("brass_hand"),
-		CRAFTER_SLOT_COVER = ingredient("crafter_slot_cover"), ELECTRON_TUBE = ingredient("electron_tube"),
-		INTEGRATED_CIRCUIT = ingredient("integrated_circuit");
+		CRAFTER_SLOT_COVER = ingredient("crafter_slot_cover"), ELECTRON_TUBE = ingredient("electron_tube");
+
+	public static final ItemEntry<SequencedAssemblyItem> INCOMPLETE_CLOCKWORK_COMPONENT =
+		REGISTRATE.item("incomplete_clockwork_component", SequencedAssemblyItem::new)
+			.register();
+
+	public static final ItemEntry<Item> CLOCKWORK_COMPONENT = ingredient("clockwork_component");
 
 	public static final ItemEntry<HiddenIngredientItem> BLAZE_CAKE_BASE =
 		REGISTRATE.item("blaze_cake_base", HiddenIngredientItem::new)
@@ -142,11 +155,10 @@ public class AllItems {
 		ZINC_NUGGET = taggedIngredient("zinc_nugget"/*, forgeItemTag("nuggets/zinc"), NUGGETS.tag*/),
 		BRASS_NUGGET = taggedIngredient("brass_nugget"/*, forgeItemTag("nuggets/brass"), NUGGETS.tag*/),
 
-		COPPER_SHEET = taggedIngredient("copper_sheet"/*, forgeItemTag("plates/copper"), PLATES.tag*/),
-		BRASS_SHEET = taggedIngredient("brass_sheet"/*, forgeItemTag("plates/brass"), PLATES.tag*/),
-		IRON_SHEET = taggedIngredient("iron_sheet"/*, forgeItemTag("plates/iron"), PLATES.tag*/),
-		GOLDEN_SHEET = taggedIngredient("golden_sheet"/*, forgeItemTag("plates/gold"), PLATES.tag, ItemTags.PIGLIN_LOVED*/),
-		LAPIS_SHEET = taggedIngredient("lapis_sheet"/*, forgeItemTag("plates/lapis_lazuli"), PLATES.tag*/),
+		COPPER_SHEET = taggedIngredient("copper_sheet", forgeItemTag("plates/copper"), PLATES.tag),
+		BRASS_SHEET = taggedIngredient("brass_sheet", forgeItemTag("plates/brass"), PLATES.tag),
+		IRON_SHEET = taggedIngredient("iron_sheet", forgeItemTag("plates/iron"), PLATES.tag),
+		GOLDEN_SHEET = taggedIngredient("golden_sheet", forgeItemTag("plates/gold"), PLATES.tag, ItemTags.PIGLIN_LOVED),
 
 		CRUSHED_IRON = taggedIngredient("crushed_iron_ore"/*, CRUSHED_ORES.tag*/),
 		CRUSHED_GOLD = taggedIngredient("crushed_gold_ore"/*, CRUSHED_ORES.tag, ItemTags.PIGLIN_LOVED*/),
@@ -214,6 +226,24 @@ public class AllItems {
 //		.model(AssetLookup.itemModelWithPartials())
 		.register();
 
+	public static final ItemEntry<MinecartContraptionItem> MINECART_CONTRAPTION =
+		REGISTRATE.item("minecart_contraption", MinecartContraptionItem::rideable)
+			.register();
+
+	public static final ItemEntry<MinecartContraptionItem> FURNACE_MINECART_CONTRAPTION =
+		REGISTRATE.item("furnace_minecart_contraption", MinecartContraptionItem::furnace)
+			.register();
+
+	public static final ItemEntry<MinecartContraptionItem> CHEST_MINECART_CONTRAPTION =
+		REGISTRATE.item("chest_minecart_contraption", MinecartContraptionItem::chest)
+			.register();
+
+	// Curiosities
+
+	static {
+		REGISTRATE.startSection(CURIOSITIES);
+	}
+
 	public static final ItemEntry<ExtendoGripItem> EXTENDO_GRIP = REGISTRATE.item("extendo_grip", ExtendoGripItem::new)
 		.transform(CreateRegistrate.customRenderedItem(() -> ExtendoGripModel::new))
 //		.model(AssetLookup.itemModelWithPartials())
@@ -221,8 +251,16 @@ public class AllItems {
 
 	public static final ItemEntry<LinkedControllerItem> LINKED_CONTROLLER =
 		REGISTRATE.item("linked_controller", LinkedControllerItem::new)
+			.properties(p -> p.maxStackSize(1))
 			.transform(CreateRegistrate.customRenderedItem(() -> LinkedControllerModel::new))
 //			.model(AssetLookup.itemModelWithPartials())
+			.register();
+
+	public static final ItemEntry<PotatoCannonItem> POTATO_CANNON =
+		REGISTRATE.item("potato_cannon", PotatoCannonItem::new)
+			.properties(p -> p.maxStackSize(1))
+			.transform(CreateRegistrate.customRenderedItem(() -> PotatoCannonModel::new))
+			.model(AssetLookup.itemModelWithPartials())
 			.register();
 
 	public static final ItemEntry<SymmetryWandItem> WAND_OF_SYMMETRY =
@@ -238,39 +276,6 @@ public class AllItems {
 			.lang("Creative Worldshaper")
 //			.model(AssetLookup.itemModelWithPartials())
 			.register();
-
-	public static final ItemEntry<MinecartContraptionItem> MINECART_CONTRAPTION =
-		REGISTRATE.item("minecart_contraption", MinecartContraptionItem::rideable)
-			.register();
-
-	public static final ItemEntry<MinecartContraptionItem> FURNACE_MINECART_CONTRAPTION =
-		REGISTRATE.item("furnace_minecart_contraption", MinecartContraptionItem::furnace)
-			.register();
-
-	public static final ItemEntry<MinecartContraptionItem> CHEST_MINECART_CONTRAPTION =
-		REGISTRATE.item("chest_minecart_contraption", MinecartContraptionItem::chest)
-			.register();
-
-	// Logistics
-
-	static {
-		REGISTRATE.startSection(LOGISTICS);
-	}
-
-	public static final ItemEntry<FilterItem> FILTER = REGISTRATE.item("filter", FilterItem::regular)
-//		.model(AssetLookup.existingItemModel())
-		.register();
-
-	public static final ItemEntry<FilterItem> ATTRIBUTE_FILTER =
-		REGISTRATE.item("attribute_filter", FilterItem::attribute)
-//			.model(AssetLookup.existingItemModel())
-			.register();
-
-	// Curiosities
-
-	static {
-		REGISTRATE.startSection(CURIOSITIES);
-	}
 
 	public static final ItemEntry<? extends CopperArmorItem>
 
@@ -288,6 +293,21 @@ public class AllItems {
 
 	public static final ItemEntry<TreeFertilizerItem> TREE_FERTILIZER =
 		REGISTRATE.item("tree_fertilizer", TreeFertilizerItem::new)
+			.register();
+
+	// Logistics
+
+	static {
+		REGISTRATE.startSection(LOGISTICS);
+	}
+
+	public static final ItemEntry<FilterItem> FILTER = REGISTRATE.item("filter", FilterItem::regular)
+		.model(AssetLookup.existingItemModel())
+		.register();
+
+	public static final ItemEntry<FilterItem> ATTRIBUTE_FILTER =
+		REGISTRATE.item("attribute_filter", FilterItem::attribute)
+			.model(AssetLookup.existingItemModel())
 			.register();
 
 	// Schematics
@@ -316,7 +336,6 @@ public class AllItems {
 			.register();
 	}
 
-	@SuppressWarnings("unused")
 	private static ItemEntry<HiddenIngredientItem> hiddenIngredient(String name) {
 		return REGISTRATE.item(name, HiddenIngredientItem::new)
 			.register();

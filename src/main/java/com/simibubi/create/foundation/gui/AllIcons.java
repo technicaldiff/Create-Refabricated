@@ -136,7 +136,15 @@ public class AllIcons implements IScreenRenderable {
 		I_CONFIG_PREV = next(),
 		I_CONFIG_NEXT = next(),
 		I_DISABLE = next(),
-		I_CONFIG_OPEN = next();
+		I_CONFIG_OPEN = next(),
+
+		I_FX_SURFACE_OFF = newRow(),
+		I_FX_SURFACE_ON = next(),
+		I_FX_FIELD_OFF = next(),
+		I_FX_FIELD_ON = next(),
+		I_FX_BLEND = next(),
+		I_FX_BLEND_OFF = next();
+	;
 
 	public AllIcons(int x, int y) {
 		iconX = x * 16;

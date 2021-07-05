@@ -61,7 +61,7 @@ import net.minecraft.world.gen.feature.template.Template.BlockInfo;
 public abstract class AbstractContraptionEntity extends Entity implements ExtraSpawnDataEntity {
 
 	private static final DataParameter<Boolean> STALLED =
-		EntityDataManager.createKey(AbstractContraptionEntity.class, DataSerializers.BOOLEAN);
+			EntityDataManager.createKey(AbstractContraptionEntity.class, DataSerializers.BOOLEAN);
 
 	public final Map<Entity, MutableInt> collidingEntities;
 
@@ -397,7 +397,7 @@ public abstract class AbstractContraptionEntity extends Entity implements ExtraS
 			int estimatedPacketSize = byteArray.length;
 			if (estimatedPacketSize > 2_000_000) {
 				Create.LOGGER.warn("Could not send Contraption Spawn Data (Packet too big): "
-					+ getContraption().getType().id + " @" + getPositionVec() + " (" + getUniqueID().toString() + ")");
+						+ getContraption().getType().id + " @" + getPositionVec() + " (" + getUniqueID().toString() + ")");
 				buffer.writeCompoundTag(new CompoundNBT());
 				return;
 			}
@@ -682,20 +682,21 @@ public abstract class AbstractContraptionEntity extends Entity implements ExtraS
 
 	}
 
-	// @Override //TODO find 1.16 replacement
-	// public void updateAquatics() {
-	/*
-	 * Override this with an empty method to reduce enormous calculation time when contraptions are in water
-	 * WARNING: THIS HAS A BUNCH OF SIDE EFFECTS!
-	 * - Fluids will not try to change contraption movement direction
-	 * - this.inWater and this.isInWater() will return unreliable data
-	 * - entities riding a contraption will not cause water splashes (seats are their own entity so this should be fine)
-	 * - fall distance is not reset when the contraption is in water
-	 * - this.eyesInWater and this.canSwim() will always be false
-	 * - swimming state will never be updated
-	 */
-	// extinguish();
-	// }
+
+	@Override
+	protected boolean updateWaterState() {
+		/*
+		 * Override this with an empty method to reduce enormous calculation time when contraptions are in water
+		 * WARNING: THIS HAS A BUNCH OF SIDE EFFECTS!
+		 * - Fluids will not try to change contraption movement direction
+		 * - this.inWater and this.isInWater() will return unreliable data
+		 * - entities riding a contraption will not cause water splashes (seats are their own entity so this should be fine)
+		 * - fall distance is not reset when the contraption is in water
+		 * - this.eyesInWater and this.canSwim() will always be false
+		 * - swimming state will never be updated
+		 */
+		return false;
+	}
 
 	@Override
 	public void setFire(int p_70015_1_) {

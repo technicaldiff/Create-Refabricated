@@ -5,7 +5,6 @@ import java.util.Optional;
 import com.simibubi.create.AllContainerTypes;
 import com.simibubi.create.content.curiosities.tools.BlueprintEntity.BlueprintSection;
 import com.simibubi.create.foundation.gui.GhostItemContainer;
-import com.simibubi.create.foundation.gui.IClearableContainer;
 
 import com.simibubi.create.lib.lba.item.IItemHandler;
 import com.simibubi.create.lib.lba.item.ItemStackHandler;
@@ -16,6 +15,7 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.inventory.CraftingInventory;
@@ -27,7 +27,7 @@ import net.minecraft.item.crafting.IRecipeType;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.network.play.server.SSetSlotPacket;
 
-public class BlueprintContainer extends GhostItemContainer<BlueprintSection> implements IClearableContainer {
+public class BlueprintContainer extends GhostItemContainer<BlueprintSection> {
 
 	public BlueprintContainer(ContainerType<?> type, int id, PlayerInventory inv, PacketBuffer extraData) {
 		super(type, id, inv, extraData);
@@ -48,7 +48,7 @@ public class BlueprintContainer extends GhostItemContainer<BlueprintSection> imp
 
 	@Override
 	protected void addSlots() {
-		addPlayerSlots(9, 131);
+		addPlayerSlots(8, 131);
 
 		int x = 29;
 		int y = 21;
@@ -68,12 +68,12 @@ public class BlueprintContainer extends GhostItemContainer<BlueprintSection> imp
 		ServerPlayerEntity serverplayerentity = (ServerPlayerEntity) player;
 		CraftingInventory craftingInventory = new BlueprintCraftingInventory(this, ghostInventory);
 		Optional<ICraftingRecipe> optional = player.getServer()
-			.getRecipeManager()
-			.getRecipe(IRecipeType.CRAFTING, craftingInventory, player.getEntityWorld());
+				.getRecipeManager()
+				.getRecipe(IRecipeType.CRAFTING, craftingInventory, player.getEntityWorld());
 
 		if (!optional.isPresent()) {
 			if (ghostInventory.getStackInSlot(9)
-				.isEmpty())
+					.isEmpty())
 				return;
 			if (!contentHolder.inferredIcon)
 				return;
@@ -90,7 +90,7 @@ public class BlueprintContainer extends GhostItemContainer<BlueprintSection> imp
 		contentHolder.inferredIcon = true;
 		ItemStack toSend = itemstack.copy();
 		toSend.getOrCreateTag()
-			.putBoolean("InferredFromRecipe", true);
+				.putBoolean("InferredFromRecipe", true);
 		serverplayerentity.connection.sendPacket(new SSetSlotPacket(windowId, 36 + 9, toSend));
 	}
 
@@ -99,9 +99,9 @@ public class BlueprintContainer extends GhostItemContainer<BlueprintSection> imp
 		if (p_75141_1_ == 36 + 9) {
 			if (p_75141_2_.hasTag()) {
 				contentHolder.inferredIcon = p_75141_2_.getTag()
-					.getBoolean("InferredFromRecipe");
+						.getBoolean("InferredFromRecipe");
 				p_75141_2_.getTag()
-					.remove("InferredFromRecipe");
+						.remove("InferredFromRecipe");
 			} else
 				contentHolder.inferredIcon = false;
 		}
@@ -114,7 +114,8 @@ public class BlueprintContainer extends GhostItemContainer<BlueprintSection> imp
 	}
 
 	@Override
-	protected void readData(BlueprintSection contentHolder) {}
+	protected void readData(BlueprintSection contentHolder) {
+	}
 
 	@Override
 	protected void saveData(BlueprintSection contentHolder) {
@@ -132,6 +133,11 @@ public class BlueprintContainer extends GhostItemContainer<BlueprintSection> imp
 		BlueprintEntity blueprintEntity = (BlueprintEntity) entityByID;
 		BlueprintSection blueprintSection = blueprintEntity.getSection(section);
 		return blueprintSection;
+	}
+
+	@Override
+	public boolean canInteractWith(PlayerEntity player) {
+		return contentHolder != null && contentHolder.canPlayerUse(player);
 	}
 
 	static class BlueprintCraftingInventory extends CraftingInventory {

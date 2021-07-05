@@ -12,6 +12,7 @@ import com.simibubi.create.content.contraptions.components.structureMovement.tra
 import com.simibubi.create.lib.utility.LazyOptional;
 import com.simibubi.create.lib.utility.MinecartAndRailUtil;
 import com.tterrag.registrate.fabric.EnvExecutor;
+import com.simibubi.create.foundation.utility.Iterate;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.minecart.AbstractMinecartEntity;

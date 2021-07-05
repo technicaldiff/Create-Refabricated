@@ -40,8 +40,8 @@ public class InstantSchematicPacket implements C2SPacket {
 	@Override
 	public void handle(MinecraftServer server, ServerPlayerEntity player, ServerPlayNetHandler handler, ResponseTarget responseTarget) {
 		server
-			.execute(() -> {
-				if (player == null)
+				.execute(() -> {
+					if (player == null)
 					return;
 				Create.SCHEMATIC_RECEIVER.handleInstantSchematic(player, name, player.world, origin, bounds);
 			});

@@ -1,25 +1,23 @@
 package com.simibubi.create.content.curiosities.tools;
 
+import com.jozufozu.flywheel.core.PartialModel;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.simibubi.create.AllBlockPartials;
 import com.simibubi.create.content.curiosities.tools.BlueprintEntity.BlueprintSection;
 import com.simibubi.create.foundation.render.PartialBufferer;
 import com.simibubi.create.foundation.render.SuperByteBuffer;
-import com.simibubi.create.foundation.render.backend.core.PartialModel;
 import com.simibubi.create.foundation.utility.Couple;
 import com.simibubi.create.foundation.utility.MatrixStacker;
 import com.simibubi.create.lib.extensions.Matrix3fExtensions;
 
 import net.minecraft.block.Blocks;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.Atlases;
 import net.minecraft.client.renderer.IRenderTypeBuffer;
-import net.minecraft.client.renderer.RenderType;
-import net.minecraft.client.renderer.WorldRenderer;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererManager;
 import net.minecraft.client.renderer.model.ItemCameraTransforms.TransformType;
 import net.minecraft.client.renderer.texture.OverlayTexture;
-import net.minecraft.inventory.container.PlayerContainer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
@@ -27,17 +25,16 @@ import net.minecraft.util.math.vector.Matrix3f;
 
 public class BlueprintRenderer extends EntityRenderer<BlueprintEntity> {
 
-	public BlueprintRenderer(EntityRendererManager p_i46179_1_) {
-		super(p_i46179_1_);
+	public BlueprintRenderer(EntityRendererManager manager) {
+		super(manager);
 	}
 
 	@Override
 	public void render(BlueprintEntity entity, float yaw, float pt, MatrixStack ms, IRenderTypeBuffer buffer,
-		int overlay) {
+		int light) {
 		PartialModel partialModel = entity.size == 3 ? AllBlockPartials.CRAFTING_BLUEPRINT_3x3
 			: entity.size == 2 ? AllBlockPartials.CRAFTING_BLUEPRINT_2x2 : AllBlockPartials.CRAFTING_BLUEPRINT_1x1;
 		SuperByteBuffer sbb = PartialBufferer.get(partialModel, Blocks.AIR.getDefaultState());
-		int light = WorldRenderer.getLightmapCoordinates(entity.world, entity.getBlockPos());
 		sbb.matrixStacker()
 			.rotateY(-yaw)
 			.rotateX(90.0F + entity.rotationPitch)
@@ -45,10 +42,9 @@ public class BlueprintRenderer extends EntityRenderer<BlueprintEntity> {
 		if (entity.size == 2)
 			sbb.translate(.5, 0, -.5);
 
-		RenderType entitySolid = RenderType.getEntitySolid(PlayerContainer.BLOCK_ATLAS_TEXTURE);
-		sbb.asEntityModel()
+		sbb.forEntityRender()
 			.light(light)
-			.renderInto(ms, buffer.getBuffer(entitySolid));
+			.renderInto(ms, buffer.getBuffer(Atlases.getEntitySolid()));
 		super.render(entity, yaw, pt, ms, buffer, light);
 
 		ms.push();
@@ -57,14 +53,14 @@ public class BlueprintRenderer extends EntityRenderer<BlueprintEntity> {
 		int bl = light >> 4 & 0xf;
 		int sl = light >> 20 & 0xf;
 		boolean vertical = entity.rotationPitch != 0;
-		if (entity.rotationPitch == -90) 
+		if (entity.rotationPitch == -90)
 			fakeNormalXRotation = -45;
 		else if (entity.rotationPitch == 90 || yaw % 180 != 0) {
 			bl /= 1.35;
 			sl /= 1.35;
 		}
 		int itemLight = MathHelper.floor(sl + .5) << 20 | (MathHelper.floor(bl + .5) & 0xf) << 4;
-		
+
 		MatrixStacker.of(ms)
 			.rotateY(vertical ? 0 : -yaw)
 			.rotateX(fakeNormalXRotation);

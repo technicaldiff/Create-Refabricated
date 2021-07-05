@@ -2,22 +2,17 @@ package com.simibubi.create.content.contraptions.components.deployer;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.annotation.Nullable;
-
-import com.simibubi.create.content.contraptions.components.structureMovement.mounted.CartAssemblerBlockItem;
-
-import net.minecraft.block.DoublePlantBlock;
-
-import net.minecraft.entity.merchant.villager.AbstractVillagerEntity;
-import net.minecraft.entity.merchant.villager.VillagerEntity;
-import net.minecraft.state.properties.DoubleBlockHalf;
 
 import org.apache.commons.lang3.tuple.Pair;
 
 import com.google.common.collect.Multimap;
 import com.simibubi.create.AllSoundEvents;
 import com.simibubi.create.content.contraptions.components.deployer.DeployerTileEntity.Mode;
+import com.simibubi.create.content.contraptions.components.structureMovement.AbstractContraptionEntity;
+import com.simibubi.create.content.contraptions.components.structureMovement.mounted.CartAssemblerBlockItem;
 import com.simibubi.create.content.contraptions.components.structureMovement.mounted.CartAssemblerBlockItem;
 import com.simibubi.create.content.curiosities.tools.SandPaperItem;
 import com.simibubi.create.foundation.tileEntity.TileEntityBehaviour;
@@ -42,6 +37,7 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.attributes.Attribute;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.item.ItemEntity;
+import net.minecraft.entity.merchant.villager.AbstractVillagerEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.fluid.Fluid;
@@ -152,7 +148,9 @@ public class DeployerHandler {
 
 		// Check for entities
 		final ServerWorld world = player.getServerWorld();
-		List<Entity> entities = world.getEntitiesWithinAABB(Entity.class, new AxisAlignedBB(clickedPos));
+		List<Entity> entities = world.getEntitiesWithinAABB(Entity.class, new AxisAlignedBB(clickedPos)).stream()
+			.filter(e -> !(e instanceof AbstractContraptionEntity))
+			.collect(Collectors.toList());
 		Hand hand = Hand.MAIN_HAND;
 		if (!entities.isEmpty()) {
 			Entity entity = entities.get(world.rand.nextInt(entities.size()));

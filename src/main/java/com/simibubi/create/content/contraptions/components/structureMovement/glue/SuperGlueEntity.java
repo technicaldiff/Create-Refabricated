@@ -4,6 +4,7 @@ import javax.annotation.Nullable;
 
 import org.apache.commons.lang3.Validate;
 
+import com.jozufozu.flywheel.backend.instancing.IInstanceRendered;
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.AllEntityTypes;
 import com.simibubi.create.AllItems;
@@ -65,7 +66,7 @@ import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 
-public class SuperGlueEntity extends Entity implements ExtraSpawnDataEntity, ISpecialEntityItemRequirement, EntityPickInteractionAware {
+public class SuperGlueEntity extends Entity implements ExtraSpawnDataEntity, ISpecialEntityItemRequirement, IInstanceRendered {
 
 	private int validationTimer;
 	protected BlockPos hangingPosition;
@@ -187,13 +188,13 @@ public class SuperGlueEntity extends Entity implements ExtraSpawnDataEntity, ISp
 		if (!world.isAreaLoaded(pos.add(-1, -1, -1), pos.add(1, 1, 1)) || !world.isAreaLoaded(pos2.add(-1, -1, -1), pos2.add(1, 1, 1)))
 			return true;
 		if (!isValidFace(world, pos2, getFacingDirection())
-			&& !isValidFace(world, pos, getFacingDirection().getOpposite()))
+				&& !isValidFace(world, pos, getFacingDirection().getOpposite()))
 			return false;
 		if (isSideSticky(world, pos2, getFacingDirection())
-			|| isSideSticky(world, pos, getFacingDirection().getOpposite()))
+				|| isSideSticky(world, pos, getFacingDirection().getOpposite()))
 			return false;
 		return world.getEntitiesInAABBexcluding(this, getBoundingBox(), e -> e instanceof SuperGlueEntity)
-			.isEmpty();
+				.isEmpty();
 	}
 
 	public static boolean isValidFace(World world, BlockPos pos, Direction direction) {
@@ -482,5 +483,10 @@ public class SuperGlueEntity extends Entity implements ExtraSpawnDataEntity, ISp
 	@Override
 	public boolean doesEntityNotTriggerPressurePlate() {
 		return true;
+	}
+
+	@Override
+	public World getWorld() {
+		return world;
 	}
 }

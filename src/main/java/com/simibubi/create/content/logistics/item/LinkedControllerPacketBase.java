@@ -6,31 +6,65 @@ import me.pepperbell.simplenetworking.C2SPacket;
 import me.pepperbell.simplenetworking.SimpleChannel;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.network.PacketBuffer;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.math.BlockPos;
+import net.minecraftforge.fml.network.NetworkEvent.Context;
 import net.minecraft.network.play.ServerPlayNetHandler;
 import net.minecraft.server.MinecraftServer;
 
 public abstract class LinkedControllerPacketBase implements C2SPacket {
 
+	private BlockPos lecternPos;
+
+	public LinkedControllerPacketBase(BlockPos lecternPos) {
+		this.lecternPos = lecternPos;
+	}
+
+	public LinkedControllerPacketBase(PacketBuffer buffer) {
+		if (buffer.readBoolean()) {
+			lecternPos = new BlockPos(buffer.readInt(), buffer.readInt(), buffer.readInt());
+		}
+	}
+
+	protected boolean inLectern() {
+		return lecternPos != null;
+	}
+
+	@Override
+	public void write(PacketBuffer buffer) {
+		buffer.writeBoolean(inLectern());
+		if (inLectern()) {
+			buffer.writeInt(lecternPos.getX());
+			buffer.writeInt(lecternPos.getY());
+			buffer.writeInt(lecternPos.getZ());
+		}
+	}
+
 	@Override
 	public void handle(MinecraftServer server, ServerPlayerEntity player, ServerPlayNetHandler handler, SimpleChannel.ResponseTarget responseTarget) {
 		server.execute(() -> {
-//				ServerPlayerEntity player = context.get()
-//					.getSender();
-				if (player == null)
-					return;
+			ServerPlayerEntity player = context.get().getSender();
+			if (player == null)
+				return;
 
-				ItemStack heldItem = player.getHeldItemMainhand();
-				if (!AllItems.LINKED_CONTROLLER.isIn(heldItem)) {
-					heldItem = player.getHeldItemOffhand();
-					if (!AllItems.LINKED_CONTROLLER.isIn(heldItem))
+			if (inLectern()) {
+				TileEntity te = player.world.getTileEntity(lecternPos);
+				if (!(te instanceof LecternControllerTileEntity))
+					return;
+				handleLectern(player, (LecternControllerTileEntity) te);
+			} else {
+				ItemStack controller = player.getHeldItemMainhand();
+				if (!AllItems.LINKED_CONTROLLER.isIn(controller)) {
+					controller = player.getHeldItemOffhand();
+					if (!AllItems.LINKED_CONTROLLER.isIn(controller))
 						return;
 				}
-				handle(player, heldItem);
+				handleItem(player, controller);
 			});
-//		context.get()
-//			.setPacketHandled(true);
 	}
 
-	protected abstract void handle(ServerPlayerEntity player, ItemStack heldItem);
+	protected abstract void handleItem(ServerPlayerEntity player, ItemStack heldItem);
+	protected abstract void handleLectern(ServerPlayerEntity player, LecternControllerTileEntity lectern);
 
 }

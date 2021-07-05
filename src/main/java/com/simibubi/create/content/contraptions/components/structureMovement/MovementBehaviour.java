@@ -2,10 +2,12 @@ package com.simibubi.create.content.contraptions.components.structureMovement;
 
 import javax.annotation.Nullable;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
+import com.jozufozu.flywheel.backend.instancing.MaterialManager;
 import com.simibubi.create.content.contraptions.components.structureMovement.render.ActorInstance;
 import com.simibubi.create.content.contraptions.components.structureMovement.render.ContraptionKineticRenderer;
 import com.simibubi.create.lib.lba.item.ItemHandlerHelper;
+import com.simibubi.create.content.contraptions.components.structureMovement.render.ContraptionMatrices;
+import com.simibubi.create.foundation.utility.worldWrappers.PlacementSimulationWorld;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -60,12 +62,12 @@ public abstract class MovementBehaviour {
 	}
 
 	@Environment(EnvType.CLIENT)
-	public void renderInContraption(MovementContext context, MatrixStack ms, MatrixStack msLocal,
-		IRenderTypeBuffer buffer) {}
+	public void renderInContraption(MovementContext context, PlacementSimulationWorld renderWorld,
+		ContraptionMatrices matrices, IRenderTypeBuffer buffer) {}
 
 	@Environment(EnvType.CLIENT)
 	@Nullable
-	public ActorInstance createInstance(ContraptionKineticRenderer kr, MovementContext context) {
+	public ActorInstance createInstance(MaterialManager<?> materialManager, PlacementSimulationWorld simulationWorld, MovementContext context) {
 		return null;
 	}
 

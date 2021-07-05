@@ -33,6 +33,7 @@ package com.simibubi.create.compat.jei;
 //import com.simibubi.create.compat.jei.category.PressingCategory;
 //import com.simibubi.create.compat.jei.category.ProcessingViaFanCategory;
 //import com.simibubi.create.compat.jei.category.SawingCategory;
+//import com.simibubi.create.compat.jei.category.SequencedAssemblyCategory;
 //import com.simibubi.create.compat.jei.category.SpoutCategory;
 //import com.simibubi.create.content.contraptions.components.deployer.DeployerApplicationRecipe;
 //import com.simibubi.create.content.contraptions.components.press.MechanicalPressTileEntity;
@@ -119,6 +120,10 @@ package com.simibubi.create.compat.jei;
 //		mixing = register("mixing", MixingCategory::standard).recipes(AllRecipeTypes.MIXING::getType)
 //			.catalyst(AllBlocks.MECHANICAL_MIXER::get)
 //			.catalyst(AllBlocks.BASIN::get)
+//			.build(),
+//
+//		seqAssembly = register("sequenced_assembly", SequencedAssemblyCategory::new)
+//			.recipes(AllRecipeTypes.SEQUENCED_ASSEMBLY::getType)
 //			.build(),
 //
 //		autoShapeless = register("automatic_shapeless", MixingCategory::autoShapeless)
@@ -209,9 +214,7 @@ package com.simibubi.create.compat.jei;
 //		mechanicalCrafting =
 //			register("mechanical_crafting", MechanicalCraftingCategory::new).recipes(AllRecipeTypes.MECHANICAL_CRAFTING)
 //				.catalyst(AllBlocks.MECHANICAL_CRAFTER::get)
-//				.build()
-//
-//	;
+//				.build();
 //
 //	private <T extends IRecipe<?>> CategoryBuilder<T> register(String name,
 //		Supplier<CreateRecipeCategory<T>> supplier) {

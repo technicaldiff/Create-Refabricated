@@ -21,6 +21,11 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.util.text.ITextComponent;
+import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.common.util.LazyOptional;
+import net.minecraftforge.items.CapabilityItemHandler;
+import net.minecraftforge.items.IItemHandler;
+import net.minecraftforge.items.ItemStackHandler;
 import net.minecraft.util.text.StringTextComponent;
 
 public class AdjustableCrateTileEntity extends CrateTileEntity implements INamedContainerProvider {

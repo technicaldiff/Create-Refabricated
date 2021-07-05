@@ -25,13 +25,13 @@ import com.simibubi.create.content.contraptions.components.structureMovement.tra
 import com.simibubi.create.content.contraptions.components.turntable.TurntableHandler;
 import com.simibubi.create.content.contraptions.goggles.GoggleOverlayRenderer;
 import com.simibubi.create.content.contraptions.goggles.IHaveGoggleInformation;
+import com.simibubi.create.content.contraptions.itemAssembly.SequencedAssemblyRecipe;
 import com.simibubi.create.content.contraptions.relays.belt.item.BeltConnectorHandler;
 import com.simibubi.create.content.curiosities.armor.CopperBacktankArmorLayer;
 import com.simibubi.create.content.curiosities.symmetry.SymmetryHandler;
 import com.simibubi.create.content.curiosities.tools.BlueprintOverlayRenderer;
 import com.simibubi.create.content.curiosities.tools.ExtendoGripRenderHandler;
 import com.simibubi.create.content.curiosities.zapper.ZapperItem;
-import com.simibubi.create.content.curiosities.zapper.ZapperRenderHandler;
 import com.simibubi.create.content.curiosities.zapper.terrainzapper.WorldshaperRenderHandler;
 import com.simibubi.create.content.logistics.block.depot.EjectorTargetHandler;
 import com.simibubi.create.content.logistics.block.mechanicalArm.ArmInteractionPointHandler;
@@ -44,9 +44,6 @@ import com.simibubi.create.foundation.item.TooltipHelper;
 import com.simibubi.create.foundation.networking.AllPackets;
 import com.simibubi.create.foundation.networking.LeftClickPacket;
 import com.simibubi.create.foundation.ponder.PonderTooltipHandler;
-import com.simibubi.create.foundation.render.KineticRenderer;
-import com.simibubi.create.foundation.render.backend.FastRenderDispatcher;
-import com.simibubi.create.foundation.render.backend.RenderWork;
 import com.simibubi.create.foundation.renderState.SuperRenderTypeBuffer;
 import com.simibubi.create.foundation.sound.SoundScapes;
 import com.simibubi.create.foundation.tileEntity.behaviour.edgeInteraction.EdgeInteractionHandler;
@@ -116,20 +113,16 @@ public class ClientEvents {
 		if (!isGameActive())
 			return;
 
-//		if (event.phase == Phase.START) {
-//			LinkedControllerClientHandler.tick();
-//			AirCurrent.tickClientPlayerSounds();
-//			return;
-//		}
-
 		SoundScapes.tick();
 		AnimationTickHolder.tick();
-		FastRenderDispatcher.tick();
 		ScrollValueHandler.tick();
 
 		CreateClient.SCHEMATIC_SENDER.tick();
 		CreateClient.SCHEMATIC_AND_QUILL_HANDLER.tick();
 		CreateClient.SCHEMATIC_HANDLER.tick();
+		CreateClient.ZAPPER_RENDER_HANDLER.tick();
+		CreateClient.POTATO_CANNON_RENDER_HANDLER.tick();
+		CreateClient.SOUL_PULSE_EFFECT_HANDLER.tick(world);
 
 		ContraptionHandler.tick(world);
 		CapabilityMinecartController.tick(world);
@@ -148,7 +141,6 @@ public class ClientEvents {
 		CouplingHandlerClient.tick();
 		CouplingRenderer.tickDebugModeRenders();
 		KineticDebugger.tick();
-		ZapperRenderHandler.tick();
 		ExtendoGripRenderHandler.tick();
 		// CollisionDebugger.tick();
 		ArmInteractionPointHandler.tick();
@@ -165,12 +157,9 @@ public class ClientEvents {
 	}
 
 	public static void onLoadWorld(Minecraft client, ClientWorld world) {
-		if (world.isRemote() && !(world instanceof WrappedClientWorld)) {
-			CreateClient.invalidateRenderers(world);
+		if (world.isRemote() && world instanceof ClientWorld && !(world instanceof WrappedClientWorld)) {
+			CreateClient.invalidateRenderers();
 			AnimationTickHolder.reset();
-			KineticRenderer renderer = CreateClient.KINETIC_RENDERER.get(world);
-			renderer.invalidate();
-			((ClientWorld) world).loadedTileEntityList.forEach(renderer::add);
 		}
 
 		/*
@@ -182,16 +171,16 @@ public class ClientEvents {
 	}
 
 	public static void onUnloadWorld(Minecraft client, ClientWorld world) {
-		if (world
-			.isRemote()) {
-			CreateClient.invalidateRenderers(world);
+		if (world.isRemote()) {
+			CreateClient.invalidateRenderers();
+			CreateClient.SOUL_PULSE_EFFECT_HANDLER.refresh();
 			AnimationTickHolder.reset();
 		}
 	}
 
 	public static void onRenderWorld(WorldRenderContext event) {
 		Vector3d cameraPos = Minecraft.getInstance().gameRenderer.getActiveRenderInfo()
-			.getProjectedView();
+				.getProjectedView();
 		float pt = AnimationTickHolder.getPartialTicks();
 
 		MatrixStack ms = event.matrixStack();
@@ -209,8 +198,6 @@ public class ClientEvents {
 		RenderSystem.enableCull();
 
 		ms.pop();
-
-		RenderWork.runAll();
 	}
 
 	public static void onRenderOverlay(MatrixStack stack, float partialTicks, MainWindow window, OverlayRenderCallback.Types type) {
@@ -278,6 +265,7 @@ public class ClientEvents {
 		}
 
 		PonderTooltipHandler.addToTooltip(itemTooltip, stack);
+		SequencedAssemblyRecipe.addToTooltip(itemTooltip, stack);
 	}
 
 	public static void onRenderTick() {

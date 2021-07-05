@@ -31,17 +31,17 @@ public class BlueprintAssignCompleteRecipePacket implements C2SPacket {
 	@Override
 	public void handle(MinecraftServer server, ServerPlayerEntity player, ServerPlayNetHandler handler, SimpleChannel.ResponseTarget responseTarget) {
 		server
-			.execute(() -> {
-				if (player == null)
-					return;
-				if (player.openContainer instanceof BlueprintContainer) {
-					BlueprintContainer c = (BlueprintContainer) player.openContainer;
-					player.getServerWorld()
-						.getRecipeManager()
-						.getRecipe(recipeID)
-						.ifPresent(r -> BlueprintItem.assignCompleteRecipe(c.ghostInventory, r));
-				}
-			});
+				.execute(() -> {
+					if (player == null)
+						return;
+					if (player.openContainer instanceof BlueprintContainer) {
+						BlueprintContainer c = (BlueprintContainer) player.openContainer;
+						player.getServerWorld()
+								.getRecipeManager()
+								.getRecipe(recipeID)
+								.ifPresent(r -> BlueprintItem.assignCompleteRecipe(c.ghostInventory, r));
+					}
+				});
 	}
 
 }

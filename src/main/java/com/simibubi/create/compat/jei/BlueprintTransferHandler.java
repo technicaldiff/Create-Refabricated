@@ -19,7 +19,7 @@ package com.simibubi.create.compat.jei;
 //
 //	@Override
 //	public IRecipeTransferError transferRecipe(BlueprintContainer container, Object recipe, IRecipeLayout recipeLayout,
-//		PlayerEntity player, boolean maxTransfer, boolean doTransfer) {
+//											   PlayerEntity player, boolean maxTransfer, boolean doTransfer) {
 //		if (!(recipe instanceof IRecipe))
 //			return null;
 //		if (!doTransfer)

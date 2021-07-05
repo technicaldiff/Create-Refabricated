@@ -3,6 +3,7 @@ package com.simibubi.create.content.contraptions.relays.elementary;
 import java.util.Random;
 import java.util.function.Supplier;
 
+import com.jozufozu.flywheel.util.VirtualEmptyModelData;
 import com.simibubi.create.foundation.tileEntity.TileEntityBehaviour;
 import com.simibubi.create.lib.render.VirtualRenderingStateManager;
 

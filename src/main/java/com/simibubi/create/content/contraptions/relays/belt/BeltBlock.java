@@ -15,6 +15,7 @@ import com.simibubi.create.content.contraptions.base.KineticTileEntity;
 import com.simibubi.create.content.contraptions.processing.EmptyingByBasin;
 import com.simibubi.create.content.contraptions.relays.belt.BeltTileEntity.CasingType;
 import com.simibubi.create.content.contraptions.relays.belt.transport.BeltMovementHandler.TransportedEntityInfo;
+import com.simibubi.create.content.contraptions.relays.belt.transport.BeltTunnelInteractionHandler;
 import com.simibubi.create.content.logistics.block.belts.tunnel.BeltTunnelBlock;
 import com.simibubi.create.content.schematics.ISpecialBlockItemRequirement;
 import com.simibubi.create.content.schematics.ItemRequirement;
@@ -107,7 +108,7 @@ public class BeltBlock extends HorizontalKineticBlock implements ITE<BeltTileEnt
 		if (face.getAxis() != getRotationAxis(state))
 			return false;
 		return getTileEntityOptional(world, pos).map(BeltTileEntity::hasPulley)
-			.orElse(false);
+				.orElse(false);
 	}
 
 	@Override
@@ -201,6 +202,8 @@ public class BeltBlock extends HorizontalKineticBlock implements ITE<BeltTileEnt
 				return;
 			if (!entityIn.isAlive())
 				return;
+			if (BeltTunnelInteractionHandler.getTunnelOnPosition(worldIn, pos) != null)
+				return;
 			withTileEntityDo(worldIn, pos, te -> {
 				ItemEntity itemEntity = (ItemEntity) entityIn;
 				ItemStackHandler handler = (ItemStackHandler) ItemAttributes.INSERTABLE.get(worldIn, pos);
@@ -273,7 +276,7 @@ public class BeltBlock extends HorizontalKineticBlock implements ITE<BeltTileEnt
 				});
 			if (success.isTrue())
 				world.playSound(null, pos, SoundEvents.ENTITY_ITEM_PICKUP, SoundCategory.PLAYERS, .2f,
-					1f + Create.RANDOM.nextFloat());
+						1f + Create.RANDOM.nextFloat());
 		}
 
 		if (isShaft) {
@@ -473,6 +476,7 @@ public class BeltBlock extends HorizontalKineticBlock implements ITE<BeltTileEnt
 			BlockPos currentPos = nextSegmentPosition(state, pos, forward);
 			if (currentPos == null)
 				continue;
+			world.sendBlockBreakProgress(currentPos.hashCode(), currentPos, -1);
 			BlockState currentState = world.getBlockState(currentPos);
 			if (!AllBlocks.BELT.has(currentState))
 				continue;

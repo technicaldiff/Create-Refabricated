@@ -41,6 +41,10 @@ import net.fabricmc.fabric.api.client.rendering.v1.BuiltinItemRendererRegistry;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.model.IBakedModel;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityClassification;
+import net.minecraft.entity.EntityType;
+import net.minecraft.fluid.Fluid;
 import net.minecraft.item.Item;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityType;
@@ -116,6 +120,17 @@ public class CreateRegistrate extends AbstractRegistrate<CreateRegistrate> {
 																			  NonNullFunction<TileEntityType<T>, ? extends T> factory) {
 		return (CreateTileEntityBuilder<T, P>) this.entry(name, (callback) -> {
 			return CreateTileEntityBuilder.create(this, parent, name, callback, factory);
+		});
+	}
+
+	@Override
+	public <T extends Entity> CreateEntityBuilder<T, CreateRegistrate> entity(String name, EntityType.IFactory<T> factory, EntityClassification classification) {
+		return this.entity(self(), name, factory, classification);
+	}
+
+	public <T extends Entity, P> CreateEntityBuilder<T, P> entity(P parent, String name, EntityType.IFactory<T> factory, EntityClassification classification) {
+		return (CreateEntityBuilder<T, P>) this.entry(name, (callback) -> {
+			return CreateEntityBuilder.create(this, parent, name, callback, factory, classification);
 		});
 	}
 
@@ -203,32 +218,29 @@ public class CreateRegistrate extends AbstractRegistrate<CreateRegistrate> {
 	}
 
 	@Environment(EnvType.CLIENT)
-	private static class ClientMethods {
+	private static void registerCTBehviour(Block entry, ConnectedTextureBehaviour behavior) {
+		CreateClient.getCustomBlockModels()
+				.register(() -> entry, model -> new CTModel(model, behavior));
+	}
 
-		@Environment(EnvType.CLIENT)
-		private static void registerCTBehviour(Block entry, ConnectedTextureBehaviour behavior) {
-			CreateClient.getCustomBlockModels()
-					.register(() -> entry, model -> new CTModel(model, behavior));
-		}
+	@Environment(EnvType.CLIENT)
+	private static <T extends Block> void registerCasingConnectivity(T entry,
+																	 BiConsumer<T, CasingConnectivity> consumer) {
+		consumer.accept(entry, CreateClient.getCasingConnectivity());
+	}
 
-		@Environment(EnvType.CLIENT)
-		private static <T extends Block> void registerCasingConnectivity(T entry,
-																		 BiConsumer<T, CasingConnectivity> consumer) {
-			consumer.accept(entry, CreateClient.getCasingConnectivity());
-		}
+	@Environment(EnvType.CLIENT)
+	private static void registerBlockVertexColor(Block entry, IBlockVertexColor colorFunc) {
+		CreateClient.getCustomBlockModels()
+				.register(() -> entry, model -> new ColoredVertexModel(model, colorFunc));
+	}
 
-		@Environment(EnvType.CLIENT)
-		private static void registerBlockVertexColor(Block entry, IBlockVertexColor colorFunc) {
-			CreateClient.getCustomBlockModels()
-					.register(() -> entry, model -> new ColoredVertexModel(model, colorFunc));
-		}
-
-		@Environment(EnvType.CLIENT)
-		private static void registerBlockModel(Block entry,
-											   Supplier<NonNullFunction<IBakedModel, ? extends IBakedModel>> func) {
-			CreateClient.getCustomBlockModels()
-					.register(() -> entry, func.get());
-		}
+	@Environment(EnvType.CLIENT)
+	private static void registerBlockModel(Block entry,
+										   Supplier<NonNullFunction<IBakedModel, ? extends IBakedModel>> func) {
+		CreateClient.getCustomBlockModels()
+				.register(() -> entry, func.get());
+	}
 
 		@Environment(EnvType.CLIENT)
 		private static void registerItemModel(Item entry,

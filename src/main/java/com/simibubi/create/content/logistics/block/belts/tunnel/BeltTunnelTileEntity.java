@@ -9,13 +9,14 @@ import java.util.Set;
 
 import org.apache.commons.lang3.tuple.Pair;
 
+import com.jozufozu.flywheel.backend.instancing.IInstanceRendered;
+import com.jozufozu.flywheel.backend.instancing.InstancedRenderDispatcher;
+import com.simibubi.create.AllBlocks;
 import com.simibubi.create.content.logistics.block.belts.tunnel.BeltTunnelBlock.Shape;
 import com.simibubi.create.content.logistics.block.funnel.BeltFunnelBlock;
 import com.simibubi.create.content.logistics.packet.TunnelFlapPacket;
 import com.simibubi.create.foundation.gui.widgets.InterpolatedChasingValue;
 import com.simibubi.create.foundation.networking.AllPackets;
-import com.simibubi.create.foundation.render.backend.FastRenderDispatcher;
-import com.simibubi.create.foundation.render.backend.instancing.IInstanceRendered;
 import com.simibubi.create.foundation.tileEntity.SmartTileEntity;
 import com.simibubi.create.foundation.tileEntity.TileEntityBehaviour;
 import com.simibubi.create.foundation.utility.Iterate;
@@ -100,7 +101,7 @@ public class BeltTunnelTileEntity extends SmartTileEntity implements IInstanceRe
 			sides.addAll(flaps.keySet());
 		super.fromTag(state, compound, clientPacket);
 		if (clientPacket)
-			EnvExecutor.runWhenOn(EnvType.CLIENT, () -> () -> FastRenderDispatcher.enqueueUpdate(this));
+			EnvExecutor.runWhenOn(EnvType.CLIENT, () -> () -> InstancedRenderDispatcher.enqueueUpdate(this));
 	}
 
 	public void updateTunnelConnections() {
@@ -174,7 +175,7 @@ public class BeltTunnelTileEntity extends SmartTileEntity implements IInstanceRe
 	}
 
 	@Override
-	public boolean shouldRenderAsTE() {
+	public boolean shouldRenderNormally() {
 		return true;
 	}
 

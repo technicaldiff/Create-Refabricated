@@ -29,14 +29,14 @@ public class ItemUseOverrides {
 			return ActionResultType.PASS;
 
 		BlockState state = world
-			.getBlockState(traceResult.getPos());
+				.getBlockState(traceResult.getPos());
 		ResourceLocation id = Registry.BLOCK.getKey(state.getBlock());
 
 		if (!OVERRIDES.contains(id))
 			return ActionResultType.PASS;
 
 		BlockRayTraceResult blockTrace =
-			new BlockRayTraceResult(VecHelper.getCenterOf(traceResult.getPos()), traceResult.getFace(), traceResult.getPos(), true);
+				new BlockRayTraceResult(VecHelper.getCenterOf(traceResult.getPos()), traceResult.getFace(), traceResult.getPos(), true);
 		ActionResultType result = state.onUse(world, player, hand, blockTrace);
 
 		if (!result.isAccepted())

@@ -14,9 +14,12 @@ import com.simibubi.create.content.contraptions.components.structureMovement.tra
 import com.simibubi.create.content.contraptions.components.structureMovement.train.capability.MinecartControllerUpdatePacket;
 import com.simibubi.create.content.contraptions.fluids.actors.FluidSplashPacket;
 import com.simibubi.create.content.contraptions.relays.advanced.sequencer.ConfigureSequencedGearshiftPacket;
+import com.simibubi.create.content.curiosities.bell.SoulPulseEffectPacket;
+import com.simibubi.create.content.curiosities.projector.ConfigureProjectorPacket;
 import com.simibubi.create.content.curiosities.symmetry.SymmetryEffectPacket;
 import com.simibubi.create.content.curiosities.tools.BlueprintAssignCompleteRecipePacket;
 import com.simibubi.create.content.curiosities.tools.ExtendoGripInteractionPacket;
+import com.simibubi.create.content.curiosities.weapons.PotatoCannonPacket;
 import com.simibubi.create.content.curiosities.zapper.ZapperBeamPacket;
 import com.simibubi.create.content.logistics.block.depot.EjectorElytraPacket;
 import com.simibubi.create.content.logistics.block.depot.EjectorPlacementPacket;
@@ -24,6 +27,7 @@ import com.simibubi.create.content.logistics.block.depot.EjectorTriggerPacket;
 import com.simibubi.create.content.logistics.block.mechanicalArm.ArmPlacementPacket;
 import com.simibubi.create.content.logistics.item.LinkedControllerBindPacket;
 import com.simibubi.create.content.logistics.item.LinkedControllerInputPacket;
+import com.simibubi.create.content.logistics.item.LinkedControllerStopLecternPacket;
 import com.simibubi.create.content.logistics.item.filter.FilterScreenPacket;
 import com.simibubi.create.content.logistics.packet.ConfigureFlexcratePacket;
 import com.simibubi.create.content.logistics.packet.ConfigureStockswitchPacket;
@@ -59,6 +63,7 @@ public enum AllPackets {
 	CONFIGURE_FLEXCRATE(ConfigureFlexcratePacket.class),
 	CONFIGURE_STOCKSWITCH(ConfigureStockswitchPacket.class),
 	CONFIGURE_SEQUENCER(ConfigureSequencedGearshiftPacket.class),
+	CONFIGURE_PROJECTOR(ConfigureProjectorPacket.class),
 	PLACE_SCHEMATIC(SchematicPlacePacket.class),
 	UPLOAD_SCHEMATIC(SchematicUploadPacket.class),
 	CLEAR_CONTAINER(ClearContainerPacket.class),
@@ -78,6 +83,7 @@ public enum AllPackets {
 	EJECTOR_ELYTRA(EjectorElytraPacket.class),
 	LINKED_CONTROLLER_INPUT(LinkedControllerInputPacket.class),
 	LINKED_CONTROLLER_BIND(LinkedControllerBindPacket.class),
+	LINKED_CONTROLLER_USE_LECTERN(LinkedControllerStopLecternPacket.class),
 	C_CONFIGURE_CONFIG(CConfigureConfigPacket.class),
 	SUBMIT_GHOST_ITEM(GhostItemSubmitPacket.class),
 	BLUEPRINT_COMPLETE_RECIPE(BlueprintAssignCompleteRecipePacket.class),
@@ -99,6 +105,8 @@ public enum AllPackets {
 	BLOCK_HIGHLIGHT(HighlightPacket.class),
 	TUNNEL_FLAP(TunnelFlapPacket.class),
 	FUNNEL_FLAP(FunnelFlapPacket.class),
+	POTATO_CANNON(PotatoCannonPacket.class),
+	SOUL_PULSE(SoulPulseEffectPacket.class),
 	PERSISTENT_DATA(ISyncPersistentData.Packet.class),
 
 	;
