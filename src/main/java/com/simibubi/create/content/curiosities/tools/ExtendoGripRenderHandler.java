@@ -54,8 +54,8 @@ public class ExtendoGripRenderHandler {
 		boolean rightHand = hand == Hand.MAIN_HAND ^ player.getPrimaryHand() == HandSide.LEFT;
 
 		ItemStack offhandItem = getRenderedOffHandStack();
-		boolean notInOffhand = !AllItems.EXTENDO_GRIP.isIn(offhandItem);
-		if (notInOffhand && !AllItems.EXTENDO_GRIP.isIn(heldItem))
+		boolean notInOffhand = !ExtendoGripItem.isActiveExtendoGrip(offhandItem);
+		if (notInOffhand && !ExtendoGripItem.isActiveExtendoGrip(heldItem))
 			return false;
 
 		MatrixStacker msr = MatrixStacker.of(ms);
