@@ -18,13 +18,6 @@ import net.minecraft.block.BlockState;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.fluid.Fluid;
 import net.minecraft.fluid.FluidState;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.IBlockDisplayReader;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.common.Tags;
-import net.minecraftforge.fluids.FluidAttributes;
-import net.minecraftforge.fluids.ForgeFlowingFluid;
 
 public class AllFluids {
 
@@ -52,15 +45,15 @@ public class AllFluids {
 //							.density(1400))
 					.properties(p -> p.levelDecreasePerBlock(2)
 							.tickRate(25)
-							.slopeFindDistance(3)
-							.explosionResistance(100f))
+							.flowSpeed(3)
+							.blastResistance(100f))
 //					.tag(AllFluidTags.HONEY.tag)
 					.bucket()
-					.properties(p -> p.maxStackSize(1))
+					.properties(p -> (FabricItemSettings) p.maxStackSize(1))
 					.build()
 					.register();
 
-	public static final FluidEntry<ForgeFlowingFluid.Flowing> CHOCOLATE =
+	public static final FluidEntry<SimpleFlowableFluid.Flowing> CHOCOLATE =
 			REGISTRATE.standardFluid("chocolate"/*, NoColorFluidAttributes::new*/)
 					.lang(f -> "fluid.create.chocolate", "Chocolate")
 //					.tag(AllTags.forgeFluidTag("chocolate"))
@@ -68,10 +61,10 @@ public class AllFluids {
 //							.density(1400))
 					.properties(p -> p.levelDecreasePerBlock(2)
 							.tickRate(25)
-							.slopeFindDistance(3)
-							.explosionResistance(100f))
+							.flowSpeed(3)
+							.blastResistance(100f))
 					.bucket()
-			.properties(p -> p.maxStackSize(1))
+			.properties(p -> (FabricItemSettings) p.maxStackSize(1))
 			.build()
 			.register();
 

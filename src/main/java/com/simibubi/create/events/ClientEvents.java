@@ -32,6 +32,7 @@ import com.simibubi.create.content.curiosities.symmetry.SymmetryHandler;
 import com.simibubi.create.content.curiosities.tools.BlueprintOverlayRenderer;
 import com.simibubi.create.content.curiosities.tools.ExtendoGripRenderHandler;
 import com.simibubi.create.content.curiosities.zapper.ZapperItem;
+import com.simibubi.create.content.curiosities.zapper.ZapperRenderHandler;
 import com.simibubi.create.content.curiosities.zapper.terrainzapper.WorldshaperRenderHandler;
 import com.simibubi.create.content.logistics.block.depot.EjectorTargetHandler;
 import com.simibubi.create.content.logistics.block.mechanicalArm.ArmInteractionPointHandler;
@@ -360,7 +361,6 @@ public class ClientEvents {
 		// External Events
 
 		RenderHandCallback.EVENT.register(ExtendoGripRenderHandler::onRenderPlayerHand);
-		RenderHandCallback.EVENT.register(ZapperRenderHandler::onRenderPlayerHand);
 		UseBlockCallback.EVENT.register(ItemUseOverrides::onBlockActivated);
 		UseBlockCallback.EVENT.register(EdgeInteractionHandler::onBlockActivated);
 		UseBlockCallback.EVENT.register(FilteringHandler::onBlockActivated);

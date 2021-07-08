@@ -9,13 +9,6 @@ import com.simibubi.create.lib.event.MouseButtonCallback;
 import com.simibubi.create.lib.event.MouseScrolledCallback;
 
 import net.minecraft.client.Minecraft;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.client.event.InputEvent.ClickInputEvent;
-import net.minecraftforge.client.event.InputEvent.KeyInputEvent;
-import net.minecraftforge.client.event.InputEvent.MouseInputEvent;
-import net.minecraftforge.client.event.InputEvent.MouseScrollEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 
 public class InputEvents {
 
@@ -50,12 +43,11 @@ public class InputEvents {
 		CreateClient.SCHEMATIC_AND_QUILL_HANDLER.onMouseInput(button, pressed);
 	}
 
-	@SubscribeEvent
-	public static void onClickInput(ClickInputEvent event) {
+	public static void onClickInput(int button, int action, int mods) {
 		if (Minecraft.getInstance().currentScreen != null)
 			return;
 
-		if (event.isUseItem())
+		if (button == 1)
 			LinkedControllerClientHandler.deactivateInLectern();
 	}
 
@@ -63,5 +55,6 @@ public class InputEvents {
 		KeyInputCallback.EVENT.register(InputEvents::onKeyInput);
 		MouseScrolledCallback.EVENT.register(InputEvents::onMouseScrolled);
 		MouseButtonCallback.EVENT.register(InputEvents::onMouseInput);
+		MouseButtonCallback.EVENT.register(InputEvents::onClickInput);
 	}
 }

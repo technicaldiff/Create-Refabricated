@@ -18,51 +18,52 @@ import com.simibubi.create.foundation.data.CreateEntityBuilder;
 import com.simibubi.create.foundation.utility.Lang;
 import com.tterrag.registrate.util.entry.EntityEntry;
 import com.tterrag.registrate.util.nullness.NonNullConsumer;
+
 import com.tterrag.registrate.util.nullness.NonNullSupplier;
 
+import net.fabricmc.fabric.api.client.rendereregistry.v1.EntityRendererRegistry;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityClassification;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.EntityType.IFactory;
-import net.minecraftforge.fml.client.registry.IRenderFactory;
 
 public class AllEntityTypes {
 
 	public static final EntityEntry<OrientedContraptionEntity> ORIENTED_CONTRAPTION = contraption("contraption",
-		OrientedContraptionEntity::new, () -> OrientedContraptionEntityRenderer::new, 5, 3, true);
+		OrientedContraptionEntity::new, () -> (manager, context) -> new OrientedContraptionEntityRenderer(manager), 5, 3, true);
 	public static final EntityEntry<ControlledContraptionEntity> CONTROLLED_CONTRAPTION =
-		contraption("stationary_contraption", ControlledContraptionEntity::new, () -> ContraptionEntityRenderer::new,
+		contraption("stationary_contraption", ControlledContraptionEntity::new, () -> (manager, context) -> new ContraptionEntityRenderer<>(manager),
 			20, 40, false);
 	public static final EntityEntry<GantryContraptionEntity> GANTRY_CONTRAPTION = contraption("gantry_contraption",
-		GantryContraptionEntity::new, () -> ContraptionEntityRenderer::new, 10, 40, false);
+		GantryContraptionEntity::new, () -> (manager, context) -> new ContraptionEntityRenderer<>(manager), 10, 40, false);
 
 	public static final EntityEntry<SuperGlueEntity> SUPER_GLUE =
-		register("super_glue", SuperGlueEntity::new, () -> SuperGlueRenderer::new, EntityClassification.MISC, 10,
+		register("super_glue", SuperGlueEntity::new, () -> (manager, context) -> new SuperGlueRenderer(manager), EntityClassification.MISC, 10,
 			Integer.MAX_VALUE, false, true, SuperGlueEntity::build).instance(() -> GlueInstance::new)
 				.register();
 
 	public static final EntityEntry<BlueprintEntity> CRAFTING_BLUEPRINT =
-		register("crafting_blueprint", BlueprintEntity::new, () -> BlueprintRenderer::new, EntityClassification.MISC,
+		register("crafting_blueprint", BlueprintEntity::new, () -> (manager, context) -> new BlueprintRenderer(manager), EntityClassification.MISC,
 			10, Integer.MAX_VALUE, false, true, BlueprintEntity::build).register();
 
 	public static final EntityEntry<PotatoProjectileEntity> POTATO_PROJECTILE =
-		register("potato_projectile", PotatoProjectileEntity::new, () -> PotatoProjectileRenderer::new,
+		register("potato_projectile", PotatoProjectileEntity::new, () -> (manager, context) -> new PotatoProjectileRenderer(manager),
 			EntityClassification.MISC, 4, 20, true, false, PotatoProjectileEntity::build).register();
 
-	public static final EntityEntry<SeatEntity> SEAT = register("seat", SeatEntity::new, () -> SeatEntity.Render::new,
+	public static final EntityEntry<SeatEntity> SEAT = register("seat", SeatEntity::new, () -> (manager, context) -> new SeatEntity.Render(manager),
 		EntityClassification.MISC, 0, Integer.MAX_VALUE, false, true, SeatEntity::build).register();
 
 	//
 
 	private static <T extends Entity> EntityEntry<T> contraption(String name, IFactory<T> factory,
-		NonNullSupplier<IRenderFactory<? super T>> renderer, int range, int updateFrequency, boolean sendVelocity) {
+		NonNullSupplier<EntityRendererRegistry.Factory> renderer, int range, int updateFrequency, boolean sendVelocity) {
 		return register(name, factory, renderer, EntityClassification.MISC, range, updateFrequency, sendVelocity, true,
 			AbstractContraptionEntity::build).register();
 	}
 
 	private static <T extends Entity> CreateEntityBuilder<T, ?> register(String name, IFactory<T> factory,
-		NonNullSupplier<IRenderFactory<? super T>> renderer, EntityClassification group, int range, int updateFrequency,
-		boolean sendVelocity, boolean immuneToFire, NonNullConsumer<EntityType.Builder<T>> propertyBuilder) {
+																		 NonNullSupplier<EntityRendererRegistry.Factory> renderer, EntityClassification group, int range, int updateFrequency,
+																		 boolean sendVelocity, boolean immuneToFire, NonNullConsumer<EntityType.Builder<T>> propertyBuilder) {
 		String id = Lang.asId(name);
 		return (CreateEntityBuilder<T, ?>) Create.registrate()
 			.entity(id, factory, group)

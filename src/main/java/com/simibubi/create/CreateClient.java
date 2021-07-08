@@ -29,12 +29,9 @@ import com.simibubi.create.foundation.networking.AllPackets;
 import com.simibubi.create.foundation.ponder.content.PonderIndex;
 import com.simibubi.create.foundation.ponder.elements.WorldSectionElement;
 import com.simibubi.create.foundation.render.AllMaterialSpecs;
+import com.simibubi.create.foundation.render.AllProgramSpecs;
 import com.simibubi.create.foundation.render.CreateContexts;
 import com.simibubi.create.foundation.render.SuperByteBufferCache;
-import com.simibubi.create.foundation.render.backend.OptifineHandler;
-import com.simibubi.create.foundation.render.backend.core.PartialModel;
-import com.simibubi.create.foundation.render.backend.instancing.InstancedTileRenderer;
-import com.simibubi.create.foundation.utility.WorldAttached;
 import com.simibubi.create.foundation.utility.ghost.GhostBlocks;
 import com.simibubi.create.foundation.utility.outliner.Outliner;
 import com.simibubi.create.lib.event.ModelsBakedCallback;
@@ -70,13 +67,6 @@ import net.minecraft.util.text.TextComponentUtils;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.event.ClickEvent;
 import net.minecraft.util.text.event.HoverEvent;
-import net.minecraftforge.client.event.ModelBakeEvent;
-import net.minecraftforge.client.event.ModelRegistryEvent;
-import net.minecraftforge.client.event.TextureStitchEvent;
-import net.minecraftforge.client.model.ModelLoader;
-import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
-import net.minecraft.world.IWorld;
 
 public class CreateClient implements ClientModInitializer {
 
@@ -108,14 +98,12 @@ public class CreateClient implements ClientModInitializer {
 		modEventBus.addListener(AllMaterialSpecs::flwInit);
 		modEventBus.addListener(ContraptionRenderDispatcher::invalidateOnGatherContext);
 
-		ZAPPER_RENDER_HANDLER.register(forgeEventBus);
-		POTATO_CANNON_RENDER_HANDLER.register(forgeEventBus);
+		ZAPPER_RENDER_HANDLER.register();
+		POTATO_CANNON_RENDER_HANDLER.register();
 	}
 
 	@Override
 	public void onInitializeClient() {
-		AllProgramSpecs.init();
-
 		BUFFER_CACHE.registerCompartment(KineticTileEntityRenderer.KINETIC_TILE);
 		BUFFER_CACHE.registerCompartment(ContraptionRenderDispatcher.CONTRAPTION, 20);
 		BUFFER_CACHE.registerCompartment(WorldSectionElement.DOC_WORLD_SECTION, 20);

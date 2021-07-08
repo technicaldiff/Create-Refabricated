@@ -74,7 +74,7 @@ import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 
 public class BlueprintEntity extends HangingEntity
-	implements ExtraSpawnDataEntity, ISpecialEntityItemRequirement, ISyncPersistentData, BlockPickInteractionAware {
+	implements ExtraSpawnDataEntity, ISpecialEntityItemRequirement, ISyncPersistentData, IInteractionChecker, BlockPickInteractionAware {
 
 	protected int size;
 	protected Direction verticalOrientation;

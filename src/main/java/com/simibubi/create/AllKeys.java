@@ -23,7 +23,7 @@ public enum AllKeys {
 	private AllKeys(String description, int defaultKey) {
 		this.description = Create.ID + ".keyinfo." + description;
 		this.key = defaultKey;
-		this.modifiable = !description.isEmpty();
+		this.modifiable = true;//!description.isEmpty(); // make ACTIVATE_TOOL rebindable to help with the fact it needed to be changed
 	}
 
 	public static void register() {

@@ -1,6 +1,7 @@
 package com.simibubi.create.content.contraptions.wrench;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import com.simibubi.create.AllItems;
 import com.simibubi.create.AllSoundEvents;
@@ -21,11 +22,8 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.math.EntityRayTraceResult;
 import net.minecraft.world.World;
 
-import org.jetbrains.annotations.Nullable;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
-import net.minecraftforge.event.entity.player.AttackEntityEvent;
 
 public class WrenchItem extends Item {
 
@@ -76,8 +74,7 @@ public class WrenchItem extends Item {
 		return ActionResultType.SUCCESS;
 	}
 
-	public static void wrenchInstaKillsMinecarts(AttackEntityEvent event) {
-		Entity target = event.getTarget();
+	public static void wrenchInstaKillsMinecarts(PlayerEntity player, World world, Hand hand, Entity target, @Nullable EntityRayTraceResult entityRayTraceResult) {
 		if (!(target instanceof AbstractMinecartEntity))
 			return;
 		ItemStack heldItem = player.getHeldItemMainhand();
