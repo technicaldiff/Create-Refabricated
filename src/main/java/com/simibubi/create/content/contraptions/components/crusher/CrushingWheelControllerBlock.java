@@ -170,7 +170,7 @@ public class CrushingWheelControllerBlock extends DirectionalBlock
 
 	@Override
 	public VoxelShape getCollisionShape(BlockState state, IBlockReader worldIn, BlockPos pos,
-		ISelectionContext context) {
+										ISelectionContext context) {
 		VoxelShape standardShape = AllShapes.CRUSHING_WHEEL_CONTROLLER_COLLISION.get(state.get(FACING));
 
 		if (!state.get(VALID))

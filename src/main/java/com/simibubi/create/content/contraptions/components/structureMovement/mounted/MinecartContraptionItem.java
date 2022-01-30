@@ -2,7 +2,6 @@ package com.simibubi.create.content.contraptions.components.structureMovement.mo
 
 import java.io.IOException;
 import java.util.List;
-import java.util.Optional;
 
 import javax.annotation.Nullable;
 
@@ -12,6 +11,8 @@ import com.simibubi.create.AllItems;
 import com.simibubi.create.content.contraptions.components.structureMovement.AbstractContraptionEntity;
 import com.simibubi.create.content.contraptions.components.structureMovement.Contraption;
 import com.simibubi.create.content.contraptions.components.structureMovement.OrientedContraptionEntity;
+import com.simibubi.create.foundation.config.AllConfigs;
+import com.simibubi.create.foundation.config.CKinetics;
 import com.simibubi.create.foundation.utility.Lang;
 import com.simibubi.create.foundation.utility.NBTHelper;
 import com.simibubi.create.lib.extensions.AbstractRailBlockExtensions;
@@ -21,6 +22,7 @@ import com.simibubi.create.lib.utility.NBTSerializer;
 import net.minecraft.block.AbstractRailBlock;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.DispenserBlock;
+import net.minecraft.block.SpawnerBlock;
 import net.minecraft.block.material.Material;
 import net.minecraft.dispenser.DefaultDispenseItemBehavior;
 import net.minecraft.dispenser.IBlockSource;
@@ -171,10 +173,7 @@ public class MinecartContraptionItem extends Item {
 		if (tag.contains("Contraption")) {
 			CompoundNBT contraptionTag = tag.getCompound("Contraption");
 
-			Optional<Direction> intialOrientation = Optional.empty();
-			if (contraptionTag.contains("InitialOrientation"))
-				intialOrientation =
-					Optional.of(NBTHelper.readEnum(contraptionTag, "InitialOrientation", Direction.class));
+			Direction intialOrientation = NBTHelper.readEnum(contraptionTag, "InitialOrientation", Direction.class);
 
 			Contraption mountedContraption = Contraption.fromNBT(world, contraptionTag, false);
 			OrientedContraptionEntity contraptionEntity =
@@ -209,6 +208,8 @@ public class MinecartContraptionItem extends Item {
 			entity = entity.getRidingEntity();
 		if (!(entity instanceof AbstractMinecartEntity))
 			return ActionResultType.PASS;
+		if (!entity.isAlive())
+			return ActionResultType.PASS;
 		AbstractMinecartEntity cart = (AbstractMinecartEntity) entity;
 		Type type = cart.getMinecartType();
 		if (type != Type.RIDEABLE && type != Type.FURNACE && type != Type.CHEST)
@@ -217,6 +218,16 @@ public class MinecartContraptionItem extends Item {
 		if (passengers.isEmpty() || !(passengers.get(0) instanceof OrientedContraptionEntity))
 			return ActionResultType.PASS;
 		OrientedContraptionEntity contraption = (OrientedContraptionEntity) passengers.get(0);
+
+		if (AllConfigs.SERVER.kinetics.spawnerMovement.get() == CKinetics.SpawnerMovementSetting.NO_PICKUP) {
+			Contraption blocks = contraption.getContraption();
+			if (blocks != null && blocks.getBlocks().values().stream()
+					.anyMatch(i -> i.state.getBlock() instanceof SpawnerBlock)) {
+				player.sendStatusMessage(Lang.translate("contraption.minecart_contraption_illegal_pickup")
+						.formatted(TextFormatting.RED), true);
+				return;
+			}
+		}
 
 		if (player.world.isRemote) {
 			return ActionResultType.SUCCESS;
@@ -272,8 +283,7 @@ public class MinecartContraptionItem extends Item {
 		tag.remove("Pos");
 		tag.remove("Motion");
 
-		if (entity.isInitialOrientationPresent())
-			NBTHelper.writeEnum(tag, "InitialOrientation", entity.getInitialOrientation());
+		NBTHelper.writeEnum(tag, "InitialOrientation", entity.getInitialOrientation());
 
 		stack.getOrCreateTag()
 			.put("Contraption", tag);

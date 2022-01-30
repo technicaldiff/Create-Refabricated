@@ -1,6 +1,7 @@
 package com.simibubi.create.events;
 
 import com.simibubi.create.CreateClient;
+import com.simibubi.create.content.logistics.item.LinkedControllerClientHandler;
 import com.simibubi.create.foundation.tileEntity.behaviour.filtering.FilteringHandler;
 import com.simibubi.create.foundation.tileEntity.behaviour.scrollvalue.ScrollValueHandler;
 import com.simibubi.create.lib.event.KeyInputCallback;
@@ -27,8 +28,8 @@ public class InputEvents {
 		// upstream comment
 //		CollisionDebugger.onScroll(delta);
 		boolean cancelled = CreateClient.SCHEMATIC_HANDLER.mouseScrolled(delta)
-			|| CreateClient.SCHEMATIC_AND_QUILL_HANDLER.mouseScrolled(delta) || FilteringHandler.onScroll(delta)
-			|| ScrollValueHandler.onScroll(delta);
+				|| CreateClient.SCHEMATIC_AND_QUILL_HANDLER.mouseScrolled(delta) || FilteringHandler.onScroll(delta)
+				|| ScrollValueHandler.onScroll(delta);
 		return cancelled;
 	}
 
@@ -42,10 +43,18 @@ public class InputEvents {
 		CreateClient.SCHEMATIC_AND_QUILL_HANDLER.onMouseInput(button, pressed);
 	}
 
+	public static void onClickInput(int button, int action, int mods) {
+		if (Minecraft.getInstance().currentScreen != null)
+			return;
+
+		if (button == 1)
+			LinkedControllerClientHandler.deactivateInLectern();
+	}
+
 	public static void register() {
 		KeyInputCallback.EVENT.register(InputEvents::onKeyInput);
 		MouseScrolledCallback.EVENT.register(InputEvents::onMouseScrolled);
 		MouseButtonCallback.EVENT.register(InputEvents::onMouseInput);
+		MouseButtonCallback.EVENT.register(InputEvents::onClickInput);
 	}
-
 }

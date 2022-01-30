@@ -1,8 +1,10 @@
 package com.simibubi.create.content.contraptions.fluids.actors;
 
 import java.util.List;
+import java.util.Optional;
 
 import com.simibubi.create.AllRecipeTypes;
+import com.simibubi.create.content.contraptions.itemAssembly.SequencedAssemblyRecipe;
 import com.simibubi.create.foundation.fluid.FluidIngredient;
 import com.simibubi.create.lib.lba.fluid.FluidStack;
 import com.simibubi.create.lib.lba.item.ItemStackHandler;
@@ -17,6 +19,12 @@ public class FillingBySpout {
 	static RecipeWrapper wrapper = new RecipeWrapper(new ItemStackHandler(1));
 	public static boolean canItemBeFilled(World world, ItemStack stack) {
 		wrapper.setInventorySlotContents(0, stack);
+
+		Optional<FillingRecipe> assemblyRecipe =
+			SequencedAssemblyRecipe.getRecipe(world, wrapper, AllRecipeTypes.FILLING.getType(), FillingRecipe.class);
+		if (assemblyRecipe.isPresent())
+			return true;
+
 		if (AllRecipeTypes.FILLING.find(wrapper, world)
 			.isPresent())
 			return true;
@@ -25,6 +33,16 @@ public class FillingBySpout {
 
 	public static int getRequiredAmountForItem(World world, ItemStack stack, FluidStack availableFluid) {
 		wrapper.setInventorySlotContents(0, stack);
+
+		Optional<FillingRecipe> assemblyRecipe =
+			SequencedAssemblyRecipe.getRecipe(world, wrapper, AllRecipeTypes.FILLING.getType(), FillingRecipe.class);
+		if (assemblyRecipe.isPresent()) {
+			FluidIngredient requiredFluid = assemblyRecipe.get()
+				.getRequiredFluid();
+			if (requiredFluid.test(availableFluid))
+				return requiredFluid.getRequiredAmount();
+		}
+
 		for (IRecipe<RecipeWrapper> recipe : world.getRecipeManager()
 			.getRecipes(AllRecipeTypes.FILLING.getType(), wrapper, world)) {
 			FillingRecipe fillingRecipe = (FillingRecipe) recipe;
@@ -40,16 +58,27 @@ public class FillingBySpout {
 		toFill.setAmount(requiredAmount);
 
 		wrapper.setInventorySlotContents(0, stack);
-		for (IRecipe<RecipeWrapper> recipe : world.getRecipeManager()
-			.getRecipes(AllRecipeTypes.FILLING.getType(), wrapper, world)) {
-			FillingRecipe fillingRecipe = (FillingRecipe) recipe;
-			FluidIngredient requiredFluid = fillingRecipe.getRequiredFluid();
-			if (requiredFluid.test(toFill)) {
-				List<ItemStack> results = fillingRecipe.rollResults();
-				availableFluid.shrink(requiredAmount);
-				stack.shrink(1);
-				return results.isEmpty() ? ItemStack.EMPTY : results.get(0);
-			}
+
+		FillingRecipe fillingRecipe =
+			SequencedAssemblyRecipe.getRecipe(world, wrapper, AllRecipeTypes.FILLING.getType(), FillingRecipe.class)
+				.filter(fr -> fr.getRequiredFluid()
+					.test(toFill))
+				.orElseGet(() -> {
+					for (IRecipe<RecipeWrapper> recipe : world.getRecipeManager()
+						.getRecipes(AllRecipeTypes.FILLING.getType(), wrapper, world)) {
+						FillingRecipe fr = (FillingRecipe) recipe;
+						FluidIngredient requiredFluid = fr.getRequiredFluid();
+						if (requiredFluid.test(toFill))
+							return fr;
+					}
+					return null;
+				});
+
+		if (fillingRecipe != null) {
+			List<ItemStack> results = fillingRecipe.rollResults();
+			availableFluid.shrink(requiredAmount);
+			stack.shrink(1);
+			return results.isEmpty() ? ItemStack.EMPTY : results.get(0);
 		}
 
 		return GenericItemFilling.fillItem(world, requiredAmount, stack, availableFluid);

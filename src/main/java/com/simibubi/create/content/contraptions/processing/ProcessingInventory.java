@@ -13,10 +13,21 @@ public class ProcessingInventory extends ItemStackHandler {
 	public float recipeDuration;
 	public boolean appliedRecipe;
 	public Consumer<ItemStack> callback;
+	private boolean limit;
 
 	public ProcessingInventory(Consumer<ItemStack> callback) {
 		super(10);
 		this.callback = callback;
+	}
+
+	public ProcessingInventory withSlotLimit(boolean limit) {
+		this.limit = limit;
+		return this;
+	}
+
+	@Override
+	public int getSlotLimit(int slot) {
+		return !limit ? super.getSlotLimit(slot) : 1;
 	}
 
 	public void clear() {
@@ -38,7 +49,7 @@ public class ProcessingInventory extends ItemStackHandler {
 	public ItemStack insertItem(int slot, ItemStack stack, boolean simulate) {
 		ItemStack insertItem = super.insertItem(slot, stack, simulate);
 		if (slot == 0 && !ItemStack.areItemStacksEqual(insertItem, stack))
-			callback.accept(insertItem.copy());
+			callback.accept(getStackInSlot(slot));
 		return insertItem;
 	}
 

@@ -20,7 +20,7 @@ package com.simibubi.create.compat.jei;
 //@MethodsReturnNonnullByDefault
 //@ParametersAreNonnullByDefault
 //public class GhostIngredientHandler<T extends GhostItemContainer<?>>
-//	implements IGhostIngredientHandler<AbstractSimiContainerScreen<T>> {
+//		implements IGhostIngredientHandler<AbstractSimiContainerScreen<T>> {
 //
 //	@Override
 //	public <I> List<Target<I>> getTargets(AbstractSimiContainerScreen<T> gui, I ingredient, boolean doStart) {
@@ -41,7 +41,8 @@ package com.simibubi.create.compat.jei;
 //	}
 //
 //	@Override
-//	public void onComplete() {}
+//	public void onComplete() {
+//	}
 //
 //	@Override
 //	public boolean shouldHighlightTargets() {

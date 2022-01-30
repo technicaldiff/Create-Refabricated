@@ -14,7 +14,7 @@
   },
 
   "license": "MIT",
-  "icon": "assets/create/icon.gif",
+  "icon": "assets/create/icon.png",
 
   "environment": "*",
   "entrypoints": {

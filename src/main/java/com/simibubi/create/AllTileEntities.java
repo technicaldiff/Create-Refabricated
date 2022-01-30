@@ -119,6 +119,9 @@ import com.simibubi.create.content.contraptions.relays.gearbox.GearshiftTileEnti
 import com.simibubi.create.content.curiosities.armor.CopperBacktankInstance;
 import com.simibubi.create.content.curiosities.armor.CopperBacktankRenderer;
 import com.simibubi.create.content.curiosities.armor.CopperBacktankTileEntity;
+import com.simibubi.create.content.curiosities.bell.BellRenderer;
+import com.simibubi.create.content.curiosities.bell.HauntedBellTileEntity;
+import com.simibubi.create.content.curiosities.bell.PeculiarBellTileEntity;
 import com.simibubi.create.content.logistics.block.belts.tunnel.BeltTunnelInstance;
 import com.simibubi.create.content.logistics.block.belts.tunnel.BeltTunnelRenderer;
 import com.simibubi.create.content.logistics.block.belts.tunnel.BeltTunnelTileEntity;
@@ -152,6 +155,8 @@ import com.simibubi.create.content.logistics.block.redstone.NixieTubeRenderer;
 import com.simibubi.create.content.logistics.block.redstone.NixieTubeTileEntity;
 import com.simibubi.create.content.logistics.block.redstone.RedstoneLinkTileEntity;
 import com.simibubi.create.content.logistics.block.redstone.StockpileSwitchTileEntity;
+import com.simibubi.create.content.logistics.item.LecternControllerRenderer;
+import com.simibubi.create.content.logistics.item.LecternControllerTileEntity;
 import com.simibubi.create.content.schematics.block.SchematicTableTileEntity;
 import com.simibubi.create.content.schematics.block.SchematicannonInstance;
 import com.simibubi.create.content.schematics.block.SchematicannonRenderer;
@@ -246,10 +251,10 @@ public class AllTileEntities {
 
 	@SuppressWarnings("RedundantCast")
 	public static final TileEntityEntry<HandCrankTileEntity> HAND_CRANK = Create.registrate()
-		.tileEntity("hand_crank", HandCrankTileEntity::new)
-		.instance(() -> HandCrankInstance::new)
-		.validBlocks(AllBlocks.HAND_CRANK, AllBlocks.COPPER_VALVE_HANDLE)
-		.validBlocks(AllBlocks.DYED_VALVE_HANDLES.toArray())
+			.tileEntity("hand_crank", HandCrankTileEntity::new)
+			.instance(() -> HandCrankInstance::new)
+			.validBlocks(AllBlocks.HAND_CRANK, AllBlocks.COPPER_VALVE_HANDLE)
+			.validBlocks(AllBlocks.DYED_VALVE_HANDLES.toArray())
 		.renderer(() -> HandCrankRenderer::new)
 		.register();
 
@@ -658,11 +663,31 @@ public class AllTileEntities {
 			.renderer(() -> AdjustableRepeaterRenderer::new)
 			.register();
 
+	public static final TileEntityEntry<LecternControllerTileEntity> LECTERN_CONTROLLER =
+		Create.registrate()
+			.tileEntity("lectern_controller", LecternControllerTileEntity::new)
+			.validBlocks(AllBlocks.LECTERN_CONTROLLER)
+			.renderer(() -> LecternControllerRenderer::new)
+			.register();
+
+	// Curiosities
 	public static final TileEntityEntry<CopperBacktankTileEntity> COPPER_BACKTANK = Create.registrate()
 		.tileEntity("copper_backtank", CopperBacktankTileEntity::new)
 		.instance(() -> CopperBacktankInstance::new)
 		.validBlocks(AllBlocks.COPPER_BACKTANK)
 		.renderer(() -> CopperBacktankRenderer::new)
+		.register();
+
+	public static final TileEntityEntry<PeculiarBellTileEntity> PECULIAR_BELL = Create.registrate()
+		.tileEntity("peculiar_bell", PeculiarBellTileEntity::new)
+		.validBlocks(AllBlocks.PECULIAR_BELL)
+		.renderer(() -> BellRenderer::new)
+		.register();
+
+	public static final TileEntityEntry<HauntedBellTileEntity> HAUNTED_BELL = Create.registrate()
+		.tileEntity("cursed_bell", HauntedBellTileEntity::new)
+		.validBlocks(AllBlocks.HAUNTED_BELL)
+		.renderer(() -> BellRenderer::new)
 		.register();
 
 	public static void register() {}

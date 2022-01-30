@@ -41,6 +41,9 @@ package com.simibubi.create.foundation.data;
 //import net.minecraft.util.Direction.Axis;
 //import net.minecraft.util.Direction.AxisDirection;
 //import net.minecraft.util.ResourceLocation;
+//import net.minecraftforge.client.model.generators.ConfiguredModel;
+//import net.minecraftforge.client.model.generators.ModelFile;
+//import net.minecraftforge.client.model.generators.MultiPartBlockStateBuilder;
 //
 //public class BlockStateGen {
 //
@@ -215,12 +218,12 @@ package com.simibubi.create.foundation.data;
 //			.forAllStates(state -> {
 //				CartAssembleRailType type = state.get(CartAssemblerBlock.RAIL_TYPE);
 //				Boolean powered = state.get(CartAssemblerBlock.POWERED);
+//				Boolean backwards = state.get(CartAssemblerBlock.BACKWARDS);
 //				RailShape shape = state.get(CartAssemblerBlock.RAIL_SHAPE);
+//
 //				int yRotation = shape == RailShape.EAST_WEST ? 270 : 0;
-//				if (type == CartAssembleRailType.CONTROLLER_RAIL_BACKWARDS) {
+//				if (backwards)
 //					yRotation += 180;
-//					type = CartAssembleRailType.CONTROLLER_RAIL;
-//				}
 //
 //				return ConfiguredModel.builder()
 //					.modelFile(p.models()

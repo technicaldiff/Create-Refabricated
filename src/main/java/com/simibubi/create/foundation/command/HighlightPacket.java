@@ -47,12 +47,12 @@ public class HighlightPacket implements S2CPacket {
 			return;
 
 		CreateClient.OUTLINER.showAABB("highlightCommand", VoxelShapes.fullCube()
-			.getBoundingBox()
-			.offset(pos), 200)
-			.lineWidth(1 / 32f)
-			.colored(0xEeEeEe)
-			// .colored(0x243B50)
-			.withFaceTexture(AllSpecialTextures.SELECTION);
+				.getBoundingBox()
+				.offset(pos), 200)
+				.lineWidth(1 / 32f)
+				.colored(0xEeEeEe)
+				// .colored(0x243B50)
+				.withFaceTexture(AllSpecialTextures.SELECTION);
 
 	}
 }

@@ -74,7 +74,8 @@ public final class NBTProcessors {
 		return component != null && component.getStyle() != null && component.getStyle().getClickEvent() != null;
 	}
 
-	private NBTProcessors() {}
+	private NBTProcessors() {
+	}
 
 	@Nullable
 	public static CompoundNBT process(TileEntity tileEntity, CompoundNBT compound, boolean survival) {

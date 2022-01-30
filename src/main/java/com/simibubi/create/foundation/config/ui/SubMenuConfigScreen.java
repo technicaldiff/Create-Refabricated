@@ -10,6 +10,9 @@ import javax.annotation.Nullable;
 
 import org.lwjgl.glfw.GLFW;
 
+import com.electronwill.nightconfig.core.AbstractConfig;
+import com.electronwill.nightconfig.core.UnmodifiableConfig;
+import com.google.common.collect.Lists;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.simibubi.create.foundation.config.AllConfigs;
 import com.simibubi.create.foundation.config.ui.ConfigScreenList.LabeledEntry;
@@ -215,10 +218,10 @@ public class SubMenuConfigScreen extends ConfigScreen {
 //			if (obj instanceof AbstractConfig) {
 //				SubMenuEntry entry = new SubMenuEntry(this, humanKey, spec, (UnmodifiableConfig) obj);
 //				list.children().add(entry);
-//					if (configGroup.valueMap()
+//				if (configGroup.valueMap()
 //						.size() == 1)
-//							ScreenOpener.open(
-//								new SubMenuConfigScreen(parent, humanKey, type, spec, (UnmodifiableConfig) obj));
+//					ScreenOpener.open(
+//							new SubMenuConfigScreen(parent, humanKey, type, spec, (UnmodifiableConfig) obj));
 //
 //			} else if (obj instanceof ForgeConfigSpec.ConfigValue<?>) {
 //				ForgeConfigSpec.ConfigValue<?> configValue = (ForgeConfigSpec.ConfigValue<?>) obj;
@@ -245,15 +248,15 @@ public class SubMenuConfigScreen extends ConfigScreen {
 		});
 
 		Collections.sort(list.children(),
-			(e, e2) -> {
-				int group = (e2 instanceof SubMenuEntry ? 1 : 0) - (e instanceof SubMenuEntry ? 1 : 0);
+				(e, e2) -> {
+					int group = (e2 instanceof SubMenuEntry ? 1 : 0) - (e instanceof SubMenuEntry ? 1 : 0);
 					if (group == 0 && e instanceof LabeledEntry && e2 instanceof LabeledEntry) {
 						LabeledEntry le = (LabeledEntry) e;
 						LabeledEntry le2 = (LabeledEntry) e2;
 						return le.label.getComponent()
-							.getString()
-							.compareTo(le2.label.getComponent()
-								.getString());
+								.getString()
+								.compareTo(le2.label.getComponent()
+										.getString());
 					}
 					return group;
 				});
@@ -300,8 +303,8 @@ public class SubMenuConfigScreen extends ConfigScreen {
 	protected void renderWindow(MatrixStack ms, int mouseX, int mouseY, float partialTicks) {
 		super.renderWindow(ms, mouseX, mouseY, partialTicks);
 
-		int x = width/2;
-		drawCenteredString(ms, client.fontRenderer, ConfigScreen.modID + " > " + config.name.toLowerCase(Locale.ROOT) + " > " + title, x, 15, Theme.i(Theme.Key.TEXT));
+		int x = width / 2;
+		drawCenteredString(ms, client.fontRenderer, ConfigScreen.modID + " > " + type.toString().toLowerCase(Locale.ROOT) + " > " + title, x, 15, Theme.i(Theme.Key.TEXT));
 
 		list.render(ms, mouseX, mouseY, partialTicks);
 	}
@@ -379,10 +382,10 @@ public class SubMenuConfigScreen extends ConfigScreen {
 
 	public void showLeavingPrompt(Consumer<ConfirmationScreen.Response> action) {
 		new ConfirmationScreen().centered()
-			.addText(ITextProperties.plain("Leaving with " + changes.size() + " unsaved change"
-				+ (changes.size() != 1 ? "s" : "") + " for this config"))
-			.withThreeActions(action)
-			.open(this);
+				.addText(ITextProperties.plain("Leaving with " + changes.size() + " unsaved change"
+						+ (changes.size() != 1 ? "s" : "") + " for this config"))
+				.withThreeActions(action)
+				.open(this);
 	}
 
 }

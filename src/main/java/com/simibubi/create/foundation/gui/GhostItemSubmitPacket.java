@@ -35,15 +35,15 @@ public class GhostItemSubmitPacket implements C2SPacket {
 	@Override
 	public void handle(MinecraftServer server, ServerPlayerEntity player, ServerPlayNetHandler handler, SimpleChannel.ResponseTarget responseTarget) {
 		server
-			.execute(() -> {
-				if (player == null)
-					return;
+				.execute(() -> {
+					if (player == null)
+						return;
 
-				if (player.openContainer instanceof GhostItemContainer) {
-					GhostItemContainer<?> c = (GhostItemContainer<?>) player.openContainer;
-					c.ghostInventory.setStackInSlot(slot, item);
-					c.getSlot(36 + slot).onSlotChanged();
-				}
+					if (player.openContainer instanceof GhostItemContainer) {
+						GhostItemContainer<?> c = (GhostItemContainer<?>) player.openContainer;
+						c.ghostInventory.setStackInSlot(slot, item);
+						c.getSlot(36 + slot).onSlotChanged();
+					}
 
 			});
 	}

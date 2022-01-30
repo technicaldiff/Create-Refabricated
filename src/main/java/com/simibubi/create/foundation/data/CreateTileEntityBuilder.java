@@ -4,6 +4,8 @@ import javax.annotation.Nullable;
 
 import com.simibubi.create.foundation.render.backend.instancing.IRendererFactory;
 import com.simibubi.create.lib.event.InstanceRegistrationCallback;
+import com.jozufozu.flywheel.backend.instancing.InstancedRenderRegistry;
+import com.jozufozu.flywheel.backend.instancing.tile.ITileInstanceFactory;
 import com.tterrag.registrate.AbstractRegistrate;
 import com.tterrag.registrate.builders.BuilderCallback;
 import com.tterrag.registrate.builders.TileEntityBuilder;
@@ -18,7 +20,7 @@ import net.minecraft.tileentity.TileEntityType;
 public class CreateTileEntityBuilder<T extends TileEntity, P> extends TileEntityBuilder<T, P> {
 
 	@Nullable
-	private NonNullSupplier<IRendererFactory<? super T>> instanceFactory;
+	private NonNullSupplier<ITileInstanceFactory<? super T>> instanceFactory;
 
 	public static <T extends TileEntity, P> TileEntityBuilder<T, P> create(AbstractRegistrate<?> owner, P parent,
 		String name, BuilderCallback callback, NonNullFunction<TileEntityType<T>, ? extends T> factory) {
@@ -31,7 +33,7 @@ public class CreateTileEntityBuilder<T extends TileEntity, P> extends TileEntity
 		InstanceRegistrationCallback.EVENT.register(this::registerInstance);
 	}
 
-    public CreateTileEntityBuilder<T, P> instance(NonNullSupplier<IRendererFactory<? super T>> instanceFactory) {
+	public CreateTileEntityBuilder<T, P> instance(NonNullSupplier<ITileInstanceFactory<? super T>> instanceFactory) {
 		if (this.instanceFactory == null) { // fixme this is likely to be broken
 			EnvExecutor.runWhenOn(EnvType.CLIENT, () -> this::registerInstance);
 		}
@@ -41,11 +43,11 @@ public class CreateTileEntityBuilder<T extends TileEntity, P> extends TileEntity
 		return this;
 	}
 
-	public void registerInstance() {
-//		OneTimeEventReceiver.addModListener(FMLClientSetupEvent.class, ($) -> {
+	protected void registerInstance() {
+//		OneTimeEventReceiver.addModListener(FMLClientSetupEvent.class, $ -> {
 			NonNullSupplier<IRendererFactory<? super T>> instanceFactory = this.instanceFactory;
 			if (instanceFactory != null) {
-//				InstancedTileRenderRegistry.instance.register(getEntry(), instanceFactory.get());
+//				InstancedRenderRegistry.getInstance().register(getEntry(), instanceFactory.get());
 			}
 
 //		});

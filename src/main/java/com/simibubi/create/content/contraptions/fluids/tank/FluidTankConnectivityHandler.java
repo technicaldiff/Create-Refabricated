@@ -277,7 +277,7 @@ public class FluidTankConnectivityHandler {
 					if (!toDistribute.isEmpty() && tankAt != te) {
 						FluidStack copy = (FluidStack) toDistribute.copy();
 						SimpleFluidTank tankInventory = tankAt.tankInventory;
-						if (/*tankInventory.isEmpty() &&*/ tankInventory instanceof CreativeSmartFluidTank)
+						if (tankInventory.isEmpty() && tankInventory instanceof CreativeSmartFluidTank)
 							((CreativeSmartFluidTank) tankInventory).setContainedFluid(toDistribute);
 						else {
 							int split = Math.min(maxCapacity, toDistribute.getAmount());

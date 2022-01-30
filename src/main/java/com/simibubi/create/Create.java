@@ -10,6 +10,7 @@ import com.google.gson.GsonBuilder;
 import com.simibubi.create.content.CreateItemGroup;
 import com.simibubi.create.content.contraptions.TorquePropagator;
 import com.simibubi.create.content.contraptions.components.structureMovement.train.capability.CapabilityMinecartController;
+import com.simibubi.create.content.curiosities.weapons.PotatoCannonProjectileTypes;
 import com.simibubi.create.content.logistics.RedstoneLinkNetworkHandler;
 import com.simibubi.create.content.palettes.AllPaletteBlocks;
 import com.simibubi.create.content.palettes.PalettesItemGroup;
@@ -116,6 +117,7 @@ public class Create implements ModInitializer {
 
 		AllPackets.registerPackets();
 		AllTriggers.register();
+		PotatoCannonProjectileTypes.register();
 
 //		event.enqueueWork(() -> { // I think this can just be run on initialize too
 			SchematicProcessor.register();
@@ -130,6 +132,7 @@ public class Create implements ModInitializer {
 //		gen.addProvider(AllSoundEvents.provider(gen));
 //		gen.addProvider(new StandardRecipeGen(gen));
 //		gen.addProvider(new MechanicalCraftingRecipeGen(gen));
+//		gen.addProvider(new SequencedAssemblyRecipeGen(gen));
 //		ProcessingRecipeGen.registerAll(gen);
 //	}
 

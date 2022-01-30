@@ -205,7 +205,7 @@ public class SmartFluidTankBehaviour extends TileEntityBehaviour {
 			return super.fill(resource, action);
 		}
 
-		public int forceFill(FluidStack resource, Simulation action) {
+		public int forceFill(FluidStack resource, FluidAction action) {
 			return super.fill(resource, action);
 		}
 
@@ -245,6 +245,9 @@ public class SmartFluidTankBehaviour extends TileEntityBehaviour {
 			fluidLevel.chase(tank.getFluidAmount() / (float) tank.getCapacity(), .25, Chaser.EXP);
 			if (!getWorld().isRemote)
 				sendDataLazily();
+			if (tileEntity.isVirtual() && !tank.getFluid()
+				.isEmpty())
+				renderedFluid = tank.getFluid();
 		}
 
 		public FluidStack getRenderedFluid() {

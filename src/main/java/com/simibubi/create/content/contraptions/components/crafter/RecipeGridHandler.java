@@ -11,9 +11,6 @@ import java.util.Set;
 import java.util.function.Predicate;
 import java.util.stream.IntStream;
 
-import net.minecraft.item.crafting.FireworkRocketRecipe;
-import net.minecraft.item.crafting.ICraftingRecipe;
-
 import org.apache.commons.lang3.tuple.Pair;
 
 import com.google.common.base.Predicates;
@@ -28,6 +25,8 @@ import com.simibubi.create.lib.utility.NBTSerializer;
 import net.minecraft.block.BlockState;
 import net.minecraft.inventory.CraftingInventory;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.FireworkRocketRecipe;
+import net.minecraft.item.crafting.ICraftingRecipe;
 import net.minecraft.item.crafting.IRecipeType;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.ListNBT;

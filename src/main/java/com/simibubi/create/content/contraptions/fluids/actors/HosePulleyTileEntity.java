@@ -192,7 +192,7 @@ public class HosePulleyTileEntity extends KineticTileEntity {
 //	}
 
 	@Override
-	public boolean shouldRenderAsTE() {
+	public boolean shouldRenderNormally() {
 		return true;
 	}
 }

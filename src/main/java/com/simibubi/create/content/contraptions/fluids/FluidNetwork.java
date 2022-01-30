@@ -158,6 +158,9 @@ public class FluidNetwork {
 			source = sourceSupplier.get();
 		if (!source.isPresent())
 			return;
+
+		keepPortableFluidInterfaceEngaged();
+
 		if (targets.isEmpty())
 			return;
 		for (Pair<BlockFace, IFluidHandler> pair : targets) {
@@ -252,6 +255,15 @@ public class FluidNetwork {
 //				.lineWidth(1 / 4f)
 //				.colored(0xfaaa33);
 //	}
+
+	private void keepPortableFluidInterfaceEngaged() {
+		IFluidHandler handler = source.orElse(null);
+		if (!(handler instanceof InterfaceFluidHandler))
+			return;
+		if (frontier.isEmpty())
+			return;
+		((InterfaceFluidHandler) handler).keepAlive();
+	}
 
 	public void reset() {
 		frontier.clear();

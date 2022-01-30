@@ -160,18 +160,16 @@ public class ChuteTileEntity extends SmartTileEntity implements IHaveGoggleInfor
 					nextOffset = .5f;
 				else if (nextOffset < 0) {
 					handleDownwardOutput(world.isRemote && !isVirtual());
-					return;
+					nextOffset = itemPosition.value;
 				}
 			}
-		}
-
-		if (itemMotion > 0) {
+		} else if (itemMotion > 0) {
 			if (nextOffset > .5f) {
 				if (!handleUpwardOutput(true))
 					nextOffset = .5f;
 				else if (nextOffset > 1) {
 					handleUpwardOutput(world.isRemote && !isVirtual());
-					return;
+					nextOffset = itemPosition.value;
 				}
 			}
 		}
@@ -326,25 +324,26 @@ public class ChuteTileEntity extends SmartTileEntity implements IHaveGoggleInfor
 	private void handleInputFromAbove() {
 		if (!capAbove.isPresent())
 			capAbove = grabCapability(Direction.UP);
-		handleInput(capAbove.orElse(null));
+		handleInput(capAbove.orElse(null), 1);
 	}
 
 	private void handleInputFromBelow() {
 		if (!capBelow.isPresent())
 			capBelow = grabCapability(Direction.DOWN);
-		handleInput(capBelow.orElse(null));
+		handleInput(capBelow.orElse(null), 0);
 	}
 
-	private void handleInput(IItemHandler inv) {
+	private void handleInput(IItemHandler inv, float startLocation) {
 		if (inv == null)
 			return;
 		Predicate<ItemStack> canAccept = this::canAcceptItem;
 		int count = getExtractionAmount();
 		ExtractionCountMode mode = getExtractionMode();
 		if (mode == ExtractionCountMode.UPTO || !ItemHelper.extract(inv, canAccept, mode, count, true)
-			.isEmpty())
-			item = ItemHelper.extract(inv, canAccept, mode, count, false);
-
+			.isEmpty()) {
+			ItemStack extracted = ItemHelper.extract(inv, canAccept, mode, count, false);
+			setItem(extracted, startLocation);
+		}
 	}
 
 	private boolean handleDownwardOutput(boolean simulate) {
@@ -357,10 +356,12 @@ public class ChuteTileEntity extends SmartTileEntity implements IHaveGoggleInfor
 		if (!capBelow.isPresent())
 			capBelow = grabCapability(Direction.DOWN);
 		if (capBelow.isPresent()) {
+			if (world.isRemote && !isVirtual())
+				return false;
 			ItemStack remainder = ItemHandlerHelper.insertItemStacked(capBelow.orElse(null), item, simulate);
 			ItemStack held = getItem();
 			if (!simulate)
-				setItem(remainder);
+				setItem(remainder, itemPosition.get(0));
 			if (remainder.getCount() != held.getCount())
 				return true;
 			if (direction == Direction.DOWN)
@@ -409,6 +410,8 @@ public class ChuteTileEntity extends SmartTileEntity implements IHaveGoggleInfor
 			if (!capAbove.isPresent())
 				capAbove = grabCapability(Direction.UP);
 			if (capAbove.isPresent()) {
+				if (world.isRemote && !isVirtual() && !ChuteBlock.isChute(stateAbove))
+					return false;
 				int countBefore = item.getCount();
 				ItemStack remainder = ItemHandlerHelper.insertItemStacked(capAbove.orElse(null), item, simulate);
 				if (!simulate)

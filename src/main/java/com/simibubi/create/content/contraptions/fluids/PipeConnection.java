@@ -240,7 +240,7 @@ public class PipeConnection {
 		return source.orElse(null) instanceof OpenEndedPipe;
 	}
 
-	public void deserializeNBT(CompoundNBT tag, boolean clientPacket) {
+	public void deserializeNBT(CompoundNBT tag, BlockPos tilePos, boolean clientPacket) {
 		CompoundNBT connectionData = tag.getCompound(side.getName2());
 
 		if (connectionData.contains("Pressure")) {
@@ -251,7 +251,7 @@ public class PipeConnection {
 
 		source = Optional.empty();
 		if (connectionData.contains("OpenEnd"))
-			source = Optional.of(OpenEndedPipe.fromNBT(connectionData.getCompound("OpenEnd")));
+			source = Optional.of(OpenEndedPipe.fromNBT(connectionData.getCompound("OpenEnd"), tilePos));
 
 		if (connectionData.contains("Flow")) {
 			CompoundNBT flowData = connectionData.getCompound("Flow");
@@ -368,8 +368,9 @@ public class PipeConnection {
 
 	@Environment(EnvType.CLIENT)
 	private void spawnParticlesInner(World world, BlockPos pos, FluidStack fluid) {
-		if (!isRenderEntityWithinDistance(pos))
-			return;
+		if (world == Minecraft.getInstance().world)
+			if (!isRenderEntityWithinDistance(pos))
+				return;
 		if (hasOpenEnd())
 			spawnPouringLiquid(world, pos, fluid, 1);
 		else if (r.nextFloat() < IDLE_PARTICLE_SPAWN_CHANCE)
@@ -378,8 +379,9 @@ public class PipeConnection {
 
 	@Environment(EnvType.CLIENT)
 	private void spawnSplashOnRimInner(World world, BlockPos pos, FluidStack fluid) {
-		if (!isRenderEntityWithinDistance(pos))
-			return;
+		if (world == Minecraft.getInstance().world)
+			if (!isRenderEntityWithinDistance(pos))
+				return;
 		spawnRimParticles(world, pos, fluid, SPLASH_PARTICLE_AMOUNT);
 	}
 

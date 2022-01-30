@@ -1,5 +1,6 @@
 package com.simibubi.create.content.schematics.block;
 
+import com.simibubi.create.foundation.gui.IInteractionChecker;
 import com.simibubi.create.foundation.tileEntity.SyncedTileEntity;
 import com.simibubi.create.foundation.utility.Lang;
 
@@ -15,11 +16,9 @@ import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.TileEntityType;
-import net.minecraft.util.registry.Registry;
 import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
 
-public class SchematicTableTileEntity extends SyncedTileEntity implements ITickableTileEntity, INamedContainerProvider {
+public class SchematicTableTileEntity extends SyncedTileEntity implements ITickableTileEntity, INamedContainerProvider, IInteractionChecker {
 
 	public SchematicTableInventory inventory;
 	public boolean isUploading;
@@ -120,6 +119,14 @@ public class SchematicTableTileEntity extends SyncedTileEntity implements ITicka
 	@Override
 	public ITextComponent getDisplayName() {
 		return Lang.translate("gui.schematicTable.title");
+	}
+
+	@Override
+	public boolean canPlayerUse(PlayerEntity player) {
+		if (world == null || world.getTileEntity(pos) != this) {
+			return false;
+		}
+		return player.getDistanceSq(pos.getX() + 0.5D, pos.getY() + 0.5D, pos.getZ() + 0.5D) <= 64.0D;
 	}
 
 }

@@ -117,7 +117,7 @@ public class StockpileSwitchTileEntity extends SmartTileEntity {
 		world.setBlockState(pos, getBlockState().with(StockpileSwitchBlock.INDICATOR, displayLevel), update ? 3 : 2);
 
 		if (update && !world.getPendingBlockTicks().isTickPending(pos, getBlockState().getBlock()))
-				world.getPendingBlockTicks().scheduleTick(pos, getBlockState().getBlock(), 2, TickPriority.NORMAL);
+			world.getPendingBlockTicks().scheduleTick(pos, getBlockState().getBlock(), 2, TickPriority.NORMAL);
 
 		if (changed || update)
 			sendData();

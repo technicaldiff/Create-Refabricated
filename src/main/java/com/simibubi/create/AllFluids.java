@@ -2,6 +2,7 @@ package com.simibubi.create;
 
 import javax.annotation.Nullable;
 
+import com.simibubi.create.AllTags.AllFluidTags;
 import com.simibubi.create.content.contraptions.fluids.VirtualFluid;
 import com.simibubi.create.content.contraptions.fluids.potion.PotionFluid;
 import com.simibubi.create.content.palettes.AllPaletteBlocks;
@@ -22,47 +23,47 @@ public class AllFluids {
 
 	private static final CreateRegistrate REGISTRATE = Create.registrate();
 
-	public static FluidEntry<PotionFluid> POTION =
-		REGISTRATE.potionFluid("potion"/*, PotionFluidAttributes::new, PotionFluid::new*/)
-			.lang(f -> "fluid.create.potion", "Potion")
+	public static final FluidEntry<PotionFluid> POTION =
+			REGISTRATE.potionFluid("potion"/*, PotionFluidAttributes::new, PotionFluid::new*/)
+					.lang(f -> "fluid.create.potion", "Potion")
+					.register();
+
+	public static final FluidEntry<VirtualFluid> TEA = REGISTRATE.virtualFluid("tea")
+			.lang(f -> "fluid.create.tea", "Builder's Tea")
+//			.tag(AllTags.forgeFluidTag("tea"))
 			.register();
 
-	public static FluidEntry<VirtualFluid> TEA = REGISTRATE.virtualFluid("tea")
-		.lang(f -> "fluid.create.tea", "Builder's Tea")
-//		.tag(AllTags.forgeFluidTag("tea"))
-		.register();
-
-	public static FluidEntry<VirtualFluid> MILK = REGISTRATE.virtualFluid("milk")
-		.lang(f -> "fluid.create.milk", "Milk")
-//		.tag(AllTags.forgeFluidTag("milk"))
-		.register();
-
-	public static FluidEntry<SimpleFlowableFluid.Flowing> HONEY =
-		REGISTRATE.standardFluid("honey"/* NoColorFluidAttributes::new*/)
-			.lang(f -> "fluid.create.honey", "Honey")
-//			.attributes(b -> b.viscosity(500)
-//				.density(1400))
-			.properties(p -> p.levelDecreasePerBlock(2)
-				.tickRate(25)
-				.flowSpeed(3)
-				.blastResistance(100f))
-//			.tag(AllTags.forgeFluidTag("honey"))
-			.bucket()
-			.properties(p -> (FabricItemSettings) p.maxStackSize(1))
-			.build()
+	public static final FluidEntry<VirtualFluid> MILK = REGISTRATE.virtualFluid("milk")
+			.lang(f -> "fluid.create.milk", "Milk")
+//			.tag(Tags.Fluids.MILK)
 			.register();
 
-	public static FluidEntry<SimpleFlowableFluid.Flowing> CHOCOLATE =
-		REGISTRATE.standardFluid("chocolate"/*, NoColorFluidAttributes::new*/)
-			.lang(f -> "fluid.create.chocolate", "Chocolate")
-//			.tag(AllTags.forgeFluidTag("chocolate"))
-//			.attributes(b -> b.viscosity(500)
-//				.density(1400))
-			.properties(p -> p.levelDecreasePerBlock(2)
-				.tickRate(25)
-				.flowSpeed(3)
-				.blastResistance(100f))
-			.bucket()
+	public static final FluidEntry<SimpleFlowableFluid.Flowing> HONEY =
+			REGISTRATE.standardFluid("honey"/*, NoColorFluidAttributes::new*/)
+					.lang(f -> "fluid.create.honey", "Honey")
+//					.attributes(b -> b.viscosity(500)
+//							.density(1400))
+					.properties(p -> p.levelDecreasePerBlock(2)
+							.tickRate(25)
+							.flowSpeed(3)
+							.blastResistance(100f))
+//					.tag(AllFluidTags.HONEY.tag)
+					.bucket()
+					.properties(p -> (FabricItemSettings) p.maxStackSize(1))
+					.build()
+					.register();
+
+	public static final FluidEntry<SimpleFlowableFluid.Flowing> CHOCOLATE =
+			REGISTRATE.standardFluid("chocolate"/*, NoColorFluidAttributes::new*/)
+					.lang(f -> "fluid.create.chocolate", "Chocolate")
+//					.tag(AllTags.forgeFluidTag("chocolate"))
+//					.attributes(b -> b.viscosity(500)
+//							.density(1400))
+					.properties(p -> p.levelDecreasePerBlock(2)
+							.tickRate(25)
+							.flowSpeed(3)
+							.blastResistance(100f))
+					.bucket()
 			.properties(p -> (FabricItemSettings) p.maxStackSize(1))
 			.build()
 			.register();

@@ -7,6 +7,7 @@ public class CRecipes extends ConfigBase {
 
 	public ConfigGroup recipes = group(0, "recipes", CServer.Comments.recipes);
 	public ConfigBool bulkPressing = b(false, "bulkPressing", Comments.bulkPressing);
+	public ConfigBool bulkCutting = b(false, "bulkCutting", Comments.bulkCutting);
 	public ConfigBool allowShapelessInMixer = b(true, "allowShapelessInMixer", Comments.allowShapelessInMixer);
 	public ConfigBool allowShapedSquareInPress = b(true, "allowShapedSquareInPress", Comments.allowShapedSquareInPress);
 	public ConfigBool allowRegularCraftingInCrafter =
@@ -34,6 +35,7 @@ public class CRecipes extends ConfigBase {
 
 	private static class Comments {
 		static String bulkPressing = "When true, allows the Mechanical Press to process entire stacks at a time.";
+		static String bulkCutting = "When true, allows the Mechanical Saw to process entire stacks at a time.";
 		static String allowShapelessInMixer =
 			"When true, allows any shapeless crafting recipes to be processed by a Mechanical Mixer + Basin.";
 		static String allowShapedSquareInPress =

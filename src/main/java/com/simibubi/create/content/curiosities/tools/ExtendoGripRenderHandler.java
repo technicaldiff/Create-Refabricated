@@ -1,9 +1,9 @@
 package com.simibubi.create.content.curiosities.tools;
 
+import com.jozufozu.flywheel.core.PartialModel;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.simibubi.create.AllBlockPartials;
 import com.simibubi.create.AllItems;
-import com.simibubi.create.foundation.render.backend.core.PartialModel;
 import com.simibubi.create.foundation.utility.AnimationTickHolder;
 import com.simibubi.create.foundation.utility.MatrixStacker;
 
@@ -54,8 +54,8 @@ public class ExtendoGripRenderHandler {
 		boolean rightHand = hand == Hand.MAIN_HAND ^ player.getPrimaryHand() == HandSide.LEFT;
 
 		ItemStack offhandItem = getRenderedOffHandStack();
-		boolean notInOffhand = !AllItems.EXTENDO_GRIP.isIn(offhandItem);
-		if (notInOffhand && !AllItems.EXTENDO_GRIP.isIn(heldItem))
+		boolean notInOffhand = !ExtendoGripItem.isActiveExtendoGrip(offhandItem);
+		if (notInOffhand && !ExtendoGripItem.isActiveExtendoGrip(heldItem))
 			return false;
 
 		MatrixStacker msr = MatrixStacker.of(ms);

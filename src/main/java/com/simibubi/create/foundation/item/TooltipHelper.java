@@ -9,7 +9,6 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Supplier;
 
 import com.google.common.base.Strings;
@@ -34,9 +33,7 @@ import net.minecraft.util.IItemProvider;
 import net.minecraft.util.text.IFormattableTextComponent;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.util.text.Style;
 import net.minecraft.util.text.TextFormatting;
-import net.minecraft.util.text.TextProcessing;
 
 public class TooltipHelper {
 
@@ -127,7 +124,7 @@ public class TooltipHelper {
 
 	public static List<ITextComponent> cutTextComponent(ITextComponent c, TextFormatting defaultColor,
 		TextFormatting highlightColor, int indent) {
-		String s = getUnformattedDeepText(c);
+		String s = c.getString();
 
 		// Apply markup
 		String markedUp = s;// .replaceAll("_([^_]+)_", highlightColor + "$1" + defaultColor);
@@ -277,10 +274,6 @@ public class TooltipHelper {
 
 	private static ItemDescription buildToolTip(String translationKey, ItemStack stack) {
 		AllSections module = AllSections.of(stack);
-		if (I18n.format(translationKey)
-			.equals("WIP"))
-			return new WipScription(module.getTooltipPalette());
-
 		ItemDescription tooltip = new ItemDescription(module.getTooltipPalette());
 		String summaryKey = translationKey + ".summary";
 
@@ -328,21 +321,13 @@ public class TooltipHelper {
 		return item.getTranslationKey(stack) + ".tooltip";
 	}
 
-	private static int getComponentLength(ITextComponent component) {
-		AtomicInteger l = new AtomicInteger();
-		TextProcessing.visitFormatted(component, Style.EMPTY, (s, style, charConsumer) -> {
-			l.getAndIncrement();
-			return true;
-		});
-		return l.get();
-	}
-
-	public static String getUnformattedDeepText(ITextComponent component) {
-		StringBuilder b = new StringBuilder();
-		b.append(component.getString());
-		component.getSiblings()
-			.forEach(c -> b.append(getUnformattedDeepText(c)));
-		return b.toString();
-	}
+//	private static int getComponentLength(ITextComponent component) {
+//		AtomicInteger l = new AtomicInteger();
+//		TextProcessing.visitFormatted(component, Style.EMPTY, (s, style, charConsumer) -> {
+//			l.getAndIncrement();
+//			return true;
+//		});
+//		return l.get();
+//	}
 
 }

@@ -190,7 +190,7 @@ public class CuckooClockTileEntity extends KineticTileEntity {
 	}
 
 	@Override
-	public boolean shouldRenderAsTE() {
+	public boolean shouldRenderNormally() {
 		return true;
 	}
 }

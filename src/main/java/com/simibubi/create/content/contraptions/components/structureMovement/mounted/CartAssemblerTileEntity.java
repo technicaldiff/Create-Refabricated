@@ -47,7 +47,6 @@ public class CartAssemblerTileEntity extends SmartTileEntity implements IDisplay
 	protected ScrollOptionBehaviour<CartMovementMode> movementMode;
 	private int ticksSinceMinecartUpdate;
 	protected AssemblyException lastException;
-
 	protected AbstractMinecartEntity cartToAssemble;
 
 	public CartAssemblerTileEntity(TileEntityType<? extends CartAssemblerTileEntity> type) {
@@ -85,41 +84,44 @@ public class CartAssemblerTileEntity extends SmartTileEntity implements IDisplay
 		if (action.shouldDisassemble())
 			disassemble(world, pos, cart);
 		if (action == CartAssemblerBlock.CartAssemblerAction.ASSEMBLE_ACCELERATE) {
-			Direction facing = cart.getAdjustedHorizontalFacing();
-
-			RailShape railShape = state.get(CartAssemblerBlock.RAIL_SHAPE);
-			for (Direction d : Iterate.directionsInAxis(railShape == RailShape.EAST_WEST ? Axis.X : Axis.Z))
-				if (world.getBlockState(pos.offset(d))
+			if (cart.getMotion()
+				.length() > 1 / 128f) {
+				Direction facing = cart.getAdjustedHorizontalFacing();
+				RailShape railShape = state.get(CartAssemblerBlock.RAIL_SHAPE);
+				for (Direction d : Iterate.directionsInAxis(railShape == RailShape.EAST_WEST ? Axis.X : Axis.Z))
+					if (world.getBlockState(pos.offset(d))
 						.isNormalCube(world, pos.offset(d)))
-					facing = d.getOpposite();
+						facing = d.getOpposite();
 
-			float speed = 0.4f;//block.getRailMaxSpeed(state, world, pos, cart);
-			cart.setMotion(facing.getXOffset() * speed, facing.getYOffset() * speed, facing.getZOffset() * speed);
+				float speed = 0.4f;//block.getRailMaxSpeed(state, world, pos, cart);
+				cart.setMotion(facing.getXOffset() * speed, facing.getYOffset() * speed, facing.getZOffset() * speed);
+			}
 		}
 		if (action == CartAssemblerBlock.CartAssemblerAction.ASSEMBLE_ACCELERATE_DIRECTIONAL) {
-			Vector3i accelerationVector = ControllerRailBlock.getAccelerationVector(
-					AllBlocks.CONTROLLER_RAIL.getDefaultState()
-							.with(ControllerRailBlock.SHAPE, state.get(CartAssemblerBlock.RAIL_SHAPE))
-							.with(ControllerRailBlock.BACKWARDS, state.get(CartAssemblerBlock.RAIL_TYPE) == CartAssembleRailType.CONTROLLER_RAIL_BACKWARDS));
+			Vector3i accelerationVector =
+				ControllerRailBlock.getAccelerationVector(AllBlocks.CONTROLLER_RAIL.getDefaultState()
+					.with(ControllerRailBlock.SHAPE, state.get(CartAssemblerBlock.RAIL_SHAPE))
+					.with(ControllerRailBlock.BACKWARDS, state.get(CartAssemblerBlock.BACKWARDS)));
 			float speed = 0.4f;//block.getRailMaxSpeed(state, world, pos, cart);
-			cart.setMotion(Vector3d.of(accelerationVector).scale(speed));
+			cart.setMotion(Vector3d.of(accelerationVector)
+				.scale(speed));
 		}
 		if (action == CartAssemblerBlock.CartAssemblerAction.DISASSEMBLE_BRAKE) {
 			Vector3d diff = VecHelper.getCenterOf(pos)
-					.subtract(cart.getPositionVec());
+				.subtract(cart.getPositionVec());
 			cart.setMotion(diff.x / 16f, 0, diff.z / 16f);
 		}
 	}
 
 	protected void assemble(World world, BlockPos pos, AbstractMinecartEntity cart) {
 		if (!cart.getPassengers()
-				.isEmpty())
+			.isEmpty())
 			return;
 
 		LazyOptional<MinecartController> optional =
 				LazyOptional.ofObject((MinecartController) MinecartAndRailUtil.getController(cart));
 		if (optional.isPresent() && optional.orElse(null)
-				.isCoupledThroughContraption())
+			.isCoupledThroughContraption())
 			return;
 
 		CartMovementMode mode = CartMovementMode.values()[movementMode.value];
@@ -138,13 +140,12 @@ public class CartAssemblerTileEntity extends SmartTileEntity implements IDisplay
 		}
 
 		boolean couplingFound = contraption.connectedCart != null;
-		Optional<Direction> initialOrientation = cart.getMotion()
-				.length() < 1 / 512f ? Optional.empty() : Optional.of(cart.getAdjustedHorizontalFacing());
+		Direction initialOrientation = CartAssemblerBlock.getHorizontalDirection(getBlockState());
 
 		if (couplingFound) {
 			cart.setPosition(pos.getX() + .5f, pos.getY(), pos.getZ() + .5f);
 			if (!CouplingHandler.tryToCoupleCarts(null, world, cart.getEntityId(),
-					contraption.connectedCart.getEntityId()))
+				contraption.connectedCart.getEntityId()))
 				return;
 		}
 
@@ -154,8 +155,8 @@ public class CartAssemblerTileEntity extends SmartTileEntity implements IDisplay
 
 		if (couplingFound) {
 			Vector3d diff = contraption.connectedCart.getPositionVec()
-					.subtract(cart.getPositionVec());
-			initialOrientation = Optional.of(Direction.fromAngle(MathHelper.atan2(diff.z, diff.x) * 180 / Math.PI));
+				.subtract(cart.getPositionVec());
+			initialOrientation = Direction.fromAngle(MathHelper.atan2(diff.z, diff.x) * 180 / Math.PI);
 		}
 
 		OrientedContraptionEntity entity = OrientedContraptionEntity.create(world, contraption, initialOrientation);
@@ -176,16 +177,18 @@ public class CartAssemblerTileEntity extends SmartTileEntity implements IDisplay
 
 	protected void disassemble(World world, BlockPos pos, AbstractMinecartEntity cart) {
 		if (cart.getPassengers()
-				.isEmpty())
+			.isEmpty())
 			return;
 		Entity entity = cart.getPassengers()
-				.get(0);
+			.get(0);
 		if (!(entity instanceof OrientedContraptionEntity))
 			return;
 		OrientedContraptionEntity contraption = (OrientedContraptionEntity) entity;
 		UUID couplingId = contraption.getCouplingId();
 
 		if (couplingId == null) {
+			contraption.yaw = CartAssemblerBlock.getHorizontalDirection(getBlockState())
+				.getHorizontalAngle();
 			disassembleCart(cart);
 			return;
 		}
@@ -200,17 +203,18 @@ public class CartAssemblerTileEntity extends SmartTileEntity implements IDisplay
 			if (minecartController.cart() == cart)
 				continue;
 			BlockPos otherPos = minecartController.cart()
-					.getBlockPos();
+				.getBlockPos();
 			BlockState blockState = world.getBlockState(otherPos);
 			if (!AllBlocks.CART_ASSEMBLER.has(blockState))
 				return;
-			if (!CartAssemblerBlock.getActionForCart(blockState, minecartController.cart()).shouldDisassemble())
+			if (!CartAssemblerBlock.getActionForCart(blockState, minecartController.cart())
+				.shouldDisassemble())
 				return;
 		}
 
 		for (boolean current : Iterate.trueAndFalse)
 			coupledCarts.get(current)
-					.removeConnection(current);
+				.removeConnection(current);
 		disassembleCart(cart);
 	}
 
@@ -313,4 +317,5 @@ public class CartAssemblerTileEntity extends SmartTileEntity implements IDisplay
 	public boolean isMinecartUpdateValid() {
 		return ticksSinceMinecartUpdate >= assemblyCooldown;
 	}
+
 }

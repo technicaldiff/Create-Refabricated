@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.AllTags.AllBlockTags;
+import com.simibubi.create.Create;
 import com.simibubi.create.content.contraptions.components.actors.AttachedActorBlock;
 import com.simibubi.create.content.contraptions.components.actors.HarvesterBlock;
 import com.simibubi.create.content.contraptions.components.actors.PortableStorageInterfaceBlock;
@@ -28,8 +29,8 @@ import com.simibubi.create.content.contraptions.components.structureMovement.pul
 import com.simibubi.create.content.contraptions.fluids.tank.FluidTankBlock;
 import com.simibubi.create.content.contraptions.fluids.tank.FluidTankConnectivityHandler;
 import com.simibubi.create.content.logistics.block.redstone.RedstoneLinkBlock;
-
 import com.simibubi.create.foundation.config.AllConfigs;
+import com.simibubi.create.foundation.config.CKinetics;
 
 import net.minecraft.block.AbstractPressurePlateBlock;
 import net.minecraft.block.AbstractRailBlock;
@@ -62,6 +63,7 @@ import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.state.properties.DoubleBlockHalf;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
@@ -72,6 +74,7 @@ public class BlockMovementChecks {
 	private static final List<BrittleCheck> BRITTLE_CHECKS = new ArrayList<>();
 	private static final List<AttachedCheck> ATTACHED_CHECKS = new ArrayList<>();
 	private static final List<NotSupportiveCheck> NOT_SUPPORTIVE_CHECKS = new ArrayList<>();
+	public static final ResourceLocation NON_MOVABLE = new ResourceLocation(Create.ID, "non_movable");
 
 	// Registration
 	// Add new checks to the front instead of the end
@@ -144,7 +147,7 @@ public class BlockMovementChecks {
 	 * Attached blocks will move if blocks they are attached to are moved
 	 */
 	public static boolean isBlockAttachedTowards(BlockState state, World world, BlockPos pos,
-		Direction direction) {
+												 Direction direction) {
 		for (AttachedCheck check : ATTACHED_CHECKS) {
 			CheckResult result = check.isBlockAttachedTowards(state, world, pos, direction);
 			if (result != CheckResult.PASS) {
@@ -176,10 +179,10 @@ public class BlockMovementChecks {
 		if (state.getBlock() instanceof FenceGateBlock)
 			return true;
 		if (state.getMaterial()
-			.isReplaceable())
+				.isReplaceable())
 			return false;
 		if (state.getCollisionShape(world, pos)
-			.isEmpty())
+				.isEmpty())
 			return false;
 		return true;
 	}
@@ -190,9 +193,10 @@ public class BlockMovementChecks {
 			return true;
 		if (state.getBlockHardness(world, pos) == -1)
 			return false;
-		if (AllBlockTags.NON_MOVABLE.matches(state))
+		if (state.getBlock().getTags().contains(NON_MOVABLE))
 			return false;
-		if (!AllConfigs.SERVER.kinetics.movableSpawners.get() && block instanceof SpawnerBlock)
+		if (AllConfigs.SERVER.kinetics.spawnerMovement.get() == CKinetics.SpawnerMovementSetting.UNMOVABLE
+			&& block instanceof SpawnerBlock)
 			return false;
 
 		// Move controllers only when they aren't moving
@@ -255,7 +259,7 @@ public class BlockMovementChecks {
 	}
 
 	private static boolean isBlockAttachedTowardsFallback(BlockState state, World world, BlockPos pos,
-		Direction direction) {
+														  Direction direction) {
 		Block block = state.getBlock();
 		if (block instanceof LadderBlock)
 			return state.get(LadderBlock.FACING) == direction.getOpposite();
@@ -327,12 +331,12 @@ public class BlockMovementChecks {
 		}
 		if (state.getBlock() instanceof SailBlock)
 			return direction.getAxis() != state.get(SailBlock.FACING)
-				.getAxis();
+					.getAxis();
 		if (state.getBlock() instanceof FluidTankBlock)
 			return FluidTankConnectivityHandler.isConnected(world, pos, pos.offset(direction));
 		if (AllBlocks.STICKER.has(state) && state.get(StickerBlock.EXTENDED)) {
 			return direction == state.get(StickerBlock.FACING)
-				&& !isNotSupportive(world.getBlockState(pos.offset(direction)), direction.getOpposite());
+					&& !isNotSupportive(world.getBlockState(pos.offset(direction)), direction.getOpposite());
 		}
 		return false;
 	}
@@ -359,10 +363,10 @@ public class BlockMovementChecks {
 				.getAxis();
 		if (AllBlocks.PISTON_EXTENSION_POLE.has(state))
 			return facing.getAxis() != state.get(BlockStateProperties.FACING)
-				.getAxis();
+					.getAxis();
 		if (AllBlocks.MECHANICAL_PISTON_HEAD.has(state))
 			return facing.getAxis() != state.get(BlockStateProperties.FACING)
-				.getAxis();
+					.getAxis();
 		if (AllBlocks.STICKER.has(state) && !state.get(StickerBlock.EXTENDED))
 			return facing == state.get(StickerBlock.FACING);
 		return isBrittle(state);

@@ -51,7 +51,7 @@ public class SchematicTableContainer extends Container {
 			@Override
 			public boolean isItemValid(ItemStack stack) {
 				return AllItems.EMPTY_SCHEMATIC.isIn(stack) || AllItems.SCHEMATIC_AND_QUILL.isIn(stack)
-					|| AllItems.SCHEMATIC.isIn(stack);
+						|| AllItems.SCHEMATIC.isIn(stack);
 			}
 		};
 
@@ -84,8 +84,8 @@ public class SchematicTableContainer extends Container {
 	}
 
 	@Override
-	public boolean canInteractWith(PlayerEntity playerIn) {
-		return true;
+	public boolean canInteractWith(PlayerEntity player) {
+		return te != null && te.canPlayerUse(player);
 	}
 
 	@Override

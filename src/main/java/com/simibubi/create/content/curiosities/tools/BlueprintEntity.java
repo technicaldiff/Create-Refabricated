@@ -18,6 +18,7 @@ import com.simibubi.create.content.logistics.item.filter.FilterItem;
 import com.simibubi.create.content.schematics.ISpecialEntityItemRequirement;
 import com.simibubi.create.content.schematics.ItemRequirement;
 import com.simibubi.create.content.schematics.ItemRequirement.ItemUseType;
+import com.simibubi.create.foundation.gui.IInteractionChecker;
 import com.simibubi.create.foundation.networking.ISyncPersistentData;
 import com.simibubi.create.foundation.utility.Couple;
 import com.simibubi.create.foundation.utility.VecHelper;
@@ -73,7 +74,7 @@ import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 
 public class BlueprintEntity extends HangingEntity
-	implements ExtraSpawnDataEntity, ISpecialEntityItemRequirement, ISyncPersistentData, BlockPickInteractionAware {
+	implements ExtraSpawnDataEntity, ISpecialEntityItemRequirement, ISyncPersistentData, IInteractionChecker, BlockPickInteractionAware {
 
 	protected int size;
 	protected Direction verticalOrientation;
@@ -494,7 +495,7 @@ public class BlueprintEntity extends HangingEntity
 		return sectionCache.computeIfAbsent(index, i -> new BlueprintSection(i));
 	}
 
-	class BlueprintSection implements INamedContainerProvider {
+	class BlueprintSection implements INamedContainerProvider, IInteractionChecker {
 		int index;
 		Couple<ItemStack> cachedDisplayItems;
 		public boolean inferredIcon = false;
@@ -548,11 +549,44 @@ public class BlueprintEntity extends HangingEntity
 				.getTranslationKey());
 		}
 
+		@Override
+		public boolean canPlayerUse(PlayerEntity player) {
+			return BlueprintEntity.this.canPlayerUse(player);
+		}
+
 	}
 
 	@Override
 	public void onPersistentDataUpdated() {
 		sectionCache.clear();
+	}
+
+	@Override
+	public boolean canPlayerUse(PlayerEntity player) {
+		AxisAlignedBB box = getBoundingBox();
+
+		double dx = 0;
+		if (box.minX > player.getX()) {
+			dx = box.minX - player.getX();
+		} else if (player.getX() > box.maxX) {
+			dx = player.getX() - box.maxX;
+		}
+
+		double dy = 0;
+		if (box.minY > player.getY()) {
+			dy = box.minY - player.getY();
+		} else if (player.getY() > box.maxY) {
+			dy = player.getY() - box.maxY;
+		}
+
+		double dz = 0;
+		if (box.minZ > player.getZ()) {
+			dz = box.minZ - player.getZ();
+		} else if (player.getZ() > box.maxZ) {
+			dz = player.getZ() - box.maxZ;
+		}
+
+		return (dx * dx + dy * dy + dz * dz) <= 64.0D;
 	}
 
 }
